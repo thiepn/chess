@@ -28,6 +28,7 @@ export interface ImportedGame {
   event?: string;
   site?: string;
   date?: string;
+  startingFen?: string;
   moves: ImportedGameMove[];
   criticalMomentIds: string[];
   analysisEngine?: string;
