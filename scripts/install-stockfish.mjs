@@ -3,6 +3,9 @@ import path from "node:path";
 
 const sourceDir = path.resolve("node_modules/stockfish/bin");
 const outputDir = path.resolve("public/engine");
+const packageJson = JSON.parse(
+  fs.readFileSync(path.resolve("node_modules/stockfish/package.json"), "utf8"),
+);
 
 if (!fs.existsSync(sourceDir)) {
   throw new Error("stockfish package is not installed");
@@ -38,15 +41,28 @@ for (const candidate of licenseCandidates) {
 }
 
 fs.writeFileSync(
+  path.join(outputDir, "STOCKFISH-SOURCE.txt"),
+  [
+    `Stockfish.js ${packageJson.version}`,
+    "Corresponding source and build scripts:",
+    "https://github.com/nmrugg/stockfish.js",
+    `Release: https://github.com/nmrugg/stockfish.js/releases/tag/v${packageJson.version}`,
+    "",
+  ].join("\n"),
+);
+
+fs.writeFileSync(
   path.join(outputDir, "manifest.json"),
   JSON.stringify(
     {
       version: 1,
-      engine: "Stockfish",
+      engine: `Stockfish ${packageJson.version}`,
       package: "stockfish",
+      packageVersion: packageJson.version,
       script: jsFile,
       wasm: wasmFile,
       license: "GPL-3.0",
+      source: "https://github.com/nmrugg/stockfish.js",
     },
     null,
     2,
