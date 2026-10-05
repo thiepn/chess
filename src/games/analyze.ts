@@ -1,3 +1,4 @@
+import { Chess } from "chess.js";
 import type { StockfishBrowserEngine } from "../engine/stockfish";
 import { buildPersonalMistake } from "./classify";
 import type {
@@ -6,6 +7,35 @@ import type {
   ImportedGame,
   PersonalMistake,
 } from "./types";
+
+async function evaluatePosition(
+  fen: string,
+  engine: StockfishBrowserEngine,
+  depth: number,
+) {
+  const chess = new Chess(fen);
+
+  if (chess.isCheckmate()) {
+    return {
+      scoreCp: -100_000,
+      mate: 0,
+      bestMove: "(none)",
+      pv: [],
+      depth: 0,
+    };
+  }
+
+  if (chess.isDraw() || chess.isStalemate()) {
+    return {
+      scoreCp: 0,
+      bestMove: "(none)",
+      pv: [],
+      depth: 0,
+    };
+  }
+
+  return engine.evaluate(fen, depth);
+}
 
 export async function analyzeImportedGame(
   game: ImportedGame,
@@ -27,8 +57,8 @@ export async function analyzeImportedGame(
 
   for (let index = 0; index < playerMoves.length; index += 1) {
     const move = playerMoves[index];
-    const before = await engine.evaluate(move.beforeFen, depth);
-    const after = await engine.evaluate(move.afterFen, depth);
+    const before = await evaluatePosition(move.beforeFen, engine, depth);
+    const after = await evaluatePosition(move.afterFen, engine, depth);
     const playerScoreAfter = -after.scoreCp;
     const centipawnLoss = Math.max(0, Math.round(before.scoreCp - playerScoreAfter));
 
