@@ -1,0 +1,78 @@
+import type { StockfishBrowserEngine } from "../engine/stockfish";
+import { buildPersonalMistake } from "./classify";
+import type {
+  EngineMoveReview,
+  GameAnalysisProgress,
+  ImportedGame,
+  PersonalMistake,
+} from "./types";
+
+export async function analyzeImportedGame(
+  game: ImportedGame,
+  engine: StockfishBrowserEngine,
+  options: {
+    depth?: number;
+    onProgress?: (progress: GameAnalysisProgress) => void;
+  } = {},
+): Promise<{ game: ImportedGame; mistakes: PersonalMistake[]; reviews: EngineMoveReview[] }> {
+  const depth = options.depth ?? 11;
+  const playerMoves = game.moves.filter((move) => move.color === game.playerColor);
+  const reviews: EngineMoveReview[] = [];
+
+  options.onProgress?.({
+    completed: 0,
+    total: playerMoves.length,
+    phase: "analyzing",
+  });
+
+  for (let index = 0; index < playerMoves.length; index += 1) {
+    const move = playerMoves[index];
+    const before = await engine.evaluate(move.beforeFen, depth);
+    const after = await engine.evaluate(move.afterFen, depth);
+    const playerScoreAfter = -after.scoreCp;
+    const centipawnLoss = Math.max(0, Math.round(before.scoreCp - playerScoreAfter));
+
+    reviews.push({
+      gameId: game.id,
+      ply: move.ply,
+      move,
+      before,
+      after,
+      centipawnLoss,
+    });
+
+    options.onProgress?.({
+      completed: index + 1,
+      total: playerMoves.length,
+      phase: "analyzing",
+    });
+  }
+
+  options.onProgress?.({
+    completed: playerMoves.length,
+    total: playerMoves.length,
+    phase: "classifying",
+  });
+
+  const now = new Date();
+  const mistakes = reviews
+    .map((review) => buildPersonalMistake(review, now))
+    .filter((value): value is PersonalMistake => Boolean(value))
+    .sort((a, b) => b.centipawnLoss - a.centipawnLoss)
+    .slice(0, 8);
+
+  const analyzedGame: ImportedGame = {
+    ...game,
+    analyzedAt: now.toISOString(),
+    analysisEngine: engine.name,
+    criticalMomentIds: mistakes.map((mistake) => mistake.id),
+  };
+
+  options.onProgress?.({
+    completed: playerMoves.length,
+    total: playerMoves.length,
+    phase: "complete",
+  });
+
+  return { game: analyzedGame, mistakes, reviews };
+}
