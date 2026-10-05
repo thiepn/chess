@@ -397,7 +397,7 @@ export const repertoireById = Object.fromEntries(
 
 export function pathToNode(nodeId: string) {
   const path: OpeningNode[] = [];
-  let current = openingNodes[nodeId];
+  let current: OpeningNode | undefined = openingNodes[nodeId];
 
   while (current) {
     path.unshift(current);
