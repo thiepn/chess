@@ -797,7 +797,6 @@ export default function App() {
           <LibraryView
             studies={state.savedStudies ?? []}
             games={state.games ?? []}
-            mastery={state.mastery}
             onSaveStudy={saveStudy}
             onDeleteStudy={deleteStudy}
             onToggleFavorite={toggleStudyFavorite}
