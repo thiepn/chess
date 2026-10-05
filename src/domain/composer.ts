@@ -1,6 +1,8 @@
 import { readyCurriculumSkills, skillById } from "./curriculum";
 import { retentionProbability, weaknessPriority } from "./mastery";
 import { mistakePriority } from "../games/classify";
+import { dueOpeningNodes } from "../openings/progress";
+import { repertoires } from "../openings/repertoire";
 import type {
   CandidateSource,
   ChessSkill,
@@ -44,6 +46,7 @@ function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMo
   }
   if (source === "weakness" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   if (source === "game") return "personalMistake";
+  if (source === "repertoire") return "openingRecall";
   if (source === "calibration" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   return skill.trainingModes[0] ?? "conceptLesson";
 }
@@ -125,6 +128,39 @@ export function buildCandidatePool(
     );
     item.mistakeId = mistake.id;
     result.push(item);
+  }
+
+  const openingSkill = skillById["openings.principles"];
+  if (openingSkill) {
+    const progress = state.openingProgress ?? {};
+    const deviations = state.openingDeviations ?? [];
+
+    for (const repertoire of repertoires) {
+      const due = dueOpeningNodes(repertoire, progress, now);
+      if (!due.length) continue;
+
+      const deviation = deviations.find(
+        (item) =>
+          !item.resolved &&
+          item.repertoireId === repertoire.id &&
+          due.some((node) => node.id === item.nodeId),
+      );
+      const node = deviation
+        ? due.find((item) => item.id === deviation.nodeId) ?? due[0]
+        : due[0];
+
+      const item = candidate(
+        openingSkill,
+        "repertoire",
+        deviation ? .9 : .48,
+        deviation ? .9 : .48,
+        deviation ? "Opening deviation from your game" : `${repertoire.versus}: repertoire recall`,
+      );
+      item.id = `repertoire:${repertoire.id}:${node.id}`;
+      item.openingNodeId = node.id;
+      item.repertoireId = repertoire.id;
+      result.push(item);
+    }
   }
 
   for (const skill of readyCurriculumSkills(state.mastery).slice(0, 8)) {
