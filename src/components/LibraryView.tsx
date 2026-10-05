@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { skills } from "../domain/curriculum";
-import type { SkillMastery } from "../domain/types";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import type { EngineEvaluation, ImportedGame } from "../games/types";
 import { createStudyTraining, dueStudyTraining } from "../library/progress";
@@ -46,7 +45,6 @@ type LibraryTab = "workspace" | "saved" | "references" | "games";
 interface LibraryViewProps {
   studies: SavedStudy[];
   games: ImportedGame[];
-  mastery: Record<string, SkillMastery>;
   onSaveStudy: (study: SavedStudy) => void;
   onDeleteStudy: (studyId: string) => void;
   onToggleFavorite: (studyId: string) => void;
@@ -84,7 +82,6 @@ function newStudyId() {
 export function LibraryView({
   studies,
   games,
-  mastery,
   onSaveStudy,
   onDeleteStudy,
   onToggleFavorite,
@@ -274,6 +271,7 @@ export function LibraryView({
     const existing = loadedStudyId
       ? studies.find((study) => study.id === loadedStudyId)
       : undefined;
+    const samePosition = existing?.fen === currentFen;
     const parsedTags = [...new Set(
       tags
         .split(",")
@@ -292,8 +290,12 @@ export function LibraryView({
       source,
       sourceId,
       orientation,
-      arrows: evaluation ? uciArrow(evaluation.bestMove) : existing?.arrows ?? [],
-      highlights: existing?.highlights ?? [],
+      arrows: evaluation
+        ? uciArrow(evaluation.bestMove)
+        : samePosition
+          ? existing?.arrows ?? []
+          : [],
+      highlights: samePosition ? existing?.highlights ?? [] : [],
       engine: evaluation
         ? {
             evaluationCp: evaluation.scoreCp,
@@ -302,7 +304,9 @@ export function LibraryView({
             principalVariation: evaluation.pv.slice(0, 8),
             depth: evaluation.depth,
           }
-        : existing?.engine,
+        : samePosition
+          ? existing?.engine
+          : undefined,
       training:
         training && evaluation && bestSan
           ? createStudyTraining(
@@ -311,7 +315,9 @@ export function LibraryView({
               bestSan,
               new Date(now),
             )
-          : existing?.training,
+          : samePosition
+            ? existing?.training
+            : undefined,
       favorite: existing?.favorite ?? false,
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
