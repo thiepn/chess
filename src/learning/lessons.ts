@@ -604,9 +604,9 @@ const seeds: Record<string, LessonSeed> = {
     summary: "The Philidor position is the essential defensive rook-ending setup.",
     body: "Keep the attacking king from advancing while the pawn remains back. Once the pawn advances, switch to checking from behind.",
     fen: PHILIDOR,
-    move: "a6h6",
+    move: "a6d6",
     prompt: "Maintain the sixth-rank barrier with a waiting rook move.",
-    hint: "Move the rook along the sixth rank to h6.",
+    hint: "Move the rook along the sixth rank to d6.",
   },
   "conversion.simplify": {
     title: "Simplify without going passive",
