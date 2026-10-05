@@ -223,6 +223,55 @@ describe("course assessment engine", () => {
     expect(courseCurriculumFloor(state)).toBe(2);
   });
 
+  it("does not replace an existing certificate with a failed retake", () => {
+    const stageId: CurriculumStageId = "safety";
+    const stageSkills = skills.filter((skill) => skill.stage === stageId);
+    const session = buildStageCheckpoint(
+      stageId,
+      0,
+      new Date("2026-10-05T12:00:00Z"),
+    );
+    const results = session.items.map((item) => ({
+      itemId: item.id,
+      skillId: item.skillId,
+      stageId: item.stageId,
+      success: false,
+    }));
+    const prior = {
+      stageId,
+      attemptId: "old-pass",
+      passedAt: "2026-10-01T12:00:00Z",
+      checkpointScore: 90,
+      metrics: {
+        coverage: 100,
+        mastery: 70,
+        retention: 50,
+        transfer: 30,
+        checkpoint: 90,
+      },
+      method: "checkpoint" as const,
+    };
+
+    const state: UserState = {
+      ...baseState(),
+      placement: placementAt("safety"),
+      mastery: Object.fromEntries(
+        stageSkills.map((skill) => [skill.id, mastery(skill.id)]),
+      ),
+      stageCertifications: { safety: prior },
+    };
+
+    const applied = applyAssessmentToState(
+      state,
+      session,
+      results,
+      new Date("2026-10-05T12:05:00Z"),
+    );
+
+    expect(applied.certification).toBeNull();
+    expect(applied.state.stageCertifications?.safety?.attemptId).toBe("old-pass");
+  });
+
   it("applies placement evidence without certifying skipped stages", () => {
     const state = baseState();
     const session = buildPlacementAssessment(
