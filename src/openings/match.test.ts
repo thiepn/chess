@@ -22,6 +22,19 @@ describe("opening repertoire matching", () => {
     expect(openingDeviationsForGame(game)).toHaveLength(0);
   });
 
+  it("does not classify training-position games as opening deviations", () => {
+    const game = importPgn(
+      `[SetUp "1"]
+[FEN "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3"]
+
+3. Bc4 Nf6 *`,
+      "w",
+    );
+
+    expect(chooseRepertoireForGame(game)).toBeUndefined();
+    expect(openingDeviationsForGame(game)).toHaveLength(0);
+  });
+
   it("matches Black Caro-Kann moves without deviation", () => {
     const game = importPgn("1. e4 c6 2. d4 d5 *", "b");
     expect(chooseRepertoireForGame(game)?.id).toBe("black-caro");
