@@ -1,5 +1,6 @@
 import { Chess, type Color, type PieceSymbol, type Square } from "chess.js";
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { useExperience } from "../interaction/ExperienceProvider";
 import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 
 interface BoardMove {
@@ -60,12 +61,15 @@ export function ChessBoard({
   const [selected, setSelected] = useState<Square | null>(null);
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
+  const [secondaryMove, setSecondaryMove] = useState<{ from: Square; to: Square } | null>(null);
   const [rejected, setRejected] = useState<Square | null>(null);
+  const { feedback } = useExperience();
 
   useEffect(() => {
     setPosition(fen);
     setSelected(null);
     setLastMove(null);
+    setSecondaryMove(null);
     setRejected(null);
   }, [fen]);
 
@@ -83,6 +87,19 @@ export function ChessBoard({
     [highlights],
   );
 
+  const checkedKing = useMemo(() => {
+    if (!chess.inCheck()) return null;
+    const turn = chess.turn();
+
+    for (const row of chess.board()) {
+      for (const piece of row) {
+        if (piece?.type === "k" && piece.color === turn) return piece.square;
+      }
+    }
+
+    return null;
+  }, [chess]);
+
   function tryMove(from: Square, to: Square) {
     if (disabled) return false;
 
@@ -97,6 +114,7 @@ export function ChessBoard({
 
     if (!move) {
       setRejected(to);
+      feedback("error");
       window.setTimeout(() => setRejected(null), 260);
       return false;
     }
@@ -113,13 +131,33 @@ export function ChessBoard({
     if (!accepted) {
       setRejected(to);
       setSelected(null);
+      feedback("error");
       window.setTimeout(() => setRejected(null), 300);
       return false;
     }
 
+    const castle =
+      move.piece === "k" && Math.abs(move.to.charCodeAt(0) - move.from.charCodeAt(0)) === 2
+        ? move.to[0] === "g"
+          ? {
+              from: `h${move.from[1]}` as Square,
+              to: `f${move.from[1]}` as Square,
+            }
+          : {
+              from: `a${move.from[1]}` as Square,
+              to: `d${move.from[1]}` as Square,
+            }
+        : null;
+
     setPosition(candidate.fen());
     setLastMove({ from, to });
+    setSecondaryMove(castle);
     setSelected(null);
+
+    if (candidate.inCheck()) feedback("check");
+    else if (move.captured) feedback("capture");
+    else feedback("move");
+
     return true;
   }
 
@@ -141,11 +179,15 @@ export function ChessBoard({
         return;
       }
       setRejected(square);
+      feedback("error");
       window.setTimeout(() => setRejected(null), 260);
       return;
     }
 
-    if (piece?.color === chess.turn()) setSelected(square);
+    if (piece?.color === chess.turn()) {
+      setSelected(square);
+      feedback("select");
+    }
   }
 
   function squareLabel(square: Square) {
@@ -174,7 +216,13 @@ export function ChessBoard({
           const isSelected = selected === square;
           const isLegal = legalTargets.has(square);
           const displayMove = lastMove ?? presentationMove;
-          const isLast = displayMove?.from === square || displayMove?.to === square;
+          const isSecondary =
+            secondaryMove?.from === square || secondaryMove?.to === square;
+          const isLast =
+            displayMove?.from === square ||
+            displayMove?.to === square ||
+            isSecondary;
+          const isChecked = checkedKing === square;
           const classes = [
             "board-square",
             dark ? "dark" : "light",
@@ -183,6 +231,7 @@ export function ChessBoard({
             isLegal ? "legal-target" : "",
             isLast ? "last-move" : "",
             rejected === square ? "rejected" : "",
+            isChecked ? "in-check" : "",
           ]
             .filter(Boolean)
             .join(" ");
@@ -213,20 +262,42 @@ export function ChessBoard({
               }}
               onDragEnd={() => setDragFrom(null)}
             >
-              {piece && (
-                <span
-                  className={[
-                    "piece",
-                    piece.color === "w" ? "white-piece" : "black-piece",
-                    displayMove?.to === square ? "piece-land" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  aria-hidden="true"
-                >
-                  {pieces[piece.color][piece.type]}
-                </span>
-              )}
+              {piece && (() => {
+                const landingMove =
+                  displayMove?.to === square
+                    ? displayMove
+                    : secondaryMove?.to === square
+                      ? secondaryMove
+                      : null;
+                const start = landingMove
+                  ? arrowPoint(landingMove.from, orientation)
+                  : null;
+                const end = landingMove
+                  ? arrowPoint(landingMove.to, orientation)
+                  : null;
+                const style = start && end
+                  ? {
+                      "--piece-dx": `${(start.x - end.x) * 100}%`,
+                      "--piece-dy": `${(start.y - end.y) * 100}%`,
+                    } as CSSProperties
+                  : undefined;
+
+                return (
+                  <span
+                    className={[
+                      "piece",
+                      piece.color === "w" ? "white-piece" : "black-piece",
+                      landingMove ? "piece-land" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    style={style}
+                    aria-hidden="true"
+                  >
+                    {pieces[piece.color][piece.type]}
+                  </span>
+                );
+              })()}
               {isLegal && <span className={piece ? "capture-ring" : "move-dot"} aria-hidden="true" />}
               {showFile && <span className="file-label" aria-hidden="true">{square[0]}</span>}
               {showRank && <span className="rank-label" aria-hidden="true">{square[1]}</span>}
