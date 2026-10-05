@@ -258,7 +258,7 @@ const scripts: Record<string, LessonScript> = {
         eyebrow: "TACTICAL PATTERN",
         title: "The king changes what a piece can do.",
         body: "After the bishop reaches b5, the knight on c6 stands between the bishop and the king on e8. Moving the knight would expose the king.",
-        fen: "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        fen: "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
         arrows: [{ from: "b5", to: "e8", tone: "danger" }],
         highlights: [{ square: "c6", tone: "danger" }],
       },
