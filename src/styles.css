@@ -1300,3 +1300,77 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
     display: none;
   }
 }
+
+
+/* P4 — adaptive puzzle practice */
+
+.puzzle-runner .lesson-prompt {
+  min-height: 54px;
+}
+
+.puzzle-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.puzzle-meta span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.055);
+  color: #8f9ab2;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.puzzle-source-line {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #687691;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.puzzle-source-line svg {
+  color: #65c99d;
+}
+
+.puzzle-loading {
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  text-align: center;
+  color: #8190ad;
+}
+
+.puzzle-loading svg {
+  color: #8ca0ff;
+  animation: puzzle-spin 850ms linear infinite;
+}
+
+.puzzle-loading strong {
+  color: #d7def0;
+  font-size: 15px;
+}
+
+.puzzle-loading span {
+  max-width: 360px;
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+@keyframes puzzle-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puzzle-loading svg {
+    animation: none;
+  }
+}
