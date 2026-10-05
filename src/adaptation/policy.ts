@@ -11,6 +11,7 @@ import type {
   AdaptiveTrainingPolicy,
   ChallengeBand,
 } from "./types";
+import { trainingScenarios } from "../play/scenarios";
 
 const DAY = 86_400_000;
 
@@ -84,15 +85,14 @@ function modePerformance(
 }
 
 function availableTransferMode(skill: ChessSkill) {
-  const preferred: TrainingMode[] = [
-    "engineGame",
-    "conversionChallenge",
-    "defenseChallenge",
-    "endgameDrill",
-    "openingPosition",
-    "calculation",
-  ];
-  return preferred.find((mode) => skill.trainingModes.includes(mode));
+  if (trainingScenarios.some((scenario) => scenario.skillId === skill.id)) {
+    return "engineGame" as TrainingMode;
+  }
+  if (skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
+  if (skill.trainingModes.includes("themedPuzzle")) return "themedPuzzle";
+  if (skill.trainingModes.includes("guidedDemo")) return "guidedDemo";
+  if (skill.trainingModes.includes("conceptLesson")) return "conceptLesson";
+  return skill.trainingModes[0];
 }
 
 function availableRecognitionMode(skill: ChessSkill) {
@@ -200,7 +200,6 @@ function bestModeFromHistory(
 }
 
 function chooseMode(
-  state: UserState,
   skill: ChessSkill,
   source: CandidateSource,
   mastery: SkillMastery | undefined,
@@ -295,12 +294,6 @@ function chooseMode(
     "mixedPuzzle",
     "guidedDemo",
     "conceptLesson",
-    "calculation",
-    "engineGame",
-    "endgameDrill",
-    "openingPosition",
-    "defenseChallenge",
-    "conversionChallenge",
   ]);
 
   if (historicalBest) {
@@ -358,7 +351,6 @@ export function trainingPolicyFor(
     : 0;
   const transfer = transferValue(mastery);
   const chosen = chooseMode(
-    state,
     skill,
     source,
     mastery,
