@@ -3,6 +3,7 @@ import { retentionProbability, weaknessPriority } from "./mastery";
 import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
 import { openingNodes, repertoires } from "../openings/repertoire";
+import { dueStudyTraining } from "../library/progress";
 import type {
   CandidateSource,
   ChessSkill,
@@ -36,6 +37,7 @@ const durations: Partial<Record<TrainingMode, number>> = {
   engineGame: 15,
   gameReview: 7,
   boardVision: 4,
+  savedStudy: 5,
 };
 
 function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMode {
@@ -47,6 +49,7 @@ function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMo
   if (source === "weakness" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   if (source === "game") return "personalMistake";
   if (source === "repertoire") return "openingRecall";
+  if (source === "library") return "savedStudy";
   if (source === "calibration" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   return skill.trainingModes[0] ?? "conceptLesson";
 }
@@ -166,6 +169,29 @@ export function buildCandidatePool(
     }
   }
 
+  for (const study of dueStudyTraining(state.savedStudies ?? [], now).slice(0, 5)) {
+    const training = study.training;
+    if (!training) continue;
+    const skill = skillById[training.skillId];
+    if (!skill) continue;
+
+    const urgency =
+      training.attempts === 0
+        ? .62
+        : Math.min(1, .5 + Math.max(0, 2 - training.streak) * .18);
+
+    const item = candidate(
+      skill,
+      "library",
+      urgency,
+      skill.importance * urgency * 1.25,
+      "Saved from your analysis workspace",
+    );
+    item.id = `library:${study.id}`;
+    item.studyId = study.id;
+    result.push(item);
+  }
+
   for (const skill of readyCurriculumSkills(state.mastery).slice(0, 8)) {
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     const priority = skill.curriculumPriority * (1 - current / 100);
@@ -190,7 +216,11 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
   const fatiguePenalty = Math.min(.42, recentMinutes / 180);
   const focusModifier = state.focus?.domain === skill.domain ? 1.3 : 1;
   const transferValue =
-    item.source === "game" || item.source === "weakness" ? 1.22 : 1;
+    item.source === "game" || item.source === "weakness"
+      ? 1.22
+      : item.source === "library"
+        ? 1.12
+        : 1;
   const repetitionPenalty = recentMinutes > 60 ? .82 : 1;
 
   return (
@@ -210,7 +240,10 @@ function toActivity(item: TrainingCandidate): TrainingActivity {
 
   return {
     ...item,
-    title: repertoire?.name ?? skill?.title ?? "Training",
+    title:
+      item.source === "library"
+        ? "Saved study"
+        : repertoire?.name ?? skill?.title ?? "Training",
     subtitle: item.reason,
   };
 }
@@ -281,7 +314,8 @@ export function composeSession(
       curriculum: 3,
       calibration: 4,
       repertoire: 5,
-      focus: 6,
+      library: 6,
+      focus: 7,
     };
     return order[a.source] - order[b.source];
   });
