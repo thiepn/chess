@@ -23,6 +23,7 @@ import type {
 } from "./domain/types";
 import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
+import { LessonRunner, type LessonOutcome } from "./components/LessonRunner";
 
 const repo = createChessStateRepository();
 
@@ -86,7 +87,7 @@ export default function App() {
       .slice(0, 4);
   }, [state.mastery]);
 
-  function completeActivity(success: boolean) {
+  function completeActivity(outcome: LessonOutcome) {
     if (!active || !activeSkill) return;
     const skillId = activeSkill.id;
     const existing = state.mastery[skillId];
@@ -99,14 +100,21 @@ export default function App() {
             ? "mixedPuzzle"
             : active.activityType === "conceptLesson"
               ? "lesson"
-              : "trainingPosition";
+              : active.activityType === "guidedDemo"
+                ? "guided"
+                : active.activityType === "themedPuzzle"
+                  ? "themedPuzzle"
+                  : active.activityType === "mixedPuzzle"
+                    ? "mixedPuzzle"
+                    : "trainingPosition";
 
       const evidence: LearningEvidence = {
         skillId,
         source,
-        success,
-        quality: success ? .9 : .35,
+        success: outcome.success,
+        quality: outcome.quality,
         difficulty: Math.min(1, activeSkill.difficulty / 5),
+        hintsUsed: outcome.hintsUsed,
         occurredAt: new Date().toISOString(),
       };
 
@@ -311,36 +319,23 @@ export default function App() {
             >
               ×
             </button>
-            <p className="eyebrow">{reasonLabel(active)}</p>
-            <div className="lesson-symbol">♞</div>
-            <h2>{active.title}</h2>
-            <p className="lesson-copy">{activeSkill.description}</p>
-
-            <div className="lesson-context">
-              <span>{domainLabels[activeSkill.domain]}</span>
-              <span>{active.estimatedMinutes} min</span>
-              <span>Difficulty {activeSkill.difficulty}/5</span>
-            </div>
-
-            <div className="teaching-placeholder">
-              <BrainCircuit size={24} />
+            <div className="lesson-shell-heading">
               <div>
-                <strong>Teaching surface reserved</strong>
-                <span>
-                  P3 will render the interactive board, animations, positions
-                  and guided move logic here.
-                </span>
+                <p className="eyebrow">{reasonLabel(active)}</p>
+                <strong>{active.title}</strong>
+              </div>
+              <div className="lesson-context">
+                <span>{domainLabels[activeSkill.domain]}</span>
+                <span>{active.estimatedMinutes} min</span>
+                <span>Difficulty {activeSkill.difficulty}/5</span>
               </div>
             </div>
 
-            <div className="training-actions">
-              <button className="secondary" onClick={() => completeActivity(false)}>
-                Needs review
-              </button>
-              <button className="primary" onClick={() => completeActivity(true)}>
-                Got it <ChevronRight size={18} />
-              </button>
-            </div>
+            <LessonRunner
+              activity={active}
+              skill={activeSkill}
+              onComplete={completeActivity}
+            />
           </section>
         </div>
       )}
