@@ -48,7 +48,7 @@ export const trainingScenarios: TrainingScenario[] = [
     title: "Hold the worse rook ending",
     subtitle: "Defend under pressure",
     description: "You are a pawn down. Activate the rook and king, reduce threats, and fight for the draw.",
-    fen: "8/5pk1/6p1/8/5P2/6P1/5K1P/6rR w - - 0 1",
+    fen: "8/5pk1/6pp/8/5Pr1/6P1/5K2/7R w - - 0 1",
     playerColor: "w",
     skillId: "defense.threats",
     objective: "Survive the position. A draw counts as success.",
