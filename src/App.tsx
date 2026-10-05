@@ -184,6 +184,26 @@ export default function App() {
     });
   }
 
+  function startManualPractice(skillId: string) {
+    const skill = skillById[skillId];
+    if (!skill) return;
+
+    setManualActivity({
+      id: `practice:${skillId}`,
+      source: "focus",
+      skillIds: [skillId],
+      activityType: "themedPuzzle",
+      estimatedMinutes: 4,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .5,
+      reason: "Focused puzzle practice",
+      title: skill.title,
+      subtitle: "Adaptive themed practice",
+    });
+  }
+
   const navItems = [
     ["home", "Home", Sparkles],
     ["learn", "Learn", BookOpen],
@@ -328,7 +348,11 @@ export default function App() {
             </section>
           </>
         ) : nav === "learn" ? (
-          <LearnView mastery={state.mastery} onStartLesson={startManualLesson} />
+          <LearnView
+            mastery={state.mastery}
+            onStartLesson={startManualLesson}
+            onStartPractice={startManualPractice}
+          />
         ) : (
           <section className="placeholder">
             <div className="placeholder-icon">
