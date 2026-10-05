@@ -60,9 +60,14 @@ export interface GameReviewStory {
   generatedAt: string;
 }
 
+export type ImportedGameSource = "manual" | "lichess" | "training";
+
 export interface ImportedGame {
   id: string;
   pgn: string;
+  source?: ImportedGameSource;
+  externalId?: string;
+  externalUrl?: string;
   importedAt: string;
   analyzedAt?: string;
   playerColor: Color;
