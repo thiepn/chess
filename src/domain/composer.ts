@@ -4,6 +4,7 @@ import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
 import { openingNodes, repertoires } from "../openings/repertoire";
 import { dueStudyTraining } from "../library/progress";
+import { assessmentRemediationSkillIds } from "../assessment/engine";
 import type {
   CandidateSource,
   ChessSkill,
@@ -50,6 +51,11 @@ function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMo
   if (source === "game") return "personalMistake";
   if (source === "repertoire") return "openingRecall";
   if (source === "library") return "savedStudy";
+  if (source === "assessment") {
+    if (skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
+    if (skill.trainingModes.includes("themedPuzzle")) return "themedPuzzle";
+    return skill.trainingModes[0] ?? "conceptLesson";
+  }
   if (source === "calibration" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   return skill.trainingModes[0] ?? "conceptLesson";
 }
@@ -192,6 +198,21 @@ export function buildCandidatePool(
     result.push(item);
   }
 
+  for (const skillId of assessmentRemediationSkillIds(state)) {
+    const skill = skillById[skillId];
+    if (!skill) continue;
+    const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
+    result.push(
+      candidate(
+        skill,
+        "assessment",
+        .88,
+        skill.importance * (1 - current / 120) * 1.7,
+        "Checkpoint remediation",
+      ),
+    );
+  }
+
   for (const skill of readyCurriculumSkills(state.mastery).slice(0, 8)) {
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     const priority = skill.curriculumPriority * (1 - current / 100);
@@ -316,11 +337,12 @@ export function composeSession(
       review: 0,
       weakness: 1,
       game: 2,
-      curriculum: 3,
-      calibration: 4,
-      repertoire: 5,
-      library: 6,
-      focus: 7,
+      assessment: 3,
+      curriculum: 4,
+      calibration: 5,
+      repertoire: 6,
+      library: 7,
+      focus: 8,
     };
     return order[a.source] - order[b.source];
   });
