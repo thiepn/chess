@@ -427,11 +427,16 @@ export function certificationFromGate(
   gate: StageGateEvaluation,
   attempt: AssessmentAttempt,
 ): StageCertification | null {
+  const freshBlockers = (
+    Object.keys(gate.requirements) as Array<keyof StageGateRequirements>
+  ).filter((key) => gate.metrics[key] < gate.requirements[key]);
+
   if (
     attempt.kind !== "checkpoint" ||
     !attempt.stageId ||
     gate.stageId !== attempt.stageId ||
-    gate.status !== "passed"
+    attempt.score < gate.requirements.checkpoint ||
+    freshBlockers.length > 0
   ) {
     return null;
   }
