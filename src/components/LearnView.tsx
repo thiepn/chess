@@ -9,6 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import {
+  curriculumStageOrder,
   curriculumStages,
   domainLabels,
   isSkillUnlocked,
@@ -96,7 +97,10 @@ export function LearnView({
     (skill) => skillMastery(mastery, skill.id) >= 75,
   ).length;
   const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
-  const recommendedId = readyCurriculumSkills(mastery)[0]?.id;
+  const recommendedId = readyCurriculumSkills(
+    mastery,
+    curriculumStageOrder(placement?.recommendedStageId),
+  )[0]?.id;
   const certified = curriculumStages.filter(
     (stage) => gates[stage.id]?.status === "passed",
   ).length;
