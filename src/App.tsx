@@ -31,6 +31,11 @@ import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { ImportedGame, PersonalMistake } from "./games/types";
+import { OpeningsView } from "./components/OpeningsView";
+import { OpeningTrainer } from "./components/OpeningTrainer";
+import { openingNodes, repertoireById } from "./openings/repertoire";
+import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
+import { openingDeviationsForGame } from "./openings/match";
 
 const repo = createChessStateRepository();
 
@@ -62,6 +67,7 @@ export default function App() {
   const [mode, setMode] = useState<SessionMode>("standard");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
+  const [learnMode, setLearnMode] = useState<"curriculum" | "openings">("curriculum");
   const [nav, setNav] = useState("home");
 
   useEffect(() => {
@@ -83,6 +89,10 @@ export default function App() {
     active?.mistakeId
       ? state.mistakes?.find((mistake) => mistake.id === active.mistakeId)
       : undefined;
+  const activeOpeningNode =
+    active?.openingNodeId ? openingNodes[active.openingNodeId] : undefined;
+  const activeRepertoire =
+    active?.repertoireId ? repertoireById[active.repertoireId] : undefined;
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -145,6 +155,8 @@ export default function App() {
 
       const puzzleHistory = { ...(previous.puzzleHistory ?? {}) };
       let mistakes = previous.mistakes ?? [];
+      const openingProgress = { ...(previous.openingProgress ?? {}) };
+      let openingDeviations = previous.openingDeviations ?? [];
 
       if (outcome.puzzleId) {
         const prior = puzzleHistory[outcome.puzzleId];
@@ -158,6 +170,25 @@ export default function App() {
           hintsUsed: outcome.hintsUsed,
           wrongAttempts: outcome.wrongAttempts,
         };
+      }
+
+      if (active.openingNodeId) {
+        const prior =
+          openingProgress[active.openingNodeId] ??
+          createOpeningProgress(active.openingNodeId, new Date(occurredAt));
+        openingProgress[active.openingNodeId] = applyOpeningAttempt(
+          prior,
+          outcome.success,
+          outcome.quality,
+          new Date(occurredAt),
+        );
+
+        openingDeviations = openingDeviations.map((deviation) =>
+          deviation.nodeId === active.openingNodeId &&
+          deviation.repertoireId === active.repertoireId
+            ? { ...deviation, resolved: outcome.success }
+            : deviation,
+        );
       }
 
       if (outcome.mistakeId) {
@@ -190,6 +221,8 @@ export default function App() {
         },
         puzzleHistory,
         mistakes,
+        openingProgress,
+        openingDeviations,
       };
     });
 
@@ -218,6 +251,27 @@ export default function App() {
         ...newMistakes,
       ];
       const mastery = { ...previous.mastery };
+      const gameOpeningDeviations = openingDeviationsForGame(
+        game,
+        new Date(occurredAt),
+      );
+      const openingDeviations = [
+        ...(previous.openingDeviations ?? []).filter(
+          (item) => item.gameId !== game.id,
+        ),
+        ...gameOpeningDeviations,
+      ];
+      const openingProgress = { ...(previous.openingProgress ?? {}) };
+
+      for (const deviation of gameOpeningDeviations) {
+        const current =
+          openingProgress[deviation.nodeId] ??
+          createOpeningProgress(deviation.nodeId, new Date(occurredAt));
+        openingProgress[deviation.nodeId] = {
+          ...current,
+          nextReviewAt: occurredAt,
+        };
+      }
 
       for (const mistake of newMistakes) {
         const skillId = mistake.skillIds[0];
@@ -250,6 +304,8 @@ export default function App() {
         mistakes,
         mastery,
         weaknesses: weaknessesFromMistakes(mistakes),
+        openingDeviations,
+        openingProgress,
       };
     });
   }
@@ -277,6 +333,30 @@ export default function App() {
       title: skill.title,
       subtitle: "Personal mistake repair",
       mistakeId: mistake.id,
+    });
+  }
+
+  function startOpeningPractice(repertoireId: string, nodeId: string) {
+    const skill = skillById["openings.principles"];
+    const repertoire = repertoireById[repertoireId];
+    const node = openingNodes[nodeId];
+    if (!skill || !repertoire || !node?.preferredChildId) return;
+
+    setManualActivity({
+      id: `opening:${repertoireId}:${nodeId}`,
+      source: "repertoire",
+      skillIds: [skill.id],
+      activityType: "openingRecall",
+      estimatedMinutes: 4,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .7,
+      reason: `${repertoire.versus}: repertoire recall`,
+      title: repertoire.name,
+      subtitle: node.name,
+      openingNodeId: nodeId,
+      repertoireId,
     });
   }
 
@@ -471,11 +551,21 @@ export default function App() {
             </section>
           </>
         ) : nav === "learn" ? (
-          <LearnView
-            mastery={state.mastery}
-            onStartLesson={startManualLesson}
-            onStartPractice={startManualPractice}
-          />
+          learnMode === "openings" ? (
+            <OpeningsView
+              progress={state.openingProgress ?? {}}
+              deviations={state.openingDeviations ?? []}
+              onTrainNode={startOpeningPractice}
+              onBack={() => setLearnMode("curriculum")}
+            />
+          ) : (
+            <LearnView
+              mastery={state.mastery}
+              onStartLesson={startManualLesson}
+              onStartPractice={startManualPractice}
+              onOpenOpenings={() => setLearnMode("openings")}
+            />
+          )
         ) : nav === "review" ? (
           <ReviewView
             games={state.games ?? []}
@@ -542,7 +632,15 @@ export default function App() {
               </div>
             </div>
 
-            {active.activityType === "personalMistake" && activeMistake ? (
+            {active.activityType === "openingRecall" &&
+            activeOpeningNode &&
+            activeRepertoire ? (
+              <OpeningTrainer
+                repertoire={activeRepertoire}
+                node={activeOpeningNode}
+                onComplete={completeActivity}
+              />
+            ) : active.activityType === "personalMistake" && activeMistake ? (
               <PersonalMistakeRunner
                 mistake={activeMistake}
                 onComplete={completeActivity}
