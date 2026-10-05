@@ -2,7 +2,7 @@ import { readyCurriculumSkills, skillById } from "./curriculum";
 import { retentionProbability, weaknessPriority } from "./mastery";
 import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
-import { repertoires } from "../openings/repertoire";
+import { openingNodes, repertoires } from "../openings/repertoire";
 import type {
   CandidateSource,
   ChessSkill,
@@ -137,17 +137,20 @@ export function buildCandidatePool(
 
     for (const repertoire of repertoires) {
       const due = dueOpeningNodes(repertoire, progress, now);
-      if (!due.length) continue;
-
       const deviation = deviations.find(
         (item) =>
           !item.resolved &&
           item.repertoireId === repertoire.id &&
-          due.some((node) => node.id === item.nodeId),
+          repertoire.nodeIds.includes(item.nodeId),
       );
-      const node = deviation
-        ? due.find((item) => item.id === deviation.nodeId) ?? due[0]
-        : due[0];
+      const deviationNode = deviation ? openingNodes[deviation.nodeId] : undefined;
+      const node =
+        deviationNode?.preferredChildId &&
+        deviationNode.sideToMove === repertoire.color
+          ? deviationNode
+          : due[0];
+
+      if (!node) continue;
 
       const item = candidate(
         openingSkill,
