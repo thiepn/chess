@@ -22,7 +22,10 @@ function phaseForReview(review: EngineMoveReview): GamePhase {
     return "endgame";
   }
 
-  if (review.ply <= 20 && pieces.length >= 24) {
+  const fullMoveNumber =
+    Number(review.move.beforeFen.split(/\s+/)[5]) || review.move.moveNumber;
+
+  if (fullMoveNumber <= 10 && pieces.length >= 24) {
     return "opening";
   }
 
