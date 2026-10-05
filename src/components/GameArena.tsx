@@ -189,7 +189,7 @@ export function GameArena({
     if (reason === "checkmate") feedback("mate");
     else feedback(outcome === "win" ? "complete" : outcome === "draw" ? "success" : "error");
 
-    if (outcome === "win") celebrate(scenario ? "medium" : "large");
+    if (outcome === "win") celebrate(scenario ? "small" : "medium");
     else if (scenarioSuccess) celebrate("small");
 
     try {
