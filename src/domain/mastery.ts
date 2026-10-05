@@ -12,6 +12,8 @@ export const evidenceWeight: Record<LearningEvidence["source"], number> = {
   trainingPosition: .8,
   engineGame: .85,
   realGame: 1,
+  diagnostic: .52,
+  checkpoint: .78,
 };
 
 export function emptyMastery(skillId: string, difficulty = .5): SkillMastery {
@@ -106,6 +108,19 @@ export function applyEvidence(
   if (evidence.source === "trainingPosition" || evidence.source === "engineGame") {
     next.trainingTransfer = updateDimension(next.trainingTransfer, target, weight);
     next.execution = updateDimension(next.execution, target, weight * .5);
+  }
+  if (evidence.source === "diagnostic") {
+    next.recognition = updateDimension(next.recognition, target, weight);
+    next.execution = updateDimension(next.execution, target, weight * .8);
+  }
+  if (evidence.source === "checkpoint") {
+    next.mixedRecognition = updateDimension(next.mixedRecognition, target, weight);
+    next.execution = updateDimension(next.execution, target, weight * .8);
+    next.delayedRetention = updateDimension(
+      next.delayedRetention,
+      target,
+      weight * .72,
+    );
   }
   if (evidence.source === "realGame") {
     next.realGameAttempts += 1;
