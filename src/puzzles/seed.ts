@@ -14,8 +14,8 @@ export const seedPuzzles: PuzzleRecord[] = [
   },
   {
     id: "seed-knight-fork-2",
-    initialFen: "4k3/8/8/3q4/8/4N3/8/4K2R w K - 0 1",
-    solutionMoves: ["e3d5"],
+    initialFen: "k1q5/8/8/3N4/8/8/8/4K3 w - - 0 1",
+    solutionMoves: ["d5b6"],
     rating: 820,
     popularity: 100,
     plays: 1,
@@ -58,12 +58,12 @@ export const seedPuzzles: PuzzleRecord[] = [
   },
   {
     id: "seed-skewer-1",
-    initialFen: "4k3/4q3/8/8/8/8/4R3/4K3 w - - 0 1",
-    solutionMoves: ["e2e8", "e7e8"],
+    initialFen: "q5k1/8/8/8/8/2B5/8/4K2R w - - 0 1",
+    solutionMoves: ["h1h8"],
     rating: 920,
     popularity: 100,
     plays: 1,
-    themes: ["skewer", "short"],
+    themes: ["skewer", "oneMove"],
     skillIds: ["tactics.skewer"],
     source: "seed"
   }
