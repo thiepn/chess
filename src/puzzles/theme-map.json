@@ -1,0 +1,12 @@
+{
+  "fork": ["tactics.double-attack"],
+  "pin": ["tactics.pin"],
+  "skewer": ["tactics.skewer"],
+  "hangingPiece": ["fundamentals.hanging"],
+  "defensiveMove": ["defense.threats"],
+  "mate": ["rules.mate"],
+  "mateIn1": ["rules.mate"],
+  "capturingDefender": ["fundamentals.attacked"],
+  "discoveredAttack": ["tactics.double-attack"],
+  "doubleCheck": ["tactics.double-attack"]
+}
