@@ -2,6 +2,7 @@ import type { PuzzleAttemptSummary } from "../puzzles/types";
 import type { ImportedGame, PersonalMistake } from "../games/types";
 import type { OpeningDeviation, OpeningProgress } from "../openings/types";
 import type { SavedStudy } from "../library/types";
+import type { ExperienceSettings } from "../interaction/types";
 
 export type DomainId =
   | "rules"
@@ -176,6 +177,7 @@ export interface UserState {
   openingProgress?: Record<string, OpeningProgress>;
   openingDeviations?: OpeningDeviation[];
   savedStudies?: SavedStudy[];
+  experience?: ExperienceSettings;
   focus?: {
     domain: DomainId;
     until?: string;
