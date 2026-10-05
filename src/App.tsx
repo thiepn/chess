@@ -5,6 +5,7 @@ import {
   BrainCircuit,
   ChevronRight,
   Clock3,
+  Compass,
   Library,
   Play,
   RefreshCcw,
@@ -49,6 +50,7 @@ function activityIcon(activity: TrainingActivity) {
   if (activity.source === "weakness") return <Target size={18} />;
   if (activity.source === "review") return <RefreshCcw size={18} />;
   if (activity.activityType === "conceptLesson") return <BookOpen size={18} />;
+  if (activity.activityType === "openingRecall") return <Compass size={18} />;
   if (activity.activityType === "engineGame") return <Swords size={18} />;
   return <BrainCircuit size={18} />;
 }
