@@ -1,4 +1,5 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
+import type { ImportedGame, PersonalMistake } from "../games/types";
 
 export type DomainId =
   | "rules"
@@ -127,6 +128,7 @@ export interface TrainingCandidate {
   novelty: number;
   urgency: number;
   reason: string;
+  mistakeId?: string;
 }
 
 export interface TrainingActivity extends TrainingCandidate {
@@ -142,6 +144,7 @@ export interface TrainingOutcome {
   puzzleId?: string;
   puzzleRating?: number;
   puzzleSkillIds?: string[];
+  mistakeId?: string;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";
@@ -160,6 +163,8 @@ export interface UserState {
   weaknesses: UserWeakness[];
   recentDomainMinutes: Partial<Record<DomainId, number>>;
   puzzleHistory?: Record<string, PuzzleAttemptSummary>;
+  games?: ImportedGame[];
+  mistakes?: PersonalMistake[];
   focus?: {
     domain: DomainId;
     until?: string;
