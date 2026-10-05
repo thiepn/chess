@@ -28,6 +28,52 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
+  it("pulls a due blunder from the personal mistake bank into training", () => {
+    const state = {
+      ...initialUserState,
+      mistakes: [
+        {
+          id: "game-1:11",
+          gameId: "game-1",
+          ply: 11,
+          moveNumber: 6,
+          playerColor: "w" as const,
+          positionFen: "4k3/8/8/8/8/8/4Q3/4K3 w - - 0 1",
+          actualMove: "e2e7",
+          actualSan: "Qe7+",
+          bestMove: "e2b5",
+          principalVariation: ["e2b5"],
+          evaluationBefore: 50,
+          evaluationAfter: -400,
+          centipawnLoss: 450,
+          severity: "blunder" as const,
+          skillIds: ["fundamentals.blunder-check"],
+          explanation: "Check forcing moves before committing.",
+          createdAt: "2026-10-05T10:00:00Z",
+          nextReviewAt: "2026-10-05T10:00:00Z",
+          attempts: 0,
+          successes: 0,
+          resolved: false,
+        },
+      ],
+    };
+
+    const session = composeSession(
+      state,
+      "standard",
+      new Date("2026-10-05T12:00:00Z"),
+    );
+
+    expect(
+      session.activities.some(
+        (item) =>
+          item.source === "game" &&
+          item.activityType === "personalMistake" &&
+          item.mistakeId === "game-1:11",
+      ),
+    ).toBe(true);
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,
