@@ -29,6 +29,8 @@ import { GameArena } from "./GameArena";
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
   onGameFinished: (result: PlayResult) => Promise<boolean> | boolean;
+  externalScenario?: TrainingScenario;
+  onExternalScenarioExit?: () => void;
 }
 
 const profileOrder: AiProfileId[] = [
@@ -49,6 +51,8 @@ function scenarioIcon(mode: TrainingScenario["mode"]) {
 export function PlayView({
   mastery,
   onGameFinished,
+  externalScenario,
+  onExternalScenarioExit,
 }: PlayViewProps) {
   const [setup, setSetup] = useState<PlaySetup | null>(null);
   const [side, setSide] = useState<Color>("w");
@@ -58,6 +62,20 @@ export function PlayView({
     () => resolveAiProfile(profileId, mastery),
     [mastery, profileId],
   );
+
+  if (externalScenario) {
+    const profile = resolveAiProfile(profileId, mastery);
+    return (
+      <GameArena
+        initialFen={externalScenario.fen}
+        playerColor={externalScenario.playerColor}
+        profile={profile}
+        scenario={externalScenario}
+        onExit={() => onExternalScenarioExit?.()}
+        onFinished={onGameFinished}
+      />
+    );
+  }
 
   if (setup) {
     const scenario = setup.scenarioId
