@@ -30,12 +30,13 @@ The default experience should answer one question: **what should I train now?**
 - P11 complete beginner-to-intermediate curriculum expansion with 68 atomic skills across 8 stages, authored interactive board lessons for every skill, prerequisite-driven progression, expanded Lichess puzzle-theme mappings, a staged Learn journey, recommended-next guidance, and CI-enforced curriculum/content QA
 - P12 placement diagnostics, mixed stage checkpoints, evidence-based promotion gates, persistent certifications, placement/certification-aware curriculum floors, targeted checkpoint remediation, and Home/Learn course-status surfaces
 - P13 longitudinal learning analytics with compact evidence history, mastery/retention/transfer trajectories, model calibration, stage velocity, recurring-vs-repaired weakness tracking, intervention effectiveness signals, and a dedicated Progress Intelligence view
+- P14 adaptive training policy with per-skill intervention selection, challenge bands, calibrated puzzle targets, transfer-to-game routing, explicit stopping pressure, explainable policy reasons, and session-level difficulty adaptation
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next.
 
 ## Run
 
@@ -380,6 +381,104 @@ The analytics layer stores no separate telemetry backend and requires no new dat
 
 P13 cannot reconstruct learning trajectories that were never stored before this phase. For pre-P13 users, existing mastery becomes a baseline and real longitudinal tracking begins from that baseline. The UI therefore distinguishes insufficient calibration/history from confident conclusions instead of inventing past progress.
 
+## Adaptive training policy
+
+P14 turns the P13 player model into an explainable session policy.
+
+For every candidate skill, the composer now evaluates:
+
+- current effective mastery;
+- understanding, recognition, execution and mixed-recognition dimensions;
+- expected retention from the forgetting/stability model;
+- training and real-game transfer;
+- recent success/failure history;
+- confidence in the mastery estimate;
+- recent per-skill intervention results;
+- the reason the skill entered the session in the first place, such as curriculum, spaced review, game weakness, checkpoint remediation or personal material.
+
+The result is an explicit per-activity policy rather than a hidden score.
+
+### Challenge bands
+
+Every adaptive activity receives one of five challenge bands:
+
+- **Recovery** — recent performance is breaking down. Difficulty is reduced and the target success range is intentionally high enough to rebuild reliable retrieval.
+- **Supported** — new or still-fragile knowledge receives a more forgiving task.
+- **Productive** — the default desirable difficulty range.
+- **Stretch** — repeated clean success and sufficient model confidence raise the challenge instead of adding more easy volume.
+- **Maintenance** — mastery, retention and transfer are all strong enough that continued drilling receives heavy stop pressure.
+
+Each band carries an explicit target-success range. This makes difficulty calibration goal-aware instead of treating harder as automatically better.
+
+### Intervention selection
+
+The app no longer picks the training mode only from the candidate source.
+
+The policy can move a skill through a progression such as:
+
+1. concept lesson when understanding is still weak;
+2. guided or themed recognition when the pattern is not reliably seen;
+3. mixed retrieval when isolated recognition is stronger than mixed recognition;
+4. real position play when knowledge is ahead of transfer;
+5. spaced retrieval when recall is decaying;
+6. the strongest recent per-skill intervention signal when enough personal history exists.
+
+Personal mistakes, opening recalls and saved Library studies keep their concrete intervention because the source position itself is the learning material.
+
+The policy does not invent capabilities that the runtime cannot execute. If a transfer gap exists but no dedicated playable scenario is available for that skill, the composer falls back to a real retrieval mode rather than labeling an ordinary lesson as a game.
+
+### Adaptive puzzle difficulty
+
+Puzzle selection accepts a policy-generated target rating.
+
+The target combines:
+
+- current mastery;
+- curriculum difficulty;
+- recent success rate;
+- challenge band.
+
+Repeated failure can lower the target substantially. Repeated clean success raises it. The target remains bounded to the curated corpus range instead of escalating without limit.
+
+Recent-puzzle spacing, popularity, play confidence and exact skill match continue to influence final puzzle selection after the difficulty target is set.
+
+### Transfer into real play
+
+For skills with dedicated P7 scenarios, a strong knowledge/weak transfer gap can automatically become a real Stockfish training game inside the adaptive session.
+
+Current scenario-backed examples include:
+
+- opposition/endgame conversion;
+- defending a worse rook ending;
+- converting a material advantage;
+- concept-first opening play.
+
+Opponent pressure follows the same challenge policy:
+
+- Recovery → Gentle
+- Supported → Developing
+- Productive → adaptive player-model opponent
+- Stretch → Strong
+- Maintenance → Club
+
+The resulting game still follows the normal P7 → P5/P8 pipeline: PGN capture, transfer evidence, Review storage and critical-moment analysis.
+
+### Stop pressure
+
+P14 also decides when **not** to keep training something.
+
+A skill with strong mastery, retention and transfer receives increasing stop pressure. Routine curriculum/focus candidates are strongly down-ranked when this pressure is high, while important spaced reviews, real-game weaknesses, checkpoint remediation and personal mistakes remain allowed to override it.
+
+This prevents a familiar failure mode in learning apps: spending time on material that already feels good simply because it is easy to serve.
+
+### Explainability
+
+Home now shows the challenge band and selected activity type inside the generated session.
+
+Opening an activity shows the policy reason, target success range and—when relevant—the current puzzle-rating target. Low-confidence policy decisions are explicitly marked as such.
+
+The adaptive policy itself is not stored as permanent account state. It is deterministically recomputed from the latest synced mastery, analytics, assessment and game evidence whenever a session is composed. This allows later evidence to change the recommendation immediately without stale personalization state.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -394,4 +493,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P14 — Adaptive Training Policy, Difficulty Calibration & Automatic Intervention Selection.
+P15 — Human Play Integration, Lichess Sync & Automatic Real-Game Intake.
