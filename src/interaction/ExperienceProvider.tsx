@@ -135,10 +135,12 @@ export function ExperienceProvider({
       if (!settings.sound) return;
 
       try {
+        const audioWindow = window as unknown as {
+          AudioContext?: typeof AudioContext;
+          webkitAudioContext?: typeof AudioContext;
+        };
         const AudioCtor =
-          window.AudioContext ??
-          (window as typeof window & { webkitAudioContext?: typeof AudioContext })
-            .webkitAudioContext;
+          audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
         if (!AudioCtor) return;
 
         const context = audioRef.current ?? new AudioCtor();
