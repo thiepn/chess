@@ -2,9 +2,11 @@ import {
   BookOpen,
   CheckCircle2,
   ChevronRight,
+  ClipboardCheck,
   Compass,
   LockKeyhole,
   Route,
+  ShieldCheck,
 } from "lucide-react";
 import {
   curriculumStages,
@@ -13,14 +15,26 @@ import {
   readyCurriculumSkills,
   skills,
 } from "../domain/curriculum";
-import type { SkillMastery } from "../domain/types";
+import type {
+  CurriculumStageId,
+  SkillMastery,
+} from "../domain/types";
+import type {
+  PlacementProfile,
+  StageGateEvaluation,
+  StageGateStatus,
+} from "../assessment/types";
 import { lessonScripts } from "../learning/lessons";
 import { supportsPuzzlePractice } from "../puzzles/support";
 
 interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
+  gates: Record<CurriculumStageId, StageGateEvaluation>;
+  placement?: PlacementProfile;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
+  onStartPlacement: () => void;
+  onStartCheckpoint: (stageId: CurriculumStageId) => void;
   onOpenOpenings: () => void;
 }
 
@@ -32,6 +46,16 @@ function masteryLabel(value: number) {
   return "New";
 }
 
+function gateLabel(status: StageGateStatus) {
+  if (status === "passed") return "Certified";
+  if (status === "provisional") return "Evidence pending";
+  if (status === "remediation") return "Repair needed";
+  if (status === "ready") return "Checkpoint ready";
+  if (status === "placed") return "Placement cleared";
+  if (status === "locked") return "Locked";
+  return "Learning";
+}
+
 function skillMastery(
   mastery: Record<string, SkillMastery>,
   skillId: string,
@@ -39,10 +63,33 @@ function skillMastery(
   return Math.round(mastery[skillId]?.effectiveMastery ?? 0);
 }
 
+function GateMetric({
+  label,
+  value,
+  target,
+}: {
+  label: string;
+  value: number;
+  target: number;
+}) {
+  const met = value >= target;
+  return (
+    <div className={met ? "gate-metric met" : "gate-metric"}>
+      <span>{label}</span>
+      <strong>{value}%</strong>
+      <small>need {target}%</small>
+    </div>
+  );
+}
+
 export function LearnView({
   mastery,
+  gates,
+  placement,
   onStartLesson,
   onStartPractice,
+  onStartPlacement,
+  onStartCheckpoint,
   onOpenOpenings,
 }: LearnViewProps) {
   const mastered = skills.filter(
@@ -50,6 +97,14 @@ export function LearnView({
   ).length;
   const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
   const recommendedId = readyCurriculumSkills(mastery)[0]?.id;
+  const certified = curriculumStages.filter(
+    (stage) => gates[stage.id]?.status === "passed",
+  ).length;
+  const placementStage = placement
+    ? curriculumStages.find(
+        (stage) => stage.id === placement.recommendedStageId,
+      )
+    : undefined;
 
   return (
     <section className="learn-view">
@@ -58,9 +113,8 @@ export function LearnView({
           <p className="eyebrow">GUIDED CURRICULUM</p>
           <h1>From first move to practical chess.</h1>
           <p>
-            The course is ordered around what changes games first: legal play,
-            piece safety, sound positions, tactics, calculation, attack,
-            endings and practical decision-making.
+            Lessons build knowledge. Checkpoints certify whether the skill
+            survives mixed positions, delayed recall and transfer into play.
           </p>
         </div>
         <div className="section-hero-icon" aria-hidden="true">
@@ -80,18 +134,40 @@ export function LearnView({
           <strong>{skills.length}</strong>
         </div>
         <div>
-          <CheckCircle2 size={18} />
-          <span>Interactive lessons</span>
-          <strong>{interactive}/{skills.length}</strong>
+          <ShieldCheck size={18} />
+          <span>Certified stages</span>
+          <strong>{certified}/{curriculumStages.length}</strong>
         </div>
         <div>
           <span className="overview-progress-ring">
             {Math.round((mastered / Math.max(1, skills.length)) * 100)}%
           </span>
-          <span>Mastered</span>
-          <strong>{mastered} skills</strong>
+          <span>Skill mastery</span>
+          <strong>{mastered} / {interactive}</strong>
         </div>
       </div>
+
+      <section className="placement-card">
+        <div className="placement-card-icon">
+          <ClipboardCheck size={23} />
+        </div>
+        <div>
+          <p className="eyebrow">COURSE PLACEMENT</p>
+          <strong>
+            {placementStage
+              ? `Placed at: ${placementStage.title}`
+              : "Find the right starting point"}
+          </strong>
+          <span>
+            {placementStage
+              ? "Placement unlocks the appropriate part of the course, but stage certification still requires a real checkpoint plus retention and transfer evidence."
+              : "A 16-position mixed diagnostic samples every stage without hints. It seeds the player model without pretending two positions are full mastery."}
+          </span>
+        </div>
+        <button className="secondary" type="button" onClick={onStartPlacement}>
+          {placement ? "Re-run diagnostic" : "Take diagnostic"}
+        </button>
+      </section>
 
       <button
         className="opening-entry-card"
@@ -125,6 +201,7 @@ export function LearnView({
                 ) / stageSkills.length,
               )
             : 0;
+          const gate = gates[stage.id];
 
           return (
             <section className="curriculum-stage" key={stage.id}>
@@ -146,6 +223,56 @@ export function LearnView({
                   <div className="track stage-track">
                     <i style={{ width: `${average}%` }} />
                   </div>
+
+                  <div className="stage-gate-panel">
+                    <div className="stage-gate-heading">
+                      <div>
+                        <span className={`gate-status ${gate.status}`}>
+                          {gateLabel(gate.status)}
+                        </span>
+                        <strong>Promotion gate</strong>
+                      </div>
+                      <button
+                        type="button"
+                        className="stage-checkpoint-button"
+                        disabled={gate.status === "locked"}
+                        onClick={() => onStartCheckpoint(stage.id)}
+                      >
+                        <ClipboardCheck size={15} />
+                        {gate.metrics.checkpoint
+                          ? "Retake checkpoint"
+                          : "Take checkpoint"}
+                      </button>
+                    </div>
+
+                    <div className="gate-metrics">
+                      <GateMetric
+                        label="Breadth"
+                        value={gate.metrics.coverage}
+                        target={gate.requirements.coverage}
+                      />
+                      <GateMetric
+                        label="Mastery"
+                        value={gate.metrics.mastery}
+                        target={gate.requirements.mastery}
+                      />
+                      <GateMetric
+                        label="Retention"
+                        value={gate.metrics.retention}
+                        target={gate.requirements.retention}
+                      />
+                      <GateMetric
+                        label="Transfer"
+                        value={gate.metrics.transfer}
+                        target={gate.requirements.transfer}
+                      />
+                      <GateMetric
+                        label="Checkpoint"
+                        value={gate.metrics.checkpoint}
+                        target={gate.requirements.checkpoint}
+                      />
+                    </div>
+                  </div>
                 </div>
               </header>
 
@@ -155,7 +282,9 @@ export function LearnView({
                   const unlocked = isSkillUnlocked(skill, mastery);
                   const practiceAvailable = supportsPuzzlePractice(skill.id);
                   const prerequisites = skill.prerequisites
-                    .map((relation) => skills.find((item) => item.id === relation.skillId))
+                    .map((relation) =>
+                      skills.find((item) => item.id === relation.skillId),
+                    )
                     .filter(Boolean);
 
                   return (
