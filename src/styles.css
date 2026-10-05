@@ -2321,3 +2321,36 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+.opening-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.opening-concept-grid > div {
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(118,151,255,.08);
+  background: rgba(118,151,255,.04);
+  display: grid;
+  gap: 4px;
+}
+
+.opening-concept-grid strong {
+  color: #cbd4e8;
+  font-size: 10px;
+}
+
+.opening-concept-grid span {
+  color: #7c89a2;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .opening-concept-grid {
+    grid-template-columns: 1fr;
+  }
+}
