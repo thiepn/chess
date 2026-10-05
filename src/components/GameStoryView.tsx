@@ -130,6 +130,21 @@ export function GameStoryView({
     [mistakes, selectedMoment],
   );
 
+  const moveRows = useMemo(() => {
+    const rows = new Map<
+      number,
+      { number: number; w?: ImportedGame["moves"][number]; b?: ImportedGame["moves"][number] }
+    >();
+
+    for (const move of game.moves) {
+      const row = rows.get(move.moveNumber) ?? { number: move.moveNumber };
+      row[move.color] = move;
+      rows.set(move.moveNumber, row);
+    }
+
+    return [...rows.values()].sort((a, b) => a.number - b.number);
+  }, [game.moves]);
+
   useEffect(() => {
     const base =
       selectedMoment?.positionFen ??
@@ -307,40 +322,34 @@ export function GameStoryView({
         </div>
 
         <div className="story-timeline">
-          {Array.from({ length: Math.ceil(game.moves.length / 2) }).map(
-            (_, index) => {
-              const white = game.moves[index * 2];
-              const black = game.moves[index * 2 + 1];
-              return (
-                <div className="timeline-row" key={index}>
-                  <span className="timeline-number">{index + 1}.</span>
-                  {[white, black].map((move, colorIndex) => {
-                    if (!move) return <span key={colorIndex} />;
-                    const moment = story.moments.find(
-                      (item) => item.ply === move.ply,
-                    );
-                    return (
-                      <button
-                        key={move.ply}
-                        type="button"
-                        className={[
-                          selectedPly === move.ply ? "active" : "",
-                          moment ? `moment ${moment.kind}` : "",
-                          moment?.severity ?? "",
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        onClick={() => setSelectedPly(move.ply)}
-                      >
-                        {move.san}
-                        {moment && <i />}
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            },
-          )}
+          {moveRows.map((row) => (
+            <div className="timeline-row" key={row.number}>
+              <span className="timeline-number">{row.number}.</span>
+              {([row.w, row.b] as const).map((move, colorIndex) => {
+                if (!move) return <span key={colorIndex} />;
+                const moment = story.moments.find(
+                  (item) => item.ply === move.ply,
+                );
+                return (
+                  <button
+                    key={move.ply}
+                    type="button"
+                    className={[
+                      selectedPly === move.ply ? "active" : "",
+                      moment ? `moment ${moment.kind}` : "",
+                      moment?.severity ?? "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() => setSelectedPly(move.ply)}
+                  >
+                    {move.san}
+                    {moment && <i />}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </section>
 
