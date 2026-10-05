@@ -238,7 +238,17 @@ export function GameArena({
     return () => {
       cancelled = true;
     };
-  }, [fen, playerColor, profile, result, error, thinking, engineReady]);
+  }, [
+    fen,
+    playerColor,
+    profile.skillLevel,
+    profile.depth,
+    profile.name,
+    profile.accent,
+    result,
+    error,
+    engineReady,
+  ]);
 
   return (
     <section className="game-arena">
@@ -362,6 +372,7 @@ export function GameArena({
             <button
               className="resign-button"
               type="button"
+              disabled={!moves.length}
               onClick={() => void finalize("resigned", "resignation")}
             >
               <Flag size={15} /> Resign
