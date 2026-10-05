@@ -232,18 +232,23 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
   );
 }
 
-function toActivity(item: TrainingCandidate): TrainingActivity {
+function toActivity(item: TrainingCandidate, state: UserState): TrainingActivity {
   const skill = skillById[item.skillIds[0]];
   const repertoire = item.repertoireId
     ? repertoires.find((entry) => entry.id === item.repertoireId)
     : undefined;
 
+  const study = item.studyId
+    ? (state.savedStudies ?? []).find((entry) => entry.id === item.studyId)
+    : undefined;
+
   return {
     ...item,
     title:
-      item.source === "library"
-        ? "Saved study"
-        : repertoire?.name ?? skill?.title ?? "Training",
+      study?.title ??
+      repertoire?.name ??
+      skill?.title ??
+      "Training",
     subtitle: item.reason,
   };
 }
@@ -326,6 +331,6 @@ export function composeSession(
     plannedMinutes: usedMinutes || budget,
     mode,
     focus: state.focus?.domain,
-    activities: ordered.map(toActivity),
+    activities: ordered.map((item) => toActivity(item, state)),
   };
 }
