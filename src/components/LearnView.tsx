@@ -1,6 +1,18 @@
-import { BookOpen, ChevronRight, Compass, LockKeyhole } from "lucide-react";
-import { domainLabels, skills } from "../domain/curriculum";
-import type { DomainId, SkillMastery } from "../domain/types";
+import {
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  Compass,
+  LockKeyhole,
+  Route,
+} from "lucide-react";
+import {
+  curriculumStages,
+  domainLabels,
+  isSkillUnlocked,
+  skills,
+} from "../domain/curriculum";
+import type { SkillMastery } from "../domain/types";
 import { lessonScripts } from "../learning/lessons";
 import { supportsPuzzlePractice } from "../puzzles/support";
 
@@ -11,21 +23,6 @@ interface LearnViewProps {
   onOpenOpenings: () => void;
 }
 
-const domainOrder: DomainId[] = [
-  "rules",
-  "fundamentals",
-  "tactics",
-  "calculation",
-  "openings",
-  "endgames",
-  "strategy",
-  "pawns",
-  "attack",
-  "defense",
-  "conversion",
-  "practical",
-];
-
 function masteryLabel(value: number) {
   if (value >= 85) return "Mastered";
   if (value >= 70) return "Strong";
@@ -34,21 +31,34 @@ function masteryLabel(value: number) {
   return "New";
 }
 
+function skillMastery(
+  mastery: Record<string, SkillMastery>,
+  skillId: string,
+) {
+  return Math.round(mastery[skillId]?.effectiveMastery ?? 0);
+}
+
 export function LearnView({
   mastery,
   onStartLesson,
   onStartPractice,
   onOpenOpenings,
 }: LearnViewProps) {
+  const mastered = skills.filter(
+    (skill) => skillMastery(mastery, skill.id) >= 75,
+  ).length;
+  const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
+
   return (
     <section className="learn-view">
-      <header className="section-hero">
+      <header className="section-hero curriculum-hero">
         <div>
           <p className="eyebrow">GUIDED CURRICULUM</p>
-          <h1>Learn chess in the right order.</h1>
+          <h1>From first move to practical chess.</h1>
           <p>
-            Use this when you want to explore deliberately. Your daily adaptive
-            session still decides what deserves priority.
+            The course is ordered around what changes games first: legal play,
+            piece safety, sound positions, tactics, calculation, attack,
+            endings and practical decision-making.
           </p>
         </div>
         <div className="section-hero-icon" aria-hidden="true">
@@ -56,56 +66,129 @@ export function LearnView({
         </div>
       </header>
 
-      <button className="opening-entry-card" type="button" onClick={onOpenOpenings}>
+      <div className="curriculum-overview">
+        <div>
+          <Route size={18} />
+          <span>Course</span>
+          <strong>{curriculumStages.length} stages</strong>
+        </div>
+        <div>
+          <BookOpen size={18} />
+          <span>Atomic skills</span>
+          <strong>{skills.length}</strong>
+        </div>
+        <div>
+          <CheckCircle2 size={18} />
+          <span>Interactive lessons</span>
+          <strong>{interactive}/{skills.length}</strong>
+        </div>
+        <div>
+          <span className="overview-progress-ring">
+            {Math.round((mastered / Math.max(1, skills.length)) * 100)}%
+          </span>
+          <span>Mastered</span>
+          <strong>{mastered} skills</strong>
+        </div>
+      </div>
+
+      <button
+        className="opening-entry-card"
+        type="button"
+        onClick={onOpenOpenings}
+      >
         <div className="opening-entry-icon"><Compass size={23} /></div>
         <div>
           <p className="eyebrow">YOUR OPENINGS</p>
           <strong>Concept-first repertoire</strong>
           <span>
-            Italian, Alapin, Caro-Kann and QGD structures with spaced recall
-            and deviations from your own games.
+            Repertoire recall stays connected to the course but remains compact:
+            Italian, Alapin, Caro-Kann and QGD structures rather than an opening
+            encyclopedia.
           </span>
         </div>
         <ChevronRight size={19} />
       </button>
 
-      <div className="curriculum-domains">
-        {domainOrder.map((domain) => {
-          const domainSkills = skills.filter((skill) => skill.domain === domain);
-          if (!domainSkills.length) return null;
+      <div className="curriculum-stage-list">
+        {curriculumStages.map((stage) => {
+          const stageSkills = skills.filter((skill) => skill.stage === stage.id);
+          const stageMastered = stageSkills.filter(
+            (skill) => skillMastery(mastery, skill.id) >= 75,
+          ).length;
+          const average = stageSkills.length
+            ? Math.round(
+                stageSkills.reduce(
+                  (sum, skill) => sum + skillMastery(mastery, skill.id),
+                  0,
+                ) / stageSkills.length,
+              )
+            : 0;
 
           return (
-            <section className="curriculum-domain" key={domain}>
-              <div className="curriculum-domain-heading">
-                <div>
-                  <p className="eyebrow">{domainLabels[domain]}</p>
-                  <h2>{domainLabels[domain]}</h2>
+            <section className="curriculum-stage" key={stage.id}>
+              <header className="curriculum-stage-heading">
+                <div className="stage-number">{stage.order + 1}</div>
+                <div className="stage-copy">
+                  <div className="stage-title-row">
+                    <div>
+                      <p className="eyebrow">{stage.targetRating}</p>
+                      <h2>{stage.title}</h2>
+                    </div>
+                    <div className="stage-mastery">
+                      <span>{stageMastered}/{stageSkills.length} mastered</span>
+                      <strong>{average}%</strong>
+                    </div>
+                  </div>
+                  <strong className="stage-promise">{stage.promise}</strong>
+                  <p>{stage.description}</p>
+                  <div className="track stage-track">
+                    <i style={{ width: `${average}%` }} />
+                  </div>
                 </div>
-                <span>
-                  {domainSkills.filter((skill) => lessonScripts[skill.id]).length} interactive
-                </span>
-              </div>
+              </header>
 
               <div className="curriculum-card-grid">
-                {domainSkills.map((skill) => {
-                  const value = Math.round(mastery[skill.id]?.effectiveMastery ?? 0);
-                  const available = Boolean(lessonScripts[skill.id]);
+                {stageSkills.map((skill, index) => {
+                  const value = skillMastery(mastery, skill.id);
+                  const unlocked = isSkillUnlocked(skill, mastery);
                   const practiceAvailable = supportsPuzzlePractice(skill.id);
+                  const prerequisites = skill.prerequisites
+                    .map((relation) => skills.find((item) => item.id === relation.skillId))
+                    .filter(Boolean);
 
                   return (
                     <article
-                      className={available ? "curriculum-card" : "curriculum-card unavailable"}
+                      className={
+                        unlocked
+                          ? "curriculum-card"
+                          : "curriculum-card unavailable"
+                      }
                       key={skill.id}
                     >
                       <div className="curriculum-card-top">
-                        <div className="curriculum-piece" aria-hidden="true">
-                          {domain === "tactics" ? "♞" : domain === "endgames" ? "♔" : "♟"}
+                        <div className="curriculum-sequence">
+                          <span>{index + 1}</span>
+                          <small>{domainLabels[skill.domain]}</small>
                         </div>
-                        <span className="mastery-state">{masteryLabel(value)}</span>
+                        <span className="mastery-state">
+                          {masteryLabel(value)}
+                        </span>
                       </div>
 
                       <h3>{skill.title}</h3>
                       <p>{skill.description}</p>
+
+                      {prerequisites.length > 0 && !unlocked && (
+                        <div className="curriculum-prereqs">
+                          <LockKeyhole size={13} />
+                          <span>
+                            First: {prerequisites
+                              .slice(0, 2)
+                              .map((item) => item!.title)
+                              .join(" · ")}
+                          </span>
+                        </div>
+                      )}
 
                       <div className="curriculum-progress">
                         <div>
@@ -117,17 +200,15 @@ export function LearnView({
                         </div>
                       </div>
 
-                      {available || practiceAvailable ? (
+                      {unlocked ? (
                         <div className="curriculum-actions">
-                          {available && (
-                            <button
-                              className="curriculum-start"
-                              type="button"
-                              onClick={() => onStartLesson(skill.id)}
-                            >
-                              Study <ChevronRight size={16} />
-                            </button>
-                          )}
+                          <button
+                            className="curriculum-start"
+                            type="button"
+                            onClick={() => onStartLesson(skill.id)}
+                          >
+                            Study <ChevronRight size={16} />
+                          </button>
                           {practiceAvailable && (
                             <button
                               className="curriculum-practice"
@@ -140,7 +221,7 @@ export function LearnView({
                         </div>
                       ) : (
                         <div className="curriculum-locked">
-                          <LockKeyhole size={14} /> Content expansion
+                          <LockKeyhole size={14} /> Build the prerequisite first
                         </div>
                       )}
                     </article>
