@@ -162,13 +162,27 @@ export default function App() {
   }, [state, loaded]);
 
   useEffect(() => {
-    if (!loaded || !state.lichess?.autoSync || lichessSyncing) return;
-    const lastSync = state.lichess.lastSyncAt
-      ? new Date(state.lichess.lastSyncAt).getTime()
-      : 0;
-    const due = Date.now() - lastSync >= 15 * 60 * 1000;
-    if (due) void syncLichessGames(true);
-  }, [loaded, state.lichess?.autoSync, state.lichess?.lastSyncAt]);
+    if (!loaded || !state.lichess?.autoSync) return;
+
+    const syncIfDue = () => {
+      if (lichessSyncing) return;
+      const lastSync = state.lichess?.lastSyncAt
+        ? new Date(state.lichess.lastSyncAt).getTime()
+        : 0;
+      const due = Date.now() - lastSync >= 15 * 60 * 1000;
+      if (due) void syncLichessGames(true);
+    };
+
+    syncIfDue();
+    window.addEventListener("focus", syncIfDue);
+    return () => window.removeEventListener("focus", syncIfDue);
+  }, [
+    loaded,
+    lichessSyncing,
+    state.lichess?.autoSync,
+    state.lichess?.lastSyncAt,
+    state.lichess?.username,
+  ]);
 
   const session = useMemo(() => composeSession(state, mode), [state, mode]);
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
