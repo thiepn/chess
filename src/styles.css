@@ -6650,3 +6650,94 @@ html[data-motion="reduced"] .dashboard-grid {
     display: none;
   }
 }
+
+
+/* P14 — adaptive policy, challenge calibration and intervention selection */
+
+.adaptive-challenge-chip {
+  text-transform: capitalize;
+  border: 1px solid rgba(118,151,255,.12);
+  color: #a9b8ed !important;
+  background: rgba(118,151,255,.06) !important;
+}
+
+.adaptive-policy-strip {
+  margin: -8px 0 18px;
+  padding: 11px 12px;
+  border-radius: 13px;
+  border: 1px solid rgba(118,151,255,.08);
+  background:
+    linear-gradient(135deg, rgba(118,151,255,.05), rgba(255,255,255,.015));
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  color: #8294d1;
+}
+
+.adaptive-policy-strip > div {
+  display: grid;
+  gap: 3px;
+}
+
+.adaptive-policy-strip strong {
+  color: #c8d2e8;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.adaptive-policy-strip span {
+  color: #6d7b94;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.adaptive-game-sheet {
+  width: min(1120px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+}
+
+.adaptive-game-sheet .game-arena {
+  padding-bottom: 0;
+}
+
+.adaptive-game-sheet .game-topbar {
+  margin-top: 4px;
+}
+
+.adaptive-game-sheet .game-layout {
+  margin-top: 12px;
+}
+
+.activity-row:has(.adaptive-activity-note) {
+  align-items: start;
+}
+
+.adaptive-activity-note {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: rgba(118,151,255,.045);
+  color: #7182ba !important;
+  font-size: 7px !important;
+  text-transform: capitalize;
+}
+
+@media (max-width: 820px) {
+  .adaptive-game-sheet {
+    width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+
+  .adaptive-game-sheet .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .adaptive-policy-strip {
+    margin-top: -4px;
+  }
+}
