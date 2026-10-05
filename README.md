@@ -26,12 +26,13 @@ The default experience should answer one question: **what should I train now?**
 - P7 full Play system with configurable/adaptive Stockfish opponents, complete legal games, opening/endgame/conversion/defense training scenarios, automatic PGN capture, transfer evidence, and automatic handoff into P5 Review
 - P8 post-game storytelling with phase summaries, a complete move timeline, 3–5 high-signal moments, animated actual-vs-better move playback, curriculum links, legacy-review upgrades, and direct Repair/Replay actions
 - P9 full Library workspace with free FEN/PGN analysis, on-demand Stockfish, branching move navigation, saved studies, notes/tags/favorites, reference positions/master-game exploration, game-history access, and optional promotion of saved positions into adaptive spaced training
+- P10 shared premium interaction system with real board glides/castling motion, check emphasis, motion tokens, optional Web Audio and haptics, milestone-based celebrations, synced experience preferences, improved loading/error resilience, accessibility states, safe-area handling, and mobile/landscape polish
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump; P9 provides a serious free-study workspace without forcing every exploratory position into the guided learning loop.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump; P9 provides a serious free-study workspace without forcing every exploratory position into the guided learning loop; P10 standardizes how the entire product moves, responds and feels across desktop and mobile.
 
 ## Run
 
@@ -191,6 +192,27 @@ If a saved study is branched to a different position, position-dependent engine 
 
 Library study state lives inside the same account JSON state as mastery, games, repertoire and mistakes, so no additional database table or migration is required.
 
+## Premium interaction system
+
+P10 provides one shared interaction contract across Learn, Play, Review and Library.
+
+The board now uses real square-to-square piece travel rather than only destination pop animations. Castling animates the rook as well as the king, check gets its own visual pulse, legal targets enter smoothly, and rejected moves use restrained feedback.
+
+Interaction preferences are account state:
+
+- **Sound** — optional generated Web Audio cues for moves, captures, checks, success and game results. No audio asset bundle is required.
+- **Haptics** — subtle vibration patterns on supported devices.
+- **Celebrations** — optional particle flourishes reserved for mastery thresholds, repaired personal material, scenario goals and game wins.
+- **Motion** — System, Full or Reduced. Reduced motion can be explicitly selected even when the operating system does not request it, while Full can deliberately override system reduction.
+
+Celebrations are deliberately sparse. Ordinary correct moves receive tactile/audio confirmation, not confetti. Larger visual responses are reserved for meaningful mastery thresholds and real achievements.
+
+Mobile polish includes safe-area-aware navigation, larger touch targets, an accessible settings surface, bottom-sheet training behavior, portrait/landscape tuning, reduced hover artifacts on touch devices, and improved study/game controls.
+
+Startup now uses a branded loading state instead of briefly rendering demo state. Supabase/auth/network failures fall back to local state so account-sync trouble does not trap the application on startup.
+
+Accessibility additions include current-page and pressed-state semantics, live game-state announcements, explicit reduced-motion control, and consistent keyboard focus behavior.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -205,4 +227,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P10 — Premium Interaction, Motion, Sound, Haptics & Mobile Polish.
+P11 — Full Curriculum Expansion, Beginner-to-Intermediate Course Completeness & Content QA.
