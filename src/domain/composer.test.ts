@@ -169,6 +169,56 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
+  it("prioritizes skills missed in the latest checkpoint", () => {
+    const state = {
+      ...initialUserState,
+      placement: {
+        attemptId: "placement-1",
+        completedAt: "2026-10-05T09:00:00Z",
+        recommendedStageId: "safety" as const,
+        stageScores: {},
+      },
+      assessments: [
+        {
+          id: "attempt:checkpoint:safety",
+          sessionId: "checkpoint:safety",
+          kind: "checkpoint" as const,
+          stageId: "safety" as const,
+          completedAt: "2026-10-05T11:00:00Z",
+          score: 50,
+          results: [
+            {
+              itemId: "one",
+              skillId: "fundamentals.hanging",
+              stageId: "safety" as const,
+              success: false,
+            },
+            {
+              itemId: "two",
+              skillId: "fundamentals.values",
+              stageId: "safety" as const,
+              success: true,
+            },
+          ],
+        },
+      ],
+    };
+
+    const session = composeSession(
+      state,
+      "standard",
+      new Date("2026-10-05T12:00:00Z"),
+    );
+
+    expect(
+      session.activities.some(
+        (item) =>
+          item.source === "assessment" &&
+          item.skillIds.includes("fundamentals.hanging"),
+      ),
+    ).toBe(true);
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,
