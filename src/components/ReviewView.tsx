@@ -91,7 +91,12 @@ export function ReviewView({
     setAnalyzing(true);
 
     try {
-      const game = importPgn(pgn, playerColor);
+      const game = importPgn(
+        pgn,
+        playerColor,
+        new Date().toISOString(),
+        { source: "manual" },
+      );
       setProgress({
         completed: 0,
         total: playerMoveCount(game),
