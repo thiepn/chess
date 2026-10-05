@@ -22,12 +22,13 @@ The default experience should answer one question: **what should I train now?**
 - P3 reusable interactive lesson scripting model, chessboard teaching engine, guided moves, hints, overlays, rewind/retry feedback, and curriculum browser
 - P4 streaming Lichess puzzle ingestion, curriculum-theme normalization, quality/rating filtering, sharded corpus loading, adaptive puzzle selection, multi-ply practice, and durable puzzle history
 - P5 PGN/Lichess game import, client-side Stockfish 19 analysis, critical-moment filtering, curriculum-linked error classification, personal mistake bank, real-game evidence, and spaced mistake repair
+- P6 compact concept-first opening repertoire, visual repertoire explorer, spaced branch recall, real-game deviation detection, and adaptive opening review
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 closes the loop by converting the user's own games into real-game evidence and future training.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 closes the loop by converting the user's own games into real-game evidence and future training; P6 adds a deliberately small opening repertoire so opening study stays guided rather than becoming a memorization tree.
 
 ## Run
 
@@ -100,6 +101,20 @@ Game analysis is deliberately selective:
 
 Imported game summaries and the personal mistake bank are account state. The engine itself stays client-side.
 
+## Opening repertoire
+
+The default repertoire is intentionally narrow:
+
+- White: 1.e4, Italian versus ...e5, Alapin versus the Sicilian, central setups versus the Caro-Kann and French
+- Black versus 1.e4: Caro-Kann
+- Black versus 1.d4: Queen's Gambit Declined setup
+
+Each branch stores purpose, plans, common mistakes, key squares and a preferred move. Training happens from positions rather than notation lists.
+
+Opening recall is spaced independently per position. Real games are matched against the repertoire after analysis. If the opponent leaves the curated tree, the app stops judging the branch. If the learner leaves a chosen repertoire move, that exact position is marked due and can override the normal review date.
+
+The repertoire explorer is owned data and works offline. The app does not expose a Lichess access token in client code. A future authenticated server-side explorer adapter can add live Lichess statistics without making the learning flow dependent on the external service.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -114,4 +129,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P6 — Opening Repertoire, Opening Explorer & Concept-First Repertoire Training.
+P7 — Play System, Adaptive AI Opponents & Training Games.
