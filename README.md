@@ -289,7 +289,7 @@ Stage certification requires all of the following:
 
 - **Breadth** — at least 80% of stage skills have real learning evidence.
 - **Mastery** — stage-average effective mastery of at least 55%.
-- **Retention** — stage-average delayed-retention evidence of at least 35%.
+- **Retention** — stage-average delayed-retention evidence of at least 35%. A checkpoint only earns delayed-retention credit when the skill was previously seen at least one day earlier, so same-session recall cannot satisfy this gate.
 - **Transfer** — evidence outside the lesson, with stage-specific requirements from 0% for the rules stage up to 30% for Practical Chess.
 - **Checkpoint** — at least 80% on the mixed checkpoint.
 
