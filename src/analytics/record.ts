@@ -26,14 +26,14 @@ export function ensureAnalyticsState(
 ): UserState {
   if (state.analytics) return state;
 
-  const events: LearningAnalyticsEvent[] = Object.values(state.mastery)
-    .map((mastery) => {
+  const events = Object.values(state.mastery)
+    .reduce<LearningAnalyticsEvent[]>((result, mastery) => {
       const skill = skillById[mastery.skillId];
-      if (!skill) return null;
+      if (!skill) return result;
 
-      return {
+      result.push({
         id: `baseline:${mastery.skillId}`,
-        kind: "baseline" as const,
+        kind: "baseline",
         skillId: mastery.skillId,
         stageId: skill.stage,
         domain: skill.domain,
@@ -48,9 +48,10 @@ export function ensureAnalyticsState(
         confidenceAfter: mastery.confidence,
         stabilityBefore: mastery.stabilityDays,
         stabilityAfter: mastery.stabilityDays,
-      };
-    })
-    .filter((event): event is LearningAnalyticsEvent => Boolean(event))
+      });
+
+      return result;
+    }, [])
     .sort((a, b) => a.occurredAt.localeCompare(b.occurredAt));
 
   const analytics: LearningAnalyticsState = {
