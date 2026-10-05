@@ -10,6 +10,7 @@ import {
   curriculumStages,
   domainLabels,
   isSkillUnlocked,
+  readyCurriculumSkills,
   skills,
 } from "../domain/curriculum";
 import type { SkillMastery } from "../domain/types";
@@ -48,6 +49,7 @@ export function LearnView({
     (skill) => skillMastery(mastery, skill.id) >= 75,
   ).length;
   const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
+  const recommendedId = readyCurriculumSkills(mastery)[0]?.id;
 
   return (
     <section className="learn-view">
@@ -170,9 +172,14 @@ export function LearnView({
                           <span>{index + 1}</span>
                           <small>{domainLabels[skill.domain]}</small>
                         </div>
-                        <span className="mastery-state">
-                          {masteryLabel(value)}
-                        </span>
+                        <div className="curriculum-card-state">
+                          {recommendedId === skill.id && (
+                            <span className="recommended-next">Next</span>
+                          )}
+                          <span className="mastery-state">
+                            {masteryLabel(value)}
+                          </span>
+                        </div>
                       </div>
 
                       <h3>{skill.title}</h3>
