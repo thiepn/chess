@@ -1,4 +1,4 @@
-import { Chess, type Color } from "chess.js";
+import { Chess, DEFAULT_POSITION, type Color } from "chess.js";
 import type { ImportedGame, ImportedGameMove } from "./types";
 
 function stableGameId(pgn: string) {
@@ -42,6 +42,10 @@ export function importPgn(
     afterFen: move.after,
   }));
 
+  const headerFen = headers.FEN;
+  const startingFen =
+    headerFen && headerFen !== DEFAULT_POSITION ? headerFen : undefined;
+
   return {
     id: stableGameId(pgn),
     pgn: pgn.trim(),
@@ -53,6 +57,7 @@ export function importPgn(
     event: headers.Event,
     site: headers.Site,
     date: headers.Date,
+    startingFen,
     moves,
     criticalMomentIds: [],
   };
