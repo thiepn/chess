@@ -417,6 +417,7 @@ export default function App() {
         game.id,
       );
       const mastery = { ...previous.mastery };
+      let analytics = previous.analytics;
       const gameOpeningDeviations = openingDeviationsForGame(
         game,
         new Date(occurredAt),
@@ -449,7 +450,7 @@ export default function App() {
           mastery[skillId] ??
           emptyMastery(skillId, Math.min(1, skill.difficulty / 5));
 
-        mastery[skillId] = applyEvidence(base, {
+        const evidence: LearningEvidence = {
           skillId,
           source: "realGame",
           success: false,
@@ -462,7 +463,16 @@ export default function App() {
                 ? .72
                 : .45,
           occurredAt,
-        });
+        };
+        const nextMastery = applyEvidence(base, evidence);
+        mastery[skillId] = nextMastery;
+        analytics = appendEvidenceAnalytics(
+          analytics,
+          base,
+          nextMastery,
+          evidence,
+          "game-review",
+        );
       }
 
       return {
@@ -473,6 +483,7 @@ export default function App() {
         weaknesses: weaknessesFromMistakes(mistakes),
         openingDeviations,
         openingProgress,
+        analytics,
       };
     });
   }
