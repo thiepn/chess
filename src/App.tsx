@@ -385,7 +385,7 @@ export default function App() {
           previousMastery,
           nextMastery,
           evidence,
-          manualActivity ? "manual" : active.source,
+          active.id.startsWith("manual:") ? "manual" : active.source,
         ),
         puzzleHistory,
         mistakes,
