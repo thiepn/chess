@@ -11,6 +11,7 @@ import type {
   UserState,
 } from "../domain/types";
 import { applyEvidence, emptyMastery } from "../domain/mastery";
+import { appendEvidenceAnalytics } from "../analytics/record";
 import { lessonScripts } from "../learning/lessons";
 import type {
   AssessmentAttempt,
@@ -491,6 +492,7 @@ export function applyAssessmentToState(
 ) {
   const attempt = completeAssessmentAttempt(session, results, now);
   const mastery = { ...state.mastery };
+  let analytics = state.analytics;
 
   for (const result of results) {
     const skill = skillById[result.skillId];
@@ -509,12 +511,21 @@ export function applyAssessmentToState(
       occurredAt: now.toISOString(),
     };
 
-    mastery[skill.id] = applyEvidence(base, evidence);
+    const nextMastery = applyEvidence(base, evidence);
+    mastery[skill.id] = nextMastery;
+    analytics = appendEvidenceAnalytics(
+      analytics,
+      base,
+      nextMastery,
+      evidence,
+      session.kind === "placement" ? "placement" : "checkpoint",
+    );
   }
 
   let next: UserState = {
     ...state,
     mastery,
+    analytics,
     assessments: [...(state.assessments ?? []), attempt],
   };
 
