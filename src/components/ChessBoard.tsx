@@ -1,5 +1,5 @@
 import { Chess, type Color, type PieceSymbol, type Square } from "chess.js";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 
@@ -58,6 +58,7 @@ export function ChessBoard({
   presentationMove,
 }: ChessBoardProps) {
   const [position, setPosition] = useState(fen);
+  const positionRef = useRef(fen);
   const [selected, setSelected] = useState<Square | null>(null);
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
@@ -66,6 +67,8 @@ export function ChessBoard({
   const { feedback } = useExperience();
 
   useEffect(() => {
+    if (positionRef.current === fen) return;
+    positionRef.current = fen;
     setPosition(fen);
     setSelected(null);
     setLastMove(null);
@@ -153,6 +156,7 @@ export function ChessBoard({
             }
         : null;
 
+    positionRef.current = candidate.fen();
     setPosition(candidate.fen());
     setLastMove({ from, to });
     setSecondaryMove(castle);
