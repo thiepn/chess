@@ -28,7 +28,7 @@ import { GameArena } from "./GameArena";
 
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
-  onGameFinished: (result: PlayResult) => Promise<void> | void;
+  onGameFinished: (result: PlayResult) => Promise<boolean> | boolean;
 }
 
 const profileOrder: AiProfileId[] = [
