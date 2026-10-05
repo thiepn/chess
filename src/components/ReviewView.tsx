@@ -24,6 +24,7 @@ interface ReviewViewProps {
   mistakes: PersonalMistake[];
   onAnalyzed: (game: ImportedGame, mistakes: PersonalMistake[]) => void;
   onTrainMistake: (mistakeId: string) => void;
+  onReplayMistake: (mistakeId: string) => void;
 }
 
 function severityLabel(value: PersonalMistake["severity"]) {
@@ -37,6 +38,7 @@ export function ReviewView({
   mistakes,
   onAnalyzed,
   onTrainMistake,
+  onReplayMistake,
 }: ReviewViewProps) {
   const [pgn, setPgn] = useState("");
   const [lichessUrl, setLichessUrl] = useState("");
@@ -45,6 +47,7 @@ export function ReviewView({
   const [progress, setProgress] = useState<GameAnalysisProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
+  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unresolved = useMemo(
@@ -74,6 +77,7 @@ export function ReviewView({
       });
 
       onAnalyzed(result.game, result.mistakes);
+      setSelectedGameId(result.game.id);
       setPgn("");
     } catch (cause) {
       setError(
@@ -85,6 +89,22 @@ export function ReviewView({
       engine?.quit();
       setAnalyzing(false);
     }
+  }
+
+  const selectedGame = selectedGameId
+    ? games.find((game) => game.id === selectedGameId)
+    : undefined;
+
+  if (selectedGame) {
+    return (
+      <GameStoryView
+        game={selectedGame}
+        mistakes={mistakes.filter((mistake) => mistake.gameId === selectedGame.id)}
+        onBack={() => setSelectedGameId(null)}
+        onTrainMistake={onTrainMistake}
+        onReplayMistake={onReplayMistake}
+      />
+    );
   }
 
   return (
@@ -334,16 +354,25 @@ export function ReviewView({
           </div>
           <div className="game-history-list">
             {[...games].reverse().slice(0, 8).map((game) => (
-              <div className="game-history-row" key={game.id}>
+              <button
+                className="game-history-row"
+                type="button"
+                key={game.id}
+                onClick={() => setSelectedGameId(game.id)}
+              >
                 <div>
                   <strong>{game.white} — {game.black}</strong>
                   <span>{game.result} · {game.moves.length} plies</span>
                 </div>
                 <div>
-                  <span>{game.analysisEngine ?? "Imported"}</span>
-                  <strong>{game.criticalMomentIds.length} moments</strong>
+                  <span>{game.reviewStory ? "Visual review" : game.analysisEngine ?? "Imported"}</span>
+                  <strong>
+                    {game.reviewStory
+                      ? `${game.reviewStory.moments.length} story moments`
+                      : `${game.criticalMomentIds.length} moments`}
+                  </strong>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </section>
