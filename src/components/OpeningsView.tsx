@@ -226,6 +226,17 @@ export function OpeningsView({
                 <p>{selected.purpose}</p>
               </div>
 
+              {selected.concepts.length > 0 && (
+                <div className="opening-concept-grid">
+                  {selected.concepts.map((concept) => (
+                    <div key={concept.title}>
+                      <strong>{concept.title}</strong>
+                      <span>{concept.body}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {selected.plans.length > 0 && (
                 <div className="opening-idea-list">
                   <span>Plans</span>
