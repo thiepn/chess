@@ -35,7 +35,7 @@ const placementAnchorIds = [
   "tactics.pin",
   "calculation.candidates",
   "strategy.open-files",
-  "defense.threats",
+  "defense.prophylaxis",
   "attack.mating-net",
   "endgames.opposition",
   "conversion.simplify",
