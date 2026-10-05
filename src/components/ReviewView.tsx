@@ -84,7 +84,7 @@ export function ReviewView({
   );
 
   async function analyze() {
-    if (!pgn.trim() || analyzing) return;
+    if (!pgn.trim() || analyzing || batchAnalyzing) return;
 
     let engine: StockfishBrowserEngine | null = null;
     setError(null);
@@ -120,7 +120,7 @@ export function ReviewView({
   }
 
   async function reanalyzeStoredGame(game: ImportedGame) {
-    if (analyzing) return;
+    if (analyzing || batchAnalyzing) return;
 
     let engine: StockfishBrowserEngine | null = null;
     setError(null);
@@ -290,11 +290,11 @@ export function ReviewView({
               value={lichessUrl}
               onChange={(event) => setLichessUrl(event.target.value)}
               placeholder="Lichess game URL or ID"
-              disabled={analyzing || fetchingLichess}
+              disabled={analyzing || batchAnalyzing || fetchingLichess}
             />
             <button
               type="button"
-              disabled={!lichessUrl.trim() || analyzing || fetchingLichess}
+              disabled={!lichessUrl.trim() || analyzing || batchAnalyzing || fetchingLichess}
               onClick={async () => {
                 setError(null);
                 setFetchingLichess(true);
@@ -361,7 +361,7 @@ export function ReviewView({
               className="secondary"
               type="button"
               onClick={() => fileRef.current?.click()}
-              disabled={analyzing}
+              disabled={analyzing || batchAnalyzing}
             >
               <Upload size={16} /> PGN file
             </button>
@@ -369,7 +369,7 @@ export function ReviewView({
               className="primary"
               type="button"
               onClick={analyze}
-              disabled={!pgn.trim() || analyzing}
+              disabled={!pgn.trim() || analyzing || batchAnalyzing}
             >
               {analyzing ? <LoaderCircle className="spin" size={17} /> : <BrainCircuit size={17} />}
               {analyzing ? "Analyzing…" : "Analyze my game"}
