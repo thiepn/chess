@@ -1,5 +1,6 @@
 import {
   createContext,
+  type CSSProperties,
   type ReactNode,
   useCallback,
   useContext,
@@ -76,7 +77,7 @@ function CelebrationLayer({
           style={{
             "--particle-index": index,
             "--particle-count": count,
-          } as React.CSSProperties}
+          } as CSSProperties}
         />
       ))}
     </div>
