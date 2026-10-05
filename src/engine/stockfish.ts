@@ -14,6 +14,11 @@ interface PendingSearch {
   timeout: number;
 }
 
+export interface EnginePlayOptions {
+  skillLevel: number;
+  depth: number;
+}
+
 function scoreToCentipawns(type: string, value: number) {
   if (type === "cp") return value;
   const sign = Math.sign(value) || 1;
@@ -139,7 +144,11 @@ export class StockfishBrowserEngine {
     }
   };
 
-  async evaluate(fen: string, depth = 11): Promise<EngineEvaluation> {
+  private async searchPosition(
+    fen: string,
+    depth: number,
+    skillLevel: number,
+  ): Promise<EngineEvaluation> {
     await this.readyPromise;
 
     if (this.search) {
@@ -156,9 +165,27 @@ export class StockfishBrowserEngine {
       }, 15_000);
 
       this.search = { resolve, reject, timeout };
+      this.worker.postMessage(
+        `setoption name Skill Level value ${Math.min(20, Math.max(0, Math.round(skillLevel)))}`,
+      );
       this.worker.postMessage(`position fen ${fen}`);
-      this.worker.postMessage(`go depth ${depth}`);
+      this.worker.postMessage(`go depth ${Math.min(18, Math.max(1, Math.round(depth)))}`);
     });
+  }
+
+  async evaluate(fen: string, depth = 11): Promise<EngineEvaluation> {
+    return this.searchPosition(fen, depth, 20);
+  }
+
+  async chooseMove(
+    fen: string,
+    options: EnginePlayOptions,
+  ): Promise<EngineEvaluation> {
+    return this.searchPosition(
+      fen,
+      options.depth,
+      options.skillLevel,
+    );
   }
 
   quit() {
