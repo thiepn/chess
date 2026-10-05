@@ -9,6 +9,7 @@ import type {
   StageCertification,
 } from "../assessment/types";
 import type { LearningAnalyticsState } from "../analytics/types";
+import type { AdaptiveTrainingPolicy } from "../adaptation/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -157,6 +158,7 @@ export interface TrainingCandidate {
   openingNodeId?: string;
   repertoireId?: string;
   studyId?: string;
+  adaptivePolicy?: AdaptiveTrainingPolicy;
 }
 
 export interface TrainingActivity extends TrainingCandidate {
