@@ -162,6 +162,7 @@ export function GameArena({
       scenarioId: scenario?.id,
       scenarioSuccess,
       aiProfileId: profile.id,
+      trainingSkillId: scenario?.skillId,
       completedAt,
     };
 
