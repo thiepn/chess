@@ -34,6 +34,18 @@ describe("PGN import", () => {
     expect(game.startingFen).toBe("4k3/8/8/4K3/4P3/8/8/8 w - - 0 1");
   });
 
+  it("uses the FEN full-move number for scenario timelines", () => {
+    const custom = `[Event "Late scenario"]
+[SetUp "1"]
+[FEN "4k3/8/8/4K3/4P3/8/8/8 w - - 0 27"]
+[Result "*"]
+
+27. Kf6 *`;
+
+    const game = importPgn(custom, "w");
+    expect(game.moves[0].moveNumber).toBe(27);
+  });
+
   it("rejects PGN without moves", () => {
     expect(() => importPgn('[Event "Empty"]', "w")).toThrow();
   });
