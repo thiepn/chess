@@ -957,6 +957,11 @@ export default function App() {
                       <small>{reasonLabel(activity)}</small>
                       <strong>{activity.title}</strong>
                       <span>{activity.subtitle}</span>
+                      {activity.adaptivePolicy && (
+                        <span className="adaptive-activity-note">
+                          {activity.adaptivePolicy.challenge} · {activity.activityType.replace(/([A-Z])/g, " $1")}
+                        </span>
+                      )}
                     </div>
                     <div className="activity-time">{activity.estimatedMinutes}m</div>
                   </div>
