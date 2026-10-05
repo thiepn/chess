@@ -254,6 +254,22 @@ function placementUnlockOrder(state: UserState) {
   );
 }
 
+export function courseCurriculumFloor(state: UserState) {
+  let floor = Math.max(0, placementUnlockOrder(state));
+
+  for (const certification of Object.values(
+    state.stageCertifications ?? {},
+  )) {
+    if (!certification) continue;
+    const order =
+      curriculumStages.find((stage) => stage.id === certification.stageId)
+        ?.order ?? 0;
+    floor = Math.max(floor, order + 1);
+  }
+
+  return Math.min(curriculumStages.length - 1, floor);
+}
+
 export function stageRequirements(
   stageId: CurriculumStageId,
 ): StageGateRequirements {
@@ -437,12 +453,16 @@ export function assessmentRemediationSkillIds(state: UserState) {
 
   if (!latest?.stageId) return [];
 
-  const gate = evaluateStageGate(state, latest.stageId);
-  if (!["remediation", "provisional"].includes(gate.status)) return [];
-
   const failed = latest.results
     .filter((result) => !result.success)
     .map((result) => result.skillId);
+
+  if (latest.score < stageRequirements(latest.stageId).checkpoint && failed.length) {
+    return [...new Set(failed)].slice(0, 4);
+  }
+
+  const gate = evaluateStageGate(state, latest.stageId);
+  if (gate.status !== "provisional") return [];
 
   if (failed.length) return [...new Set(failed)].slice(0, 4);
 
