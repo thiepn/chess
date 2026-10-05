@@ -13,6 +13,8 @@ import { StockfishBrowserEngine } from "../engine/stockfish";
 import { analyzeImportedGame } from "../games/analyze";
 import { importPgn, playerMoveCount } from "../games/import";
 import { fetchLichessPgn } from "../games/lichess";
+import type { LichessConnection } from "../lichess/types";
+import { LichessSyncCard } from "./LichessSyncCard";
 import type {
   GameAnalysisProgress,
   ImportedGame,
@@ -23,6 +25,13 @@ import { GameStoryView } from "./GameStoryView";
 interface ReviewViewProps {
   games: ImportedGame[];
   mistakes: PersonalMistake[];
+  lichess?: LichessConnection;
+  lichessSyncing: boolean;
+  lichessSyncMessage?: string | null;
+  lichessSyncError?: string | null;
+  onLinkLichess: (username: string) => Promise<void> | void;
+  onUnlinkLichess: () => void;
+  onSyncLichess: () => Promise<void> | void;
   onAnalyzed: (game: ImportedGame, mistakes: PersonalMistake[]) => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
@@ -37,6 +46,13 @@ function severityLabel(value: PersonalMistake["severity"]) {
 export function ReviewView({
   games,
   mistakes,
+  lichess,
+  lichessSyncing,
+  lichessSyncMessage,
+  lichessSyncError,
+  onLinkLichess,
+  onUnlinkLichess,
+  onSyncLichess,
   onAnalyzed,
   onTrainMistake,
   onReplayMistake,
@@ -50,6 +66,8 @@ export function ReviewView({
   const [analyzing, setAnalyzing] = useState(false);
   const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const [reanalyzingGameId, setReanalyzingGameId] = useState<string | null>(null);
+  const [batchAnalyzing, setBatchAnalyzing] = useState(false);
+  const [batchStatus, setBatchStatus] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unresolved = useMemo(
@@ -135,6 +153,60 @@ export function ReviewView({
     }
   }
 
+  async function analyzeSyncedGames() {
+    if (analyzing || batchAnalyzing) return;
+
+    const pending = [...games]
+      .filter((game) => game.source === "lichess" && !game.analyzedAt)
+      .sort((a, b) => b.importedAt.localeCompare(a.importedAt))
+      .slice(0, 5);
+
+    if (!pending.length) {
+      setBatchStatus("All synced Lichess games are already analyzed.");
+      return;
+    }
+
+    let engine: StockfishBrowserEngine | null = null;
+    setError(null);
+    setBatchAnalyzing(true);
+
+    try {
+      engine = await StockfishBrowserEngine.create();
+
+      for (let index = 0; index < pending.length; index += 1) {
+        const game = pending[index];
+        setBatchStatus(
+          `Analyzing human game ${index + 1}/${pending.length}: ${game.white} — ${game.black}`,
+        );
+        setProgress({
+          completed: 0,
+          total: playerMoveCount(game),
+          phase: "analyzing",
+        });
+
+        const result = await analyzeImportedGame(game, engine, {
+          depth: 10,
+          onProgress: setProgress,
+        });
+        onAnalyzed(result.game, result.mistakes);
+      }
+
+      setBatchStatus(
+        `Analyzed ${pending.length} synced human game${pending.length === 1 ? "" : "s"}.`,
+      );
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "Synced games could not be analyzed.",
+      );
+    } finally {
+      engine?.quit();
+      setBatchAnalyzing(false);
+      setProgress(null);
+    }
+  }
+
   const selectedGame = selectedGameId
     ? games.find((game) => game.id === selectedGameId)
     : undefined;
@@ -166,6 +238,42 @@ export function ReviewView({
           <BrainCircuit size={30} />
         </div>
       </header>
+
+      <section className="review-lichess-section">
+        <LichessSyncCard
+          connection={lichess}
+          syncing={lichessSyncing}
+          message={lichessSyncMessage}
+          error={lichessSyncError}
+          compact
+          onLink={onLinkLichess}
+          onUnlink={onUnlinkLichess}
+          onSync={onSyncLichess}
+        />
+
+        {lichess && (
+          <button
+            className="review-batch-analyze"
+            type="button"
+            disabled={
+              batchAnalyzing ||
+              !games.some(
+                (game) => game.source === "lichess" && !game.analyzedAt,
+              )
+            }
+            onClick={() => void analyzeSyncedGames()}
+          >
+            {batchAnalyzing ? (
+              <LoaderCircle className="spin" size={16} />
+            ) : (
+              <BrainCircuit size={16} />
+            )}
+            {batchAnalyzing ? "Analyzing synced games…" : "Analyze new human games"}
+          </button>
+        )}
+
+        {batchStatus && <span className="review-batch-status">{batchStatus}</span>}
+      </section>
 
       <div className="review-grid">
         <article className="panel import-panel">
@@ -434,7 +542,10 @@ export function ReviewView({
               >
                 <div>
                   <strong>{game.white} — {game.black}</strong>
-                  <span>{game.result} · {game.moves.length} plies</span>
+                  <span>
+                    {game.result} · {game.moves.length} plies
+                    {game.source === "lichess" ? " · Lichess human game" : ""}
+                  </span>
                 </div>
                 <div>
                   <span>
