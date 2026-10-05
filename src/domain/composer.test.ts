@@ -255,6 +255,50 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
+  it("turns a transfer gap into a playable adaptive scenario", () => {
+    const base = initialUserState.mastery["endgames.opposition"];
+    const state = {
+      ...initialUserState,
+      weaknesses: [],
+      mastery: {
+        ...initialUserState.mastery,
+        "endgames.opposition": {
+          ...base,
+          attempts: 16,
+          understanding: 82,
+          recognition: 78,
+          execution: 74,
+          mixedRecognition: 72,
+          effectiveMastery: 68,
+          trainingTransfer: 8,
+          realGameRecognition: 5,
+          realGameExecution: 3,
+          confidence: 72,
+          lastSuccessAt: "2026-10-05T10:00:00Z",
+          stabilityDays: 8,
+          nextReviewAt: "2026-11-05T10:00:00Z",
+        },
+      },
+      focus: {
+        domain: "endgames" as const,
+      },
+    };
+
+    const pool = buildCandidatePool(
+      state,
+      new Date("2026-10-05T12:00:00Z"),
+    );
+    const candidate = pool.find(
+      (item) =>
+        item.skillIds.includes("endgames.opposition") &&
+        item.activityType === "engineGame",
+    );
+
+    expect(candidate).toBeTruthy();
+    expect(candidate?.scenarioId).toBe("endgame-opposition");
+    expect(candidate?.adaptivePolicy?.reason).toContain("transfer");
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,
