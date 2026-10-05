@@ -45,6 +45,7 @@ import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
 import { PlayView } from "./components/PlayView";
+import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { analyzeImportedGame } from "./games/analyze";
 import {
@@ -52,6 +53,7 @@ import {
   mergeReanalyzedMistakes,
 } from "./games/refresh";
 import { scenarioById } from "./play/scenarios";
+import { aiProfiles, resolveAiProfile } from "./play/profiles";
 import type { PlayResult, TrainingScenario } from "./play/types";
 import { LibraryView } from "./components/LibraryView";
 import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
@@ -168,6 +170,18 @@ export default function App() {
     active?.studyId
       ? state.savedStudies?.find((study) => study.id === active.studyId)
       : undefined;
+  const activeScenario =
+    active?.scenarioId ? scenarioById[active.scenarioId] : undefined;
+  const activeGameProfile =
+    active?.adaptivePolicy?.challenge === "recovery"
+      ? aiProfiles.gentle
+      : active?.adaptivePolicy?.challenge === "supported"
+        ? aiProfiles.developing
+        : active?.adaptivePolicy?.challenge === "stretch"
+          ? aiProfiles.strong
+          : active?.adaptivePolicy?.challenge === "maintenance"
+            ? aiProfiles.club
+            : resolveAiProfile("adaptive", state.mastery);
 
   const stageGates = useMemo(
     () =>
@@ -1220,10 +1234,46 @@ export default function App() {
                 <span>{domainLabels[activeSkill.domain]}</span>
                 <span>{active.estimatedMinutes} min</span>
                 <span>Difficulty {activeSkill.difficulty}/5</span>
+                {active.adaptivePolicy && (
+                  <span className="adaptive-challenge-chip">
+                    {active.adaptivePolicy.challenge}
+                  </span>
+                )}
               </div>
             </div>
 
-            {active.activityType === "savedStudy" && activeStudy ? (
+            {active.adaptivePolicy && (
+              <div className="adaptive-policy-strip">
+                <BrainCircuit size={16} />
+                <div>
+                  <strong>{active.adaptivePolicy.reason}</strong>
+                  <span>
+                    Target success {active.adaptivePolicy.targetSuccessLow}–{active.adaptivePolicy.targetSuccessHigh}%
+                    {active.adaptivePolicy.targetPuzzleRating
+                      ? ` · puzzle target ~${active.adaptivePolicy.targetPuzzleRating}`
+                      : ""}
+                    {active.adaptivePolicy.policyConfidence < .45
+                      ? " · low-confidence policy"
+                      : ""}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {active.activityType === "engineGame" && activeScenario ? (
+              <GameArena
+                initialFen={activeScenario.fen}
+                playerColor={activeScenario.playerColor}
+                profile={activeGameProfile}
+                scenario={activeScenario}
+                onExit={() => {
+                  setActiveIndex(null);
+                  setManualActivity(null);
+                }}
+                onFinished={handlePlayFinished}
+                exitLabel="Finish activity"
+              />
+            ) : active.activityType === "savedStudy" && activeStudy ? (
               <SavedStudyTrainer
                 study={activeStudy}
                 onComplete={completeActivity}
