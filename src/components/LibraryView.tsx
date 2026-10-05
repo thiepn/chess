@@ -384,6 +384,19 @@ export function LibraryView({
             <div className="workspace-toolbar">
               <button
                 type="button"
+                onClick={() =>
+                  resetWorkspace(loadFenLine(standardFen, "w"), {
+                    title: "Untitled study",
+                    kind: "position",
+                    orientation: "w",
+                    source: "personal",
+                  })
+                }
+              >
+                <Sparkles size={15} /> New
+              </button>
+              <button
+                type="button"
                 disabled={cursor <= 0}
                 onClick={() => {
                   setCursor((value) => Math.max(0, value - 1));
