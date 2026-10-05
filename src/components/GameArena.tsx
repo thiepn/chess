@@ -136,6 +136,19 @@ export function GameArena({
     gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
 
   const lastMove = useMemo(() => moves.at(-1), [moves]);
+  const moveRows = useMemo(() => {
+    const rows = new Map<number, { number: number; w?: string; b?: string }>();
+
+    for (const move of gameRef.current.history({ verbose: true })) {
+      const number =
+        Number(move.before.split(/\s+/)[5]) || Math.floor(rows.size / 2) + 1;
+      const row = rows.get(number) ?? { number };
+      row[move.color] = move.san;
+      rows.set(number, row);
+    }
+
+    return [...rows.values()].sort((a, b) => a.number - b.number);
+  }, [moves]);
 
   async function finalize(
     outcome: PlayResult["outcome"],
@@ -346,16 +359,14 @@ export function GameArena({
               <strong>{moves.length} plies</strong>
             </div>
             <div className="move-list">
-              {moves.length ? (
-                Array.from({ length: Math.ceil(moves.length / 2) }).map(
-                  (_, index) => (
-                    <div key={index}>
-                      <span>{index + 1}.</span>
-                      <strong>{moves[index * 2] ?? ""}</strong>
-                      <strong>{moves[index * 2 + 1] ?? ""}</strong>
-                    </div>
-                  ),
-                )
+              {moveRows.length ? (
+                moveRows.map((row) => (
+                  <div key={row.number}>
+                    <span>{row.number}.</span>
+                    <strong>{row.w ?? ""}</strong>
+                    <strong>{row.b ?? ""}</strong>
+                  </div>
+                ))
               ) : (
                 <p>No moves yet.</p>
               )}
