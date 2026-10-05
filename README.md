@@ -27,12 +27,13 @@ The default experience should answer one question: **what should I train now?**
 - P8 post-game storytelling with phase summaries, a complete move timeline, 3–5 high-signal moments, animated actual-vs-better move playback, curriculum links, legacy-review upgrades, and direct Repair/Replay actions
 - P9 full Library workspace with free FEN/PGN analysis, on-demand Stockfish, branching move navigation, saved studies, notes/tags/favorites, reference positions/master-game exploration, game-history access, and optional promotion of saved positions into adaptive spaced training
 - P10 shared premium interaction system with real board glides/castling motion, check emphasis, motion tokens, optional Web Audio and haptics, milestone-based celebrations, synced experience preferences, improved loading/error resilience, accessibility states, safe-area handling, and mobile/landscape polish
+- P11 complete beginner-to-intermediate curriculum expansion with 68 atomic skills across 8 stages, authored interactive board lessons for every skill, prerequisite-driven progression, expanded Lichess puzzle-theme mappings, a staged Learn journey, recommended-next guidance, and CI-enforced curriculum/content QA
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump; P9 provides a serious free-study workspace without forcing every exploratory position into the guided learning loop; P10 standardizes how the entire product moves, responds and feels across desktop and mobile.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage.
 
 ## Run
 
@@ -213,6 +214,45 @@ Startup now uses a branded loading state instead of briefly rendering demo state
 
 Accessibility additions include current-page and pressed-state semantics, live game-state announcements, explicit reduced-motion control, and consistent keyboard focus behavior.
 
+## Full curriculum
+
+P11 expands Learn into an eight-stage beginner-to-intermediate course:
+
+1. **Learn to play** — board coordinates, piece movement, captures, check, responses to check, mate, castling, promotion and draw rules.
+2. **Stop losing pieces** — material values, attacks, defenders, hanging pieces, exchanges, final blunder checks and opponent-threat recognition.
+3. **Build good positions** — development, center control, king safety, queen timing, tempo use, piece activity and improving the worst piece.
+4. **See tactical patterns** — double attacks, knight forks, pins, skewers, discovered attacks, removing defenders, deflection, decoys, back-rank tactics, overloaded defenders and clearance.
+5. **Think before you move** — candidate generation, best replies, forcing lines, move order, visualization, quiet moves, open files, outposts, pawn breaks and pawn weaknesses.
+6. **Attack and defend** — exposed kings, opening lines, counting defenders, mating nets, sound sacrifices, prophylaxis, exchanging attackers and counterplay.
+7. **Finish games** — queen mate, rook mate, opposition, key squares, pawn races, passed pawns, rook activity, Lucena, Philidor and simplification.
+8. **Play practical chess** — clock discipline, planning, phase transitions, post-move rechecks and recovering after mistakes.
+
+Every curriculum skill has a skill-specific authored board lesson. The generic fallback lesson has been removed entirely. If a curriculum ID is added without matching lesson content, the content audit now fails CI.
+
+Learn is stage-based rather than a flat domain catalog. Each stage shows:
+
+- its learning promise and approximate player level;
+- average mastery and mastered-skill count;
+- prerequisite locks;
+- course progress;
+- legitimate puzzle practice when a compatible Lichess theme exists;
+- the current **Next** skill selected by the same prerequisite logic used by adaptive training.
+
+Puzzle theme mappings now connect common Lichess motifs such as forks, pins, skewers, deflection, clearance, overloaded pieces, back-rank mates, sacrifices, quiet moves, pawn endings, rook endings and king attacks to the expanded skill graph. Concepts that do not map honestly to tactical puzzles continue to use board lessons, endgame drills, opening positions, game review or training games instead of receiving fake puzzle coverage.
+
+P11 also adds a curriculum certification audit. CI verifies:
+
+- unique skill IDs;
+- valid prerequisite references;
+- no prerequisite cycles;
+- all eight stages populated;
+- valid difficulty and importance values;
+- at least one training/transfer mode per skill;
+- authored lesson coverage for every curriculum skill;
+- legal FENs and legal accepted moves in every lesson.
+
+During the certification pass, strict TypeScript defects in PuzzleRunner, the Stockfish message handler and repertoire ancestor typing were also repaired so the expanded course is tested against a clean production build rather than only unit tests.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -227,4 +267,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P11 — Full Curriculum Expansion, Beginner-to-Intermediate Course Completeness & Content QA.
+P12 — Stage Checkpoints, Diagnostics, Promotion Gates & Course Assessment.
