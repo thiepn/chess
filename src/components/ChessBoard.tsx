@@ -17,6 +17,7 @@ interface ChessBoardProps {
   highlights?: BoardHighlight[];
   arrows?: BoardArrow[];
   onMove?: (move: BoardMove) => boolean;
+  presentationMove?: { from: Square; to: Square };
 }
 
 const pieces: Record<Color, Record<PieceSymbol, string>> = {
@@ -53,6 +54,7 @@ export function ChessBoard({
   highlights = [],
   arrows = [],
   onMove,
+  presentationMove,
 }: ChessBoardProps) {
   const [position, setPosition] = useState(fen);
   const [selected, setSelected] = useState<Square | null>(null);
@@ -171,7 +173,8 @@ export function ChessBoard({
           const tone = highlightMap.get(square);
           const isSelected = selected === square;
           const isLegal = legalTargets.has(square);
-          const isLast = lastMove?.from === square || lastMove?.to === square;
+          const displayMove = lastMove ?? presentationMove;
+          const isLast = displayMove?.from === square || displayMove?.to === square;
           const classes = [
             "board-square",
             dark ? "dark" : "light",
@@ -215,7 +218,7 @@ export function ChessBoard({
                   className={[
                     "piece",
                     piece.color === "w" ? "white-piece" : "black-piece",
-                    lastMove?.to === square ? "piece-land" : "",
+                    displayMove?.to === square ? "piece-land" : "",
                   ]
                     .filter(Boolean)
                     .join(" ")}
