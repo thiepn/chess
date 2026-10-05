@@ -204,9 +204,13 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
 
 function toActivity(item: TrainingCandidate): TrainingActivity {
   const skill = skillById[item.skillIds[0]];
+  const repertoire = item.repertoireId
+    ? repertoires.find((entry) => entry.id === item.repertoireId)
+    : undefined;
+
   return {
     ...item,
-    title: skill?.title ?? "Training",
+    title: repertoire?.name ?? skill?.title ?? "Training",
     subtitle: item.reason,
   };
 }
