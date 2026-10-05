@@ -366,12 +366,21 @@ export default function App() {
         });
       }
 
+      const nextMastery = applyEvidence(previousMastery, evidence);
+
       return {
         ...previous,
         mastery: {
           ...previous.mastery,
-          [skillId]: applyEvidence(previousMastery, evidence),
+          [skillId]: nextMastery,
         },
+        analytics: appendEvidenceAnalytics(
+          previous.analytics,
+          previousMastery,
+          nextMastery,
+          evidence,
+          manualActivity ? "manual" : active.source,
+        ),
         puzzleHistory,
         mistakes,
         openingProgress,
