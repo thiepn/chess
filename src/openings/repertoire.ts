@@ -23,9 +23,23 @@ const rootFen = new Chess().fen();
 
 const seeds: NodeSeed[] = [
   {
+    id: "white-start",
+    name: "White repertoire",
+    purpose: "Start from one dependable first move instead of memorizing unrelated opening systems.",
+    concepts: [
+      { title: "One home base", body: "Use 1.e4 as the default so recurring structures become familiar quickly." }
+    ],
+    plans: ["Play e4", "Learn Black's major replies by ideas"],
+    commonMistakes: ["Changing first move every game before building pattern recognition"],
+    keySquares: ["e4", "d4"],
+    priority: "core"
+  },
+  {
     id: "white-e4",
+    parentId: "white-start",
     name: "1.e4 — Open Games Base",
     eco: "B00",
+    moveFromParent: "e2e4",
     purpose: "Claim central space and open the queen and f1 bishop.",
     concepts: [
       { title: "Develop with tempo", body: "Use the open diagonals created by e4 to bring pieces toward the center quickly." },
@@ -34,7 +48,8 @@ const seeds: NodeSeed[] = [
     plans: ["Develop Nf3 and Bc4/Bb5", "Castle kingside", "Use d4 when the center supports it"],
     commonMistakes: ["Early queen moves", "Repeatedly moving the same piece", "Ignoring ...Nf6 pressure on e4"],
     keySquares: ["e4", "d4", "f7"],
-    priority: "core"
+    priority: "core",
+    preferred: true
   },
   {
     id: "italian-e5",
@@ -349,10 +364,10 @@ export const repertoires: OpeningRepertoire[] = [
     color: "w",
     versus: "As White",
     summary: "Italian versus ...e5, Alapin versus the Sicilian, and principled central setups versus the Caro-Kann and French.",
-    rootNodeId: "white-e4",
+    rootNodeId: "white-start",
     nodeIds: seeds
       .filter((seed) =>
-        ["white-e4","italian-e5","italian-nf3","italian-nc6","italian-bc4","sicilian","sicilian-alapin","caro","caro-d4","french","french-d4"].includes(seed.id),
+        ["white-start","white-e4","italian-e5","italian-nf3","italian-nc6","italian-bc4","sicilian","sicilian-alapin","caro","caro-d4","french","french-d4"].includes(seed.id),
       )
       .map((seed) => seed.id),
   },
