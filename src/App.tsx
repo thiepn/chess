@@ -27,6 +27,10 @@ import { createChessStateRepository } from "./lib/persistence";
 import { LessonRunner } from "./components/LessonRunner";
 import { PuzzleRunner } from "./components/PuzzleRunner";
 import { LearnView } from "./components/LearnView";
+import { ReviewView } from "./components/ReviewView";
+import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
+import { weaknessesFromMistakes } from "./games/weaknesses";
+import type { ImportedGame, PersonalMistake } from "./games/types";
 
 const repo = createChessStateRepository();
 
@@ -75,6 +79,19 @@ export default function App() {
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
   const active = manualActivity ?? sessionActivity;
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
+  const activeMistake =
+    active?.mistakeId
+      ? state.mistakes?.find((mistake) => mistake.id === active.mistakeId)
+      : undefined;
+
+  const topWeakness = useMemo(() => {
+    const weakness = [...state.weaknesses]
+      .sort((a, b) => b.gameImpact * b.frequency * b.recency - a.gameImpact * a.frequency * a.recency)
+      .find((item) => skillById[item.skillId]);
+    return weakness
+      ? { weakness, skill: skillById[weakness.skillId] }
+      : null;
+  }, [state.weaknesses]);
 
   const topDomains = useMemo(() => {
     const grouped = new Map<string, number[]>();
@@ -127,6 +144,7 @@ export default function App() {
         emptyMastery(skillId, Math.min(1, activeSkill.difficulty / 5));
 
       const puzzleHistory = { ...(previous.puzzleHistory ?? {}) };
+      let mistakes = previous.mistakes ?? [];
 
       if (outcome.puzzleId) {
         const prior = puzzleHistory[outcome.puzzleId];
@@ -142,6 +160,28 @@ export default function App() {
         };
       }
 
+      if (outcome.mistakeId) {
+        mistakes = mistakes.map((mistake) => {
+          if (mistake.id !== outcome.mistakeId) return mistake;
+
+          const successes = mistake.successes + (outcome.success ? 1 : 0);
+          const attempts = mistake.attempts + 1;
+          const intervalDays =
+            successes >= 3 ? 30 : successes >= 2 ? 7 : successes >= 1 ? 1 : .25;
+
+          return {
+            ...mistake,
+            attempts,
+            successes,
+            lastAttemptAt: occurredAt,
+            resolved: successes >= 2,
+            nextReviewAt: new Date(
+              new Date(occurredAt).getTime() + intervalDays * 86_400_000,
+            ).toISOString(),
+          };
+        });
+      }
+
       return {
         ...previous,
         mastery: {
@@ -149,6 +189,7 @@ export default function App() {
           [skillId]: applyEvidence(previousMastery, evidence),
         },
         puzzleHistory,
+        mistakes,
       };
     });
 
@@ -162,6 +203,81 @@ export default function App() {
     } else {
       setActiveIndex(null);
     }
+  }
+
+  function handleAnalyzedGame(game: ImportedGame, newMistakes: PersonalMistake[]) {
+    const occurredAt = new Date().toISOString();
+
+    setState((previous) => {
+      const games = [
+        ...(previous.games ?? []).filter((item) => item.id !== game.id),
+        game,
+      ];
+      const mistakes = [
+        ...(previous.mistakes ?? []).filter((item) => item.gameId !== game.id),
+        ...newMistakes,
+      ];
+      const mastery = { ...previous.mastery };
+
+      for (const mistake of newMistakes) {
+        const skillId = mistake.skillIds[0];
+        const skill = skillById[skillId];
+        if (!skill) continue;
+
+        const base =
+          mastery[skillId] ??
+          emptyMastery(skillId, Math.min(1, skill.difficulty / 5));
+
+        mastery[skillId] = applyEvidence(base, {
+          skillId,
+          source: "realGame",
+          success: false,
+          quality: 0,
+          difficulty: Math.min(1, skill.difficulty / 5),
+          gameImpact:
+            mistake.severity === "blunder"
+              ? 1
+              : mistake.severity === "mistake"
+                ? .72
+                : .45,
+          occurredAt,
+        });
+      }
+
+      return {
+        ...previous,
+        games,
+        mistakes,
+        mastery,
+        weaknesses: weaknessesFromMistakes(mistakes),
+      };
+    });
+  }
+
+  function startMistakePractice(mistakeId: string) {
+    const mistake = state.mistakes?.find((item) => item.id === mistakeId);
+    if (!mistake) return;
+
+    const skill = mistake.skillIds
+      .map((skillId) => skillById[skillId])
+      .find(Boolean);
+    if (!skill) return;
+
+    setManualActivity({
+      id: `mistake:${mistake.id}`,
+      source: "game",
+      skillIds: [skill.id],
+      activityType: "personalMistake",
+      estimatedMinutes: 5,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: 1,
+      reason: `From move ${mistake.moveNumber}: your own game`,
+      title: skill.title,
+      subtitle: "Personal mistake repair",
+      mistakeId: mistake.id,
+    });
   }
 
   function startManualLesson(skillId: string) {
@@ -331,19 +447,26 @@ export default function App() {
                 <div className="panel-title">
                   <div>
                     <p className="eyebrow">CURRENT PRIORITY</p>
-                    <h3>Stop hanging pieces</h3>
+                    <h3>{topWeakness?.skill.title ?? "Build your player model"}</h3>
                   </div>
                   <Target size={20} />
                 </div>
                 <p>
-                  This recurring fundamental error is currently more important
-                  than adding opening theory.
+                  {topWeakness
+                    ? "This skill currently carries the highest combined weight from frequency, recency and game impact."
+                    : "Analyze games and complete training so the app can identify the most valuable next weakness."}
                 </p>
                 <div className="metric-row">
                   <span>Current mastery</span>
-                  <strong>{Math.round(state.mastery["fundamentals.hanging"]?.effectiveMastery ?? 0)}%</strong>
+                  <strong>
+                    {topWeakness
+                      ? Math.round(state.mastery[topWeakness.skill.id]?.effectiveMastery ?? 0)
+                      : 0}%
+                  </strong>
                 </div>
-                <div className="priority-tag">Critical · recent games</div>
+                <div className="priority-tag">
+                  {topWeakness ? `${topWeakness.weakness.severity} · game evidence` : "Awaiting evidence"}
+                </div>
               </article>
             </section>
           </>
@@ -353,10 +476,17 @@ export default function App() {
             onStartLesson={startManualLesson}
             onStartPractice={startManualPractice}
           />
+        ) : nav === "review" ? (
+          <ReviewView
+            games={state.games ?? []}
+            mistakes={state.mistakes ?? []}
+            onAnalyzed={handleAnalyzedGame}
+            onTrainMistake={startMistakePractice}
+          />
         ) : (
           <section className="placeholder">
             <div className="placeholder-icon">
-              {nav === "play" ? <Play /> : nav === "review" ? <BarChart3 /> : <Library />}
+              {nav === "play" ? <Play /> : <Library />}
             </div>
             <p className="eyebrow">{nav.toUpperCase()}</p>
             <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
@@ -412,7 +542,12 @@ export default function App() {
               </div>
             </div>
 
-            {active.activityType === "themedPuzzle" ||
+            {active.activityType === "personalMistake" && activeMistake ? (
+              <PersonalMistakeRunner
+                mistake={activeMistake}
+                onComplete={completeActivity}
+              />
+            ) : active.activityType === "themedPuzzle" ||
             active.activityType === "mixedPuzzle" ? (
               <PuzzleRunner
                 activity={active}
