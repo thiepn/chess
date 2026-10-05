@@ -67,6 +67,7 @@ import {
   buildPlacementAssessment,
   buildStageCheckpoint,
   checkpointAttemptCount,
+  courseCurriculumFloor,
   evaluateStageGate,
 } from "./assessment/engine";
 import type {
@@ -1022,6 +1023,7 @@ export default function App() {
               mastery={state.mastery}
               gates={stageGates}
               placement={state.placement}
+              curriculumFloor={courseCurriculumFloor(state)}
               onStartLesson={startManualLesson}
               onStartPractice={startManualPractice}
               onStartPlacement={startPlacementAssessment}
