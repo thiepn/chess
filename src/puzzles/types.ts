@@ -44,5 +44,6 @@ export interface PuzzleSelectionCriteria {
   skillId: string;
   mastery: number;
   activityDifficulty: number;
+  targetRating?: number;
   history?: Record<string, PuzzleAttemptSummary>;
 }
