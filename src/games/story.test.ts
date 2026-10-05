@@ -102,6 +102,58 @@ describe("game review story", () => {
     expect(story.prioritySkillId).toBe("openings.principles");
   });
 
+  it("does not call a late custom position an opening just because its local ply is small", () => {
+    const chess = new Chess(
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 30",
+    );
+    const beforeFen = chess.fen();
+    const move = chess.move("e4")!;
+    const review: EngineMoveReview = {
+      gameId: "late",
+      ply: 1,
+      move: {
+        ply: 1,
+        moveNumber: 30,
+        color: "w",
+        san: move.san,
+        uci: "e2e4",
+        from: move.from,
+        to: move.to,
+        piece: move.piece,
+        beforeFen,
+        afterFen: chess.fen(),
+      },
+      before: {
+        scoreCp: 0,
+        bestMove: "e2e4",
+        pv: ["e2e4"],
+        depth: 10,
+      },
+      after: {
+        scoreCp: 0,
+        bestMove: "e7e5",
+        pv: ["e7e5"],
+        depth: 10,
+      },
+      centipawnLoss: 0,
+    };
+    const game: ImportedGame = {
+      id: "late",
+      pgn: "*",
+      importedAt: "2026-10-05T12:00:00Z",
+      playerColor: "w",
+      white: "You",
+      black: "Opponent",
+      result: "*",
+      startingFen: beforeFen,
+      moves: [review.move],
+      criticalMomentIds: [],
+    };
+
+    const result = buildGameReviewStory(game, [review], []);
+    expect(result.phases[0]?.phase).toBe("middlegame");
+  });
+
   it("does not invent critical mistakes in a clean game", () => {
     const reviews = makeReviews().map((review) => ({
       ...review,
