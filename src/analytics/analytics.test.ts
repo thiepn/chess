@@ -119,21 +119,57 @@ describe("longitudinal analytics", () => {
       };
     }
 
+    for (let index = 0; index < 4; index += 1) {
+      const skill = skillById["openings.development"];
+      const before =
+        state.mastery[skill.id] ??
+        emptyMastery(skill.id, skill.difficulty / 5);
+      const evidence: LearningEvidence = {
+        skillId: skill.id,
+        source: "guided",
+        success: true,
+        quality: 1,
+        difficulty: skill.difficulty / 5,
+        occurredAt: `2026-09-${20 + index}T10:00:00Z`,
+      };
+      const after = applyEvidence(before, evidence);
+
+      state = {
+        ...state,
+        mastery: {
+          ...state.mastery,
+          [skill.id]: after,
+        },
+        analytics: appendEvidenceAnalytics(
+          state.analytics,
+          before,
+          after,
+          evidence,
+          "curriculum",
+        ),
+      };
+    }
+
     const intelligence = buildProgressIntelligence(
       state,
       new Date("2026-10-01T10:00:00Z"),
     );
 
-    expect(intelligence.evidenceCount).toBe(6);
+    expect(intelligence.evidenceCount).toBe(10);
     expect(intelligence.calibration.sampleCount).toBe(6);
     expect(intelligence.calibration.label).toBe("underconfident");
     expect(
       intelligence.interventions.some(
         (item) =>
-          item.intervention === "checkpoint" &&
-          item.attempts === 6,
+          item.intervention === "curriculum" &&
+          item.attempts === 4,
       ),
     ).toBe(true);
+    expect(
+      intelligence.interventions.some(
+        (item) => item.intervention === "checkpoint",
+      ),
+    ).toBe(false);
     expect(intelligence.trend).toHaveLength(8);
   });
 
