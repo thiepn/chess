@@ -11,6 +11,8 @@ import {
   assessmentRemediationSkillIds,
   courseCurriculumFloor,
 } from "../assessment/engine";
+import { trainingPolicyFor } from "../adaptation/policy";
+import { trainingScenarios } from "../play/scenarios";
 import type {
   CandidateSource,
   ChessSkill,
@@ -47,44 +49,56 @@ const durations: Partial<Record<TrainingMode, number>> = {
   savedStudy: 5,
 };
 
-function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMode {
-  if (source === "review") {
-    if (skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
-    if (skill.trainingModes.includes("themedPuzzle")) return "themedPuzzle";
-    return "microReview";
-  }
-  if (source === "weakness" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
-  if (source === "game") return "personalMistake";
-  if (source === "repertoire") return "openingRecall";
-  if (source === "library") return "savedStudy";
-  if (source === "assessment") {
-    if (skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
-    if (skill.trainingModes.includes("themedPuzzle")) return "themedPuzzle";
-    return skill.trainingModes[0] ?? "conceptLesson";
-  }
-  if (source === "calibration" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
-  return skill.trainingModes[0] ?? "conceptLesson";
-}
-
 function candidate(
+  state: UserState,
   skill: ChessSkill,
   source: CandidateSource,
   urgency: number,
   priority: number,
   reason: string,
+  now: Date,
 ): TrainingCandidate {
-  const activityType = activityTypeFor(skill, source);
+  const adaptivePolicy = trainingPolicyFor(state, skill, source, now);
+  const activityType = adaptivePolicy.mode;
+  const scenario =
+    activityType === "engineGame"
+      ? trainingScenarios.find((item) => item.skillId === skill.id)
+      : undefined;
+
+  const executableActivityType =
+    activityType === "engineGame" && !scenario
+      ? skill.trainingModes.includes("mixedPuzzle")
+        ? "mixedPuzzle"
+        : skill.trainingModes.includes("themedPuzzle")
+          ? "themedPuzzle"
+          : skill.trainingModes.includes("guidedDemo")
+            ? "guidedDemo"
+            : "conceptLesson"
+      : activityType;
+
+  const resolvedPolicy =
+    executableActivityType === adaptivePolicy.mode
+      ? adaptivePolicy
+      : {
+          ...adaptivePolicy,
+          mode: executableActivityType,
+          reason:
+            "Transfer needs work, but this skill has no dedicated playable scenario yet; use active retrieval instead.",
+        };
+
   return {
     id: `${source}:${skill.id}`,
     source,
     skillIds: [skill.id],
-    activityType,
-    estimatedMinutes: durations[activityType] ?? 5,
-    priority,
+    activityType: executableActivityType,
+    estimatedMinutes: durations[executableActivityType] ?? 5,
+    priority: priority * resolvedPolicy.priorityMultiplier,
     difficulty: skill.difficulty,
     novelty: source === "curriculum" ? 1 : .15,
     urgency,
     reason,
+    scenarioId: scenario?.id,
+    adaptivePolicy: resolvedPolicy,
   };
 }
 
@@ -102,11 +116,11 @@ export function buildCandidatePool(
     const isDue = !mastery.nextReviewAt || new Date(mastery.nextReviewAt) <= now;
     if (isDue && mastery.attempts > 0) {
       const urgency = Math.max(.25, 1 - retention);
-      result.push(candidate(skill, "review", urgency, skill.importance * urgency, "Review due"));
+      result.push(candidate(state, skill, "review", urgency, skill.importance * urgency, "Review due", now));
     }
 
     if (mastery.confidence < 35 && mastery.attempts > 1) {
-      result.push(candidate(skill, "calibration", .35, skill.importance * .45, "Mastery estimate needs calibration"));
+      result.push(candidate(state, skill, "calibration", .35, skill.importance * .45, "Mastery estimate needs calibration", now));
     }
   }
 
@@ -116,11 +130,13 @@ export function buildCandidatePool(
     const priority = weaknessPriority(weakness, skill, state.mastery[skill.id]);
     result.push(
       candidate(
+        state,
         skill,
         "weakness",
         weakness.severity === "critical" ? 1 : .72,
         priority * 2.2,
         weakness.severity === "critical" ? "Critical recurring weakness" : "Recent game weakness",
+        now,
       ),
     );
   }
@@ -135,11 +151,13 @@ export function buildCandidatePool(
     if (!skill) continue;
 
     const item = candidate(
+      state,
       skill,
       "game",
       mistake.severity === "blunder" ? 1 : mistake.severity === "mistake" ? .8 : .58,
       mistakePriority(mistake, now) * 1.8,
       `From move ${mistake.moveNumber}: your own game`,
+      now,
     );
     item.mistakeId = mistake.id;
     result.push(item);
@@ -168,11 +186,13 @@ export function buildCandidatePool(
       if (!node) continue;
 
       const item = candidate(
+        state,
         openingSkill,
         "repertoire",
         deviation ? .9 : .48,
         deviation ? .9 : .48,
         deviation ? "Opening deviation from your game" : `${repertoire.versus}: repertoire recall`,
+        now,
       );
       item.id = `repertoire:${repertoire.id}:${node.id}`;
       item.openingNodeId = node.id;
@@ -193,11 +213,13 @@ export function buildCandidatePool(
         : Math.min(1, .5 + Math.max(0, 2 - training.streak) * .18);
 
     const item = candidate(
+      state,
       skill,
       "library",
       urgency,
       skill.importance * urgency * 1.25,
       "Saved from your analysis workspace",
+      now,
     );
     item.id = `library:${study.id}`;
     item.studyId = study.id;
@@ -210,11 +232,13 @@ export function buildCandidatePool(
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     result.push(
       candidate(
+        state,
         skill,
         "assessment",
         .88,
         skill.importance * (1 - current / 120) * 1.7,
         "Checkpoint remediation",
+        now,
       ),
     );
   }
@@ -226,13 +250,33 @@ export function buildCandidatePool(
   ).slice(0, 8)) {
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     const priority = skill.curriculumPriority * (1 - current / 100);
-    result.push(candidate(skill, "curriculum", .42, priority, current ? "Continue curriculum" : "New concept"));
+    result.push(
+      candidate(
+        state,
+        skill,
+        "curriculum",
+        .42,
+        priority,
+        current ? "Continue curriculum" : "New concept",
+        now,
+      ),
+    );
   }
 
   if (state.focus) {
     for (const skill of Object.values(skillById).filter((item) => item.domain === state.focus?.domain)) {
       const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
-      result.push(candidate(skill, "focus", .55, skill.importance * (1 - current / 120) * 1.35, "Current focus"));
+      result.push(
+        candidate(
+          state,
+          skill,
+          "focus",
+          .55,
+          skill.importance * (1 - current / 120) * 1.35,
+          "Current focus",
+          now,
+        ),
+      );
     }
   }
 
@@ -253,12 +297,24 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
         ? 1.12
         : 1;
   const repetitionPenalty = recentMinutes > 60 ? .82 : 1;
+  const stopPressure = item.adaptivePolicy?.stopPressure ?? 0;
+  const protectedSource = ["review", "weakness", "game", "assessment"].includes(
+    item.source,
+  );
+  const continuationFactor = protectedSource
+    ? 1
+    : stopPressure >= .86
+      ? .22
+      : stopPressure >= .74
+        ? .62
+        : 1;
 
   return (
     (item.priority * .55 + item.urgency * .45) *
     focusModifier *
     transferValue *
     repetitionPenalty *
+    continuationFactor *
     (1 - fatiguePenalty)
   );
 }
