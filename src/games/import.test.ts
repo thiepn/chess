@@ -22,6 +22,18 @@ describe("PGN import", () => {
     expect(playerMoveCount(game)).toBe(5);
   });
 
+  it("preserves a custom starting FEN", () => {
+    const custom = `[Event "Scenario"]
+[SetUp "1"]
+[FEN "4k3/8/8/4K3/4P3/8/8/8 w - - 0 1"]
+[Result "*"]
+
+1. Kf6 *`;
+
+    const game = importPgn(custom, "w");
+    expect(game.startingFen).toBe("4k3/8/8/4K3/4P3/8/8/8 w - - 0 1");
+  });
+
   it("rejects PGN without moves", () => {
     expect(() => importPgn('[Event "Empty"]', "w")).toThrow();
   });
