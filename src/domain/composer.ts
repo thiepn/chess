@@ -1,5 +1,6 @@
 import { readyCurriculumSkills, skillById } from "./curriculum";
 import { retentionProbability, weaknessPriority } from "./mastery";
+import { mistakePriority } from "../games/classify";
 import type {
   CandidateSource,
   ChessSkill,
@@ -106,6 +107,26 @@ export function buildCandidatePool(
     );
   }
 
+  for (const mistake of (state.mistakes ?? [])
+    .filter((item) => new Date(item.nextReviewAt) <= now)
+    .sort((a, b) => mistakePriority(b, now) - mistakePriority(a, now))
+    .slice(0, 5)) {
+    const skill = mistake.skillIds
+      .map((skillId) => skillById[skillId])
+      .find(Boolean);
+    if (!skill) continue;
+
+    const item = candidate(
+      skill,
+      "game",
+      mistake.severity === "blunder" ? 1 : mistake.severity === "mistake" ? .8 : .58,
+      mistakePriority(mistake, now) * 1.8,
+      `From move ${mistake.moveNumber}: your own game`,
+    );
+    item.mistakeId = mistake.id;
+    result.push(item);
+  }
+
   for (const skill of readyCurriculumSkills(state.mastery).slice(0, 8)) {
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     const priority = skill.curriculumPriority * (1 - current / 100);
@@ -168,17 +189,25 @@ export function composeSession(
   let noveltyMinutes = 0;
   const noveltyCap = budget * .28;
 
-  const mandatory = pool.filter(
-    ({ item }) => item.source === "weakness" && item.urgency >= .95,
-  );
+  const mandatory = [
+    ...pool.filter(
+      ({ item }) => item.source === "game" && item.urgency >= .95,
+    ).slice(0, 1),
+    ...pool.filter(
+      ({ item }) => item.source === "weakness" && item.urgency >= .95,
+    ).slice(0, 1),
+  ];
 
-  for (const { item } of mandatory.slice(0, 1)) {
-    if (item.estimatedMinutes <= budget) {
+  for (const { item } of mandatory) {
+    if (
+      item.estimatedMinutes <= budget - usedMinutes &&
+      !usedSkills.has(item.skillIds[0])
+    ) {
       selected.push(item);
       usedSkills.add(item.skillIds[0]);
       usedMinutes += item.estimatedMinutes;
       const domain = skillById[item.skillIds[0]]?.domain;
-      if (domain) domainCount.set(domain, 1);
+      if (domain) domainCount.set(domain, (domainCount.get(domain) ?? 0) + 1);
     }
   }
 
