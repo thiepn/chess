@@ -10,6 +10,7 @@ import {
 import { type ReactNode, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { MotionPreference } from "../interaction/types";
+import { emitExperienceEvent } from "../interaction/events";
 
 export function ExperienceControls() {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,12 @@ export function ExperienceControls() {
             checked={settings.sound}
             onChange={(value) => {
               updateSettings({ sound: value });
-              if (value) window.setTimeout(() => feedback("success"), 0);
+              if (value) {
+                window.setTimeout(
+                  () => emitExperienceEvent({ feedback: "success" }),
+                  120,
+                );
+              }
             }}
           />
 
