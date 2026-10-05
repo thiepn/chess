@@ -2,10 +2,12 @@ import { BookOpen, ChevronRight, LockKeyhole } from "lucide-react";
 import { domainLabels, skills } from "../domain/curriculum";
 import type { DomainId, SkillMastery } from "../domain/types";
 import { lessonScripts } from "../learning/lessons";
+import { supportsPuzzlePractice } from "../puzzles/support";
 
 interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
   onStartLesson: (skillId: string) => void;
+  onStartPractice: (skillId: string) => void;
 }
 
 const domainOrder: DomainId[] = [
@@ -31,7 +33,7 @@ function masteryLabel(value: number) {
   return "New";
 }
 
-export function LearnView({ mastery, onStartLesson }: LearnViewProps) {
+export function LearnView({ mastery, onStartLesson, onStartPractice }: LearnViewProps) {
   return (
     <section className="learn-view">
       <header className="section-hero">
@@ -69,6 +71,7 @@ export function LearnView({ mastery, onStartLesson }: LearnViewProps) {
                 {domainSkills.map((skill) => {
                   const value = Math.round(mastery[skill.id]?.effectiveMastery ?? 0);
                   const available = Boolean(lessonScripts[skill.id]);
+                  const practiceAvailable = supportsPuzzlePractice(skill.id);
 
                   return (
                     <article
@@ -95,14 +98,27 @@ export function LearnView({ mastery, onStartLesson }: LearnViewProps) {
                         </div>
                       </div>
 
-                      {available ? (
-                        <button
-                          className="curriculum-start"
-                          type="button"
-                          onClick={() => onStartLesson(skill.id)}
-                        >
-                          Study <ChevronRight size={16} />
-                        </button>
+                      {available || practiceAvailable ? (
+                        <div className="curriculum-actions">
+                          {available && (
+                            <button
+                              className="curriculum-start"
+                              type="button"
+                              onClick={() => onStartLesson(skill.id)}
+                            >
+                              Study <ChevronRight size={16} />
+                            </button>
+                          )}
+                          {practiceAvailable && (
+                            <button
+                              className="curriculum-practice"
+                              type="button"
+                              onClick={() => onStartPractice(skill.id)}
+                            >
+                              Practice
+                            </button>
+                          )}
+                        </div>
                       ) : (
                         <div className="curriculum-locked">
                           <LockKeyhole size={14} /> Content expansion
