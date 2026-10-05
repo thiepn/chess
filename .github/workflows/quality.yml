@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: test -f public/engine/manifest.json
+      - run: test -f public/engine/stockfish-19-lite-single.js
+      - run: test -f public/engine/stockfish-19-lite-single.wasm
       - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
       - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm test
