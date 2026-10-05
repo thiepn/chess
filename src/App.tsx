@@ -254,20 +254,46 @@ export default function App() {
         ...(previous.games ?? []).filter((item) => item.id !== game.id),
         game,
       ];
+      const priorGameMistakes = new Map(
+        (previous.mistakes ?? [])
+          .filter((item) => item.gameId === game.id)
+          .map((item) => [item.id, item]),
+      );
+      const refreshedMistakes = newMistakes.map((mistake) => {
+        const prior = priorGameMistakes.get(mistake.id);
+        return prior
+          ? {
+              ...mistake,
+              attempts: prior.attempts,
+              successes: prior.successes,
+              lastAttemptAt: prior.lastAttemptAt,
+              nextReviewAt: prior.nextReviewAt,
+              resolved: prior.resolved,
+            }
+          : mistake;
+      });
       const mistakes = [
         ...(previous.mistakes ?? []).filter((item) => item.gameId !== game.id),
-        ...newMistakes,
+        ...refreshedMistakes,
       ];
       const mastery = { ...previous.mastery };
       const gameOpeningDeviations = openingDeviationsForGame(
         game,
         new Date(occurredAt),
       );
+      const priorGameDeviations = new Map(
+        (previous.openingDeviations ?? [])
+          .filter((item) => item.gameId === game.id)
+          .map((item) => [item.id, item]),
+      );
       const openingDeviations = [
         ...(previous.openingDeviations ?? []).filter(
           (item) => item.gameId !== game.id,
         ),
-        ...gameOpeningDeviations,
+        ...gameOpeningDeviations.map((deviation) => ({
+          ...deviation,
+          resolved: priorGameDeviations.get(deviation.id)?.resolved ?? deviation.resolved,
+        })),
       ];
       const openingProgress = { ...(previous.openingProgress ?? {}) };
 
