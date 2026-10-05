@@ -1,4 +1,5 @@
 import { ChevronRight, Lightbulb, RotateCcw, Sparkles } from "lucide-react";
+import type { Color } from "chess.js";
 import { useEffect, useMemo, useState } from "react";
 import type { ChessSkill, TrainingActivity, TrainingOutcome } from "../domain/types";
 import { lessonForSkill } from "../learning/lessons";
@@ -31,6 +32,7 @@ export function LessonRunner({
 
   const step = lesson.steps[stepIndex];
   const isLast = stepIndex === lesson.steps.length - 1;
+  const orientation = (step.fen.split(/\s+/)[1] === "b" ? "b" : "w") as Color;
 
   useEffect(() => {
     setStepIndex(0);
@@ -90,6 +92,7 @@ export function LessonRunner({
           <ChessBoard
             key={`${step.id}-${boardReset}`}
             fen={step.fen}
+            orientation={orientation}
             disabled={step.type === "explain" || solved}
             highlights={displayedHighlights}
             arrows={displayedArrows}
@@ -112,7 +115,7 @@ export function LessonRunner({
           />
 
           <div className="board-caption">
-            <span>White perspective</span>
+            <span>{orientation === "w" ? "White" : "Black"} perspective</span>
             <span>Tap a piece to see legal moves</span>
           </div>
         </div>
