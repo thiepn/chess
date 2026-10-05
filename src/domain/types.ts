@@ -4,6 +4,16 @@ import type { OpeningDeviation, OpeningProgress } from "../openings/types";
 import type { SavedStudy } from "../library/types";
 import type { ExperienceSettings } from "../interaction/types";
 
+export type CurriculumStageId =
+  | "learn"
+  | "safety"
+  | "build"
+  | "tactics"
+  | "thinking"
+  | "fight"
+  | "finish"
+  | "practical";
+
 export type DomainId =
   | "rules"
   | "fundamentals"
@@ -45,6 +55,7 @@ export interface SkillRelation {
 
 export interface ChessSkill {
   id: string;
+  stage: CurriculumStageId;
   domain: DomainId;
   title: string;
   description: string;
