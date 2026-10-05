@@ -104,6 +104,14 @@ export function ExperienceProvider({
     settings.motion === "reduced" ||
     (settings.motion === "system" && systemReduced);
 
+  useEffect(
+    () => () => {
+      const context = audioRef.current;
+      if (context && context.state !== "closed") void context.close();
+    },
+    [],
+  );
+
   useEffect(() => {
     const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     if (!media) return;
