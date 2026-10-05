@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Play,
-  RotateCcw,
   Sparkles,
   Swords,
   Target,
@@ -63,6 +62,27 @@ function applyUci(fen: string, uci: string) {
   } catch {
     return fen;
   }
+}
+
+function pvToSan(fen: string, pv: string[]) {
+  const chess = new Chess(fen);
+  const sans: string[] = [];
+
+  for (const uci of pv.slice(0, 4)) {
+    try {
+      const move = chess.move({
+        from: uci.slice(0, 2),
+        to: uci.slice(2, 4),
+        promotion: uci.slice(4, 5) || "q",
+      });
+      if (!move) break;
+      sans.push(move.san);
+    } catch {
+      break;
+    }
+  }
+
+  return sans;
 }
 
 function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
@@ -192,7 +212,8 @@ export function GameStoryView({
 
       <div className="story-phase-grid">
         {story.phases.map((phase) => (
-          <article
+          <button
+            type="button"
             key={phase.phase}
             className={`story-phase ${phase.phase}`}
             onClick={() => {
@@ -211,7 +232,7 @@ export function GameStoryView({
               <span>Avg loss {(phase.averageCentipawnLoss / 100).toFixed(1)}</span>
               <span>{phase.criticalCount} critical</span>
             </div>
-          </article>
+          </button>
         ))}
       </div>
 
@@ -419,7 +440,7 @@ function MomentDetails({
       {moment.principalVariation.length > 1 && (
         <div className="moment-line">
           <span>Engine continuation</span>
-          <strong>{moment.principalVariation.slice(0, 4).join(" ")}</strong>
+          <strong>{pvToSan(moment.positionFen, moment.principalVariation).join(" ")}</strong>
         </div>
       )}
 
