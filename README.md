@@ -24,12 +24,13 @@ The default experience should answer one question: **what should I train now?**
 - P5 PGN/Lichess game import, client-side Stockfish 19 analysis, critical-moment filtering, curriculum-linked error classification, personal mistake bank, real-game evidence, and spaced mistake repair
 - P6 compact concept-first opening repertoire, visual repertoire explorer, spaced branch recall, real-game deviation detection, and adaptive opening review
 - P7 full Play system with configurable/adaptive Stockfish opponents, complete legal games, opening/endgame/conversion/defense training scenarios, automatic PGN capture, transfer evidence, and automatic handoff into P5 Review
+- P8 post-game storytelling with phase summaries, a complete move timeline, 3–5 high-signal moments, animated actual-vs-better move playback, curriculum links, legacy-review upgrades, and direct Repair/Replay actions
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system instead of a disconnected chessboard.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump.
 
 ## Run
 
@@ -138,6 +139,33 @@ Training scenarios currently include:
 
 A completed game immediately produces PGN, enters account game history, updates scenario transfer evidence, detects opening deviations, and is then analyzed through the P5 Stockfish critical-moment pipeline. If automatic analysis fails, the raw game remains safely stored in Review.
 
+## Post-game story
+
+Every analyzed game now stores a compact durable review story rather than the raw per-move engine dump.
+
+The story contains:
+
+- opening, middlegame and endgame phase summaries;
+- a verdict for the overall game;
+- the highest-priority curriculum skill from that game;
+- 3–5 moments worth remembering;
+- actual move versus better move;
+- evaluation before/after and centipawn cost;
+- a short teaching explanation;
+- a compact engine continuation;
+- links back to the personal mistake bank.
+
+The visual Review workspace keeps the entire move timeline navigable while reserving detailed explanation for the selected moments. Switching between Position, Your move and Better move animates the relevant board transition and teaching arrow.
+
+Older P5/P7 analyzed games can be upgraded in place by selecting them from Review; the app reruns analysis and generates the P8 story.
+
+From a critical moment:
+
+- **Repair now** opens the focused retrieval exercise from P5.
+- **Replay position** starts a real P7 Stockfish game from that exact position.
+
+Replay games preserve their custom starting FEN, are excluded from ordinary opening-deviation tracking, and flow back into the normal Review pipeline after completion.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -152,4 +180,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P8 — Post-Game Storytelling, Move Timeline & Personalized Review Experience.
+P9 — Library, Analysis Board & Saved Study Workspace.
