@@ -40,37 +40,57 @@ class SupabaseChessStateRepository implements ChessStateRepository {
   }
 
   async load(fallback: UserState) {
-    const userId = await this.userId();
-    if (!userId) {
-      const local = localStorage.getItem(LOCAL_KEY);
-      return local ? (JSON.parse(local) as UserState) : fallback;
+    const loadLocal = () => {
+      try {
+        const local = localStorage.getItem(LOCAL_KEY);
+        return local ? (JSON.parse(local) as UserState) : fallback;
+      } catch {
+        return fallback;
+      }
+    };
+
+    try {
+      const userId = await this.userId();
+      if (!userId) return loadLocal();
+
+      const { data, error } = await this.client
+        .from("chess_user_state")
+        .select("state")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (error || !data?.state) return loadLocal();
+      return data.state as UserState;
+    } catch {
+      return loadLocal();
     }
-
-    const { data, error } = await this.client
-      .from("chess_user_state")
-      .select("state")
-      .eq("user_id", userId)
-      .maybeSingle();
-
-    if (error || !data?.state) return fallback;
-    return data.state as UserState;
   }
 
   async save(state: UserState) {
-    const userId = await this.userId();
-    if (!userId) {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-      return;
-    }
+    const saveLocal = () => {
+      try {
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
+      } catch {
+        // Persistence fallback is best-effort.
+      }
+    };
 
-    const { error } = await this.client.from("chess_user_state").upsert({
-      user_id: userId,
-      state,
-      updated_at: new Date().toISOString(),
-    });
+    try {
+      const userId = await this.userId();
+      if (!userId) {
+        saveLocal();
+        return;
+      }
 
-    if (error) {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
+      const { error } = await this.client.from("chess_user_state").upsert({
+        user_id: userId,
+        state,
+        updated_at: new Date().toISOString(),
+      });
+
+      if (error) saveLocal();
+    } catch {
+      saveLocal();
     }
   }
 }
