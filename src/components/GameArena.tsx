@@ -167,7 +167,9 @@ export function GameArena({
     chess.setHeader("Result", resultHeader(outcome, playerColor));
     const pgn = chess.pgn({ maxWidth: 80, newline: "\n" });
     const completedAt = new Date().toISOString();
-    const importedGame = importPgn(pgn, playerColor, completedAt);
+    const importedGame = importPgn(pgn, playerColor, completedAt, {
+      source: "training",
+    });
     const scenarioSuccess =
       scenario && outcome !== "resigned"
         ? scenario.successResults.includes(outcome)
