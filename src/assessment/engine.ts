@@ -6,9 +6,11 @@ import {
 } from "../domain/curriculum";
 import type {
   CurriculumStageId,
+  LearningEvidence,
   SkillMastery,
   UserState,
 } from "../domain/types";
+import { applyEvidence, emptyMastery } from "../domain/mastery";
 import { lessonScripts } from "../learning/lessons";
 import type {
   AssessmentAttempt,
@@ -453,4 +455,72 @@ export function assessmentRemediationSkillIds(state: UserState) {
     )
     .slice(0, 3)
     .map((skill) => skill.id);
+}
+
+
+export function applyAssessmentToState(
+  state: UserState,
+  session: AssessmentSession,
+  results: AssessmentItemResult[],
+  now = new Date(),
+) {
+  const attempt = completeAssessmentAttempt(session, results, now);
+  const mastery = { ...state.mastery };
+
+  for (const result of results) {
+    const skill = skillById[result.skillId];
+    if (!skill) continue;
+
+    const base =
+      mastery[skill.id] ??
+      emptyMastery(skill.id, Math.min(1, skill.difficulty / 5));
+
+    const evidence: LearningEvidence = {
+      skillId: skill.id,
+      source: session.kind === "placement" ? "diagnostic" : "checkpoint",
+      success: result.success,
+      quality: result.success ? 1 : 0,
+      difficulty: Math.min(1, skill.difficulty / 5),
+      occurredAt: now.toISOString(),
+    };
+
+    mastery[skill.id] = applyEvidence(base, evidence);
+  }
+
+  let next: UserState = {
+    ...state,
+    mastery,
+    assessments: [...(state.assessments ?? []), attempt],
+  };
+
+  let placement: PlacementProfile | undefined;
+  let certification: StageCertification | null = null;
+
+  if (session.kind === "placement") {
+    placement = placementProfileFromAttempt(attempt);
+    next = {
+      ...next,
+      placement,
+    };
+  } else if (session.stageId) {
+    const gate = evaluateStageGate(next, session.stageId);
+    certification = certificationFromGate(gate, attempt);
+
+    if (certification) {
+      next = {
+        ...next,
+        stageCertifications: {
+          ...(next.stageCertifications ?? {}),
+          [session.stageId]: certification,
+        },
+      };
+    }
+  }
+
+  return {
+    state: next,
+    attempt,
+    placement,
+    certification,
+  };
 }
