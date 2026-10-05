@@ -435,7 +435,7 @@ export function LibraryView({
             </div>
 
             <ChessBoard
-              key={`${currentFen}-${orientation}`}
+              key={orientation}
               fen={currentFen}
               orientation={orientation}
               arrows={engineArrow}
