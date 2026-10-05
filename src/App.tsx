@@ -510,6 +510,7 @@ export default function App() {
       ];
       const openingProgress = { ...(previous.openingProgress ?? {}) };
       const mastery = { ...previous.mastery };
+      let analytics = previous.analytics;
 
       for (const deviation of gameOpeningDeviations) {
         const current =
@@ -528,7 +529,7 @@ export default function App() {
             mastery[skill.id] ??
             emptyMastery(skill.id, Math.min(1, skill.difficulty / 5));
 
-          mastery[skill.id] = applyEvidence(base, {
+          const evidence: LearningEvidence = {
             skillId: skill.id,
             source: "trainingPosition",
             success: Boolean(result.scenarioSuccess),
@@ -540,7 +541,16 @@ export default function App() {
                   : .3,
             difficulty: Math.min(1, skill.difficulty / 5),
             occurredAt,
-          });
+          };
+          const nextMastery = applyEvidence(base, evidence);
+          mastery[skill.id] = nextMastery;
+          analytics = appendEvidenceAnalytics(
+            analytics,
+            base,
+            nextMastery,
+            evidence,
+            "play",
+          );
         }
       }
 
@@ -550,6 +560,7 @@ export default function App() {
         mastery,
         openingDeviations,
         openingProgress,
+        analytics,
       };
     });
 
