@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BarChart3,
   Bookmark,
@@ -147,6 +147,7 @@ export default function App() {
     useState<AssessmentSession | null>(null);
   const [nav, setNav] = useState("home");
   const [lichessSyncing, setLichessSyncing] = useState(false);
+  const lichessSyncInFlight = useRef(false);
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
   const [lichessSyncError, setLichessSyncError] = useState<string | null>(null);
 
@@ -165,7 +166,7 @@ export default function App() {
     if (!loaded || !state.lichess?.autoSync) return;
 
     const syncIfDue = () => {
-      if (lichessSyncing) return;
+      if (lichessSyncInFlight.current) return;
       const lastSync = state.lichess?.lastSyncAt
         ? new Date(state.lichess.lastSyncAt).getTime()
         : 0;
@@ -178,7 +179,6 @@ export default function App() {
     return () => window.removeEventListener("focus", syncIfDue);
   }, [
     loaded,
-    lichessSyncing,
     state.lichess?.autoSync,
     state.lichess?.lastSyncAt,
     state.lichess?.username,
@@ -321,12 +321,13 @@ export default function App() {
     silent = false,
     usernameOverride?: string,
   ) {
-    if (lichessSyncing) return;
+    if (lichessSyncInFlight.current) return;
 
     const connection = state.lichess;
     const username = usernameOverride ?? connection?.username;
     if (!username) return;
 
+    lichessSyncInFlight.current = true;
     setLichessSyncing(true);
     setLichessSyncError(null);
     if (!silent) setLichessSyncMessage("Checking Lichess for finished games…");
@@ -389,6 +390,7 @@ export default function App() {
       setLichessSyncError(message);
       if (!silent) setLichessSyncMessage(null);
     } finally {
+      lichessSyncInFlight.current = false;
       setLichessSyncing(false);
     }
   }
