@@ -1,9 +1,9 @@
 import { Chess, type Color } from "chess.js";
 import type { ImportedGame, ImportedGameMove } from "./types";
 
-function stableGameId(pgn: string, importedAt: string) {
+function stableGameId(pgn: string) {
   let hash = 2166136261;
-  const value = `${pgn.trim()}|${importedAt.slice(0, 10)}`;
+  const value = pgn.trim().replace(/\s+/g, " ");
 
   for (let index = 0; index < value.length; index += 1) {
     hash ^= value.charCodeAt(index);
@@ -43,7 +43,7 @@ export function importPgn(
   }));
 
   return {
-    id: stableGameId(pgn, importedAt),
+    id: stableGameId(pgn),
     pgn: pgn.trim(),
     importedAt,
     playerColor,
