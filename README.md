@@ -29,12 +29,13 @@ The default experience should answer one question: **what should I train now?**
 - P10 shared premium interaction system with real board glides/castling motion, check emphasis, motion tokens, optional Web Audio and haptics, milestone-based celebrations, synced experience preferences, improved loading/error resilience, accessibility states, safe-area handling, and mobile/landscape polish
 - P11 complete beginner-to-intermediate curriculum expansion with 68 atomic skills across 8 stages, authored interactive board lessons for every skill, prerequisite-driven progression, expanded Lichess puzzle-theme mappings, a staged Learn journey, recommended-next guidance, and CI-enforced curriculum/content QA
 - P12 placement diagnostics, mixed stage checkpoints, evidence-based promotion gates, persistent certifications, placement/certification-aware curriculum floors, targeted checkpoint remediation, and Home/Learn course-status surfaces
+- P13 longitudinal learning analytics with compact evidence history, mastery/retention/transfer trajectories, model calibration, stage velocity, recurring-vs-repaired weakness tracking, intervention effectiveness signals, and a dedicated Progress Intelligence view
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score.
 
 ## Run
 
@@ -334,13 +335,58 @@ Learn shows the complete five-part gate for every stage, placement status, check
 
 Assessment state, placement results and stage certifications live inside the existing account JSON state, so P12 requires no separate backend service or database migration.
 
+## Longitudinal progress intelligence
+
+P13 adds a compact event history behind the existing mastery model. It records the before/after state whenever meaningful learning evidence changes a skill.
+
+Tracked evidence includes:
+
+- curriculum lessons and guided work;
+- themed and mixed puzzle practice;
+- spaced reviews;
+- personal mistake repair;
+- saved Library study retrieval;
+- opening recall;
+- targeted training games;
+- real-game review mistakes;
+- placement diagnostics;
+- stage checkpoints.
+
+Each event stores the relevant skill/stage/domain plus mastery, delayed-retention, transfer, confidence and stability before and after the evidence. The history is capped to a compact rolling window rather than storing disposable engine data or raw interaction telemetry.
+
+Existing accounts are migrated without a database change. Their current skill states become baseline events; P13 then records true longitudinal changes from that point onward.
+
+### Progress Intelligence view
+
+The five primary product tabs remain unchanged. Home links into a dedicated Progress Intelligence surface that answers:
+
+- **Mastery trajectory** — whether effective mastery is actually increasing over the last 30 days and across an eight-week trend.
+- **Retention health** — expected recall from the current forgetting/stability model rather than lesson-completion percentage.
+- **Transfer** — how well trained concepts survive position training and real games.
+- **Calibration** — whether mastery estimates predict placement/checkpoint performance, including overconfidence and underconfidence signals.
+- **Stage velocity** — time from first evidence in a course stage to certification, plus current mastery/retention/transfer for unfinished stages.
+- **Improving skills** — skills with positive recent longitudinal movement.
+- **Needs attention** — skills with the weakest combined mastery, retention and transfer.
+- **Recurring versus repaired weaknesses** — unresolved/repaired personal mistakes and recurring game-derived weakness signals.
+- **Intervention effectiveness** — which actual learning interventions are producing the strongest current personal signal.
+
+Placement, checkpoints and game review are deliberately treated as **measurement**, not as teaching interventions. They inform calibration and player-model accuracy but are excluded from the “what works for you” intervention ranking.
+
+Intervention effectiveness is presented as a personal signal, not a causal scientific claim. It combines recent success, mastery movement, retention movement and sample size. Scores are bounded and become more meaningful as repeated evidence accumulates.
+
+The analytics layer stores no separate telemetry backend and requires no new database table. It lives inside the same account JSON state as mastery, games, assessments and Library studies. The event log is capped at 3,000 entries to keep personal sync compact.
+
+### Historical limits
+
+P13 cannot reconstruct learning trajectories that were never stored before this phase. For pre-P13 users, existing mastery becomes a baseline and real longitudinal tracking begins from that baseline. The UI therefore distinguishes insufficient calibration/history from confident conclusions instead of inventing past progress.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
 
 If there is no authenticated Supabase session, the app stays fully usable with local persistence.
 
-Durable account state includes skill mastery, puzzle attempt history, games, game stories, repertoire progress, personal mistakes, and saved Library studies. The static puzzle/reference corpora themselves are not synced through the account backend.
+Durable account state includes skill mastery, longitudinal analytics history, puzzle attempt history, games, game stories, repertoire progress, personal mistakes, assessments, certifications, and saved Library studies. The static puzzle/reference corpora themselves are not synced through the account backend.
 
 ## Architecture
 
@@ -348,4 +394,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P13 — Longitudinal Learning Analytics, Skill Calibration & Progress Intelligence.
+P14 — Adaptive Training Policy, Difficulty Calibration & Automatic Intervention Selection.
