@@ -19,6 +19,7 @@ describe("opening repertoire", () => {
 
   it("builds an ordered path to the Italian repertoire move", () => {
     expect(pathToNode("italian-bc4").map((node) => node.id)).toEqual([
+      "white-start",
       "white-e4",
       "italian-e5",
       "italian-nf3",
