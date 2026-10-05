@@ -1374,3 +1374,37 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
     animation: none;
   }
 }
+
+
+.curriculum-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.curriculum-actions .curriculum-start {
+  margin-top: 0;
+}
+
+.curriculum-practice {
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 11px;
+  border: 1px solid rgba(87, 212, 155, .16);
+  background: rgba(87, 212, 155, .065);
+  color: #9ce2bf;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.curriculum-practice:hover {
+  background: rgba(87, 212, 155, .11);
+}
+
+@media (max-width: 420px) {
+  .curriculum-actions {
+    grid-template-columns: 1fr;
+  }
+}
