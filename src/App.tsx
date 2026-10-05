@@ -75,6 +75,10 @@ import type {
   AssessmentSession,
   StageGateEvaluation,
 } from "./assessment/types";
+import {
+  appendEvidenceAnalytics,
+  ensureAnalyticsState,
+} from "./analytics/record";
 
 const repo = createChessStateRepository();
 
@@ -137,7 +141,7 @@ export default function App() {
 
   useEffect(() => {
     repo.load(initialUserState).then((value) => {
-      setState(value);
+      setState(ensureAnalyticsState(value));
       setLoaded(true);
     });
   }, []);
