@@ -14,16 +14,18 @@ import {
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
 import { domainLabels, skillById } from "./domain/curriculum";
-import { applyEvidence } from "./domain/mastery";
+import { applyEvidence, emptyMastery } from "./domain/mastery";
 import type {
   LearningEvidence,
   SessionMode,
   TrainingActivity,
+  TrainingOutcome,
   UserState,
 } from "./domain/types";
 import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
-import { LessonRunner, type LessonOutcome } from "./components/LessonRunner";
+import { LessonRunner } from "./components/LessonRunner";
+import { PuzzleRunner } from "./components/PuzzleRunner";
 import { LearnView } from "./components/LearnView";
 
 const repo = createChessStateRepository();
@@ -90,45 +92,65 @@ export default function App() {
       .slice(0, 4);
   }, [state.mastery]);
 
-  function completeActivity(outcome: LessonOutcome) {
+  function completeActivity(outcome: TrainingOutcome) {
     if (!active || !activeSkill) return;
     const skillId = activeSkill.id;
-    const existing = state.mastery[skillId];
-
-    if (existing) {
-      const source: LearningEvidence["source"] =
-        active.source === "review"
-          ? "delayedReview"
-          : active.source === "weakness"
+    const occurredAt = new Date().toISOString();
+    const source: LearningEvidence["source"] =
+      active.source === "review"
+        ? "delayedReview"
+        : active.activityType === "themedPuzzle"
+          ? "themedPuzzle"
+          : active.activityType === "mixedPuzzle"
             ? "mixedPuzzle"
-            : active.activityType === "conceptLesson"
-              ? "lesson"
-              : active.activityType === "guidedDemo"
-                ? "guided"
-                : active.activityType === "themedPuzzle"
-                  ? "themedPuzzle"
-                  : active.activityType === "mixedPuzzle"
-                    ? "mixedPuzzle"
-                    : "trainingPosition";
+            : active.source === "weakness"
+              ? "mixedPuzzle"
+              : active.activityType === "conceptLesson"
+                ? "lesson"
+                : active.activityType === "guidedDemo"
+                  ? "guided"
+                  : "trainingPosition";
 
-      const evidence: LearningEvidence = {
-        skillId,
-        source,
-        success: outcome.success,
-        quality: outcome.quality,
-        difficulty: Math.min(1, activeSkill.difficulty / 5),
-        hintsUsed: outcome.hintsUsed,
-        occurredAt: new Date().toISOString(),
-      };
+    const evidence: LearningEvidence = {
+      skillId,
+      source,
+      success: outcome.success,
+      quality: outcome.quality,
+      difficulty: Math.min(1, activeSkill.difficulty / 5),
+      hintsUsed: outcome.hintsUsed,
+      occurredAt,
+    };
 
-      setState((previous) => ({
+    setState((previous) => {
+      const previousMastery =
+        previous.mastery[skillId] ??
+        emptyMastery(skillId, Math.min(1, activeSkill.difficulty / 5));
+
+      const puzzleHistory = { ...(previous.puzzleHistory ?? {}) };
+
+      if (outcome.puzzleId) {
+        const prior = puzzleHistory[outcome.puzzleId];
+        puzzleHistory[outcome.puzzleId] = {
+          puzzleId: outcome.puzzleId,
+          attempts: (prior?.attempts ?? 0) + 1,
+          successes: (prior?.successes ?? 0) + (outcome.success ? 1 : 0),
+          lastAttemptAt: occurredAt,
+          lastSuccessAt: outcome.success ? occurredAt : prior?.lastSuccessAt,
+          lastQuality: outcome.quality,
+          hintsUsed: outcome.hintsUsed,
+          wrongAttempts: outcome.wrongAttempts,
+        };
+      }
+
+      return {
         ...previous,
         mastery: {
           ...previous.mastery,
-          [skillId]: applyEvidence(previous.mastery[skillId], evidence),
+          [skillId]: applyEvidence(previousMastery, evidence),
         },
-      }));
-    }
+        puzzleHistory,
+      };
+    });
 
     if (manualActivity) {
       setManualActivity(null);
@@ -366,11 +388,22 @@ export default function App() {
               </div>
             </div>
 
-            <LessonRunner
-              activity={active}
-              skill={activeSkill}
-              onComplete={completeActivity}
-            />
+            {active.activityType === "themedPuzzle" ||
+            active.activityType === "mixedPuzzle" ? (
+              <PuzzleRunner
+                activity={active}
+                skill={activeSkill}
+                mastery={state.mastery[activeSkill.id]}
+                history={state.puzzleHistory}
+                onComplete={completeActivity}
+              />
+            ) : (
+              <LessonRunner
+                activity={active}
+                skill={activeSkill}
+                onComplete={completeActivity}
+              />
+            )}
           </section>
         </div>
       )}
