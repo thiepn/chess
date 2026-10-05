@@ -293,6 +293,9 @@ export function composeSession(
 
   const mandatory = [
     ...pool.filter(
+      ({ item }) => item.source === "assessment" && item.urgency >= .85,
+    ).slice(0, 1),
+    ...pool.filter(
       ({ item }) => item.source === "game" && item.urgency >= .95,
     ).slice(0, 1),
     ...pool.filter(
