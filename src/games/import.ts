@@ -32,7 +32,8 @@ export function importPgn(
 
   const moves: ImportedGameMove[] = history.map((move, index) => ({
     ply: index + 1,
-    moveNumber: Math.floor(index / 2) + 1,
+    moveNumber:
+      Number(move.before.split(/\s+/)[5]) || Math.floor(index / 2) + 1,
     color: move.color,
     san: move.san,
     uci: `${move.from}${move.to}${move.promotion ?? ""}`,
