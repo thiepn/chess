@@ -83,6 +83,10 @@ import {
 } from "./analytics/record";
 import { buildProgressIntelligence } from "./analytics/engine";
 import { ProgressView } from "./components/ProgressView";
+import {
+  fetchLichessProfile,
+  fetchRecentLichessGames,
+} from "./lichess/api";
 
 const repo = createChessStateRepository();
 
@@ -142,6 +146,9 @@ export default function App() {
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
   const [nav, setNav] = useState("home");
+  const [lichessSyncing, setLichessSyncing] = useState(false);
+  const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
+  const [lichessSyncError, setLichessSyncError] = useState<string | null>(null);
 
   useEffect(() => {
     repo.load(initialUserState).then((value) => {
@@ -153,6 +160,15 @@ export default function App() {
   useEffect(() => {
     if (loaded) void repo.save(state);
   }, [state, loaded]);
+
+  useEffect(() => {
+    if (!loaded || !state.lichess?.autoSync || lichessSyncing) return;
+    const lastSync = state.lichess.lastSyncAt
+      ? new Date(state.lichess.lastSyncAt).getTime()
+      : 0;
+    const due = Date.now() - lastSync >= 15 * 60 * 1000;
+    if (due) void syncLichessGames(true);
+  }, [loaded, state.lichess?.autoSync, state.lichess?.lastSyncAt]);
 
   const session = useMemo(() => composeSession(state, mode), [state, mode]);
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
@@ -245,6 +261,123 @@ export default function App() {
       .sort((a, b) => b.value - a.value)
       .slice(0, 4);
   }, [state.mastery]);
+
+  async function linkLichess(username: string) {
+    setLichessSyncError(null);
+    setLichessSyncMessage(null);
+
+    try {
+      const profile = await fetchLichessProfile(username);
+      if (profile.disabled) {
+        throw new Error("That Lichess account is disabled.");
+      }
+
+      const linkedAt = new Date().toISOString();
+      setState((previous) => ({
+        ...previous,
+        lichess: {
+          username: profile.username,
+          linkedAt,
+          autoSync: true,
+        },
+      }));
+      setLichessSyncMessage(`Linked @${profile.username}. Syncing recent games…`);
+
+      window.setTimeout(() => {
+        void syncLichessGames(false, profile.username);
+      }, 0);
+    } catch (cause) {
+      setLichessSyncError(
+        cause instanceof Error ? cause.message : "Could not link Lichess.",
+      );
+      throw cause;
+    }
+  }
+
+  function unlinkLichess() {
+    setState((previous) => {
+      const { lichess: _lichess, ...rest } = previous;
+      return rest;
+    });
+    setLichessSyncMessage(null);
+    setLichessSyncError(null);
+  }
+
+  async function syncLichessGames(
+    silent = false,
+    usernameOverride?: string,
+  ) {
+    if (lichessSyncing) return;
+
+    const connection = state.lichess;
+    const username = usernameOverride ?? connection?.username;
+    if (!username) return;
+
+    setLichessSyncing(true);
+    setLichessSyncError(null);
+    if (!silent) setLichessSyncMessage("Checking Lichess for finished games…");
+
+    try {
+      const fetched = await fetchRecentLichessGames(username, {
+        max: 12,
+        since: usernameOverride ? undefined : connection?.lastSyncAt,
+      });
+
+      const existing = new Set(
+        (state.games ?? []).map((game) =>
+          game.externalId ? `lichess:${game.externalId}` : game.id,
+        ),
+      );
+      const fresh = fetched.filter(
+        (game) =>
+          !existing.has(
+            game.externalId ? `lichess:${game.externalId}` : game.id,
+          ),
+      );
+      const syncedAt = new Date().toISOString();
+
+      setState((previous) => {
+        const currentIds = new Set(
+          (previous.games ?? []).map((game) =>
+            game.externalId ? `lichess:${game.externalId}` : game.id,
+          ),
+        );
+        const uniqueFresh = fresh.filter(
+          (game) =>
+            !currentIds.has(
+              game.externalId ? `lichess:${game.externalId}` : game.id,
+            ),
+        );
+
+        return {
+          ...previous,
+          games: [...(previous.games ?? []), ...uniqueFresh],
+          lichess: {
+            username,
+            linkedAt: previous.lichess?.linkedAt ?? syncedAt,
+            autoSync: previous.lichess?.autoSync ?? true,
+            lastSyncAt: syncedAt,
+            lastImportedAt:
+              uniqueFresh.at(-1)?.importedAt ??
+              previous.lichess?.lastImportedAt,
+            lastSyncCount: uniqueFresh.length,
+          },
+        };
+      });
+
+      const message = fresh.length
+        ? `Imported ${fresh.length} new human game${fresh.length === 1 ? "" : "s"} into Review.`
+        : "Lichess is up to date.";
+      setLichessSyncMessage(message);
+    } catch (cause) {
+      const message =
+        cause instanceof Error ? cause.message : "Could not sync Lichess games.";
+      setLichessSyncError(message);
+      if (!silent) setLichessSyncMessage(null);
+    } finally {
+      setLichessSyncing(false);
+    }
+  }
 
   function completeActivity(outcome: TrainingOutcome) {
     if (!active || !activeSkill) return;
@@ -1116,6 +1249,13 @@ export default function App() {
         ) : nav === "play" ? (
           <PlayView
             mastery={state.mastery}
+            lichess={state.lichess}
+            lichessSyncing={lichessSyncing}
+            lichessSyncMessage={lichessSyncMessage}
+            lichessSyncError={lichessSyncError}
+            onLinkLichess={linkLichess}
+            onUnlinkLichess={unlinkLichess}
+            onSyncLichess={() => syncLichessGames(false)}
             onGameFinished={handlePlayFinished}
             externalScenario={replayScenario}
             onExternalScenarioExit={() => setReplayScenario(undefined)}
@@ -1124,6 +1264,13 @@ export default function App() {
           <ReviewView
             games={state.games ?? []}
             mistakes={state.mistakes ?? []}
+            lichess={state.lichess}
+            lichessSyncing={lichessSyncing}
+            lichessSyncMessage={lichessSyncMessage}
+            lichessSyncError={lichessSyncError}
+            onLinkLichess={linkLichess}
+            onUnlinkLichess={unlinkLichess}
+            onSyncLichess={() => syncLichessGames(false)}
             onAnalyzed={handleAnalyzedGame}
             onTrainMistake={startMistakePractice}
             onReplayMistake={replayMistakePosition}
