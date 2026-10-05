@@ -6,7 +6,8 @@ export type PlayMode =
   | "opening"
   | "conversion"
   | "defense"
-  | "endgame";
+  | "endgame"
+  | "replay";
 
 export type AiProfileId =
   | "gentle"
@@ -60,5 +61,6 @@ export interface PlayResult {
   scenarioId?: string;
   scenarioSuccess?: boolean;
   aiProfileId: AiProfileId;
+  trainingSkillId?: string;
   completedAt: string;
 }
