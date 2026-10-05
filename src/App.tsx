@@ -41,7 +41,7 @@ import { PlayView } from "./components/PlayView";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { analyzeImportedGame } from "./games/analyze";
 import { scenarioById } from "./play/scenarios";
-import type { PlayResult } from "./play/types";
+import type { PlayResult, TrainingScenario } from "./play/types";
 
 const repo = createChessStateRepository();
 
@@ -75,6 +75,7 @@ export default function App() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [learnMode, setLearnMode] = useState<"curriculum" | "openings">("curriculum");
+  const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [nav, setNav] = useState("home");
 
   useEffect(() => {
@@ -320,6 +321,7 @@ export default function App() {
   async function handlePlayFinished(result: PlayResult) {
     const occurredAt = result.completedAt;
     const scenario = result.scenarioId ? scenarioById[result.scenarioId] : undefined;
+    const trainingSkillId = scenario?.skillId ?? result.trainingSkillId;
 
     setState((previous) => {
       const games = [
@@ -349,8 +351,8 @@ export default function App() {
         };
       }
 
-      if (scenario) {
-        const skill = skillById[scenario.skillId];
+      if (trainingSkillId) {
+        const skill = skillById[trainingSkillId];
         if (skill) {
           const base =
             mastery[skill.id] ??
@@ -394,6 +396,36 @@ export default function App() {
     } finally {
       engine?.quit();
     }
+  }
+
+  function replayMistakePosition(mistakeId: string) {
+    const mistake = state.mistakes?.find((item) => item.id === mistakeId);
+    if (!mistake) return;
+
+    const skillId = mistake.skillIds.find((id) => skillById[id]) ?? mistake.skillIds[0];
+    if (!skillId) return;
+
+    const successResults: TrainingScenario["successResults"] =
+      mistake.evaluationBefore >= 180 ? ["win"] : ["win", "draw"];
+
+    setReplayScenario({
+      id: `replay:${mistake.id}`,
+      mode: "replay",
+      title: "Replay the critical position",
+      subtitle: `From move ${mistake.moveNumber} of your game`,
+      description:
+        "Start from the exact position before your original decision and prove the improved plan survives against resistance.",
+      fen: mistake.positionFen,
+      playerColor: mistake.playerColor,
+      skillId,
+      objective:
+        mistake.evaluationBefore >= 180
+          ? "Convert the advantage without repeating the original mistake."
+          : "Reach a stable result without repeating the original mistake.",
+      successResults,
+      sourceLabel: "Replay from Review",
+    });
+    setNav("play");
   }
 
   function startMistakePractice(mistakeId: string) {
@@ -656,6 +688,8 @@ export default function App() {
           <PlayView
             mastery={state.mastery}
             onGameFinished={handlePlayFinished}
+            externalScenario={replayScenario}
+            onExternalScenarioExit={() => setReplayScenario(undefined)}
           />
         ) : nav === "review" ? (
           <ReviewView
@@ -663,6 +697,7 @@ export default function App() {
             mistakes={state.mistakes ?? []}
             onAnalyzed={handleAnalyzedGame}
             onTrainMistake={startMistakePractice}
+            onReplayMistake={replayMistakePosition}
           />
         ) : (
           <section className="placeholder">
