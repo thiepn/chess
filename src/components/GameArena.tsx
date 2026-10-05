@@ -80,8 +80,10 @@ export function GameArena({
   const engineRef = useRef<StockfishBrowserEngine | null>(null);
   const finishedRef = useRef(false);
   const [fen, setFen] = useState(initialFen);
-  const [boardVersion, setBoardVersion] = useState(0);
   const [moves, setMoves] = useState<string[]>([]);
+  const [presentationMove, setPresentationMove] = useState<
+    { from: Square; to: Square } | undefined
+  >();
   const [thinking, setThinking] = useState(false);
   const [engineStatus, setEngineStatus] = useState("Loading opponent…");
   const [engineReady, setEngineReady] = useState(false);
@@ -240,11 +242,14 @@ export function GameArena({
         }
 
         setMoves((previous) => [...previous, move.san]);
+        setPresentationMove({
+          from: move.from as Square,
+          to: move.to as Square,
+        });
         if (chess.inCheck()) feedback("check");
         else if (move.captured) feedback("capture");
         else feedback("move");
         setFen(chess.fen());
-        setBoardVersion((value) => value + 1);
         setEngineStatus(`${profile.name} · ${profile.accent}`);
         finishIfNeeded();
       })
@@ -290,10 +295,10 @@ export function GameArena({
       <div className="game-layout">
         <div className="game-board-column">
           <ChessBoard
-            key={boardVersion}
             fen={fen}
             orientation={playerColor}
             disabled={!playerToMove || thinking || Boolean(result)}
+            presentationMove={presentationMove}
             onMove={(boardMove) => {
               if (!playerToMove || thinking || result) return false;
               const chess = gameRef.current;
@@ -312,8 +317,8 @@ export function GameArena({
               if (!move) return false;
 
               setMoves((previous) => [...previous, move.san]);
+              setPresentationMove(undefined);
               setFen(chess.fen());
-              setBoardVersion((value) => value + 1);
               finishIfNeeded();
               return true;
             }}
