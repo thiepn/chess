@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
+  Bookmark,
   BookOpen,
   BrainCircuit,
   ChevronRight,
@@ -46,6 +47,10 @@ import {
 } from "./games/refresh";
 import { scenarioById } from "./play/scenarios";
 import type { PlayResult, TrainingScenario } from "./play/types";
+import { LibraryView } from "./components/LibraryView";
+import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
+import type { SavedStudy } from "./library/types";
+import { applyStudyAttempt } from "./library/progress";
 
 const repo = createChessStateRepository();
 
@@ -60,6 +65,7 @@ function activityIcon(activity: TrainingActivity) {
   if (activity.source === "review") return <RefreshCcw size={18} />;
   if (activity.activityType === "conceptLesson") return <BookOpen size={18} />;
   if (activity.activityType === "openingRecall") return <Compass size={18} />;
+  if (activity.activityType === "savedStudy") return <Bookmark size={18} />;
   if (activity.activityType === "engineGame") return <Swords size={18} />;
   return <BrainCircuit size={18} />;
 }
@@ -69,6 +75,7 @@ function reasonLabel(activity: TrainingActivity) {
   if (activity.source === "review") return "REVIEW DUE";
   if (activity.source === "curriculum") return "CURRICULUM";
   if (activity.source === "focus") return "CURRENT FOCUS";
+  if (activity.source === "library") return "FROM YOUR LIBRARY";
   return activity.source.toUpperCase();
 }
 
@@ -105,6 +112,10 @@ export default function App() {
     active?.openingNodeId ? openingNodes[active.openingNodeId] : undefined;
   const activeRepertoire =
     active?.repertoireId ? repertoireById[active.repertoireId] : undefined;
+  const activeStudy =
+    active?.studyId
+      ? state.savedStudies?.find((study) => study.id === active.studyId)
+      : undefined;
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -169,6 +180,7 @@ export default function App() {
       let mistakes = previous.mistakes ?? [];
       const openingProgress = { ...(previous.openingProgress ?? {}) };
       let openingDeviations = previous.openingDeviations ?? [];
+      let savedStudies = previous.savedStudies ?? [];
 
       if (outcome.puzzleId) {
         const prior = puzzleHistory[outcome.puzzleId];
@@ -203,6 +215,22 @@ export default function App() {
         );
       }
 
+      if (outcome.studyId) {
+        savedStudies = savedStudies.map((study) => {
+          if (study.id !== outcome.studyId || !study.training) return study;
+          return {
+            ...study,
+            training: applyStudyAttempt(
+              study.training,
+              outcome.success,
+              outcome.quality,
+              new Date(occurredAt),
+            ),
+            updatedAt: occurredAt,
+          };
+        });
+      }
+
       if (outcome.mistakeId) {
         mistakes = mistakes.map((mistake) => {
           if (mistake.id !== outcome.mistakeId) return mistake;
@@ -235,6 +263,7 @@ export default function App() {
         mistakes,
         openingProgress,
         openingDeviations,
+        savedStudies,
       };
     });
 
@@ -486,6 +515,63 @@ export default function App() {
     });
   }
 
+  function saveStudy(study: SavedStudy) {
+    setState((previous) => ({
+      ...previous,
+      savedStudies: [
+        ...(previous.savedStudies ?? []).filter((item) => item.id !== study.id),
+        study,
+      ],
+    }));
+  }
+
+  function deleteStudy(studyId: string) {
+    setState((previous) => ({
+      ...previous,
+      savedStudies: (previous.savedStudies ?? []).filter(
+        (study) => study.id !== studyId,
+      ),
+    }));
+  }
+
+  function toggleStudyFavorite(studyId: string) {
+    setState((previous) => ({
+      ...previous,
+      savedStudies: (previous.savedStudies ?? []).map((study) =>
+        study.id === studyId
+          ? {
+              ...study,
+              favorite: !study.favorite,
+              updatedAt: new Date().toISOString(),
+            }
+          : study,
+      ),
+    }));
+  }
+
+  function startStudyTraining(studyId: string) {
+    const study = state.savedStudies?.find((item) => item.id === studyId);
+    const training = study?.training;
+    const skill = training ? skillById[training.skillId] : undefined;
+    if (!study || !training || !skill) return;
+
+    setManualActivity({
+      id: `library:${study.id}`,
+      source: "library",
+      skillIds: [skill.id],
+      activityType: "savedStudy",
+      estimatedMinutes: 5,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .75,
+      reason: "Saved from your analysis workspace",
+      title: study.title,
+      subtitle: "Personal study recall",
+      studyId: study.id,
+    });
+  }
+
   function startManualLesson(skillId: string) {
     const skill = skillById[skillId];
     if (!skill) return;
@@ -707,6 +793,16 @@ export default function App() {
             onTrainMistake={startMistakePractice}
             onReplayMistake={replayMistakePosition}
           />
+        ) : nav === "library" ? (
+          <LibraryView
+            studies={state.savedStudies ?? []}
+            games={state.games ?? []}
+            mastery={state.mastery}
+            onSaveStudy={saveStudy}
+            onDeleteStudy={deleteStudy}
+            onToggleFavorite={toggleStudyFavorite}
+            onTrainStudy={startStudyTraining}
+          />
         ) : (
           <section className="placeholder">
             <div className="placeholder-icon">
@@ -766,7 +862,12 @@ export default function App() {
               </div>
             </div>
 
-            {active.activityType === "openingRecall" &&
+            {active.activityType === "savedStudy" && activeStudy ? (
+              <SavedStudyTrainer
+                study={activeStudy}
+                onComplete={completeActivity}
+              />
+            ) : active.activityType === "openingRecall" &&
             activeOpeningNode &&
             activeRepertoire ? (
               <OpeningTrainer
