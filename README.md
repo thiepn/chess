@@ -28,12 +28,13 @@ The default experience should answer one question: **what should I train now?**
 - P9 full Library workspace with free FEN/PGN analysis, on-demand Stockfish, branching move navigation, saved studies, notes/tags/favorites, reference positions/master-game exploration, game-history access, and optional promotion of saved positions into adaptive spaced training
 - P10 shared premium interaction system with real board glides/castling motion, check emphasis, motion tokens, optional Web Audio and haptics, milestone-based celebrations, synced experience preferences, improved loading/error resilience, accessibility states, safe-area handling, and mobile/landscape polish
 - P11 complete beginner-to-intermediate curriculum expansion with 68 atomic skills across 8 stages, authored interactive board lessons for every skill, prerequisite-driven progression, expanded Lichess puzzle-theme mappings, a staged Learn journey, recommended-next guidance, and CI-enforced curriculum/content QA
+- P12 placement diagnostics, mixed stage checkpoints, evidence-based promotion gates, persistent certifications, placement/certification-aware curriculum floors, targeted checkpoint remediation, and Home/Learn course-status surfaces
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence.
 
 ## Run
 
@@ -253,6 +254,86 @@ P11 also adds a curriculum certification audit. CI verifies:
 
 During the certification pass, strict TypeScript defects in PuzzleRunner, the Stockfish message handler and repertoire ancestor typing were also repaired so the expanded course is tested against a clean production build rather than only unit tests.
 
+## Placement, checkpoints and promotion gates
+
+P12 separates **learning a concept** from **earning progression**.
+
+### Placement diagnostic
+
+A first-time or repeatable 16-position diagnostic samples two positions from every curriculum stage.
+
+Placement rules:
+
+- no hints;
+- no retries;
+- one committed legal move per position;
+- the tested skill is hidden until after the move;
+- results seed recognition/execution evidence;
+- two sampled positions never certify an entire stage.
+
+Placement chooses the automatic curriculum floor. Earlier stages remain visible and manually accessible, but adaptive curriculum recommendations begin at the recommended stage rather than immediately sending an experienced player back to board basics.
+
+Placement-cleared stages are deliberately labeled as such rather than falsely marked **Certified**.
+
+### Stage checkpoints
+
+Each stage has a rotating mixed checkpoint of up to six representative skills. Retakes rotate the selected skills so the same subset is not used every time.
+
+A checkpoint answer is irreversible inside that assessment. After each move the app reveals whether it was correct and shows the target move when it was missed.
+
+A checkpoint score is only one promotion signal.
+
+### Promotion gate
+
+Stage certification requires all of the following:
+
+- **Breadth** — at least 80% of stage skills have real learning evidence.
+- **Mastery** — stage-average effective mastery of at least 55%.
+- **Retention** — stage-average delayed-retention evidence of at least 35%.
+- **Transfer** — evidence outside the lesson, with stage-specific requirements from 0% for the rules stage up to 30% for Practical Chess.
+- **Checkpoint** — at least 80% on the mixed checkpoint.
+
+Transfer uses representative evidence from training positions and real games rather than requiring every single atomic skill to appear in a played game.
+
+Gate states are explicit:
+
+- **Learning** — not enough evidence yet.
+- **Checkpoint ready** — broad preparation is sufficient to test.
+- **Placement cleared** — placement allows progression, but the stage is not certified.
+- **Repair needed** — the latest checkpoint failed.
+- **Evidence pending** — the checkpoint passed but retention/transfer/mastery still needs proof.
+- **Certified** — all promotion requirements were demonstrated.
+- **Locked** — the previous stage has not been certified or bypassed by placement.
+
+Certifications are durable account state. A later failed retake can generate maintenance work without deleting an already-earned certificate.
+
+### Assessment-driven remediation
+
+A failed checkpoint is not just a score.
+
+Missed checkpoint skills are inserted into the next adaptive session with elevated priority and labeled **Checkpoint remediation**. If the checkpoint score passes but another gate remains weak, the composer targets the weakest skills in that stage.
+
+This sits alongside existing priorities from personal blunders, recurring weaknesses, spaced reviews, opening deviations and saved Library studies.
+
+### Curriculum floor
+
+Automatic curriculum progression respects both placement and certification:
+
+1. placement establishes the initial floor;
+2. certification of that stage advances the floor to the next stage;
+3. prior material stays available manually;
+4. real-game weaknesses and due reviews are still allowed to pull earlier concepts back into training when evidence says they matter.
+
+This prevents both failure modes: forcing an experienced player through beginner content, and pretending skipped material was mastered.
+
+### Course visibility
+
+Home now shows the current course stage, certification state and which evidence category is blocking promotion.
+
+Learn shows the complete five-part gate for every stage, placement status, checkpoint controls and the same recommended-next curriculum logic used by Home.
+
+Assessment state, placement results and stage certifications live inside the existing account JSON state, so P12 requires no separate backend service or database migration.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -267,4 +348,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P12 — Stage Checkpoints, Diagnostics, Promotion Gates & Course Assessment.
+P13 — Longitudinal Learning Analytics, Skill Calibration & Progress Intelligence.
