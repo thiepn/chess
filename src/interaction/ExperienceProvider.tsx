@@ -14,6 +14,7 @@ import type {
   ExperienceSettings,
   FeedbackEvent,
 } from "./types";
+import type { ExperienceEventDetail } from "./events";
 
 interface ExperienceContextValue {
   settings: ExperienceSettings;
@@ -179,6 +180,17 @@ export function ExperienceProvider({
     },
     [reducedMotion, settings.celebrations],
   );
+
+  useEffect(() => {
+    const handleExperience = (event: Event) => {
+      const detail = (event as CustomEvent<ExperienceEventDetail>).detail;
+      if (detail?.feedback) feedback(detail.feedback);
+      if (detail?.celebration) celebrate(detail.celebration);
+    };
+
+    window.addEventListener("chess:experience", handleExperience);
+    return () => window.removeEventListener("chess:experience", handleExperience);
+  }, [celebrate, feedback]);
 
   const value = useMemo(
     () => ({
