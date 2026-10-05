@@ -19,12 +19,13 @@ The default experience should answer one question: **what should I train now?**
 - P0 product architecture and five-area information model
 - P1 typed curriculum graph, multidimensional mastery, evidence weighting, retention and weakness scoring
 - P2 adaptive 10/25/60-minute Training Composer with diversity, novelty and fatigue constraints
+- P3 reusable interactive lesson scripting model, chessboard teaching engine, guided moves, hints, overlays, rewind/retry feedback, and curriculum browser
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The current curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. It establishes the data contract that later content phases expand.
+The current curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 now includes polished interactive scripts for the first foundational, tactical, opening, and endgame concepts; unsupported skills remain visible as future content-expansion targets.
 
 ## Run
 
@@ -47,4 +48,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P3 — Interactive Lesson System, Chess Board Teaching Engine & Visual Pedagogy.
+P4 — Practice Corpus, Lichess Puzzle Ingestion & Adaptive Exercise Selection.
