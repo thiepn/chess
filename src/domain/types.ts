@@ -10,6 +10,7 @@ import type {
 } from "../assessment/types";
 import type { LearningAnalyticsState } from "../analytics/types";
 import type { AdaptiveTrainingPolicy } from "../adaptation/types";
+import type { LichessConnection } from "../lichess/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -205,6 +206,7 @@ export interface UserState {
   placement?: PlacementProfile;
   stageCertifications?: Partial<Record<CurriculumStageId, StageCertification>>;
   analytics?: LearningAnalyticsState;
+  lichess?: LichessConnection;
   focus?: {
     domain: DomainId;
     until?: string;
