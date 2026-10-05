@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { composeSession, sessionMinutes } from "./composer";
+import {
+  buildCandidatePool,
+  composeSession,
+  sessionMinutes,
+} from "./composer";
+import { curriculumStages, skillById } from "./curriculum";
 import { initialUserState } from "../data/demo";
 
 describe("training composer", () => {
@@ -216,6 +221,37 @@ describe("training composer", () => {
           item.source === "assessment" &&
           item.skillIds.includes("fundamentals.hanging"),
       ),
+    ).toBe(true);
+  });
+
+  it("does not recommend curriculum below the placement floor", () => {
+    const state = {
+      ...initialUserState,
+      placement: {
+        attemptId: "placement-advanced",
+        completedAt: "2026-10-05T09:00:00Z",
+        recommendedStageId: "tactics" as const,
+        stageScores: {},
+      },
+    };
+
+    const pool = buildCandidatePool(
+      state,
+      new Date("2026-10-05T12:00:00Z"),
+    );
+    const curriculum = pool.filter((item) => item.source === "curriculum");
+    const tacticsOrder =
+      curriculumStages.find((stage) => stage.id === "tactics")?.order ?? 0;
+
+    expect(curriculum.length).toBeGreaterThan(0);
+    expect(
+      curriculum.every((item) => {
+        const skill = skillById[item.skillIds[0]];
+        const order =
+          curriculumStages.find((stage) => stage.id === skill?.stage)?.order ??
+          -1;
+        return order >= tacticsOrder;
+      }),
     ).toBe(true);
   });
 
