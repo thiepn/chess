@@ -22,6 +22,7 @@ interface GameArenaProps {
   scenario?: TrainingScenario;
   onExit: () => void;
   onFinished: (result: PlayResult) => Promise<boolean> | boolean;
+  exitLabel?: string;
 }
 
 function uciMove(chess: Chess, encoded: string) {
@@ -75,6 +76,7 @@ export function GameArena({
   scenario,
   onExit,
   onFinished,
+  exitLabel = "Back to Play",
 }: GameArenaProps) {
   const gameRef = useRef(new Chess(initialFen));
   const engineRef = useRef<StockfishBrowserEngine | null>(null);
@@ -450,7 +452,7 @@ export function GameArena({
               </div>
 
               <button className="primary" type="button" onClick={onExit}>
-                Back to Play
+                {exitLabel}
               </button>
             </div>
           )}
