@@ -25,12 +25,13 @@ The default experience should answer one question: **what should I train now?**
 - P6 compact concept-first opening repertoire, visual repertoire explorer, spaced branch recall, real-game deviation detection, and adaptive opening review
 - P7 full Play system with configurable/adaptive Stockfish opponents, complete legal games, opening/endgame/conversion/defense training scenarios, automatic PGN capture, transfer evidence, and automatic handoff into P5 Review
 - P8 post-game storytelling with phase summaries, a complete move timeline, 3–5 high-signal moments, animated actual-vs-better move playback, curriculum links, legacy-review upgrades, and direct Repair/Replay actions
+- P9 full Library workspace with free FEN/PGN analysis, on-demand Stockfish, branching move navigation, saved studies, notes/tags/favorites, reference positions/master-game exploration, game-history access, and optional promotion of saved positions into adaptive spaced training
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system; P8 turns engine output into a visual game story instead of an evaluation dump; P9 provides a serious free-study workspace without forcing every exploratory position into the guided learning loop.
 
 ## Run
 
@@ -166,13 +167,37 @@ From a critical moment:
 
 Replay games preserve their custom starting FEN, are excluded from ordinary opening-deviation tracking, and flow back into the normal Review pipeline after completion.
 
+## Library and analysis workspace
+
+Library is the free-study side of the product.
+
+The Analysis Board supports:
+
+- legal free play from the initial position or any valid FEN;
+- pasted PGN/game loading;
+- undo/redo-style move navigation and branching by rewinding then choosing another move;
+- board flipping;
+- on-demand client-side Stockfish evaluation;
+- best-move and principal-variation display in readable notation;
+- study titles, notes, tags and study type;
+- saving and updating studies;
+- favorites and search;
+- opening any game already stored by Play or Review;
+- a small built-in reference collection, including the Morphy Opera Game and targeted opening/endgame/conversion positions.
+
+Saved studies remain exploratory by default. They enter the adaptive training system only when **Save + train** is used after engine analysis. That stores a concrete target move and curriculum skill, then spaces future recall exactly like other personal review material.
+
+If a saved study is branched to a different position, position-dependent engine analysis and training targets are cleared automatically rather than being carried onto the new FEN.
+
+Library study state lives inside the same account JSON state as mastery, games, repertoire and mistakes, so no additional database table or migration is required.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
 
 If there is no authenticated Supabase session, the app stays fully usable with local persistence.
 
-Durable account state includes skill mastery and puzzle attempt history. The static puzzle corpus itself is not synced through the account backend.
+Durable account state includes skill mastery, puzzle attempt history, games, game stories, repertoire progress, personal mistakes, and saved Library studies. The static puzzle/reference corpora themselves are not synced through the account backend.
 
 ## Architecture
 
@@ -180,4 +205,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P9 — Library, Analysis Board & Saved Study Workspace.
+P10 — Premium Interaction, Motion, Sound, Haptics & Mobile Polish.
