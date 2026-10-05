@@ -9,7 +9,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import {
-  curriculumStageOrder,
   curriculumStages,
   domainLabels,
   isSkillUnlocked,
@@ -32,6 +31,7 @@ interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
   gates: Record<CurriculumStageId, StageGateEvaluation>;
   placement?: PlacementProfile;
+  curriculumFloor: number;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
   onStartPlacement: () => void;
@@ -87,6 +87,7 @@ export function LearnView({
   mastery,
   gates,
   placement,
+  curriculumFloor,
   onStartLesson,
   onStartPractice,
   onStartPlacement,
@@ -99,7 +100,7 @@ export function LearnView({
   const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
   const recommendedId = readyCurriculumSkills(
     mastery,
-    curriculumStageOrder(placement?.recommendedStageId),
+    curriculumFloor,
   )[0]?.id;
   const certified = curriculumStages.filter(
     (stage) => gates[stage.id]?.status === "passed",
