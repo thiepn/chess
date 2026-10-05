@@ -39,10 +39,12 @@ export function puzzleSelectionScore(
   criteria: PuzzleSelectionCriteria,
   now = new Date(),
 ): number {
-  const target = targetPuzzleRating(
-    criteria.mastery,
-    criteria.activityDifficulty,
-  );
+  const target =
+    criteria.targetRating ??
+    targetPuzzleRating(
+      criteria.mastery,
+      criteria.activityDifficulty,
+    );
   const distance = Math.abs(puzzle.rating - target);
   const difficultyFit = Math.max(0, 1 - distance / 700);
   const popularity = Math.max(0, Math.min(1, (puzzle.popularity + 100) / 200));
