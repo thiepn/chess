@@ -1205,7 +1205,13 @@ export default function App() {
 
       {active && activeSkill && (
         <div className="training-overlay" role="dialog" aria-modal="true">
-          <section className="training-sheet">
+          <section
+            className={
+              active.activityType === "engineGame"
+                ? "training-sheet adaptive-game-sheet"
+                : "training-sheet"
+            }
+          >
             <div className="training-progress">
               <span
                 style={{
