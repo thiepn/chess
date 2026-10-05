@@ -40,6 +40,10 @@ import { openingDeviationsForGame } from "./openings/match";
 import { PlayView } from "./components/PlayView";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { analyzeImportedGame } from "./games/analyze";
+import {
+  mergeReanalyzedDeviations,
+  mergeReanalyzedMistakes,
+} from "./games/refresh";
 import { scenarioById } from "./play/scenarios";
 import type { PlayResult, TrainingScenario } from "./play/types";
 
@@ -254,60 +258,38 @@ export default function App() {
         ...(previous.games ?? []).filter((item) => item.id !== game.id),
         game,
       ];
-      const priorGameMistakes = new Map(
-        (previous.mistakes ?? [])
-          .filter((item) => item.gameId === game.id)
-          .map((item) => [item.id, item]),
+      const priorGame = (previous.games ?? []).find((item) => item.id === game.id);
+      const alreadyAnalyzed = Boolean(priorGame?.analyzedAt);
+      const mistakes = mergeReanalyzedMistakes(
+        previous.mistakes ?? [],
+        newMistakes,
+        game.id,
       );
-      const refreshedMistakes = newMistakes.map((mistake) => {
-        const prior = priorGameMistakes.get(mistake.id);
-        return prior
-          ? {
-              ...mistake,
-              attempts: prior.attempts,
-              successes: prior.successes,
-              lastAttemptAt: prior.lastAttemptAt,
-              nextReviewAt: prior.nextReviewAt,
-              resolved: prior.resolved,
-            }
-          : mistake;
-      });
-      const mistakes = [
-        ...(previous.mistakes ?? []).filter((item) => item.gameId !== game.id),
-        ...refreshedMistakes,
-      ];
       const mastery = { ...previous.mastery };
       const gameOpeningDeviations = openingDeviationsForGame(
         game,
         new Date(occurredAt),
       );
-      const priorGameDeviations = new Map(
-        (previous.openingDeviations ?? [])
-          .filter((item) => item.gameId === game.id)
-          .map((item) => [item.id, item]),
+      const openingDeviations = mergeReanalyzedDeviations(
+        previous.openingDeviations ?? [],
+        gameOpeningDeviations,
+        game.id,
       );
-      const openingDeviations = [
-        ...(previous.openingDeviations ?? []).filter(
-          (item) => item.gameId !== game.id,
-        ),
-        ...gameOpeningDeviations.map((deviation) => ({
-          ...deviation,
-          resolved: priorGameDeviations.get(deviation.id)?.resolved ?? deviation.resolved,
-        })),
-      ];
       const openingProgress = { ...(previous.openingProgress ?? {}) };
 
-      for (const deviation of gameOpeningDeviations) {
-        const current =
-          openingProgress[deviation.nodeId] ??
-          createOpeningProgress(deviation.nodeId, new Date(occurredAt));
-        openingProgress[deviation.nodeId] = {
-          ...current,
-          nextReviewAt: occurredAt,
-        };
+      if (!alreadyAnalyzed) {
+        for (const deviation of gameOpeningDeviations) {
+          const current =
+            openingProgress[deviation.nodeId] ??
+            createOpeningProgress(deviation.nodeId, new Date(occurredAt));
+          openingProgress[deviation.nodeId] = {
+            ...current,
+            nextReviewAt: occurredAt,
+          };
+        }
       }
 
-      for (const mistake of newMistakes) {
+      for (const mistake of alreadyAnalyzed ? [] : newMistakes) {
         const skillId = mistake.skillIds[0];
         const skill = skillById[skillId];
         if (!skill) continue;
