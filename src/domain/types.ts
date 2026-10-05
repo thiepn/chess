@@ -1,5 +1,6 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
 import type { ImportedGame, PersonalMistake } from "../games/types";
+import type { OpeningDeviation, OpeningProgress } from "../openings/types";
 
 export type DomainId =
   | "rules"
@@ -129,6 +130,8 @@ export interface TrainingCandidate {
   urgency: number;
   reason: string;
   mistakeId?: string;
+  openingNodeId?: string;
+  repertoireId?: string;
 }
 
 export interface TrainingActivity extends TrainingCandidate {
@@ -165,6 +168,8 @@ export interface UserState {
   puzzleHistory?: Record<string, PuzzleAttemptSummary>;
   games?: ImportedGame[];
   mistakes?: PersonalMistake[];
+  openingProgress?: Record<string, OpeningProgress>;
+  openingDeviations?: OpeningDeviation[];
   focus?: {
     domain: DomainId;
     until?: string;
