@@ -119,6 +119,56 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
+  it("schedules a due study promoted from the library", () => {
+    const state = {
+      ...initialUserState,
+      savedStudies: [
+        {
+          id: "study-1",
+          title: "Remember this candidate move",
+          kind: "position" as const,
+          fen: "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1",
+          notes: "Look for forcing moves first.",
+          tags: ["calculation"],
+          source: "personal" as const,
+          orientation: "w" as const,
+          arrows: [],
+          highlights: [],
+          favorite: true,
+          createdAt: "2026-10-05T09:00:00Z",
+          updatedAt: "2026-10-05T09:00:00Z",
+          training: {
+            enabled: true,
+            skillId: "calculation.candidates",
+            targetMove: "e2e4",
+            targetSan: "e4",
+            attempts: 0,
+            successes: 0,
+            streak: 0,
+            nextReviewAt: "2026-10-05T09:00:00Z",
+            lastQuality: 0,
+          },
+        },
+      ],
+    };
+
+    const session = composeSession(
+      state,
+      "deep",
+      new Date("2026-10-05T12:00:00Z"),
+    );
+
+    expect(
+      session.activities.some(
+        (item) =>
+          item.source === "library" &&
+          item.activityType === "savedStudy" &&
+          item.studyId === "study-1" &&
+          item.title === "Remember this candidate move",
+      ),
+    ).toBe(true);
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,
