@@ -175,12 +175,33 @@ export default function App() {
       occurredAt,
     };
 
+    const currentMastery =
+      state.mastery[skillId] ??
+      emptyMastery(skillId, Math.min(1, activeSkill.difficulty / 5));
+    const projectedMastery = applyEvidence(currentMastery, evidence);
+    const crossed90 =
+      currentMastery.effectiveMastery < 90 &&
+      projectedMastery.effectiveMastery >= 90;
+    const crossed75 =
+      currentMastery.effectiveMastery < 75 &&
+      projectedMastery.effectiveMastery >= 75;
+    const crossed60 =
+      currentMastery.effectiveMastery < 60 &&
+      projectedMastery.effectiveMastery >= 60;
+
     emitExperienceEvent({
       feedback: outcome.success ? "complete" : "error",
-      celebration:
-        outcome.success && active.activityType !== "mixedPuzzle"
-          ? "small"
-          : undefined,
+      celebration: outcome.success
+        ? crossed90
+          ? "large"
+          : crossed75
+            ? "medium"
+            : crossed60 ||
+                active.activityType === "personalMistake" ||
+                active.activityType === "savedStudy"
+              ? "small"
+              : undefined
+        : undefined,
     });
 
     setState((previous) => {
