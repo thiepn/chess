@@ -18,6 +18,7 @@ import type {
   ImportedGame,
   PersonalMistake,
 } from "../games/types";
+import { GameStoryView } from "./GameStoryView";
 
 interface ReviewViewProps {
   games: ImportedGame[];
@@ -48,6 +49,7 @@ export function ReviewView({
   const [error, setError] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
+  const [reanalyzingGameId, setReanalyzingGameId] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unresolved = useMemo(
@@ -96,6 +98,40 @@ export function ReviewView({
     } finally {
       engine?.quit();
       setAnalyzing(false);
+    }
+  }
+
+  async function reanalyzeStoredGame(game: ImportedGame) {
+    if (analyzing) return;
+
+    let engine: StockfishBrowserEngine | null = null;
+    setError(null);
+    setAnalyzing(true);
+    setReanalyzingGameId(game.id);
+    setProgress({
+      completed: 0,
+      total: playerMoveCount(game),
+      phase: "loading-engine",
+    });
+
+    try {
+      engine = await StockfishBrowserEngine.create();
+      const result = await analyzeImportedGame(game, engine, {
+        depth: 11,
+        onProgress: setProgress,
+      });
+      onAnalyzed(result.game, result.mistakes);
+      setSelectedGameId(result.game.id);
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "The stored game could not be upgraded to a visual review.",
+      );
+    } finally {
+      engine?.quit();
+      setAnalyzing(false);
+      setReanalyzingGameId(null);
     }
   }
 
@@ -387,18 +423,33 @@ export function ReviewView({
                 className="game-history-row"
                 type="button"
                 key={game.id}
-                onClick={() => setSelectedGameId(game.id)}
+                onClick={() => {
+                  if (game.reviewStory) {
+                    setSelectedGameId(game.id);
+                  } else {
+                    void reanalyzeStoredGame(game);
+                  }
+                }}
+                disabled={reanalyzingGameId === game.id}
               >
                 <div>
                   <strong>{game.white} — {game.black}</strong>
                   <span>{game.result} · {game.moves.length} plies</span>
                 </div>
                 <div>
-                  <span>{game.reviewStory ? "Visual review" : game.analysisEngine ?? "Imported"}</span>
+                  <span>
+                    {reanalyzingGameId === game.id
+                      ? "Generating story…"
+                      : game.reviewStory
+                        ? "Visual review"
+                        : "Upgrade review"}
+                  </span>
                   <strong>
-                    {game.reviewStory
-                      ? `${game.reviewStory.moments.length} story moments`
-                      : `${game.criticalMomentIds.length} moments`}
+                    {reanalyzingGameId === game.id
+                      ? "Stockfish"
+                      : game.reviewStory
+                        ? `${game.reviewStory.moments.length} story moments`
+                        : "Generate P8 story"}
                   </strong>
                 </div>
               </button>
