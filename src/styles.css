@@ -1079,9 +1079,9 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .piece-land,
-  .board-square.rejected,
-  .success-burst span {
+  html:not([data-motion="full"]) .piece-land,
+  html:not([data-motion="full"]) .board-square.rejected,
+  html:not([data-motion="full"]) .success-burst span {
     animation: none !important;
   }
 }
@@ -1372,7 +1372,7 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .puzzle-loading svg {
+  html:not([data-motion="full"]) .puzzle-loading svg {
     animation: none;
   }
 }
@@ -1817,7 +1817,7 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spin {
+  html:not([data-motion="full"]) .spin {
     animation: none;
   }
 }
@@ -3594,8 +3594,8 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .latest-story-card,
-  .story-phase {
+  html:not([data-motion="full"]) .latest-story-card,
+  html:not([data-motion="full"]) .story-phase {
     transition: none;
   }
 }
@@ -4418,9 +4418,9 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .library-tabs button,
-  .study-card,
-  .reference-card {
+  html:not([data-motion="full"]) .library-tabs button,
+  html:not([data-motion="full"]) .study-card,
+  html:not([data-motion="full"]) .reference-card {
     transition: none;
   }
 }
