@@ -24,6 +24,7 @@ import type {
 import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
 import { LessonRunner, type LessonOutcome } from "./components/LessonRunner";
+import { LearnView } from "./components/LearnView";
 
 const repo = createChessStateRepository();
 
@@ -54,6 +55,7 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [mode, setMode] = useState<SessionMode>("standard");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [nav, setNav] = useState("home");
 
   useEffect(() => {
@@ -68,7 +70,8 @@ export default function App() {
   }, [state, loaded]);
 
   const session = useMemo(() => composeSession(state, mode), [state, mode]);
-  const active = activeIndex === null ? null : session.activities[activeIndex];
+  const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
+  const active = manualActivity ?? sessionActivity;
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
 
   const topDomains = useMemo(() => {
@@ -127,11 +130,36 @@ export default function App() {
       }));
     }
 
+    if (manualActivity) {
+      setManualActivity(null);
+      return;
+    }
+
     if (activeIndex !== null && activeIndex < session.activities.length - 1) {
       setActiveIndex(activeIndex + 1);
     } else {
       setActiveIndex(null);
     }
+  }
+
+  function startManualLesson(skillId: string) {
+    const skill = skillById[skillId];
+    if (!skill) return;
+
+    setManualActivity({
+      id: `manual:${skillId}`,
+      source: "curriculum",
+      skillIds: [skillId],
+      activityType: skill.trainingModes[0] ?? "conceptLesson",
+      estimatedMinutes: 6,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: 0,
+      reason: "Manual curriculum study",
+      title: skill.title,
+      subtitle: "Guided curriculum",
+    });
   }
 
   const navItems = [
@@ -277,16 +305,18 @@ export default function App() {
               </article>
             </section>
           </>
+        ) : nav === "learn" ? (
+          <LearnView mastery={state.mastery} onStartLesson={startManualLesson} />
         ) : (
           <section className="placeholder">
             <div className="placeholder-icon">
-              {nav === "learn" ? <BookOpen /> : nav === "play" ? <Play /> : nav === "review" ? <BarChart3 /> : <Library />}
+              {nav === "play" ? <Play /> : nav === "review" ? <BarChart3 /> : <Library />}
             </div>
             <p className="eyebrow">{nav.toUpperCase()}</p>
             <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
             <p>
-              P0–P2 establish the data and navigation boundary. The interactive
-              board and lesson surfaces arrive in P3.
+              This area is reserved for the next specialized product phase.
+              P3 now provides the shared interactive board and lesson engine.
             </p>
             <button className="secondary" onClick={() => setNav("home")}>Back home</button>
           </section>
@@ -308,13 +338,18 @@ export default function App() {
             <div className="training-progress">
               <span
                 style={{
-                  width: `${(((activeIndex ?? 0) + 1) / session.activities.length) * 100}%`,
+                  width: manualActivity
+                    ? "100%"
+                    : `${(((activeIndex ?? 0) + 1) / Math.max(1, session.activities.length)) * 100}%`,
                 }}
               />
             </div>
             <button
               className="close-button"
-              onClick={() => setActiveIndex(null)}
+              onClick={() => {
+                setActiveIndex(null);
+                setManualActivity(null);
+              }}
               aria-label="Close session"
             >
               ×
