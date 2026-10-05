@@ -1819,3 +1819,72 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
     animation: none;
   }
 }
+
+
+.lichess-import-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.lichess-import-row input {
+  min-width: 0;
+  min-height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(4,8,16,.42);
+  color: #d7deed;
+  padding: 0 12px;
+  outline: none;
+  font-size: 12px;
+}
+
+.lichess-import-row input:focus {
+  border-color: rgba(118,151,255,.34);
+}
+
+.lichess-import-row button {
+  min-height: 42px;
+  padding: 0 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(118,151,255,.16);
+  background: rgba(118,151,255,.07);
+  color: #bcc9ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.lichess-import-row button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.import-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0 2px;
+  color: #55627a;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.import-divider::before,
+.import-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgba(255,255,255,.055);
+}
+
+@media (max-width: 480px) {
+  .lichess-import-row {
+    grid-template-columns: 1fr;
+  }
+}
