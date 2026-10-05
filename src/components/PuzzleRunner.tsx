@@ -72,6 +72,7 @@ export function PuzzleRunner({
         skillId: skill.id,
         mastery: mastery?.effectiveMastery ?? 0,
         activityDifficulty: activity.difficulty,
+        targetRating: activity.adaptivePolicy?.targetPuzzleRating,
         history,
       });
       setPuzzle(selected);
@@ -82,7 +83,13 @@ export function PuzzleRunner({
     return () => {
       cancelled = true;
     };
-  }, [activity.difficulty, history, mastery?.effectiveMastery, skill.id]);
+  }, [
+    activity.adaptivePolicy?.targetPuzzleRating,
+    activity.difficulty,
+    history,
+    mastery?.effectiveMastery,
+    skill.id,
+  ]);
 
   const orientation = useMemo<Color>(() => {
     if (!position) return "w";
