@@ -144,6 +144,17 @@ export default function App() {
       ? state.savedStudies?.find((study) => study.id === active.studyId)
       : undefined;
 
+  const stageGates = useMemo(
+    () =>
+      Object.fromEntries(
+        curriculumStages.map((stage) => [
+          stage.id,
+          evaluateStageGate(state, stage.id),
+        ]),
+      ) as Record<CurriculumStageId, StageGateEvaluation>,
+    [state],
+  );
+
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
       .sort((a, b) => b.gameImpact * b.frequency * b.recency - a.gameImpact * a.frequency * a.recency)
@@ -665,6 +676,46 @@ export default function App() {
       reason: "Focused puzzle practice",
       title: skill.title,
       subtitle: "Adaptive themed practice",
+    });
+  }
+
+  function startPlacementAssessment() {
+    setActiveIndex(null);
+    setManualActivity(null);
+    setAssessmentSession(buildPlacementAssessment());
+  }
+
+  function startStageCheckpoint(stageId: CurriculumStageId) {
+    if (stageGates[stageId].status === "locked") return;
+    setActiveIndex(null);
+    setManualActivity(null);
+    setAssessmentSession(
+      buildStageCheckpoint(
+        stageId,
+        checkpointAttemptCount(state, stageId),
+      ),
+    );
+  }
+
+  function completeAssessment(results: AssessmentItemResult[]) {
+    if (!assessmentSession) return;
+
+    const applied = applyAssessmentToState(
+      state,
+      assessmentSession,
+      results,
+      new Date(),
+    );
+
+    setState(applied.state);
+    setAssessmentSession(null);
+
+    emitExperienceEvent({
+      feedback:
+        applied.attempt.score >= 80 || assessmentSession.kind === "placement"
+          ? "complete"
+          : "error",
+      celebration: applied.certification ? "medium" : undefined,
     });
   }
 
