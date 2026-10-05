@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
+import { useExperience } from "../interaction/ExperienceProvider";
 import { importPgn } from "../games/import";
 import type { AiProfile, PlayResult, TrainingScenario } from "../play/types";
 import { ChessBoard } from "./ChessBoard";
@@ -88,6 +89,7 @@ export function GameArena({
   const [result, setResult] = useState<PlayResult | null>(null);
   const [sendingReview, setSendingReview] = useState(false);
   const [reviewSent, setReviewSent] = useState(false);
+  const { feedback, celebrate } = useExperience();
 
   useEffect(() => {
     const chess = gameRef.current;
@@ -182,6 +184,12 @@ export function GameArena({
     setResult(finished);
     setSendingReview(true);
 
+    if (reason === "checkmate") feedback("mate");
+    else feedback(outcome === "win" ? "complete" : outcome === "draw" ? "success" : "error");
+
+    if (outcome === "win") celebrate(scenario ? "medium" : "large");
+    else if (scenarioSuccess) celebrate("small");
+
     try {
       const analyzed = await onFinished(finished);
       setReviewSent(analyzed);
@@ -232,6 +240,9 @@ export function GameArena({
         }
 
         setMoves((previous) => [...previous, move.san]);
+        if (chess.inCheck()) feedback("check");
+        else if (move.captured) feedback("capture");
+        else feedback("move");
         setFen(chess.fen());
         setBoardVersion((value) => value + 1);
         setEngineStatus(`${profile.name} · ${profile.accent}`);
