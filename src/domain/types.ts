@@ -8,6 +8,7 @@ import type {
   PlacementProfile,
   StageCertification,
 } from "../assessment/types";
+import type { LearningAnalyticsState } from "../analytics/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -200,6 +201,7 @@ export interface UserState {
   assessments?: AssessmentAttempt[];
   placement?: PlacementProfile;
   stageCertifications?: Partial<Record<CurriculumStageId, StageCertification>>;
+  analytics?: LearningAnalyticsState;
   focus?: {
     domain: DomainId;
     until?: string;
