@@ -10,6 +10,8 @@ import {
   Target,
 } from "lucide-react";
 import type { SkillMastery } from "../domain/types";
+import type { LichessConnection } from "../lichess/types";
+import { LichessSyncCard } from "./LichessSyncCard";
 import {
   aiProfiles,
   resolveAiProfile,
@@ -28,6 +30,13 @@ import { GameArena } from "./GameArena";
 
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
+  lichess?: LichessConnection;
+  lichessSyncing: boolean;
+  lichessSyncMessage?: string | null;
+  lichessSyncError?: string | null;
+  onLinkLichess: (username: string) => Promise<void> | void;
+  onUnlinkLichess: () => void;
+  onSyncLichess: () => Promise<void> | void;
   onGameFinished: (result: PlayResult) => Promise<boolean> | boolean;
   externalScenario?: TrainingScenario;
   onExternalScenarioExit?: () => void;
@@ -50,6 +59,13 @@ function scenarioIcon(mode: TrainingScenario["mode"]) {
 
 export function PlayView({
   mastery,
+  lichess,
+  lichessSyncing,
+  lichessSyncMessage,
+  lichessSyncError,
+  onLinkLichess,
+  onUnlinkLichess,
+  onSyncLichess,
   onGameFinished,
   externalScenario,
   onExternalScenarioExit,
@@ -166,6 +182,26 @@ export function PlayView({
             Start game <ChevronRight size={18} />
           </button>
         </div>
+      </section>
+
+      <section className="play-section human-play-section">
+        <div className="review-section-heading">
+          <div>
+            <p className="eyebrow">HUMAN PLAY</p>
+            <h2>Play people. Bring the game back automatically.</h2>
+          </div>
+          <span>No multiplayer backend required</span>
+        </div>
+
+        <LichessSyncCard
+          connection={lichess}
+          syncing={lichessSyncing}
+          message={lichessSyncMessage}
+          error={lichessSyncError}
+          onLink={onLinkLichess}
+          onUnlink={onUnlinkLichess}
+          onSync={onSyncLichess}
+        />
       </section>
 
       <section className="play-section">
