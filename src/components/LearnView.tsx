@@ -1,4 +1,4 @@
-import { BookOpen, ChevronRight, LockKeyhole } from "lucide-react";
+import { BookOpen, ChevronRight, Compass, LockKeyhole } from "lucide-react";
 import { domainLabels, skills } from "../domain/curriculum";
 import type { DomainId, SkillMastery } from "../domain/types";
 import { lessonScripts } from "../learning/lessons";
@@ -8,6 +8,7 @@ interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
+  onOpenOpenings: () => void;
 }
 
 const domainOrder: DomainId[] = [
@@ -33,7 +34,12 @@ function masteryLabel(value: number) {
   return "New";
 }
 
-export function LearnView({ mastery, onStartLesson, onStartPractice }: LearnViewProps) {
+export function LearnView({
+  mastery,
+  onStartLesson,
+  onStartPractice,
+  onOpenOpenings,
+}: LearnViewProps) {
   return (
     <section className="learn-view">
       <header className="section-hero">
@@ -49,6 +55,19 @@ export function LearnView({ mastery, onStartLesson, onStartPractice }: LearnView
           <BookOpen size={30} />
         </div>
       </header>
+
+      <button className="opening-entry-card" type="button" onClick={onOpenOpenings}>
+        <div className="opening-entry-icon"><Compass size={23} /></div>
+        <div>
+          <p className="eyebrow">YOUR OPENINGS</p>
+          <strong>Concept-first repertoire</strong>
+          <span>
+            Italian, Alapin, Caro-Kann and QGD structures with spaced recall
+            and deviations from your own games.
+          </span>
+        </div>
+        <ChevronRight size={19} />
+      </button>
 
       <div className="curriculum-domains">
         {domainOrder.map((domain) => {
