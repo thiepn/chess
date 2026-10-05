@@ -36,7 +36,11 @@ const durations: Partial<Record<TrainingMode, number>> = {
 };
 
 function activityTypeFor(skill: ChessSkill, source: CandidateSource): TrainingMode {
-  if (source === "review") return "microReview";
+  if (source === "review") {
+    if (skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
+    if (skill.trainingModes.includes("themedPuzzle")) return "themedPuzzle";
+    return "microReview";
+  }
   if (source === "weakness" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
   if (source === "game") return "personalMistake";
   if (source === "calibration" && skill.trainingModes.includes("mixedPuzzle")) return "mixedPuzzle";
