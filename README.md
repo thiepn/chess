@@ -23,12 +23,13 @@ The default experience should answer one question: **what should I train now?**
 - P4 streaming Lichess puzzle ingestion, curriculum-theme normalization, quality/rating filtering, sharded corpus loading, adaptive puzzle selection, multi-ply practice, and durable puzzle history
 - P5 PGN/Lichess game import, client-side Stockfish 19 analysis, critical-moment filtering, curriculum-linked error classification, personal mistake bank, real-game evidence, and spaced mistake repair
 - P6 compact concept-first opening repertoire, visual repertoire explorer, spaced branch recall, real-game deviation detection, and adaptive opening review
+- P7 full Play system with configurable/adaptive Stockfish opponents, complete legal games, opening/endgame/conversion/defense training scenarios, automatic PGN capture, transfer evidence, and automatic handoff into P5 Review
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 closes the loop by converting the user's own games into real-game evidence and future training; P6 adds a deliberately small opening repertoire so opening study stays guided rather than becoming a memorization tree.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 converts real games into evidence and future training; P6 adds a deliberately small opening repertoire; P7 makes Play itself part of the learning system instead of a disconnected chessboard.
 
 ## Run
 
@@ -115,6 +116,28 @@ Opening recall is spaced independently per position. Real games are matched agai
 
 The repertoire explorer is owned data and works offline. The app does not expose a Lichess access token in client code. A future authenticated server-side explorer adapter can add live Lichess statistics without making the learning flow dependent on the external service.
 
+## Play system
+
+Play supports complete games from the initial position and targeted training games from curated positions.
+
+Opponent profiles are deliberately described as training pressure rather than exact Elo ratings:
+
+- Gentle: Stockfish Skill Level 0, shallow search
+- Developing: more reliable punishment of obvious errors
+- Club: default practical resistance
+- Strong: deeper and more accurate
+- Adaptive: selected from the current multidimensional player model
+
+Training scenarios currently include:
+
+- Italian repertoire entry
+- Caro-Kann rehearsal as Black
+- conversion with an extra rook
+- defending a worse rook ending
+- king-and-pawn opposition
+
+A completed game immediately produces PGN, enters account game history, updates scenario transfer evidence, detects opening deviations, and is then analyzed through the P5 Stockfish critical-moment pipeline. If automatic analysis fails, the raw game remains safely stored in Review.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -129,4 +152,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P7 — Play System, Adaptive AI Opponents & Training Games.
+P8 — Post-Game Storytelling, Move Timeline & Personalized Review Experience.
