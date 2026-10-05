@@ -127,6 +127,7 @@ export function PlayView({
             <button
               type="button"
               className={side === "w" ? "active" : ""}
+              aria-pressed={side === "w"}
               onClick={() => setSide("w")}
             >
               ♙ White
@@ -134,6 +135,7 @@ export function PlayView({
             <button
               type="button"
               className={side === "b" ? "active" : ""}
+              aria-pressed={side === "b"}
               onClick={() => setSide("b")}
             >
               ♟ Black
@@ -188,6 +190,7 @@ export function PlayView({
                 type="button"
                 key={id}
                 className={active ? "ai-profile-card active" : "ai-profile-card"}
+                aria-pressed={active}
                 onClick={() => setProfileId(id)}
               >
                 <div>
