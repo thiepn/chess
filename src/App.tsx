@@ -795,6 +795,29 @@ export default function App() {
               <div className="hero-emblem" aria-hidden="true">♞</div>
             </header>
 
+            {!state.placement && (
+              <section className="home-placement-card">
+                <div className="home-placement-icon">
+                  <ClipboardCheck size={22} />
+                </div>
+                <div>
+                  <p className="eyebrow">PLACEMENT DIAGNOSTIC</p>
+                  <strong>Calibrate the course before it teaches too low or too high.</strong>
+                  <span>
+                    16 mixed positions sample every stage. No hints, no retries,
+                    and no stage is falsely marked mastered from placement alone.
+                  </span>
+                </div>
+                <button
+                  className="secondary"
+                  type="button"
+                  onClick={startPlacementAssessment}
+                >
+                  Start diagnostic
+                </button>
+              </section>
+            )}
+
             <section className="mode-switch" aria-label="Training duration">
               {(Object.keys(sessionMinutes) as SessionMode[]).map((item) => (
                 <button
@@ -912,8 +935,12 @@ export default function App() {
           ) : (
             <LearnView
               mastery={state.mastery}
+              gates={stageGates}
+              placement={state.placement}
               onStartLesson={startManualLesson}
               onStartPractice={startManualPractice}
+              onStartPlacement={startPlacementAssessment}
+              onStartCheckpoint={startStageCheckpoint}
               onOpenOpenings={() => setLearnMode("openings")}
             />
           )
@@ -977,6 +1004,35 @@ export default function App() {
           </button>
         ))}
       </nav>
+
+      {assessmentSession && (
+        <div
+          className="training-overlay assessment-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={
+            assessmentSession.kind === "placement"
+              ? "Placement diagnostic"
+              : "Stage checkpoint"
+          }
+        >
+          <section className="training-sheet assessment-sheet">
+            <button
+              className="close-button"
+              type="button"
+              onClick={() => setAssessmentSession(null)}
+              aria-label="Close assessment"
+            >
+              ×
+            </button>
+            <AssessmentRunner
+              session={assessmentSession}
+              onComplete={completeAssessment}
+              onCancel={() => setAssessmentSession(null)}
+            />
+          </section>
+        </div>
+      )}
 
       {active && activeSkill && (
         <div className="training-overlay" role="dialog" aria-modal="true">
