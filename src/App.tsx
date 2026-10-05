@@ -652,6 +652,19 @@ export default function App() {
     }));
   }
 
+  if (!loaded) {
+    return (
+      <div className="app-loading-shell" aria-label="Loading chess">
+        <div className="app-loading-brand">♞</div>
+        <div className="app-loading-copy">
+          <span className="loading-shimmer" />
+          <span className="loading-shimmer" />
+          <span className="loading-shimmer short" />
+        </div>
+      </div>
+    );
+  }
+
   const navItems = [
     ["home", "Home", Sparkles],
     ["learn", "Learn", BookOpen],
@@ -673,6 +686,7 @@ export default function App() {
             <button
               key={id}
               className={nav === id ? "nav-item active" : "nav-item"}
+              aria-current={nav === id ? "page" : undefined}
               onClick={() => {
                 setNav(id);
                 emitExperienceEvent({ feedback: "navigate" });
@@ -712,6 +726,7 @@ export default function App() {
                 <button
                   key={item}
                   className={mode === item ? "mode active" : "mode"}
+                  aria-pressed={mode === item}
                   onClick={() => {
                     setMode(item);
                     setActiveIndex(null);
@@ -877,6 +892,7 @@ export default function App() {
           <button
             key={id}
             className={nav === id ? "active" : ""}
+            aria-current={nav === id ? "page" : undefined}
             onClick={() => {
               setNav(id);
               emitExperienceEvent({ feedback: "navigate" });
