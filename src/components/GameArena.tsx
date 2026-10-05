@@ -286,7 +286,7 @@ export function GameArena({
         <button className="back-link" type="button" onClick={onExit}>
           <RotateCcw size={15} /> Exit game
         </button>
-        <div className="game-opponent">
+        <div className="game-opponent" aria-live="polite">
           <BrainCircuit size={15} />
           <span>{engineStatus}</span>
         </div>
@@ -324,7 +324,7 @@ export function GameArena({
             }}
           />
 
-          <div className="game-turn-line">
+          <div className="game-turn-line" aria-live="polite">
             <span>
               {result
                 ? outcomeLabel(result.outcome)
