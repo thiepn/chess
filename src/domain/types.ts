@@ -3,6 +3,11 @@ import type { ImportedGame, PersonalMistake } from "../games/types";
 import type { OpeningDeviation, OpeningProgress } from "../openings/types";
 import type { SavedStudy } from "../library/types";
 import type { ExperienceSettings } from "../interaction/types";
+import type {
+  AssessmentAttempt,
+  PlacementProfile,
+  StageCertification,
+} from "../assessment/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -99,7 +104,9 @@ export type EvidenceSource =
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
-  | "realGame";
+  | "realGame"
+  | "diagnostic"
+  | "checkpoint";
 
 export interface LearningEvidence {
   skillId: string;
@@ -130,6 +137,7 @@ export type CandidateSource =
   | "curriculum"
   | "repertoire"
   | "library"
+  | "assessment"
   | "calibration"
   | "focus";
 
@@ -189,6 +197,9 @@ export interface UserState {
   openingDeviations?: OpeningDeviation[];
   savedStudies?: SavedStudy[];
   experience?: ExperienceSettings;
+  assessments?: AssessmentAttempt[];
+  placement?: PlacementProfile;
+  stageCertifications?: Partial<Record<CurriculumStageId, StageCertification>>;
   focus?: {
     domain: DomainId;
     until?: string;
