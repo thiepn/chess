@@ -1,5 +1,4 @@
 import {
-  curriculumStageOrder,
   readyCurriculumSkills,
   skillById,
 } from "./curriculum";
@@ -8,7 +7,10 @@ import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
 import { openingNodes, repertoires } from "../openings/repertoire";
 import { dueStudyTraining } from "../library/progress";
-import { assessmentRemediationSkillIds } from "../assessment/engine";
+import {
+  assessmentRemediationSkillIds,
+  courseCurriculumFloor,
+} from "../assessment/engine";
 import type {
   CandidateSource,
   ChessSkill,
@@ -217,9 +219,7 @@ export function buildCandidatePool(
     );
   }
 
-  const curriculumFloor = curriculumStageOrder(
-    state.placement?.recommendedStageId,
-  );
+  const curriculumFloor = courseCurriculumFloor(state);
   for (const skill of readyCurriculumSkills(
     state.mastery,
     curriculumFloor,
