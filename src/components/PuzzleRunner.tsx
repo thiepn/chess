@@ -152,6 +152,7 @@ export function PuzzleRunner({
   }
 
   function finish() {
+    if (!puzzle) return;
     const penalty = hintsUsed * .12 + wrongAttempts * .1;
     onComplete({
       success: true,
