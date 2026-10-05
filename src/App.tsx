@@ -94,6 +94,24 @@ function activityIcon(activity: TrainingActivity) {
   return <BrainCircuit size={18} />;
 }
 
+function gateStatusLabel(status: StageGateEvaluation["status"]) {
+  if (status === "passed") return "Certified";
+  if (status === "ready") return "Checkpoint ready";
+  if (status === "placed") return "Placement cleared";
+  if (status === "remediation") return "Repair needed";
+  if (status === "provisional") return "Evidence pending";
+  if (status === "locked") return "Locked";
+  return "Building evidence";
+}
+
+function gateBlockerLabel(key: keyof StageGateEvaluation["metrics"]) {
+  if (key === "coverage") return "breadth";
+  if (key === "mastery") return "mastery";
+  if (key === "retention") return "retention";
+  if (key === "transfer") return "transfer";
+  return "checkpoint";
+}
+
 function reasonLabel(activity: TrainingActivity) {
   if (activity.source === "weakness") return "FROM YOUR WEAKNESSES";
   if (activity.source === "review") return "REVIEW DUE";
@@ -154,6 +172,29 @@ export default function App() {
       ) as Record<CurriculumStageId, StageGateEvaluation>,
     [state],
   );
+
+  const currentCourseStage = useMemo(() => {
+    const placementOrder = state.placement
+      ? curriculumStages.find(
+          (stage) => stage.id === state.placement?.recommendedStageId,
+        )?.order ?? 0
+      : 0;
+
+    return (
+      curriculumStages.find(
+        (stage) =>
+          stage.order >= placementOrder &&
+          stageGates[stage.id].status !== "passed" &&
+          stageGates[stage.id].status !== "locked",
+      ) ??
+      curriculumStages.find(
+        (stage) => stageGates[stage.id].status !== "passed",
+      ) ??
+      curriculumStages[curriculumStages.length - 1]
+    );
+  }, [stageGates, state.placement]);
+
+  const currentCourseGate = stageGates[currentCourseStage.id];
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -872,6 +913,50 @@ export default function App() {
                 disabled={!session.activities.length}
               >
                 Start training <ChevronRight size={18} />
+              </button>
+            </section>
+
+            <section className="home-course-gate">
+              <div className="home-course-gate-copy">
+                <div>
+                  <p className="eyebrow">COURSE PROGRESSION</p>
+                  <span className={`gate-status ${currentCourseGate.status}`}>
+                    {gateStatusLabel(currentCourseGate.status)}
+                  </span>
+                </div>
+                <h2>{currentCourseStage.title}</h2>
+                <p>
+                  {currentCourseGate.blockers.length
+                    ? `Promotion still needs ${currentCourseGate.blockers
+                        .map(gateBlockerLabel)
+                        .join(", ")} evidence.`
+                    : "All promotion requirements are currently satisfied."}
+                </p>
+              </div>
+              <div className="home-course-metrics">
+                <div>
+                  <span>Mastery</span>
+                  <strong>{currentCourseGate.metrics.mastery}%</strong>
+                </div>
+                <div>
+                  <span>Retention</span>
+                  <strong>{currentCourseGate.metrics.retention}%</strong>
+                </div>
+                <div>
+                  <span>Transfer</span>
+                  <strong>{currentCourseGate.metrics.transfer}%</strong>
+                </div>
+                <div>
+                  <span>Checkpoint</span>
+                  <strong>{currentCourseGate.metrics.checkpoint}%</strong>
+                </div>
+              </div>
+              <button
+                className="secondary"
+                type="button"
+                onClick={() => setNav("learn")}
+              >
+                Open course <ChevronRight size={16} />
               </button>
             </section>
 
