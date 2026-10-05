@@ -1,6 +1,7 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
 import type { ImportedGame, PersonalMistake } from "../games/types";
 import type { OpeningDeviation, OpeningProgress } from "../openings/types";
+import type { SavedStudy } from "../library/types";
 
 export type DomainId =
   | "rules"
@@ -33,7 +34,8 @@ export type TrainingMode =
   | "defenseChallenge"
   | "engineGame"
   | "gameReview"
-  | "boardVision";
+  | "boardVision"
+  | "savedStudy";
 
 export interface SkillRelation {
   skillId: string;
@@ -115,6 +117,7 @@ export type CandidateSource =
   | "game"
   | "curriculum"
   | "repertoire"
+  | "library"
   | "calibration"
   | "focus";
 
@@ -132,6 +135,7 @@ export interface TrainingCandidate {
   mistakeId?: string;
   openingNodeId?: string;
   repertoireId?: string;
+  studyId?: string;
 }
 
 export interface TrainingActivity extends TrainingCandidate {
@@ -148,6 +152,7 @@ export interface TrainingOutcome {
   puzzleRating?: number;
   puzzleSkillIds?: string[];
   mistakeId?: string;
+  studyId?: string;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";
@@ -170,6 +175,7 @@ export interface UserState {
   mistakes?: PersonalMistake[];
   openingProgress?: Record<string, OpeningProgress>;
   openingDeviations?: OpeningDeviation[];
+  savedStudies?: SavedStudy[];
   focus?: {
     domain: DomainId;
     until?: string;
