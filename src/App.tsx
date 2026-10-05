@@ -37,6 +37,11 @@ import { OpeningTrainer } from "./components/OpeningTrainer";
 import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
+import { PlayView } from "./components/PlayView";
+import { StockfishBrowserEngine } from "./engine/stockfish";
+import { analyzeImportedGame } from "./games/analyze";
+import { scenarioById } from "./play/scenarios";
+import type { PlayResult } from "./play/types";
 
 const repo = createChessStateRepository();
 
@@ -312,6 +317,85 @@ export default function App() {
     });
   }
 
+  async function handlePlayFinished(result: PlayResult) {
+    const occurredAt = result.completedAt;
+    const scenario = result.scenarioId ? scenarioById[result.scenarioId] : undefined;
+
+    setState((previous) => {
+      const games = [
+        ...(previous.games ?? []).filter((item) => item.id !== result.importedGame.id),
+        result.importedGame,
+      ];
+      const gameOpeningDeviations = openingDeviationsForGame(
+        result.importedGame,
+        new Date(occurredAt),
+      );
+      const openingDeviations = [
+        ...(previous.openingDeviations ?? []).filter(
+          (item) => item.gameId !== result.importedGame.id,
+        ),
+        ...gameOpeningDeviations,
+      ];
+      const openingProgress = { ...(previous.openingProgress ?? {}) };
+      const mastery = { ...previous.mastery };
+
+      for (const deviation of gameOpeningDeviations) {
+        const current =
+          openingProgress[deviation.nodeId] ??
+          createOpeningProgress(deviation.nodeId, new Date(occurredAt));
+        openingProgress[deviation.nodeId] = {
+          ...current,
+          nextReviewAt: occurredAt,
+        };
+      }
+
+      if (scenario) {
+        const skill = skillById[scenario.skillId];
+        if (skill) {
+          const base =
+            mastery[skill.id] ??
+            emptyMastery(skill.id, Math.min(1, skill.difficulty / 5));
+
+          mastery[skill.id] = applyEvidence(base, {
+            skillId: skill.id,
+            source: "trainingPosition",
+            success: Boolean(result.scenarioSuccess),
+            quality:
+              result.outcome === "win"
+                ? 1
+                : result.outcome === "draw"
+                  ? .72
+                  : .3,
+            difficulty: Math.min(1, skill.difficulty / 5),
+            occurredAt,
+          });
+        }
+      }
+
+      return {
+        ...previous,
+        games,
+        mastery,
+        openingDeviations,
+        openingProgress,
+      };
+    });
+
+    let engine: StockfishBrowserEngine | null = null;
+    try {
+      engine = await StockfishBrowserEngine.create();
+      const analyzed = await analyzeImportedGame(result.importedGame, engine, {
+        depth: 10,
+      });
+      handleAnalyzedGame(analyzed.game, analyzed.mistakes);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      engine?.quit();
+    }
+  }
+
   function startMistakePractice(mistakeId: string) {
     const mistake = state.mistakes?.find((item) => item.id === mistakeId);
     if (!mistake) return;
@@ -568,6 +652,11 @@ export default function App() {
               onOpenOpenings={() => setLearnMode("openings")}
             />
           )
+        ) : nav === "play" ? (
+          <PlayView
+            mastery={state.mastery}
+            onGameFinished={handlePlayFinished}
+          />
         ) : nav === "review" ? (
           <ReviewView
             games={state.games ?? []}
@@ -578,7 +667,7 @@ export default function App() {
         ) : (
           <section className="placeholder">
             <div className="placeholder-icon">
-              {nav === "play" ? <Play /> : <Library />}
+              <Library />
             </div>
             <p className="eyebrow">{nav.toUpperCase()}</p>
             <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
