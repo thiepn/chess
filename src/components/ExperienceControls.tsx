@@ -7,7 +7,7 @@ import {
   VolumeX,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { MotionPreference } from "../interaction/types";
 
@@ -104,7 +104,7 @@ function SettingToggle({
   checked,
   onChange,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
   checked: boolean;
