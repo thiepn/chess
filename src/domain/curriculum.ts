@@ -272,10 +272,21 @@ export function isSkillUnlocked(
   return prerequisiteReadiness(candidate, mastery) > .55;
 }
 
+export function curriculumStageOrder(stageId?: CurriculumStageId) {
+  if (!stageId) return 0;
+  return curriculumStages.find((stage) => stage.id === stageId)?.order ?? 0;
+}
+
 export function readyCurriculumSkills(
   mastery: Record<string, SkillMastery>,
+  minimumStageOrder = 0,
 ): ChessSkill[] {
   return skills
+    .filter(
+      (candidate) =>
+        (curriculumStages.find((stage) => stage.id === candidate.stage)?.order ??
+          0) >= minimumStageOrder,
+    )
     .filter((candidate) => (mastery[candidate.id]?.effectiveMastery ?? 0) < 75)
     .filter((candidate) => isSkillUnlocked(candidate, mastery))
     .sort((a, b) => {
