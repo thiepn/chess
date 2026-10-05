@@ -31,12 +31,13 @@ The default experience should answer one question: **what should I train now?**
 - P12 placement diagnostics, mixed stage checkpoints, evidence-based promotion gates, persistent certifications, placement/certification-aware curriculum floors, targeted checkpoint remediation, and Home/Learn course-status surfaces
 - P13 longitudinal learning analytics with compact evidence history, mastery/retention/transfer trajectories, model calibration, stage velocity, recurring-vs-repaired weakness tracking, intervention effectiveness signals, and a dedicated Progress Intelligence view
 - P14 adaptive training policy with per-skill intervention selection, challenge bands, calibrated puzzle targets, transfer-to-game routing, explicit stopping pressure, explainable policy reasons, and session-level difficulty adaptation
+- P15 human-play integration through Lichess with public-username linking, bounded recent-game sync, stable external-game deduplication, focus-triggered automatic refresh, batch human-game analysis, source provenance, and direct routing into Review/mistake/adaptive learning
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service.
 
 ## Run
 
@@ -479,13 +480,102 @@ Opening an activity shows the policy reason, target success range and—when rel
 
 The adaptive policy itself is not stored as permanent account state. It is deterministically recomputed from the latest synced mastery, analytics, assessment and game evidence whenever a session is composed. This allows later evidence to change the recommendation immediately without stale personalization state.
 
+## Human play and Lichess game intake
+
+P15 uses Lichess as the human-play surface rather than building a multiplayer backend.
+
+### Lightweight account link
+
+The chess app stores only:
+
+- the public Lichess username;
+- when it was linked;
+- whether automatic sync is enabled;
+- the last successful sync/import timestamps;
+- the number of newly imported games from the latest sync.
+
+No Lichess password, session cookie, personal access token or OAuth bearer token is stored in THIEPN account state.
+
+The username is validated against the public Lichess user endpoint before it is linked.
+
+### Human play
+
+Play now includes a **Human Play** section.
+
+When a Lichess username is linked:
+
+- **Play humans** opens Lichess in a new tab;
+- the normal local/Stockfish training modes remain available;
+- returning focus to THIEPN can trigger a due game sync automatically.
+
+This deliberately keeps live matchmaking, clocks, anti-cheat, reconnection and multiplayer infrastructure on Lichess instead of recreating them in this app.
+
+### Recent-game sync
+
+The client requests a bounded recent-game window rather than attempting to mirror an entire Lichess account.
+
+Current behavior:
+
+- at most 12 games are requested per sync;
+- later syncs use the last successful sync timestamp with a six-hour overlap;
+- overlap prevents games near a boundary from being lost;
+- stable Lichess game IDs make the overlap safe because duplicates are removed;
+- automatic refresh is considered due after 15 minutes and also runs when the app regains focus;
+- only one Lichess request/sync sequence can be in flight at once.
+
+The primary integration uses the documented Lichess user-game export endpoint. A narrow historical export-route fallback is retained for temporary endpoint-routing regressions. The app never scrapes rendered Lichess HTML.
+
+If Lichess responds with a rate-limit status, the app surfaces a clear retry-later message rather than hammering the service.
+
+### Stable game provenance
+
+Imported games now carry explicit provenance:
+
+- **manual** — PGN pasted/uploaded by the user;
+- **training** — games played against the app's Stockfish training opponent;
+- **lichess** — human games imported from the linked public Lichess account.
+
+Synced Lichess games also preserve:
+
+- their external Lichess game ID;
+- their canonical Lichess game URL;
+- the real game timestamp when available;
+- the linked user's inferred color.
+
+A synced game receives a stable ID such as `lichess:AbCd1234`, so repeated syncs cannot create duplicate Review entries or duplicate mastery penalties.
+
+### Review pipeline
+
+Synced games appear immediately in Review.
+
+Review adds a linked-account sync surface and a **Analyze new human games** action. It processes up to five newest unanalyzed synced games in one batch using a single browser Stockfish instance.
+
+Each analyzed game then follows the already-established learning pipeline:
+
+1. client-side Stockfish analysis;
+2. critical-moment filtering;
+3. curriculum-skill classification;
+4. visual P8 game story;
+5. personal mistake-bank entries;
+6. opening-deviation detection;
+7. real-game mastery/transfer evidence;
+8. future P14 adaptive remediation.
+
+Browser engine work is serialized so manual review, game reanalysis and synced-game batch analysis cannot accidentally run competing Stockfish jobs.
+
+### API/privacy boundary
+
+P15 intentionally stops short of OAuth because the current product does not need private account actions merely to learn from public finished games.
+
+If a future phase needs actions such as creating challenges programmatically, reading private data or controlling authenticated Lichess account functions, OAuth2 PKCE should be added as a separate capability with narrowly scoped permissions. It should not be introduced merely to make public game sync look more sophisticated.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
 
 If there is no authenticated Supabase session, the app stays fully usable with local persistence.
 
-Durable account state includes skill mastery, longitudinal analytics history, puzzle attempt history, games, game stories, repertoire progress, personal mistakes, assessments, certifications, and saved Library studies. The static puzzle/reference corpora themselves are not synced through the account backend.
+Durable account state includes skill mastery, longitudinal analytics history, puzzle attempt history, games, game stories, repertoire progress, personal mistakes, assessments, certifications, saved Library studies, and the lightweight public Lichess link/sync metadata. Lichess credentials are not part of account state. The static puzzle/reference corpora themselves are not synced through the account backend.
 
 ## Architecture
 
@@ -493,4 +583,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P15 — Human Play Integration, Lichess Sync & Automatic Real-Game Intake.
+P16 — Real-Game Transfer Scoring, Human-vs-AI Evidence Separation & Practical Rating Model.
