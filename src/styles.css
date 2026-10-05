@@ -561,7 +561,9 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html:not([data-motion="full"]) *,
+  html:not([data-motion="full"]) *::before,
+  html:not([data-motion="full"]) *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
@@ -4989,4 +4991,183 @@ html[data-motion="reduced"] *::after {
 
 html[data-motion="reduced"] .celebration-layer {
   display: none !important;
+}
+
+
+.app-loading-shell {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 20px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(82,109,255,.13), transparent 28rem),
+    var(--bg);
+}
+
+.app-loading-brand {
+  width: 66px;
+  height: 66px;
+  border-radius: 21px;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  background: linear-gradient(145deg, #526dff, #8a72f4);
+  box-shadow: 0 20px 55px rgba(82,109,255,.24);
+  animation: loading-brand-breathe 1.7s ease-in-out infinite;
+}
+
+.app-loading-copy {
+  width: min(290px, 70vw);
+  display: grid;
+  gap: 8px;
+}
+
+.app-loading-copy .loading-shimmer {
+  display: block;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.app-loading-copy .loading-shimmer.short {
+  width: 64%;
+}
+
+.hero,
+.section-hero,
+.play-view,
+.review-view,
+.library-view,
+.openings-view,
+.game-story-view,
+.game-arena {
+  animation: view-rise var(--motion-standard) var(--ease-out-premium) both;
+}
+
+.mode-switch,
+.session-card,
+.dashboard-grid {
+  animation: view-rise var(--motion-standard) var(--ease-out-premium) both;
+}
+
+.mode-switch { animation-delay: 35ms; }
+.session-card { animation-delay: 65ms; }
+.dashboard-grid { animation-delay: 95ms; }
+
+@keyframes view-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes loading-brand-breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.035); filter: brightness(1.08); }
+}
+
+@media (hover: none) {
+  .board-square:hover {
+    filter: none;
+  }
+
+  .board-square:hover .piece {
+    transform: translateY(-1px) scale(1);
+  }
+
+  .primary:hover,
+  .secondary:hover,
+  .reference-card:hover,
+  .ai-profile-card:hover,
+  .story-phase:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .training-sheet::before {
+    content: "";
+    position: sticky;
+    display: block;
+    width: 42px;
+    height: 4px;
+    top: -18px;
+    margin: -13px auto 15px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+    z-index: 4;
+  }
+
+  .lesson-shell-heading {
+    position: relative;
+  }
+
+  .lesson-shell-heading .lesson-context {
+    gap: 5px;
+  }
+
+  .lesson-context span {
+    padding: 6px 8px;
+  }
+
+  .game-topbar {
+    padding-top: 36px;
+  }
+
+  .game-opponent {
+    max-width: 55vw;
+    text-align: right;
+  }
+
+  .story-hero,
+  .section-hero.compact {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 820px) and (orientation: landscape) and (max-height: 540px) {
+  .main {
+    padding-top: 10px;
+  }
+
+  .mobile-experience {
+    top: 8px;
+  }
+
+  .training-sheet {
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+
+  .lesson-stage {
+    grid-template-columns: minmax(300px, .95fr) minmax(260px, .75fr);
+    align-items: start;
+  }
+
+  .lesson-board-column {
+    width: min(48vw, 430px);
+  }
+
+  .lesson-instruction {
+    padding-top: 0;
+  }
+
+  .mobile-nav {
+    opacity: .96;
+  }
+}
+
+html[data-motion="reduced"] .app-loading-brand,
+html[data-motion="reduced"] .hero,
+html[data-motion="reduced"] .section-hero,
+html[data-motion="reduced"] .play-view,
+html[data-motion="reduced"] .review-view,
+html[data-motion="reduced"] .library-view,
+html[data-motion="reduced"] .openings-view,
+html[data-motion="reduced"] .game-story-view,
+html[data-motion="reduced"] .game-arena,
+html[data-motion="reduced"] .mode-switch,
+html[data-motion="reduced"] .session-card,
+html[data-motion="reduced"] .dashboard-grid {
+  animation: none !important;
 }
