@@ -20,7 +20,7 @@ interface GameArenaProps {
   profile: AiProfile;
   scenario?: TrainingScenario;
   onExit: () => void;
-  onFinished: (result: PlayResult) => Promise<void> | void;
+  onFinished: (result: PlayResult) => Promise<boolean> | boolean;
 }
 
 function uciMove(chess: Chess, encoded: string) {
@@ -83,6 +83,7 @@ export function GameArena({
   const [moves, setMoves] = useState<string[]>([]);
   const [thinking, setThinking] = useState(false);
   const [engineStatus, setEngineStatus] = useState("Loading opponent…");
+  const [engineReady, setEngineReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<PlayResult | null>(null);
   const [sendingReview, setSendingReview] = useState(false);
@@ -111,6 +112,7 @@ export function GameArena({
           return;
         }
         engineRef.current = engine;
+        setEngineReady(true);
         setEngineStatus(`${profile.name} ready`);
       })
       .catch((cause) => {
@@ -126,6 +128,7 @@ export function GameArena({
       cancelled = true;
       engineRef.current?.quit();
       engineRef.current = null;
+      setEngineReady(false);
     };
   }, [initialFen, playerColor, profile.name, scenario]);
 
@@ -166,8 +169,8 @@ export function GameArena({
     setSendingReview(true);
 
     try {
-      await onFinished(finished);
-      setReviewSent(true);
+      const analyzed = await onFinished(finished);
+      setReviewSent(analyzed);
     } finally {
       setSendingReview(false);
     }
@@ -235,7 +238,7 @@ export function GameArena({
     return () => {
       cancelled = true;
     };
-  }, [fen, playerColor, profile, result, error, thinking]);
+  }, [fen, playerColor, profile, result, error, thinking, engineReady]);
 
   return (
     <section className="game-arena">
@@ -400,7 +403,10 @@ export function GameArena({
                     <span>Saved and analyzed for Review</span>
                   </>
                 ) : (
-                  <span>Saved to Review</span>
+                  <>
+                    <BrainCircuit size={16} />
+                    <span>Saved to Review · analysis can be retried</span>
+                  </>
                 )}
               </div>
 
