@@ -6,6 +6,7 @@ import {
   BrainCircuit,
   ChevronRight,
   Clock3,
+  ClipboardCheck,
   Compass,
   Library,
   Play,
@@ -15,9 +16,14 @@ import {
   Target,
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
-import { domainLabels, skillById } from "./domain/curriculum";
+import {
+  curriculumStages,
+  domainLabels,
+  skillById,
+} from "./domain/curriculum";
 import { applyEvidence, emptyMastery } from "./domain/mastery";
 import type {
+  CurriculumStageId,
   LearningEvidence,
   SessionMode,
   TrainingActivity,
@@ -55,6 +61,19 @@ import { ExperienceProvider } from "./interaction/ExperienceProvider";
 import { ExperienceControls } from "./components/ExperienceControls";
 import { defaultExperienceSettings } from "./interaction/types";
 import { emitExperienceEvent } from "./interaction/events";
+import { AssessmentRunner } from "./components/AssessmentRunner";
+import {
+  applyAssessmentToState,
+  buildPlacementAssessment,
+  buildStageCheckpoint,
+  checkpointAttemptCount,
+  evaluateStageGate,
+} from "./assessment/engine";
+import type {
+  AssessmentItemResult,
+  AssessmentSession,
+  StageGateEvaluation,
+} from "./assessment/types";
 
 const repo = createChessStateRepository();
 
@@ -67,6 +86,7 @@ const modeLabels: Record<SessionMode, string> = {
 function activityIcon(activity: TrainingActivity) {
   if (activity.source === "weakness") return <Target size={18} />;
   if (activity.source === "review") return <RefreshCcw size={18} />;
+  if (activity.source === "assessment") return <ClipboardCheck size={18} />;
   if (activity.activityType === "conceptLesson") return <BookOpen size={18} />;
   if (activity.activityType === "openingRecall") return <Compass size={18} />;
   if (activity.activityType === "savedStudy") return <Bookmark size={18} />;
@@ -80,6 +100,7 @@ function reasonLabel(activity: TrainingActivity) {
   if (activity.source === "curriculum") return "CURRICULUM";
   if (activity.source === "focus") return "CURRENT FOCUS";
   if (activity.source === "library") return "FROM YOUR LIBRARY";
+  if (activity.source === "assessment") return "CHECKPOINT REMEDIATION";
   return activity.source.toUpperCase();
 }
 
@@ -91,6 +112,8 @@ export default function App() {
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [learnMode, setLearnMode] = useState<"curriculum" | "openings">("curriculum");
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
+  const [assessmentSession, setAssessmentSession] =
+    useState<AssessmentSession | null>(null);
   const [nav, setNav] = useState("home");
 
   useEffect(() => {
