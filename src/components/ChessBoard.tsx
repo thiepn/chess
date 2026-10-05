@@ -91,9 +91,13 @@ export function ChessBoard({
     if (!chess.inCheck()) return null;
     const turn = chess.turn();
 
-    for (const row of chess.board()) {
-      for (const piece of row) {
-        if (piece?.type === "k" && piece.color === turn) return piece.square;
+    const board = chess.board();
+    for (let row = 0; row < board.length; row += 1) {
+      for (let col = 0; col < board[row].length; col += 1) {
+        const piece = board[row][col];
+        if (piece?.type === "k" && piece.color === turn) {
+          return `${files[col]}${8 - row}` as Square;
+        }
       }
     }
 
