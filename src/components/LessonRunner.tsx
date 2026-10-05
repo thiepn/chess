@@ -1,21 +1,14 @@
 import { ChevronRight, Lightbulb, RotateCcw, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import type { ChessSkill, TrainingActivity } from "../domain/types";
+import type { ChessSkill, TrainingActivity, TrainingOutcome } from "../domain/types";
 import { lessonForSkill } from "../learning/lessons";
 import type { BoardArrow, BoardHighlight } from "../learning/types";
 import { ChessBoard } from "./ChessBoard";
 
-export interface LessonOutcome {
-  success: boolean;
-  quality: number;
-  hintsUsed: number;
-  wrongAttempts: number;
-}
-
 interface LessonRunnerProps {
   activity: TrainingActivity;
   skill: ChessSkill;
-  onComplete: (outcome: LessonOutcome) => void;
+  onComplete: (outcome: TrainingOutcome) => void;
 }
 
 export function LessonRunner({
