@@ -5445,3 +5445,22 @@ html[data-motion="reduced"] .dashboard-grid {
     margin-top: 26px;
   }
 }
+
+
+.curriculum-card-state {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.recommended-next {
+  padding: 5px 7px;
+  border-radius: 999px;
+  background: rgba(87,212,155,.08);
+  border: 1px solid rgba(87,212,155,.12);
+  color: #76d4a7;
+  font-size: 7px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
