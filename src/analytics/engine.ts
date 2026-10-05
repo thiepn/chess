@@ -147,7 +147,10 @@ function interventionInsights(
     (event) =>
       event.kind === "evidence" &&
       new Date(event.occurredAt).getTime() >= cutoff &&
-      event.intervention,
+      event.intervention &&
+      !["placement", "checkpoint", "game-review"].includes(
+        event.intervention,
+      ),
   );
   const grouped = new Map<AnalyticsIntervention, LearningAnalyticsEvent[]>();
 
