@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { UserState } from "../domain/types";
 
 const LOCAL_KEY = "thiepn.chess.user-state.v1";
@@ -28,7 +28,7 @@ class LocalChessStateRepository implements ChessStateRepository {
 
 class SupabaseChessStateRepository implements ChessStateRepository {
   mode = "supabase" as const;
-  private client;
+  private client: SupabaseClient;
 
   constructor(url: string, key: string) {
     this.client = createClient(url, key);
