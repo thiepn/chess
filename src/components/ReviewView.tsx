@@ -55,6 +55,14 @@ export function ReviewView({
     [mistakes],
   );
 
+  const latestStoryGame = useMemo(
+    () =>
+      [...games]
+        .reverse()
+        .find((game) => Boolean(game.reviewStory)),
+    [games],
+  );
+
   async function analyze() {
     if (!pgn.trim() || analyzing) return;
 
@@ -289,6 +297,27 @@ export function ReviewView({
           </div>
         </article>
       </div>
+
+      {latestStoryGame?.reviewStory && (
+        <button
+          className="latest-story-card"
+          type="button"
+          onClick={() => setSelectedGameId(latestStoryGame.id)}
+        >
+          <div className="latest-story-kicker">
+            <BrainCircuit size={18} />
+            <span>LATEST GAME STORY</span>
+          </div>
+          <div>
+            <h2>{latestStoryGame.reviewStory.headline}</h2>
+            <p>{latestStoryGame.reviewStory.summary}</p>
+          </div>
+          <div className="latest-story-meta">
+            <span>{latestStoryGame.white} — {latestStoryGame.black}</span>
+            <strong>{latestStoryGame.reviewStory.moments.length} moments</strong>
+          </div>
+        </button>
+      )}
 
       <section className="mistake-bank">
         <div className="review-section-heading">
