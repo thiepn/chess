@@ -110,7 +110,8 @@ export class StockfishBrowserEngine {
   }
 
   private handleMessage = (event: MessageEvent) => {
-    if (!this.search) return;
+    const activeSearch = this.search;
+    if (!activeSearch) return;
 
     const text = String(event.data ?? "");
     for (const rawLine of text.split("\n")) {
@@ -121,15 +122,15 @@ export class StockfishBrowserEngine {
         const parsed = parseInfo(line);
         if (
           parsed &&
-          (!this.search.last || parsed.depth >= this.search.last.depth)
+          (!activeSearch.last || parsed.depth >= activeSearch.last.depth)
         ) {
-          this.search.last = parsed;
+          activeSearch.last = parsed;
         }
       }
 
       if (line.startsWith("bestmove ")) {
         const move = line.split(/\s+/)[1] ?? "(none)";
-        const result = this.search.last ?? {
+        const result = activeSearch.last ?? {
           scoreCp: 0,
           bestMove: move,
           pv: move === "(none)" ? [] : [move],
@@ -137,9 +138,9 @@ export class StockfishBrowserEngine {
         };
 
         result.bestMove = move === "(none)" ? result.bestMove : move;
-        window.clearTimeout(this.search.timeout);
-        this.search.resolve(result);
-        this.search = null;
+        window.clearTimeout(activeSearch.timeout);
+        activeSearch.resolve(result);
+        if (this.search === activeSearch) this.search = null;
       }
     }
   };
