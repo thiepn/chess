@@ -1,6 +1,8 @@
 import type { Color } from "chess.js";
 
 export type MistakeSeverity = "inaccuracy" | "mistake" | "blunder";
+export type GamePhase = "opening" | "middlegame" | "endgame";
+export type StoryMomentKind = "critical" | "turning-point" | "strong";
 
 export interface ImportedGameMove {
   ply: number;
@@ -14,6 +16,48 @@ export interface ImportedGameMove {
   captured?: string;
   beforeFen: string;
   afterFen: string;
+}
+
+export interface GamePhaseSummary {
+  phase: GamePhase;
+  startPly: number;
+  endPly: number;
+  headline: string;
+  summary: string;
+  averageCentipawnLoss: number;
+  criticalCount: number;
+}
+
+export interface GameStoryMoment {
+  id: string;
+  mistakeId?: string;
+  ply: number;
+  moveNumber: number;
+  phase: GamePhase;
+  kind: StoryMomentKind;
+  severity?: MistakeSeverity;
+  positionFen: string;
+  actualMove: string;
+  actualSan: string;
+  bestMove: string;
+  bestSan: string;
+  principalVariation: string[];
+  evaluationBefore: number;
+  evaluationAfter: number;
+  centipawnLoss: number;
+  skillIds: string[];
+  title: string;
+  summary: string;
+}
+
+export interface GameReviewStory {
+  headline: string;
+  summary: string;
+  verdict: "clean" | "competitive" | "uneven" | "costly";
+  phases: GamePhaseSummary[];
+  moments: GameStoryMoment[];
+  prioritySkillId?: string;
+  generatedAt: string;
 }
 
 export interface ImportedGame {
@@ -32,6 +76,7 @@ export interface ImportedGame {
   moves: ImportedGameMove[];
   criticalMomentIds: string[];
   analysisEngine?: string;
+  reviewStory?: GameReviewStory;
 }
 
 export interface EngineEvaluation {
