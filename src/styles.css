@@ -2894,3 +2894,13 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
     padding: 0 2px;
   }
 }
+
+
+.resign-button:disabled {
+  opacity: .38;
+  cursor: default;
+}
+
+.game-board-column .board-square:disabled {
+  cursor: default;
+}
