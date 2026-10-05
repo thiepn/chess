@@ -14,5 +14,7 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
+      - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm test
       - run: npm run build
