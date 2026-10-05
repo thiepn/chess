@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   applyAssessmentToState,
   assessmentRemediationSkillIds,
+  courseCurriculumFloor,
   buildPlacementAssessment,
   buildStageCheckpoint,
   certificationFromGate,
@@ -195,6 +196,31 @@ describe("course assessment engine", () => {
 
     expect(evaluateStageGate(state, stageId).status).toBe("remediation");
     expect(assessmentRemediationSkillIds(state)).toContain(failedSkill);
+  });
+
+  it("advances the automatic curriculum floor after certification", () => {
+    const state: UserState = {
+      ...baseState(),
+      placement: placementAt("safety"),
+      stageCertifications: {
+        safety: {
+          stageId: "safety",
+          attemptId: "checkpoint-safety",
+          passedAt: "2026-10-05T12:00:00Z",
+          checkpointScore: 90,
+          metrics: {
+            coverage: 100,
+            mastery: 70,
+            retention: 50,
+            transfer: 30,
+            checkpoint: 90,
+          },
+          method: "checkpoint",
+        },
+      },
+    };
+
+    expect(courseCurriculumFloor(state)).toBe(2);
   });
 
   it("applies placement evidence without certifying skipped stages", () => {
