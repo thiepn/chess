@@ -7,10 +7,12 @@ import {
   Swords,
   Target,
   Upload,
+  Link2,
 } from "lucide-react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { analyzeImportedGame } from "../games/analyze";
 import { importPgn, playerMoveCount } from "../games/import";
+import { fetchLichessPgn } from "../games/lichess";
 import type {
   GameAnalysisProgress,
   ImportedGame,
@@ -37,6 +39,8 @@ export function ReviewView({
   onTrainMistake,
 }: ReviewViewProps) {
   const [pgn, setPgn] = useState("");
+  const [lichessUrl, setLichessUrl] = useState("");
+  const [fetchingLichess, setFetchingLichess] = useState(false);
   const [playerColor, setPlayerColor] = useState<"w" | "b">("w");
   const [progress, setProgress] = useState<GameAnalysisProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -108,6 +112,39 @@ export function ReviewView({
             </div>
             <FileUp size={20} />
           </div>
+
+          <div className="lichess-import-row">
+            <input
+              value={lichessUrl}
+              onChange={(event) => setLichessUrl(event.target.value)}
+              placeholder="Lichess game URL or ID"
+              disabled={analyzing || fetchingLichess}
+            />
+            <button
+              type="button"
+              disabled={!lichessUrl.trim() || analyzing || fetchingLichess}
+              onClick={async () => {
+                setError(null);
+                setFetchingLichess(true);
+                try {
+                  setPgn(await fetchLichessPgn(lichessUrl));
+                } catch (cause) {
+                  setError(
+                    cause instanceof Error
+                      ? cause.message
+                      : "Could not fetch the Lichess game.",
+                  );
+                } finally {
+                  setFetchingLichess(false);
+                }
+              }}
+            >
+              {fetchingLichess ? <LoaderCircle className="spin" size={15} /> : <Link2 size={15} />}
+              Fetch
+            </button>
+          </div>
+
+          <div className="import-divider"><span>or paste/upload PGN</span></div>
 
           <div className="color-picker" aria-label="Your color">
             <button
