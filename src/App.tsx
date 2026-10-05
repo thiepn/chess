@@ -79,6 +79,8 @@ import {
   appendEvidenceAnalytics,
   ensureAnalyticsState,
 } from "./analytics/record";
+import { buildProgressIntelligence } from "./analytics/engine";
+import { ProgressView } from "./components/ProgressView";
 
 const repo = createChessStateRepository();
 
@@ -200,6 +202,10 @@ export default function App() {
   }, [stageGates, state.placement]);
 
   const currentCourseGate = stageGates[currentCourseStage.id];
+  const progressIntelligence = useMemo(
+    () => buildProgressIntelligence(state),
+    [state],
+  );
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -996,6 +1002,28 @@ export default function App() {
               </button>
             </section>
 
+            <button
+              className="home-progress-card"
+              type="button"
+              onClick={() => setNav("progress")}
+            >
+              <div className="home-progress-icon">
+                <BarChart3 size={21} />
+              </div>
+              <div>
+                <p className="eyebrow">PROGRESS INTELLIGENCE</p>
+                <strong>
+                  {progressIntelligence.mastery}% mastery · {progressIntelligence.retention}% retention
+                </strong>
+                <span>
+                  {progressIntelligence.evidenceCount30
+                    ? `${progressIntelligence.evidenceCount30} evidence events in 30 days · transfer ${progressIntelligence.transfer}%.`
+                    : "Longitudinal tracking is active. New training will build your personal learning history."}
+                </span>
+              </div>
+              <ChevronRight size={18} />
+            </button>
+
             <section className="dashboard-grid">
               <article className="panel">
                 <div className="panel-title">
@@ -1089,6 +1117,11 @@ export default function App() {
             onDeleteStudy={deleteStudy}
             onToggleFavorite={toggleStudyFavorite}
             onTrainStudy={startStudyTraining}
+          />
+        ) : nav === "progress" ? (
+          <ProgressView
+            intelligence={progressIntelligence}
+            onBack={() => setNav("home")}
           />
         ) : (
           <section className="placeholder">
