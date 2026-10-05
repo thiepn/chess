@@ -24,6 +24,8 @@ function branchFit(game: ImportedGame, repertoire: OpeningRepertoire) {
 }
 
 export function chooseRepertoireForGame(game: ImportedGame) {
+  if (game.startingFen) return undefined;
+
   return candidateRepertoires(game)
     .map((repertoire) => ({
       repertoire,
@@ -36,6 +38,8 @@ export function openingDeviationsForGame(
   game: ImportedGame,
   occurredAt = new Date(),
 ): OpeningDeviation[] {
+  if (game.startingFen) return [];
+
   const repertoire = chooseRepertoireForGame(game);
   if (!repertoire) return [];
 
@@ -71,8 +75,6 @@ export function openingDeviationsForGame(
       continue;
     }
 
-    // If the opponent leaves the curated tree, that is not the learner's
-    // mistake. Stop tracking rather than treating unknown theory as failure.
     if (node.sideToMove !== repertoire.color) break;
 
     if (node.preferredChildId) {
