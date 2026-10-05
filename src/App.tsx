@@ -51,6 +51,10 @@ import { LibraryView } from "./components/LibraryView";
 import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
 import type { SavedStudy } from "./library/types";
 import { applyStudyAttempt } from "./library/progress";
+import { ExperienceProvider } from "./interaction/ExperienceProvider";
+import { ExperienceControls } from "./components/ExperienceControls";
+import { defaultExperienceSettings } from "./interaction/types";
+import { emitExperienceEvent } from "./interaction/events";
 
 const repo = createChessStateRepository();
 
@@ -170,6 +174,14 @@ export default function App() {
       hintsUsed: outcome.hintsUsed,
       occurredAt,
     };
+
+    emitExperienceEvent({
+      feedback: outcome.success ? "complete" : "error",
+      celebration:
+        outcome.success && active.activityType !== "mixedPuzzle"
+          ? "small"
+          : undefined,
+    });
 
     setState((previous) => {
       const previousMastery =
@@ -612,6 +624,13 @@ export default function App() {
     });
   }
 
+  function updateExperience(settings: typeof defaultExperienceSettings) {
+    setState((previous) => ({
+      ...previous,
+      experience: settings,
+    }));
+  }
+
   const navItems = [
     ["home", "Home", Sparkles],
     ["learn", "Learn", BookOpen],
@@ -621,7 +640,11 @@ export default function App() {
   ] as const;
 
   return (
-    <div className="app-shell">
+    <ExperienceProvider
+      settings={state.experience ?? defaultExperienceSettings}
+      onChange={updateExperience}
+    >
+      <div className="app-shell">
       <aside className="sidebar">
         <div className="brand-mark">♞</div>
         <nav>
@@ -629,13 +652,19 @@ export default function App() {
             <button
               key={id}
               className={nav === id ? "nav-item active" : "nav-item"}
-              onClick={() => setNav(id)}
+              onClick={() => {
+                setNav(id);
+                emitExperienceEvent({ feedback: "navigate" });
+              }}
             >
               <Icon size={19} />
               <span>{label}</span>
             </button>
           ))}
         </nav>
+        <div className="sidebar-experience">
+          <ExperienceControls />
+        </div>
         <div className="sync-chip">
           <span className="sync-dot" />
           {repo.mode === "supabase" ? "Account sync" : "Local-first"}
@@ -818,9 +847,20 @@ export default function App() {
         )}
       </main>
 
+      <div className="mobile-experience">
+        <ExperienceControls />
+      </div>
+
       <nav className="mobile-nav">
         {navItems.map(([id, label, Icon]) => (
-          <button key={id} className={nav === id ? "active" : ""} onClick={() => setNav(id)}>
+          <button
+            key={id}
+            className={nav === id ? "active" : ""}
+            onClick={() => {
+              setNav(id);
+              emitExperienceEvent({ feedback: "navigate" });
+            }}
+          >
             <Icon size={20} />
             <span>{label}</span>
           </button>
@@ -898,6 +938,7 @@ export default function App() {
           </section>
         </div>
       )}
-    </div>
+      </div>
+    </ExperienceProvider>
   );
 }
