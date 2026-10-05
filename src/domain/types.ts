@@ -1,3 +1,5 @@
+import type { PuzzleAttemptSummary } from "../puzzles/types";
+
 export type DomainId =
   | "rules"
   | "fundamentals"
@@ -132,6 +134,16 @@ export interface TrainingActivity extends TrainingCandidate {
   subtitle: string;
 }
 
+export interface TrainingOutcome {
+  success: boolean;
+  quality: number;
+  hintsUsed: number;
+  wrongAttempts: number;
+  puzzleId?: string;
+  puzzleRating?: number;
+  puzzleSkillIds?: string[];
+}
+
 export type SessionMode = "quick" | "standard" | "deep";
 
 export interface TrainingSession {
@@ -147,6 +159,7 @@ export interface UserState {
   mastery: Record<string, SkillMastery>;
   weaknesses: UserWeakness[];
   recentDomainMinutes: Partial<Record<DomainId, number>>;
+  puzzleHistory?: Record<string, PuzzleAttemptSummary>;
   focus?: {
     domain: DomainId;
     until?: string;
