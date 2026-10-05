@@ -116,11 +116,22 @@ export function applyEvidence(
   if (evidence.source === "checkpoint") {
     next.mixedRecognition = updateDimension(next.mixedRecognition, target, weight);
     next.execution = updateDimension(next.execution, target, weight * .8);
-    next.delayedRetention = updateDimension(
-      next.delayedRetention,
-      target,
-      weight * .72,
-    );
+
+    const priorSeenAt = previous.lastSeenAt
+      ? new Date(previous.lastSeenAt).getTime()
+      : null;
+    const elapsedDays =
+      priorSeenAt === null
+        ? 0
+        : (new Date(evidence.occurredAt).getTime() - priorSeenAt) / 86_400_000;
+
+    if (elapsedDays >= 1) {
+      next.delayedRetention = updateDimension(
+        next.delayedRetention,
+        target,
+        weight * .72,
+      );
+    }
   }
   if (evidence.source === "realGame") {
     next.realGameAttempts += 1;
