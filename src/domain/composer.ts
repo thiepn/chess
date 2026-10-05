@@ -1,4 +1,8 @@
-import { readyCurriculumSkills, skillById } from "./curriculum";
+import {
+  curriculumStageOrder,
+  readyCurriculumSkills,
+  skillById,
+} from "./curriculum";
 import { retentionProbability, weaknessPriority } from "./mastery";
 import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
@@ -213,7 +217,13 @@ export function buildCandidatePool(
     );
   }
 
-  for (const skill of readyCurriculumSkills(state.mastery).slice(0, 8)) {
+  const curriculumFloor = curriculumStageOrder(
+    state.placement?.recommendedStageId,
+  );
+  for (const skill of readyCurriculumSkills(
+    state.mastery,
+    curriculumFloor,
+  ).slice(0, 8)) {
     const current = state.mastery[skill.id]?.effectiveMastery ?? 0;
     const priority = skill.curriculumPriority * (1 - current / 100);
     result.push(candidate(skill, "curriculum", .42, priority, current ? "Continue curriculum" : "New concept"));
