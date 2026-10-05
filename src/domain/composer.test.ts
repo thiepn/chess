@@ -74,6 +74,51 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
+  it("schedules a real-game opening deviation even if normal recall is not due", () => {
+    const state = {
+      ...initialUserState,
+      openingProgress: {
+        "white-start": {
+          nodeId: "white-start",
+          attempts: 4,
+          successes: 4,
+          streak: 4,
+          lastAttemptAt: "2026-10-05T10:00:00Z",
+          nextReviewAt: "2026-11-05T10:00:00Z",
+          lastQuality: 1,
+        },
+      },
+      openingDeviations: [
+        {
+          id: "g1:opening:1",
+          gameId: "g1",
+          repertoireId: "white-e4-simple",
+          nodeId: "white-start",
+          ply: 1,
+          expectedMoves: ["e2e4"],
+          playedMove: "d2d4",
+          occurredAt: "2026-10-05T11:00:00Z",
+          resolved: false,
+        },
+      ],
+    };
+
+    const session = composeSession(
+      state,
+      "standard",
+      new Date("2026-10-05T12:00:00Z"),
+    );
+
+    expect(
+      session.activities.some(
+        (item) =>
+          item.activityType === "openingRecall" &&
+          item.openingNodeId === "white-start" &&
+          item.repertoireId === "white-e4-simple",
+      ),
+    ).toBe(true);
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,
