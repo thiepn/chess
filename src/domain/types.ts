@@ -158,6 +158,7 @@ export interface TrainingCandidate {
   openingNodeId?: string;
   repertoireId?: string;
   studyId?: string;
+  scenarioId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
 }
 
