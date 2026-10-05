@@ -1,4 +1,4 @@
-import { Chess } from "chess.js";
+import { Chess, type Square } from "chess.js";
 import type {
   EngineMoveReview,
   MistakeSeverity,
@@ -38,7 +38,7 @@ function onlyKingsAndPawns(chess: Chess) {
 
 function moveCreatesImmediateHang(review: EngineMoveReview) {
   const after = new Chess(review.move.afterFen);
-  const movedPiece = after.get(review.move.to as never);
+  const movedPiece = after.get(review.move.to as Square);
   if (!movedPiece || movedPiece.type === "k") return false;
 
   const captures = after.moves({ verbose: true });
