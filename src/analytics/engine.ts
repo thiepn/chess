@@ -182,7 +182,7 @@ function interventionInsights(
         successRate: Math.round(successRate),
         averageMasteryGain: round(masteryGain),
         averageRetentionGain: round(retentionGain),
-        score: Math.round(score),
+        score: Math.round(Math.max(0, Math.min(100, score))),
       };
     })
     .sort((a, b) => b.score - a.score);
