@@ -21,12 +21,13 @@ The default experience should answer one question: **what should I train now?**
 - P2 adaptive 10/25/60-minute Training Composer with diversity, novelty and fatigue constraints
 - P3 reusable interactive lesson scripting model, chessboard teaching engine, guided moves, hints, overlays, rewind/retry feedback, and curriculum browser
 - P4 streaming Lichess puzzle ingestion, curriculum-theme normalization, quality/rating filtering, sharded corpus loading, adaptive puzzle selection, multi-ply practice, and durable puzzle history
+- P5 PGN/Lichess game import, client-side Stockfish 19 analysis, critical-moment filtering, curriculum-linked error classification, personal mistake bank, real-game evidence, and spaced mistake repair
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts.
+The curriculum is intentionally a representative seed graph rather than the final 200–300 atomic-skill catalog. P3 provides polished authored lessons; P4 supplies scalable practice behind those concepts; P5 closes the loop by converting the user's own games into real-game evidence and future training.
 
 ## Run
 
@@ -82,6 +83,23 @@ At runtime the browser downloads only the shard needed for the current skill. Pu
 
 Lichess puzzle exports are CC0. Source provenance and license metadata are preserved in the generated manifest.
 
+## Personal game analysis
+
+Review accepts pasted PGN, uploaded `.pgn` files, or a public Lichess game URL/ID. The app analyzes only the selected player's moves.
+
+Stockfish 19 lite single-threaded is installed as a browser worker during `npm install`. Its JS/WASM files, GPL-3.0 license text, exact package version, and corresponding-source link are emitted into `public/engine`.
+
+Game analysis is deliberately selective:
+
+- engine differences below the learning threshold are ignored;
+- low-value inaccuracies in already-lost positions are suppressed;
+- at most eight high-impact moments are promoted per game;
+- positions are classified against curriculum skills such as piece safety, exchange judgment, candidate moves, opening principles, defense, opposition, and conversion;
+- the bank stores the position *before* the error, so future review tests retrieval instead of showing the old move;
+- successful repairs are spaced at increasing intervals and feed the normal mastery engine.
+
+Imported game summaries and the personal mistake bank are account state. The engine itself stays client-side.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -96,4 +114,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P5 — Game Import, Stockfish Analysis, Critical-Moment Detection & Personal Mistake Bank.
+P6 — Opening Repertoire, Opening Explorer & Concept-First Repertoire Training.
