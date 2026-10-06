@@ -324,7 +324,24 @@ export function buildTrainingHorizon(
         a.pressure * a.share,
     );
 
-  const elapsed = elapsedWeekFraction(now, start);
+  const planStart = new Date(plan.updatedAt);
+  const paceStart = new Date(
+    Math.max(
+      start.getTime(),
+      Math.min(now.getTime(), planStart.getTime()),
+    ),
+  );
+  const paceWindow =
+    end.getTime() - paceStart.getTime();
+  const elapsed =
+    paceWindow > 0
+      ? clamp(
+          (now.getTime() - paceStart.getTime()) /
+            paceWindow,
+          0,
+          1,
+        )
+      : elapsedWeekFraction(now, start);
   const expectedMinutes = Math.round(
     plan.weeklyMinutes * elapsed,
   );
@@ -344,7 +361,11 @@ export function buildTrainingHorizon(
   const recommendedSessionMinutes =
     remainingMinutes > 0
       ? Math.round(
-          remainingMinutes / remainingSessions,
+          clamp(
+            remainingMinutes / remainingSessions,
+            10,
+            60,
+          ),
         )
       : 10;
   const paceStatus: TrainingHorizonInsight["paceStatus"] =
