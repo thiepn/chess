@@ -116,6 +116,23 @@ export function applyEvidence(
     next.mixedRecognition = updateDimension(next.mixedRecognition, target, weight);
     next.execution = updateDimension(next.execution, target, weight * .7);
   }
+  if (evidence.source === "openingRecall") {
+    next.recognition = updateDimension(
+      next.recognition,
+      target,
+      weight * .82,
+    );
+    next.execution = updateDimension(
+      next.execution,
+      target,
+      weight,
+    );
+    next.delayedRetention = updateDimension(
+      next.delayedRetention,
+      target,
+      weight * .72,
+    );
+  }
   if (evidence.source === "calculation") {
     next.mixedRecognition = updateDimension(
       next.mixedRecognition,
