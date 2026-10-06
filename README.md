@@ -46,6 +46,7 @@ The default experience should answer one question: **what should I train now?**
 - P25 event retrospectives with multi-day event matching, preparation-vs-event performance comparison, evidence thresholds, recurring event-repair extraction, stable-skill detection, persisted human notes, and a bounded 14-day post-event repair loop
 - P26 core learning experience reset with a one-decision Train home, one-tap adaptive session start, compact recommendation context, first-run non-blocking placement, Progress as a top-level destination, advanced plan/competition controls moved out of the training path, and removal of internal phase jargon from user-facing planning UI
 - P27 production puzzle practice with a 2,000-position CC0 Lichess baseline, all mapped puzzle skills covered, rating-balanced per-skill shards, CI corpus-health gates, deterministic full-database refresh tooling, stronger repeat avoidance, spaced failed-puzzle returns, concealed-motif mixed practice, post-solve tactical explanations, readable solution lines, and optional local Stockfish verification
+- P28 Lesson Engine 2.0 with eight-stage teaching scripts, misconception checks, escalating hints, guided practice, independent retrieval, distinct transfer positions for prioritized skills, lesson-mastery scoring separated from completion, and stronger content QA
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -1853,6 +1854,37 @@ After the P25 product audit, the roadmap intentionally pivots away from addition
 
 See [ROADMAP.md](./ROADMAP.md) for the revised product direction and P26–P37 sequence.
 
+## Lesson Engine 2.0 and curriculum depth
+
+P28 replaces the old universal explanation-plus-one-move lesson with a real instructional sequence.
+
+Every authored curriculum lesson now contains:
+
+1. concept model;
+2. worked example;
+3. misconception / contrast check;
+4. guided board practice;
+5. retrieval check;
+6. independent board retrieval;
+7. transfer;
+8. concise takeaway.
+
+The learner is no longer rewarded equally for clicking through explanations and for independently retrieving the idea.
+
+Lesson outcomes now include a separate mastery-evidence summary:
+
+- assessed interactive steps;
+- independent steps;
+- first-try independent successes;
+- transfer attempts;
+- first-try transfer success;
+- mastery quality;
+- mastery-passed state.
+
+Hints escalate gradually. The first hint stays conceptual, later hints narrow the search, and only the final hint may reveal origin/destination geometry. Wrong choices and wrong legal moves explain why the answer does not express the lesson instead of only reporting that it is incorrect.
+
+The first deep-content pass gives distinct transfer positions to high-value fundamentals, tactical vision, calculation and essential endgame skills. Content QA enforces legal FENs, legal accepted moves, unique step IDs, misconception feedback, staged hints and distinct transfer positions for that prioritized set.
+
 ## Next phase
 
-P28 — Lesson Engine 2.0 & Curriculum Depth.
+P29 — Dedicated Calculation Trainer.

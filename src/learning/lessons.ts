@@ -665,6 +665,268 @@ const seeds: Record<string, LessonSeed> = {
   },
 };
 
+interface LessonTransferSeed {
+  fen: string;
+  acceptedMoves: string[];
+  prompt: string;
+  success: string;
+  hints: string[];
+}
+
+const transferSeeds: Record<string, LessonTransferSeed> = {
+  "fundamentals.attacked": {
+    fen: "4k3/8/2n5/8/3Q4/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["d4e3"],
+    prompt:
+      "The knight on c6 attacks your queen. Save the queen without creating a new immediate problem.",
+    success:
+      "You responded to the concrete attack first instead of continuing with a plan that no longer mattered.",
+    hints: [
+      "Start with the opponent's forcing threats.",
+      "The knight on c6 attacks d4.",
+      "Move the queen from d4 to e3.",
+    ],
+  },
+  "fundamentals.hanging": {
+    fen: "4k3/8/2n5/8/3Q4/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["d4e3"],
+    prompt:
+      "Your queen is loose to the knight. Remove the hanging-piece problem before doing anything else.",
+    success:
+      "The queen is no longer available to a one-move capture. That is the habit this lesson is trying to automate.",
+    hints: [
+      "Ask which of your valuable pieces can be captured immediately.",
+      "The c6 knight attacks d4.",
+      "Qe3 solves the immediate problem.",
+    ],
+  },
+  "fundamentals.blunder-check": {
+    fen: "4k3/8/2n5/8/3Q4/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["d4e3"],
+    prompt:
+      "Run the final blunder check. Which move gets the queen out of the knight's attack?",
+    success:
+      "You used the opponent's immediate capture threat as the final filter before committing.",
+    hints: [
+      "What can Black capture after your move?",
+      "The knight currently attacks d4.",
+      "Move the queen to e3.",
+    ],
+  },
+  "defense.threats": {
+    fen: "4k3/8/2n5/8/3Q4/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["d4e3"],
+    prompt:
+      "Name Black's immediate threat, then make the move that neutralizes it.",
+    success:
+      "You solved the opponent's threat before looking for your own active idea.",
+    hints: [
+      "Scan checks and captures against you first.",
+      "The knight can capture the queen on d4.",
+      "Qe3 steps out of the attack.",
+    ],
+  },
+  "tactics.double-attack": {
+    fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["f5d6"],
+    prompt:
+      "Find a move that attacks the king and queen at the same time.",
+    success:
+      "Nd6+ creates two urgent problems with one move: check on e8 and an attack on c8.",
+    hints: [
+      "Look for a knight move with check first.",
+      "The useful destination must also attack c8.",
+      "Nd6+ is the double attack.",
+    ],
+  },
+  "tactics.knight-fork": {
+    fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["f5d6"],
+    prompt:
+      "Use knight geometry to fork the king and queen.",
+    success:
+      "The knight reaches d6 with check while also attacking the queen on c8.",
+    hints: [
+      "List the checking squares for the knight.",
+      "From d6 the knight attacks both e8 and c8.",
+      "Play Nd6+.",
+    ],
+  },
+  "tactics.pin": {
+    fen: "4k3/3n4/8/8/2B5/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["c4b5"],
+    prompt:
+      "Create an absolute pin on the d7 knight.",
+    success:
+      "Bb5 pins the knight to the king because moving the knight would expose check along the diagonal.",
+    hints: [
+      "Find a bishop square that lines the knight up with the king.",
+      "The diagonal b5-c6-d7-e8 is the key.",
+      "Play Bb5.",
+    ],
+  },
+  "tactics.discovered": {
+    fen: "k7/8/8/8/8/8/B7/R6K w - - 0 1",
+    acceptedMoves: ["a2f7"],
+    prompt:
+      "Move the bishop so the rook on a1 is revealed against the king.",
+    success:
+      "Bf7 clears the a-file and uncovers the rook's attack on a8.",
+    hints: [
+      "The rook already points toward the king but one friendly piece blocks it.",
+      "Move the bishop away from a2.",
+      "Bf7 reveals the rook check.",
+    ],
+  },
+  "tactics.back-rank": {
+    fen: "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+    acceptedMoves: ["a1a8"],
+    prompt:
+      "The king has no flight square. Finish with the back-rank pattern.",
+    success:
+      "Ra8+ exploits the sealed pawn shelter: the king cannot step onto the seventh rank.",
+    hints: [
+      "Verify that f7, g7 and h7 remove the king's escape squares.",
+      "A rook check on the eighth rank is decisive.",
+      "Play Ra8+.",
+    ],
+  },
+  "calculation.candidates": {
+    fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["f5d6"],
+    prompt:
+      "Generate forcing candidates first, then choose the move that creates the strongest concrete problem.",
+    success:
+      "Nd6+ wins the candidate comparison because it checks and attacks the queen simultaneously.",
+    hints: [
+      "Begin with checks before quiet moves.",
+      "One knight check also attacks a major piece.",
+      "Nd6+ is the forcing candidate.",
+    ],
+  },
+  "calculation.reply": {
+    fen: "6k1/5ppp/8/8/8/8/8/4R1K1 w - - 0 1",
+    acceptedMoves: ["e1e8"],
+    prompt:
+      "Choose the forcing move only after checking Black's best legal responses.",
+    success:
+      "Re8 is decisive because the king has no legal flight square and there is no useful block or capture.",
+    hints: [
+      "After your candidate, give Black every legal defense.",
+      "The back-rank pawns remove the king moves.",
+      "Re8 is the forcing conclusion.",
+    ],
+  },
+  "calculation.forcing-lines": {
+    fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["f5d6"],
+    prompt:
+      "Start the calculation with the forcing move that sharply reduces Black's reply tree.",
+    success:
+      "Nd6+ forces a king response while keeping the attack on the queen visible in the resulting position.",
+    hints: [
+      "Checks usually shrink the reply tree most.",
+      "Search the knight's checking squares.",
+      "Nd6+ begins the forcing line.",
+    ],
+  },
+  "calculation.visualization": {
+    fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["f5d6"],
+    prompt:
+      "Before moving, picture the knight on d6 and identify both squares it will attack.",
+    success:
+      "The imagined board was accurate: from d6 the knight checks e8 and attacks c8.",
+    hints: [
+      "Rebuild the knight's attacks from its destination, not its starting square.",
+      "A knight on d6 attacks e8 and c8.",
+      "Now play Nd6+.",
+    ],
+  },
+  "calculation.quiet": {
+    fen: "rnbqkbnr/pppp1ppp/8/4p3/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    acceptedMoves: ["g1f3"],
+    prompt:
+      "No tactic is required. Choose a quiet move that improves a piece and increases central influence.",
+    success:
+      "Nf3 improves a dormant piece, controls central squares and develops without forcing the position.",
+    hints: [
+      "Look for the least active piece rather than a forcing move.",
+      "A kingside knight can improve naturally.",
+      "Play Nf3.",
+    ],
+  },
+  "endgames.pawn-races": {
+    fen: "8/8/8/1P6/6p1/8/4K2k/8 w - - 0 1",
+    acceptedMoves: ["b5b6"],
+    prompt:
+      "Count both promotion races, then commit to the passed pawn push.",
+    success:
+      "b6 advances the race by one tempo. The key habit is counting both sides before assuming a passed pawn is fast enough.",
+    hints: [
+      "Count moves to promotion for both pawns.",
+      "Your b-pawn must keep moving.",
+      "Play b6.",
+    ],
+  },
+  "pawns.passed": {
+    fen: "4k3/8/8/3P4/8/8/3K4/8 w - - 0 1",
+    acceptedMoves: ["d5d6"],
+    prompt:
+      "Advance the passed pawn while its king remains close enough to support the promotion plan.",
+    success:
+      "d6 increases the passed pawn's value while the king remains available to support it.",
+    hints: [
+      "A passed pawn grows stronger as it advances, provided it is not simply lost.",
+      "The d-pawn can gain a rank safely here.",
+      "Play d6.",
+    ],
+  },
+  "endgames.rook-activity": {
+    fen: "7k/8/8/8/8/8/8/K6R w - - 0 1",
+    acceptedMoves: ["h1h7"],
+    prompt:
+      "Activate the rook with a checking invasion instead of leaving it passive on the back rank.",
+    success:
+      "Rh7+ uses the open file and forces the king to respond. Active rooks create problems from a distance.",
+    hints: [
+      "Look for the most active rank the rook can reach with tempo.",
+      "The h-file is completely open.",
+      "Play Rh7+.",
+    ],
+  },
+  "endgames.lucena": {
+    fen: "5K2/3k1P2/8/8/8/8/7r/4R3 w - - 0 1",
+    acceptedMoves: ["e1e4"],
+    prompt:
+      "This is the mirrored Lucena structure. Begin building the bridge.",
+    success:
+      "Re4 starts the same bridge-building mechanism on the mirrored board.",
+    hints: [
+      "The technique survives when the board is mirrored.",
+      "Lift the rook to the fourth rank.",
+      "Play Re4.",
+    ],
+  },
+  "endgames.philidor": {
+    fen: "8/8/3k3r/3P4/3K4/8/8/R7 b - - 0 1",
+    acceptedMoves: ["h6e6"],
+    prompt:
+      "Use the mirrored Philidor setup to keep the sixth-rank barrier.",
+    success:
+      "Re6 preserves the barrier and prevents the attacking king from making useful progress.",
+    hints: [
+      "Do not abandon the sixth rank while the pawn remains back.",
+      "Keep the rook active laterally on rank six.",
+      "Play Re6.",
+    ],
+  },
+};
+
+export const deepTransferSkillIds = Object.freeze(
+  Object.keys(transferSeeds),
+);
+
 function moveSquares(move: string) {
   return {
     from: move.slice(0, 2) as Square,
@@ -672,8 +934,117 @@ function moveSquares(move: string) {
   };
 }
 
-function makeScript(skillId: string, seed: LessonSeed): LessonScript {
+function moveHints(
+  seed: LessonSeed,
+  move: string,
+  conceptual = seed.summary,
+) {
+  const { from, to } = moveSquares(move);
+  return [
+    {
+      text: conceptual,
+    },
+    {
+      text: seed.hint,
+      highlights: [{ square: from, tone: "hint" as const }],
+    },
+    {
+      text: `The move starts on ${from} and finishes on ${to}.`,
+      highlights: [
+        { square: from, tone: "hint" as const },
+        { square: to, tone: "good" as const },
+      ],
+      arrows: [
+        {
+          from,
+          to,
+          tone: "hint" as const,
+        },
+      ],
+    },
+  ];
+}
+
+function transferHints(
+  transfer: LessonTransferSeed,
+) {
+  const move = transfer.acceptedMoves[0];
+  const { from, to } = moveSquares(move);
+  return [
+    {
+      text:
+        transfer.hints[0] ??
+        "Name the concept before calculating moves.",
+    },
+    {
+      text:
+        transfer.hints[1] ??
+        "Compare the strongest candidate with the opponent's best reply.",
+      highlights: [{ square: from, tone: "hint" as const }],
+    },
+    {
+      text:
+        transfer.hints[2] ??
+        `Consider the move from ${from} to ${to}.`,
+      highlights: [
+        { square: from, tone: "hint" as const },
+        { square: to, tone: "good" as const },
+      ],
+      arrows: [
+        {
+          from,
+          to,
+          tone: "hint" as const,
+        },
+      ],
+    },
+  ];
+}
+
+function misconceptionOptions(seed: LessonSeed) {
+  return [
+    {
+      id: "principle",
+      text: seed.summary,
+      feedback:
+        "Correct. That is the reusable idea; the board move is only one example of it.",
+    },
+    {
+      id: "automatic",
+      text:
+        "Once you recognize the pattern, the same move should be played automatically in every similar position.",
+      feedback:
+        "Pattern recognition starts the search, but legality, tactics and the opponent's best reply still decide whether the move works.",
+    },
+    {
+      id: "hope",
+      text:
+        "If the idea looks attractive, you can ignore the opponent's strongest response and calculate only your own plan.",
+      feedback:
+        "That is hope, not chess calculation. A concept is useful only when it survives the opponent's best response.",
+    },
+  ];
+}
+
+function makeScript(
+  skillId: string,
+  seed: LessonSeed,
+): LessonScript {
   const { from, to } = moveSquares(seed.move);
+  const transfer =
+    transferSeeds[skillId] ?? {
+      fen: seed.fen,
+      acceptedMoves: [seed.move],
+      prompt:
+        `Solve the position again without the demonstration. ${seed.prompt}`,
+      success:
+        seed.success ?? seed.summary,
+      hints: [
+        "Name the concept and the opponent's strongest reply before touching a piece.",
+        seed.hint,
+        `The key move runs from ${from} to ${to}.`,
+      ],
+    };
 
   return {
     id: `lesson-${skillId}`,
@@ -682,9 +1053,10 @@ function makeScript(skillId: string, seed: LessonSeed): LessonScript {
     summary: seed.summary,
     steps: [
       {
-        id: "concept",
+        id: "model",
         type: "explain",
-        eyebrow: "CONCEPT",
+        stage: "model",
+        eyebrow: "MODEL",
         title: seed.title,
         body: seed.body,
         fen: seed.fen,
@@ -694,31 +1066,134 @@ function makeScript(skillId: string, seed: LessonSeed): LessonScript {
         ],
       },
       {
-        id: "apply",
+        id: "worked-example",
+        type: "explain",
+        stage: "example",
+        eyebrow: "WORKED EXAMPLE",
+        title: "See the idea before you have to find it.",
+        body:
+          `${seed.prompt} The reusable lesson is: ${seed.summary} First understand why the move works; memorizing the coordinates is not the goal.`,
+        fen: seed.fen,
+        highlights: [
+          { square: from, tone: "focus" },
+          { square: to, tone: "good" },
+        ],
+        arrows: [
+          {
+            from,
+            to,
+            tone: "good",
+          },
+        ],
+      },
+      {
+        id: "misconception",
+        type: "choice",
+        stage: "contrast",
+        support: "retrieval",
+        eyebrow: "CONTRAST",
+        title: "Which rule should you carry to another position?",
+        prompt:
+          "Choose the statement that captures the chess idea rather than the memorized move.",
+        fen: seed.fen,
+        options: misconceptionOptions(seed),
+        correctOptionId: "principle",
+        successTitle: "Concept separated from coordinates",
+        successBody:
+          "Good. You identified the transferable principle instead of treating one board position as a recipe.",
+      },
+      {
+        id: "guided",
         type: "move",
-        eyebrow: "APPLY IT",
-        title: "Use the idea on the board.",
+        stage: "guided",
+        support: "guided",
+        eyebrow: "GUIDED PRACTICE",
+        title: "Apply it with support.",
         prompt: seed.prompt,
         fen: seed.fen,
         acceptedMoves: [seed.move],
         successTitle: seed.title,
-        successBody: seed.success ?? seed.summary,
-        hint: seed.hint,
-        hintHighlights: [
-          { square: from, tone: "hint" },
-          { square: to, tone: "good" },
-        ],
-        hintArrows: [{ from, to, tone: "hint" }],
+        successBody:
+          seed.success ?? seed.summary,
+        hints: moveHints(seed, seed.move),
+      },
+      {
+        id: "retrieval-check",
+        type: "choice",
+        stage: "retrieval",
+        support: "retrieval",
+        eyebrow: "RETRIEVAL",
+        title: "Rebuild the idea from memory.",
+        prompt:
+          "Before moving again, which statement should guide your search?",
+        fen: seed.fen,
+        options: misconceptionOptions(seed),
+        correctOptionId: "principle",
+        successTitle: "You retrieved the principle",
+        successBody:
+          "Now use that principle without relying on the worked-example arrow.",
+      },
+      {
+        id: "independent",
+        type: "move",
+        stage: "retrieval",
+        support: "retrieval",
+        eyebrow: "INDEPENDENT",
+        title: "Find it without the demonstration.",
+        prompt: seed.prompt,
+        fen: seed.fen,
+        acceptedMoves: [seed.move],
+        successTitle: "Independent retrieval",
+        successBody:
+          "You reproduced the idea after the visual support was removed.",
+        hints: moveHints(
+          seed,
+          seed.move,
+          "Name the concept first. Only then compare candidate moves.",
+        ),
+      },
+      {
+        id: "transfer",
+        type: "move",
+        stage: "transfer",
+        support: "transfer",
+        eyebrow: "TRANSFER",
+        title:
+          transfer.fen === seed.fen
+            ? "Prove you can retrieve it again."
+            : "Use the idea in a different position.",
+        prompt: transfer.prompt,
+        fen: transfer.fen,
+        acceptedMoves:
+          transfer.acceptedMoves,
+        successTitle: "Transfer complete",
+        successBody: transfer.success,
+        hints: transferHints(transfer),
+      },
+      {
+        id: "takeaway",
+        type: "explain",
+        stage: "takeaway",
+        eyebrow: "TAKEAWAY",
+        title: "Keep the rule, not the coordinates.",
+        body:
+          `${seed.summary} In a real game, recognize the condition first, check the opponent's strongest reply, and only then commit to the move.`,
+        fen: transfer.fen,
       },
     ],
   };
 }
 
-export const lessonScripts: Record<string, LessonScript> = Object.fromEntries(
-  Object.entries(seeds).map(([skillId, seed]) => [
-    skillId,
-    makeScript(skillId, seed),
-  ]),
+export const lessonScripts: Record<
+  string,
+  LessonScript
+> = Object.fromEntries(
+  Object.entries(seeds).map(
+    ([skillId, seed]) => [
+      skillId,
+      makeScript(skillId, seed),
+    ],
+  ),
 );
 
 export function lessonForSkill(
@@ -729,7 +1204,9 @@ export function lessonForSkill(
 ): LessonScript {
   const lesson = lessonScripts[skillId];
   if (!lesson) {
-    throw new Error(`Missing authored lesson for curriculum skill: ${skillId}`);
+    throw new Error(
+      `Missing authored lesson for curriculum skill: ${skillId}`,
+    );
   }
   return lesson;
 }
@@ -737,29 +1214,143 @@ export function lessonForSkill(
 export function lessonCatalogIssues() {
   const issues: string[] = [];
 
-  for (const [skillId, lesson] of Object.entries(lessonScripts)) {
+  for (
+    const [skillId, lesson] of
+    Object.entries(lessonScripts)
+  ) {
+    const stepIds = new Set<string>();
+    const stages = new Set(
+      lesson.steps.map((step) => step.stage),
+    );
+
+    if (lesson.steps.length < 7) {
+      issues.push(
+        `${skillId}: only ${lesson.steps.length} lesson steps`,
+      );
+    }
+    for (
+      const stage of [
+        "model",
+        "contrast",
+        "guided",
+        "retrieval",
+        "transfer",
+        "takeaway",
+      ] as const
+    ) {
+      if (!stages.has(stage)) {
+        issues.push(
+          `${skillId}: missing ${stage} stage`,
+        );
+      }
+    }
+
     for (const step of lesson.steps) {
+      if (stepIds.has(step.id)) {
+        issues.push(
+          `${skillId}:${step.id}: duplicate step id`,
+        );
+      }
+      stepIds.add(step.id);
+
       try {
         new Chess(step.fen);
       } catch {
-        issues.push(`${skillId}:${step.id}: invalid FEN`);
+        issues.push(
+          `${skillId}:${step.id}: invalid FEN`,
+        );
         continue;
       }
 
-      if (step.type !== "move") continue;
+      if (step.type === "choice") {
+        const optionIds = new Set(
+          step.options.map(
+            (option) => option.id,
+          ),
+        );
+        if (optionIds.size !== step.options.length) {
+          issues.push(
+            `${skillId}:${step.id}: duplicate option ids`,
+          );
+        }
+        if (
+          !optionIds.has(
+            step.correctOptionId,
+          )
+        ) {
+          issues.push(
+            `${skillId}:${step.id}: missing correct option`,
+          );
+        }
+        if (step.options.length < 3) {
+          issues.push(
+            `${skillId}:${step.id}: too few misconception options`,
+          );
+        }
+        continue;
+      }
 
-      for (const encoded of step.acceptedMoves) {
+      if (step.type !== "move") {
+        continue;
+      }
+
+      if (step.hints.length < 2) {
+        issues.push(
+          `${skillId}:${step.id}: needs escalating hints`,
+        );
+      }
+
+      for (
+        const encoded of
+        step.acceptedMoves
+      ) {
         try {
-          const chess = new Chess(step.fen);
+          const chess = new Chess(
+            step.fen,
+          );
           const move = chess.move({
             from: encoded.slice(0, 2),
             to: encoded.slice(2, 4),
-            promotion: encoded.slice(4, 5) || "q",
+            promotion:
+              encoded.slice(4, 5) ||
+              "q",
           });
-          if (!move) issues.push(`${skillId}:${step.id}: illegal move ${encoded}`);
+          if (!move) {
+            issues.push(
+              `${skillId}:${step.id}: illegal move ${encoded}`,
+            );
+          }
         } catch {
-          issues.push(`${skillId}:${step.id}: illegal move ${encoded}`);
+          issues.push(
+            `${skillId}:${step.id}: illegal move ${encoded}`,
+          );
         }
+      }
+    }
+
+    if (
+      deepTransferSkillIds.includes(
+        skillId,
+      )
+    ) {
+      const transferStep =
+        lesson.steps.find(
+          (step) =>
+            step.stage === "transfer",
+        );
+      const modelStep =
+        lesson.steps.find(
+          (step) =>
+            step.stage === "model",
+        );
+      if (
+        !transferStep ||
+        !modelStep ||
+        transferStep.fen === modelStep.fen
+      ) {
+        issues.push(
+          `${skillId}: deep lesson requires a distinct transfer position`,
+        );
       }
     }
   }
