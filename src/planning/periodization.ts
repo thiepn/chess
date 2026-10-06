@@ -432,6 +432,7 @@ export function buildTrainingHorizon(
       plan.weeklyMinutes * plan.horizonWeeks,
     effectiveWeeklyMinutes,
     managedWeeklyMinutes,
+    loadManagement,
     allocations,
   };
 }
@@ -462,7 +463,7 @@ export function periodizationAdjustment(
     allocation?.pressure ?? 0;
   let multiplier =
     (.86 + gap * .28) *
-    (loadManagement.bucketMultipliers[bucket] ?? 1);
+    (horizon.loadManagement.bucketMultipliers[bucket] ?? 1);
 
   if (bucket === horizon.nextFocus) {
     multiplier += .08;
