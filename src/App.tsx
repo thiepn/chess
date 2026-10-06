@@ -48,6 +48,7 @@ import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { analyzeImportedGame } from "./games/analyze";
+import { timeControlWeight } from "./games/practical";
 import {
   mergeReanalyzedDeviations,
   mergeReanalyzedMistakes,
@@ -610,6 +611,17 @@ export default function App() {
         }
       }
 
+      const reviewEvidenceSource: LearningEvidence["source"] =
+        game.source === "lichess"
+          ? "humanGame"
+          : game.source === "training"
+            ? "aiGameReview"
+            : "realGame";
+      const contextWeight = timeControlWeight(game.timeControlCategory);
+      const mistakeSkills = new Set(
+        newMistakes.flatMap((mistake) => mistake.skillIds),
+      );
+
       for (const mistake of alreadyAnalyzed ? [] : newMistakes) {
         const skillId = mistake.skillIds[0];
         const skill = skillById[skillId];
@@ -621,7 +633,7 @@ export default function App() {
 
         const evidence: LearningEvidence = {
           skillId,
-          source: "realGame",
+          source: reviewEvidenceSource,
           success: false,
           quality: 0,
           difficulty: Math.min(1, skill.difficulty / 5),
@@ -631,6 +643,8 @@ export default function App() {
               : mistake.severity === "mistake"
                 ? .72
                 : .45,
+          opponentRating: game.opponentRating,
+          timeControlWeight: contextWeight,
           occurredAt,
         };
         const nextMastery = applyEvidence(base, evidence);
@@ -642,6 +656,47 @@ export default function App() {
           evidence,
           "game-review",
         );
+      }
+
+      if (!alreadyAnalyzed) {
+        for (const validation of game.practicalMetrics?.skillValidations ?? []) {
+          if (mistakeSkills.has(validation.skillId)) continue;
+          const skill = skillById[validation.skillId];
+          if (!skill) continue;
+
+          const base =
+            mastery[skill.id] ??
+            emptyMastery(skill.id, Math.min(1, skill.difficulty / 5));
+          const quality = Math.max(
+            .58,
+            Math.min(
+              .96,
+              .68 +
+                validation.occurrences * .045 -
+                validation.averageCentipawnLoss / 220,
+            ),
+          );
+          const evidence: LearningEvidence = {
+            skillId: skill.id,
+            source: reviewEvidenceSource,
+            success: true,
+            quality,
+            difficulty: Math.min(1, skill.difficulty / 5),
+            gameImpact: Math.min(1, validation.occurrences / 5),
+            opponentRating: game.opponentRating,
+            timeControlWeight: contextWeight,
+            occurredAt,
+          };
+          const nextMastery = applyEvidence(base, evidence);
+          mastery[skill.id] = nextMastery;
+          analytics = appendEvidenceAnalytics(
+            analytics,
+            base,
+            nextMastery,
+            evidence,
+            "game-review",
+          );
+        }
       }
 
       return {
