@@ -913,6 +913,98 @@ export function ProgressView({
         </p>
       </section>
 
+      <section className="progress-panel competition-cycle-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P24 · COMPETITION CYCLE</p>
+            <h2>Shift from general growth toward event-specific readiness at the right time.</h2>
+          </div>
+          <Target size={20} />
+        </div>
+
+        <div className="competition-cycle-kpis">
+          <div>
+            <span>Phase</span>
+            <strong>{intelligence.trainingHorizon.competitionCycle.phaseLabel}</strong>
+          </div>
+          <div>
+            <span>Prep readiness</span>
+            <strong>{intelligence.trainingHorizon.competitionCycle.readinessScore}%</strong>
+            <small>{intelligence.trainingHorizon.competitionCycle.readinessStatus.replace("-", " ")}</small>
+          </div>
+          <div>
+            <span>Event</span>
+            <strong>{intelligence.trainingHorizon.competitionCycle.eventDate ?? "—"}</strong>
+            <small>{intelligence.trainingHorizon.competitionCycle.eventLabel ?? "No named event"}</small>
+          </div>
+          <div>
+            <span>Cycle load</span>
+            <strong>{Math.round(intelligence.trainingHorizon.competitionCycle.weeklyLoadMultiplier * 100)}%</strong>
+            <small>{intelligence.trainingHorizon.competitionCycle.managedWeeklyMinutes}m managed</small>
+          </div>
+          <div>
+            <span>Session cap</span>
+            <strong>{intelligence.trainingHorizon.competitionCycle.maxSessionMinutes}m</strong>
+            <small>
+              {intelligence.trainingHorizon.competitionCycle.suppressedByRecovery
+                ? "P23 recovery dominates"
+                : "cycle-specific"}
+            </small>
+          </div>
+        </div>
+
+        <div className="cycle-phase-track">
+          {["base", "build", "sharpen", "taper", "event", "reset"].map((phase) => (
+            <div
+              key={phase}
+              className={
+                intelligence.trainingHorizon.competitionCycle.phase === phase
+                  ? "active"
+                  : ""
+              }
+            >
+              <span>{phase}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="load-bucket-policy-grid competition-buckets">
+          {Object.entries(
+            intelligence.trainingHorizon.competitionCycle.bucketMultipliers,
+          ).map(([bucket, multiplier]) => (
+            <article
+              key={bucket}
+              className={
+                multiplier > 1
+                  ? "protected"
+                  : multiplier < 1
+                    ? "reduced"
+                    : ""
+              }
+            >
+              <span>{bucket}</span>
+              <strong>{Math.round(multiplier * 100)}%</strong>
+            </article>
+          ))}
+        </div>
+
+        <div className={`recalibration-card ${intelligence.trainingHorizon.competitionCycle.active ? "active" : ""}`}>
+          <Target size={17} />
+          <div>
+            <strong>
+              {intelligence.trainingHorizon.competitionCycle.enabled
+                ? intelligence.trainingHorizon.competitionCycle.phaseLabel
+                : "Competition cycle disabled"}
+            </strong>
+            <span>{intelligence.trainingHorizon.competitionCycle.reason}</span>
+          </div>
+        </div>
+
+        <p className="coach-policy-note">
+          P24 readiness is preparation readiness, not a rating or win-probability prediction. It combines adherence, consistency, horizon risk and current load status. P23 recovery remains authoritative: an upcoming event can reduce or redirect work, but it cannot force intensity upward through an active recovery state.
+        </p>
+      </section>
+
       <section className="progress-panel real-game-diagnostics-panel">
         <div className="progress-section-heading">
           <div>
