@@ -8021,3 +8021,331 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+
+/* P21 — goal-aware training horizons and weekly periodization */
+
+.home-training-horizon,
+.training-horizon-panel {
+  border: 1px solid rgba(118,151,255,.1);
+  background:
+    radial-gradient(circle at top right, rgba(118,151,255,.055), transparent 35%),
+    rgba(255,255,255,.014);
+}
+
+.home-training-horizon {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.home-training-horizon-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.home-training-horizon-head > div {
+  min-width: 0;
+}
+
+.home-training-horizon-head h2 {
+  margin: 3px 0 4px;
+  color: #dbe3ef;
+  font-size: 18px;
+}
+
+.home-training-horizon-head p:last-child {
+  margin: 0;
+  max-width: 650px;
+  color: #6f7d93;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.horizon-pace {
+  flex: none;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.05);
+  background: rgba(255,255,255,.018);
+  color: #8794aa;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.horizon-pace.ahead,
+.horizon-pace.complete {
+  color: #7bcda2;
+  border-color: rgba(112,209,164,.12);
+  background: rgba(112,209,164,.025);
+}
+
+.horizon-pace.behind {
+  color: #d3a27f;
+  border-color: rgba(236,161,101,.12);
+  background: rgba(236,161,101,.025);
+}
+
+.horizon-progress-line {
+  height: 5px;
+  margin: 14px 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.035);
+}
+
+.horizon-progress-line > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #647ce8, #7799ff);
+  transition: width 180ms ease;
+}
+
+.horizon-summary-grid,
+.training-horizon-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.training-horizon-kpis {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 8px;
+}
+
+.horizon-summary-grid > div,
+.training-horizon-kpis > div {
+  min-height: 62px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  align-content: center;
+  gap: 3px;
+}
+
+.horizon-summary-grid span,
+.training-horizon-kpis span {
+  color: #637188;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 800;
+}
+
+.horizon-summary-grid strong,
+.training-horizon-kpis strong {
+  color: #c8d2e1;
+  font-size: 10px;
+  text-transform: capitalize;
+}
+
+.horizon-goal-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.horizon-goal-switch button {
+  padding: 7px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.014);
+  color: #718096;
+  font-size: 8px;
+  font-weight: 750;
+}
+
+.horizon-goal-switch button.active {
+  border-color: rgba(118,151,255,.18);
+  background: rgba(118,151,255,.07);
+  color: #aebeff;
+}
+
+.horizon-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.horizon-controls label {
+  display: grid;
+  gap: 4px;
+}
+
+.horizon-controls label > span {
+  color: #5f6d82;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 800;
+}
+
+.horizon-controls select {
+  width: 100%;
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: #111826;
+  color: #aeb9ca;
+  font: inherit;
+  font-size: 8px;
+}
+
+.horizon-allocation-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.horizon-allocation-strip > div {
+  display: grid;
+  gap: 5px;
+}
+
+.horizon-allocation-strip > div > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.horizon-allocation-strip span,
+.horizon-allocation-strip small {
+  color: #68768d;
+  font-size: 7px;
+}
+
+.horizon-allocation-strip > div > div > span {
+  font-weight: 800;
+}
+
+.horizon-allocation-strip i,
+.training-allocation-meter {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.035);
+}
+
+.horizon-allocation-strip i > span,
+.training-allocation-meter > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(118,151,255,.65);
+}
+
+.mode.recommended:not(.active) {
+  border-color: rgba(118,151,255,.12);
+  background: rgba(118,151,255,.025);
+}
+
+.periodization-activity-note {
+  color: #7183a0;
+  font-size: 7px;
+  line-height: 1.4;
+  text-transform: capitalize;
+}
+
+.training-allocation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.training-allocation-card {
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  gap: 7px;
+}
+
+.training-allocation-card.priority {
+  border-color: rgba(118,151,255,.13);
+  background: rgba(118,151,255,.025);
+}
+
+.training-allocation-card > div:first-child {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.training-allocation-card strong {
+  color: #bdc8d8;
+  font-size: 9px;
+}
+
+.training-allocation-card span,
+.training-allocation-card small {
+  color: #637188;
+  font-size: 7px;
+}
+
+.training-horizon-note {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  color: #67758b;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.training-horizon-note span {
+  font-size: 7px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .training-horizon-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .training-allocation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .home-training-horizon-head {
+    display: grid;
+  }
+
+  .horizon-summary-grid,
+  .horizon-controls,
+  .horizon-allocation-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .home-training-horizon {
+    padding: 16px;
+  }
+
+  .horizon-summary-grid,
+  .horizon-controls,
+  .horizon-allocation-strip,
+  .training-horizon-kpis,
+  .training-allocation-grid {
+    grid-template-columns: 1fr;
+  }
+}
