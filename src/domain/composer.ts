@@ -14,6 +14,11 @@ import {
 import { trainingPolicyFor } from "../adaptation/policy";
 import { trainingScenarios } from "../play/scenarios";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
+import {
+  buildTrainingHorizon,
+  periodizationAdjustment,
+  recentDomainMinutes,
+} from "../planning/periodization";
 import type {
   TrainingPrescription,
   TrainingPrescriptionAction,
@@ -375,11 +380,19 @@ export function buildCandidatePool(
   return result;
 }
 
-function scoreCandidate(item: TrainingCandidate, state: UserState): number {
+function scoreCandidate(
+  item: TrainingCandidate,
+  state: UserState,
+  now: Date,
+): number {
   const skill = skillById[item.skillIds[0]];
   if (!skill) return -1;
 
-  const recentMinutes = state.recentDomainMinutes[skill.domain] ?? 0;
+  const recentMinutes = recentDomainMinutes(
+    state,
+    skill.domain,
+    now,
+  );
   const fatiguePenalty = Math.min(.42, recentMinutes / 180);
   const focusModifier = state.focus?.domain === skill.domain ? 1.3 : 1;
   const transferValue =
@@ -413,6 +426,7 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
     transferValue *
     repetitionPenalty *
     continuationFactor *
+    (item.periodization?.multiplier ?? 1) *
     (1 - fatiguePenalty)
   );
 }
@@ -444,8 +458,26 @@ export function composeSession(
   now = new Date(),
 ): TrainingSession {
   const budget = sessionMinutes[mode];
+  const horizon = buildTrainingHorizon(state, now);
   const pool = buildCandidatePool(state, now)
-    .map((item) => ({ item, score: scoreCandidate(item, state) }))
+    .map((item) => {
+      const adjusted = {
+        ...item,
+        periodization: periodizationAdjustment(
+          state,
+          item,
+          now,
+        ),
+      };
+      return {
+        item: adjusted,
+        score: scoreCandidate(
+          adjusted,
+          state,
+          now,
+        ),
+      };
+    })
     .sort((a, b) => b.score - a.score);
 
   const selected: TrainingCandidate[] = [];
@@ -526,6 +558,7 @@ export function composeSession(
     plannedMinutes: usedMinutes || budget,
     mode,
     focus: state.focus?.domain,
+    weeklyFocus: horizon.nextFocus,
     activities: ordered.map((item) => toActivity(item, state)),
   };
 }
