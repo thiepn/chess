@@ -91,6 +91,11 @@ import {
 import type {
   TrainingPrescriptionAction,
 } from "./prescriptions/types";
+import {
+  markPrescriptionCompleted,
+  markPrescriptionStarted,
+  syncPrescriptionHistory,
+} from "./prescriptions/outcomes";
 
 const repo = createChessStateRepository();
 
@@ -258,6 +263,30 @@ export default function App() {
   );
   const topPrescription =
     progressIntelligence.prescriptions[0];
+
+  useEffect(() => {
+    if (!loaded) return;
+
+    setState((previous) => {
+      const prescriptionHistory =
+        syncPrescriptionHistory(
+          previous,
+          progressIntelligence.prescriptions,
+        );
+
+      if (
+        prescriptionHistory ===
+        previous.prescriptionHistory
+      ) {
+        return previous;
+      }
+
+      return {
+        ...previous,
+        prescriptionHistory,
+      };
+    });
+  }, [loaded, progressIntelligence.prescriptions]);
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -544,6 +573,17 @@ export default function App() {
       }
 
       const nextMastery = applyEvidence(previousMastery, evidence);
+      const prescriptionHistory =
+        active.prescriptionId
+          ? markPrescriptionCompleted(
+              previous.prescriptionHistory,
+              active.prescriptionId,
+              active.prescriptionActionId ?? active.id,
+              outcome.success,
+              outcome.quality,
+              new Date(occurredAt),
+            )
+          : previous.prescriptionHistory;
 
       return {
         ...previous,
@@ -563,6 +603,7 @@ export default function App() {
         openingProgress,
         openingDeviations,
         savedStudies,
+        prescriptionHistory,
       };
     });
 
@@ -785,6 +826,24 @@ export default function App() {
         }
       }
 
+      const prescriptionHistory =
+        result.prescriptionId
+          ? markPrescriptionCompleted(
+              previous.prescriptionHistory,
+              result.prescriptionId,
+              result.prescriptionActionId ??
+                result.scenarioId ??
+                result.importedGame.id,
+              Boolean(result.scenarioSuccess),
+              result.outcome === "win"
+                ? 1
+                : result.outcome === "draw"
+                  ? .72
+                  : .3,
+              new Date(occurredAt),
+            )
+          : previous.prescriptionHistory;
+
       return {
         ...previous,
         games,
@@ -792,6 +851,7 @@ export default function App() {
         openingDeviations,
         openingProgress,
         analytics,
+        prescriptionHistory,
       };
     });
 
@@ -810,7 +870,11 @@ export default function App() {
     }
   }
 
-  function replayMistakePosition(mistakeId: string) {
+  function replayMistakePosition(
+    mistakeId: string,
+    prescriptionId?: string,
+    prescriptionActionId?: string,
+  ) {
     const mistake = state.mistakes?.find((item) => item.id === mistakeId);
     if (!mistake) return;
 
@@ -836,6 +900,8 @@ export default function App() {
           : "Reach a stable result without repeating the original mistake.",
       successResults,
       sourceLabel: "Replay from Review",
+      prescriptionId,
+      prescriptionActionId,
     });
     setNav("play");
   }
@@ -866,7 +932,12 @@ export default function App() {
     });
   }
 
-  function startOpeningPractice(repertoireId: string, nodeId: string) {
+  function startOpeningPractice(
+    repertoireId: string,
+    nodeId: string,
+    prescriptionId?: string,
+    prescriptionActionId?: string,
+  ) {
     const skill = skillById["openings.principles"];
     const repertoire = repertoireById[repertoireId];
     const node = openingNodes[nodeId];
@@ -887,6 +958,8 @@ export default function App() {
       subtitle: node.name,
       openingNodeId: nodeId,
       repertoireId,
+      prescriptionId,
+      prescriptionActionId,
     });
   }
 
@@ -967,7 +1040,11 @@ export default function App() {
     });
   }
 
-  function startManualPractice(skillId: string) {
+  function startManualPractice(
+    skillId: string,
+    prescriptionId?: string,
+    prescriptionActionId?: string,
+  ) {
     const skill = skillById[skillId];
     if (!skill) return;
 
@@ -1001,24 +1078,48 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .5,
-      reason: "Focused practice",
+      reason: prescriptionId
+        ? "Real-game prescription"
+        : "Focused practice",
       title: skill.title,
       subtitle:
         activityType === "mixedPuzzle" ||
         activityType === "themedPuzzle"
           ? "Adaptive retrieval practice"
           : "Guided concept repair",
+      prescriptionId,
+      prescriptionActionId,
     });
   }
 
   function runPrescriptionAction(
+    prescriptionId: string,
     action: TrainingPrescriptionAction,
   ) {
+    const prescription =
+      progressIntelligence.prescriptions.find(
+        (item) => item.id === prescriptionId,
+      );
+    if (!prescription) return;
+
+    setState((previous) => ({
+      ...previous,
+      prescriptionHistory: markPrescriptionStarted(
+        previous.prescriptionHistory,
+        prescription,
+        action.id,
+      ),
+    }));
+
     if (
       action.kind === "focused-practice" &&
       action.skillId
     ) {
-      startManualPractice(action.skillId);
+      startManualPractice(
+        action.skillId,
+        prescription.id,
+        action.id,
+      );
       setNav("home");
       return;
     }
@@ -1027,7 +1128,11 @@ export default function App() {
       action.kind === "mistake-replay" &&
       action.mistakeId
     ) {
-      replayMistakePosition(action.mistakeId);
+      replayMistakePosition(
+        action.mistakeId,
+        prescription.id,
+        action.id,
+      );
       return;
     }
 
@@ -1039,6 +1144,8 @@ export default function App() {
       startOpeningPractice(
         action.repertoireId,
         action.openingNodeId,
+        prescription.id,
+        action.id,
       );
       setNav("home");
       return;
@@ -1050,7 +1157,11 @@ export default function App() {
     ) {
       const scenario = scenarioById[action.scenarioId];
       if (!scenario) return;
-      setReplayScenario(scenario);
+      setReplayScenario({
+        ...scenario,
+        prescriptionId: prescription.id,
+        prescriptionActionId: action.id,
+      });
       setNav("play");
     }
   }
