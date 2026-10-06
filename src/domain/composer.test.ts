@@ -255,7 +255,7 @@ describe("training composer", () => {
     ).toBe(true);
   });
 
-  it("turns a transfer gap into a playable adaptive scenario", () => {
+  it("turns an endgame transfer gap into a dedicated P31 play-out", () => {
     const base = initialUserState.mastery["endgames.opposition"];
     const state = {
       ...initialUserState,
@@ -291,12 +291,12 @@ describe("training composer", () => {
     const candidate = pool.find(
       (item) =>
         item.skillIds.includes("endgames.opposition") &&
-        item.activityType === "engineGame",
+        item.activityType === "endgameDrill",
     );
 
     expect(candidate).toBeTruthy();
-    expect(candidate?.scenarioId).toBe("endgame-opposition");
-    expect(candidate?.adaptivePolicy?.reason).toContain("transfer");
+    expect(candidate?.endgamePositionId).toBe("endgame:opposition-convert");
+    expect(candidate?.adaptivePolicy?.reason).toContain("resistance");
   });
 
   it("limits novel material", () => {
