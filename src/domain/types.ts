@@ -58,6 +58,8 @@ export interface TrainingPlanSettings {
   horizonWeeks: 4 | 8 | 12;
   sessionsPerWeek: number;
   autoRecalibrate?: boolean;
+  autoRecovery?: boolean;
+  manualRecoveryUntil?: string;
   updatedAt: string;
 }
 
