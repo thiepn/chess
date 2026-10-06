@@ -149,6 +149,9 @@ function criticalMoment(
           ? "A costly decision"
           : "A useful correction",
     summary: mistake.explanation,
+    errorType: mistake.errorType,
+    errorReason: mistake.errorReason,
+    moveTimeSeconds: mistake.moveTimeSeconds,
   };
 }
 
@@ -178,6 +181,7 @@ function positiveMoment(review: EngineMoveReview): GameStoryMoment {
       review.centipawnLoss <= 15
         ? "Your move stayed very close to the engine's preferred continuation. Keep the thought process that produced it."
         : "This was not a training-bank mistake, but your move preserved most of the position's value.",
+    moveTimeSeconds: review.move.moveTimeSeconds,
   };
 }
 
