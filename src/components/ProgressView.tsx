@@ -638,7 +638,7 @@ export function ProgressView({
             <span>Weekly budget</span>
             <strong>
               {intelligence.trainingHorizon.completedMinutes}/
-              {intelligence.trainingHorizon.plan.weeklyMinutes}m
+              {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
             </strong>
           </div>
           <div>
@@ -691,6 +691,134 @@ export function ProgressView({
             human-game repair and failed prescriptions stay protected even when their weekly bucket is full.
           </span>
         </div>
+      </section>
+
+      <section className="progress-panel plan-forecast-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P22 · PLAN ADHERENCE & FORECAST</p>
+            <h2>Is the current training horizon actually sustainable?</h2>
+          </div>
+          <TrendingUp size={20} />
+        </div>
+
+        <div className="plan-forecast-kpis">
+          <div>
+            <span>Adherence</span>
+            <strong>
+              {intelligence.trainingPlanForecast.adherence.comparableWeeks
+                ? `${intelligence.trainingPlanForecast.adherence.averageAdherence}%`
+                : "—"}
+            </strong>
+            <small>
+              {intelligence.trainingPlanForecast.adherence.comparableWeeks} comparable week{intelligence.trainingPlanForecast.adherence.comparableWeeks === 1 ? "" : "s"}
+            </small>
+          </div>
+          <div>
+            <span>Consistency</span>
+            <strong>
+              {intelligence.trainingPlanForecast.adherence.comparableWeeks >= 2
+                ? `${intelligence.trainingPlanForecast.adherence.consistency}%`
+                : "—"}
+            </strong>
+            <small>{intelligence.trainingPlanForecast.adherence.trend.replace("-", " ")}</small>
+          </div>
+          <div>
+            <span>Sustainable pace</span>
+            <strong>{intelligence.trainingPlanForecast.forecast.sustainableWeeklyMinutes}m</strong>
+            <small>per week</small>
+          </div>
+          <div className={`forecast-status ${intelligence.trainingPlanForecast.forecast.status}`}>
+            <span>Forecast</span>
+            <strong>{intelligence.trainingPlanForecast.forecast.status.replace("-", " ")}</strong>
+            <small>
+              {intelligence.trainingPlanForecast.forecast.status === "insufficient"
+                ? "More history needed"
+                : `${intelligence.trainingPlanForecast.forecast.projectedCompletion}% projected`}
+            </small>
+          </div>
+          <div>
+            <span>Effective load</span>
+            <strong>{intelligence.trainingPlanForecast.recalibration.effectiveWeeklyMinutes}m</strong>
+            <small>
+              nominal {intelligence.trainingPlanForecast.recalibration.nominalWeeklyMinutes}m
+            </small>
+          </div>
+        </div>
+
+        {intelligence.trainingPlanForecast.adherence.weeks.length > 0 ? (
+          <div className="adherence-history">
+            {intelligence.trainingPlanForecast.adherence.weeks.map((week) => (
+              <article key={week.weekStart}>
+                <div>
+                  <span>
+                    {new Date(week.weekStart).toLocaleDateString(undefined, {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                  <strong>{week.adherence}%</strong>
+                </div>
+                <div className="adherence-week-meter">
+                  <span
+                    style={{
+                      width: `${Math.min(100, week.adherence)}%`,
+                    }}
+                  />
+                </div>
+                <small>
+                  {week.completedMinutes}/{week.targetMinutes}m · {week.activeDays} active day{week.activeDays === 1 ? "" : "s"}
+                </small>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="cohort-insufficient-note">
+            <Clock3 size={17} />
+            <span>
+              P22 starts forecasting only after full weeks under the current structural plan. Current-week activity still counts toward P21, but partial weeks are not treated as adherence evidence.
+            </span>
+          </div>
+        )}
+
+        <div className={`recalibration-card ${intelligence.trainingPlanForecast.recalibration.active ? "active" : ""}`}>
+          <BrainCircuit size={17} />
+          <div>
+            <strong>
+              {intelligence.trainingPlanForecast.recalibration.active
+                ? "Effective load recalibrated"
+                : intelligence.trainingPlanForecast.recalibration.enabled
+                  ? "Automatic recalibration standing by"
+                  : "Automatic recalibration disabled"}
+            </strong>
+            <span>{intelligence.trainingPlanForecast.recalibration.reason}</span>
+          </div>
+        </div>
+
+        {intelligence.trainingPlanForecast.forecast.status !== "insufficient" && (
+          <div className="forecast-detail-grid">
+            <div>
+              <span>Nominal horizon</span>
+              <strong>{intelligence.trainingPlanForecast.forecast.nominalTargetMinutes}m</strong>
+            </div>
+            <div>
+              <span>Projected total</span>
+              <strong>{intelligence.trainingPlanForecast.forecast.projectedTotalMinutes}m</strong>
+            </div>
+            <div>
+              <span>Projected shortfall</span>
+              <strong>{intelligence.trainingPlanForecast.forecast.projectedShortfallMinutes}m</strong>
+            </div>
+            <div>
+              <span>Forecast confidence</span>
+              <strong>{intelligence.trainingPlanForecast.forecast.confidence}%</strong>
+            </div>
+          </div>
+        )}
+
+        <p className="coach-policy-note">
+          Recalibration changes only the operational weekly allocation used by the composer. It never edits the selected goal, nominal weekly target, or horizon length, so the forecast remains an honest comparison against the plan you chose.
+        </p>
       </section>
 
       <section className="progress-panel real-game-diagnostics-panel">
