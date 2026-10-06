@@ -15,6 +15,7 @@ import type {
   TrainingGoalDefinition,
   TrainingHorizonInsight,
 } from "./types";
+import { buildTrainingPlanForecast } from "./forecast";
 
 const DAY = 86_400_000;
 const LEDGER_RETENTION_DAYS = 180;
@@ -131,6 +132,7 @@ export function defaultTrainingPlan(
     weeklyMinutes: 150,
     horizonWeeks: 8,
     sessionsPerWeek: 5,
+    autoRecalibrate: true,
     updatedAt: now.toISOString(),
   };
 }
@@ -163,6 +165,8 @@ export function trainingPlanForState(
     sessionsPerWeek: Math.round(
       clamp(stored.sessionsPerWeek, 2, 7),
     ),
+    autoRecalibrate:
+      stored.autoRecalibrate !== false,
     updatedAt: stored.updatedAt || now.toISOString(),
   };
 }
@@ -290,6 +294,13 @@ export function buildTrainingHorizon(
 ): TrainingHorizonInsight {
   const plan = trainingPlanForState(state, now);
   const goal = trainingGoals[plan.goal];
+  const forecast = buildTrainingPlanForecast(
+    state,
+    plan,
+    now,
+  );
+  const effectiveWeeklyMinutes =
+    forecast.recalibration.effectiveWeeklyMinutes;
   const start = mondayStart(now);
   const end = endOfWeek(start);
   const ledger = weeklyLedger(state, now);
@@ -318,7 +329,7 @@ export function buildTrainingHorizon(
       allocationFor(
         bucket,
         goal.shares[bucket],
-        plan.weeklyMinutes,
+        effectiveWeeklyMinutes,
         byBucket.get(bucket) ?? 0,
       ),
     )
@@ -347,11 +358,11 @@ export function buildTrainingHorizon(
         )
       : elapsedWeekFraction(now, start);
   const expectedMinutes = Math.round(
-    plan.weeklyMinutes * elapsed,
+    effectiveWeeklyMinutes * elapsed,
   );
   const remainingMinutes = Math.max(
     0,
-    plan.weeklyMinutes - completedMinutes,
+    effectiveWeeklyMinutes - completedMinutes,
   );
   const activeDays = new Set(
     ledger.map((entry) =>
@@ -373,7 +384,7 @@ export function buildTrainingHorizon(
         )
       : 10;
   const paceStatus: TrainingHorizonInsight["paceStatus"] =
-    completedMinutes >= plan.weeklyMinutes
+    completedMinutes >= effectiveWeeklyMinutes
       ? "complete"
       : expectedMinutes > 20 &&
           completedMinutes < expectedMinutes * .72
@@ -404,6 +415,7 @@ export function buildTrainingHorizon(
     recommendedSessionMinutes,
     horizonTargetMinutes:
       plan.weeklyMinutes * plan.horizonWeeks,
+    effectiveWeeklyMinutes,
     allocations,
   };
 }
