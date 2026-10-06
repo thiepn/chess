@@ -10440,3 +10440,352 @@ html[data-motion="reduced"] .dashboard-grid {
     justify-self: start;
   }
 }
+
+
+/* P29 — dedicated calculation trainer */
+
+.calculation-sheet {
+  width: min(1220px, calc(100vw - 28px));
+}
+
+.calculation-runner {
+  display: grid;
+  gap: 12px;
+}
+
+.calculation-stage-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calculation-stage-chip {
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.01);
+  color: #627087;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.calculation-stage-chip > span {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.025);
+  font-size: 8px;
+  font-weight: 850;
+}
+
+.calculation-stage-chip strong {
+  font-size: 8px;
+}
+
+.calculation-stage-chip.current {
+  border-color: rgba(118,151,255,.16);
+  background: rgba(118,151,255,.045);
+  color: #b6c3f1;
+}
+
+.calculation-stage-chip.done {
+  color: #79a990;
+}
+
+.calculation-stage {
+  align-items: stretch;
+}
+
+.calculation-board-frame {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.calculation-board-frame.blind .chess-board {
+  filter: blur(13px) saturate(.2);
+  opacity: .18;
+  pointer-events: none;
+}
+
+.calculation-board-frame.blind .piece,
+.calculation-board-frame.blind .move-dot,
+.calculation-board-frame.blind .capture-ring {
+  opacity: 0;
+}
+
+.calculation-blind-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 28px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(118,151,255,.08), transparent 34%),
+    rgba(9,13,23,.88);
+  backdrop-filter: blur(9px);
+}
+
+.calculation-blind-overlay svg {
+  color: #8fa4ea;
+}
+
+.calculation-blind-overlay strong {
+  color: #d2daea;
+  font-size: 14px;
+}
+
+.calculation-blind-overlay span {
+  max-width: 320px;
+  color: #718098;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.calculation-instruction {
+  min-height: 100%;
+}
+
+.calculation-rule {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(118,151,255,.08);
+  background: rgba(118,151,255,.018);
+  color: #7587bd;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.calculation-rule span {
+  color: #748198;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.calculation-visualization-toggle {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.calculation-visualization-toggle input {
+  margin-top: 2px;
+  accent-color: #7799ff;
+}
+
+.calculation-visualization-toggle > span {
+  display: grid;
+  gap: 2px;
+}
+
+.calculation-visualization-toggle strong {
+  color: #aeb9cb;
+  font-size: 8px;
+}
+
+.calculation-visualization-toggle small {
+  color: #617087;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.calculation-candidates {
+  margin-top: 11px;
+  display: grid;
+  gap: 6px;
+}
+
+.calculation-empty {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px dashed rgba(255,255,255,.05);
+  color: #5f6d82;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.calculation-candidate {
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.012);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.calculation-candidate strong {
+  color: #c5cfde;
+  font-size: 11px;
+}
+
+.calculation-candidate > div {
+  display: flex;
+  gap: 5px;
+}
+
+.calculation-candidate button {
+  min-height: 28px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(118,151,255,.08);
+  background: rgba(118,151,255,.025);
+  color: #8194cd;
+  font: inherit;
+  font-size: 7px;
+  cursor: pointer;
+}
+
+.calculation-result-banner {
+  margin-top: 12px;
+  padding: 11px;
+  border-radius: 11px;
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  border: 1px solid rgba(255,255,255,.04);
+}
+
+.calculation-result-banner.success {
+  border-color: rgba(112,209,164,.12);
+  background: rgba(112,209,164,.02);
+  color: #84b89c;
+}
+
+.calculation-result-banner.repair {
+  border-color: rgba(236,161,101,.12);
+  background: rgba(236,161,101,.02);
+  color: #b89373;
+}
+
+.calculation-result-banner > div {
+  display: grid;
+  gap: 3px;
+}
+
+.calculation-result-banner strong {
+  color: #c3cedd;
+  font-size: 9px;
+}
+
+.calculation-result-banner span {
+  color: #718096;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.calculation-score-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calculation-score-grid > div {
+  min-height: 54px;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+}
+
+.calculation-score-grid span,
+.calculation-reference-line > span {
+  color: #5f6d82;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.calculation-score-grid strong {
+  color: #bac5d5;
+  font-size: 10px;
+}
+
+.calculation-reference-line {
+  margin-top: 9px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: grid;
+  gap: 4px;
+}
+
+.calculation-reference-line strong {
+  color: #b6c1d1;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.calculation-reference-line small,
+.calculation-retry-note {
+  color: #647288;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+.calculation-retry-note {
+  margin: 9px 0 0;
+}
+
+.calculation-engine-state {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.03);
+  background: rgba(255,255,255,.008);
+}
+
+.calculation-engine-state span {
+  color: #5c6b80;
+  font-size: 7px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.calculation-engine-state strong {
+  color: #8393aa;
+  font-size: 7px;
+}
+
+@media (max-width: 720px) {
+  .calculation-stage-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calculation-score-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .calculation-score-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calculation-candidate {
+    align-items: flex-start;
+  }
+}
