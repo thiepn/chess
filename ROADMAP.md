@@ -210,6 +210,8 @@ Prioritize fundamentals, tactical vision, calculation and essential endgames bef
 
 ### P29 — Dedicated Calculation Trainer
 
+**Status:** implemented.
+
 **Purpose:** make calculation a real skill rather than a lesson label.
 
 Deliver:
