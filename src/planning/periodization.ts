@@ -350,11 +350,25 @@ export function buildTrainingHorizon(
   const buckets = Object.keys(
     goal.shares,
   ) as TrainingBudgetBucket[];
+  const weightedShares = Object.fromEntries(
+    buckets.map((bucket) => [
+      bucket,
+      goal.shares[bucket] *
+        (competitionCycle.bucketMultipliers[bucket] ?? 1),
+    ]),
+  ) as Record<TrainingBudgetBucket, number>;
+  const shareTotal = buckets.reduce(
+    (sum, bucket) =>
+      sum + weightedShares[bucket],
+    0,
+  );
   const allocations = buckets
     .map((bucket) =>
       allocationFor(
         bucket,
-        goal.shares[bucket],
+        shareTotal > 0
+          ? weightedShares[bucket] / shareTotal
+          : goal.shares[bucket],
         managedWeeklyMinutes,
         byBucket.get(bucket) ?? 0,
       ),
