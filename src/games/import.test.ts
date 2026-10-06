@@ -22,6 +22,18 @@ describe("PGN import", () => {
     expect(playerMoveCount(game)).toBe(5);
   });
 
+  it("preserves opening metadata when present", () => {
+    const game = importPgn(
+      `[Opening "Italian Game: Classical Variation"]
+[ECO "C50"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 *`,
+      "w",
+    );
+    expect(game.openingName).toBe("Italian Game: Classical Variation");
+    expect(game.eco).toBe("C50");
+  });
+
   it("preserves a custom starting FEN", () => {
     const custom = `[Event "Scenario"]
 [SetUp "1"]
