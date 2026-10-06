@@ -8795,3 +8795,255 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* P24 — training blocks, competition cycles and preparation readiness */
+
+.home-competition-cycle,
+.competition-cycle-panel {
+  border-color: rgba(127, 155, 255, .11);
+}
+
+.home-competition-cycle {
+  margin-top: 9px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.04);
+  background:
+    radial-gradient(circle at top right, rgba(118,151,255,.045), transparent 42%),
+    rgba(255,255,255,.012);
+  display: grid;
+  gap: 10px;
+}
+
+.home-competition-cycle.taper,
+.home-competition-cycle.event {
+  border-color: rgba(236,161,101,.14);
+  background:
+    radial-gradient(circle at top right, rgba(236,161,101,.045), transparent 42%),
+    rgba(255,255,255,.012);
+}
+
+.home-competition-cycle.reset {
+  border-color: rgba(112,209,164,.1);
+}
+
+.home-cycle-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.home-cycle-head > div:first-child {
+  display: grid;
+  gap: 2px;
+}
+
+.home-cycle-head span,
+.cycle-summary-grid span,
+.competition-cycle-kpis span {
+  color: #627188;
+  font-size: 7px;
+  font-weight: 820;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.home-cycle-head strong {
+  color: #c7d1df;
+  font-size: 11px;
+}
+
+.home-cycle-head small,
+.home-competition-cycle > p {
+  color: #64738a;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+.home-competition-cycle > p {
+  margin: 0;
+}
+
+.cycle-readiness {
+  min-width: 92px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  gap: 2px;
+  text-align: right;
+}
+
+.cycle-readiness.ready {
+  border-color: rgba(112,209,164,.13);
+  background: rgba(112,209,164,.02);
+}
+
+.cycle-readiness.at-risk {
+  border-color: rgba(236,161,101,.13);
+  background: rgba(236,161,101,.02);
+}
+
+.cycle-readiness strong {
+  color: #c4cede;
+  font-size: 15px;
+}
+
+.cycle-controls {
+  display: grid;
+  grid-template-columns: 1.1fr 1.35fr 1fr 1fr;
+  gap: 7px;
+  align-items: end;
+}
+
+.cycle-controls label {
+  display: grid;
+  gap: 4px;
+}
+
+.cycle-controls label > span {
+  color: #617087;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+}
+
+.cycle-controls .cycle-toggle {
+  min-height: 33px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.01);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+
+.cycle-controls input[type="checkbox"] {
+  accent-color: #7799ff;
+}
+
+.cycle-controls input[type="date"],
+.cycle-controls select {
+  width: 100%;
+  min-height: 33px;
+  padding: 7px 8px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: #111826;
+  color: #aeb9ca;
+  font: inherit;
+  font-size: 8px;
+}
+
+.cycle-summary-grid,
+.competition-cycle-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.competition-cycle-kpis {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 8px;
+}
+
+.cycle-summary-grid > div,
+.competition-cycle-kpis > div {
+  min-height: 58px;
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+}
+
+.cycle-summary-grid strong,
+.competition-cycle-kpis strong {
+  color: #bdc8d8;
+  font-size: 10px;
+  text-transform: capitalize;
+}
+
+.competition-cycle-kpis small {
+  color: #59677d;
+  font-size: 7px;
+  line-height: 1.35;
+}
+
+.cycle-phase-track {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.cycle-phase-track > div {
+  padding: 7px 5px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.03);
+  background: rgba(255,255,255,.009);
+  text-align: center;
+}
+
+.cycle-phase-track > div.active {
+  border-color: rgba(118,151,255,.18);
+  background: rgba(118,151,255,.055);
+}
+
+.cycle-phase-track span {
+  color: #647188;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.cycle-phase-track > div.active span {
+  color: #aabaff;
+}
+
+.competition-buckets {
+  margin-top: 9px;
+}
+
+@media (max-width: 1000px) {
+  .competition-cycle-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cycle-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .home-cycle-head {
+    display: grid;
+  }
+
+  .cycle-readiness {
+    width: 100%;
+    text-align: left;
+  }
+
+  .cycle-summary-grid,
+  .cycle-phase-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .cycle-controls,
+  .cycle-summary-grid,
+  .competition-cycle-kpis,
+  .cycle-phase-track {
+    grid-template-columns: 1fr;
+  }
+}
