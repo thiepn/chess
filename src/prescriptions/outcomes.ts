@@ -92,7 +92,19 @@ function scoreForTarget(
         ),
       )
       .filter(Boolean)
-      .map((phase) => phase!.quality);
+      .map((phase) =>
+        Math.round(
+          Math.max(
+            0,
+            Math.min(
+              100,
+              100 -
+                phase!.averageCentipawnLoss * .5 -
+                phase!.criticalCount * 12,
+            ),
+          ),
+        ),
+      );
 
     return {
       games: phaseScores.length,
