@@ -7,6 +7,7 @@ import { retentionProbability } from "../domain/mastery";
 import { timeControlWeight } from "../games/practical";
 import { buildRealGameDiagnostics } from "./cohorts";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
+import { buildCoachEffectiveness } from "../prescriptions/outcomes";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -601,6 +602,7 @@ export function buildProgressIntelligence(
       state,
       realGameDiagnostics,
     ),
+    coachEffectiveness: buildCoachEffectiveness(state, now),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(
