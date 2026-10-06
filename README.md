@@ -45,12 +45,13 @@ The default experience should answer one question: **what should I train now?**
 - P24 competition-cycle planning with pre-cycle/base/build/sharpen/taper/event/reset phases, event-specific bucket pressure, volume tapering, preparation-readiness scoring, P23 recovery precedence, event-day minimalism, and post-event reset
 - P25 event retrospectives with multi-day event matching, preparation-vs-event performance comparison, evidence thresholds, recurring event-repair extraction, stable-skill detection, persisted human notes, and a bounded 14-day post-event repair loop
 - P26 core learning experience reset with a one-decision Train home, one-tap adaptive session start, compact recommendation context, first-run non-blocking placement, Progress as a top-level destination, advanced plan/competition controls moved out of the training path, and removal of internal phase jargon from user-facing planning UI
+- P27 production puzzle practice with a 2,000-position CC0 Lichess baseline, all mapped puzzle skills covered, rating-balanced per-skill shards, CI corpus-health gates, deterministic full-database refresh tooling, stronger repeat avoidance, spaced failed-puzzle returns, concealed-motif mixed practice, post-solve tactical explanations, readable solution lines, and optional local Stockfish verification
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21–P25 provide optional planning, adherence, load and competition intelligence in the background; P26 restores the product hierarchy so that the user encounters the recommended training decision first and advanced planning only when they deliberately open Progress.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21–P25 provide optional planning, adherence, load and competition intelligence in the background; P26 restores the product hierarchy so that the user encounters the recommended training decision first and advanced planning only when they deliberately open Progress; P27 turns the puzzle pipeline into a real daily practice substrate with real Lichess positions, stronger spacing and explicit post-solve teaching.
 
 ## Run
 
@@ -63,27 +64,70 @@ npm run build
 
 ## Lichess puzzle corpus
 
-The app uses Lichess's open puzzle export as an optional large practice source. The ingestion pipeline expects the published CSV schema and normalizes Lichess's puzzle convention automatically: the source FEN is before the opponent move, so the builder applies the first UCI move and stores the remaining solution from the learner's turn.
+P27 makes real Lichess puzzle practice part of every ordinary build instead of relying on a zero-record manifest.
 
-A small built-in seed corpus keeps development and offline fallback functional without a large download.
+### Always-available production baseline
 
-Generate the production corpus from a decompressed CSV:
+The repository contains a compact source file at `scripts/data/lichess-production-baseline.csv` with **2,000 unique CC0 Lichess puzzle rows**. It is deliberately kept as source data rather than committed browser shards.
+
+Before development or production builds, the app generates bounded per-skill JSON shards into `public/data/puzzles`. The generated files are ignored by normal Git operations, so the repository no longer carries a misleading static `total: 0` manifest.
+
+The production baseline is filtered and normalized with:
+
+- legality validation for every stored move;
+- the Lichess convention that the source FEN is before the opponent move;
+- curriculum-theme mapping;
+- 200-point rating buckets;
+- popularity, play-count and rating-deviation filters;
+- bounded per-skill shard sizes;
+- CC0/source provenance in the manifest.
+
+The baseline covers every skill currently mapped to Lichess puzzle themes. The built-in six-position seed set remains only as a true offline/network-failure fallback.
+
+### Corpus health gate
+
+`npm run puzzles:audit` validates the generated production corpus.
+
+The default gate requires:
+
+- CC0 provenance;
+- a shard for every puzzle-mapped curriculum skill;
+- multiple records per mapped skill;
+- at least 600 unique real Lichess puzzles;
+- broad rating-band coverage;
+- no duplicate IDs inside a shard;
+- correct shard/skill tagging;
+- legal solution lines;
+- manifest counts matching the generated files.
+
+Quality CI builds the production baseline and runs this audit before tests/build, so a future change cannot silently regress production back to seed-only practice.
+
+### Full official-database refresh
+
+The manual **Refresh Puzzle Corpus** GitHub Actions workflow can stream the current official Lichess export directly from:
+
+`https://database.lichess.org/lichess_db_puzzle.csv.zst`
+
+It uses deterministic ID sampling, stricter quality filters and a much stronger health gate, then opens a reviewable corpus-refresh pull request. Normal CI and Pages deploys do **not** repeatedly download the multi-million-position upstream database.
+
+For local custom generation:
 
 ```bash
 npm run puzzles:build -- lichess_db_puzzle.csv
 ```
 
-Or stream decompression without creating the full CSV:
+Or stream decompression:
 
 ```bash
 zstdcat lichess_db_puzzle.csv.zst | npm run puzzles:build -- -
 ```
 
-Useful options:
+Useful options include:
 
 ```bash
 --out public/data/puzzles
 --max-per-skill 5000
+--sample-modulo 1
 --min-popularity 75
 --min-plays 50
 --min-rating 600
@@ -92,19 +136,37 @@ Useful options:
 --include-very-long
 ```
 
-The builder:
+### Selection and spacing
 
-1. streams the source instead of loading millions of rows into memory;
-2. validates FEN and every UCI move with chess.js;
-3. maps Lichess themes to canonical curriculum skills;
-4. detects knight-specific forks from the solving piece;
-5. filters low-confidence, unpopular, and excessively noisy positions;
-6. preserves rating diversity with rating buckets;
-7. emits one compact JSON shard per skill plus a manifest.
+Puzzle selection combines:
 
-At runtime the browser downloads only the shard needed for the current skill. Puzzle selection scores rating fit, popularity, play count, exact curriculum match, and personal attempt history. Puzzles attempted recently are heavily penalized; older failed puzzles can return after spacing.
+- current skill;
+- target rating from mastery/challenge policy;
+- popularity and play confidence;
+- exact skill match;
+- personal attempt history;
+- small deterministic day-to-day variation.
 
-Lichess puzzle exports are CC0. Source provenance and license metadata are preserved in the generated manifest.
+A clean solve is normally cooled down for **14 days** when alternatives exist. A weak/failed solve can return after a much shorter spacing interval and later receives resurfacing pressure.
+
+For `themedPuzzle`, the motif is visible before solving. For `mixedPuzzle`, the motif is deliberately concealed until after the solve. The latter still uses a position tagged to the active skill so mastery evidence remains correctly attributed; cross-skill variety is supplied by the adaptive session composer rather than by mislabeling a random puzzle.
+
+Exact positions from the user's own games remain higher-fidelity practice and continue through the Personal Mistake runner before generic corpus work when they are due.
+
+### Post-solve teaching
+
+After a successful puzzle, P27 now shows:
+
+- the actual motif;
+- a concise explanation of why the tactic works;
+- the full stored solution in readable SAN;
+- what Lichess solution uniqueness means and the mate-in-one exception;
+- a reminder when failed alternatives imply the position should return later;
+- a direct link to the original Lichess puzzle.
+
+Stockfish verification is **optional and post-solve only**. The browser engine can check the initial position at depth 12 and report whether its current first choice matches the stored Lichess solution without spoiling the exercise beforehand.
+
+Lichess puzzle data is CC0. The static corpus is not stored in account state; only personal attempt history is synced.
 
 ## Personal game analysis
 
@@ -1793,4 +1855,4 @@ See [ROADMAP.md](./ROADMAP.md) for the revised product direction and P26–P37 s
 
 ## Next phase
 
-P27 — Production Puzzle Corpus & Tactical Practice 2.0.
+P28 — Lesson Engine 2.0 & Curriculum Depth.
