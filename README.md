@@ -14,6 +14,8 @@ Learn → Practice → Play → Review → Diagnose → Retrain → Retain
 
 The default experience should answer one question: **what should I train now?**
 
+> **Roadmap reset after P25:** P21–P25 remain useful optional planning intelligence, but they are no longer the product-development priority. The next phases focus on learning depth, puzzle volume, purpose-built calculation/endgame training, stronger game-review teaching, and restoring Home to a one-decision experience. See [ROADMAP.md](./ROADMAP.md).
+
 ## Implemented foundation
 
 - P0 product architecture and five-area information model
@@ -1782,6 +1784,12 @@ Durable account state includes skill mastery, longitudinal analytics history, pu
 
 Static curriculum lives in version control. Personal state lives behind a repository interface and can persist locally or to Supabase. Disposable engine calculations and board runtime state do not belong in account sync.
 
+## Revised roadmap
+
+After the P25 product audit, the roadmap intentionally pivots away from additional planning/competition analytics and back toward the core learning experience.
+
+See [ROADMAP.md](./ROADMAP.md) for the revised product direction and P26–P37 sequence.
+
 ## Next phase
 
-P26 — Cross-Cycle Competition Memory, Longitudinal Event Comparison & Goal Calibration.
+P26 — Core Learning Experience Reset.
