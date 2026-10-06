@@ -1208,7 +1208,7 @@ Attribution remains cautious. If one P19 episode completed several action famili
 
 ### Exploration without randomness
 
-P20 does not use opaque random recommendations.
+P20 does not use opaque random recommendations. Given the same player state and validated history, the policy produces the same ordering and weights.
 
 Unknown or weakly sampled action families remain neutral. This means they naturally rank above repeatedly poor alternatives while still ranking below clearly validated winners. The system can therefore keep learning without locking into an early guess.
 
