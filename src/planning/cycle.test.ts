@@ -252,6 +252,29 @@ describe("P24 competition cycles", () => {
     expect(result.readinessStatus).toBe("at-risk");
   });
 
+  it("changes the visible P21 weekly allocation mix during sharpening", () => {
+    const p = plan("2026-10-15", {
+      updatedAt: "2026-10-05T00:00:00Z",
+    });
+    const s = state(p);
+    const horizon = buildTrainingHorizon(
+      s,
+      new Date("2026-10-06T12:00:00Z"),
+    );
+
+    expect(horizon.competitionCycle.phase).toBe("sharpen");
+
+    const transfer = horizon.allocations.find(
+      (item) => item.bucket === "transfer",
+    );
+    const course = horizon.allocations.find(
+      (item) => item.bucket === "course",
+    );
+
+    expect(transfer?.share).toBeGreaterThan(.28);
+    expect(course?.share).toBeLessThan(.1);
+  });
+
   it("feeds taper limits and cycle pressure into the actual P21 session horizon", () => {
     const p = plan("2026-10-10", {
       updatedAt: "2026-10-05T00:00:00Z",
