@@ -8,6 +8,7 @@ import type { UserState } from "../domain/types";
 import type { ImportedGame } from "../games/types";
 import { openingIdentityForGame } from "../openings/match";
 import { openingNodes } from "../openings/repertoire";
+import { evaluatePrescriptionRecord } from "./outcomes";
 import type {
   PrescriptionBaseline,
   TrainingPrescription,
@@ -670,5 +671,50 @@ export function buildTrainingPrescriptions(
       seen.add(signature);
       return true;
     })
+    .map((item) => {
+      const record = [...(state.prescriptionHistory ?? [])]
+        .reverse()
+        .find(
+          (entry) =>
+            entry.prescriptionId === item.id &&
+            !entry.retiredAt,
+        );
+      if (!record) return item;
+
+      const outcome = evaluatePrescriptionRecord(
+        state,
+        record,
+      );
+
+      if (outcome.status === "worsened") {
+        return {
+          ...item,
+          title: `Escalate: ${item.title}`,
+          priority: Math.min(1.25, item.priority * 1.22),
+          composerEligible: true,
+          outcome,
+        };
+      }
+
+      if (outcome.status === "unchanged") {
+        return {
+          ...item,
+          priority: Math.min(1.15, item.priority * 1.08),
+          outcome,
+        };
+      }
+
+      return {
+        ...item,
+        composerEligible:
+          outcome.status === "improved"
+            ? false
+            : item.composerEligible,
+        outcome,
+      };
+    })
+    .filter(
+      (item) => item.outcome?.status !== "improved",
+    )
     .slice(0, 5);
 }
