@@ -12746,3 +12746,64 @@ html[data-motion="reduced"] .dashboard-grid {
     text-align: left;
   }
 }
+
+
+.progress-advanced-evidence {
+  margin-top: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.008);
+  overflow: hidden;
+}
+
+.progress-advanced-evidence > summary {
+  min-height: 62px;
+  padding: 14px 16px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.progress-advanced-evidence > summary::-webkit-details-marker {
+  display: none;
+}
+
+.progress-advanced-evidence > summary > div {
+  display: grid;
+  gap: 3px;
+}
+
+.progress-advanced-evidence > summary span {
+  color: #aeb9ca;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.progress-advanced-evidence > summary small {
+  color: #68768b;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+.progress-advanced-evidence > summary svg {
+  color: #72809a;
+  transition: transform 160ms ease;
+}
+
+.progress-advanced-evidence[open] > summary svg {
+  transform: rotate(90deg);
+}
+
+.progress-advanced-evidence-body {
+  padding: 0 10px 10px;
+  display: grid;
+  gap: 12px;
+}
+
+.progress-advanced-evidence-body > .progress-panel {
+  margin: 0;
+}
+
