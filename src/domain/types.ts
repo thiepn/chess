@@ -52,6 +52,14 @@ export type TrainingBudgetBucket =
   | "repertoire"
   | "exploration";
 
+export interface CompetitionPlanSettings {
+  enabled: boolean;
+  eventDate: string;
+  label?: string;
+  prepWeeks: 4 | 6 | 8 | 12;
+  resetDays: 3 | 5 | 7;
+}
+
 export interface TrainingPlanSettings {
   goal: TrainingGoalId;
   weeklyMinutes: number;
@@ -60,6 +68,7 @@ export interface TrainingPlanSettings {
   autoRecalibrate?: boolean;
   autoRecovery?: boolean;
   manualRecoveryUntil?: string;
+  competition?: CompetitionPlanSettings;
   updatedAt: string;
 }
 
