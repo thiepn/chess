@@ -3,6 +3,7 @@ import type {
   EngineMoveReview,
   MistakeSeverity,
   PersonalMistake,
+  ReviewErrorType,
 } from "./types";
 
 const pieceValue: Record<string, number> = {
@@ -76,6 +77,8 @@ export function classifyReview(review: EngineMoveReview): {
   severity: MistakeSeverity;
   skillIds: string[];
   explanation: string;
+  errorType: ReviewErrorType;
+  errorReason: string;
 } | null {
   const severity = severityForLoss(review.centipawnLoss);
   if (!severity) return null;
@@ -137,6 +140,45 @@ export function classifyReview(review: EngineMoveReview): {
   const unique = [...new Set(skillIds)].slice(0, 3);
   const primary = unique[0];
 
+  const veryFastDecision =
+    review.move.moveTimeSeconds !== undefined &&
+    review.move.moveTimeSeconds <= 3;
+  const immediateExecutionError =
+    moveCreatesImmediateHang(review) ||
+    primary === "fundamentals.values";
+  const tacticalMiss =
+    forcing.mate ||
+    forcing.check ||
+    forcing.capture ||
+    primary === "rules.mate";
+  const openingPlanError =
+    review.ply <= 20 &&
+    primary === "openings.principles";
+
+  const errorType: ReviewErrorType =
+    veryFastDecision && review.centipawnLoss >= 120
+      ? "time-management"
+      : immediateExecutionError
+        ? "execution-error"
+        : tacticalMiss
+          ? "tactical-miss"
+          : openingPlanError
+            ? "strategic-plan"
+            : review.before.pv.length >= 3 && review.centipawnLoss >= 120
+              ? "calculation-failure"
+              : "strategic-plan";
+
+  const errorReason =
+    errorType === "time-management"
+      ? `The decision took only ${review.move.moveTimeSeconds?.toFixed(1)}s despite carrying substantial tactical cost. The review should focus on the decision process, not only the move.`
+      : errorType === "execution-error"
+        ? "The position did not require a new strategic plan; the main failure was executing the move without a final safety check."
+        : errorType === "tactical-miss"
+          ? "A forcing tactical candidate existed and should have entered the candidate list before quieter ideas."
+          : errorType === "calculation-failure"
+            ? "The critical candidate was available, but the line required calculating the opponent's best resistance beyond the first move."
+            : "The error came from choosing the wrong plan or priority rather than missing a single forcing tactic.";
+
   const explanation =
     primary === "fundamentals.hanging"
       ? "Your move left a valuable piece immediately vulnerable. Rebuild the habit of checking opponent captures before committing."
@@ -154,7 +196,13 @@ export function classifyReview(review: EngineMoveReview): {
                   ? "The position required defensive threat recognition. Before creating your own plan, identify the opponent's strongest forcing idea."
                   : "The main issue was candidate-move selection. Compare checks, captures, threats and the opponent's best reply before choosing.";
 
-  return { severity, skillIds: unique, explanation };
+  return {
+    severity,
+    skillIds: unique,
+    explanation,
+    errorType,
+    errorReason,
+  };
 }
 
 export function classifyStrongReview(review: EngineMoveReview): string[] {
@@ -223,6 +271,9 @@ export function buildPersonalMistake(
     severity: classification.severity,
     skillIds: classification.skillIds,
     explanation: classification.explanation,
+    errorType: classification.errorType,
+    errorReason: classification.errorReason,
+    moveTimeSeconds: review.move.moveTimeSeconds,
     createdAt: now.toISOString(),
     nextReviewAt: now.toISOString(),
     attempts: 0,

@@ -51,6 +51,25 @@ describe("critical moment classification", () => {
     expect(result?.skillIds).toContain("openings.principles");
   });
 
+  it("distinguishes a very fast costly decision as time-management evidence", () => {
+    const result = classifyReview(
+      review({
+        move: {
+          ...review().move,
+          moveTimeSeconds: 2.2,
+        },
+      }),
+    );
+
+    expect(result?.errorType).toBe("time-management");
+    expect(result?.errorReason).toContain("2.2s");
+  });
+
+  it("marks an ordinary early non-forcing error as a strategic-plan error", () => {
+    const result = classifyReview(review());
+    expect(result?.errorType).toBe("strategic-plan");
+  });
+
   it("creates a due personal training position without revealing it first", () => {
     const result = buildPersonalMistake(review(), new Date("2026-10-05T12:00:00Z"));
     expect(result?.positionFen).toBeTruthy();

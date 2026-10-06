@@ -3,6 +3,39 @@ import type { Color } from "chess.js";
 export type MistakeSeverity = "inaccuracy" | "mistake" | "blunder";
 export type GamePhase = "opening" | "middlegame" | "endgame";
 export type StoryMomentKind = "critical" | "turning-point" | "strong";
+export type ReviewErrorType =
+  | "tactical-miss"
+  | "calculation-failure"
+  | "strategic-plan"
+  | "time-management"
+  | "execution-error"
+  | "opening-deviation";
+
+export type ReviewThoughtTag =
+  | "candidate-search"
+  | "calculation"
+  | "threat-awareness"
+  | "plan"
+  | "time-pressure"
+  | "opening-memory"
+  | "execution"
+  | "unsure";
+
+export interface GameReviewReflection {
+  momentId: string;
+  gameId: string;
+  ply: number;
+  thoughtTag?: ReviewThoughtTag;
+  thoughtNote?: string;
+  retryMove?: string;
+  retrySuccess?: boolean;
+  hintUsed?: boolean;
+  bestRevealed?: boolean;
+  continuationRevealed?: boolean;
+  retained?: boolean;
+  relatedPracticeStarted?: boolean;
+  updatedAt: string;
+}
 
 export interface ImportedGameMove {
   ply: number;
@@ -16,6 +49,8 @@ export interface ImportedGameMove {
   captured?: string;
   beforeFen: string;
   afterFen: string;
+  clockSecondsAfterMove?: number;
+  moveTimeSeconds?: number;
 }
 
 export interface GamePhaseSummary {
@@ -48,6 +83,9 @@ export interface GameStoryMoment {
   skillIds: string[];
   title: string;
   summary: string;
+  errorType?: ReviewErrorType;
+  errorReason?: string;
+  moveTimeSeconds?: number;
 }
 
 export interface GameReviewStory {
@@ -150,6 +188,9 @@ export interface PersonalMistake {
   severity: MistakeSeverity;
   skillIds: string[];
   explanation: string;
+  errorType?: ReviewErrorType;
+  errorReason?: string;
+  moveTimeSeconds?: number;
   createdAt: string;
   nextReviewAt: string;
   attempts: number;

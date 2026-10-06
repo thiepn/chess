@@ -13,12 +13,15 @@ import { useEffect, useMemo, useState } from "react";
 import { skillById } from "../domain/curriculum";
 import type {
   GamePhase,
+  GameReviewReflection,
   GameStoryMoment,
   ImportedGame,
   PersonalMistake,
 } from "../games/types";
 import type { BoardArrow } from "../learning/types";
+import type { OpeningDeviation } from "../openings/types";
 import { ChessBoard } from "./ChessBoard";
+import { GameReviewCoach } from "./GameReviewCoach";
 
 interface GameStoryViewProps {
   game: ImportedGame;
@@ -26,6 +29,12 @@ interface GameStoryViewProps {
   onBack: () => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
+  reflections: Record<string, GameReviewReflection>;
+  openingDeviations: OpeningDeviation[];
+  onUpdateReflection: (reflection: GameReviewReflection) => void;
+  onRetainLesson: (gameId: string, momentId: string) => void;
+  onPracticeSkill: (skillId: string) => void;
+  onPracticeOpening: (repertoireId: string, nodeId: string) => void;
 }
 
 type PreviewMode = "position" | "actual" | "better";
@@ -102,6 +111,12 @@ export function GameStoryView({
   onBack,
   onTrainMistake,
   onReplayMistake,
+  reflections,
+  openingDeviations,
+  onUpdateReflection,
+  onRetainLesson,
+  onPracticeSkill,
+  onPracticeOpening,
 }: GameStoryViewProps) {
   const story = game.reviewStory;
   const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 1;
@@ -113,6 +128,7 @@ export function GameStoryView({
   const [presentationMove, setPresentationMove] = useState<
     { from: Square; to: Square } | undefined
   >();
+  const [coachMomentId, setCoachMomentId] = useState<string | null>(null);
 
   const selectedMove = useMemo(
     () => game.moves.find((move) => move.ply === selectedPly),
@@ -129,6 +145,18 @@ export function GameStoryView({
         : undefined,
     [mistakes, selectedMoment],
   );
+  const selectedReflection = selectedMoment
+    ? reflections[selectedMoment.id]
+    : undefined;
+  const coachMoment = coachMomentId
+    ? story?.moments.find((moment) => moment.id === coachMomentId)
+    : undefined;
+  const coachMistake = coachMoment?.mistakeId
+    ? mistakes.find((mistake) => mistake.id === coachMoment.mistakeId)
+    : undefined;
+  const coachDeviation = coachMoment
+    ? openingDeviations.find((deviation) => deviation.ply === coachMoment.ply)
+    : undefined;
 
   const moveRows = useMemo(() => {
     const rows = new Map<
@@ -279,13 +307,15 @@ export function GameStoryView({
                 >
                   Your move
                 </button>
-                <button
-                  type="button"
-                  className={preview === "better" ? "active better" : ""}
-                  onClick={() => setPreview("better")}
-                >
-                  Better move
-                </button>
+                {(!selectedMistake || selectedReflection?.bestRevealed) && (
+                  <button
+                    type="button"
+                    className={preview === "better" ? "active better" : ""}
+                    onClick={() => setPreview("better")}
+                  >
+                    Better move
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -298,6 +328,8 @@ export function GameStoryView({
               mistake={selectedMistake}
               onTrainMistake={onTrainMistake}
               onReplayMistake={onReplayMistake}
+              reflection={selectedReflection}
+              onCoach={() => setCoachMomentId(selectedMoment.id)}
             />
           ) : selectedMove ? (
             <div className="ordinary-move">
@@ -380,6 +412,21 @@ export function GameStoryView({
           ))}
         </div>
       </section>
+
+      {coachMoment && (
+        <GameReviewCoach
+          game={game}
+          moment={coachMoment}
+          mistake={coachMistake}
+          reflection={reflections[coachMoment.id]}
+          openingDeviation={coachDeviation}
+          onClose={() => setCoachMomentId(null)}
+          onUpdateReflection={onUpdateReflection}
+          onRetainLesson={onRetainLesson}
+          onPracticeSkill={onPracticeSkill}
+          onPracticeOpening={onPracticeOpening}
+        />
+      )}
     </section>
   );
 }
@@ -389,11 +436,15 @@ function MomentDetails({
   mistake,
   onTrainMistake,
   onReplayMistake,
+  reflection,
+  onCoach,
 }: {
   moment: GameStoryMoment;
   mistake?: PersonalMistake;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
+  reflection?: GameReviewReflection;
+  onCoach: () => void;
 }) {
   return (
     <>
@@ -419,7 +470,11 @@ function MomentDetails({
         <ArrowLeft size={14} />
         <div>
           <span>Better</span>
-          <strong>{moment.bestSan}</strong>
+          <strong>
+            {!mistake || reflection?.bestRevealed
+              ? moment.bestSan
+              : "Hidden until retry"}
+          </strong>
         </div>
       </div>
 
@@ -446,14 +501,30 @@ function MomentDetails({
         </div>
       )}
 
-      {moment.principalVariation.length > 1 && (
-        <div className="moment-line">
-          <span>Engine continuation</span>
-          <strong>{pvToSan(moment.positionFen, moment.principalVariation).join(" ")}</strong>
+      {moment.principalVariation.length > 1 &&
+        (!mistake || reflection?.continuationRevealed) && (
+          <div className="moment-line">
+            <span>Engine continuation</span>
+            <strong>{pvToSan(moment.positionFen, moment.principalVariation).join(" ")}</strong>
+          </div>
+        )}
+
+      {mistake && (
+        <div className="moment-coach-summary">
+          <span>{moment.errorType?.replaceAll("-", " ") ?? "decision error"}</span>
+          {moment.moveTimeSeconds !== undefined && (
+            <strong>{moment.moveTimeSeconds.toFixed(1)}s on move</strong>
+          )}
         </div>
       )}
 
       {mistake && (
+        <button className="moment-coach-primary" type="button" onClick={onCoach}>
+          <BrainCircuit size={16} /> Review this decision first
+        </button>
+      )}
+
+      {mistake && reflection?.bestRevealed && (
         <div className="moment-actions">
           <button
             className="secondary"

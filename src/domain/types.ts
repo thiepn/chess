@@ -1,5 +1,5 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
-import type { ImportedGame, PersonalMistake } from "../games/types";
+import type { GameReviewReflection, ImportedGame, PersonalMistake } from "../games/types";
 import type { OpeningDeviation, OpeningProgress } from "../openings/types";
 import type { SavedStudy } from "../library/types";
 import type { ExperienceSettings } from "../interaction/types";
@@ -299,6 +299,7 @@ export interface UserState {
   trainingLedger?: TrainingLedgerEntry[];
   competitionRetrospectives?: CompetitionRetrospectiveNote[];
   calculationHistory?: Record<string, CalculationAttemptSummary>;
+  gameReviewReflections?: Record<string, GameReviewReflection>;
   focus?: {
     domain: DomainId;
     until?: string;

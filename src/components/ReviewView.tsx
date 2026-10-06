@@ -17,10 +17,12 @@ import type { LichessConnection } from "../lichess/types";
 import { LichessSyncCard } from "./LichessSyncCard";
 import type {
   GameAnalysisProgress,
+  GameReviewReflection,
   ImportedGame,
   PersonalMistake,
 } from "../games/types";
 import { GameStoryView } from "./GameStoryView";
+import type { OpeningDeviation } from "../openings/types";
 
 interface ReviewViewProps {
   games: ImportedGame[];
@@ -35,6 +37,12 @@ interface ReviewViewProps {
   onAnalyzed: (game: ImportedGame, mistakes: PersonalMistake[]) => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
+  reflections: Record<string, GameReviewReflection>;
+  openingDeviations: OpeningDeviation[];
+  onUpdateReflection: (reflection: GameReviewReflection) => void;
+  onRetainLesson: (gameId: string, momentId: string) => void;
+  onPracticeSkill: (skillId: string) => void;
+  onPracticeOpening: (repertoireId: string, nodeId: string) => void;
 }
 
 function severityLabel(value: PersonalMistake["severity"]) {
@@ -56,6 +64,12 @@ export function ReviewView({
   onAnalyzed,
   onTrainMistake,
   onReplayMistake,
+  reflections,
+  openingDeviations,
+  onUpdateReflection,
+  onRetainLesson,
+  onPracticeSkill,
+  onPracticeOpening,
 }: ReviewViewProps) {
   const [pgn, setPgn] = useState("");
   const [lichessUrl, setLichessUrl] = useState("");
@@ -224,6 +238,14 @@ export function ReviewView({
         onBack={() => setSelectedGameId(null)}
         onTrainMistake={onTrainMistake}
         onReplayMistake={onReplayMistake}
+        reflections={reflections}
+        openingDeviations={openingDeviations.filter(
+          (deviation) => deviation.gameId === selectedGame.id,
+        )}
+        onUpdateReflection={onUpdateReflection}
+        onRetainLesson={onRetainLesson}
+        onPracticeSkill={onPracticeSkill}
+        onPracticeOpening={onPracticeOpening}
       />
     );
   }

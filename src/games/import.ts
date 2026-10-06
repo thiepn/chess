@@ -8,6 +8,35 @@ import type {
   TimeControlCategory,
 } from "./types";
 
+
+function parseClockSeconds(value: string) {
+  const match = value.match(/(\d+):(\d{2}):(\d{2}(?:\.\d+)?)/);
+  if (!match) return undefined;
+  return (
+    Number(match[1]) * 3600 +
+    Number(match[2]) * 60 +
+    Number(match[3])
+  );
+}
+
+function clockAnnotations(pgn: string) {
+  return [...pgn.matchAll(/\[%clk\s+([^\]]+)\]/g)]
+    .map((match) => parseClockSeconds(match[1]))
+    .filter((value): value is number => Number.isFinite(value));
+}
+
+function incrementSeconds(value?: string) {
+  if (!value) return 0;
+  const match = value.match(/^(\d+)(?:\+(\d+))?$/);
+  return match ? Number(match[2] ?? 0) : 0;
+}
+
+function initialSeconds(value?: string) {
+  if (!value) return undefined;
+  const match = value.match(/^(\d+)(?:\+\d+)?$/);
+  return match ? Number(match[1]) : undefined;
+}
+
 function rating(value?: string) {
   if (!value) return undefined;
   const parsed = Number(value);
@@ -65,20 +94,55 @@ export function importPgn(
     throw new Error("The PGN does not contain any moves.");
   }
 
-  const moves: ImportedGameMove[] = history.map((move, index) => ({
-    ply: index + 1,
-    moveNumber:
-      Number(move.before.split(/\s+/)[5]) || Math.floor(index / 2) + 1,
-    color: move.color,
-    san: move.san,
-    uci: `${move.from}${move.to}${move.promotion ?? ""}`,
-    from: move.from,
-    to: move.to,
-    piece: move.piece,
-    captured: move.captured,
-    beforeFen: move.before,
-    afterFen: move.after,
-  }));
+  const timeControl = headers.TimeControl;
+  const annotations = clockAnnotations(pgn);
+  const initialClock = initialSeconds(timeControl);
+  const increment = incrementSeconds(timeControl);
+  const previousClock: Partial<Record<Color, number>> =
+    initialClock === undefined
+      ? {}
+      : { w: initialClock, b: initialClock };
+
+  const moves: ImportedGameMove[] = history.map((move, index) => {
+    const clockSecondsAfterMove =
+      annotations.length === history.length
+        ? annotations[index]
+        : undefined;
+    const prior = previousClock[move.color];
+    const moveTimeSeconds =
+      clockSecondsAfterMove !== undefined &&
+      prior !== undefined
+        ? Math.max(
+            0,
+            prior -
+              clockSecondsAfterMove +
+              increment,
+          )
+        : undefined;
+
+    if (clockSecondsAfterMove !== undefined) {
+      previousClock[move.color] =
+        clockSecondsAfterMove;
+    }
+
+    return {
+      ply: index + 1,
+      moveNumber:
+        Number(move.before.split(/\s+/)[5]) ||
+        Math.floor(index / 2) + 1,
+      color: move.color,
+      san: move.san,
+      uci: `${move.from}${move.to}${move.promotion ?? ""}`,
+      from: move.from,
+      to: move.to,
+      piece: move.piece,
+      captured: move.captured,
+      beforeFen: move.before,
+      afterFen: move.after,
+      clockSecondsAfterMove,
+      moveTimeSeconds,
+    };
+  });
 
   const headerFen = headers.FEN;
   const startingFen =
@@ -87,7 +151,6 @@ export function importPgn(
   const blackRating = rating(headers.BlackElo);
   const playerRating = playerColor === "w" ? whiteRating : blackRating;
   const opponentRating = playerColor === "w" ? blackRating : whiteRating;
-  const timeControl = headers.TimeControl;
   const eventText = (headers.Event ?? "").toLocaleLowerCase();
 
   return {

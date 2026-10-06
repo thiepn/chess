@@ -48,6 +48,7 @@ The default experience should answer one question: **what should I train now?**
 - P27 production puzzle practice with a 2,000-position CC0 Lichess baseline, all mapped puzzle skills covered, rating-balanced per-skill shards, CI corpus-health gates, deterministic full-database refresh tooling, stronger repeat avoidance, spaced failed-puzzle returns, concealed-motif mixed practice, post-solve tactical explanations, readable solution lines, and optional local Stockfish verification
 - P28 Lesson Engine 2.0 with eight-stage teaching scripts, misconception checks, escalating hints, guided practice, independent retrieval, distinct transfer positions for prioritized skills, lesson-mastery scoring separated from completion, and stronger content QA
 - P29 dedicated calculation trainer with candidate generation, best-reply prediction, multi-ply continuation, optional blind visualization, personal-game calculation positions, local Stockfish verification, depth/correctness scoring, and spaced retry scheduling
+- P30 Game Review 2.0 with self-analysis-first critical moments, answer-gated retry, decision-error classification, PGN move-time context, repertoire-deviation coaching, immediate related practice, and opt-in retained lessons that become spaced Library studies
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -1915,6 +1916,31 @@ Calculation evidence records:
 
 Failed calculations return after roughly 12 hours, ordinary successes after roughly 3 days, and strong successes after roughly 7 days. A learner can also retry immediately from the original position.
 
+## Game Review 2.0: Understand, Retry, Transfer
+
+P30 changes game review from an engine report into a coached learning loop.
+
+For a critical moment, the better move and principal variation are now hidden until the learner reviews the decision. The preferred sequence is:
+
+1. reconstruct what you were thinking;
+2. identify the decision-process category;
+3. retry the original position without the answer;
+4. use a process hint or reveal the best move only if needed;
+5. compare candidate moves and the classified error family;
+6. reveal the short engine continuation only as supporting evidence;
+7. launch related practice immediately;
+8. retain the position only when it is worth future spaced review.
+
+Review reflections persist per story moment. They record the thought category, optional free-text reasoning, retry result, hint/reveal state, related-practice handoff and whether the lesson was retained.
+
+Decision errors are classified into tactical miss, calculation failure, strategic-plan error, time-management error and execution error using observable engine/position/move-time signals. The label is an instructional hypothesis, not a claim to know the learner's internal thought process.
+
+When PGN `[%clk ...]` annotations are complete, import derives per-move thinking time from the time control and increment. Games without complete clock annotations receive no invented timing data.
+
+Opening deviations are explained against the matched repertoire node: played move, expected repertoire move and the node's underlying purpose. Related practice can jump directly to that repertoire position.
+
+Choosing **Retain this lesson** creates a spaced Library study from the exact game position. Existing study progress is preserved if the lesson is retained again. Review moments that are not retained remain review-only and do not inflate the study queue.
+
 ## Next phase
 
-P30 — Game Review 2.0: Understand, Retry, Transfer.
+P31 — Endgame & Technique Trainer.
