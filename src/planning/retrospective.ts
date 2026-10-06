@@ -328,16 +328,24 @@ export function buildEventRetrospective(
     eventStart.getTime() -
       plan.prepWeeks * 7 * DAY,
   );
+  const byPlayedAt = (
+    a: ImportedGame,
+    b: ImportedGame,
+  ) =>
+    (gamePlayedAt(a)?.getTime() ?? 0) -
+    (gamePlayedAt(b)?.getTime() ?? 0);
   const eventGames = gamesBetween(
     state.games ?? [],
     eventStart,
     eventEndExclusive,
-  );
+  ).sort(byPlayedAt);
   const preparationGames = gamesBetween(
     state.games ?? [],
     cycleStart,
     eventStart,
-  ).slice(-12);
+  )
+    .sort(byPlayedAt)
+    .slice(-12);
 
   const event = summary(eventGames);
   const preparation = summary(preparationGames);
