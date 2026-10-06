@@ -1,4 +1,4 @@
-import { Chess, type Color } from "chess.js";
+import { Chess } from "chess.js";
 import {
   BrainCircuit,
   ChevronRight,
@@ -351,11 +351,8 @@ export function CalculationRunner({
           candidateFen ??
           position.fen;
 
-  const orientation = (
-    currentFen.split(/\s+/)[1] === "b"
-      ? "b"
-      : "w"
-  ) as Color;
+  const orientation =
+    position.playerColor;
 
   const hiddenBoard =
     visualizationMode &&
