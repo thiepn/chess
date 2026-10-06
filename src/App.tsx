@@ -971,19 +971,43 @@ export default function App() {
     const skill = skillById[skillId];
     if (!skill) return;
 
+    const activityType =
+      skill.trainingModes.includes("mixedPuzzle")
+        ? "mixedPuzzle"
+        : skill.trainingModes.includes("themedPuzzle")
+          ? "themedPuzzle"
+          : skill.trainingModes.includes("guidedDemo")
+            ? "guidedDemo"
+            : skill.trainingModes.includes("conceptLesson")
+              ? "conceptLesson"
+              : skill.trainingModes.includes("microReview")
+                ? "microReview"
+                : "conceptLesson";
+
     setManualActivity({
       id: `practice:${skillId}`,
       source: "focus",
       skillIds: [skillId],
-      activityType: "themedPuzzle",
-      estimatedMinutes: 4,
+      activityType,
+      estimatedMinutes:
+        activityType === "mixedPuzzle"
+          ? 5
+          : activityType === "themedPuzzle"
+            ? 4
+            : activityType === "guidedDemo"
+              ? 4
+              : 6,
       priority: 1,
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .5,
-      reason: "Focused puzzle practice",
+      reason: "Focused practice",
       title: skill.title,
-      subtitle: "Adaptive themed practice",
+      subtitle:
+        activityType === "mixedPuzzle" ||
+        activityType === "themedPuzzle"
+          ? "Adaptive retrieval practice"
+          : "Guided concept repair",
     });
   }
 
