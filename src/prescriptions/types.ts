@@ -53,6 +53,43 @@ export interface PrescriptionOutcomeEvaluation {
   evaluatedAt: string;
 }
 
+export interface PrescriptionEffectivenessRow {
+  recordId: string;
+  prescriptionId: string;
+  kind: PrescriptionKind;
+  title: string;
+  targetLabel: string;
+  status: PrescriptionOutcomeStatus;
+  baselineScore: number;
+  postScore?: number;
+  delta?: number;
+  postGames: number;
+  confidence: number;
+  completions: number;
+  trainingSuccessRate?: number;
+  issuedAt: string;
+  completedAt?: string;
+}
+
+export interface CoachEffectivenessInsight {
+  issued: number;
+  started: number;
+  completed: number;
+  evaluated: number;
+  improved: number;
+  unchanged: number;
+  worsened: number;
+  validationRate: number;
+  averageDelta: number;
+  byKind: Array<{
+    kind: PrescriptionKind;
+    evaluated: number;
+    improved: number;
+    averageDelta: number;
+  }>;
+  history: PrescriptionEffectivenessRow[];
+}
+
 export interface PrescriptionTrackingRecord {
   id: string;
   prescriptionId: string;
