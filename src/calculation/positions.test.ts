@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { initialUserState } from "../data/demo";
-import type { PersonalMistake, UserState } from "../domain/types";
+import type { UserState } from "../domain/types";
+import type { PersonalMistake } from "../games/types";
 import {
   authoredPositions,
   calculationCatalogIssues,
