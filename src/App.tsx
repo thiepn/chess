@@ -102,6 +102,7 @@ import {
   trainingGoals,
   trainingPlanForState,
 } from "./planning/periodization";
+import { recoveryUntil } from "./planning/load";
 
 const repo = createChessStateRepository();
 
@@ -1253,6 +1254,8 @@ export default function App() {
       horizonWeeks: 4 | 8 | 12;
       sessionsPerWeek: number;
       autoRecalibrate: boolean;
+      autoRecovery: boolean;
+      manualRecoveryUntil: string;
     }>,
   ) {
     setState((previous) => {
@@ -1480,6 +1483,86 @@ export default function App() {
                   </span>
                 </label>
                 <p>{progressIntelligence.trainingPlanForecast.recalibration.reason}</p>
+              </div>
+
+              <div className={`home-load-management ${progressIntelligence.trainingHorizon.loadManagement.appliedMode}`}>
+                <div className="home-load-management-head">
+                  <div>
+                    <span>P23 · LOAD MANAGEMENT</span>
+                    <strong>
+                      {progressIntelligence.trainingHorizon.loadManagement.appliedMode === "recovery"
+                        ? "Recovery week"
+                        : progressIntelligence.trainingHorizon.loadManagement.appliedMode === "watch"
+                          ? "Load watch"
+                          : "Normal load"}
+                    </strong>
+                  </div>
+                  <small>
+                    {progressIntelligence.trainingHorizon.loadManagement.managedWeeklyMinutes}m managed · {progressIntelligence.trainingHorizon.effectiveWeeklyMinutes}m P22 effective
+                  </small>
+                </div>
+
+                <div className="home-load-metrics">
+                  <div>
+                    <span>Latest full week</span>
+                    <strong>{progressIntelligence.trainingHorizon.loadManagement.latestWeekMinutes}m</strong>
+                  </div>
+                  <div>
+                    <span>Prior baseline</span>
+                    <strong>{progressIntelligence.trainingHorizon.loadManagement.baselineWeeklyMinutes}m</strong>
+                  </div>
+                  <div>
+                    <span>Load ramp</span>
+                    <strong>{progressIntelligence.trainingHorizon.loadManagement.rampRatio}×</strong>
+                  </div>
+                  <div>
+                    <span>Overload weeks</span>
+                    <strong>{progressIntelligence.trainingHorizon.loadManagement.overloadWeeks}/3</strong>
+                  </div>
+                </div>
+
+                <div className="home-load-controls">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={progressIntelligence.trainingHorizon.plan.autoRecovery !== false}
+                      onChange={(event) =>
+                        updateTrainingPlan({
+                          autoRecovery: event.target.checked,
+                        })
+                      }
+                    />
+                    <span>Automatic recovery</span>
+                  </label>
+
+                  {progressIntelligence.trainingHorizon.loadManagement.manualRecoveryActive ? (
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() =>
+                        updateTrainingPlan({
+                          manualRecoveryUntil: "",
+                        })
+                      }
+                    >
+                      End recovery week
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() =>
+                        updateTrainingPlan({
+                          manualRecoveryUntil: recoveryUntil(),
+                        })
+                      }
+                    >
+                      Start 7-day recovery
+                    </button>
+                  )}
+                </div>
+
+                <p>{progressIntelligence.trainingHorizon.loadManagement.reason}</p>
               </div>
 
               <div className="horizon-goal-switch" aria-label="Training goal">
