@@ -1252,16 +1252,29 @@ export default function App() {
       weeklyMinutes: number;
       horizonWeeks: 4 | 8 | 12;
       sessionsPerWeek: number;
+      autoRecalibrate: boolean;
     }>,
   ) {
-    setState((previous) => ({
-      ...previous,
-      trainingPlan: {
-        ...trainingPlanForState(previous),
-        ...patch,
-        updatedAt: new Date().toISOString(),
-      },
-    }));
+    setState((previous) => {
+      const current =
+        trainingPlanForState(previous);
+      const structuralChange =
+        "goal" in patch ||
+        "weeklyMinutes" in patch ||
+        "horizonWeeks" in patch ||
+        "sessionsPerWeek" in patch;
+
+      return {
+        ...previous,
+        trainingPlan: {
+          ...current,
+          ...patch,
+          updatedAt: structuralChange
+            ? new Date().toISOString()
+            : current.updatedAt,
+        },
+      };
+    });
   }
 
   if (!loaded) {
@@ -1359,7 +1372,7 @@ export default function App() {
             <section className="home-training-horizon">
               <div className="home-training-horizon-head">
                 <div>
-                  <p className="eyebrow">P21 · TRAINING HORIZON</p>
+                  <p className="eyebrow">P21/P22 · TRAINING HORIZON</p>
                   <h2>{progressIntelligence.trainingHorizon.goalLabel}</h2>
                   <p>{progressIntelligence.trainingHorizon.goalDescription}</p>
                 </div>
@@ -1373,9 +1386,9 @@ export default function App() {
                   style={{
                     width: `${Math.min(
                       100,
-                      progressIntelligence.trainingHorizon.plan.weeklyMinutes
+                      progressIntelligence.trainingHorizon.effectiveWeeklyMinutes
                         ? progressIntelligence.trainingHorizon.completedMinutes /
-                          progressIntelligence.trainingHorizon.plan.weeklyMinutes *
+                          progressIntelligence.trainingHorizon.effectiveWeeklyMinutes *
                           100
                         : 0,
                     )}%`,
@@ -1388,7 +1401,7 @@ export default function App() {
                   <span>This week</span>
                   <strong>
                     {progressIntelligence.trainingHorizon.completedMinutes}/
-                    {progressIntelligence.trainingHorizon.plan.weeklyMinutes}m
+                    {progressIntelligence.trainingHorizon.effectiveWeeklyMinutes}m
                   </strong>
                 </div>
                 <div>
@@ -1405,6 +1418,68 @@ export default function App() {
                   <span>{progressIntelligence.trainingHorizon.plan.horizonWeeks}-week horizon</span>
                   <strong>{progressIntelligence.trainingHorizon.horizonTargetMinutes}m</strong>
                 </div>
+              </div>
+
+              <div className={`home-forecast-strip ${progressIntelligence.trainingPlanForecast.forecast.status}`}>
+                <div>
+                  <span>Adherence</span>
+                  <strong>
+                    {progressIntelligence.trainingPlanForecast.adherence.comparableWeeks
+                      ? `${progressIntelligence.trainingPlanForecast.adherence.averageAdherence}%`
+                      : "Collecting"}
+                  </strong>
+                  <small>
+                    {progressIntelligence.trainingPlanForecast.adherence.comparableWeeks} comparable full week{progressIntelligence.trainingPlanForecast.adherence.comparableWeeks === 1 ? "" : "s"}
+                  </small>
+                </div>
+                <div>
+                  <span>Horizon forecast</span>
+                  <strong>{progressIntelligence.trainingPlanForecast.forecast.status.replace("-", " ")}</strong>
+                  <small>
+                    {progressIntelligence.trainingPlanForecast.forecast.status === "insufficient"
+                      ? "Needs two full weeks"
+                      : `${progressIntelligence.trainingPlanForecast.forecast.projectedCompletion}% of nominal target projected`}
+                  </small>
+                </div>
+                <div>
+                  <span>Sustainable pace</span>
+                  <strong>{progressIntelligence.trainingPlanForecast.forecast.sustainableWeeklyMinutes}m/week</strong>
+                  <small>{progressIntelligence.trainingPlanForecast.adherence.trend.replace("-", " ")} trend</small>
+                </div>
+                <div>
+                  <span>Recalibration</span>
+                  <strong>
+                    {progressIntelligence.trainingPlanForecast.recalibration.active
+                      ? `${progressIntelligence.trainingPlanForecast.recalibration.effectiveWeeklyMinutes}m effective`
+                      : "Nominal"}
+                  </strong>
+                  <small>
+                    {progressIntelligence.trainingPlanForecast.recalibration.active
+                      ? `${progressIntelligence.trainingPlanForecast.recalibration.nominalWeeklyMinutes}m goal preserved`
+                      : `${progressIntelligence.trainingPlanForecast.recalibration.confidence}% confidence`}
+                  </small>
+                </div>
+              </div>
+
+              <div className="horizon-recalibration-control">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={progressIntelligence.trainingHorizon.plan.autoRecalibrate !== false}
+                    onChange={(event) =>
+                      updateTrainingPlan({
+                        autoRecalibrate: event.target.checked,
+                      })
+                    }
+                  />
+                  <span>
+                    Automatic recalibration
+                    <small>
+                      Adjust effective load only after sustained adherence evidence; never change the nominal goal.
+                    </small>
+                  </span>
+                </label>
+                <p>{progressIntelligence.trainingPlanForecast.recalibration.reason}</p>
               </div>
 
               <div className="horizon-goal-switch" aria-label="Training goal">

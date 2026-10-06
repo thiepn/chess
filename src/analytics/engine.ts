@@ -9,7 +9,8 @@ import { buildRealGameDiagnostics } from "./cohorts";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildCoachEffectiveness } from "../prescriptions/outcomes";
 import { buildCoachPolicyInsight } from "../prescriptions/policy";
-import { buildTrainingHorizon } from "../planning/periodization";
+import { buildTrainingHorizon, trainingPlanForState } from "../planning/periodization";
+import { buildTrainingPlanForecast } from "../planning/forecast";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -607,6 +608,11 @@ export function buildProgressIntelligence(
     coachEffectiveness: buildCoachEffectiveness(state, now),
     coachPolicy: buildCoachPolicyInsight(state, now),
     trainingHorizon: buildTrainingHorizon(state, now),
+    trainingPlanForecast: buildTrainingPlanForecast(
+      state,
+      trainingPlanForState(state, now),
+      now,
+    ),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(

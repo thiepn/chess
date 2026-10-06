@@ -3,7 +3,7 @@ import type {
   CoachPolicyInsight,
   TrainingPrescription,
 } from "../prescriptions/types";
-import type { TrainingHorizonInsight } from "../planning/types";
+import type { TrainingHorizonInsight, TrainingPlanForecast } from "../planning/types";
 import type {
   CandidateSource,
   CurriculumStageId,
@@ -208,6 +208,7 @@ export interface ProgressIntelligence {
   coachEffectiveness: CoachEffectivenessInsight;
   coachPolicy: CoachPolicyInsight;
   trainingHorizon: TrainingHorizonInsight;
+  trainingPlanForecast: TrainingPlanForecast;
   calibration: CalibrationInsight;
   trend: TrendPoint[];
   interventions: InterventionInsight[];
