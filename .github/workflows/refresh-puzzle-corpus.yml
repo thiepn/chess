@@ -62,7 +62,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain --untracked-files=all public/data/puzzles)" ]; then
+          git add -f public/data/puzzles
+          if git diff --cached --quiet; then
             echo "No corpus changes detected."
             exit 0
           fi
@@ -71,7 +72,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add -f public/data/puzzles
           git commit -m "data: refresh Lichess puzzle corpus"
           git push origin "$branch"
           gh pr create \
