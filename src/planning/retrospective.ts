@@ -31,10 +31,11 @@ function normalizedDay(value: Date) {
 
 function parseDate(value: string | undefined) {
   if (!value) return undefined;
-  const normalized = value
-    .replace(/\?/g, "01")
-    .replace(/\./g, "-");
+  const normalized = value.replace(/\./g, "-");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
+    return undefined;
+  }
+  if (normalized.includes("?")) {
     return undefined;
   }
   const date = new Date(`${normalized}T00:00:00Z`);
@@ -44,9 +45,11 @@ function parseDate(value: string | undefined) {
 }
 
 function gamePlayedAt(game: ImportedGame) {
-  return (
-    parseDate(game.date) ??
-    parseDate(game.importedAt.slice(0, 10))
+  if (game.date) {
+    return parseDate(game.date);
+  }
+  return parseDate(
+    game.importedAt.slice(0, 10),
   );
 }
 
