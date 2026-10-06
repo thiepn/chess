@@ -16,6 +16,7 @@ import type {
   TrainingHorizonInsight,
 } from "./types";
 import { buildTrainingPlanForecast } from "./forecast";
+import { buildLoadManagement } from "./load";
 
 const DAY = 86_400_000;
 const LEDGER_RETENTION_DAYS = 180;
@@ -133,6 +134,7 @@ export function defaultTrainingPlan(
     horizonWeeks: 8,
     sessionsPerWeek: 5,
     autoRecalibrate: true,
+    autoRecovery: true,
     updatedAt: now.toISOString(),
   };
 }
@@ -167,6 +169,11 @@ export function trainingPlanForState(
     ),
     autoRecalibrate:
       stored.autoRecalibrate !== false,
+    autoRecovery:
+      stored.autoRecovery !== false,
+    ...(stored.manualRecoveryUntil
+      ? { manualRecoveryUntil: stored.manualRecoveryUntil }
+      : {}),
     updatedAt: stored.updatedAt || now.toISOString(),
   };
 }
@@ -301,6 +308,14 @@ export function buildTrainingHorizon(
   );
   const effectiveWeeklyMinutes =
     forecast.recalibration.effectiveWeeklyMinutes;
+  const loadManagement = buildLoadManagement(
+    state,
+    plan,
+    forecast,
+    now,
+  );
+  const managedWeeklyMinutes =
+    loadManagement.managedWeeklyMinutes;
   const start = mondayStart(now);
   const end = endOfWeek(start);
   const ledger = weeklyLedger(state, now);
@@ -329,7 +344,7 @@ export function buildTrainingHorizon(
       allocationFor(
         bucket,
         goal.shares[bucket],
-        effectiveWeeklyMinutes,
+        managedWeeklyMinutes,
         byBucket.get(bucket) ?? 0,
       ),
     )
@@ -358,11 +373,11 @@ export function buildTrainingHorizon(
         )
       : elapsedWeekFraction(now, start);
   const expectedMinutes = Math.round(
-    effectiveWeeklyMinutes * elapsed,
+    managedWeeklyMinutes * elapsed,
   );
   const remainingMinutes = Math.max(
     0,
-    effectiveWeeklyMinutes - completedMinutes,
+    managedWeeklyMinutes - completedMinutes,
   );
   const activeDays = new Set(
     ledger.map((entry) =>
@@ -379,12 +394,12 @@ export function buildTrainingHorizon(
           clamp(
             remainingMinutes / remainingSessions,
             10,
-            60,
+            loadManagement.maxSessionMinutes,
           ),
         )
       : 10;
   const paceStatus: TrainingHorizonInsight["paceStatus"] =
-    completedMinutes >= effectiveWeeklyMinutes
+    completedMinutes >= managedWeeklyMinutes
       ? "complete"
       : expectedMinutes > 20 &&
           completedMinutes < expectedMinutes * .72
@@ -416,6 +431,7 @@ export function buildTrainingHorizon(
     horizonTargetMinutes:
       plan.weeklyMinutes * plan.horizonWeeks,
     effectiveWeeklyMinutes,
+    managedWeeklyMinutes,
     allocations,
   };
 }
@@ -445,7 +461,8 @@ export function periodizationAdjustment(
   const gap =
     allocation?.pressure ?? 0;
   let multiplier =
-    .86 + gap * .28;
+    (.86 + gap * .28) *
+    (loadManagement.bucketMultipliers[bucket] ?? 1);
 
   if (bucket === horizon.nextFocus) {
     multiplier += .08;
@@ -461,7 +478,7 @@ export function periodizationAdjustment(
 
   if (
     horizon.completedMinutes >=
-      horizon.plan.weeklyMinutes
+      horizon.managedWeeklyMinutes
   ) {
     multiplier *= protectedSource ? .95 : .72;
   }
