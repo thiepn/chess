@@ -9,6 +9,8 @@ import {
   Sparkles,
   Target,
   TrendingUp,
+  Users,
+  Gauge,
 } from "lucide-react";
 import type { ProgressIntelligence, TrendPoint } from "../analytics/types";
 import { skillTitle, stageTitle } from "../analytics/engine";
@@ -195,7 +197,9 @@ export function ProgressView({
         <article>
           <div><Target size={18} /><span>Transfer</span></div>
           <strong>{intelligence.transfer}%</strong>
-          <small>Training positions and real-game evidence</small>
+          <small>
+            Human {intelligence.humanTransfer}% · AI {intelligence.aiTransfer}%
+          </small>
         </article>
         <article>
           <div><ShieldCheck size={18} /><span>Calibration</span></div>
@@ -209,6 +213,81 @@ export function ProgressView({
           </small>
         </article>
       </div>
+
+      <section className="progress-panel practical-strength-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">PRACTICAL STRENGTH</p>
+            <h2>Human-game performance, separated from training.</h2>
+          </div>
+          <Gauge size={20} />
+        </div>
+
+        <div className="practical-strength-grid">
+          <div className="practical-rating-card">
+            <span>THIEPN practical rating</span>
+            <strong>{intelligence.practicalStrength.rating}</strong>
+            <small>
+              {intelligence.practicalStrength.status} · {intelligence.practicalStrength.confidence}% confidence
+            </small>
+          </div>
+
+          <div className="practical-signal-grid">
+            <div>
+              <span>Human transfer</span>
+              <strong>{intelligence.practicalStrength.humanTransfer}%</strong>
+            </div>
+            <div>
+              <span>AI / training transfer</span>
+              <strong>{intelligence.practicalStrength.aiTransfer}%</strong>
+            </div>
+            <div>
+              <span>Human-game quality</span>
+              <strong>{intelligence.practicalStrength.quality}%</strong>
+            </div>
+            <div>
+              <span>Consistency</span>
+              <strong>{intelligence.practicalStrength.consistency}%</strong>
+            </div>
+          </div>
+        </div>
+
+        <div className="practical-context-row">
+          <div>
+            <Users size={16} />
+            <span>
+              {intelligence.practicalStrength.humanGames} analyzed human game{intelligence.practicalStrength.humanGames === 1 ? "" : "s"}
+              {intelligence.practicalStrength.averageOpponentRating
+                ? ` · avg opponent ${intelligence.practicalStrength.averageOpponentRating}`
+                : ""}
+            </span>
+          </div>
+          <div>
+            <Target size={16} />
+            <span>
+              result performance {intelligence.practicalStrength.resultPerformance}%
+            </span>
+          </div>
+        </div>
+
+        {intelligence.practicalStrength.timeControls.length > 0 && (
+          <div className="practical-time-controls">
+            {intelligence.practicalStrength.timeControls.map((item) => (
+              <div key={item.category}>
+                <span>{item.category}</span>
+                <strong>{item.quality}%</strong>
+                <small>{item.games} game{item.games === 1 ? "" : "s"}</small>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <p className="practical-rating-note">
+          This is an internal learning-strength estimate, not a Lichess Elo clone.
+          Opponent rating only adds modest context; engine quality, consistency,
+          curriculum mastery and demonstrated human transfer carry most of the model.
+        </p>
+      </section>
 
       <section className="progress-panel progress-trajectory">
         <div className="progress-section-heading">
@@ -254,7 +333,7 @@ export function ProgressView({
                   <div>
                     <strong>{skillTitle(item.skillId)}</strong>
                     <span>
-                      {item.evidenceCount30} recent evidence · transfer {item.transfer}%
+                      {item.evidenceCount30} recent evidence · human {item.humanTransfer}% · AI {item.aiTransfer}%
                     </span>
                   </div>
                   <div className="progress-skill-value positive">
@@ -285,7 +364,7 @@ export function ProgressView({
                 <div>
                   <strong>{skillTitle(item.skillId)}</strong>
                   <span>
-                    mastery {item.current}% · retention {item.retention}% · transfer {item.transfer}%
+                    mastery {item.current}% · retention {item.retention}% · human {item.humanTransfer}% · AI {item.aiTransfer}%
                   </span>
                 </div>
                 <div className="progress-skill-value">
