@@ -13,6 +13,11 @@ import {
 } from "../assessment/engine";
 import { trainingPolicyFor } from "../adaptation/policy";
 import { trainingScenarios } from "../play/scenarios";
+import { buildTrainingPrescriptions } from "../prescriptions/engine";
+import type {
+  TrainingPrescription,
+  TrainingPrescriptionAction,
+} from "../prescriptions/types";
 import type {
   CandidateSource,
   ChessSkill,
@@ -102,6 +107,76 @@ function candidate(
   };
 }
 
+function prescriptionCandidate(
+  state: UserState,
+  prescription: TrainingPrescription,
+  action: TrainingPrescriptionAction,
+  now: Date,
+): TrainingCandidate | undefined {
+  const skill = action.skillId
+    ? skillById[action.skillId]
+    : undefined;
+  if (!skill) return undefined;
+
+  const urgency = Math.max(
+    .62,
+    Math.min(
+      1,
+      prescription.priority *
+        (.72 + prescription.confidence / 360),
+    ),
+  );
+  const item = candidate(
+    state,
+    skill,
+    "prescription",
+    urgency,
+    skill.importance *
+      prescription.priority *
+      (.75 + prescription.confidence / 250),
+    prescription.title,
+    now,
+  );
+
+  item.id = `prescription:${prescription.id}:${action.id}`;
+  item.prescriptionId = prescription.id;
+
+  if (
+    action.kind === "mistake-replay" &&
+    action.mistakeId
+  ) {
+    item.activityType = "personalMistake";
+    item.mistakeId = action.mistakeId;
+  } else if (
+    action.kind === "opening-recall" &&
+    action.repertoireId &&
+    action.openingNodeId
+  ) {
+    item.activityType = "openingRecall";
+    item.repertoireId = action.repertoireId;
+    item.openingNodeId = action.openingNodeId;
+  } else if (
+    action.kind === "scenario" &&
+    action.scenarioId
+  ) {
+    item.activityType = "engineGame";
+    item.scenarioId = action.scenarioId;
+  }
+
+  if (item.adaptivePolicy) {
+    item.adaptivePolicy = {
+      ...item.adaptivePolicy,
+      mode: item.activityType,
+      reason: `P18 prescription: ${prescription.rationale}`,
+    };
+  }
+
+  item.estimatedMinutes =
+    durations[item.activityType] ?? item.estimatedMinutes;
+
+  return item;
+}
+
 export function buildCandidatePool(
   state: UserState,
   now = new Date(),
@@ -139,6 +214,20 @@ export function buildCandidatePool(
         now,
       ),
     );
+  }
+
+  for (const prescription of buildTrainingPrescriptions(state)) {
+    if (!prescription.composerEligible) continue;
+    const action = prescription.actions[0];
+    if (!action) continue;
+
+    const item = prescriptionCandidate(
+      state,
+      prescription,
+      action,
+      now,
+    );
+    if (item) result.push(item);
   }
 
   for (const mistake of (state.mistakes ?? [])
@@ -291,16 +380,22 @@ function scoreCandidate(item: TrainingCandidate, state: UserState): number {
   const fatiguePenalty = Math.min(.42, recentMinutes / 180);
   const focusModifier = state.focus?.domain === skill.domain ? 1.3 : 1;
   const transferValue =
-    item.source === "game" || item.source === "weakness"
-      ? 1.22
-      : item.source === "library"
-        ? 1.12
-        : 1;
+    item.source === "prescription"
+      ? 1.3
+      : item.source === "game" || item.source === "weakness"
+        ? 1.22
+        : item.source === "library"
+          ? 1.12
+          : 1;
   const repetitionPenalty = recentMinutes > 60 ? .82 : 1;
   const stopPressure = item.adaptivePolicy?.stopPressure ?? 0;
-  const protectedSource = ["review", "weakness", "game", "assessment"].includes(
-    item.source,
-  );
+  const protectedSource = [
+    "review",
+    "weakness",
+    "game",
+    "assessment",
+    "prescription",
+  ].includes(item.source);
   const continuationFactor = protectedSource
     ? 1
     : stopPressure >= .86
@@ -359,6 +454,11 @@ export function composeSession(
 
   const mandatory = [
     ...pool.filter(
+      ({ item }) =>
+        item.source === "prescription" &&
+        item.urgency >= .8,
+    ).slice(0, 1),
+    ...pool.filter(
       ({ item }) => item.source === "assessment" && item.urgency >= .85,
     ).slice(0, 1),
     ...pool.filter(
@@ -406,12 +506,13 @@ export function composeSession(
       review: 0,
       weakness: 1,
       game: 2,
-      assessment: 3,
-      curriculum: 4,
-      calibration: 5,
-      repertoire: 6,
-      library: 7,
-      focus: 8,
+      prescription: 3,
+      assessment: 4,
+      curriculum: 5,
+      calibration: 6,
+      repertoire: 7,
+      library: 8,
+      focus: 9,
     };
     return order[a.source] - order[b.source];
   });
