@@ -1,0 +1,81 @@
+name: Refresh Puzzle Corpus
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_per_skill:
+        description: Maximum curated puzzles kept per curriculum skill
+        required: false
+        default: "600"
+      sample_modulo:
+        description: Deterministic sampling divisor for the full Lichess export
+        required: false
+        default: "8"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: chess-puzzle-corpus-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Install zstd
+        run: sudo apt-get update && sudo apt-get install -y zstd
+      - name: Build curated corpus from official Lichess export
+        shell: bash
+        run: |
+          set -o pipefail
+          curl --fail --location --retry 3 --retry-delay 5 \
+            https://database.lichess.org/lichess_db_puzzle.csv.zst \
+            | zstd -dc \
+            | node scripts/build-puzzle-corpus.mjs - \
+                --out public/data/puzzles \
+                --max-per-skill "${{ inputs.max_per_skill }}" \
+                --sample-modulo "${{ inputs.sample_modulo }}" \
+                --min-popularity 70 \
+                --min-plays 50 \
+                --min-rating 600 \
+                --max-rating 2400 \
+                --max-rd 170 \
+                --source-label "Lichess official puzzle database"
+      - name: Audit refreshed corpus
+        env:
+          PUZZLE_MIN_UNIQUE: "5000"
+          PUZZLE_MIN_PER_SKILL: "40"
+          PUZZLE_MIN_RATING_BANDS: "7"
+        run: npm run puzzles:audit
+      - name: Create corpus refresh pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet -- public/data/puzzles; then
+            echo "No corpus changes detected."
+            exit 0
+          fi
+
+          branch="puzzle-corpus-refresh-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add -f public/data/puzzles
+          git commit -m "data: refresh Lichess puzzle corpus"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "Puzzle corpus refresh" \
+            --body "Regenerated the bounded browser puzzle shards from the current official Lichess CC0 puzzle export. The corpus passed the strict production health gate before this PR was created."
