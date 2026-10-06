@@ -11,6 +11,7 @@ import type {
 import type { LearningAnalyticsState } from "../analytics/types";
 import type { AdaptiveTrainingPolicy } from "../adaptation/types";
 import type { LichessConnection } from "../lichess/types";
+import type { PrescriptionTrackingRecord } from "../prescriptions/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -218,6 +219,7 @@ export interface UserState {
   stageCertifications?: Partial<Record<CurriculumStageId, StageCertification>>;
   analytics?: LearningAnalyticsState;
   lichess?: LichessConnection;
+  prescriptionHistory?: PrescriptionTrackingRecord[];
   focus?: {
     domain: DomainId;
     until?: string;
