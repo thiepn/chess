@@ -1408,8 +1408,7 @@ export default function App() {
               : "position",
         fen: position.beforeFen,
         notes: [
-          checkpoint.explanation,
-          `Reusable plan: ${checkpoint.plan}`,
+          `Recover the move that expresses this plan: ${checkpoint.plan}`,
           `From ${game.players}, ${game.event} ${game.year}.`,
         ].join("\n\n"),
         tags: [
