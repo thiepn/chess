@@ -16,6 +16,7 @@ import { trainingScenarios } from "../play/scenarios";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildEventRetrospective } from "../planning/retrospective";
 import { competitionPlanForState } from "../planning/cycle";
+import { calculationPositionFor } from "../calculation/positions";
 import {
   buildTrainingHorizon,
   periodizationAdjustment,
@@ -98,6 +99,15 @@ function candidate(
             "Transfer needs work, but this skill has no dedicated playable scenario yet; use active retrieval instead.",
         };
 
+  const calculationPosition =
+    executableActivityType === "calculation"
+      ? calculationPositionFor(
+          state,
+          skill.id,
+          now,
+        )
+      : undefined;
+
   return {
     id: `${source}:${skill.id}`,
     source,
@@ -110,6 +120,8 @@ function candidate(
     urgency,
     reason,
     scenarioId: scenario?.id,
+    calculationPositionId:
+      calculationPosition?.id,
     adaptivePolicy: resolvedPolicy,
   };
 }
