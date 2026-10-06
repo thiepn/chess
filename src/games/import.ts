@@ -94,6 +94,7 @@ export function importPgn(
     throw new Error("The PGN does not contain any moves.");
   }
 
+  const timeControl = headers.TimeControl;
   const annotations = clockAnnotations(pgn);
   const initialClock = initialSeconds(timeControl);
   const increment = incrementSeconds(timeControl);
@@ -150,7 +151,6 @@ export function importPgn(
   const blackRating = rating(headers.BlackElo);
   const playerRating = playerColor === "w" ? whiteRating : blackRating;
   const opponentRating = playerColor === "w" ? blackRating : whiteRating;
-  const timeControl = headers.TimeControl;
   const eventText = (headers.Event ?? "").toLocaleLowerCase();
 
   return {
