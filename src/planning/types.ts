@@ -39,6 +39,7 @@ export interface TrainingHorizonInsight {
   recommendedSessionMode: SessionMode;
   recommendedSessionMinutes: number;
   horizonTargetMinutes: number;
+  effectiveWeeklyMinutes: number;
   allocations: TrainingBudgetAllocation[];
 }
 
@@ -47,4 +48,67 @@ export interface TrainingGoalDefinition {
   label: string;
   description: string;
   shares: Record<TrainingBudgetBucket, number>;
+}
+
+
+export type AdherenceTrend =
+  | "improving"
+  | "stable"
+  | "declining"
+  | "insufficient";
+
+export type ForecastStatus =
+  | "insufficient"
+  | "ahead"
+  | "on-track"
+  | "at-risk";
+
+export interface TrainingWeekAdherence {
+  weekStart: string;
+  weekEnd: string;
+  targetMinutes: number;
+  completedMinutes: number;
+  adherence: number;
+  activeDays: number;
+}
+
+export interface TrainingAdherenceInsight {
+  comparableWeeks: number;
+  averageAdherence: number;
+  weightedWeeklyMinutes: number;
+  consistency: number;
+  trend: AdherenceTrend;
+  confidence: number;
+  weeks: TrainingWeekAdherence[];
+}
+
+export interface HorizonForecast {
+  status: ForecastStatus;
+  planStart: string;
+  planEnd: string;
+  nominalTargetMinutes: number;
+  completedSinceStart: number;
+  projectedTotalMinutes: number;
+  projectedCompletion: number;
+  projectedShortfallMinutes: number;
+  sustainableWeeklyMinutes: number;
+  predictedWeeksToTarget?: number;
+  confidence: number;
+}
+
+export interface HorizonRecalibration {
+  enabled: boolean;
+  active: boolean;
+  nominalWeeklyMinutes: number;
+  effectiveWeeklyMinutes: number;
+  multiplier: number;
+  evidenceWeeks: number;
+  confidence: number;
+  reason: string;
+}
+
+export interface TrainingPlanForecast {
+  adherence: TrainingAdherenceInsight;
+  forecast: HorizonForecast;
+  recalibration: HorizonRecalibration;
 }
