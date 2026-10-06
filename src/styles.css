@@ -11248,3 +11248,266 @@ html[data-motion="reduced"] .dashboard-grid {
     text-align: left;
   }
 }
+
+
+/* P31 — Endgame & Technique Trainer */
+
+.endgame-technique-sheet {
+  width: min(1180px, calc(100vw - 28px));
+}
+
+.endgame-runner {
+  display: grid;
+  gap: 14px;
+}
+
+.endgame-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.endgame-header h2 {
+  margin: 3px 0;
+  color: #d2d9e4;
+  font-size: clamp(18px, 2vw, 25px);
+}
+
+.endgame-header p:not(.eyebrow) {
+  margin: 0;
+  color: #68768b;
+  font-size: 8px;
+}
+
+.endgame-header > span,
+.endgame-status-chip {
+  min-height: 29px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.012);
+  color: #8593a8;
+  font-size: 7px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.endgame-recognition-layout,
+.endgame-play-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, .92fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.endgame-preview-board,
+.endgame-board-column {
+  min-width: 0;
+}
+
+.endgame-recognition-panel,
+.endgame-side-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.endgame-objective,
+.endgame-technique-card,
+.endgame-move-strip,
+.endgame-source-note {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.01);
+}
+
+.endgame-objective {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.endgame-objective > div,
+.endgame-technique-card,
+.endgame-move-strip {
+  display: grid;
+  gap: 3px;
+}
+
+.endgame-objective span,
+.endgame-technique-card > span,
+.endgame-move-strip > span,
+.endgame-result-grid span {
+  color: #5f6d82;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.endgame-objective strong,
+.endgame-technique-card strong,
+.endgame-move-strip strong {
+  color: #afb9c9;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.endgame-recognition-panel h3 {
+  margin: 3px 0 0;
+  color: #bac4d2;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.endgame-recognition-options {
+  display: grid;
+  gap: 6px;
+}
+
+.endgame-recognition-options button {
+  padding: 10px;
+  min-height: 45px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.012);
+  color: #748298;
+  font: inherit;
+  font-size: 8px;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+
+.endgame-recognition-options button.active {
+  border-color: rgba(118,151,255,.17);
+  background: rgba(118,151,255,.04);
+  color: #afbae4;
+}
+
+.endgame-recognition-feedback {
+  padding: 9px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.endgame-recognition-feedback.correct {
+  border: 1px solid rgba(112,209,164,.12);
+  background: rgba(112,209,164,.02);
+  color: #82aa94;
+}
+
+.endgame-recognition-feedback.incorrect {
+  border: 1px solid rgba(236,161,101,.12);
+  background: rgba(236,161,101,.02);
+  color: #aa866c;
+}
+
+.endgame-technique-card p {
+  margin: 0;
+  color: #68768b;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.endgame-result-card {
+  padding: 11px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.045);
+  display: grid;
+  gap: 10px;
+}
+
+.endgame-result-card.success {
+  border-color: rgba(112,209,164,.13);
+  background: rgba(112,209,164,.018);
+}
+
+.endgame-result-card.repair {
+  border-color: rgba(236,161,101,.13);
+  background: rgba(236,161,101,.018);
+}
+
+.endgame-result-card > div:first-child {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.endgame-result-card > div:first-child > div {
+  display: grid;
+  gap: 2px;
+}
+
+.endgame-result-card > div:first-child span {
+  color: #718096;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.endgame-result-card > div:first-child strong {
+  color: #b9c3d2;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.endgame-result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.endgame-result-grid > div {
+  min-height: 52px;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+}
+
+.endgame-result-grid strong {
+  color: #bac4d2;
+  font-size: 9px;
+}
+
+.endgame-source-note {
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+  color: #5f6e82;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+@media (max-width: 820px) {
+  .endgame-recognition-layout,
+  .endgame-play-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .endgame-result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .endgame-header {
+    display: grid;
+  }
+
+  .endgame-result-grid {
+    grid-template-columns: 1fr;
+  }
+}

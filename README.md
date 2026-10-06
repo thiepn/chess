@@ -49,6 +49,7 @@ The default experience should answer one question: **what should I train now?**
 - P28 Lesson Engine 2.0 with eight-stage teaching scripts, misconception checks, escalating hints, guided practice, independent retrieval, distinct transfer positions for prioritized skills, lesson-mastery scoring separated from completion, and stronger content QA
 - P29 dedicated calculation trainer with candidate generation, best-reply prediction, multi-ply continuation, optional blind visualization, personal-game calculation positions, local Stockfish verification, depth/correctness scoring, and spaced retry scheduling
 - P30 Game Review 2.0 with self-analysis-first critical moments, answer-gated retry, decision-error classification, PGN move-time context, repertoire-deviation coaching, immediate related practice, and opt-in retained lessons that become spaced Library studies
+- P31 Endgame & Technique Trainer with theory recognition, full legal play-outs against local Stockfish, conversion/hold objectives, bounded survival thresholds, process-only hints, technique-specific scheduling, repeated-conversion and defensive-hold history, and delayed-retention evidence
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -1941,6 +1942,36 @@ Opening deviations are explained against the matched repertoire node: played mov
 
 Choosing **Retain this lesson** creates a spaced Library study from the exact game position. Existing study progress is preserved if the lesson is retained again. Review moments that are not retained remain review-only and do not inflate the study queue.
 
+## Endgame & Technique Trainer
+
+P31 turns finish-stage concepts into repeatable practical technique.
+
+Every dedicated endgame exercise has two independent stages:
+
+1. **Recognition** — identify the theoretical technique or defensive plan before moving.
+2. **Execution** — play the complete position against local Stockfish until the objective is achieved or the technique breaks.
+
+The first corpus covers queen mate, rook mate, opposition, key squares, pawn races, passed-pawn support, active rook endings, Lucena, Philidor, material conversion and a second practical rook-defense hold.
+
+Conversion positions must actually be won. Defensive positions can succeed by reaching a validated survival threshold or a real draw/win. This keeps Philidor and difficult rook-defense practice from becoming artificial one-move quizzes.
+
+Hints are process cues rather than engine moves. They remind the learner about principles such as opposition, the Lucena bridge, sixth-rank Philidor defense, rook activity or reducing counterplay, while still requiring the learner to execute the position.
+
+P31 persists per-position technique history:
+
+- recognition attempts / correct recognitions;
+- practical attempts / successes;
+- repeated conversion attempts / successes;
+- defensive attempts / holds;
+- latest execution quality and play-out length;
+- next spaced-review date.
+
+Failed execution returns after roughly 12 hours. Normal successful technique returns after roughly five days. Clean high-quality technique can move to roughly fourteen days.
+
+A repeated attempt at least one day after the prior attempt can contribute delayed-retention evidence. Immediate repeats improve execution evidence but do not pretend to prove long-term retention.
+
+The adaptive policy now routes established finish-stage skills into the dedicated play-out trainer instead of falling back to generic LessonRunner or the old P7 scenario route.
+
 ## Next phase
 
-P31 — Endgame & Technique Trainer.
+P32 — Personal Repertoire 2.0.

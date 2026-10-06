@@ -40,6 +40,49 @@ describe("mastery evidence timing", () => {
     expect(next.delayedRetention).toBeGreaterThan(20);
   });
 
+  it("credits delayed endgame technique to execution, transfer and retention", () => {
+    const previous = {
+      ...emptyMastery("endgames.lucena"),
+      recognition: 45,
+      execution: 35,
+      trainingTransfer: 25,
+      delayedRetention: 18,
+    };
+
+    const next = applyEvidence(previous, {
+      skillId: "endgames.lucena",
+      source: "endgameTechnique",
+      success: true,
+      quality: .92,
+      difficulty: 1,
+      retentionEvidence: true,
+      occurredAt: "2026-10-05T12:00:00Z",
+    });
+
+    expect(next.execution).toBeGreaterThan(previous.execution);
+    expect(next.trainingTransfer).toBeGreaterThan(previous.trainingTransfer);
+    expect(next.delayedRetention).toBeGreaterThan(previous.delayedRetention);
+  });
+
+  it("does not claim delayed retention for a fresh endgame attempt", () => {
+    const previous = {
+      ...emptyMastery("endgames.lucena"),
+      delayedRetention: 22,
+    };
+
+    const next = applyEvidence(previous, {
+      skillId: "endgames.lucena",
+      source: "endgameTechnique",
+      success: true,
+      quality: .9,
+      difficulty: 1,
+      retentionEvidence: false,
+      occurredAt: "2026-10-05T12:00:00Z",
+    });
+
+    expect(next.delayedRetention).toBe(22);
+  });
+
   it("credits dedicated calculation evidence to execution and transfer", () => {
     const previous = {
       ...emptyMastery("calculation.candidates"),

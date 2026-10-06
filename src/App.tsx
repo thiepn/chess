@@ -41,6 +41,7 @@ import { LearnView } from "./components/LearnView";
 import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { CalculationRunner } from "./components/CalculationRunner";
+import { EndgameTechniqueRunner } from "./components/EndgameTechniqueRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 import { OpeningsView } from "./components/OpeningsView";
@@ -52,6 +53,7 @@ import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
+import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
 import { analyzeImportedGame } from "./games/analyze";
 import { timeControlWeight } from "./games/practical";
 import {
@@ -233,6 +235,32 @@ export default function App() {
           activeSkill,
         )
       : undefined;
+  const activeEndgamePosition =
+    active &&
+    activeSkill &&
+    (active.activityType === "endgameDrill" ||
+      active.activityType === "conversionChallenge")
+      ? resolveEndgamePosition(
+          state,
+          active,
+          activeSkill,
+        )
+      : undefined;
+  const activeEndgameHistory =
+    activeEndgamePosition
+      ? state.endgameHistory?.[
+          activeEndgamePosition.id
+        ]
+      : undefined;
+  const activeEndgameDelayedRetention =
+    Boolean(
+      activeEndgameHistory?.lastAttemptAt &&
+      Date.now() -
+        new Date(
+          activeEndgameHistory.lastAttemptAt,
+        ).getTime() >=
+        86_400_000,
+    );
   const activeScenarioBase =
     active?.scenarioId ? scenarioById[active.scenarioId] : undefined;
   const activeScenario =
@@ -487,7 +515,10 @@ export default function App() {
     const source: LearningEvidence["source"] =
       active.activityType === "calculation"
         ? "calculation"
-        : active.source === "review"
+        : active.activityType === "endgameDrill" ||
+            active.activityType === "conversionChallenge"
+          ? "endgameTechnique"
+          : active.source === "review"
           ? "delayedReview"
           : active.activityType === "themedPuzzle"
           ? "themedPuzzle"
@@ -508,6 +539,8 @@ export default function App() {
       quality: outcome.quality,
       difficulty: Math.min(1, activeSkill.difficulty / 5),
       hintsUsed: outcome.hintsUsed,
+      retentionEvidence:
+        outcome.endgameEvidence?.delayedRetention,
       occurredAt,
     };
 
@@ -678,6 +711,84 @@ export default function App() {
         };
       }
 
+      const endgameHistory = {
+        ...(previous.endgameHistory ?? {}),
+      };
+      if (
+        outcome.endgamePositionId &&
+        outcome.endgameEvidence
+      ) {
+        const prior =
+          endgameHistory[
+            outcome.endgamePositionId
+          ];
+        const attempts =
+          (prior?.attempts ?? 0) + 1;
+        const successes =
+          (prior?.successes ?? 0) +
+          (outcome.success ? 1 : 0);
+        const conversionAttempt =
+          outcome.endgameEvidence
+            .objectiveType === "convert";
+        const defenseAttempt =
+          outcome.endgameEvidence
+            .objectiveType === "hold";
+        const intervalDays =
+          outcome.success &&
+          outcome.quality >= .88
+            ? 14
+            : outcome.success
+              ? 5
+              : .5;
+
+        endgameHistory[
+          outcome.endgamePositionId
+        ] = {
+          positionId:
+            outcome.endgamePositionId,
+          attempts,
+          successes,
+          recognitionAttempts:
+            (prior?.recognitionAttempts ?? 0) +
+            1,
+          recognitionCorrects:
+            (prior?.recognitionCorrects ?? 0) +
+            (outcome.endgameEvidence
+              .recognitionCorrect
+              ? 1
+              : 0),
+          conversionAttempts:
+            (prior?.conversionAttempts ?? 0) +
+            (conversionAttempt ? 1 : 0),
+          conversionSuccesses:
+            (prior?.conversionSuccesses ?? 0) +
+            (conversionAttempt &&
+            outcome.success
+              ? 1
+              : 0),
+          defenseAttempts:
+            (prior?.defenseAttempts ?? 0) +
+            (defenseAttempt ? 1 : 0),
+          defenseHolds:
+            (prior?.defenseHolds ?? 0) +
+            (defenseAttempt &&
+            outcome.success
+              ? 1
+              : 0),
+          lastAttemptAt: occurredAt,
+          lastSuccessAt: outcome.success
+            ? occurredAt
+            : prior?.lastSuccessAt,
+          lastQuality: outcome.quality,
+          lastPlies:
+            outcome.endgameEvidence.plies,
+          nextReviewAt: new Date(
+            new Date(occurredAt).getTime() +
+              intervalDays * 86_400_000,
+          ).toISOString(),
+        };
+      }
+
       const nextMastery = applyEvidence(previousMastery, evidence);
       const prescriptionHistory =
         active.prescriptionId
@@ -711,6 +822,7 @@ export default function App() {
         savedStudies,
         prescriptionHistory,
         calculationHistory,
+        endgameHistory,
         trainingLedger: appendTrainingLedger(
           previous.trainingLedger,
           active,
@@ -1295,9 +1407,13 @@ export default function App() {
     if (!skill) return;
 
     const activityType =
-      skill.trainingModes.includes("calculation")
-        ? "calculation"
-        : skill.trainingModes.includes("mixedPuzzle")
+      skill.trainingModes.includes("endgameDrill")
+        ? "endgameDrill"
+        : skill.trainingModes.includes("conversionChallenge")
+          ? "conversionChallenge"
+          : skill.trainingModes.includes("calculation")
+            ? "calculation"
+            : skill.trainingModes.includes("mixedPuzzle")
           ? "mixedPuzzle"
           : skill.trainingModes.includes("themedPuzzle")
             ? "themedPuzzle"
@@ -1315,8 +1431,11 @@ export default function App() {
       skillIds: [skillId],
       activityType,
       estimatedMinutes:
-        activityType === "mixedPuzzle"
-          ? 5
+        activityType === "endgameDrill" ||
+        activityType === "conversionChallenge"
+          ? 12
+          : activityType === "mixedPuzzle"
+            ? 5
           : activityType === "themedPuzzle"
             ? 4
             : activityType === "guidedDemo"
@@ -1331,9 +1450,12 @@ export default function App() {
         : "Focused practice",
       title: skill.title,
       subtitle:
-        activityType === "calculation"
-          ? "Candidate generation & line calculation"
-          : activityType === "mixedPuzzle" ||
+        activityType === "endgameDrill" ||
+        activityType === "conversionChallenge"
+          ? "Recognition + play-out against resistance"
+          : activityType === "calculation"
+            ? "Candidate generation & line calculation"
+            : activityType === "mixedPuzzle" ||
               activityType === "themedPuzzle"
             ? "Adaptive retrieval practice"
             : "Guided concept repair",
@@ -1343,6 +1465,14 @@ export default function App() {
               state,
               skill.id,
             ).id
+          : undefined,
+      endgamePositionId:
+        activityType === "endgameDrill" ||
+        activityType === "conversionChallenge"
+          ? endgamePositionFor(
+              state,
+              skill.id,
+            )?.id
           : undefined,
       prescriptionId,
       prescriptionActionId,
@@ -2129,7 +2259,10 @@ export default function App() {
                 ? "training-sheet adaptive-game-sheet"
                 : active.activityType === "calculation"
                   ? "training-sheet calculation-sheet"
-                  : "training-sheet"
+                  : active.activityType === "endgameDrill" ||
+                      active.activityType === "conversionChallenge"
+                    ? "training-sheet endgame-technique-sheet"
+                    : "training-sheet"
             }
           >
             <div className="training-progress">
@@ -2223,6 +2356,16 @@ export default function App() {
                 activity={active}
                 skill={activeSkill}
                 position={activeCalculationPosition}
+                onComplete={completeActivity}
+              />
+            ) : (active.activityType === "endgameDrill" ||
+                  active.activityType === "conversionChallenge") &&
+                activeEndgamePosition ? (
+              <EndgameTechniqueRunner
+                activity={active}
+                skill={activeSkill}
+                position={activeEndgamePosition}
+                delayedRetention={activeEndgameDelayedRetention}
                 onComplete={completeActivity}
               />
             ) : active.activityType === "themedPuzzle" ||

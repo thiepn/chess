@@ -14,6 +14,7 @@ import type { LichessConnection } from "../lichess/types";
 import type { PrescriptionTrackingRecord } from "../prescriptions/types";
 import type { LessonMasterySummary } from "../learning/types";
 import type { CalculationAttemptSummary, CalculationEvidence } from "../calculation/types";
+import type { EndgameAttemptSummary, EndgameEvidence } from "../endgames/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -178,6 +179,7 @@ export type EvidenceSource =
   | "themedPuzzle"
   | "mixedPuzzle"
   | "calculation"
+  | "endgameTechnique"
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
@@ -198,6 +200,7 @@ export interface LearningEvidence {
   gameImpact?: number;
   opponentRating?: number;
   timeControlWeight?: number;
+  retentionEvidence?: boolean;
   occurredAt: string;
 }
 
@@ -242,6 +245,7 @@ export interface TrainingCandidate {
   prescriptionId?: string;
   prescriptionActionId?: string;
   calculationPositionId?: string;
+  endgamePositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;
 }
@@ -264,6 +268,8 @@ export interface TrainingOutcome {
   lessonEvidence?: LessonMasterySummary;
   calculationPositionId?: string;
   calculationEvidence?: CalculationEvidence;
+  endgamePositionId?: string;
+  endgameEvidence?: EndgameEvidence;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";
@@ -299,6 +305,7 @@ export interface UserState {
   trainingLedger?: TrainingLedgerEntry[];
   competitionRetrospectives?: CompetitionRetrospectiveNote[];
   calculationHistory?: Record<string, CalculationAttemptSummary>;
+  endgameHistory?: Record<string, EndgameAttemptSummary>;
   gameReviewReflections?: Record<string, GameReviewReflection>;
   focus?: {
     domain: DomainId;

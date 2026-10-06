@@ -58,7 +58,7 @@ describe("adaptive training policy", () => {
     expect(policy.mode).toBe("themedPuzzle");
   });
 
-  it("uses a real scenario when transfer lags", () => {
+  it("routes established endgame skills into the dedicated technique trainer", () => {
     const skillId = "endgames.opposition";
     const state = stateFor(skillId, {
       attempts: 14,
@@ -80,7 +80,9 @@ describe("adaptive training policy", () => {
       "curriculum",
       now,
     );
-    expect(policy.mode).toBe("engineGame");
+    expect(policy.mode).toBe("endgameDrill");
+    expect(policy.reason).toContain("play");
+
   });
 
   it("routes established calculation skills into the dedicated trainer", () => {

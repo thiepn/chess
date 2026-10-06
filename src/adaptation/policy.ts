@@ -21,6 +21,7 @@ const evidenceModeMap: Partial<Record<string, TrainingMode>> = {
   themedPuzzle: "themedPuzzle",
   mixedPuzzle: "mixedPuzzle",
   calculation: "calculation",
+  endgameTechnique: "endgameDrill",
   delayedReview: "microReview",
   trainingPosition: "engineGame",
   engineGame: "engineGame",
@@ -274,6 +275,32 @@ function chooseMode(
   }
 
   if (
+    (skill.domain === "endgames" ||
+      (skill.domain === "pawns" &&
+        skill.trainingModes.includes("endgameDrill"))) &&
+    skill.trainingModes.includes("endgameDrill") &&
+    (mastery?.understanding ?? 0) >= 42
+  ) {
+    return {
+      mode: "endgameDrill" as TrainingMode,
+      reason:
+        "The endgame idea is established; prove the technique by playing the position out against resistance.",
+    };
+  }
+
+  if (
+    skill.domain === "conversion" &&
+    skill.trainingModes.includes("conversionChallenge") &&
+    (mastery?.understanding ?? 0) >= 42
+  ) {
+    return {
+      mode: "conversionChallenge" as TrainingMode,
+      reason:
+        "The conversion idea is established; finish a winning position against resistance.",
+    };
+  }
+
+  if (
     skill.domain === "calculation" &&
     skill.trainingModes.includes("calculation") &&
     (mastery?.understanding ?? 0) >= 45
@@ -320,6 +347,8 @@ function chooseMode(
     "themedPuzzle",
     "mixedPuzzle",
     "calculation",
+    "endgameDrill",
+    "conversionChallenge",
     "guidedDemo",
     "conceptLesson",
   ]);
