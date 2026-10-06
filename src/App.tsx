@@ -356,20 +356,13 @@ export default function App() {
     });
   }, [loaded, progressIntelligence.prescriptions]);
 
-  const topWeakness = useMemo(() => {
-    const weakness = [...state.weaknesses]
-      .sort((a, b) => b.gameImpact * b.frequency * b.recency - a.gameImpact * a.frequency * a.recency)
-      .find((item) => skillById[item.skillId]);
-    return weakness
-      ? { weakness, skill: skillById[weakness.skillId] }
-      : null;
-  }, [state.weaknesses]);
-
   const firstActivity = session.activities[0];
   const homeTrainingReason = !firstActivity
     ? "No adaptive activity is due right now. Open the course to choose the next concept."
     : firstActivity.source === "prescription"
-      ? "A real-game repair plan is the highest-confidence next step."
+      ? progressIntelligence.coachBrief.decisions[0]?.title
+        ? `${progressIntelligence.coachBrief.decisions[0].title} is the most useful repair before adding more material.`
+        : "A repeated game problem is worth repairing before adding more material."
       : firstActivity.source === "weakness"
         ? "Your recent games keep pointing to this weakness."
         : firstActivity.source === "review"
@@ -380,23 +373,7 @@ export default function App() {
               ? "This is the next useful concept in your current course stage."
               : firstActivity.source === "library"
                 ? "A saved position is due for retrieval."
-                : "The coach selected the highest-value work from your current evidence.";
-
-  const topDomains = useMemo(() => {
-    const grouped = new Map<string, number[]>();
-    Object.values(state.mastery).forEach((item) => {
-      const domain = skillById[item.skillId]?.domain;
-      if (!domain) return;
-      grouped.set(domain, [...(grouped.get(domain) ?? []), item.effectiveMastery]);
-    });
-    return [...grouped.entries()]
-      .map(([domain, values]) => ({
-        domain,
-        value: Math.round(values.reduce((a, b) => a + b, 0) / values.length),
-      }))
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 4);
-  }, [state.mastery]);
+                : "This session focuses on the work most likely to help your next games.";
 
   async function linkLichess(username: string) {
     setLichessSyncError(null);
@@ -2281,97 +2258,36 @@ export default function App() {
               </button>
             </section>
 
-            <button
-              className="home-progress-card"
-              type="button"
-              onClick={() => setNav("progress")}
-            >
-              <div className="home-progress-icon">
-                <BarChart3 size={21} />
-              </div>
-              <div>
-                <p className="eyebrow">PROGRESS</p>
-                <strong>
-                  Practical {progressIntelligence.practicalStrength.rating} · {progressIntelligence.mastery}% mastery
-                </strong>
+            <section className={`home-coach-brief ${progressIntelligence.coachBrief.evidenceState}`}>
+              <div className="home-coach-brief-head">
+                <div>
+                  <p className="eyebrow">COACH</p>
+                  <h3>{progressIntelligence.coachBrief.headline}</h3>
+                </div>
                 <span>
-                  {progressIntelligence.realGameDiagnostics.diagnostics[0]
-                    ? progressIntelligence.realGameDiagnostics.diagnostics[0].headline
-                    : progressIntelligence.practicalStrength.humanGames
-                      ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}%.`
-                      : "Analyze human games to establish practical transfer."}
+                  {progressIntelligence.coachBrief.confidenceLabel}
                 </span>
               </div>
-              <ChevronRight size={18} />
-            </button>
 
-            {topPrescription && (
-              <section className="home-prescription-card">
-                <div className="home-prescription-top">
-                  <div>
-                    <p className="eyebrow">COACH NOTE</p>
-                    <h3>{topPrescription.title}</h3>
-                  </div>
-                  <span>{topPrescription.confidence}% confidence</span>
-                </div>
-                <p>{topPrescription.rationale}</p>
-                <button
-                  className="secondary"
-                  type="button"
-                  onClick={() => setNav("progress")}
-                >
-                  See repair plan <ChevronRight size={16} />
-                </button>
-              </section>
-            )}
+              <p>{progressIntelligence.coachBrief.summary}</p>
 
-            <section className="dashboard-grid">
-              <article className="panel">
-                <div className="panel-title">
-                  <div>
-                    <p className="eyebrow">PLAYER MODEL</p>
-                    <h3>Your chess</h3>
-                  </div>
-                  <BrainCircuit size={20} />
-                </div>
-                <div className="skill-bars">
-                  {topDomains.map(({ domain, value }) => (
-                    <div className="skill-bar" key={domain}>
-                      <div>
-                        <span>{domainLabels[domain as keyof typeof domainLabels]}</span>
-                        <strong>{value}</strong>
-                      </div>
-                      <div className="track"><i style={{ width: `${value}%` }} /></div>
-                    </div>
-                  ))}
-                </div>
-              </article>
+              <div className="home-coach-brief-evidence">
+                <span>
+                  {progressIntelligence.coachBrief.decisions[0]?.evidenceLabel ??
+                    `${progressIntelligence.coachBrief.humanGames} human games analyzed`}
+                </span>
+                <span className={`coach-behavior-state ${progressIntelligence.coachBrief.behaviorCheck.state}`}>
+                  {progressIntelligence.coachBrief.behaviorCheck.label}
+                </span>
+              </div>
 
-              <article className="panel weakness-panel">
-                <div className="panel-title">
-                  <div>
-                    <p className="eyebrow">CURRENT PRIORITY</p>
-                    <h3>{topWeakness?.skill.title ?? "Build your player model"}</h3>
-                  </div>
-                  <Target size={20} />
-                </div>
-                <p>
-                  {topWeakness
-                    ? "This skill currently carries the highest combined weight from frequency, recency and game impact."
-                    : "Analyze games and complete training so the app can identify the most valuable next weakness."}
-                </p>
-                <div className="metric-row">
-                  <span>Current mastery</span>
-                  <strong>
-                    {topWeakness
-                      ? Math.round(state.mastery[topWeakness.skill.id]?.effectiveMastery ?? 0)
-                      : 0}%
-                  </strong>
-                </div>
-                <div className="priority-tag">
-                  {topWeakness ? `${topWeakness.weakness.severity} · game evidence` : "Awaiting evidence"}
-                </div>
-              </article>
+              <button
+                className="secondary"
+                type="button"
+                onClick={() => setNav("progress")}
+              >
+                See coach reasoning <ChevronRight size={16} />
+              </button>
             </section>
           </>
         ) : nav === "learn" ? (
@@ -2615,7 +2531,15 @@ export default function App() {
                 <span>Difficulty {activeSkill.difficulty}/5</span>
                 {active.adaptivePolicy && (
                   <span className="adaptive-challenge-chip">
-                    {active.adaptivePolicy.challenge}
+                    {active.adaptivePolicy.challenge === "recovery"
+                      ? "Extra support"
+                      : active.adaptivePolicy.challenge === "supported"
+                        ? "Supported"
+                        : active.adaptivePolicy.challenge === "stretch"
+                          ? "Harder"
+                          : active.adaptivePolicy.challenge === "maintenance"
+                            ? "Keep sharp"
+                            : "Normal"}
                   </span>
                 )}
               </div>
@@ -2627,13 +2551,15 @@ export default function App() {
                 <div>
                   <strong>{active.adaptivePolicy.reason}</strong>
                   <span>
-                    Target success {active.adaptivePolicy.targetSuccessLow}–{active.adaptivePolicy.targetSuccessHigh}%
-                    {active.adaptivePolicy.targetPuzzleRating
-                      ? ` · puzzle target ~${active.adaptivePolicy.targetPuzzleRating}`
-                      : ""}
-                    {active.adaptivePolicy.policyConfidence < .45
-                      ? " · low-confidence policy"
-                      : ""}
+                    {active.adaptivePolicy.challenge === "recovery"
+                      ? "Extra support today"
+                      : active.adaptivePolicy.challenge === "supported"
+                        ? "Supported practice"
+                        : active.adaptivePolicy.challenge === "stretch"
+                          ? "Harder test"
+                          : active.adaptivePolicy.challenge === "maintenance"
+                            ? "Keep it sharp"
+                            : "Normal challenge"}
                   </span>
                 </div>
               </div>

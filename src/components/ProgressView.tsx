@@ -259,7 +259,6 @@ export function ProgressView({
   onUpdateCompetitionRetrospective,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
-  const strongestIntervention = intelligence.interventions[0];
 
   return (
     <section className="progress-view">
@@ -269,12 +268,11 @@ export function ProgressView({
 
       <header className="section-hero progress-hero">
         <div>
-          <p className="eyebrow">PROGRESS INTELLIGENCE</p>
+          <p className="eyebrow">YOUR PROGRESS</p>
           <h1>Are you actually getting better?</h1>
           <p>
             This view separates short-term success from retained skill,
-            transfer into play, assessment calibration and recurring game
-            weaknesses.
+            what is improving, what still needs work, and whether the coach’s recommendations are helping in real games.
           </p>
         </div>
         <div className="section-hero-icon" aria-hidden="true">
@@ -732,279 +730,123 @@ export function ProgressView({
         </p>
       </section>
 
-      <section className="progress-panel prescription-panel">
+      <section className={`progress-panel coach-brief-panel ${intelligence.coachBrief.evidenceState}`}>
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">TRAINING PRESCRIPTIONS</p>
-            <h2>Turn the diagnosis into the next repair plan.</h2>
-          </div>
-          <ListChecks size={20} />
-        </div>
-
-        {intelligence.prescriptions.length ? (
-          <div className="prescription-list">
-            {intelligence.prescriptions.map((prescription, index) => (
-              <article
-                className={
-                  index === 0
-                    ? "prescription-card primary"
-                    : "prescription-card"
-                }
-                key={prescription.id}
-              >
-                <div className="prescription-card-head">
-                  <div>
-                    <span>
-                      {index === 0 ? "TOP PLAN" : prescription.kind.replace("-", " ")}
-                    </span>
-                    <strong>{prescription.title}</strong>
-                  </div>
-                  <small>
-                    {prescription.evidenceGames} games · {prescription.confidence}% confidence
-                  </small>
-                </div>
-
-                <p>{prescription.rationale}</p>
-
-                <div className="prescription-game-plan">
-                  <span>Next-game plan</span>
-                  <ol>
-                    {prescription.gamePlan.map((cue) => (
-                      <li key={cue}>{cue}</li>
-                    ))}
-                  </ol>
-                </div>
-
-                <div className="prescription-actions">
-                  {prescription.actions.map((action) => (
-                    <button
-                      type="button"
-                      key={action.id}
-                      onClick={() =>
-                        onRunPrescriptionAction?.(
-                          prescription.id,
-                          action,
-                        )
-                      }
-                      disabled={!onRunPrescriptionAction}
-                    >
-                      {action.label}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="prescription-outcome-strip">
-                  {prescription.outcome?.status === "collecting" ? (
-                    <span>
-                      Post-treatment evidence: {prescription.outcome.postGames}/3 matching human games
-                    </span>
-                  ) : prescription.outcome?.status === "unchanged" ? (
-                    <span>
-                      No clear effect yet · {prescription.outcome.delta !== undefined && prescription.outcome.delta >= 0 ? "+" : ""}{prescription.outcome.delta ?? 0} vs baseline
-                    </span>
-                  ) : prescription.outcome?.status === "worsened" ? (
-                    <span className="negative">
-                      Escalated · {prescription.outcome.delta ?? 0} vs baseline
-                    </span>
-                  ) : (
-                    <span>
-                      {prescription.composerEligible
-                        ? "High-confidence: this plan may contribute one activity to the next generated session."
-                        : "Suggestion only until more human-game evidence accumulates."}
-                    </span>
-                  )}
-                </div>
-                {prescription.policy && (
-                  <div className={`prescription-policy-strip ${prescription.policy.stance}`}>
-                    <BrainCircuit size={14} />
-                    <span>
-                      Learned policy {prescription.policy.multiplier >= 1 ? "+" : ""}
-                      {Math.round((prescription.policy.multiplier - 1) * 100)}% · {prescription.policy.reason}
-                    </span>
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="cohort-insufficient-note">
-            <ListChecks size={17} />
-            <span>
-              The coach will create a repair plan once real-game diagnostics find a repeatable problem with enough evidence.
-            </span>
-          </div>
-        )}
-      </section>
-
-      <section className="progress-panel coach-effectiveness-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">COACH EFFECTIVENESS</p>
-            <h2>Did the prescription survive the next human games?</h2>
-          </div>
-          <FlaskConical size={20} />
-        </div>
-
-        <div className="coach-effectiveness-grid">
-          <div><span>Issued</span><strong>{intelligence.coachEffectiveness.issued}</strong></div>
-          <div><span>Completed</span><strong>{intelligence.coachEffectiveness.completed}</strong></div>
-          <div><span>Evaluated</span><strong>{intelligence.coachEffectiveness.evaluated}</strong></div>
-          <div>
-            <span>Validated</span>
-            <strong>{intelligence.coachEffectiveness.evaluated ? `${intelligence.coachEffectiveness.validationRate}%` : "—"}</strong>
-          </div>
-          <div>
-            <span>Average effect</span>
-            <strong>{intelligence.coachEffectiveness.evaluated ? `${intelligence.coachEffectiveness.averageDelta >= 0 ? "+" : ""}${intelligence.coachEffectiveness.averageDelta}` : "—"}</strong>
-          </div>
-        </div>
-
-        {intelligence.coachEffectiveness.history.length ? (
-          <div className="coach-history">
-            {intelligence.coachEffectiveness.history.slice(0, 8).map((item) => (
-              <article key={item.recordId} className={`coach-history-row ${item.status}`}>
-                <div className="coach-history-icon">
-                  {item.status === "improved" ? (
-                    <CheckCircle2 size={16} />
-                  ) : item.status === "worsened" ? (
-                    <TrendingDown size={16} />
-                  ) : item.status === "collecting" ? (
-                    <Clock3 size={16} />
-                  ) : (
-                    <Activity size={16} />
-                  )}
-                </div>
-                <div>
-                  <strong>{item.title}</strong>
-                  <span>
-                    {item.targetLabel} · baseline {item.baselineScore}
-                    {item.postScore !== undefined ? ` → ${item.postScore}` : ""}
-                    {item.delta !== undefined ? ` · ${item.delta >= 0 ? "+" : ""}${item.delta}` : ""}
-                  </span>
-                  <small>
-                    {item.status.replace("-", " ")} · {item.postGames} post-game sample{item.postGames === 1 ? "" : "s"}
-                    {item.completions ? ` · ${item.completions} completed intervention${item.completions === 1 ? "" : "s"}` : " · not completed yet"}
-                  </small>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="cohort-insufficient-note">
-            <FlaskConical size={17} />
-            <span>Complete a repair plan, then analyze later matching human games. The coach needs three post-treatment games before claiming an effect.</span>
-          </div>
-        )}
-
-        {intelligence.coachEffectiveness.byKind.length > 0 && (
-          <div className="coach-kind-grid">
-            {intelligence.coachEffectiveness.byKind.map((item) => (
-              <div key={item.kind}>
-                <span>{item.kind.replace("-", " ")}</span>
-                <strong>{item.improved}/{item.evaluated} improved</strong>
-                <small>avg {item.averageDelta >= 0 ? "+" : ""}{item.averageDelta}</small>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-      <section className="progress-panel coach-policy-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">COACH POLICY LEARNING</p>
-            <h2>Which interventions should the coach prefer next?</h2>
+            <p className="eyebrow">COACH</p>
+            <h2>{intelligence.coachBrief.headline}</h2>
           </div>
           <BrainCircuit size={20} />
         </div>
 
-        <div className="coach-policy-grid">
-          <div>
-            <span>Policy mode</span>
-            <strong>{intelligence.coachPolicy.mode.replace("-", " ")}</strong>
+        <div className="coach-brief-status">
+          <span>{intelligence.coachBrief.confidenceLabel}</span>
+          <strong>
+            {intelligence.coachBrief.evidenceState === "cold-start"
+              ? `${intelligence.coachBrief.humanGames}/3 human games`
+              : intelligence.coachBrief.confidence
+                ? `${intelligence.coachBrief.confidence}% confidence`
+                : "Evidence building"}
+          </strong>
+        </div>
+
+        <p className="coach-brief-summary">
+          {intelligence.coachBrief.summary}
+        </p>
+
+        <div className="coach-decision-list">
+          {intelligence.coachBrief.decisions.map((decision, index) => (
+            <article
+              className={index === 0 ? "coach-decision primary" : "coach-decision"}
+              key={decision.id}
+            >
+              <div className="coach-decision-head">
+                <div>
+                  <span>{index === 0 ? "WORK ON THIS FIRST" : "NEXT"}</span>
+                  <strong>{decision.title}</strong>
+                </div>
+                <small>{decision.evidenceLabel}</small>
+              </div>
+
+              <p>{decision.why}</p>
+
+              {decision.nextGameCue && (
+                <div className="coach-next-game-cue">
+                  <Target size={15} />
+                  <div>
+                    <span>Next-game cue</span>
+                    <strong>{decision.nextGameCue}</strong>
+                  </div>
+                </div>
+              )}
+
+              {decision.action && decision.prescriptionId && (
+                <button
+                  type="button"
+                  className="secondary"
+                  disabled={!onRunPrescriptionAction}
+                  onClick={() =>
+                    onRunPrescriptionAction?.(
+                      decision.prescriptionId!,
+                      decision.action!,
+                    )
+                  }
+                >
+                  {decision.action.label}
+                  <ChevronRight size={15} />
+                </button>
+              )}
+            </article>
+          ))}
+        </div>
+
+        <div className={`coach-behavior-check ${intelligence.coachBrief.behaviorCheck.state}`}>
+          <div className="coach-behavior-icon">
+            {intelligence.coachBrief.behaviorCheck.state === "helping" ? (
+              <CheckCircle2 size={18} />
+            ) : intelligence.coachBrief.behaviorCheck.state === "worsening" ? (
+              <TrendingDown size={18} />
+            ) : intelligence.coachBrief.behaviorCheck.state === "waiting" ? (
+              <Clock3 size={18} />
+            ) : (
+              <Activity size={18} />
+            )}
           </div>
           <div>
-            <span>Validated episodes</span>
-            <strong>{intelligence.coachPolicy.evaluatedEpisodes}</strong>
-          </div>
-          <div>
-            <span>Learning confidence</span>
-            <strong>{intelligence.coachPolicy.learningConfidence}%</strong>
-          </div>
-          <div>
-            <span>Preferred plan</span>
-            <strong>
-              {intelligence.coachPolicy.preferredKind
-                ? intelligence.coachPolicy.preferredKind.replace("-", " ")
-                : "Exploring"}
-            </strong>
-          </div>
-          <div>
-            <span>Preferred action</span>
-            <strong>
-              {intelligence.coachPolicy.preferredAction
-                ? intelligence.coachPolicy.preferredAction.replace("-", " ")
-                : "Exploring"}
-            </strong>
+            <span>DID THE TRAINING HELP IN REAL GAMES?</span>
+            <strong>{intelligence.coachBrief.behaviorCheck.label}</strong>
+            <p>{intelligence.coachBrief.behaviorCheck.detail}</p>
+            {intelligence.coachBrief.behaviorCheck.target && (
+              <small>
+                Watching: {intelligence.coachBrief.behaviorCheck.target}
+                {intelligence.coachBrief.behaviorCheck.postGames
+                  ? ` · ${intelligence.coachBrief.behaviorCheck.postGames} later matching game${intelligence.coachBrief.behaviorCheck.postGames === 1 ? "" : "s"}`
+                  : ""}
+              </small>
+            )}
           </div>
         </div>
 
-        {(intelligence.coachPolicy.kindSignals.length > 0 ||
-          intelligence.coachPolicy.actionSignals.length > 0) ? (
-          <div className="coach-policy-signals">
-            {intelligence.coachPolicy.kindSignals.length > 0 && (
-              <div>
-                <span className="coach-policy-label">Plan families</span>
-                <div className="coach-policy-signal-grid">
-                  {intelligence.coachPolicy.kindSignals.map((item) => (
-                    <article key={item.key} className={`coach-policy-signal ${item.stance}`}>
-                      <strong>{item.label}</strong>
-                      <span>
-                        {item.multiplier >= 1 ? "+" : ""}
-                        {Math.round((item.multiplier - 1) * 100)}% policy weight
-                      </span>
-                      <small>
-                        {item.evaluated} validated · {item.improvedRate}% improved · avg {item.averageDelta >= 0 ? "+" : ""}{item.averageDelta}
-                      </small>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {intelligence.coachPolicy.actionSignals.length > 0 && (
-              <div>
-                <span className="coach-policy-label">Action families</span>
-                <div className="coach-policy-signal-grid">
-                  {intelligence.coachPolicy.actionSignals.map((item) => (
-                    <article key={item.key} className={`coach-policy-signal ${item.stance}`}>
-                      <strong>{item.label}</strong>
-                      <span>
-                        {item.multiplier >= 1 ? "+" : ""}
-                        {Math.round((item.multiplier - 1) * 100)}% policy weight
-                      </span>
-                      <small>
-                        {item.evaluated} attributed · {item.confidence}% confidence
-                      </small>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="cohort-insufficient-note">
-            <BrainCircuit size={17} />
-            <span>
-              The coach stays neutral until real before→after outcomes are validated. It never treats clicks or training completion alone as proof that an intervention works.
-            </span>
-          </div>
-        )}
-
-        <p className="coach-policy-note">
-          Policy adjustments are deterministic, recency-weighted and deliberately small. One result cannot create a preference; weak or unseen action families remain available so the coach can keep learning instead of locking into an early guess.
-        </p>
+        <details className="coach-method-details">
+          <summary>How the coach decides</summary>
+          <p>
+            The coach combines your course progress, spaced recall, mistakes,
+            opening deviations and analyzed human games. It does not treat
+            training completion as proof of improvement. Recommendations are
+            judged again only when later matching human games exist.
+          </p>
+        </details>
       </section>
 
+      <details className="progress-advanced-evidence">
+        <summary>
+          <div>
+            <span>Advanced planning & evidence</span>
+            <small>Weekly planning, cohort diagnostics, competition cycles and event analysis</small>
+          </div>
+          <ChevronRight size={16} />
+        </summary>
+        <div className="progress-advanced-evidence-body">
       <section className="progress-panel training-horizon-panel">
         <div className="progress-section-heading">
           <div>
@@ -1709,6 +1551,10 @@ export function ProgressView({
         </div>
       </section>
 
+
+        </div>
+      </details>
+
       <section className="progress-panel progress-trajectory">
         <div className="progress-section-heading">
           <div>
@@ -1836,79 +1682,6 @@ export function ProgressView({
           ))}
         </div>
       </section>
-
-      <div className="progress-two-column">
-        <section className="progress-panel">
-          <div className="progress-section-heading">
-            <div>
-              <p className="eyebrow">WHAT WORKS FOR YOU</p>
-              <h2>Intervention effectiveness.</h2>
-            </div>
-            <Sparkles size={19} />
-          </div>
-
-          {strongestIntervention && (
-            <div className="best-intervention">
-              <span>Best current signal</span>
-              <strong>{interventionLabel(strongestIntervention.intervention)}</strong>
-              <small>
-                {strongestIntervention.successRate}% success across {strongestIntervention.attempts} recent attempts
-              </small>
-            </div>
-          )}
-
-          <div className="intervention-table">
-            {intelligence.interventions.slice(0, 6).map((item) => (
-              <div key={item.intervention}>
-                <span>{interventionLabel(item.intervention)}</span>
-                <strong>{item.successRate}%</strong>
-                <small>
-                  ΔM {item.averageMasteryGain >= 0 ? "+" : ""}
-                  {item.averageMasteryGain.toFixed(1)}
-                </small>
-                <small>{item.attempts} samples</small>
-              </div>
-            ))}
-            {!intelligence.interventions.length && (
-              <div className="progress-empty">
-                <span>Complete more training to compare interventions.</span>
-              </div>
-            )}
-          </div>
-        </section>
-
-        <section className="progress-panel">
-          <div className="progress-section-heading">
-            <div>
-              <p className="eyebrow">GAME WEAKNESSES</p>
-              <h2>Recurring versus repaired.</h2>
-            </div>
-            <RefreshCcw size={19} />
-          </div>
-
-          <div className="weakness-resolution-grid">
-            <div>
-              <span>Unresolved mistakes</span>
-              <strong>{intelligence.unresolvedMistakeCount}</strong>
-            </div>
-            <div>
-              <span>Repaired mistakes</span>
-              <strong>{intelligence.resolvedMistakeCount}</strong>
-            </div>
-          </div>
-
-          <div className="recurring-weakness-list">
-            <span>Recurring signals</span>
-            {intelligence.recurringWeaknesses.length ? (
-              intelligence.recurringWeaknesses.map((skillId) => (
-                <strong key={skillId}>{skillTitle(skillId)}</strong>
-              ))
-            ) : (
-              <small>No recurring game weakness has enough evidence yet.</small>
-            )}
-          </div>
-        </section>
-      </div>
 
       <section className="progress-history-note">
         <BarChart3 size={18} />

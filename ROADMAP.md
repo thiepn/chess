@@ -318,6 +318,8 @@ Start with a compact, high-quality collection rather than hundreds of unannotate
 
 ### P34 — Adaptive Coach Simplification
 
+**Status:** implemented.
+
 **Purpose:** use the existing intelligence better instead of adding more intelligence.
 
 Deliver:

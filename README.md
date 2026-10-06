@@ -52,6 +52,7 @@ The default experience should answer one question: **what should I train now?**
 - P31 Endgame & Technique Trainer with theory recognition, full legal play-outs against local Stockfish, conversion/hold objectives, bounded survival thresholds, process-only hints, technique-specific scheduling, repeated-conversion and defensive-hold history, and delayed-retention evidence
 - P32 Personal Repertoire 2.0 with deeper compact branches, inherited structure/tactical context, game-grounded branch health, move-plus-purpose recall, optional full-line rehearsal, exact deviation repair, and dedicated opening evidence
 - P33 Model Games & Strategic Pattern Learning with a compact annotated complete-game library, active plan questions, Guess-the-Move checkpoints, repertoire-linked strategic patterns, evidence-aware scoring, persistent progress, and one-click promotion of model positions into spaced Library training
+- P34 Adaptive Coach Simplification with one consolidated coach brief, confidence-aware cold-start states, plain-language recommendations, at-most-three actionable decisions, and explicit later-human-game validation of whether training actually transferred
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2051,6 +2052,25 @@ Model-game evidence has its own bounded mastery weight. Independent plan recogni
 
 Progress persists per checkpoint and per game. Repertoire-linked games explicitly connect back to the learner's compact White 1.e4, Black Caro-Kann and Black QGD systems without expanding those repertoires into giant theory trees.
 
+## Adaptive Coach Simplification
+
+P34 keeps the existing P13–P25 intelligence but removes most of its model terminology from the learner-facing experience.
+
+The default coach surface now answers four questions:
+
+1. **What should I work on first?**
+2. **Why does the coach think that?**
+3. **What should I do in the next game?**
+4. **Did the training actually help in later human games?**
+
+The coach can explicitly say **“I don’t know your practical weaknesses yet”** during cold start. It does not turn one game, one training success or a weak sample into a confident diagnosis.
+
+Home no longer repeats separate prescription, player-model and weakness cards. Progress no longer exposes independent prescription, effectiveness and policy-learning dashboards. Those systems still operate internally, but their outputs are consolidated into one brief with no more than three actionable decisions.
+
+Recommendation outcome tracking remains strict: completing training is not proof that the recommendation worked. The coach waits for later matching human games and reports **helping**, **waiting for evidence**, **no clear change**, or **not transferred** in plain language.
+
+Adaptive session explanations also stop exposing target-success percentages, policy confidence and other implementation jargon. The learner sees the chess reason for the activity and the practical challenge level instead.
+
 ## Next phase
 
-P34 — Adaptive Coach Simplification.
+P35 — Advanced Curriculum Expansion.

@@ -9,6 +9,7 @@ import { buildRealGameDiagnostics } from "./cohorts";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildCoachEffectiveness } from "../prescriptions/outcomes";
 import { buildCoachPolicyInsight } from "../prescriptions/policy";
+import { buildCoachBrief } from "../coach/brief";
 import { buildTrainingHorizon, trainingPlanForState } from "../planning/periodization";
 import { buildTrainingPlanForecast } from "../planning/forecast";
 import type { CurriculumStageId, UserState } from "../domain/types";
@@ -559,6 +560,27 @@ export function buildProgressIntelligence(
   const mastery = currentMastery(state);
   const skillTrends = skillTrendInsights(state, now);
   const realGameDiagnostics = buildRealGameDiagnostics(state);
+  const practicalStrength = practicalStrengthInsight(state);
+  const prescriptions = buildTrainingPrescriptions(
+    state,
+    realGameDiagnostics,
+  );
+  const coachEffectiveness = buildCoachEffectiveness(
+    state,
+    now,
+  );
+  const coachPolicy = buildCoachPolicyInsight(
+    state,
+    now,
+  );
+  const coachBrief = buildCoachBrief({
+    humanGames: practicalStrength.humanGames,
+    evidenceCount: evidenceEvents.length,
+    diagnostics: realGameDiagnostics,
+    prescriptions,
+    effectiveness: coachEffectiveness,
+    policy: coachPolicy,
+  });
 
   const activeDays = new Set(
     evidenceEvents
@@ -599,14 +621,12 @@ export function buildProgressIntelligence(
     transfer: Math.round(transferNow(state)),
     humanTransfer: Math.round(humanTransferNow(state)),
     aiTransfer: Math.round(aiTransferNow(state)),
-    practicalStrength: practicalStrengthInsight(state),
+    practicalStrength,
     realGameDiagnostics,
-    prescriptions: buildTrainingPrescriptions(
-      state,
-      realGameDiagnostics,
-    ),
-    coachEffectiveness: buildCoachEffectiveness(state, now),
-    coachPolicy: buildCoachPolicyInsight(state, now),
+    prescriptions,
+    coachEffectiveness,
+    coachPolicy,
+    coachBrief,
     trainingHorizon: buildTrainingHorizon(state, now),
     trainingPlanForecast: buildTrainingPlanForecast(
       state,
