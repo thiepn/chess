@@ -465,7 +465,9 @@ export function buildCoachEffectiveness(
   return {
     issued: records.length,
     started: records.filter(
-      (record) => record.starts > 0,
+      (record) =>
+        record.starts > 0 ||
+        record.completions > 0,
     ).length,
     completed: records.filter(
       (record) => record.completions > 0,
