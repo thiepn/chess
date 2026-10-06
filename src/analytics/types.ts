@@ -107,6 +107,74 @@ export interface PracticalStrengthInsight {
   }>;
 }
 
+export type CohortDimension =
+  | "color"
+  | "timeControl"
+  | "opponent"
+  | "opening"
+  | "positionType";
+
+export interface HumanGameCohortInsight {
+  dimension: CohortDimension;
+  key: string;
+  label: string;
+  games: number;
+  quality: number;
+  resultPerformance: number;
+  averageCentipawnLoss: number;
+  criticalErrorRate: number;
+  blunderRate: number;
+  practicalScore: number;
+  deltaVsBaseline: number;
+  confidence: number;
+}
+
+export interface PhasePerformanceInsight {
+  phase: "opening" | "middlegame" | "endgame";
+  games: number;
+  averageCentipawnLoss: number;
+  criticalPerGame: number;
+  quality: number;
+}
+
+export interface RecentFormInsight {
+  recentGames: number;
+  previousGames: number;
+  recentQuality: number;
+  previousQuality: number;
+  qualityDelta: number;
+  recentResultPerformance: number;
+  previousResultPerformance: number;
+  resultDelta: number;
+  direction: "improving" | "stable" | "declining" | "insufficient";
+}
+
+export interface PracticalDiagnostic {
+  id: string;
+  severity: "watch" | "priority" | "strength";
+  headline: string;
+  detail: string;
+  dimension?: CohortDimension | "phase" | "form";
+  cohortKey?: string;
+  games: number;
+  confidence: number;
+}
+
+export interface RealGameDiagnostics {
+  sampleCount: number;
+  baselineQuality: number;
+  baselineResultPerformance: number;
+  baselinePracticalScore: number;
+  colors: HumanGameCohortInsight[];
+  timeControls: HumanGameCohortInsight[];
+  opponents: HumanGameCohortInsight[];
+  openings: HumanGameCohortInsight[];
+  positionTypes: HumanGameCohortInsight[];
+  phases: PhasePerformanceInsight[];
+  recentForm: RecentFormInsight;
+  diagnostics: PracticalDiagnostic[];
+}
+
 export interface ProgressIntelligence {
   historyStartedAt?: string;
   evidenceCount: number;
@@ -119,6 +187,7 @@ export interface ProgressIntelligence {
   humanTransfer: number;
   aiTransfer: number;
   practicalStrength: PracticalStrengthInsight;
+  realGameDiagnostics: RealGameDiagnostics;
   calibration: CalibrationInsight;
   trend: TrendPoint[];
   interventions: InterventionInsight[];
