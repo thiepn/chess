@@ -44,8 +44,8 @@ export const sessionMinutes: Record<SessionMode, number> = {
 
 const durations: Partial<Record<TrainingMode, number>> = {
   microReview: 2,
-  conceptLesson: 6,
-  guidedDemo: 4,
+  conceptLesson: 10,
+  guidedDemo: 8,
   themedPuzzle: 4,
   mixedPuzzle: 5,
   personalMistake: 5,
