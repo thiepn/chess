@@ -151,7 +151,8 @@ export type CandidateSource =
   | "library"
   | "assessment"
   | "calibration"
-  | "focus";
+  | "focus"
+  | "prescription";
 
 export interface TrainingCandidate {
   id: string;
@@ -169,6 +170,7 @@ export interface TrainingCandidate {
   repertoireId?: string;
   studyId?: string;
   scenarioId?: string;
+  prescriptionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
 }
 
