@@ -13,6 +13,7 @@ import type { AdaptiveTrainingPolicy } from "../adaptation/types";
 import type { LichessConnection } from "../lichess/types";
 import type { PrescriptionTrackingRecord } from "../prescriptions/types";
 import type { LessonMasterySummary } from "../learning/types";
+import type { CalculationAttemptSummary, CalculationEvidence } from "../calculation/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -239,6 +240,7 @@ export interface TrainingCandidate {
   scenarioId?: string;
   prescriptionId?: string;
   prescriptionActionId?: string;
+  calculationPositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;
 }
@@ -259,6 +261,8 @@ export interface TrainingOutcome {
   mistakeId?: string;
   studyId?: string;
   lessonEvidence?: LessonMasterySummary;
+  calculationPositionId?: string;
+  calculationEvidence?: CalculationEvidence;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";
@@ -293,6 +297,7 @@ export interface UserState {
   trainingPlan?: TrainingPlanSettings;
   trainingLedger?: TrainingLedgerEntry[];
   competitionRetrospectives?: CompetitionRetrospectiveNote[];
+  calculationHistory?: Record<string, CalculationAttemptSummary>;
   focus?: {
     domain: DomainId;
     until?: string;
