@@ -32,12 +32,13 @@ The default experience should answer one question: **what should I train now?**
 - P13 longitudinal learning analytics with compact evidence history, mastery/retention/transfer trajectories, model calibration, stage velocity, recurring-vs-repaired weakness tracking, intervention effectiveness signals, and a dedicated Progress Intelligence view
 - P14 adaptive training policy with per-skill intervention selection, challenge bands, calibrated puzzle targets, transfer-to-game routing, explicit stopping pressure, explainable policy reasons, and session-level difficulty adaptation
 - P15 human-play integration through Lichess with public-username linking, bounded recent-game sync, stable external-game deduplication, focus-triggered automatic refresh, batch human-game analysis, source provenance, and direct routing into Review/mistake/adaptive learning
+- P16 source-aware real-game transfer with separate structured-training, AI-game and human-game evidence channels, practical game-quality metrics, human-weighted weakness recurrence, practical-strength estimation, time-control/opponent context, positive clean-move validation, and confidence-aware human-performance analytics
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice.
 
 ## Run
 
@@ -569,6 +570,131 @@ P15 intentionally stops short of OAuth because the current product does not need
 
 If a future phase needs actions such as creating challenges programmatically, reading private data or controlling authenticated Lichess account functions, OAuth2 PKCE should be added as a separate capability with narrowly scoped permissions. It should not be introduced merely to make public game sync look more sophisticated.
 
+## Human-vs-AI transfer and practical strength
+
+P16 separates transfer evidence by where it was demonstrated.
+
+The mastery model now distinguishes:
+
+- **Structured training transfer** — guided positions, endgame drills, conversion exercises and other intentionally constructed practice.
+- **AI-game transfer** — decisions made while playing the app's Stockfish opponents and later reviewed by the engine.
+- **Human-game transfer** — decisions made in synced Lichess games against real opponents.
+
+The older `realGameRecognition` / `realGameExecution` fields remain readable as legacy compatibility fields, but new P16 evidence is written into explicit human/AI channels. Existing AI-game review can therefore no longer masquerade as human proof.
+
+### Positive and negative human evidence
+
+Real-game evidence is no longer only a list of mistakes.
+
+Engine review still creates strong negative evidence for meaningful errors, but clean decisions can also provide bounded positive validation when a skill repeatedly appears in the game context.
+
+Current positive validation can recognize signals such as:
+
+- clean opening-principle execution;
+- blunder-check discipline on low-loss moves;
+- selecting forcing candidates;
+- precise king-and-pawn endgame decisions;
+- simplifying/maintaining a winning ending;
+- accurate defensive play under pressure.
+
+A positive validation is only promoted when the pattern appears at least twice in the game, and a skill cannot receive positive validation from the same game when that skill was also classified as a mistake there.
+
+This keeps one lucky engine-approved move from becoming “mastery.”
+
+### Game context
+
+Imported PGN headers now preserve practical context when available:
+
+- player rating;
+- opponent rating;
+- rated/casual status;
+- raw time control;
+- normalized category: Bullet, Blitz, Rapid, Classical, Correspondence or Unknown.
+
+Time control affects transfer confidence rather than changing the chess result itself. Slower games receive somewhat more evidential weight because there was more opportunity to apply a learned thinking process; Bullet remains useful practical evidence but is deliberately weaker.
+
+Opponent rating is also only a context modifier. It is tightly bounded and cannot simply turn the internal model into a renamed Lichess Elo.
+
+### Practical game metrics
+
+Every analyzed game now receives a compact practical summary:
+
+- average centipawn loss across the user's moves;
+- critical-error rate;
+- blunder rate;
+- normalized quality score;
+- result score;
+- positively validated curriculum skills.
+
+These metrics are stored with the analyzed game so Review and Progress do not need to rerun Stockfish merely to explain practical performance.
+
+Review history shows the relevant human-game context directly, including time-control category, opponent rating, practical quality and ACPL.
+
+### Human-weighted weaknesses
+
+Mistakes also preserve their game source.
+
+Recurring-weakness aggregation now weights sources approximately in this order:
+
+1. synced Lichess human games;
+2. manual external games;
+3. Stockfish training games.
+
+AI mistakes remain valuable training evidence, but a repeated error against humans carries more practical weight than the same pattern occurring in an artificial practice game.
+
+### Stage transfer and adaptive policy
+
+P12 promotion and P14 adaptive saturation now prefer human transfer evidence.
+
+Human proof can satisfy transfer at full strength. AI/structured transfer remains useful but is discounted when used as the best available transfer signal.
+
+This means a user can still progress through the course without being forced to play online constantly, while the model becomes more confident once the skill actually survives human opposition.
+
+### THIEPN practical rating
+
+Progress Intelligence now includes a separate **THIEPN practical rating**.
+
+This is not copied from Lichess Elo and does not attempt to replace an official competitive rating.
+
+The estimate combines:
+
+- curriculum/effective mastery;
+- explicit human-game transfer;
+- analyzed human-game quality;
+- consistency from game to game;
+- practical result performance.
+
+Opponent rating contributes only a bounded context adjustment. AI/training transfer is used mainly when there is not yet enough human evidence.
+
+The displayed scale is intentionally familiar (roughly 500–2000) but represents this app's internal practical-strength estimate, not an externally certified chess rating.
+
+Confidence is displayed alongside the estimate:
+
+- **Provisional** — fewer than 3 analyzed human games;
+- **Developing** — 3–9 analyzed human games;
+- **Established** — at least 10 analyzed human games.
+
+Confidence grows from analyzed human-game count plus explicit skill-level human transfer evidence. Strong AI games cannot increase the human-game count or establish the model.
+
+Progress also shows:
+
+- human transfer separately from AI/training transfer;
+- analyzed human-game quality;
+- consistency;
+- result performance;
+- average opponent rating when known;
+- quality by time-control category.
+
+When no human games exist yet, Home clearly labels the practical number as a training-only estimate rather than presenting it as established real-world strength.
+
+### Compatibility
+
+P16 does not require a new database table or a destructive migration.
+
+New mastery fields are additive and tolerate older account JSON that does not contain them. Missing human-game fields are treated as absent evidence, not as zero-quality performance.
+
+Effective mastery also normalizes its dynamic weights, so simply having no human-game sample cannot lower a user's existing mastery score.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -583,4 +709,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P16 — Real-Game Transfer Scoring, Human-vs-AI Evidence Separation & Practical Rating Model.
+P17 — Real-Game Cohort Analysis, Opening Performance & Opponent/Time-Control Diagnostics.
