@@ -7701,3 +7701,177 @@ html[data-motion="reduced"] .dashboard-grid {
     white-space: normal;
   }
 }
+
+
+/* P19 — prescription outcome validation and coach effectiveness */
+
+.coach-effectiveness-panel {
+  margin-bottom: 11px;
+}
+
+.coach-effectiveness-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.coach-effectiveness-grid > div {
+  min-height: 70px;
+  padding: 11px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.016);
+  display: grid;
+  align-content: center;
+  gap: 3px;
+}
+
+.coach-effectiveness-grid span {
+  color: #66748c;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 850;
+}
+
+.coach-effectiveness-grid strong {
+  color: #d2dbe8;
+  font-size: 17px;
+}
+
+.coach-history {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.coach-history-row {
+  padding: 10px 11px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.014);
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr);
+  gap: 9px;
+  align-items: start;
+}
+
+.coach-history-row.improved {
+  border-color: rgba(112,209,164,.1);
+  background: rgba(112,209,164,.02);
+}
+
+.coach-history-row.worsened {
+  border-color: rgba(255,117,141,.1);
+  background: rgba(255,117,141,.02);
+}
+
+.coach-history-row.collecting {
+  border-color: rgba(118,151,255,.08);
+}
+
+.coach-history-icon {
+  width: 31px;
+  height: 31px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.025);
+  color: #7b89a3;
+}
+
+.coach-history-row.improved .coach-history-icon {
+  color: #76c99c;
+  background: rgba(112,209,164,.04);
+}
+
+.coach-history-row.worsened .coach-history-icon {
+  color: #cf8894;
+  background: rgba(255,117,141,.04);
+}
+
+.coach-history-row > div:last-child {
+  display: grid;
+  gap: 2px;
+}
+
+.coach-history-row strong {
+  color: #cbd5e3;
+  font-size: 9px;
+}
+
+.coach-history-row span {
+  color: #728096;
+  font-size: 8px;
+}
+
+.coach-history-row small {
+  color: #5e6c81;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.coach-kind-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.coach-kind-grid > div {
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  gap: 2px;
+}
+
+.coach-kind-grid span {
+  color: #65738a;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.coach-kind-grid strong {
+  color: #bbc6d6;
+  font-size: 8px;
+}
+
+.coach-kind-grid small {
+  color: #59677d;
+  font-size: 7px;
+}
+
+.prescription-outcome-strip {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.035);
+}
+
+.prescription-outcome-strip span {
+  color: #67758b;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.prescription-outcome-strip .negative {
+  color: #c98591;
+}
+
+@media (max-width: 900px) {
+  .coach-effectiveness-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .coach-kind-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .coach-effectiveness-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
