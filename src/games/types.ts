@@ -69,12 +69,19 @@ export type TimeControlCategory =
   | "correspondence"
   | "unknown";
 
+export interface GameSkillValidation {
+  skillId: string;
+  occurrences: number;
+  averageCentipawnLoss: number;
+}
+
 export interface PracticalGameMetrics {
   averageCentipawnLoss: number;
   criticalErrorRate: number;
   blunderRate: number;
   qualityScore: number;
   resultScore: number;
+  skillValidations: GameSkillValidation[];
 }
 
 export interface ImportedGame {
