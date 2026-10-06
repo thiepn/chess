@@ -259,7 +259,6 @@ export function ProgressView({
   onUpdateCompetitionRetrospective,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
-  const strongestIntervention = intelligence.interventions[0];
 
   return (
     <section className="progress-view">
@@ -839,6 +838,15 @@ export function ProgressView({
         </details>
       </section>
 
+      <details className="progress-advanced-evidence">
+        <summary>
+          <div>
+            <span>Advanced planning & evidence</span>
+            <small>Weekly planning, cohort diagnostics, competition cycles and event analysis</small>
+          </div>
+          <ChevronRight size={16} />
+        </summary>
+        <div className="progress-advanced-evidence-body">
       <section className="progress-panel training-horizon-panel">
         <div className="progress-section-heading">
           <div>
@@ -1542,6 +1550,10 @@ export function ProgressView({
           </article>
         </div>
       </section>
+
+
+        </div>
+      </details>
 
       <section className="progress-panel progress-trajectory">
         <div className="progress-section-heading">
