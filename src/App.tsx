@@ -2531,7 +2531,15 @@ export default function App() {
                 <span>Difficulty {activeSkill.difficulty}/5</span>
                 {active.adaptivePolicy && (
                   <span className="adaptive-challenge-chip">
-                    {active.adaptivePolicy.challenge}
+                    {active.adaptivePolicy.challenge === "recovery"
+                      ? "Extra support"
+                      : active.adaptivePolicy.challenge === "supported"
+                        ? "Supported"
+                        : active.adaptivePolicy.challenge === "stretch"
+                          ? "Harder"
+                          : active.adaptivePolicy.challenge === "maintenance"
+                            ? "Keep sharp"
+                            : "Normal"}
                   </span>
                 )}
               </div>
