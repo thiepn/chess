@@ -550,6 +550,10 @@ export function ReviewView({
                   <span>
                     {game.result} · {game.moves.length} plies
                     {game.source === "lichess" ? " · Lichess human game" : ""}
+                    {game.timeControlCategory && game.timeControlCategory !== "unknown"
+                      ? ` · ${game.timeControlCategory}`
+                      : ""}
+                    {game.opponentRating ? ` · opp ${game.opponentRating}` : ""}
                   </span>
                 </div>
                 <div>
@@ -563,9 +567,11 @@ export function ReviewView({
                   <strong>
                     {reanalyzingGameId === game.id
                       ? "Stockfish"
-                      : game.reviewStory
-                        ? `${game.reviewStory.moments.length} story moments`
-                        : "Generate P8 story"}
+                      : game.practicalMetrics
+                        ? `Quality ${game.practicalMetrics.qualityScore}% · ACPL ${game.practicalMetrics.averageCentipawnLoss}`
+                        : game.reviewStory
+                          ? `${game.reviewStory.moments.length} story moments`
+                          : "Generate P8 story"}
                   </strong>
                 </div>
               </button>
