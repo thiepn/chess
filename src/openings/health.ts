@@ -1,6 +1,5 @@
 import type { ImportedGame } from "../games/types";
 import {
-  chooseRepertoireForGame,
   matchedRepertoireNodeIds,
 } from "./match";
 import { openingNodes } from "./repertoire";
@@ -78,8 +77,10 @@ export function repertoireHealth(
 ): RepertoireHealth {
   const repertoireGames = games.filter(
     (game) =>
-      chooseRepertoireForGame(game)?.id ===
-      repertoire.id,
+      matchedRepertoireNodeIds(
+        game,
+        repertoire,
+      ).length > 1,
   );
   const relevantDeviations =
     deviations.filter(
