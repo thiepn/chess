@@ -35,12 +35,13 @@ The default experience should answer one question: **what should I train now?**
 - P16 source-aware real-game transfer with separate structured-training, AI-game and human-game evidence channels, practical game-quality metrics, human-weighted weakness recurrence, practical-strength estimation, time-control/opponent context, positive clean-move validation, and confidence-aware human-performance analytics
 - P17 sample-aware real-game cohort diagnostics across color, time control, relative opponent strength, opening family, position type and game phase, with recurring human mistake families, five-vs-five recent form, baseline deltas, confidence thresholds, and actionable focused-practice links
 - P18 cohort-to-training prescriptions that convert strong P17 diagnoses into confidence-gated repair plans, repertoire-aware opening recall, exact human-mistake replay, focused curriculum repair, targeted scenarios, one-item composer injection, Home surfacing and next-human-game checklists
+- P19 prescription outcome tracking with issued/started/completed intervention episodes, frozen pre-treatment baselines, matched post-treatment human-game validation, three-game minimums, successful-plan retirement, persistent-plan escalation and coach-effectiveness analytics
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance.
 
 ## Run
 
@@ -995,6 +996,171 @@ If the cohort improves, disappears, loses confidence or is replaced by a more im
 
 No stale permanent field such as `currentCoachPlan = "Caro-Kann"` is written to the account.
 
+## Prescription outcome tracking and coach effectiveness
+
+P19 adds the missing evaluation layer to P18.
+
+A recommendation is no longer considered successful merely because it was shown, clicked or completed. P19 waits for later human games that match the same target and compares them with a frozen pre-treatment baseline.
+
+### Lightweight persistent intervention history
+
+P18 prescriptions remain derived from current evidence.
+
+P19 persists only the minimal intervention episode needed to evaluate them:
+
+- prescription ID and type;
+- explicit target;
+- when the plan was first issued;
+- frozen pre-treatment baseline;
+- number of starts;
+- number of completed interventions;
+- completed action IDs;
+- training success/quality totals;
+- retirement metadata.
+
+This history lives in the normal account state and therefore follows the existing local/Supabase sync path. No new analytics service or database table is required.
+
+### Explicit like-for-like targets
+
+Every P18 prescription now carries a structured target.
+
+Examples:
+
+- `opening:header:caro-kann defense`;
+- `color:b`;
+- `timeControl:rapid`;
+- `opponent:stronger`;
+- `positionType:tactical`;
+- `phase:middlegame`;
+- `mistake:fundamentals.blunder-check`;
+- `form:recent`.
+
+The baseline is captured from the same metric family used by P17.
+
+P19 then evaluates only later games that match that target. A Caro-Kann intervention is not credited because unrelated Italian games improved, and a Rapid prescription is not evaluated from Bullet games.
+
+### Issued, started and completed are different
+
+P19 distinguishes:
+
+1. **Issued** — the P18 plan was surfaced and its baseline was captured.
+2. **Started** — the user explicitly launched a prescription action.
+3. **Completed** — the training runtime actually finished.
+
+Automatically composed P18 activities are also tracked when completed.
+
+Outcome validation does not begin until at least one intervention completion exists. Advice that was merely displayed receives no credit.
+
+### Runtime coverage
+
+Prescription identity now survives through every P18 execution path:
+
+- focused puzzle/concept repair;
+- personal mistake repair;
+- opening repertoire recall;
+- exact-position replay;
+- Stockfish scenarios;
+- automatically composed prescription activities.
+
+Scenario metadata carries the prescription/action IDs through `GameArena` into the final play result, so scenario completion can be attributed correctly.
+
+### Post-treatment human-game window
+
+The evaluation cutoff is the latest completed intervention timestamp.
+
+Only analyzed Lichess games played after that cutoff count as post-treatment evidence.
+
+Using the game's real imported/game timestamp prevents an older game that was merely synced later from being misclassified as post-treatment performance.
+
+### Minimum evidence
+
+P19 requires at least **three matching post-treatment human games** before assigning an effectiveness result.
+
+Before that, status is:
+
+- **Untested** — no prescription action has been completed;
+- **Collecting** — treatment was completed, but fewer than three matching later human games exist.
+
+After three or more matching games:
+
+- **Improved** — target score is at least 8 points above baseline;
+- **Unchanged** — change remains inside the neutral band;
+- **Worsened** — target score is at least 6 points below baseline.
+
+Confidence increases with post-treatment sample size and currently reaches its display ceiling at six matching games.
+
+### Target scoring
+
+For normal cohorts, P19 uses the same compact practical score used by P17.
+
+Phase prescriptions recompute the same P17 phase-quality formula from stored phase ACPL and critical-error counts.
+
+Recurring-mistake prescriptions invert recurrence into a higher-is-better score:
+
+`100 - percentage of later human games containing that mistake family`.
+
+Recent-form resets compare later human-game quality with the frozen recent-form baseline.
+
+This gives every prescription type one consistent interpretation: positive delta means the targeted practical behavior improved.
+
+### Successful-plan retirement
+
+If a completed prescription reaches an **Improved** result with enough post-game evidence, P18 stops serving that plan as an active prescription.
+
+The historical P19 episode remains visible, but the plan no longer occupies Home, Play or automatic-session priority.
+
+If the same practical problem later returns after the episode has been retired, a new prescription episode can be issued with a new baseline instead of treating the old result as permanently solved.
+
+### Persistent-plan escalation
+
+If post-treatment evidence is **Unchanged**, the active prescription remains available and receives a modest urgency increase.
+
+If performance **Worsens**, the prescription is explicitly escalated and receives stronger priority in the P18 composer.
+
+The existing one-prescription-per-session guard remains intact, so escalation cannot crowd out the entire curriculum/review system.
+
+### Coach effectiveness
+
+Progress now contains a dedicated **P19 Coach Effectiveness** panel.
+
+It reports:
+
+- prescriptions issued;
+- prescriptions started;
+- prescriptions completed;
+- prescriptions with enough post-game evidence to evaluate;
+- validated/improved rate;
+- average before→after target delta;
+- effectiveness by prescription type.
+
+Recent intervention history shows:
+
+- target;
+- baseline score;
+- post-treatment score;
+- delta;
+- outcome status;
+- post-game sample count;
+- completed-intervention count.
+
+This lets the app eventually distinguish, for example, whether opening repair, exact mistake replay or practical game plans tend to produce stronger real-world transfer for this user.
+
+### Causal caution
+
+P19 is a personal before/after validation system, not a randomized experiment.
+
+Later chess improvement can have several causes: other study, opponent mix, natural variance, fatigue, rating changes or overlapping skills.
+
+For that reason P19:
+
+- compares only like-for-like target cohorts;
+- requires minimum post-treatment samples;
+- shows confidence/sample size;
+- uses bounded thresholds;
+- describes plans as validated/ineffective signals rather than claiming scientific causality.
+
+The value is practical: stop repeatedly prescribing things that show no evidence of transfer, and preserve interventions that appear to work in the user's real games.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1009,4 +1175,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P19 — Prescription Outcome Tracking, Before/After Validation & Coach Effectiveness.
+P20 — Coach Policy Learning, Intervention Selection & Long-Term Prescription Optimization.
