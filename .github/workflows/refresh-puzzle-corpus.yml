@@ -62,7 +62,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if git diff --quiet -- public/data/puzzles; then
+          if [ -z "$(git status --porcelain --untracked-files=all public/data/puzzles)" ]; then
             echo "No corpus changes detected."
             exit 0
           fi
