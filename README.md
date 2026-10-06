@@ -34,12 +34,13 @@ The default experience should answer one question: **what should I train now?**
 - P15 human-play integration through Lichess with public-username linking, bounded recent-game sync, stable external-game deduplication, focus-triggered automatic refresh, batch human-game analysis, source provenance, and direct routing into Review/mistake/adaptive learning
 - P16 source-aware real-game transfer with separate structured-training, AI-game and human-game evidence channels, practical game-quality metrics, human-weighted weakness recurrence, practical-strength estimation, time-control/opponent context, positive clean-move validation, and confidence-aware human-performance analytics
 - P17 sample-aware real-game cohort diagnostics across color, time control, relative opponent strength, opening family, position type and game phase, with recurring human mistake families, five-vs-five recent form, baseline deltas, confidence thresholds, and actionable focused-practice links
+- P18 cohort-to-training prescriptions that convert strong P17 diagnoses into confidence-gated repair plans, repertoire-aware opening recall, exact human-mistake replay, focused curriculum repair, targeted scenarios, one-item composer injection, Home surfacing and next-human-game checklists
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans.
 
 ## Run
 
@@ -833,6 +834,167 @@ Existing P14/P16 logic already uses human-weighted weaknesses for training prior
 
 That allows the statistical layer to remain inspectable before automatic prescriptions start changing opening drills, game scenarios or session composition.
 
+## Cohort-to-training prescriptions and practical game plans
+
+P18 closes the P17 diagnostic loop.
+
+P17 can establish that a repeatable human-game problem exists. P18 converts that evidence into a short, inspectable repair plan using training capabilities that already exist elsewhere in the product.
+
+The prescription system is derived from current account state. It does not persist a separate hidden recommendation profile or add a new analytics backend.
+
+### Prescription structure
+
+Every P18 prescription contains:
+
+- the P17 diagnostic evidence that triggered it;
+- number of supporting human games;
+- confidence;
+- a short rationale;
+- a three-point next-game plan;
+- one or more executable actions;
+- whether the plan is strong enough to influence automatic session composition.
+
+Current prescription classes are:
+
+- **Opening repair**;
+- **Recurring mistake repair**;
+- **Phase repair**;
+- **Condition-specific game plan**;
+- **Recent-form reset**.
+
+Strength diagnostics do not generate remediation. P18 only prescribes against priority/watch evidence.
+
+### Opening repair
+
+When P17 finds a weak opening-family cohort, P18 tries to resolve the diagnosis back to the app's real repertoire tree.
+
+Examples include:
+
+- Italian/Open Game → White 1.e4 repertoire;
+- Sicilian → White Alapin branch;
+- Caro-Kann as White → the White anti-Caro repertoire node;
+- Caro-Kann as Black → the Black Caro-Kann repertoire and playable opening scenario;
+- French → the White French-response node;
+- Queen's Pawn/QGD positions as Black → the QGD repertoire.
+
+A mapped opening prescription can therefore offer:
+
+1. exact repertoire recall from the relevant node;
+2. a real Stockfish training scenario when one exists;
+3. opening-principles repair as a fallback.
+
+If P18 cannot map a family to a trustworthy concrete repertoire node, it falls back to principled opening training instead of fabricating theory.
+
+### Recurring mistake repair
+
+A P17 recurring human-game mistake family becomes a prescription centered on the exact curriculum skill.
+
+If a matching human-game mistake is available, the first action is the exact position replay from Review.
+
+The prescription can then add focused skill repair.
+
+That produces a concrete path such as:
+
+`Human blunder-check recurrence → replay the latest failed position → focused blunder-check training → carry a blunder-check cue into the next human game.`
+
+### Phase and condition prescriptions
+
+Weak opening/middlegame/endgame phases resolve to existing curriculum skills instead of generic advice.
+
+Condition-specific diagnoses map to practical skills such as:
+
+- time-control weakness → clock discipline;
+- stronger-opponent weakness → threat recognition/defense;
+- lower-rated-opponent weakness → post-move checking instead of careless acceleration;
+- tactical game weakness → candidate-move calculation;
+- opening-sensitive games → opening principles;
+- endgame-heavy weakness → phase transition/endgame work;
+- long middlegames → worst-piece/planning work.
+
+The prescription includes a concise practical game plan as well as a concrete training action.
+
+### Recent-form reset
+
+A sufficiently supported decline in recent form can create a **process reset** prescription.
+
+The plan deliberately avoids rating-chasing language and instead returns to:
+
+- objective position assessment;
+- threat and forcing-candidate checks;
+- a final blunder check;
+- decision quality in the next human game.
+
+### Confidence gating
+
+P18 does not automatically inject every suggestion into training.
+
+A prescription becomes composer-eligible only when its underlying P17 evidence has enough support—currently at least three games and roughly 50% cohort confidence, with stricter confidence for a recent-form reset.
+
+Lower-confidence plans remain visible in Progress but do not hijack the daily session.
+
+### Composer integration
+
+The daily composer now understands `prescription` as a distinct source.
+
+High-confidence prescriptions receive extra practical priority, but the session can include at most one prescription-driven mandatory activity.
+
+This prevents a new failure mode where one recent set of human games overwhelms:
+
+- due spaced review;
+- personal mistakes;
+- stage remediation;
+- curriculum progression;
+- other established weaknesses.
+
+Prescription candidates still pass through P14's adaptive challenge/difficulty logic whenever the action type allows it.
+
+### Executable actions
+
+P18 never creates fake training modes.
+
+Prescription actions dispatch into existing proven runtimes:
+
+- **Focused practice** → a supported puzzle/retrieval/concept mode for that skill;
+- **Mistake replay** → the exact human-game position in Play;
+- **Opening recall** → P6 repertoire trainer;
+- **Scenario** → P7 Stockfish position training.
+
+Focused practice was also hardened so it no longer forces a themed puzzle for skills that have no puzzle corpus. Practical skills such as time use or resilience fall back to an executable guided/concept repair instead.
+
+### Progress workspace
+
+Progress now includes a dedicated **P18 Training Prescriptions** section.
+
+Each plan shows:
+
+- title;
+- evidence count;
+- confidence;
+- rationale;
+- three-point game plan;
+- executable action buttons;
+- whether it may automatically contribute to the next generated session.
+
+The highest-priority prescription is visually marked as the top plan.
+
+### Home and Play
+
+Home surfaces the current **Next Repair Plan** with the first practical cues and a direct route into the evidence/plan.
+
+Play receives the same top prescription immediately above the Lichess human-play surface.
+
+This means the learning loop now reaches the actual next game:
+
+`Human games → analysis → P17 diagnosis → P18 repair → targeted training → next-game checklist → human game.`
+
+### No hidden recommendation state
+
+P18 prescriptions are recomputed from current P17 diagnostics and current account evidence.
+
+If the cohort improves, disappears, loses confidence or is replaced by a more important issue, the prescription changes automatically.
+
+No stale permanent field such as `currentCoachPlan = "Caro-Kann"` is written to the account.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -847,4 +1009,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P18 — Cohort-to-Training Prescriptions, Opening Repair & Practical Game Plans.
+P19 — Prescription Outcome Tracking, Before/After Validation & Coach Effectiveness.
