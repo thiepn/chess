@@ -168,7 +168,9 @@ function prescriptionCandidate(
     item.adaptivePolicy = {
       ...item.adaptivePolicy,
       mode: item.activityType,
-      reason: `P18 prescription: ${prescription.rationale}`,
+      reason: prescription.policy
+        ? `P20 ${prescription.policy.stance} policy: ${prescription.rationale}`
+        : `P18 prescription: ${prescription.rationale}`,
     };
   }
 
