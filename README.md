@@ -39,12 +39,13 @@ The default experience should answer one question: **what should I train now?**
 - P20 coach policy learning with recency-weighted/shrunk outcome evidence, learned plan/action-family preferences, deterministic action reordering, bounded prescription-priority adjustments, explicit exploration of weak/unseen alternatives, and transparent policy diagnostics
 - P21 goal-aware training horizons with configurable 4/8/12-week plans, real completed-training ledger, weekly functional budgets, adaptive under-allocation pressure, protected urgent work, pace-aware session recommendations, and Home/Progress periodization surfaces
 - P22 plan-adherence intelligence with comparable full-week history, sustainable-capacity estimation, horizon completion forecasts, bounded automatic effective-load recalibration, recovery detection, explicit opt-out, and transparent nominal-vs-effective targets
+- P23 load management with recent-volume ramp detection, overload-week tracking, watch/recovery modes, protected review/repair work, shorter recovery sessions, optional-bucket suppression, manual seven-day recovery, automatic opt-out, and a 70% combined-load floor
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not; P23 manages short-term load spikes and recovery periods without dropping essential retention or repair.
 
 ## Run
 
@@ -1436,6 +1437,107 @@ Progress adds a dedicated P22 panel with:
 
 Because P22 uses the existing bounded training ledger and existing account-state persistence, no new backend service or database table is required.
 
+## Recovery weeks, load management and long-term sustainability
+
+P23 adds short-term load management above the P21/P22 planning stack.
+
+It deliberately does **not** claim to detect biological or medical fatigue. The app only observes training behavior that it actually records:
+
+- completed weekly minutes;
+- recent load ramp versus prior full-week baseline;
+- number of overloaded weeks;
+- active training days;
+- adherence trend and confidence.
+
+### Load states
+
+P23 has three deterministic states:
+
+- `normal` — no load-management adjustment;
+- `watch` — recent load is elevated, so optional growth is restrained and recommended sessions are capped at 40 minutes;
+- `recovery` — sustained overload or a strong acute ramp justifies a temporary lower-load week, with recommended sessions capped at 25 minutes.
+
+Automatic recovery requires at least four comparable full weeks. An isolated spike can enter `watch` first instead of immediately triggering a recovery week.
+
+### Recovery is not inactivity
+
+During recovery mode P23 changes learning pressure by function:
+
+- retention: slightly protected;
+- repair: slightly protected;
+- course progression: reduced;
+- resistant transfer play: reduced;
+- repertoire expansion: reduced;
+- exploration / optional saved material: reduced most strongly.
+
+Urgent review, recurring weakness repair, personal-game mistakes, checkpoint remediation and active prescriptions still retain the P21 priority floor.
+
+This makes recovery a **maintenance-focused training week**, not a blank week.
+
+### Combined-load safety floor
+
+P22 may already reduce the operational weekly target when long-term adherence shows that the nominal plan is unrealistic.
+
+P23 can then apply a temporary recovery multiplier on top, but the combined automatic managed load is never allowed below **70% of the nominal weekly target**.
+
+For a nominal 150-minute plan:
+
+- P22 may reduce the effective load to 120 minutes;
+- a P23 recovery multiplier would mathematically lower that further;
+- the combined floor prevents the managed week from dropping below 105 minutes.
+
+The original 150-minute goal remains unchanged.
+
+### Manual recovery week
+
+The user can explicitly start a seven-day recovery period from Home.
+
+Manual recovery:
+
+- does not reset the structural plan start date;
+- does not erase adherence history;
+- uses the same protected/reduced bucket policy as automatic recovery;
+- can be ended early;
+- still respects the 70% combined-load floor.
+
+### Automatic recovery control
+
+Automatic recovery is enabled by default and can be disabled independently of P22 automatic recalibration.
+
+If disabled, P23 can still report that `watch` or `recovery` would be recommended, but it leaves the operational load unchanged unless a manual recovery week is active.
+
+### Session-level effects
+
+P23 feeds directly into P21 session composition.
+
+It can:
+
+- lower the managed weekly minute target;
+- cap recommended session length;
+- reduce score pressure for optional/new material;
+- preserve or slightly strengthen retention and repair;
+- annotate generated activities with the applied P23 load factor.
+
+P21's Home/Progress weekly budget now reflects `managedWeeklyMinutes`, while P22 continues to show the separate pre-recovery effective load and the untouched nominal target.
+
+### Explainability
+
+Home shows:
+
+- current load mode;
+- managed vs P22-effective weekly minutes;
+- latest full-week load;
+- previous baseline;
+- ramp ratio;
+- overload-week count;
+- automatic-recovery toggle;
+- manual recovery control;
+- reason for the current load decision.
+
+Progress adds a dedicated P23 panel with the same load metrics plus the per-bucket recovery multipliers.
+
+Because P23 derives everything from the existing bounded training ledger and plan state, it requires no new backend table or external service.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1450,4 +1552,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P23 — Recovery Weeks, Load Management & Long-Term Training Sustainability.
+P24 — Training Blocks, Competition Cycles & Peak-Readiness Planning.

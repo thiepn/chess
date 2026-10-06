@@ -638,7 +638,7 @@ export function ProgressView({
             <span>Weekly budget</span>
             <strong>
               {intelligence.trainingHorizon.completedMinutes}/
-              {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
+              {intelligence.trainingHorizon.managedWeeklyMinutes}m
             </strong>
           </div>
           <div>
@@ -818,6 +818,98 @@ export function ProgressView({
 
         <p className="coach-policy-note">
           Recalibration changes only the operational weekly allocation used by the composer. It never edits the selected goal, nominal weekly target, or horizon length, so the forecast remains an honest comparison against the plan you chose.
+        </p>
+      </section>
+
+      <section className="progress-panel load-management-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P23 · LOAD MANAGEMENT</p>
+            <h2>Keep the training plan sustainable without dropping essential work.</h2>
+          </div>
+          <RefreshCcw size={20} />
+        </div>
+
+        <div className="load-management-kpis">
+          <div>
+            <span>Mode</span>
+            <strong>{intelligence.trainingHorizon.loadManagement.appliedMode}</strong>
+            <small>
+              recommended {intelligence.trainingHorizon.loadManagement.recommendation}
+            </small>
+          </div>
+          <div>
+            <span>Managed week</span>
+            <strong>{intelligence.trainingHorizon.loadManagement.managedWeeklyMinutes}m</strong>
+            <small>
+              P22 effective {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
+            </small>
+          </div>
+          <div>
+            <span>Latest load</span>
+            <strong>{intelligence.trainingHorizon.loadManagement.latestWeekMinutes}m</strong>
+            <small>
+              baseline {intelligence.trainingHorizon.loadManagement.baselineWeeklyMinutes}m
+            </small>
+          </div>
+          <div>
+            <span>Ramp</span>
+            <strong>{intelligence.trainingHorizon.loadManagement.rampRatio}×</strong>
+            <small>
+              {intelligence.trainingHorizon.loadManagement.recentActiveDays} active day{intelligence.trainingHorizon.loadManagement.recentActiveDays === 1 ? "" : "s"}
+            </small>
+          </div>
+          <div>
+            <span>Overload weeks</span>
+            <strong>{intelligence.trainingHorizon.loadManagement.overloadWeeks}/3</strong>
+            <small>
+              {intelligence.trainingHorizon.loadManagement.confidence}% evidence confidence
+            </small>
+          </div>
+        </div>
+
+        <div className="load-bucket-policy-grid">
+          {Object.entries(
+            intelligence.trainingHorizon.loadManagement.bucketMultipliers,
+          ).map(([bucket, multiplier]) => (
+            <article
+              key={bucket}
+              className={
+                multiplier > 1
+                  ? "protected"
+                  : multiplier < 1
+                    ? "reduced"
+                    : ""
+              }
+            >
+              <span>{bucket}</span>
+              <strong>
+                {multiplier === 1
+                  ? "100%"
+                  : `${Math.round(multiplier * 100)}%`}
+              </strong>
+            </article>
+          ))}
+        </div>
+
+        <div className={`recalibration-card ${intelligence.trainingHorizon.loadManagement.active ? "active" : ""}`}>
+          <Gauge size={17} />
+          <div>
+            <strong>
+              {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                ? "Manual recovery week active"
+                : intelligence.trainingHorizon.loadManagement.appliedMode === "recovery"
+                  ? "Automatic recovery week active"
+                  : intelligence.trainingHorizon.loadManagement.appliedMode === "watch"
+                    ? "Load watch active"
+                    : "No recovery adjustment"}
+            </strong>
+            <span>{intelligence.trainingHorizon.loadManagement.reason}</span>
+          </div>
+        </div>
+
+        <p className="coach-policy-note">
+          P23 manages schedule load, not medical fatigue. Recovery mode shortens sessions and reduces course, transfer, repertoire and exploration pressure while retention and repair remain protected. Combined P22 + P23 automation can never reduce the managed weekly load below 70% of the nominal target.
         </p>
       </section>
 
