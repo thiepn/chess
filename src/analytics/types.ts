@@ -84,7 +84,27 @@ export interface SkillTrendInsight {
   delta30: number;
   retention: number;
   transfer: number;
+  humanTransfer: number;
+  aiTransfer: number;
   evidenceCount30: number;
+}
+
+export interface PracticalStrengthInsight {
+  rating: number;
+  confidence: number;
+  status: "provisional" | "developing" | "established";
+  humanGames: number;
+  quality: number;
+  consistency: number;
+  resultPerformance: number;
+  humanTransfer: number;
+  aiTransfer: number;
+  averageOpponentRating?: number;
+  timeControls: Array<{
+    category: string;
+    games: number;
+    quality: number;
+  }>;
 }
 
 export interface ProgressIntelligence {
@@ -96,6 +116,9 @@ export interface ProgressIntelligence {
   masteryDelta30: number;
   retention: number;
   transfer: number;
+  humanTransfer: number;
+  aiTransfer: number;
+  practicalStrength: PracticalStrengthInsight;
   calibration: CalibrationInsight;
   trend: TrendPoint[];
   interventions: InterventionInsight[];
