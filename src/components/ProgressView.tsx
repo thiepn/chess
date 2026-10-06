@@ -1920,7 +1920,7 @@ export function ProgressView({
           <span>
             {intelligence.historyStartedAt
               ? `Tracking from ${new Date(intelligence.historyStartedAt).toLocaleDateString()} · active on ${intelligence.activeDays28}/28 recent days.`
-              : "P13 will build history as new learning evidence arrives."}
+              : "History will build as new learning evidence arrives."}
           </span>
         </div>
       </section>
