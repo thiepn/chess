@@ -15,6 +15,8 @@ import {
   CircleAlert,
   Layers3,
   ListChecks,
+  FlaskConical,
+  TrendingDown,
 } from "lucide-react";
 import type {
   HumanGameCohortInsight,
@@ -31,6 +33,7 @@ interface ProgressViewProps {
   onBack: () => void;
   onTrainSkill?: (skillId: string) => void;
   onRunPrescriptionAction?: (
+    prescriptionId: string,
     action: TrainingPrescriptionAction,
   ) => void;
 }
@@ -393,7 +396,10 @@ export function ProgressView({
                       type="button"
                       key={action.id}
                       onClick={() =>
-                        onRunPrescriptionAction?.(action)
+                        onRunPrescriptionAction?.(
+                          prescription.id,
+                          action,
+                        )
                       }
                       disabled={!onRunPrescriptionAction}
                     >
@@ -402,10 +408,26 @@ export function ProgressView({
                   ))}
                 </div>
 
-                <div className="prescription-auto-note">
-                  {prescription.composerEligible
-                    ? "High-confidence: this plan may contribute one activity to the next generated session."
-                    : "Suggestion only until more human-game evidence accumulates."}
+                <div className="prescription-outcome-strip">
+                  {prescription.outcome?.status === "collecting" ? (
+                    <span>
+                      Post-treatment evidence: {prescription.outcome.postGames}/3 matching human games
+                    </span>
+                  ) : prescription.outcome?.status === "unchanged" ? (
+                    <span>
+                      No clear effect yet · {prescription.outcome.delta !== undefined && prescription.outcome.delta >= 0 ? "+" : ""}{prescription.outcome.delta ?? 0} vs baseline
+                    </span>
+                  ) : prescription.outcome?.status === "worsened" ? (
+                    <span className="negative">
+                      Escalated · {prescription.outcome.delta ?? 0} vs baseline
+                    </span>
+                  ) : (
+                    <span>
+                      {prescription.composerEligible
+                        ? "High-confidence: this plan may contribute one activity to the next generated session."
+                        : "Suggestion only until more human-game evidence accumulates."}
+                    </span>
+                  )}
                 </div>
               </article>
             ))}
@@ -420,6 +442,78 @@ export function ProgressView({
         )}
       </section>
 
+      <section className="progress-panel coach-effectiveness-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P19 · COACH EFFECTIVENESS</p>
+            <h2>Did the prescription survive the next human games?</h2>
+          </div>
+          <FlaskConical size={20} />
+        </div>
+
+        <div className="coach-effectiveness-grid">
+          <div><span>Issued</span><strong>{intelligence.coachEffectiveness.issued}</strong></div>
+          <div><span>Completed</span><strong>{intelligence.coachEffectiveness.completed}</strong></div>
+          <div><span>Evaluated</span><strong>{intelligence.coachEffectiveness.evaluated}</strong></div>
+          <div>
+            <span>Validated</span>
+            <strong>{intelligence.coachEffectiveness.evaluated ? `${intelligence.coachEffectiveness.validationRate}%` : "—"}</strong>
+          </div>
+          <div>
+            <span>Average effect</span>
+            <strong>{intelligence.coachEffectiveness.evaluated ? `${intelligence.coachEffectiveness.averageDelta >= 0 ? "+" : ""}${intelligence.coachEffectiveness.averageDelta}` : "—"}</strong>
+          </div>
+        </div>
+
+        {intelligence.coachEffectiveness.history.length ? (
+          <div className="coach-history">
+            {intelligence.coachEffectiveness.history.slice(0, 8).map((item) => (
+              <article key={item.recordId} className={`coach-history-row ${item.status}`}>
+                <div className="coach-history-icon">
+                  {item.status === "improved" ? (
+                    <CheckCircle2 size={16} />
+                  ) : item.status === "worsened" ? (
+                    <TrendingDown size={16} />
+                  ) : item.status === "collecting" ? (
+                    <Clock3 size={16} />
+                  ) : (
+                    <Activity size={16} />
+                  )}
+                </div>
+                <div>
+                  <strong>{item.title}</strong>
+                  <span>
+                    {item.targetLabel} · baseline {item.baselineScore}
+                    {item.postScore !== undefined ? ` → ${item.postScore}` : ""}
+                    {item.delta !== undefined ? ` · ${item.delta >= 0 ? "+" : ""}${item.delta}` : ""}
+                  </span>
+                  <small>
+                    {item.status.replace("-", " ")} · {item.postGames} post-game sample{item.postGames === 1 ? "" : "s"}
+                    {item.completions ? ` · ${item.completions} completed intervention${item.completions === 1 ? "" : "s"}` : " · not completed yet"}
+                  </small>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="cohort-insufficient-note">
+            <FlaskConical size={17} />
+            <span>Complete a P18 prescription, then analyze later matching human games. P19 needs three post-treatment games before claiming an effect.</span>
+          </div>
+        )}
+
+        {intelligence.coachEffectiveness.byKind.length > 0 && (
+          <div className="coach-kind-grid">
+            {intelligence.coachEffectiveness.byKind.map((item) => (
+              <div key={item.kind}>
+                <span>{item.kind.replace("-", " ")}</span>
+                <strong>{item.improved}/{item.evaluated} improved</strong>
+                <small>avg {item.averageDelta >= 0 ? "+" : ""}{item.averageDelta}</small>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
       <section className="progress-panel real-game-diagnostics-panel">
         <div className="progress-section-heading">
           <div>
