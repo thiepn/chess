@@ -51,6 +51,7 @@ The default experience should answer one question: **what should I train now?**
 - P30 Game Review 2.0 with self-analysis-first critical moments, answer-gated retry, decision-error classification, PGN move-time context, repertoire-deviation coaching, immediate related practice, and opt-in retained lessons that become spaced Library studies
 - P31 Endgame & Technique Trainer with theory recognition, full legal play-outs against local Stockfish, conversion/hold objectives, bounded survival thresholds, process-only hints, technique-specific scheduling, repeated-conversion and defensive-hold history, and delayed-retention evidence
 - P32 Personal Repertoire 2.0 with deeper compact branches, inherited structure/tactical context, game-grounded branch health, move-plus-purpose recall, optional full-line rehearsal, exact deviation repair, and dedicated opening evidence
+- P33 Model Games & Strategic Pattern Learning with a compact annotated complete-game library, active plan questions, Guess-the-Move checkpoints, repertoire-linked strategic patterns, evidence-aware scoring, persistent progress, and one-click promotion of model positions into spaced Library training
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2031,6 +2032,25 @@ Opening training is now a first-class learning-evidence source instead of generi
 
 Successful repertoire work updates opening recognition, execution and retention while the separate repertoire model continues to track move, concept and line evidence at node level.
 
+## Model Games & Strategic Pattern Learning
+
+P33 adds a compact curated complete-game library under **Learn** rather than turning the product into an archive of hundreds of passive PGNs.
+
+The first collection uses four complete historical games covering development and open files, Caro-Kann structure, QGD freeing breaks and counterplay, and strategic pawn-break preparation followed by tactical transformation.
+
+Each model game is taught through active checkpoints:
+
+1. read the position before the move is shown;
+2. identify the strategic plan from contrasting choices;
+3. play the historical move on the board;
+4. use optional escalating hints or reveal only when necessary;
+5. read the position-specific explanation and reusable plan;
+6. save especially useful checkpoints directly into spaced Library training.
+
+Model-game evidence has its own bounded mastery weight. Independent plan recognition and move recall can improve understanding and recognition, while reveal-only study is capped and never pretends to be real-game transfer.
+
+Progress persists per checkpoint and per game. Repertoire-linked games explicitly connect back to the learner's compact White 1.e4, Black Caro-Kann and Black QGD systems without expanding those repertoires into giant theory trees.
+
 ## Next phase
 
-P33 — Model Games & Strategic Pattern Learning.
+P34 — Adaptive Coach Simplification.
