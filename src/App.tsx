@@ -1854,9 +1854,9 @@ export default function App() {
             <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
             <p>
               This area is reserved for the next specialized product phase.
-              P3 now provides the shared interactive board and lesson engine.
+              The shared board and lesson engine are ready.
             </p>
-            <button className="secondary" onClick={() => setNav("home")}>Back home</button>
+            <button className="secondary" onClick={() => setNav("home")}>Back to Train</button>
           </section>
         )}
       </main>
