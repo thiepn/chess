@@ -20,6 +20,7 @@ const evidenceModeMap: Partial<Record<string, TrainingMode>> = {
   guided: "guidedDemo",
   themedPuzzle: "themedPuzzle",
   mixedPuzzle: "mixedPuzzle",
+  calculation: "calculation",
   delayedReview: "microReview",
   trainingPosition: "engineGame",
   engineGame: "engineGame",
@@ -303,9 +304,22 @@ function chooseMode(
     }
   }
 
+  if (
+    skill.domain === "calculation" &&
+    skill.trainingModes.includes("calculation") &&
+    (mastery?.understanding ?? 0) >= 45
+  ) {
+    return {
+      mode: "calculation" as TrainingMode,
+      reason:
+        "The concept is established; train candidate generation and multi-ply calculation directly.",
+    };
+  }
+
   const historicalBest = bestModeFromHistory(skill, events, [
     "themedPuzzle",
     "mixedPuzzle",
+    "calculation",
     "guidedDemo",
     "conceptLesson",
   ]);
