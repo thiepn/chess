@@ -64,6 +64,12 @@ export function OpeningsView({
   const relevantDeviations = deviations.filter(
     (item) => item.repertoireId === repertoire.id && !item.resolved,
   );
+  const hasConceptEvidence = repertoire.nodeIds.some(
+    (id) => (progress[id]?.conceptAttempts ?? 0) > 0,
+  );
+  const hasLineEvidence = repertoire.nodeIds.some(
+    (id) => (progress[id]?.lineAttempts ?? 0) > 0,
+  );
 
   function switchRepertoire(nextId: string) {
     const next = repertoireById[nextId];
@@ -137,11 +143,15 @@ export function OpeningsView({
             </div>
             <div>
               <span>Why recall</span>
-              <strong>{health.conceptMastery || "—"}{health.conceptMastery ? "%" : ""}</strong>
+              <strong>
+                {hasConceptEvidence ? `${health.conceptMastery}%` : "—"}
+              </strong>
             </div>
             <div>
               <span>Line rehearsal</span>
-              <strong>{health.lineMastery || "—"}{health.lineMastery ? "%" : ""}</strong>
+              <strong>
+                {hasLineEvidence ? `${health.lineMastery}%` : "—"}
+              </strong>
             </div>
             <div>
               <span>Due positions</span>
