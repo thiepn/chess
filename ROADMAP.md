@@ -156,6 +156,8 @@ Acceptance:
 
 ### P27 — Production Puzzle Corpus & Tactical Practice 2.0
 
+**Status:** implemented.
+
 **Purpose:** turn the puzzle architecture into a real training system.
 
 Deliver:
