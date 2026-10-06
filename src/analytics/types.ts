@@ -1,5 +1,6 @@
 import type {
   CoachEffectivenessInsight,
+  CoachPolicyInsight,
   TrainingPrescription,
 } from "../prescriptions/types";
 import type {
@@ -204,6 +205,7 @@ export interface ProgressIntelligence {
   realGameDiagnostics: RealGameDiagnostics;
   prescriptions: TrainingPrescription[];
   coachEffectiveness: CoachEffectivenessInsight;
+  coachPolicy: CoachPolicyInsight;
   calibration: CalibrationInsight;
   trend: TrendPoint[];
   interventions: InterventionInsight[];
