@@ -83,6 +83,28 @@ describe("mastery evidence timing", () => {
     expect(next.delayedRetention).toBe(22);
   });
 
+  it("credits repertoire recall to opening execution and retention", () => {
+    const previous = {
+      ...emptyMastery("openings.principles"),
+      recognition: 42,
+      execution: 30,
+      delayedRetention: 18,
+    };
+
+    const next = applyEvidence(previous, {
+      skillId: "openings.principles",
+      source: "openingRecall",
+      success: true,
+      quality: .9,
+      difficulty: .6,
+      occurredAt: "2026-10-05T12:00:00Z",
+    });
+
+    expect(next.recognition).toBeGreaterThan(previous.recognition);
+    expect(next.execution).toBeGreaterThan(previous.execution);
+    expect(next.delayedRetention).toBeGreaterThan(previous.delayedRetention);
+  });
+
   it("credits dedicated calculation evidence to execution and transfer", () => {
     const previous = {
       ...emptyMastery("calculation.candidates"),
