@@ -1389,9 +1389,9 @@ export default function App() {
                   style={{
                     width: `${Math.min(
                       100,
-                      progressIntelligence.trainingHorizon.effectiveWeeklyMinutes
+                      progressIntelligence.trainingHorizon.managedWeeklyMinutes
                         ? progressIntelligence.trainingHorizon.completedMinutes /
-                          progressIntelligence.trainingHorizon.effectiveWeeklyMinutes *
+                          progressIntelligence.trainingHorizon.managedWeeklyMinutes *
                           100
                         : 0,
                     )}%`,
@@ -1404,7 +1404,7 @@ export default function App() {
                   <span>This week</span>
                   <strong>
                     {progressIntelligence.trainingHorizon.completedMinutes}/
-                    {progressIntelligence.trainingHorizon.effectiveWeeklyMinutes}m
+                    {progressIntelligence.trainingHorizon.managedWeeklyMinutes}m
                   </strong>
                 </div>
                 <div>
