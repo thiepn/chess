@@ -485,9 +485,11 @@ export default function App() {
     const skillId = activeSkill.id;
     const occurredAt = new Date().toISOString();
     const source: LearningEvidence["source"] =
-      active.source === "review"
-        ? "delayedReview"
-        : active.activityType === "themedPuzzle"
+      active.activityType === "calculation"
+        ? "calculation"
+        : active.source === "review"
+          ? "delayedReview"
+          : active.activityType === "themedPuzzle"
           ? "themedPuzzle"
           : active.activityType === "mixedPuzzle"
             ? "mixedPuzzle"
