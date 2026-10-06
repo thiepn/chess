@@ -37,6 +37,8 @@ export interface TrainingScenario {
   objective: string;
   successResults: Array<"win" | "draw" | "loss">;
   sourceLabel: string;
+  prescriptionId?: string;
+  prescriptionActionId?: string;
 }
 
 export interface PlaySetup {
@@ -62,5 +64,7 @@ export interface PlayResult {
   scenarioSuccess?: boolean;
   aiProfileId: AiProfileId;
   trainingSkillId?: string;
+  prescriptionId?: string;
+  prescriptionActionId?: string;
   completedAt: string;
 }
