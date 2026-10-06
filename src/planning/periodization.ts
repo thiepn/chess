@@ -17,6 +17,7 @@ import type {
 } from "./types";
 import { buildTrainingPlanForecast } from "./forecast";
 import { buildLoadManagement } from "./load";
+import { buildCompetitionCycle } from "./cycle";
 
 const DAY = 86_400_000;
 const LEDGER_RETENTION_DAYS = 180;
@@ -174,6 +175,9 @@ export function trainingPlanForState(
     ...(stored.manualRecoveryUntil
       ? { manualRecoveryUntil: stored.manualRecoveryUntil }
       : {}),
+    ...(stored.competition
+      ? { competition: stored.competition }
+      : {}),
     updatedAt: stored.updatedAt || now.toISOString(),
   };
 }
@@ -314,8 +318,15 @@ export function buildTrainingHorizon(
     forecast,
     now,
   );
+  const competitionCycle = buildCompetitionCycle(
+    state,
+    plan,
+    forecast,
+    loadManagement,
+    now,
+  );
   const managedWeeklyMinutes =
-    loadManagement.managedWeeklyMinutes;
+    competitionCycle.managedWeeklyMinutes;
   const start = mondayStart(now);
   const end = endOfWeek(start);
   const ledger = weeklyLedger(state, now);
@@ -394,7 +405,7 @@ export function buildTrainingHorizon(
           clamp(
             remainingMinutes / remainingSessions,
             10,
-            loadManagement.maxSessionMinutes,
+            competitionCycle.maxSessionMinutes,
           ),
         )
       : 10;
@@ -433,6 +444,7 @@ export function buildTrainingHorizon(
     effectiveWeeklyMinutes,
     managedWeeklyMinutes,
     loadManagement,
+    competitionCycle,
     allocations,
   };
 }
@@ -463,7 +475,8 @@ export function periodizationAdjustment(
     allocation?.pressure ?? 0;
   let multiplier =
     (.86 + gap * .28) *
-    (horizon.loadManagement.bucketMultipliers[bucket] ?? 1);
+    (horizon.loadManagement.bucketMultipliers[bucket] ?? 1) *
+    (horizon.competitionCycle.bucketMultipliers[bucket] ?? 1);
 
   if (bucket === horizon.nextFocus) {
     multiplier += .08;
@@ -500,11 +513,20 @@ export function periodizationAdjustment(
         : `${allocation?.label ?? trainingBucketLabels[bucket]} still has ${allocation?.remainingMinutes ?? 0} planned minute(s) this week.`;
   const loadFactor =
     horizon.loadManagement.bucketMultipliers[bucket] ?? 1;
-  const reason =
+  const cycleFactor =
+    horizon.competitionCycle.bucketMultipliers[bucket] ?? 1;
+  const loadNote =
     horizon.loadManagement.appliedMode === "normal" ||
     loadFactor === 1
-      ? baseReason
-      : `${baseReason} P23 ${horizon.loadManagement.appliedMode} mode applies ${Math.round(loadFactor * 100)}% load pressure to this bucket.`;
+      ? ""
+      : ` P23 ${horizon.loadManagement.appliedMode} mode applies ${Math.round(loadFactor * 100)}% load pressure to this bucket.`;
+  const cycleNote =
+    horizon.competitionCycle.active &&
+    cycleFactor !== 1
+      ? ` P24 ${horizon.competitionCycle.phase} block applies ${Math.round(cycleFactor * 100)}% competition-cycle pressure.`
+      : "";
+  const reason =
+    `${baseReason}${loadNote}${cycleNote}`;
 
   return {
     bucket,
