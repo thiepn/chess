@@ -5,6 +5,7 @@ import {
 } from "../domain/curriculum";
 import { retentionProbability } from "../domain/mastery";
 import { timeControlWeight } from "../games/practical";
+import { buildRealGameDiagnostics } from "./cohorts";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -593,6 +594,7 @@ export function buildProgressIntelligence(
     humanTransfer: Math.round(humanTransferNow(state)),
     aiTransfer: Math.round(aiTransferNow(state)),
     practicalStrength: practicalStrengthInsight(state),
+    realGameDiagnostics: buildRealGameDiagnostics(state),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(
