@@ -106,6 +106,8 @@ export function importPgn(
     event: headers.Event,
     site: headers.Site,
     date: headers.Date,
+    openingName: headers.Opening,
+    eco: headers.ECO,
     rated:
       eventText.includes("rated")
         ? true
