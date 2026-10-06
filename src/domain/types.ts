@@ -172,6 +172,7 @@ export interface TrainingCandidate {
   studyId?: string;
   scenarioId?: string;
   prescriptionId?: string;
+  prescriptionActionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
 }
 
