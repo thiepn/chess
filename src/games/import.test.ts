@@ -58,6 +58,34 @@ describe("PGN import", () => {
     expect(game.moves[0].moveNumber).toBe(27);
   });
 
+  it("extracts per-move clock context when PGN clock annotations are complete", () => {
+    const game = importPgn(
+      `[Event "Clocked game"]
+[TimeControl "60+0"]
+[Result "*"]
+
+1. e4 {[%clk 0:00:55]} e5 {[%clk 0:00:58]} 2. Nf3 {[%clk 0:00:50]} Nc6 {[%clk 0:00:52]} *`,
+      "w",
+    );
+
+    expect(game.moves[0].clockSecondsAfterMove).toBe(55);
+    expect(game.moves[0].moveTimeSeconds).toBe(5);
+    expect(game.moves[1].moveTimeSeconds).toBe(2);
+    expect(game.moves[2].moveTimeSeconds).toBe(5);
+    expect(game.moves[3].moveTimeSeconds).toBe(6);
+  });
+
+  it("does not invent clock context from incomplete annotations", () => {
+    const game = importPgn(
+      `[TimeControl "60+0"]
+
+1. e4 {[%clk 0:00:55]} e5 2. Nf3 Nc6 *`,
+      "w",
+    );
+
+    expect(game.moves.every((move) => move.moveTimeSeconds === undefined)).toBe(true);
+  });
+
   it("rejects PGN without moves", () => {
     expect(() => importPgn('[Event "Empty"]', "w")).toThrow();
   });
