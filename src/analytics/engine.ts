@@ -6,6 +6,7 @@ import {
 import { retentionProbability } from "../domain/mastery";
 import { timeControlWeight } from "../games/practical";
 import { buildRealGameDiagnostics } from "./cohorts";
+import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -553,6 +554,7 @@ export function buildProgressIntelligence(
   const pastMastery = analyticsMasteryAt(state, cutoff30);
   const mastery = currentMastery(state);
   const skillTrends = skillTrendInsights(state, now);
+  const realGameDiagnostics = buildRealGameDiagnostics(state);
 
   const activeDays = new Set(
     evidenceEvents
@@ -594,7 +596,11 @@ export function buildProgressIntelligence(
     humanTransfer: Math.round(humanTransferNow(state)),
     aiTransfer: Math.round(aiTransferNow(state)),
     practicalStrength: practicalStrengthInsight(state),
-    realGameDiagnostics: buildRealGameDiagnostics(state),
+    realGameDiagnostics,
+    prescriptions: buildTrainingPrescriptions(
+      state,
+      realGameDiagnostics,
+    ),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(
