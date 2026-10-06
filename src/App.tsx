@@ -515,7 +515,9 @@ export default function App() {
     const source: LearningEvidence["source"] =
       active.activityType === "calculation"
         ? "calculation"
-        : active.activityType === "endgameDrill" ||
+        : active.activityType === "openingRecall"
+          ? "openingRecall"
+          : active.activityType === "endgameDrill" ||
             active.activityType === "conversionChallenge"
           ? "endgameTechnique"
           : active.source === "review"
