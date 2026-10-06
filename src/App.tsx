@@ -1239,9 +1239,11 @@ export default function App() {
                   Practical {progressIntelligence.practicalStrength.rating} · {progressIntelligence.mastery}% mastery
                 </strong>
                 <span>
-                  {progressIntelligence.practicalStrength.humanGames
-                    ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}% · ${progressIntelligence.practicalStrength.confidence}% confidence.`
-                    : "Training-only estimate for now. Analyze human games to establish practical strength."}
+                  {progressIntelligence.realGameDiagnostics.diagnostics[0]
+                    ? `Priority signal: ${progressIntelligence.realGameDiagnostics.diagnostics[0].headline}`
+                    : progressIntelligence.practicalStrength.humanGames
+                      ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}% · ${progressIntelligence.practicalStrength.confidence}% confidence.`
+                      : "Training-only estimate for now. Analyze human games to establish practical strength."}
                 </span>
               </div>
               <ChevronRight size={18} />
