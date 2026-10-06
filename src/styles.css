@@ -7875,3 +7875,149 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+
+/* P20 — coach policy learning and intervention selection */
+
+.coach-policy-panel {
+  margin-bottom: 11px;
+}
+
+.coach-policy-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.coach-policy-grid > div {
+  min-height: 70px;
+  padding: 11px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.016);
+  display: grid;
+  align-content: center;
+  gap: 3px;
+}
+
+.coach-policy-grid span,
+.coach-policy-label {
+  color: #66748c;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 850;
+}
+
+.coach-policy-grid strong {
+  color: #d2dbe8;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.coach-policy-signals {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.coach-policy-signals > div {
+  display: grid;
+  gap: 6px;
+}
+
+.coach-policy-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.coach-policy-signal {
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  gap: 2px;
+}
+
+.coach-policy-signal.prefer {
+  border-color: rgba(112,209,164,.1);
+  background: rgba(112,209,164,.02);
+}
+
+.coach-policy-signal.deprioritize {
+  border-color: rgba(255,117,141,.1);
+  background: rgba(255,117,141,.02);
+}
+
+.coach-policy-signal.explore {
+  border-color: rgba(118,151,255,.08);
+}
+
+.coach-policy-signal strong {
+  color: #bbc6d6;
+  font-size: 8px;
+}
+
+.coach-policy-signal span {
+  color: #728096;
+  font-size: 7px;
+}
+
+.coach-policy-signal small {
+  color: #59677d;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.coach-policy-note {
+  margin: 10px 0 0;
+  color: #5f6d82;
+  font-size: 7px;
+  line-height: 1.5;
+}
+
+.prescription-policy-strip {
+  margin-top: 7px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  align-items: start;
+  color: #6d7b91;
+}
+
+.prescription-policy-strip.prefer {
+  border-color: rgba(112,209,164,.08);
+}
+
+.prescription-policy-strip.deprioritize {
+  border-color: rgba(255,117,141,.08);
+}
+
+.prescription-policy-strip span {
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .coach-policy-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .coach-policy-signal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .coach-policy-grid,
+  .coach-policy-signal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
