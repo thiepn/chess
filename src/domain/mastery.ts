@@ -62,16 +62,31 @@ export function calculateEffectiveMastery(mastery: SkillMastery): number {
     mastery.humanGameExecution ?? mastery.realGameExecution ?? 0;
   const aiTransfer = mastery.aiGameTransfer ?? mastery.trainingTransfer ?? 0;
 
+  const weighted = [
+    [mastery.understanding, .08],
+    [mastery.recognition, .12],
+    [mastery.execution, .13],
+    [mastery.mixedRecognition, .16],
+    [mastery.delayedRetention, .16],
+    [mastery.trainingTransfer, .1],
+    [aiTransfer, .05],
+    ...(humanAttempts > 0
+      ? [
+          [humanRecognition, humanAttempts >= 5 ? .08 : .05],
+          [humanExecution, humanAttempts >= 5 ? .12 : .05],
+        ]
+      : []),
+  ] as Array<[number, number]>;
+
+  const totalWeight = weighted.reduce(
+    (sum, [, weight]) => sum + weight,
+    0,
+  );
   const raw =
-    mastery.understanding * .08 +
-    mastery.recognition * .12 +
-    mastery.execution * .13 +
-    mastery.mixedRecognition * .16 +
-    mastery.delayedRetention * .16 +
-    mastery.trainingTransfer * .1 +
-    aiTransfer * .05 +
-    humanRecognition * (humanAttempts >= 5 ? .08 : .05) +
-    humanExecution * (humanAttempts >= 5 ? .12 : .05);
+    weighted.reduce(
+      (sum, [value, weight]) => sum + value * weight,
+      0,
+    ) / Math.max(.01, totalWeight);
 
   const confidenceGate = .55 + .45 * (mastery.confidence / 100);
   return clamp(raw * confidenceGate);
