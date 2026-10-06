@@ -66,7 +66,12 @@ import type { PlayResult, TrainingScenario } from "./play/types";
 import { LibraryView } from "./components/LibraryView";
 import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
 import type { SavedStudy } from "./library/types";
-import { applyStudyAttempt } from "./library/progress";
+import { ModelGamesView } from "./components/ModelGamesView";
+import { ModelGameRunner } from "./components/ModelGameRunner";
+import { modelGameById, modelGameCheckpointPosition } from "./model-games/games";
+import { recordModelGameCheckpoint, recordModelGameCompletion } from "./model-games/progress";
+import type { ModelGameCheckpointResult } from "./model-games/types";
+import { applyStudyAttempt, createStudyTraining } from "./library/progress";
 import { ExperienceProvider } from "./interaction/ExperienceProvider";
 import { ExperienceControls } from "./components/ExperienceControls";
 import { defaultExperienceSettings } from "./interaction/types";
@@ -166,7 +171,8 @@ export default function App() {
   const [mode, setMode] = useState<SessionMode>("standard");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
-  const [learnMode, setLearnMode] = useState<"curriculum" | "openings">("curriculum");
+  const [learnMode, setLearnMode] = useState<"curriculum" | "openings" | "model-games">("curriculum");
+  const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
@@ -225,6 +231,9 @@ export default function App() {
     active?.studyId
       ? state.savedStudies?.find((study) => study.id === active.studyId)
       : undefined;
+  const activeModelGame = activeModelGameId
+    ? modelGameById[activeModelGameId]
+    : undefined;
   const activeCalculationPosition =
     active &&
     activeSkill &&
@@ -1278,6 +1287,209 @@ export default function App() {
     }));
   }
 
+  function startModelGame(gameId: string) {
+    if (!modelGameById[gameId]) return;
+    setActiveIndex(null);
+    setManualActivity(null);
+    setActiveModelGameId(gameId);
+  }
+
+  function completeModelGameCheckpoint(
+    gameId: string,
+    result: ModelGameCheckpointResult,
+  ) {
+    const game = modelGameById[gameId];
+    const checkpoint = game?.checkpoints.find(
+      (item) => item.id === result.checkpointId,
+    );
+    const skill = checkpoint
+      ? skillById[checkpoint.skillId]
+      : undefined;
+    if (!game || !checkpoint || !skill) return;
+
+    const occurredAt = new Date().toISOString();
+    const evidence: LearningEvidence = {
+      skillId: skill.id,
+      source: "modelGame",
+      success:
+        result.moveSolved &&
+        !result.revealed,
+      quality: result.quality,
+      difficulty: Math.min(
+        1,
+        skill.difficulty / 5,
+      ),
+      hintsUsed: result.hintsUsed,
+      occurredAt,
+    };
+
+    setState((previous) => {
+      const previousMastery =
+        previous.mastery[skill.id] ??
+        emptyMastery(
+          skill.id,
+          Math.min(
+            1,
+            skill.difficulty / 5,
+          ),
+        );
+      const nextMastery = applyEvidence(
+        previousMastery,
+        evidence,
+      );
+      const priorProgress =
+        previous.modelGameProgress?.[
+          game.id
+        ];
+      const nextProgress =
+        recordModelGameCheckpoint(
+          priorProgress,
+          game.id,
+          result,
+          new Date(occurredAt),
+        );
+
+      return {
+        ...previous,
+        mastery: {
+          ...previous.mastery,
+          [skill.id]: nextMastery,
+        },
+        analytics: appendEvidenceAnalytics(
+          previous.analytics,
+          previousMastery,
+          nextMastery,
+          evidence,
+          "manual",
+        ),
+        modelGameProgress: {
+          ...(previous.modelGameProgress ?? {}),
+          [game.id]: nextProgress,
+        },
+      };
+    });
+  }
+
+  function saveModelGameCheckpoint(
+    gameId: string,
+    checkpointId: string,
+  ) {
+    const game = modelGameById[gameId];
+    const checkpoint = game?.checkpoints.find(
+      (item) => item.id === checkpointId,
+    );
+    if (!game || !checkpoint) return;
+
+    const position =
+      modelGameCheckpointPosition(
+        game,
+        checkpoint,
+      );
+    const skill =
+      skillById[checkpoint.skillId];
+    if (!skill) return;
+
+    setState((previous) => {
+      const now = new Date();
+      const id =
+        `model:${game.id}:${checkpoint.id}`;
+      const existing = (
+        previous.savedStudies ?? []
+      ).find((study) => study.id === id);
+
+      const study: SavedStudy = {
+        id,
+        title: `Model game · ${checkpoint.title}`,
+        kind:
+          skill.domain === "openings"
+            ? "opening"
+            : skill.domain === "tactics"
+              ? "tactic"
+              : "position",
+        fen: position.beforeFen,
+        notes: [
+          checkpoint.explanation,
+          `Reusable plan: ${checkpoint.plan}`,
+          `From ${game.players}, ${game.event} ${game.year}.`,
+        ].join("\n\n"),
+        tags: [
+          "model-game",
+          skill.domain,
+          ...game.tags.slice(0, 3),
+        ],
+        source: "reference",
+        sourceId: `${game.id}:${checkpoint.id}`,
+        orientation: game.orientation,
+        arrows: [
+          {
+            from:
+              position.expectedMove.slice(
+                0,
+                2,
+              ) as import("chess.js").Square,
+            to:
+              position.expectedMove.slice(
+                2,
+                4,
+              ) as import("chess.js").Square,
+            tone: "good",
+          },
+        ],
+        highlights: [],
+        training:
+          existing?.training ??
+          createStudyTraining(
+            skill.id,
+            position.expectedMove,
+            position.targetSan,
+            now,
+          ),
+        favorite:
+          existing?.favorite ?? false,
+        createdAt:
+          existing?.createdAt ??
+          now.toISOString(),
+        updatedAt: now.toISOString(),
+      };
+
+      return {
+        ...previous,
+        savedStudies: [
+          ...(previous.savedStudies ?? []).filter(
+            (item) => item.id !== id,
+          ),
+          study,
+        ],
+      };
+    });
+  }
+
+  function completeModelGame(gameId: string) {
+    const game = modelGameById[gameId];
+    if (!game) return;
+
+    setState((previous) => ({
+      ...previous,
+      modelGameProgress: {
+        ...(previous.modelGameProgress ?? {}),
+        [game.id]:
+          recordModelGameCompletion(
+            previous.modelGameProgress?.[
+              game.id
+            ],
+            game,
+          ),
+      },
+    }));
+    emitExperienceEvent({
+      feedback: "complete",
+      celebration: "small",
+    });
+    setActiveModelGameId(null);
+    setLearnMode("model-games");
+    setNav("learn");
+  }
+
   function updateGameReviewReflection(
     reflection: GameReviewReflection,
   ) {
@@ -2173,6 +2385,12 @@ export default function App() {
               onTrainLine={startOpeningLinePractice}
               onBack={() => setLearnMode("curriculum")}
             />
+          ) : learnMode === "model-games" ? (
+            <ModelGamesView
+              progress={state.modelGameProgress ?? {}}
+              onStartGame={startModelGame}
+              onBack={() => setLearnMode("curriculum")}
+            />
           ) : (
             <LearnView
               mastery={state.mastery}
@@ -2184,6 +2402,7 @@ export default function App() {
               onStartPlacement={startPlacementAssessment}
               onStartCheckpoint={startStageCheckpoint}
               onOpenOpenings={() => setLearnMode("openings")}
+              onOpenModelGames={() => setLearnMode("model-games")}
             />
           )
         ) : nav === "play" ? (
@@ -2317,6 +2536,37 @@ export default function App() {
               session={assessmentSession}
               onComplete={completeAssessment}
               onCancel={() => setAssessmentSession(null)}
+            />
+          </section>
+        </div>
+      )}
+
+      {activeModelGame && (
+        <div
+          className="training-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Model game: ${activeModelGame.title}`}
+        >
+          <section className="training-sheet model-game-sheet">
+            <button
+              className="close-button"
+              type="button"
+              onClick={() => setActiveModelGameId(null)}
+              aria-label="Close model game"
+            >
+              ×
+            </button>
+            <ModelGameRunner
+              game={activeModelGame}
+              progress={state.modelGameProgress?.[activeModelGame.id]}
+              savedStudyIds={(state.savedStudies ?? []).map((study) => study.id)}
+              onCheckpointResult={(result) =>
+                completeModelGameCheckpoint(activeModelGame.id, result)
+              }
+              onSaveCheckpoint={saveModelGameCheckpoint}
+              onComplete={completeModelGame}
+              onExit={() => setActiveModelGameId(null)}
             />
           </section>
         </div>
