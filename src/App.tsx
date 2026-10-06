@@ -51,7 +51,7 @@ import { openingDeviationsForGame } from "./openings/match";
 import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
-import { resolveCalculationPosition } from "./calculation/positions";
+import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
 import { analyzeImportedGame } from "./games/analyze";
 import { timeControlWeight } from "./games/practical";
 import {
@@ -1171,17 +1171,19 @@ export default function App() {
     if (!skill) return;
 
     const activityType =
-      skill.trainingModes.includes("mixedPuzzle")
-        ? "mixedPuzzle"
-        : skill.trainingModes.includes("themedPuzzle")
-          ? "themedPuzzle"
-          : skill.trainingModes.includes("guidedDemo")
-            ? "guidedDemo"
-            : skill.trainingModes.includes("conceptLesson")
-              ? "conceptLesson"
-              : skill.trainingModes.includes("microReview")
-                ? "microReview"
-                : "conceptLesson";
+      skill.trainingModes.includes("calculation")
+        ? "calculation"
+        : skill.trainingModes.includes("mixedPuzzle")
+          ? "mixedPuzzle"
+          : skill.trainingModes.includes("themedPuzzle")
+            ? "themedPuzzle"
+            : skill.trainingModes.includes("guidedDemo")
+              ? "guidedDemo"
+              : skill.trainingModes.includes("conceptLesson")
+                ? "conceptLesson"
+                : skill.trainingModes.includes("microReview")
+                  ? "microReview"
+                  : "conceptLesson";
 
     setManualActivity({
       id: `practice:${skillId}`,
@@ -1205,10 +1207,19 @@ export default function App() {
         : "Focused practice",
       title: skill.title,
       subtitle:
-        activityType === "mixedPuzzle" ||
-        activityType === "themedPuzzle"
-          ? "Adaptive retrieval practice"
-          : "Guided concept repair",
+        activityType === "calculation"
+          ? "Candidate generation & line calculation"
+          : activityType === "mixedPuzzle" ||
+              activityType === "themedPuzzle"
+            ? "Adaptive retrieval practice"
+            : "Guided concept repair",
+      calculationPositionId:
+        activityType === "calculation"
+          ? calculationPositionFor(
+              state,
+              skill.id,
+            ).id
+          : undefined,
       prescriptionId,
       prescriptionActionId,
     });
@@ -1986,7 +1997,9 @@ export default function App() {
             className={
               active.activityType === "engineGame"
                 ? "training-sheet adaptive-game-sheet"
-                : "training-sheet"
+                : active.activityType === "calculation"
+                  ? "training-sheet calculation-sheet"
+                  : "training-sheet"
             }
           >
             <div className="training-progress">
