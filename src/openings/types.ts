@@ -57,6 +57,15 @@ export interface OpeningDeviation {
   resolved: boolean;
 }
 
+export interface GameOpeningIdentity {
+  key: string;
+  label: string;
+  eco?: string;
+  repertoireId?: string;
+  matchedPlies?: number;
+  source: "header" | "repertoire" | "position" | "fallback";
+}
+
 export interface OpeningExplorerMove {
   uci: string;
   san: string;
