@@ -220,13 +220,26 @@ function stageTransferScore(state: UserState, stageId: CurriculumStageId) {
     .filter((skill) => skill.stage === stageId)
     .map((skill) => {
       const mastery = masteryFor(state, skill.id);
-      return mastery
-        ? Math.max(
-            mastery.trainingTransfer,
-            mastery.realGameRecognition,
-            mastery.realGameExecution,
-          )
-        : 0;
+      if (!mastery) return 0;
+
+      const human = Math.max(
+        mastery.humanGameRecognition ?? 0,
+        mastery.humanGameExecution ?? 0,
+      );
+      const ai = Math.max(
+        mastery.trainingTransfer,
+        mastery.aiGameTransfer ?? 0,
+      );
+      const legacy = Math.max(
+        mastery.realGameRecognition,
+        mastery.realGameExecution,
+      );
+
+      return Math.max(
+        human,
+        ai * .86,
+        legacy * .9,
+      );
     })
     .sort((a, b) => b - a);
 
