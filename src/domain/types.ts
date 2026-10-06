@@ -180,6 +180,7 @@ export type EvidenceSource =
   | "mixedPuzzle"
   | "calculation"
   | "endgameTechnique"
+  | "openingRecall"
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
