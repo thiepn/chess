@@ -122,6 +122,7 @@ export interface EngineEvaluation {
 
 export interface EngineMoveReview {
   gameId: string;
+  gameSource?: ImportedGameSource;
   ply: number;
   move: ImportedGameMove;
   before: EngineEvaluation;
