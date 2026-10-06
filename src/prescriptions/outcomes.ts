@@ -283,7 +283,7 @@ export function syncPrescriptionHistory(
     changed = true;
   }
 
-  return changed ? history : state.prescriptionHistory ?? [];
+  return changed ? history : state.prescriptionHistory;
 }
 
 export function markPrescriptionStarted(
