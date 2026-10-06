@@ -1,6 +1,10 @@
 import type { ImportedGame } from "../games/types";
 import { openingNodes, repertoires } from "./repertoire";
-import type { OpeningDeviation, OpeningRepertoire } from "./types";
+import type {
+  GameOpeningIdentity,
+  OpeningDeviation,
+  OpeningRepertoire,
+} from "./types";
 
 function candidateRepertoires(game: ImportedGame) {
   return repertoires.filter((repertoire) => repertoire.color === game.playerColor);
@@ -45,7 +49,9 @@ function openingFamily(name: string) {
     .trim();
 }
 
-export function openingIdentityForGame(game: ImportedGame) {
+export function openingIdentityForGame(
+  game: ImportedGame,
+): GameOpeningIdentity {
   const headerName = game.openingName?.trim();
   if (headerName) {
     return {
