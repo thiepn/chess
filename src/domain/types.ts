@@ -87,6 +87,11 @@ export interface SkillMastery {
   trainingTransfer: number;
   realGameRecognition: number;
   realGameExecution: number;
+  humanGameRecognition?: number;
+  humanGameExecution?: number;
+  humanGameAttempts?: number;
+  aiGameTransfer?: number;
+  aiGameAttempts?: number;
   effectiveMastery: number;
   confidence: number;
   attempts: number;
@@ -108,6 +113,8 @@ export type EvidenceSource =
   | "trainingPosition"
   | "engineGame"
   | "realGame"
+  | "humanGame"
+  | "aiGameReview"
   | "diagnostic"
   | "checkpoint";
 
@@ -120,6 +127,8 @@ export interface LearningEvidence {
   responseTimeMs?: number;
   hintsUsed?: number;
   gameImpact?: number;
+  opponentRating?: number;
+  timeControlWeight?: number;
   occurredAt: string;
 }
 
