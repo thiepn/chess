@@ -102,8 +102,12 @@ function clamp(
   return Math.max(min, Math.min(max, value));
 }
 
-function round(value: number) {
-  return Math.round(value * 10) / 10;
+function round(
+  value: number,
+  digits = 1,
+) {
+  const factor = 10 ** digits;
+  return Math.round(value * factor) / factor;
 }
 
 function mondayStart(now: Date) {
@@ -276,7 +280,7 @@ function allocationFor(
     completedMinutes,
     remainingMinutes,
     completion: Math.round(completion * 100),
-    pressure: round(pressure),
+    pressure: round(pressure, 2),
   };
 }
 
@@ -467,7 +471,7 @@ export function periodizationAdjustment(
 
   return {
     bucket,
-    multiplier: round(multiplier),
+    multiplier: round(multiplier, 2),
     targetMinutes:
       allocation?.targetMinutes ?? 0,
     completedMinutes:
