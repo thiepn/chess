@@ -157,6 +157,48 @@ export function classifyReview(review: EngineMoveReview): {
   return { severity, skillIds: unique, explanation };
 }
 
+export function classifyStrongReview(review: EngineMoveReview): string[] {
+  if (review.centipawnLoss > 35) return [];
+
+  const before = new Chess(review.move.beforeFen);
+  const forcing = bestMoveIsForcing(review);
+  const skillIds: string[] = [];
+
+  if (review.ply <= 20) {
+    skillIds.push("openings.principles");
+  }
+
+  if (!moveCreatesImmediateHang(review)) {
+    skillIds.push("fundamentals.blunder-check");
+  }
+
+  if (
+    forcing.check ||
+    forcing.capture ||
+    review.move.uci === review.before.bestMove
+  ) {
+    skillIds.push("calculation.candidates");
+  }
+
+  if (onlyKingsAndPawns(before)) {
+    skillIds.push("endgames.opposition");
+  } else if (
+    materialCount(before) <= 10 &&
+    review.before.scoreCp > 180
+  ) {
+    skillIds.push("conversion.simplify");
+  }
+
+  if (
+    review.before.scoreCp < -120 &&
+    review.centipawnLoss <= 20
+  ) {
+    skillIds.push("defense.threats");
+  }
+
+  return [...new Set(skillIds)].slice(0, 3);
+}
+
 export function buildPersonalMistake(
   review: EngineMoveReview,
   now = new Date(),
