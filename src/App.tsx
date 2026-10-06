@@ -40,6 +40,7 @@ import { PuzzleRunner } from "./components/PuzzleRunner";
 import { LearnView } from "./components/LearnView";
 import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
+import { CalculationRunner } from "./components/CalculationRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { ImportedGame, PersonalMistake } from "./games/types";
 import { OpeningsView } from "./components/OpeningsView";
@@ -50,6 +51,7 @@ import { openingDeviationsForGame } from "./openings/match";
 import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
+import { resolveCalculationPosition } from "./calculation/positions";
 import { analyzeImportedGame } from "./games/analyze";
 import { timeControlWeight } from "./games/practical";
 import {
@@ -220,6 +222,16 @@ export default function App() {
   const activeStudy =
     active?.studyId
       ? state.savedStudies?.find((study) => study.id === active.studyId)
+      : undefined;
+  const activeCalculationPosition =
+    active &&
+    activeSkill &&
+    active.activityType === "calculation"
+      ? resolveCalculationPosition(
+          state,
+          active,
+          activeSkill,
+        )
       : undefined;
   const activeScenarioBase =
     active?.scenarioId ? scenarioById[active.scenarioId] : undefined;
@@ -612,6 +624,58 @@ export default function App() {
         });
       }
 
+      const calculationHistory = {
+        ...(previous.calculationHistory ?? {}),
+      };
+      if (
+        outcome.calculationPositionId &&
+        outcome.calculationEvidence
+      ) {
+        const prior =
+          calculationHistory[
+            outcome.calculationPositionId
+          ];
+        const successes =
+          (prior?.successes ?? 0) +
+          (outcome.success ? 1 : 0);
+        const attempts =
+          (prior?.attempts ?? 0) + 1;
+        const intervalDays =
+          outcome.success &&
+          outcome.quality >= .85
+            ? 7
+            : outcome.success
+              ? 3
+              : .5;
+
+        calculationHistory[
+          outcome.calculationPositionId
+        ] = {
+          positionId:
+            outcome.calculationPositionId,
+          attempts,
+          successes,
+          lastAttemptAt: occurredAt,
+          lastQuality: outcome.quality,
+          lastCandidateScore:
+            outcome.calculationEvidence
+              .candidateScore,
+          lastReplyScore:
+            outcome.calculationEvidence
+              .replyScore,
+          lastContinuationScore:
+            outcome.calculationEvidence
+              .continuationScore,
+          lastLineDepth:
+            outcome.calculationEvidence
+              .lineDepth,
+          nextReviewAt: new Date(
+            new Date(occurredAt).getTime() +
+              intervalDays * 86_400_000,
+          ).toISOString(),
+        };
+      }
+
       const nextMastery = applyEvidence(previousMastery, evidence);
       const prescriptionHistory =
         active.prescriptionId
@@ -644,6 +708,7 @@ export default function App() {
         openingDeviations,
         savedStudies,
         prescriptionHistory,
+        calculationHistory,
         trainingLedger: appendTrainingLedger(
           previous.trainingLedger,
           active,
@@ -2007,6 +2072,14 @@ export default function App() {
             ) : active.activityType === "personalMistake" && activeMistake ? (
               <PersonalMistakeRunner
                 mistake={activeMistake}
+                onComplete={completeActivity}
+              />
+            ) : active.activityType === "calculation" &&
+            activeCalculationPosition ? (
+              <CalculationRunner
+                activity={active}
+                skill={activeSkill}
+                position={activeCalculationPosition}
                 onComplete={completeActivity}
               />
             ) : active.activityType === "themedPuzzle" ||
