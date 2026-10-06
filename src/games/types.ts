@@ -61,6 +61,21 @@ export interface GameReviewStory {
 }
 
 export type ImportedGameSource = "manual" | "lichess" | "training";
+export type TimeControlCategory =
+  | "bullet"
+  | "blitz"
+  | "rapid"
+  | "classical"
+  | "correspondence"
+  | "unknown";
+
+export interface PracticalGameMetrics {
+  averageCentipawnLoss: number;
+  criticalErrorRate: number;
+  blunderRate: number;
+  qualityScore: number;
+  resultScore: number;
+}
 
 export interface ImportedGame {
   id: string;
@@ -77,6 +92,12 @@ export interface ImportedGame {
   event?: string;
   site?: string;
   date?: string;
+  rated?: boolean;
+  timeControl?: string;
+  timeControlCategory?: TimeControlCategory;
+  playerRating?: number;
+  opponentRating?: number;
+  practicalMetrics?: PracticalGameMetrics;
   startingFen?: string;
   moves: ImportedGameMove[];
   criticalMomentIds: string[];
