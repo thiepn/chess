@@ -30,6 +30,15 @@ const minRating = Number(option("--min-rating", "600"));
 const maxRating = Number(option("--max-rating", "2400"));
 const maxRatingDeviation = Number(option("--max-rd", "140"));
 const includeVeryLong = hasFlag("--include-very-long");
+const sampleModulo = Math.max(1, Number(option("--sample-modulo", "1")));
+const sourceLabel = option(
+  "--source-label",
+  inputPath === "-" ? "Lichess official puzzle database stream" : path.basename(inputPath),
+);
+const upstream = option(
+  "--upstream",
+  "https://database.lichess.org/lichess_db_puzzle.csv.zst",
+);
 const bucketWidth = 200;
 const bucketCount = Math.max(1, Math.floor((maxRating - minRating) / bucketWidth) + 1);
 const perBucketCap = Math.max(1, Math.floor(maxPerSkill / bucketCount));
@@ -123,6 +132,15 @@ function parseCsvLine(line) {
   return fields;
 }
 
+function hashId(value) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
 function uciMove(chess, encoded) {
   if (!encoded || encoded.length < 4) return null;
   try {
@@ -165,6 +183,10 @@ function normalize(fields) {
     sourceUrl,
     rawOpeningTags,
   ] = fields;
+
+  if (sampleModulo > 1 && hashId(id) % sampleModulo !== 0) {
+    return null;
+  }
 
   const rating = Number(rawRating);
   const ratingDeviation = Number(rawRatingDeviation);
@@ -289,6 +311,7 @@ for await (const line of rl) {
   }
 }
 
+fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir, { recursive: true });
 
 const skillRecords = new Map();
@@ -299,11 +322,13 @@ for (const [key, heap] of buckets.entries()) {
 }
 
 const manifest = {
-  version: 1,
+  version: 2,
   generatedAt: new Date().toISOString(),
-  source: "https://database.lichess.org/lichess_db_puzzle.csv.zst",
+  source: sourceLabel,
+  upstream,
   license: "CC0",
   total: 0,
+  uniqueTotal: 0,
   filters: {
     minPopularity,
     minPlays,
@@ -313,12 +338,15 @@ const manifest = {
     includeVeryLong,
     maxPerSkill,
     bucketWidth,
+    sampleModulo,
   },
   scanned,
   accepted,
   rejected,
   shards: {},
 };
+
+const uniquePuzzleIds = new Set();
 
 for (const [skillId, entries] of [...skillRecords.entries()].sort()) {
   const bestById = new Map();
@@ -350,7 +378,10 @@ for (const [skillId, entries] of [...skillRecords.entries()].sort()) {
     maxRating: Math.max(...records.map((item) => item.rating)),
   };
   manifest.total += records.length;
+  for (const record of records) uniquePuzzleIds.add(record.id);
 }
+
+manifest.uniqueTotal = uniquePuzzleIds.size;
 
 fs.writeFileSync(
   path.join(outputDir, "manifest.json"),
@@ -358,5 +389,5 @@ fs.writeFileSync(
 );
 
 process.stderr.write(
-  `Wrote ${manifest.total.toLocaleString()} curated puzzle records across ${Object.keys(manifest.shards).length} skill shards to ${outputDir}.\n`,
+  `Wrote ${manifest.total.toLocaleString()} shard records (${manifest.uniqueTotal.toLocaleString()} unique puzzles) across ${Object.keys(manifest.shards).length} skill shards to ${outputDir}.\n`,
 );

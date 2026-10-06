@@ -35,8 +35,14 @@ export interface PuzzleManifest {
   version: number;
   generatedAt: string;
   source: string;
+  upstream?: string;
   license: string;
   total: number;
+  uniqueTotal?: number;
+  scanned?: number;
+  accepted?: number;
+  rejected?: number;
+  filters?: Record<string, string | number | boolean>;
   shards: Record<string, PuzzleManifestShard>;
 }
 

@@ -1,5 +1,5 @@
 import { Chess, type Color, type Square } from "chess.js";
-import { Check, ChevronRight, Lightbulb, LoaderCircle, RotateCcw, Sparkles } from "lucide-react";
+import { BrainCircuit, Check, ChevronRight, ExternalLink, Lightbulb, LoaderCircle, RotateCcw, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type {
   ChessSkill,
@@ -8,8 +8,15 @@ import type {
   TrainingOutcome,
 } from "../domain/types";
 import { loadPuzzlesForSkill } from "../puzzles/repository";
+import {
+  humanPuzzleTheme,
+  puzzleExplanation,
+  puzzleSolutionSan,
+} from "../puzzles/explanations";
 import { selectPuzzle } from "../puzzles/selector";
 import type { PuzzleAttemptSummary, PuzzleRecord } from "../puzzles/types";
+import { StockfishBrowserEngine } from "../engine/stockfish";
+import type { EngineEvaluation } from "../games/types";
 import type { BoardArrow, BoardHighlight } from "../learning/types";
 import { ChessBoard } from "./ChessBoard";
 import { LessonRunner } from "./LessonRunner";
@@ -30,10 +37,17 @@ function applyUci(chess: Chess, encoded: string) {
   });
 }
 
-function humanTheme(theme: string) {
-  return theme
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .replace(/^./, (letter) => letter.toUpperCase());
+function sanForUci(fen: string, uci: string) {
+  try {
+    const chess = new Chess(fen);
+    return chess.move({
+      from: uci.slice(0, 2),
+      to: uci.slice(2, 4),
+      promotion: uci.slice(4, 5) || "q",
+    })?.san ?? uci;
+  } catch {
+    return uci;
+  }
 }
 
 export function PuzzleRunner({
@@ -53,6 +67,11 @@ export function PuzzleRunner({
   const [feedback, setFeedback] = useState<string | null>(null);
   const [boardVersion, setBoardVersion] = useState(0);
   const [replying, setReplying] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [verification, setVerification] =
+    useState<EngineEvaluation | null>(null);
+  const [verificationError, setVerificationError] =
+    useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -65,6 +84,9 @@ export function PuzzleRunner({
     setHintsUsed(0);
     setWrongAttempts(0);
     setFeedback(null);
+    setVerifying(false);
+    setVerification(null);
+    setVerificationError(null);
 
     loadPuzzlesForSkill(skill.id).then((corpus) => {
       if (cancelled) return;
@@ -95,6 +117,15 @@ export function PuzzleRunner({
     if (!position) return "w";
     return new Chess(position).turn();
   }, [position]);
+
+  const explanation = useMemo(
+    () => (puzzle ? puzzleExplanation(puzzle) : null),
+    [puzzle],
+  );
+  const solutionSan = useMemo(
+    () => (puzzle ? puzzleSolutionSan(puzzle) : []),
+    [puzzle],
+  );
 
   const expectedMove = puzzle?.solutionMoves[solutionIndex];
   const hintArrow: BoardArrow[] = useMemo(() => {
@@ -138,7 +169,7 @@ export function PuzzleRunner({
 
   const themed = activity.activityType === "themedPuzzle";
   const label = themed
-    ? humanTheme(puzzle.themes.find((theme) => !["short", "oneMove", "long"].includes(theme)) ?? "Tactic")
+    ? explanation?.motif ?? "Tactic"
     : "Mixed position";
 
   function showPuzzleHint() {
@@ -156,6 +187,30 @@ export function PuzzleRunner({
     setPosition(chess.fen());
     setFeedback(null);
     setBoardVersion((value) => value + 1);
+  }
+
+  async function verifyWithEngine() {
+    if (!puzzle || !solved || verifying) return;
+
+    let engine: StockfishBrowserEngine | null = null;
+    setVerifying(true);
+    setVerificationError(null);
+
+    try {
+      engine = await StockfishBrowserEngine.create();
+      setVerification(
+        await engine.evaluate(puzzle.initialFen, 12),
+      );
+    } catch (cause) {
+      setVerificationError(
+        cause instanceof Error
+          ? cause.message
+          : "Stockfish verification was unavailable.",
+      );
+    } finally {
+      engine?.quit();
+      setVerifying(false);
+    }
   }
 
   function finish() {
@@ -255,7 +310,7 @@ export function PuzzleRunner({
               <span>Rated {puzzle.rating}</span>
               {puzzle.source === "lichess" && <span>Lichess · CC0</span>}
               {puzzle.openingTags?.[0] && (
-                <span>{humanTheme(puzzle.openingTags[0].replaceAll("_", " "))}</span>
+                <span>{humanPuzzleTheme(puzzle.openingTags[0].replaceAll("_", " "))}</span>
               )}
             </div>
 
@@ -279,17 +334,115 @@ export function PuzzleRunner({
             )}
 
             {solved && (
-              <div className="lesson-feedback success">
-                <Sparkles size={19} />
-                <div>
-                  <strong>Correct sequence</strong>
-                  <span>
-                    {wrongAttempts === 0 && hintsUsed === 0
-                      ? "Clean solve. This is strong recognition evidence."
-                      : "Solved. The app will account for hints and retries when updating mastery."}
-                  </span>
+              <>
+                <div className="lesson-feedback success">
+                  <Sparkles size={19} />
+                  <div>
+                    <strong>Correct sequence</strong>
+                    <span>
+                      {wrongAttempts === 0 && hintsUsed === 0
+                        ? "Clean solve. This is strong recognition evidence."
+                        : "Solved. Hints and retries will reduce the mastery evidence rather than being treated as a clean solve."}
+                    </span>
+                  </div>
                 </div>
-              </div>
+
+                {explanation && (
+                  <section className="puzzle-explanation-card">
+                    <div className="puzzle-explanation-head">
+                      <div>
+                        <span>Pattern</span>
+                        <strong>{explanation.motif}</strong>
+                      </div>
+                      <small>
+                        {themed
+                          ? "Now make the pattern explicit."
+                          : "The motif was hidden until after the solve."}
+                      </small>
+                    </div>
+
+                    <p>{explanation.point}</p>
+
+                    <div className="puzzle-solution-line">
+                      <span>Solution</span>
+                      <strong>
+                        {solutionSan.length
+                          ? solutionSan.join("  ")
+                          : puzzle.solutionMoves.join("  ")}
+                      </strong>
+                    </div>
+
+                    <div className="puzzle-alternative-note">
+                      <span>Why not another move?</span>
+                      <p>{explanation.alternatives}</p>
+                    </div>
+
+                    {wrongAttempts > 0 && (
+                      <div className="puzzle-retry-note">
+                        <RotateCcw size={14} />
+                        <span>
+                          You tried {wrongAttempts} alternative move{wrongAttempts === 1 ? "" : "s"}.
+                          The next spaced appearance will test whether the tactical idea is now retained.
+                        </span>
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                <section className="puzzle-verification">
+                  <div>
+                    <BrainCircuit size={17} />
+                    <span>
+                      <strong>Optional engine check</strong>
+                      <small>
+                        Verify only after solving so Stockfish never spoils the exercise.
+                      </small>
+                    </span>
+                  </div>
+
+                  {!verification && (
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={verifyWithEngine}
+                      disabled={verifying}
+                    >
+                      {verifying ? (
+                        <>
+                          <LoaderCircle size={15} /> Checking…
+                        </>
+                      ) : (
+                        "Verify with Stockfish"
+                      )}
+                    </button>
+                  )}
+
+                  {verification && (
+                    <div className="puzzle-engine-result">
+                      <span>Stockfish · depth {verification.depth}</span>
+                      <strong>
+                        {sanForUci(
+                          puzzle.initialFen,
+                          verification.bestMove,
+                        )}
+                      </strong>
+                      <small>
+                        {verification.bestMove === puzzle.solutionMoves[0]
+                          ? "Matches the stored Lichess solution."
+                          : puzzle.themes.includes("mateIn1")
+                            ? "Different first choice at this depth. Mate-in-one positions can contain multiple winning mates."
+                            : "Stockfish chose a different first move at this depth; the stored Lichess line remains the puzzle reference."}
+                      </small>
+                    </div>
+                  )}
+
+                  {verificationError && (
+                    <small className="puzzle-engine-error">
+                      {verificationError}
+                    </small>
+                  )}
+                </section>
+              </>
             )}
           </div>
 
@@ -298,9 +451,18 @@ export function PuzzleRunner({
               <Check size={14} />
               <span>
                 {puzzle.source === "lichess"
-                  ? "Curated from the open Lichess puzzle database"
+                  ? "Curated from the open Lichess puzzle database · CC0"
                   : "Built-in offline practice position"}
               </span>
+              {solved && puzzle.source === "lichess" && (
+                <a
+                  href={`https://lichess.org/training/${puzzle.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Original <ExternalLink size={13} />
+                </a>
+              )}
             </div>
 
             <div className="lesson-button-row">
