@@ -40,12 +40,13 @@ The default experience should answer one question: **what should I train now?**
 - P21 goal-aware training horizons with configurable 4/8/12-week plans, real completed-training ledger, weekly functional budgets, adaptive under-allocation pressure, protected urgent work, pace-aware session recommendations, and Home/Progress periodization surfaces
 - P22 plan-adherence intelligence with comparable full-week history, sustainable-capacity estimation, horizon completion forecasts, bounded automatic effective-load recalibration, recovery detection, explicit opt-out, and transparent nominal-vs-effective targets
 - P23 load management with recent-volume ramp detection, overload-week tracking, watch/recovery modes, protected review/repair work, shorter recovery sessions, optional-bucket suppression, manual seven-day recovery, automatic opt-out, and a 70% combined-load floor
+- P24 competition-cycle planning with pre-cycle/base/build/sharpen/taper/event/reset phases, event-specific bucket pressure, volume tapering, preparation-readiness scoring, P23 recovery precedence, event-day minimalism, and post-event reset
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not; P23 manages short-term load spikes and recovery periods without dropping essential retention or repair.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not; P23 manages short-term load spikes and recovery periods without dropping essential retention or repair; P24 adds event-specific training blocks so preparation becomes more specific and lower-volume as competition approaches.
 
 ## Run
 
@@ -1538,6 +1539,126 @@ Progress adds a dedicated P23 panel with the same load metrics plus the per-buck
 
 Because P23 derives everything from the existing bounded training ledger and plan state, it requires no new backend table or external service.
 
+## Training blocks, competition cycles and peak-readiness planning
+
+P24 adds optional event-specific planning above the P21–P23 stack.
+
+It is designed for a concrete chess event or competition date. If no valid event date is enabled, P24 remains neutral and the existing planner behaves exactly as before.
+
+### Cycle phases
+
+P24 derives the current phase from the configured event date and preparation window:
+
+- `pre-cycle` — the selected preparation window has not started;
+- `base` — broad course/capacity building;
+- `build` — more repair, resistant play and repertoire stability;
+- `sharpen` — strongly prioritize transfer, repair and opening recall while reducing broad new material;
+- `taper` — lower volume, keep recall sharp and avoid creating new learning debt;
+- `event` — minimal familiar work only;
+- `reset` — deliberately light post-event work before normal progression resumes;
+- `complete` — the configured cycle has ended.
+
+The user can choose a 4, 6, 8 or 12-week preparation window and a 3, 5 or 7-day post-event reset.
+
+### Phase-specific learning mix
+
+P24 does not replace the P21 weekly buckets. It applies a bounded event-cycle multiplier to them.
+
+Typical behavior:
+
+- base block: modestly favor course depth;
+- build block: favor repair and resistant transfer;
+- sharpen block: favor repair, transfer and repertoire while suppressing exploration;
+- taper: strongly reduce course/exploration and preserve retention/repertoire;
+- event day: keep only minimal familiar work;
+- reset: lower transfer/course pressure and return gradually.
+
+Generated activities include the P24 phase pressure in their explanation.
+
+### Competition load taper
+
+P24 can reduce the already-managed P23 weekly load as the event approaches:
+
+- base/build: 100%;
+- sharpen: 95%;
+- taper: 82%;
+- event week: 70%;
+- reset: 75%.
+
+The final managed load still respects the existing global 70% nominal floor.
+
+Session caps also become more conservative:
+
+- sharpen: maximum 40 minutes;
+- taper: maximum 25 minutes;
+- event day: maximum 15 minutes;
+- reset: maximum 20 minutes.
+
+### P23 recovery remains authoritative
+
+An upcoming event is not allowed to force intensity upward through a recovery state.
+
+If P23 recovery is active:
+
+- P24 still shows the calendar phase;
+- any competition multiplier above 100% is suppressed;
+- shorter session limits still apply;
+- taper/event volume reductions may still reduce work;
+- preparation readiness is marked at-risk in taper/event when recovery is active.
+
+This prevents the common planning failure of responding to overload by training harder because the event is close.
+
+### Preparation readiness
+
+P24 reports **preparation readiness**, not Elo, playing strength or win probability.
+
+The score combines:
+
+- P22 adherence;
+- week-to-week consistency;
+- P22 horizon forecast status;
+- P23 load-management state.
+
+Readiness is classified as:
+
+- insufficient;
+- building;
+- ready;
+- at-risk.
+
+The score is intentionally about whether preparation is on schedule, not whether the player is objectively strong enough for an opponent or tournament.
+
+### Home controls
+
+Home now provides an optional competition-cycle card with:
+
+- enable/disable toggle;
+- event date;
+- 4/6/8/12-week prep window;
+- 3/5/7-day reset;
+- current phase;
+- days to/from event;
+- preparation-readiness score/status;
+- cycle load percentage;
+- session cap;
+- final managed weekly minutes;
+- plain-language phase rationale.
+
+### Progress audit
+
+Progress adds a dedicated P24 panel showing:
+
+- current phase;
+- event date;
+- readiness;
+- cycle load and managed minutes;
+- session cap;
+- phase track from base through reset;
+- per-bucket competition multipliers;
+- whether P23 recovery suppressed intensity.
+
+P24 requires no new backend service. Competition settings persist inside the existing training-plan state.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1552,4 +1673,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P24 — Training Blocks, Competition Cycles & Peak-Readiness Planning.
+P25 — Event Review, Cycle Retrospective & Post-Competition Learning Loop.

@@ -42,6 +42,7 @@ export interface TrainingHorizonInsight {
   effectiveWeeklyMinutes: number;
   managedWeeklyMinutes: number;
   loadManagement: LoadManagementInsight;
+  competitionCycle: CompetitionCycleInsight;
   allocations: TrainingBudgetAllocation[];
 }
 
@@ -138,5 +139,44 @@ export interface LoadManagementInsight {
   managedWeeklyMinutes: number;
   maxSessionMinutes: number;
   bucketMultipliers: Record<TrainingBudgetBucket, number>;
+  reason: string;
+}
+
+
+export type CompetitionCyclePhase =
+  | "off"
+  | "pre-cycle"
+  | "base"
+  | "build"
+  | "sharpen"
+  | "taper"
+  | "event"
+  | "reset"
+  | "complete";
+
+export type PeakReadinessStatus =
+  | "insufficient"
+  | "building"
+  | "ready"
+  | "at-risk";
+
+export interface CompetitionCycleInsight {
+  enabled: boolean;
+  active: boolean;
+  phase: CompetitionCyclePhase;
+  phaseLabel: string;
+  eventDate?: string;
+  eventLabel?: string;
+  cycleStart?: string;
+  daysToEvent?: number;
+  daysFromEvent?: number;
+  readinessScore: number;
+  readinessStatus: PeakReadinessStatus;
+  readinessConfidence: number;
+  weeklyLoadMultiplier: number;
+  maxSessionMinutes: number;
+  managedWeeklyMinutes: number;
+  bucketMultipliers: Record<TrainingBudgetBucket, number>;
+  suppressedByRecovery: boolean;
   reason: string;
 }

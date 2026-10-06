@@ -23,6 +23,7 @@ import {
 } from "./domain/curriculum";
 import { applyEvidence, emptyMastery } from "./domain/mastery";
 import type {
+  CompetitionPlanSettings,
   CurriculumStageId,
   LearningEvidence,
   SessionMode,
@@ -103,6 +104,7 @@ import {
   trainingPlanForState,
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
+import { defaultCompetitionPlan } from "./planning/cycle";
 
 const repo = createChessStateRepository();
 
@@ -1256,6 +1258,7 @@ export default function App() {
       autoRecalibrate: boolean;
       autoRecovery: boolean;
       manualRecoveryUntil: string;
+      competition: CompetitionPlanSettings;
     }>,
   ) {
     setState((previous) => {
@@ -1275,6 +1278,28 @@ export default function App() {
           updatedAt: structuralChange
             ? new Date().toISOString()
             : current.updatedAt,
+        },
+      };
+    });
+  }
+
+  function updateCompetitionPlan(
+    patch: Partial<CompetitionPlanSettings>,
+  ) {
+    setState((previous) => {
+      const current =
+        trainingPlanForState(previous);
+      const competition = {
+        ...defaultCompetitionPlan(),
+        ...(current.competition ?? {}),
+        ...patch,
+      };
+
+      return {
+        ...previous,
+        trainingPlan: {
+          ...current,
+          competition,
         },
       };
     });
@@ -1563,6 +1588,119 @@ export default function App() {
                 </div>
 
                 <p>{progressIntelligence.trainingHorizon.loadManagement.reason}</p>
+              </div>
+
+              <div className={`home-competition-cycle ${progressIntelligence.trainingHorizon.competitionCycle.phase}`}>
+                <div className="home-cycle-head">
+                  <div>
+                    <span>P24 · COMPETITION CYCLE</span>
+                    <strong>
+                      {progressIntelligence.trainingHorizon.competitionCycle.phaseLabel}
+                    </strong>
+                    <small>
+                      {progressIntelligence.trainingHorizon.competitionCycle.enabled &&
+                      progressIntelligence.trainingHorizon.competitionCycle.eventDate
+                        ? `${progressIntelligence.trainingHorizon.competitionCycle.eventLabel ?? "Target event"} · ${progressIntelligence.trainingHorizon.competitionCycle.eventDate}`
+                        : "Optional event-specific block planning"}
+                    </small>
+                  </div>
+                  <div className={`cycle-readiness ${progressIntelligence.trainingHorizon.competitionCycle.readinessStatus}`}>
+                    <span>Prep readiness</span>
+                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.readinessScore}%</strong>
+                    <small>{progressIntelligence.trainingHorizon.competitionCycle.readinessStatus.replace("-", " ")}</small>
+                  </div>
+                </div>
+
+                <div className="cycle-controls">
+                  <label className="cycle-toggle">
+                    <input
+                      type="checkbox"
+                      checked={progressIntelligence.trainingHorizon.plan.competition?.enabled ?? false}
+                      onChange={(event) =>
+                        updateCompetitionPlan({
+                          enabled: event.target.checked,
+                        })
+                      }
+                    />
+                    <span>Competition cycle</span>
+                  </label>
+
+                  <label>
+                    <span>Event date</span>
+                    <input
+                      type="date"
+                      value={progressIntelligence.trainingHorizon.plan.competition?.eventDate ?? ""}
+                      onChange={(event) =>
+                        updateCompetitionPlan({
+                          eventDate: event.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label>
+                    <span>Prep window</span>
+                    <select
+                      value={progressIntelligence.trainingHorizon.plan.competition?.prepWeeks ?? 6}
+                      onChange={(event) =>
+                        updateCompetitionPlan({
+                          prepWeeks: Number(event.target.value) as 4 | 6 | 8 | 12,
+                        })
+                      }
+                    >
+                      {[4, 6, 8, 12].map((weeks) => (
+                        <option key={weeks} value={weeks}>
+                          {weeks} weeks
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Reset</span>
+                    <select
+                      value={progressIntelligence.trainingHorizon.plan.competition?.resetDays ?? 5}
+                      onChange={(event) =>
+                        updateCompetitionPlan({
+                          resetDays: Number(event.target.value) as 3 | 5 | 7,
+                        })
+                      }
+                    >
+                      {[3, 5, 7].map((days) => (
+                        <option key={days} value={days}>
+                          {days} days
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                <div className="cycle-summary-grid">
+                  <div>
+                    <span>Time to event</span>
+                    <strong>
+                      {progressIntelligence.trainingHorizon.competitionCycle.daysToEvent !== undefined
+                        ? `${progressIntelligence.trainingHorizon.competitionCycle.daysToEvent}d`
+                        : progressIntelligence.trainingHorizon.competitionCycle.daysFromEvent !== undefined
+                          ? `+${progressIntelligence.trainingHorizon.competitionCycle.daysFromEvent}d`
+                          : "—"}
+                    </strong>
+                  </div>
+                  <div>
+                    <span>Cycle load</span>
+                    <strong>{Math.round(progressIntelligence.trainingHorizon.competitionCycle.weeklyLoadMultiplier * 100)}%</strong>
+                  </div>
+                  <div>
+                    <span>Session cap</span>
+                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.maxSessionMinutes}m</strong>
+                  </div>
+                  <div>
+                    <span>Managed week</span>
+                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.managedWeeklyMinutes}m</strong>
+                  </div>
+                </div>
+
+                <p>{progressIntelligence.trainingHorizon.competitionCycle.reason}</p>
               </div>
 
               <div className="horizon-goal-switch" aria-label="Training goal">
