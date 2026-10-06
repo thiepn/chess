@@ -133,6 +133,7 @@ export interface EngineMoveReview {
 export interface PersonalMistake {
   id: string;
   gameId: string;
+  gameSource?: ImportedGameSource;
   ply: number;
   moveNumber: number;
   playerColor: Color;
