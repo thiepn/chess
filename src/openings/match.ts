@@ -6,7 +6,7 @@ function candidateRepertoires(game: ImportedGame) {
   return repertoires.filter((repertoire) => repertoire.color === game.playerColor);
 }
 
-function branchFit(game: ImportedGame, repertoire: OpeningRepertoire) {
+function branchMatch(game: ImportedGame, repertoire: OpeningRepertoire) {
   let node = openingNodes[repertoire.rootNodeId];
   let matched = 0;
 
@@ -20,18 +20,103 @@ function branchFit(game: ImportedGame, repertoire: OpeningRepertoire) {
     node = child;
   }
 
-  return matched;
+  return { matched, node };
+}
+
+function branchFit(game: ImportedGame, repertoire: OpeningRepertoire) {
+  return branchMatch(game, repertoire).matched;
 }
 
 export function chooseRepertoireForGame(game: ImportedGame) {
   if (game.startingFen) return undefined;
 
-  return candidateRepertoires(game)
+  const best = candidateRepertoires(game)
     .map((repertoire) => ({
       repertoire,
       fit: branchFit(game, repertoire),
     }))
-    .sort((a, b) => b.fit - a.fit)[0]?.repertoire;
+    .sort((a, b) => b.fit - a.fit)[0];
+
+  return best && best.fit > 0 ? best.repertoire : undefined;
+}
+
+function openingFamily(name: string) {
+  return name
+    .replace(/\s*:\s*.+$/, "")
+    .replace(/\s*,\s*.+$/, "")
+    .trim();
+}
+
+export function openingIdentityForGame(game: ImportedGame) {
+  const headerName = game.openingName?.trim();
+  if (headerName) {
+    return {
+      key: `header:${openingFamily(headerName).toLocaleLowerCase()}`,
+      label: openingFamily(headerName),
+      eco: game.eco,
+      source: "header" as const,
+    };
+  }
+
+  if (game.startingFen) {
+    return {
+      key: "position:start-fen",
+      label: "Custom position",
+      source: "position" as const,
+    };
+  }
+
+  const best = candidateRepertoires(game)
+    .map((repertoire) => {
+      const match = branchMatch(game, repertoire);
+      return {
+        repertoire,
+        fit: match.matched,
+        node: match.node,
+      };
+    })
+    .sort((a, b) => b.fit - a.fit)[0];
+
+  if (best && best.fit > 0) {
+    return {
+      key: `repertoire:${best.repertoire.id}`,
+      label:
+        best.fit >= 2 && best.node.name
+          ? openingFamily(best.node.name)
+          : best.repertoire.name,
+      eco: best.node.eco,
+      repertoireId: best.repertoire.id,
+      matchedPlies: best.fit,
+      source: "repertoire" as const,
+    };
+  }
+
+  const first = game.moves[0]?.uci;
+  const second = game.moves[1]?.uci;
+  const label =
+    first === "e2e4" && second === "c7c5"
+      ? "Sicilian Defense"
+      : first === "e2e4" && second === "e7e5"
+        ? "Open Game"
+        : first === "e2e4" && second === "e7e6"
+          ? "French Defense"
+          : first === "e2e4" && second === "c7c6"
+            ? "Caro-Kann Defense"
+            : first === "d2d4" && second === "d7d5"
+              ? "Queen's Pawn Game"
+              : first === "d2d4"
+                ? "Queen's Pawn Game"
+                : first === "c2c4"
+                  ? "English Opening"
+                  : first === "g1f3"
+                    ? "Réti Opening"
+                    : "Other opening";
+
+  return {
+    key: `fallback:${label.toLocaleLowerCase()}`,
+    label,
+    source: "fallback" as const,
+  };
 }
 
 export function openingDeviationsForGame(
