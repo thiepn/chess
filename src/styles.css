@@ -6958,3 +6958,161 @@ html[data-motion="reduced"] .dashboard-grid {
     text-align: left;
   }
 }
+
+
+/* P16 — human-vs-AI transfer and practical strength */
+
+.practical-strength-panel {
+  margin-bottom: 11px;
+}
+
+.practical-strength-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, .72fr) minmax(0, 1.28fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.practical-rating-card {
+  min-height: 166px;
+  padding: 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(118,151,255,.12);
+  background:
+    radial-gradient(circle at 30% 0, rgba(118,151,255,.12), transparent 55%),
+    rgba(118,151,255,.035);
+  display: flex;
+  flex-direction: column;
+}
+
+.practical-rating-card > span {
+  color: #7c8dbf;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 850;
+}
+
+.practical-rating-card > strong {
+  margin-top: auto;
+  color: #e0e6f5;
+  font-size: 48px;
+  line-height: .95;
+  letter-spacing: -.06em;
+}
+
+.practical-rating-card > small {
+  margin-top: 8px;
+  color: #70809d;
+  font-size: 8px;
+  text-transform: capitalize;
+}
+
+.practical-signal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.practical-signal-grid > div {
+  min-height: 78px;
+  padding: 12px;
+  border-radius: 13px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.018);
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+
+.practical-signal-grid span {
+  color: #68768f;
+  font-size: 8px;
+}
+
+.practical-signal-grid strong {
+  color: #d2dae8;
+  font-size: 22px;
+  letter-spacing: -.04em;
+}
+
+.practical-context-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.practical-context-row > div {
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.018);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7485bd;
+}
+
+.practical-context-row span {
+  color: #75839a;
+  font-size: 8px;
+}
+
+.practical-time-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.practical-time-controls > div {
+  min-height: 66px;
+  padding: 10px;
+  border-radius: 11px;
+  background: rgba(255,255,255,.016);
+  border: 1px solid rgba(255,255,255,.04);
+  display: grid;
+  gap: 2px;
+}
+
+.practical-time-controls span {
+  color: #69778f;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.practical-time-controls strong {
+  color: #c9d2e3;
+  font-size: 15px;
+}
+
+.practical-time-controls small {
+  color: #59677e;
+  font-size: 7px;
+}
+
+.practical-rating-note {
+  margin: 11px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.04);
+  color: #63718a;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .practical-strength-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .practical-rating-card {
+    min-height: 132px;
+  }
+
+  .practical-time-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
