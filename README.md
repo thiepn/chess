@@ -38,12 +38,13 @@ The default experience should answer one question: **what should I train now?**
 - P19 prescription outcome tracking with issued/started/completed intervention episodes, frozen pre-treatment baselines, matched post-treatment human-game validation, three-game minimums, successful-plan retirement, persistent-plan escalation and coach-effectiveness analytics
 - P20 coach policy learning with recency-weighted/shrunk outcome evidence, learned plan/action-family preferences, deterministic action reordering, bounded prescription-priority adjustments, explicit exploration of weak/unseen alternatives, and transparent policy diagnostics
 - P21 goal-aware training horizons with configurable 4/8/12-week plans, real completed-training ledger, weekly functional budgets, adaptive under-allocation pressure, protected urgent work, pace-aware session recommendations, and Home/Progress periodization surfaces
+- P22 plan-adherence intelligence with comparable full-week history, sustainable-capacity estimation, horizon completion forecasts, bounded automatic effective-load recalibration, recovery detection, explicit opt-out, and transparent nominal-vs-effective targets
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not.
 
 ## Run
 
@@ -1327,6 +1328,114 @@ P21 does not replace the existing intelligence layers:
 
 This separation keeps the planner understandable and prevents a weekly quota from becoming a hidden master score.
 
+## Plan adherence, goal forecasting and automatic horizon recalibration
+
+P22 makes the P21 plan accountable to actual behavior instead of assuming that a configured weekly target remains realistic forever.
+
+### Comparable-week adherence
+
+P22 evaluates only complete weeks that occurred under the current structural plan. The partial week in which a goal, weekly budget, horizon length or session frequency changed is excluded from adherence evidence.
+
+This prevents a midweek plan change from being misread as a failed week.
+
+For up to six recent comparable weeks P22 tracks:
+
+- completed minutes;
+- nominal weekly target;
+- adherence percentage;
+- active training days.
+
+Recent weeks carry somewhat more weight than older weeks, but the model stays deterministic.
+
+### Sustainable capacity
+
+P22 estimates a sustainable weekly pace from real completed-training history rather than planned sessions.
+
+It also measures:
+
+- weighted adherence;
+- week-to-week consistency;
+- improving / stable / declining trend;
+- evidence confidence.
+
+With insufficient history, the system remains provisional and uses the nominal P21 plan.
+
+### Horizon forecast
+
+P22 projects the current multi-week plan against the nominal target selected by the user.
+
+The forecast reports:
+
+- nominal horizon minutes;
+- completed minutes since the structural plan began;
+- sustainable weekly pace;
+- projected total minutes by the horizon end;
+- projected completion percentage;
+- projected shortfall;
+- estimated weeks required to reach the nominal target when enough evidence exists;
+- forecast status: insufficient, ahead, on-track or at-risk.
+
+The forecast stays anchored to the nominal plan even when operational recalibration is active. This avoids making the prediction look successful merely because the system lowered its own denominator.
+
+### Automatic effective-load recalibration
+
+Automatic recalibration is enabled by default but can be disabled.
+
+It follows conservative rules:
+
+- at least three full comparable weeks are required;
+- improving recent adherence can suppress a reduction while recovery is underway;
+- effective weekly load can be reduced only in bounded steps;
+- the maximum automatic reduction is 20%;
+- P22 never automatically raises workload above the chosen nominal target;
+- the nominal goal, weekly target and horizon length are never silently edited.
+
+The recalibrated value is therefore an **operational weekly load** for P21 allocation—not a rewritten user goal.
+
+Example: if the user selected 150 min/week but six comparable weeks show a sustainable pace near 60 min/week, P22 may temporarily operate P21 at 120 min/week. The app still displays and forecasts against the original 150 min/week target.
+
+### Recovery-aware behavior
+
+If recent two-week adherence rises strongly enough after weaker earlier weeks, P22 preserves the nominal load rather than immediately reducing it.
+
+This prevents a temporary difficult period from permanently lowering the plan just as adherence is recovering.
+
+### Interaction with P21
+
+P21 now receives `effectiveWeeklyMinutes` from P22.
+
+That effective number controls:
+
+- weekly bucket targets;
+- remaining weekly minutes;
+- pace expectations;
+- recommended next-session duration;
+- under-served bucket pressure.
+
+Urgent review and repair protections from P21 remain unchanged.
+
+### Home and Progress visibility
+
+Home now shows:
+
+- adherence;
+- forecast status;
+- sustainable pace;
+- nominal vs effective weekly load;
+- automatic-recalibration toggle;
+- a plain-language reason for the current recalibration decision.
+
+Progress adds a dedicated P22 panel with:
+
+- comparable-week history;
+- consistency and trend;
+- horizon projection;
+- shortfall;
+- forecast confidence;
+- recalibration state and rationale.
+
+Because P22 uses the existing bounded training ledger and existing account-state persistence, no new backend service or database table is required.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1341,4 +1450,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P22 — Plan Adherence, Goal Forecasting & Automatic Horizon Recalibration.
+P23 — Recovery Weeks, Load Management & Long-Term Training Sustainability.
