@@ -1,3 +1,4 @@
+import type { TrainingPrescription } from "../prescriptions/types";
 import type {
   CandidateSource,
   CurriculumStageId,
@@ -198,6 +199,7 @@ export interface ProgressIntelligence {
   aiTransfer: number;
   practicalStrength: PracticalStrengthInsight;
   realGameDiagnostics: RealGameDiagnostics;
+  prescriptions: TrainingPrescription[];
   calibration: CalibrationInsight;
   trend: TrendPoint[];
   interventions: InterventionInsight[];
