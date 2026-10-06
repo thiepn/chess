@@ -8,6 +8,7 @@ export const evidenceWeight: Record<LearningEvidence["source"], number> = {
   guided: .3,
   themedPuzzle: .45,
   mixedPuzzle: .6,
+  calculation: .75,
   delayedReview: .7,
   trainingPosition: .8,
   engineGame: .85,
@@ -113,6 +114,23 @@ export function applyEvidence(
   if (evidence.source === "mixedPuzzle") {
     next.mixedRecognition = updateDimension(next.mixedRecognition, target, weight);
     next.execution = updateDimension(next.execution, target, weight * .7);
+  }
+  if (evidence.source === "calculation") {
+    next.mixedRecognition = updateDimension(
+      next.mixedRecognition,
+      target,
+      weight * .72,
+    );
+    next.execution = updateDimension(
+      next.execution,
+      target,
+      weight,
+    );
+    next.trainingTransfer = updateDimension(
+      next.trainingTransfer,
+      target,
+      weight * .78,
+    );
   }
   if (evidence.source === "delayedReview") {
     next.delayedRetention = updateDimension(next.delayedRetention, target, weight);

@@ -47,6 +47,7 @@ The default experience should answer one question: **what should I train now?**
 - P26 core learning experience reset with a one-decision Train home, one-tap adaptive session start, compact recommendation context, first-run non-blocking placement, Progress as a top-level destination, advanced plan/competition controls moved out of the training path, and removal of internal phase jargon from user-facing planning UI
 - P27 production puzzle practice with a 2,000-position CC0 Lichess baseline, all mapped puzzle skills covered, rating-balanced per-skill shards, CI corpus-health gates, deterministic full-database refresh tooling, stronger repeat avoidance, spaced failed-puzzle returns, concealed-motif mixed practice, post-solve tactical explanations, readable solution lines, and optional local Stockfish verification
 - P28 Lesson Engine 2.0 with eight-stage teaching scripts, misconception checks, escalating hints, guided practice, independent retrieval, distinct transfer positions for prioritized skills, lesson-mastery scoring separated from completion, and stronger content QA
+- P29 dedicated calculation trainer with candidate generation, best-reply prediction, multi-ply continuation, optional blind visualization, personal-game calculation positions, local Stockfish verification, depth/correctness scoring, and spaced retry scheduling
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -1885,6 +1886,35 @@ Hints escalate gradually. The first hint stays conceptual, later hints narrow th
 
 The first deep-content pass gives distinct transfer positions to high-value fundamentals, tactical vision, calculation and essential endgame skills. Content QA enforces legal FENs, legal accepted moves, unique step IDs, misconception feedback, staged hints and distinct transfer positions for that prioritized set.
 
+## Dedicated calculation trainer
+
+P29 makes calculation a first-class training mode rather than a LessonRunner fallback.
+
+The calculation workflow is:
+
+1. generate up to three candidate moves directly on the board;
+2. choose the candidate you actually believe is best;
+3. switch sides mentally and predict the opponent's strongest reply;
+4. calculate one move deeper and enter your continuation;
+5. compare candidate quality, move choice, reply prediction and continuation against the reference line.
+
+Blind visualization mode can hide the board between plies so the learner must rebuild the position mentally before revealing the board to enter the move.
+
+Analyzed personal-game mistakes are the preferred source when they contain a usable multi-ply principal variation. The original FEN, best move and stored analysis line are reused without exposing the answer before commitment. Curated legal fallback positions cover all six calculation curriculum skills when no personal position is available.
+
+Off-reference candidate lines can be checked locally with Stockfish after the learner commits. Engine analysis is serialized and remains hidden during calculation.
+
+Calculation evidence records:
+
+- whether the best move appeared in the candidate set;
+- whether the chosen main move was best;
+- opponent-best-reply accuracy;
+- continuation accuracy;
+- consecutive correct line depth;
+- whether blind visualization was used.
+
+Failed calculations return after roughly 12 hours, ordinary successes after roughly 3 days, and strong successes after roughly 7 days. A learner can also retry immediately from the original position.
+
 ## Next phase
 
-P29 — Dedicated Calculation Trainer.
+P30 — Game Review 2.0: Understand, Retry, Transfer.

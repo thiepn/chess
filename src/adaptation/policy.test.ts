@@ -83,6 +83,31 @@ describe("adaptive training policy", () => {
     expect(policy.mode).toBe("engineGame");
   });
 
+  it("routes established calculation skills into the dedicated trainer", () => {
+    const skillId = "calculation.candidates";
+    const state = stateFor(skillId, {
+      attempts: 10,
+      understanding: 70,
+      recognition: 65,
+      execution: 58,
+      mixedRecognition: 60,
+      effectiveMastery: 55,
+      confidence: 60,
+      lastSuccessAt: "2026-10-09T10:00:00Z",
+      stabilityDays: 5,
+    });
+
+    const policy = trainingPolicyFor(
+      state,
+      skillById[skillId],
+      "focus",
+      now,
+    );
+
+    expect(policy.mode).toBe("calculation");
+    expect(policy.reason).toContain("multi-ply");
+  });
+
   it("reduces drilling once a skill is saturated", () => {
     const skillId = "tactics.pin";
     const state = stateFor(skillId, {
