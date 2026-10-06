@@ -1236,12 +1236,12 @@ export default function App() {
               <div>
                 <p className="eyebrow">PROGRESS INTELLIGENCE</p>
                 <strong>
-                  {progressIntelligence.mastery}% mastery · {progressIntelligence.retention}% retention
+                  Practical {progressIntelligence.practicalStrength.rating} · {progressIntelligence.mastery}% mastery
                 </strong>
                 <span>
-                  {progressIntelligence.evidenceCount30
-                    ? `${progressIntelligence.evidenceCount30} evidence events in 30 days · transfer ${progressIntelligence.transfer}%.`
-                    : "Longitudinal tracking is active. New training will build your personal learning history."}
+                  {progressIntelligence.practicalStrength.humanGames
+                    ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}% · ${progressIntelligence.practicalStrength.confidence}% confidence.`
+                    : "Training-only estimate for now. Analyze human games to establish practical strength."}
                 </span>
               </div>
               <ChevronRight size={18} />
