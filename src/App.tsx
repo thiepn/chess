@@ -211,8 +211,17 @@ export default function App() {
     active?.studyId
       ? state.savedStudies?.find((study) => study.id === active.studyId)
       : undefined;
-  const activeScenario =
+  const activeScenarioBase =
     active?.scenarioId ? scenarioById[active.scenarioId] : undefined;
+  const activeScenario =
+    activeScenarioBase && active?.prescriptionId
+      ? {
+          ...activeScenarioBase,
+          prescriptionId: active.prescriptionId,
+          prescriptionActionId:
+            active.prescriptionActionId,
+        }
+      : activeScenarioBase;
   const activeGameProfile =
     active?.adaptivePolicy?.challenge === "recovery"
       ? aiProfiles.gentle
