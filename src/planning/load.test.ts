@@ -244,6 +244,7 @@ describe("P23 load management", () => {
 
   it("caps generated session advice during recovery", () => {
     const p = plan({
+      updatedAt: "2026-10-05T00:00:00Z",
       manualRecoveryUntil: recoveryUntil(NOW),
     });
     const s = state(p, []);
