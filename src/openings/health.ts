@@ -75,13 +75,25 @@ export function repertoireHealth(
   deviations: OpeningDeviation[],
   games: ImportedGame[],
 ): RepertoireHealth {
-  const repertoireGames = games.filter(
-    (game) =>
-      matchedRepertoireNodeIds(
-        game,
-        repertoire,
-      ).length > 1,
-  );
+  const root = openingNodes[repertoire.rootNodeId];
+  const repertoireGames = games.filter((game) => {
+    if (game.startingFen || game.playerColor !== repertoire.color) {
+      return false;
+    }
+    if (repertoire.color === "w") {
+      return true;
+    }
+
+    const expectedOpponentStarts = new Set(
+      root.children
+        .map((id) => openingNodes[id]?.moveFromParent)
+        .filter((move): move is string => Boolean(move)),
+    );
+    return Boolean(
+      game.moves[0]?.uci &&
+      expectedOpponentStarts.has(game.moves[0].uci),
+    );
+  });
   const relevantDeviations =
     deviations.filter(
       (item) =>
