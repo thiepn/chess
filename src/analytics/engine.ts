@@ -4,6 +4,7 @@ import {
   skills,
 } from "../domain/curriculum";
 import { retentionProbability } from "../domain/mastery";
+import { timeControlWeight } from "../games/practical";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -59,18 +60,203 @@ function analyticsMasteryAt(
   return values.length ? average(values) : 0;
 }
 
+function humanTransferForMastery(
+  mastery: UserState["mastery"][string],
+) {
+  return Math.max(
+    mastery.humanGameRecognition ?? 0,
+    mastery.humanGameExecution ?? 0,
+  );
+}
+
+function aiTransferForMastery(
+  mastery: UserState["mastery"][string],
+) {
+  return Math.max(
+    mastery.trainingTransfer,
+    mastery.aiGameTransfer ?? 0,
+  );
+}
+
+function humanTransferNow(state: UserState) {
+  const values = Object.values(state.mastery)
+    .filter((mastery) => (mastery.humanGameAttempts ?? 0) > 0)
+    .map(humanTransferForMastery);
+  return average(values);
+}
+
+function aiTransferNow(state: UserState) {
+  const values = Object.values(state.mastery)
+    .filter(
+      (mastery) =>
+        mastery.attempts > 0 &&
+        (mastery.trainingTransfer > 0 ||
+          (mastery.aiGameAttempts ?? 0) > 0),
+    )
+    .map(aiTransferForMastery);
+  return average(values);
+}
+
 function transferNow(state: UserState) {
   const values = Object.values(state.mastery)
     .filter((mastery) => mastery.attempts > 0)
     .map((mastery) =>
       Math.max(
-        mastery.trainingTransfer,
+        aiTransferForMastery(mastery),
+        humanTransferForMastery(mastery),
         mastery.realGameRecognition,
         mastery.realGameExecution,
       ),
     );
 
   return average(values);
+}
+
+function practicalStrengthInsight(state: UserState) {
+  const humanGames = [...(state.games ?? [])]
+    .filter(
+      (game) =>
+        game.source === "lichess" &&
+        Boolean(game.practicalMetrics),
+    )
+    .sort((a, b) => b.importedAt.localeCompare(a.importedAt))
+    .slice(0, 20);
+
+  const mastery = currentMastery(state);
+  const humanTransfer = humanTransferNow(state);
+  const aiTransfer = aiTransferNow(state);
+
+  const weighted = humanGames.map((game) => ({
+    game,
+    weight:
+      timeControlWeight(game.timeControlCategory) *
+      (game.rated === false ? .9 : 1),
+  }));
+  const totalWeight = weighted.reduce(
+    (sum, item) => sum + item.weight,
+    0,
+  );
+
+  const quality = totalWeight
+    ? weighted.reduce(
+        (sum, item) =>
+          sum +
+          (item.game.practicalMetrics?.qualityScore ?? 0) *
+            item.weight,
+        0,
+      ) / totalWeight
+    : 0;
+
+  const qualityValues = humanGames.map(
+    (game) => game.practicalMetrics?.qualityScore ?? 0,
+  );
+  const qualityMean = average(qualityValues);
+  const deviation = qualityValues.length
+    ? Math.sqrt(
+        average(
+          qualityValues.map(
+            (value) => (value - qualityMean) ** 2,
+          ),
+        ),
+      )
+    : 0;
+  const consistency = humanGames.length
+    ? Math.max(0, 100 - deviation * 2.2)
+    : 0;
+
+  const resultPerformance = humanGames.length
+    ? average(
+        humanGames.map((game) => {
+          const base = game.practicalMetrics?.resultScore ?? 50;
+          const ratingAdjustment =
+            game.opponentRating && game.playerRating
+              ? Math.max(
+                  -12,
+                  Math.min(
+                    12,
+                    (game.opponentRating - game.playerRating) * .04,
+                  ),
+                )
+              : 0;
+          return Math.max(0, Math.min(100, base + ratingAdjustment));
+        }),
+      )
+    : 0;
+
+  const opponentRatings = humanGames
+    .map((game) => game.opponentRating)
+    .filter((value): value is number => typeof value === "number");
+
+  const humanScore = humanGames.length
+    ? mastery * .3 +
+      humanTransfer * .25 +
+      quality * .25 +
+      consistency * .1 +
+      resultPerformance * .1
+    : mastery * .65 + aiTransfer * .35;
+
+  const rating = Math.round(
+    Math.max(500, Math.min(2000, 500 + humanScore * 15)),
+  );
+
+  const humanEvidenceCount = Object.values(state.mastery).reduce(
+    (sum, item) => sum + (item.humanGameAttempts ?? 0),
+    0,
+  );
+  const confidence = Math.round(
+    Math.max(
+      0,
+      Math.min(
+        100,
+        humanGames.length * 7 + Math.min(30, humanEvidenceCount * 1.5),
+      ),
+    ),
+  );
+
+  const grouped = new Map<
+    string,
+    { games: number; qualityTotal: number }
+  >();
+  for (const game of humanGames) {
+    const category = game.timeControlCategory ?? "unknown";
+    const current = grouped.get(category) ?? {
+      games: 0,
+      qualityTotal: 0,
+    };
+    current.games += 1;
+    current.qualityTotal +=
+      game.practicalMetrics?.qualityScore ?? 0;
+    grouped.set(category, current);
+  }
+
+  return {
+    rating,
+    confidence,
+    status:
+      humanGames.length >= 10
+        ? ("established" as const)
+        : humanGames.length >= 3
+          ? ("developing" as const)
+          : ("provisional" as const),
+    humanGames: humanGames.length,
+    quality: Math.round(quality),
+    consistency: Math.round(consistency),
+    resultPerformance: Math.round(resultPerformance),
+    humanTransfer: Math.round(humanTransfer),
+    aiTransfer: Math.round(aiTransfer),
+    averageOpponentRating: opponentRatings.length
+      ? Math.round(average(opponentRatings))
+      : undefined,
+    timeControls: [...grouped.entries()]
+      .map(([category, item]) => ({
+        category,
+        games: item.games,
+        quality: Math.round(
+          item.qualityTotal / Math.max(1, item.games),
+        ),
+      }))
+      .sort((a, b) => b.games - a.games),
+  };
 }
 
 function retentionNow(state: UserState, now: Date) {
@@ -236,7 +422,8 @@ function stageVelocityInsights(
         average(
           stageMasteries.map((item) =>
             Math.max(
-              item.trainingTransfer,
+              aiTransferForMastery(item),
+              humanTransferForMastery(item),
               item.realGameRecognition,
               item.realGameExecution,
             ),
@@ -283,10 +470,17 @@ function skillTrendInsights(
         ),
         transfer: Math.round(
           Math.max(
-            mastery.trainingTransfer,
+            aiTransferForMastery(mastery),
+            humanTransferForMastery(mastery),
             mastery.realGameRecognition,
             mastery.realGameExecution,
           ),
+        ),
+        humanTransfer: Math.round(
+          humanTransferForMastery(mastery),
+        ),
+        aiTransfer: Math.round(
+          aiTransferForMastery(mastery),
         ),
         evidenceCount30: recentEvents.length,
       };
@@ -396,6 +590,9 @@ export function buildProgressIntelligence(
     ),
     retention: Math.round(retentionNow(state, now)),
     transfer: Math.round(transferNow(state)),
+    humanTransfer: Math.round(humanTransferNow(state)),
+    aiTransfer: Math.round(aiTransferNow(state)),
+    practicalStrength: practicalStrengthInsight(state),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(
