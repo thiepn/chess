@@ -41,12 +41,13 @@ The default experience should answer one question: **what should I train now?**
 - P22 plan-adherence intelligence with comparable full-week history, sustainable-capacity estimation, horizon completion forecasts, bounded automatic effective-load recalibration, recovery detection, explicit opt-out, and transparent nominal-vs-effective targets
 - P23 load management with recent-volume ramp detection, overload-week tracking, watch/recovery modes, protected review/repair work, shorter recovery sessions, optional-bucket suppression, manual seven-day recovery, automatic opt-out, and a 70% combined-load floor
 - P24 competition-cycle planning with pre-cycle/base/build/sharpen/taper/event/reset phases, event-specific bucket pressure, volume tapering, preparation-readiness scoring, P23 recovery precedence, event-day minimalism, and post-event reset
+- P25 event retrospectives with multi-day event matching, preparation-vs-event performance comparison, evidence thresholds, recurring event-repair extraction, stable-skill detection, persisted human notes, and a bounded 14-day post-event repair loop
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not; P23 manages short-term load spikes and recovery periods without dropping essential retention or repair; P24 adds event-specific training blocks so preparation becomes more specific and lower-volume as competition approaches.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation; P22 checks whether that plan is actually sustainable over time and safely recalibrates the operational load when repeated adherence evidence says it is not; P23 manages short-term load spikes and recovery periods without dropping essential retention or repair; P24 adds event-specific training blocks so preparation becomes more specific and lower-volume as competition approaches; P25 closes the cycle by comparing analyzed event games with the preparation baseline and feeding event-proven repairs into the next sessions.
 
 ## Run
 
@@ -1659,6 +1660,116 @@ Progress adds a dedicated P24 panel showing:
 
 P24 requires no new backend service. Competition settings persist inside the existing training-plan state.
 
+## Event review, cycle retrospective and post-competition learning loop
+
+P25 closes the P24 competition cycle with evidence from the actual games.
+
+### Multi-day event matching
+
+A competition can now span 1, 2, 3, 5 or 7 days.
+
+P25 matches non-training imported games whose PGN date falls inside the configured event window. Games from the preparation block are kept separate as the comparison baseline.
+
+Unanalyzed matched games remain visible in the event sample instead of disappearing from the review.
+
+### Preparation → event comparison
+
+P25 summarizes analyzed event games and analyzed preparation games using:
+
+- practical quality score;
+- result performance;
+- average centipawn loss;
+- critical-error rate;
+- blunder rate.
+
+A transfer conclusion is not produced until there are at least:
+
+- 2 analyzed event games;
+- 3 analyzed preparation games.
+
+Until then the retrospective remains `insufficient`.
+
+Once enough evidence exists, transfer is classified as:
+
+- `improved`;
+- `stable`;
+- `regressed`.
+
+The comparison is deliberately about event transfer relative to the player's own preparation baseline, not an absolute rating claim.
+
+### Event-proven repair priorities
+
+P25 groups mistakes from matched event games by skill.
+
+Repair priorities are ranked by:
+
+- number of event games in which the skill failed;
+- total recurrence;
+- average centipawn impact.
+
+This distinguishes a recurring event leak from one isolated tactical miss.
+
+P25 also extracts event-stable skills from repeated low-loss practical validations, excluding skills already classified as repair priorities.
+
+### Fourteen-day post-event repair loop
+
+For 14 days after the event ends, recurring event-repair skills receive a bounded 114% P25 priority multiplier.
+
+They also generate explicit `game` candidates in the session composer so an important event lesson cannot disappear merely because other generic weaknesses are currently more numerous.
+
+The P21 urgent-work floor still applies, and P23/P24 load safeguards remain authoritative.
+
+When the 14-day window expires, the P25 boost automatically returns to neutral. The underlying mistakes and normal spaced-review state remain available through the existing systems.
+
+### Human retrospective notes
+
+Home includes three compact persistent reflection fields:
+
+- What worked?
+- What failed?
+- Next cycle focus.
+
+Only these human notes are persisted. Event metrics, comparisons, repair rankings and strength detection are always recalculated from the underlying games so a stale summary cannot diverge from source evidence.
+
+### Home review
+
+The P25 card shows:
+
+- configured event window;
+- analyzed / matched event-game count;
+- transfer status;
+- quality delta;
+- result-performance delta;
+- critical-error-rate delta;
+- top event repair themes;
+- retrospective notes;
+- plain-language evidence status.
+
+### Progress audit
+
+Progress adds a dedicated P25 panel with:
+
+- event and preparation sample sizes;
+- side-by-side preparation/event metrics;
+- transfer classification;
+- recurring repair priorities;
+- event-stable skills;
+- post-event loop state and expiry;
+- saved retrospective notes.
+
+### Relationship to earlier planning phases
+
+P25 does not replace P18–P24.
+
+- P18–P20 continue to handle diagnosis, treatment and intervention learning;
+- P21 continues to allocate weekly study time;
+- P22 continues to judge whether the plan is sustainable;
+- P23 continues to control overload and recovery;
+- P24 continues to control the event calendar and taper;
+- P25 turns the event itself into evidence for what should happen next.
+
+No new backend service or duplicate analytics table is required. P25 uses existing games, mistakes and training-plan state plus a small persisted note record.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1673,4 +1784,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P25 — Event Review, Cycle Retrospective & Post-Competition Learning Loop.
+P26 — Cross-Cycle Competition Memory, Longitudinal Event Comparison & Goal Calibration.
