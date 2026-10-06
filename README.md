@@ -33,12 +33,13 @@ The default experience should answer one question: **what should I train now?**
 - P14 adaptive training policy with per-skill intervention selection, challenge bands, calibrated puzzle targets, transfer-to-game routing, explicit stopping pressure, explainable policy reasons, and session-level difficulty adaptation
 - P15 human-play integration through Lichess with public-username linking, bounded recent-game sync, stable external-game deduplication, focus-triggered automatic refresh, batch human-game analysis, source provenance, and direct routing into Review/mistake/adaptive learning
 - P16 source-aware real-game transfer with separate structured-training, AI-game and human-game evidence channels, practical game-quality metrics, human-weighted weakness recurrence, practical-strength estimation, time-control/opponent context, positive clean-move validation, and confidence-aware human-performance analytics
+- P17 sample-aware real-game cohort diagnostics across color, time control, relative opponent strength, opening family, position type and game phase, with recurring human mistake families, five-vs-five recent form, baseline deltas, confidence thresholds, and actionable focused-practice links
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes.
 
 ## Run
 
@@ -695,6 +696,143 @@ New mastery fields are additive and tolerate older account JSON that does not co
 
 Effective mastery also normalizes its dynamic weights, so simply having no human-game sample cannot lower a user's existing mastery score.
 
+## Real-game cohort diagnostics
+
+P17 answers a different question from P16.
+
+P16 estimates **how strong the user's practical human chess is overall**. P17 asks **where that strength changes depending on the conditions**.
+
+The cohort layer is derived entirely from analyzed Lichess games already stored in account state. It adds no analytics service, telemetry backend or destructive migration.
+
+### Human-game baseline
+
+Every analyzed human game contributes a compact practical score built from:
+
+- engine quality;
+- result performance;
+- critical-error rate.
+
+P17 compares each cohort against the user's own human-game baseline rather than against a generic population benchmark.
+
+That makes statements such as “Black is currently weaker than White” meaningful for the individual learner without pretending a small personal dataset can establish universal chess truths.
+
+### Sample-aware conclusions
+
+Raw cohort rows can appear with any sample size so the user can inspect the evidence.
+
+However, P17 does **not** declare a cohort meaningfully better or worse until it contains at least three analyzed human games.
+
+Confidence rises with sample count and reaches the current display ceiling at six games per cohort.
+
+This is deliberate. One bad Sicilian or two rushed Blitz games should remain observations, not become durable diagnoses.
+
+### Cohort dimensions
+
+P17 derives performance across:
+
+- **Color** — White versus Black.
+- **Time control** — Bullet, Blitz, Rapid, Classical, Correspondence and Unknown.
+- **Opponent strength** — lower-rated, similar-rated and stronger opponents using rating difference relative to the player's own rating.
+- **Opening family** — grouped opening families rather than tiny one-game sub-variations.
+- **Position type** — opening-sensitive, tactical, endgame-heavy, long-middlegame or balanced games.
+- **Game phase** — opening, middlegame and endgame quality/ACPL/critical-error performance.
+
+Each cohort reports:
+
+- analyzed-game count;
+- engine quality;
+- result performance;
+- ACPL;
+- critical-error rate;
+- blunder rate;
+- compact practical score;
+- delta versus personal baseline;
+- sample confidence.
+
+### Opening identity
+
+New Lichess sync requests opening metadata where the export provides it and preserves the PGN `Opening` and `ECO` tags.
+
+Variation labels are normalized to stable families. For example, multiple Caro-Kann variations contribute to one **Caro-Kann Defense** cohort rather than producing several one-game rows.
+
+For older games or PGNs without opening metadata, P17 falls back to the app's own repertoire tree and then to a small move-based family classifier.
+
+Repertoire-deviation behavior remains separate from analytics identity: the opening trainer may still flag 1.d4 as leaving a White 1.e4 repertoire even though cohort analytics correctly refuse to label that zero-match game as a 1.e4 repertoire game.
+
+### Relative opponent diagnostics
+
+Opponent cohorts are relative rather than fixed absolute rating buckets:
+
+- **Stronger opponents** — at least 125 rating points above the player.
+- **Similar-rated opponents** — within ±124.
+- **Lower-rated opponents** — at least 125 below.
+- **Unknown rating** — required PGN rating metadata is missing.
+
+This answers a more useful personal question than generic “1200–1400” buckets: whether the player's chess changes when facing peers, stronger resistance or supposedly easier opposition.
+
+### Position-type diagnostics
+
+P17 derives broad practical archetypes from the existing review story rather than inventing a new engine pass.
+
+Examples include:
+
+- **Opening-sensitive** — the opening phase contains a meaningful error and is substantially worse than later phases.
+- **Tactical** — repeated tactical/calculation moments or a high blunder rate dominate the game.
+- **Endgame-heavy** — a substantial endgame was actually played.
+- **Long middlegame** — a long non-endgame struggle dominates.
+- **Balanced** — no single archetype dominates strongly enough.
+
+These labels are intentionally broad; they exist to find repeatable learning conditions rather than to classify chess positions academically.
+
+### Recent form
+
+Recent form uses two rolling five-game windows:
+
+- latest five analyzed human games;
+- preceding five analyzed human games.
+
+P17 compares both engine quality and result performance.
+
+A minimum of three games in each window is required before form can be called improving, stable or declining. Otherwise the status remains **insufficient**.
+
+### Recurring human mistake families
+
+P17 also aggregates the curriculum skills attached to personal mistakes from human games.
+
+For each recurring family it tracks:
+
+- unique games affected;
+- total mistake occurrences;
+- average practical impact;
+- recurrence rate across analyzed human games.
+
+Families that recur across at least three games can become explicit P17 diagnostic signals.
+
+The Progress workspace includes a direct **Train** action for these skill families, which enters the existing focused-practice runtime rather than creating a separate remediation product.
+
+### Progress Intelligence workspace
+
+The P17 section inside Progress includes:
+
+- human-game baseline summary;
+- ranked priority/watch/strength diagnostics;
+- opening-family performance;
+- time-control and opponent cohorts;
+- color and position-type cohorts;
+- phase performance;
+- recent form;
+- recurring human-game mistake families.
+
+Home surfaces the highest-ranked P17 diagnostic when one has enough evidence, so a meaningful condition-specific issue is visible without opening the analytics page.
+
+### Scope boundary
+
+P17 is primarily a **diagnostic** phase.
+
+Existing P14/P16 logic already uses human-weighted weaknesses for training priority, and recurring P17 mistake families can be trained directly. However, P17 deliberately does not rewrite the adaptive composer around every cohort difference yet.
+
+That allows the statistical layer to remain inspectable before automatic prescriptions start changing opening drills, game scenarios or session composition.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -709,4 +847,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P17 — Real-Game Cohort Analysis, Opening Performance & Opponent/Time-Control Diagnostics.
+P18 — Cohort-to-Training Prescriptions, Opening Repair & Practical Game Plans.
