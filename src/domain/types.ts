@@ -12,6 +12,7 @@ import type { LearningAnalyticsState } from "../analytics/types";
 import type { AdaptiveTrainingPolicy } from "../adaptation/types";
 import type { LichessConnection } from "../lichess/types";
 import type { PrescriptionTrackingRecord } from "../prescriptions/types";
+import type { LessonMasterySummary } from "../learning/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -257,6 +258,7 @@ export interface TrainingOutcome {
   puzzleSkillIds?: string[];
   mistakeId?: string;
   studyId?: string;
+  lessonEvidence?: LessonMasterySummary;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";
