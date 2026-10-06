@@ -10789,3 +10789,462 @@ html[data-motion="reduced"] .dashboard-grid {
     align-items: flex-start;
   }
 }
+
+
+/* P30 — Game Review 2.0 */
+
+.moment-coach-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  color: #68768b;
+  font-size: 7px;
+  text-transform: capitalize;
+}
+
+.moment-coach-summary strong {
+  color: #8d9ab0;
+  font-size: 7px;
+}
+
+.moment-coach-primary {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(118,151,255,.13);
+  background: rgba(118,151,255,.045);
+  color: #aab9ed;
+  font: inherit;
+  font-size: 8px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.review-coach-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(4,7,12,.82);
+  backdrop-filter: blur(12px);
+}
+
+.review-coach {
+  position: relative;
+  width: min(1120px, calc(100vw - 30px));
+  max-height: min(860px, calc(100vh - 30px));
+  overflow: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.055);
+  background: #0b0f17;
+  box-shadow: 0 30px 80px rgba(0,0,0,.42);
+  padding: 18px;
+}
+
+.review-coach-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-right: 34px;
+  margin-bottom: 14px;
+}
+
+.review-coach-header h2 {
+  margin: 4px 0 0;
+  font-size: clamp(18px, 2vw, 25px);
+  color: #d4dbe7;
+}
+
+.review-error-chip {
+  padding: 6px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(236,161,101,.11);
+  background: rgba(236,161,101,.025);
+  color: #b98d6d;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+  white-space: nowrap;
+}
+
+.review-self-analysis {
+  display: grid;
+  gap: 12px;
+}
+
+.review-thought-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.review-thought-grid button {
+  min-height: 48px;
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.012);
+  color: #76849a;
+  font: inherit;
+  font-size: 8px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.review-thought-grid button.active {
+  border-color: rgba(118,151,255,.18);
+  background: rgba(118,151,255,.045);
+  color: #b1bee8;
+}
+
+.review-thought-note {
+  display: grid;
+  gap: 6px;
+}
+
+.review-thought-note > span {
+  color: #68768b;
+  font-size: 8px;
+  font-weight: 750;
+}
+
+.review-thought-note textarea {
+  min-height: 100px;
+  resize: vertical;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.012);
+  color: #aeb8c8;
+  padding: 11px;
+  font: inherit;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.review-time-context,
+.review-error-summary,
+.review-retry-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.01);
+}
+
+.review-time-context > div,
+.review-error-summary > div {
+  display: grid;
+  gap: 2px;
+}
+
+.review-time-context strong,
+.review-error-summary strong {
+  color: #b8c3d2;
+  font-size: 9px;
+}
+
+.review-time-context span,
+.review-error-summary span {
+  color: #69778c;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.review-retry-layout,
+.review-explain-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.review-retry-board {
+  min-width: 0;
+}
+
+.review-retry-panel {
+  display: grid;
+  gap: 11px;
+}
+
+.review-retry-panel > p {
+  margin: 0;
+  color: #78869a;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.review-retry-result {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(236,132,112,.1);
+  background: rgba(236,132,112,.02);
+  display: grid;
+  gap: 3px;
+}
+
+.review-retry-result strong {
+  color: #c29a8e;
+  font-size: 9px;
+}
+
+.review-retry-result span {
+  color: #756d6b;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.review-retry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.review-explanation-main {
+  display: grid;
+  gap: 10px;
+}
+
+.review-candidate-compare {
+  display: grid;
+  gap: 6px;
+}
+
+.review-candidate-compare > span,
+.review-engine-evidence span,
+.review-opening-deviation > span {
+  color: #5f6d82;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.review-candidate-compare > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.review-candidate-compare > div > div {
+  min-height: 58px;
+  padding: 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+}
+
+.review-candidate-compare > div > div.best {
+  border-color: rgba(112,209,164,.14);
+  background: rgba(112,209,164,.025);
+}
+
+.review-candidate-compare strong {
+  color: #b8c3d2;
+  font-size: 10px;
+}
+
+.review-candidate-compare small {
+  color: #66748a;
+  font-size: 7px;
+}
+
+.review-position-explanation {
+  margin: 0;
+  color: #76849a;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.review-opening-deviation {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(118,151,255,.09);
+  background: rgba(118,151,255,.018);
+  display: grid;
+  gap: 4px;
+}
+
+.review-opening-deviation strong {
+  color: #aebbea;
+  font-size: 9px;
+}
+
+.review-opening-deviation p {
+  margin: 0;
+  color: #7887a4;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.review-opening-deviation small {
+  color: #65738b;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+.review-engine-evidence {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-engine-evidence > div {
+  display: grid;
+  gap: 2px;
+}
+
+.review-engine-evidence small {
+  color: #59677c;
+  font-size: 7px;
+}
+
+.review-engine-evidence > strong {
+  color: #b5c0d0;
+  font-size: 9px;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.review-transfer-card {
+  position: sticky;
+  top: 0;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.045);
+  background: rgba(255,255,255,.012);
+  display: grid;
+  gap: 9px;
+}
+
+.review-transfer-card h3 {
+  margin: 0;
+  color: #c2cbd9;
+  font-size: 13px;
+}
+
+.review-transfer-card > p:not(.eyebrow) {
+  margin: 0;
+  color: #6e7c91;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.review-retain-choice {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.035);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.review-retain-choice > div {
+  display: grid;
+  gap: 2px;
+}
+
+.review-retain-choice strong {
+  color: #aeb8c8;
+  font-size: 8px;
+}
+
+.review-retain-choice span {
+  color: #617087;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.review-retry-success {
+  color: #7ca78f;
+}
+
+.review-retry-success span {
+  font-size: 8px;
+}
+
+.review-coach-done {
+  border: 0;
+  background: transparent;
+  color: #65738a;
+  font: inherit;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .review-thought-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .review-retry-layout,
+  .review-explain-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .review-transfer-card {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .review-coach-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .review-coach {
+    width: 100vw;
+    max-height: 100vh;
+    min-height: 100vh;
+    border-radius: 0;
+    padding: 14px;
+  }
+
+  .review-coach-header {
+    display: grid;
+  }
+
+  .review-thought-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-candidate-compare > div {
+    grid-template-columns: 1fr;
+  }
+
+  .review-engine-evidence {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .review-engine-evidence > strong {
+    text-align: left;
+  }
+}
