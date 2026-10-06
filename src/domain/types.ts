@@ -57,6 +57,7 @@ export interface TrainingPlanSettings {
   weeklyMinutes: number;
   horizonWeeks: 4 | 8 | 12;
   sessionsPerWeek: number;
+  autoRecalibrate?: boolean;
   updatedAt: string;
 }
 
