@@ -140,6 +140,7 @@ function prescriptionCandidate(
 
   item.id = `prescription:${prescription.id}:${action.id}`;
   item.prescriptionId = prescription.id;
+  item.prescriptionActionId = action.id;
 
   if (
     action.kind === "mistake-replay" &&
