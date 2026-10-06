@@ -242,7 +242,7 @@ function chooseMode(
         : skill.trainingModes[0] ?? "conceptLesson";
     return {
       mode,
-      reason: "New skill: build the concept before testing transfer.",
+      reason: "New skill: learn the idea before testing it in harder positions.",
     };
   }
 
@@ -252,7 +252,7 @@ function chooseMode(
   ) {
     return {
       mode: "conceptLesson" as TrainingMode,
-      reason: "Understanding is the weakest dimension, so explanation comes before harder retrieval.",
+      reason: "The idea is not stable yet, so review it before harder practice.",
     };
   }
 
@@ -260,7 +260,7 @@ function chooseMode(
     const mode = availableRecognitionMode(skill);
     return {
       mode,
-      reason: "Recognition is weak, so use a visible pattern-focused intervention.",
+      reason: "You are missing this pattern too often, so practice seeing it clearly first.",
     };
   }
 
@@ -271,7 +271,7 @@ function chooseMode(
     const mode = availableMixedMode(skill);
     return {
       mode,
-      reason: "The pattern works in isolation but is weaker in mixed positions.",
+      reason: "You can solve this when the theme is obvious; now practice finding it without a label.",
     };
   }
 
@@ -285,7 +285,7 @@ function chooseMode(
     return {
       mode: "endgameDrill" as TrainingMode,
       reason:
-        "The endgame idea is established; prove the technique by playing the position out against resistance.",
+        "You know the endgame idea. Now prove you can execute it against resistance.",
     };
   }
 
@@ -297,7 +297,7 @@ function chooseMode(
     return {
       mode: "conversionChallenge" as TrainingMode,
       reason:
-        "The conversion idea is established; finish a winning position against resistance.",
+        "You know the winning idea. Now finish the position against resistance.",
     };
   }
 
@@ -309,7 +309,7 @@ function chooseMode(
     return {
       mode: "calculation" as TrainingMode,
       reason:
-        "The concept is established; train candidate generation and multi-ply calculation directly.",
+        "The idea is familiar. Now calculate candidates and replies without guidance.",
     };
   }
 
@@ -321,7 +321,7 @@ function chooseMode(
     if (mode) {
       return {
         mode,
-        reason: "Knowledge is ahead of transfer, so prove the skill in a resistant position.",
+        reason: "You know this better than you use it in games. Practice it in a resistant position.",
       };
     }
   }
@@ -333,13 +333,13 @@ function chooseMode(
     if (skill.trainingModes.includes("mixedPuzzle")) {
       return {
         mode: "mixedPuzzle" as TrainingMode,
-        reason: "Recall is decaying, so use retrieval without revealing the motif.",
+        reason: "This is getting rusty. Retrieve it without being told the theme.",
       };
     }
     if (skill.trainingModes.includes("microReview")) {
       return {
         mode: "microReview" as TrainingMode,
-        reason: "Recall is decaying, so use a short spaced retrieval.",
+        reason: "This is getting rusty. Use a short recall check.",
       };
     }
   }
@@ -357,7 +357,7 @@ function chooseMode(
   if (historicalBest) {
     return {
       mode: historicalBest,
-      reason: "This intervention has the strongest recent personal learning signal for this skill.",
+      reason: "This kind of practice has helped this skill most in your recent work.",
     };
   }
 
@@ -371,7 +371,7 @@ function chooseMode(
           : skill.trainingModes[0] ?? "conceptLesson";
     return {
       mode,
-      reason: "Scheduled review: retrieve the skill with minimal guidance.",
+      reason: "This is due for review. Recall it with as little help as possible.",
     };
   }
 
@@ -379,13 +379,13 @@ function chooseMode(
     const mode = availableMixedMode(skill);
     return {
       mode,
-      reason: "Checkpoint evidence was weak, so repair the skill with active retrieval.",
+      reason: "The checkpoint exposed a gap. Repair it with active practice.",
     };
   }
 
   return {
     mode: skill.trainingModes[0] ?? "conceptLesson",
-    reason: "Use the skill's default next training mode.",
+    reason: "Use the next normal practice step for this skill.",
   };
 }
 
