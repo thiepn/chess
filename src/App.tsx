@@ -42,7 +42,7 @@ import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { CalculationRunner } from "./components/CalculationRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
-import type { ImportedGame, PersonalMistake } from "./games/types";
+import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 import { OpeningsView } from "./components/OpeningsView";
 import { OpeningTrainer } from "./components/OpeningTrainer";
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -1097,6 +1097,128 @@ export default function App() {
     }));
   }
 
+  function updateGameReviewReflection(
+    reflection: GameReviewReflection,
+  ) {
+    setState((previous) => ({
+      ...previous,
+      gameReviewReflections: {
+        ...(previous.gameReviewReflections ?? {}),
+        [reflection.momentId]: {
+          ...(previous.gameReviewReflections?.[reflection.momentId] ?? {}),
+          ...reflection,
+        },
+      },
+    }));
+  }
+
+  function retainGameReviewLesson(
+    gameId: string,
+    momentId: string,
+  ) {
+    setState((previous) => {
+      const game = (previous.games ?? []).find(
+        (item) => item.id === gameId,
+      );
+      const moment = game?.reviewStory?.moments.find(
+        (item) => item.id === momentId,
+      );
+      if (!game || !moment) return previous;
+
+      const skillId =
+        moment.skillIds.find((id) => skillById[id]) ??
+        moment.skillIds[0];
+      if (!skillId) return previous;
+
+      const now = new Date();
+      const id = `review:${gameId}:${momentId}`;
+      const existing = (previous.savedStudies ?? []).find(
+        (study) => study.id === id,
+      );
+      const reflection =
+        previous.gameReviewReflections?.[momentId];
+      const domain = skillById[skillId]?.domain;
+
+      const study: SavedStudy = {
+        id,
+        title: `Game lesson · ${skillById[skillId]?.title ?? "Critical position"}`,
+        kind:
+          domain === "openings"
+            ? "opening"
+            : domain === "endgames"
+              ? "endgame"
+              : domain === "tactics"
+                ? "tactic"
+                : "position",
+        fen: moment.positionFen,
+        notes: [
+          moment.summary,
+          reflection?.thoughtNote
+            ? `Your thought: ${reflection.thoughtNote}`
+            : "",
+          moment.errorReason ?? "",
+        ]
+          .filter(Boolean)
+          .join("\n\n"),
+        tags: [
+          "game-review",
+          moment.errorType ?? "decision",
+          domain ?? "chess",
+        ],
+        source: "game",
+        sourceId: moment.id,
+        orientation: game.playerColor,
+        arrows: [
+          {
+            from: moment.bestMove.slice(0, 2) as import("chess.js").Square,
+            to: moment.bestMove.slice(2, 4) as import("chess.js").Square,
+            tone: "good",
+          },
+        ],
+        highlights: [],
+        training: existing?.training ?? {
+          enabled: true,
+          skillId,
+          targetMove: moment.bestMove,
+          targetSan: moment.bestSan,
+          attempts: 0,
+          successes: 0,
+          streak: 0,
+          nextReviewAt: new Date(
+            now.getTime() + 86_400_000,
+          ).toISOString(),
+          lastQuality: 0,
+        },
+        favorite: existing?.favorite ?? false,
+        createdAt: existing?.createdAt ?? now.toISOString(),
+        updatedAt: now.toISOString(),
+      };
+
+      return {
+        ...previous,
+        savedStudies: [
+          ...(previous.savedStudies ?? []).filter(
+            (item) => item.id !== id,
+          ),
+          study,
+        ],
+        gameReviewReflections: {
+          ...(previous.gameReviewReflections ?? {}),
+          [momentId]: {
+            ...(reflection ?? {
+              momentId,
+              gameId,
+              ply: moment.ply,
+              updatedAt: now.toISOString(),
+            }),
+            retained: true,
+            updatedAt: now.toISOString(),
+          },
+        },
+      };
+    });
+  }
+
   function deleteStudy(studyId: string) {
     setState((previous) => ({
       ...previous,
@@ -1892,6 +2014,12 @@ export default function App() {
             onAnalyzed={handleAnalyzedGame}
             onTrainMistake={startMistakePractice}
             onReplayMistake={replayMistakePosition}
+            reflections={state.gameReviewReflections ?? {}}
+            openingDeviations={state.openingDeviations ?? []}
+            onUpdateReflection={updateGameReviewReflection}
+            onRetainLesson={retainGameReviewLesson}
+            onPracticeSkill={startManualPractice}
+            onPracticeOpening={startOpeningPractice}
           />
         ) : nav === "library" ? (
           <LibraryView
