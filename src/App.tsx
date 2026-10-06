@@ -27,6 +27,7 @@ import type {
   LearningEvidence,
   SessionMode,
   TrainingActivity,
+  TrainingGoalId,
   TrainingOutcome,
   UserState,
 } from "./domain/types";
@@ -96,6 +97,11 @@ import {
   markPrescriptionStarted,
   syncPrescriptionHistory,
 } from "./prescriptions/outcomes";
+import {
+  appendTrainingLedger,
+  trainingGoals,
+  trainingPlanForState,
+} from "./planning/periodization";
 
 const repo = createChessStateRepository();
 
@@ -613,6 +619,12 @@ export default function App() {
         openingDeviations,
         savedStudies,
         prescriptionHistory,
+        trainingLedger: appendTrainingLedger(
+          previous.trainingLedger,
+          active,
+          activeSkill.domain,
+          occurredAt,
+        ),
       };
     });
 
@@ -861,6 +873,17 @@ export default function App() {
         openingProgress,
         analytics,
         prescriptionHistory,
+        trainingLedger:
+          active &&
+          active.activityType === "engineGame" &&
+          activeSkill
+            ? appendTrainingLedger(
+                previous.trainingLedger,
+                active,
+                activeSkill.domain,
+                occurredAt,
+              )
+            : previous.trainingLedger,
       };
     });
 
@@ -1222,6 +1245,25 @@ export default function App() {
     }));
   }
 
+
+  function updateTrainingPlan(
+    patch: Partial<{
+      goal: TrainingGoalId;
+      weeklyMinutes: number;
+      horizonWeeks: 4 | 8 | 12;
+      sessionsPerWeek: number;
+    }>,
+  ) {
+    setState((previous) => ({
+      ...previous,
+      trainingPlan: {
+        ...trainingPlanForState(previous),
+        ...patch,
+        updatedAt: new Date().toISOString(),
+      },
+    }));
+  }
+
   if (!loaded) {
     return (
       <div className="app-loading-shell" aria-label="Loading chess">
@@ -1314,11 +1356,165 @@ export default function App() {
               </section>
             )}
 
+            <section className="home-training-horizon">
+              <div className="home-training-horizon-head">
+                <div>
+                  <p className="eyebrow">P21 · TRAINING HORIZON</p>
+                  <h2>{progressIntelligence.trainingHorizon.goalLabel}</h2>
+                  <p>{progressIntelligence.trainingHorizon.goalDescription}</p>
+                </div>
+                <span className={`horizon-pace ${progressIntelligence.trainingHorizon.paceStatus}`}>
+                  {progressIntelligence.trainingHorizon.paceStatus.replace("-", " ")}
+                </span>
+              </div>
+
+              <div className="horizon-progress-line">
+                <span
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      progressIntelligence.trainingHorizon.plan.weeklyMinutes
+                        ? progressIntelligence.trainingHorizon.completedMinutes /
+                          progressIntelligence.trainingHorizon.plan.weeklyMinutes *
+                          100
+                        : 0,
+                    )}%`,
+                  }}
+                />
+              </div>
+
+              <div className="horizon-summary-grid">
+                <div>
+                  <span>This week</span>
+                  <strong>
+                    {progressIntelligence.trainingHorizon.completedMinutes}/
+                    {progressIntelligence.trainingHorizon.plan.weeklyMinutes}m
+                  </strong>
+                </div>
+                <div>
+                  <span>Next emphasis</span>
+                  <strong>{progressIntelligence.trainingHorizon.nextFocusLabel}</strong>
+                </div>
+                <div>
+                  <span>Suggested session</span>
+                  <strong>
+                    {progressIntelligence.trainingHorizon.recommendedSessionMinutes}m
+                  </strong>
+                </div>
+                <div>
+                  <span>{progressIntelligence.trainingHorizon.plan.horizonWeeks}-week horizon</span>
+                  <strong>{progressIntelligence.trainingHorizon.horizonTargetMinutes}m</strong>
+                </div>
+              </div>
+
+              <div className="horizon-goal-switch" aria-label="Training goal">
+                {(Object.keys(trainingGoals) as TrainingGoalId[]).map((goalId) => (
+                  <button
+                    type="button"
+                    key={goalId}
+                    className={
+                      progressIntelligence.trainingHorizon.plan.goal === goalId
+                        ? "active"
+                        : ""
+                    }
+                    aria-pressed={
+                      progressIntelligence.trainingHorizon.plan.goal === goalId
+                    }
+                    onClick={() => updateTrainingPlan({ goal: goalId })}
+                  >
+                    {trainingGoals[goalId].label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="horizon-controls">
+                <label>
+                  <span>Weekly budget</span>
+                  <select
+                    value={progressIntelligence.trainingHorizon.plan.weeklyMinutes}
+                    onChange={(event) =>
+                      updateTrainingPlan({
+                        weeklyMinutes: Number(event.target.value),
+                      })
+                    }
+                  >
+                    {[90, 150, 240, 360].map((minutes) => (
+                      <option value={minutes} key={minutes}>
+                        {minutes} min
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  <span>Horizon</span>
+                  <select
+                    value={progressIntelligence.trainingHorizon.plan.horizonWeeks}
+                    onChange={(event) =>
+                      updateTrainingPlan({
+                        horizonWeeks: Number(event.target.value) as 4 | 8 | 12,
+                      })
+                    }
+                  >
+                    {[4, 8, 12].map((weeks) => (
+                      <option value={weeks} key={weeks}>
+                        {weeks} weeks
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  <span>Sessions/week</span>
+                  <select
+                    value={progressIntelligence.trainingHorizon.plan.sessionsPerWeek}
+                    onChange={(event) =>
+                      updateTrainingPlan({
+                        sessionsPerWeek: Number(event.target.value),
+                      })
+                    }
+                  >
+                    {[3, 4, 5, 6, 7].map((count) => (
+                      <option value={count} key={count}>
+                        {count}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div className="horizon-allocation-strip">
+                {progressIntelligence.trainingHorizon.allocations.map((item) => (
+                  <div key={item.bucket}>
+                    <div>
+                      <span>{item.label}</span>
+                      <small>
+                        {item.completedMinutes}/{item.targetMinutes}m
+                      </small>
+                    </div>
+                    <i>
+                      <span
+                        style={{
+                          width: `${Math.min(100, item.completion)}%`,
+                        }}
+                      />
+                    </i>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             <section className="mode-switch" aria-label="Training duration">
               {(Object.keys(sessionMinutes) as SessionMode[]).map((item) => (
                 <button
                   key={item}
-                  className={mode === item ? "mode active" : "mode"}
+                  className={
+                    [
+                      "mode",
+                      mode === item ? "active" : "",
+                      progressIntelligence.trainingHorizon.recommendedSessionMode === item
+                        ? "recommended"
+                        : "",
+                    ].filter(Boolean).join(" ")
+                  }
                   aria-pressed={mode === item}
                   onClick={() => {
                     setMode(item);
@@ -1326,7 +1522,12 @@ export default function App() {
                   }}
                 >
                   <strong>{modeLabels[item]}</strong>
-                  <span>{sessionMinutes[item]} min</span>
+                  <span>
+                    {sessionMinutes[item]} min
+                    {progressIntelligence.trainingHorizon.recommendedSessionMode === item
+                      ? " · suggested"
+                      : ""}
+                  </span>
                 </button>
               ))}
             </section>
@@ -1359,6 +1560,11 @@ export default function App() {
                       {activity.adaptivePolicy && (
                         <span className="adaptive-activity-note">
                           {activity.adaptivePolicy.challenge} · {activity.activityType.replace(/([A-Z])/g, " $1")}
+                        </span>
+                      )}
+                      {activity.periodization && (
+                        <span className="periodization-activity-note">
+                          {activity.periodization.bucket} · {activity.periodization.reason}
                         </span>
                       )}
                     </div>

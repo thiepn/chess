@@ -37,6 +37,49 @@ export type DomainId =
   | "conversion"
   | "practical";
 
+
+export type TrainingGoalId =
+  | "balanced-growth"
+  | "course-progress"
+  | "human-transfer"
+  | "competition-prep";
+
+export type TrainingBudgetBucket =
+  | "retention"
+  | "repair"
+  | "course"
+  | "transfer"
+  | "repertoire"
+  | "exploration";
+
+export interface TrainingPlanSettings {
+  goal: TrainingGoalId;
+  weeklyMinutes: number;
+  horizonWeeks: 4 | 8 | 12;
+  sessionsPerWeek: number;
+  updatedAt: string;
+}
+
+export interface TrainingLedgerEntry {
+  id: string;
+  occurredAt: string;
+  skillId: string;
+  domain: DomainId;
+  source: CandidateSource;
+  activityType: TrainingMode;
+  bucket: TrainingBudgetBucket;
+  minutes: number;
+}
+
+export interface PeriodizationAdjustment {
+  bucket: TrainingBudgetBucket;
+  multiplier: number;
+  targetMinutes: number;
+  completedMinutes: number;
+  remainingMinutes: number;
+  reason: string;
+}
+
 export type RelationStrength = "hard" | "soft" | "helpful";
 
 export type TrainingMode =
@@ -174,6 +217,7 @@ export interface TrainingCandidate {
   prescriptionId?: string;
   prescriptionActionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
+  periodization?: PeriodizationAdjustment;
 }
 
 export interface TrainingActivity extends TrainingCandidate {
@@ -201,6 +245,7 @@ export interface TrainingSession {
   plannedMinutes: number;
   mode: SessionMode;
   focus?: DomainId;
+  weeklyFocus?: TrainingBudgetBucket;
   activities: TrainingActivity[];
 }
 
@@ -221,6 +266,8 @@ export interface UserState {
   analytics?: LearningAnalyticsState;
   lichess?: LichessConnection;
   prescriptionHistory?: PrescriptionTrackingRecord[];
+  trainingPlan?: TrainingPlanSettings;
+  trainingLedger?: TrainingLedgerEntry[];
   focus?: {
     domain: DomainId;
     until?: string;

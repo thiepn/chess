@@ -620,6 +620,79 @@ export function ProgressView({
         </p>
       </section>
 
+      <section className="progress-panel training-horizon-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P21 · TRAINING HORIZON</p>
+            <h2>Turn the weekly budget into the right mix of work.</h2>
+          </div>
+          <Gauge size={20} />
+        </div>
+
+        <div className="training-horizon-kpis">
+          <div>
+            <span>Goal</span>
+            <strong>{intelligence.trainingHorizon.goalLabel}</strong>
+          </div>
+          <div>
+            <span>Weekly budget</span>
+            <strong>
+              {intelligence.trainingHorizon.completedMinutes}/
+              {intelligence.trainingHorizon.plan.weeklyMinutes}m
+            </strong>
+          </div>
+          <div>
+            <span>Pace</span>
+            <strong>{intelligence.trainingHorizon.paceStatus.replace("-", " ")}</strong>
+          </div>
+          <div>
+            <span>Next emphasis</span>
+            <strong>{intelligence.trainingHorizon.nextFocusLabel}</strong>
+          </div>
+          <div>
+            <span>Suggested session</span>
+            <strong>{intelligence.trainingHorizon.recommendedSessionMinutes}m</strong>
+          </div>
+        </div>
+
+        <div className="training-allocation-grid">
+          {intelligence.trainingHorizon.allocations.map((item) => (
+            <article
+              className={
+                item.bucket === intelligence.trainingHorizon.nextFocus
+                  ? "training-allocation-card priority"
+                  : "training-allocation-card"
+              }
+              key={item.bucket}
+            >
+              <div>
+                <strong>{item.label}</strong>
+                <span>{Math.round(item.share * 100)}% of week</span>
+              </div>
+              <div className="training-allocation-meter">
+                <span
+                  style={{
+                    width: `${Math.min(100, item.completion)}%`,
+                  }}
+                />
+              </div>
+              <small>
+                {item.completedMinutes}/{item.targetMinutes}m · {item.remainingMinutes}m remaining
+              </small>
+            </article>
+          ))}
+        </div>
+
+        <div className="training-horizon-note">
+          <BrainCircuit size={16} />
+          <span>
+            P21 uses completed training, not planned sessions. Missed days do not break the plan:
+            the remaining budget is redistributed through the next generated sessions. Urgent review,
+            human-game repair and failed prescriptions stay protected even when their weekly bucket is full.
+          </span>
+        </div>
+      </section>
+
       <section className="progress-panel real-game-diagnostics-panel">
         <div className="progress-section-heading">
           <div>
