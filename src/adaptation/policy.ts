@@ -274,6 +274,18 @@ function chooseMode(
   }
 
   if (
+    skill.domain === "calculation" &&
+    skill.trainingModes.includes("calculation") &&
+    (mastery?.understanding ?? 0) >= 45
+  ) {
+    return {
+      mode: "calculation" as TrainingMode,
+      reason:
+        "The concept is established; train candidate generation and multi-ply calculation directly.",
+    };
+  }
+
+  if (
     transfer < 45 &&
     mastery.effectiveMastery >= 48
   ) {
@@ -302,18 +314,6 @@ function chooseMode(
         reason: "Recall is decaying, so use a short spaced retrieval.",
       };
     }
-  }
-
-  if (
-    skill.domain === "calculation" &&
-    skill.trainingModes.includes("calculation") &&
-    (mastery?.understanding ?? 0) >= 45
-  ) {
-    return {
-      mode: "calculation" as TrainingMode,
-      reason:
-        "The concept is established; train candidate generation and multi-ply calculation directly.",
-    };
   }
 
   const historicalBest = bestModeFromHistory(skill, events, [
