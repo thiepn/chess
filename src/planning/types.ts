@@ -43,6 +43,7 @@ export interface TrainingHorizonInsight {
   managedWeeklyMinutes: number;
   loadManagement: LoadManagementInsight;
   competitionCycle: CompetitionCycleInsight;
+  eventRetrospective: EventRetrospectiveInsight;
   allocations: TrainingBudgetAllocation[];
 }
 
@@ -178,5 +179,57 @@ export interface CompetitionCycleInsight {
   managedWeeklyMinutes: number;
   bucketMultipliers: Record<TrainingBudgetBucket, number>;
   suppressedByRecovery: boolean;
+  reason: string;
+}
+
+
+export type EventTranslationStatus =
+  | "insufficient"
+  | "improved"
+  | "stable"
+  | "regressed";
+
+export interface EventPerformanceSummary {
+  games: number;
+  analyzedGames: number;
+  quality: number;
+  resultPerformance: number;
+  averageCentipawnLoss: number;
+  criticalErrorRate: number;
+  blunderRate: number;
+}
+
+export interface EventRepairPriority {
+  skillId: string;
+  label: string;
+  occurrences: number;
+  games: number;
+  averageImpact: number;
+}
+
+export interface EventRetrospectiveInsight {
+  available: boolean;
+  eventDate?: string;
+  eventEndDate?: string;
+  eventLabel?: string;
+  eventGameIds: string[];
+  preparationGameIds: string[];
+  event: EventPerformanceSummary;
+  preparation: EventPerformanceSummary;
+  translationStatus: EventTranslationStatus;
+  qualityDelta: number;
+  resultDelta: number;
+  errorRateDelta: number;
+  repairPriorities: EventRepairPriority[];
+  strengthSkillIds: string[];
+  followUpActive: boolean;
+  followUpUntil?: string;
+  priorityMultiplier: number;
+  note?: {
+    whatWorked?: string;
+    whatFailed?: string;
+    nextCycleFocus?: string;
+    updatedAt: string;
+  };
   reason: string;
 }
