@@ -638,7 +638,7 @@ export function ProgressView({
             <span>Weekly budget</span>
             <strong>
               {intelligence.trainingHorizon.completedMinutes}/
-              {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
+              {intelligence.trainingHorizon.managedWeeklyMinutes}m
             </strong>
           </div>
           <div>
