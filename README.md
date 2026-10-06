@@ -36,12 +36,13 @@ The default experience should answer one question: **what should I train now?**
 - P17 sample-aware real-game cohort diagnostics across color, time control, relative opponent strength, opening family, position type and game phase, with recurring human mistake families, five-vs-five recent form, baseline deltas, confidence thresholds, and actionable focused-practice links
 - P18 cohort-to-training prescriptions that convert strong P17 diagnoses into confidence-gated repair plans, repertoire-aware opening recall, exact human-mistake replay, focused curriculum repair, targeted scenarios, one-item composer injection, Home surfacing and next-human-game checklists
 - P19 prescription outcome tracking with issued/started/completed intervention episodes, frozen pre-treatment baselines, matched post-treatment human-game validation, three-game minimums, successful-plan retirement, persistent-plan escalation and coach-effectiveness analytics
+- P20 coach policy learning with recency-weighted/shrunk outcome evidence, learned plan/action-family preferences, deterministic action reordering, bounded prescription-priority adjustments, explicit exploration of weak/unseen alternatives, and transparent policy diagnostics
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate.
 
 ## Run
 
@@ -1161,6 +1162,77 @@ For that reason P19:
 
 The value is practical: stop repeatedly prescribing things that show no evidence of transfer, and preserve interventions that appear to work in the user's real games.
 
+## Coach policy learning and long-term prescription optimization
+
+P20 closes the next loop after P19: the app no longer treats every prescription mechanism as equally useful forever.
+
+The policy layer is deliberately conservative. It learns only from P19 episodes that reached a real post-treatment outcome (`improved`, `unchanged` or `worsened`). Merely showing a plan, starting an exercise or finishing training does not create a policy preference.
+
+### Shrunk personal policy
+
+Each validated episode contributes a bounded utility signal from:
+
+- the P19 outcome class;
+- the measured before→after target delta;
+- P19 post-game confidence;
+- recency, with older interventions gradually carrying less weight.
+
+A neutral prior is always present. One strong result therefore cannot make the coach declare an intervention superior.
+
+Plan-family and action-family multipliers stay intentionally small and bounded. Diagnosis severity remains the primary reason a problem is trained.
+
+### Plan-family learning
+
+P20 learns separate signals for:
+
+- opening repair;
+- recurring-mistake repair;
+- phase repair;
+- condition-specific game plans;
+- recent-form resets.
+
+After repeated validated transfer, a plan family may receive a modest boost. Repeated poor transfer can reduce its automatic priority, but it is not deleted from the product.
+
+### Action-family learning
+
+Completed prescription actions are grouped into:
+
+- focused practice;
+- exact mistake replay;
+- opening recall;
+- resistant Stockfish scenario.
+
+When enough P19 outcomes exist, actions inside a new prescription are deterministically reordered so historically stronger transfer mechanisms come first.
+
+Attribution remains cautious. If one P19 episode completed several action families, its evidence is divided across those families instead of giving each full credit.
+
+### Exploration without randomness
+
+P20 does not use opaque random recommendations.
+
+Unknown or weakly sampled action families remain neutral. This means they naturally rank above repeatedly poor alternatives while still ranking below clearly validated winners. The system can therefore keep learning without locking into an early guess.
+
+### Failure escalation remains dominant
+
+If the current target itself worsened after treatment, P19 escalation is preserved. P20 may change which action is tried next, but it cannot suppress the urgency of a currently deteriorating real-game problem.
+
+### Explainable policy surface
+
+Progress now includes **P20 Coach Policy Learning**.
+
+It shows:
+
+- policy mode (`cold-start`, `learning`, or `personalized`);
+- number of validated episodes;
+- overall learning confidence;
+- currently preferred plan family;
+- currently preferred action family;
+- per-family policy multiplier, sample count and transfer signal.
+
+Each active prescription also shows the policy adjustment that affected it.
+
+The policy is derived from existing durable prescription history. No new analytics service, database table or opaque permanent recommendation state is introduced.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1175,4 +1247,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P20 — Coach Policy Learning, Intervention Selection & Long-Term Prescription Optimization.
+P21 — Goal-Aware Training Horizons, Weekly Periodization & Study-Budget Allocation.
