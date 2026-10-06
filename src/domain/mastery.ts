@@ -11,7 +11,9 @@ export const evidenceWeight: Record<LearningEvidence["source"], number> = {
   delayedReview: .7,
   trainingPosition: .8,
   engineGame: .85,
-  realGame: 1,
+  realGame: .92,
+  humanGame: 1,
+  aiGameReview: .72,
   diagnostic: .52,
   checkpoint: .78,
 };
@@ -32,6 +34,11 @@ export function emptyMastery(skillId: string, difficulty = .5): SkillMastery {
     attempts: 0,
     successes: 0,
     realGameAttempts: 0,
+    humanGameRecognition: 0,
+    humanGameExecution: 0,
+    humanGameAttempts: 0,
+    aiGameTransfer: 0,
+    aiGameAttempts: 0,
     stabilityDays: 1,
     difficulty,
   };
@@ -48,33 +55,23 @@ function updateDimension(current: number, target: number, weight: number) {
 }
 
 export function calculateEffectiveMastery(mastery: SkillMastery): number {
-  const hasTransferEvidence = mastery.realGameAttempts >= 5;
-  const weights = hasTransferEvidence
-    ? {
-        understanding: .05,
-        recognition: .08,
-        execution: .1,
-        mixedRecognition: .12,
-        delayedRetention: .15,
-        trainingTransfer: .15,
-        realGameRecognition: .15,
-        realGameExecution: .2,
-      }
-    : {
-        understanding: .1,
-        recognition: .15,
-        execution: .15,
-        mixedRecognition: .2,
-        delayedRetention: .15,
-        trainingTransfer: .1,
-        realGameRecognition: .05,
-        realGameExecution: .1,
-      };
+  const humanAttempts = mastery.humanGameAttempts ?? 0;
+  const humanRecognition =
+    mastery.humanGameRecognition ?? mastery.realGameRecognition ?? 0;
+  const humanExecution =
+    mastery.humanGameExecution ?? mastery.realGameExecution ?? 0;
+  const aiTransfer = mastery.aiGameTransfer ?? mastery.trainingTransfer ?? 0;
 
-  const raw = Object.entries(weights).reduce(
-    (sum, [key, weight]) => sum + mastery[key as keyof typeof weights] * weight,
-    0,
-  );
+  const raw =
+    mastery.understanding * .08 +
+    mastery.recognition * .12 +
+    mastery.execution * .13 +
+    mastery.mixedRecognition * .16 +
+    mastery.delayedRetention * .16 +
+    mastery.trainingTransfer * .1 +
+    aiTransfer * .05 +
+    humanRecognition * (humanAttempts >= 5 ? .08 : .05) +
+    humanExecution * (humanAttempts >= 5 ? .12 : .05);
 
   const confidenceGate = .55 + .45 * (mastery.confidence / 100);
   return clamp(raw * confidenceGate);
@@ -135,8 +132,47 @@ export function applyEvidence(
   }
   if (evidence.source === "realGame") {
     next.realGameAttempts += 1;
-    next.realGameRecognition = updateDimension(next.realGameRecognition, target, weight);
-    next.realGameExecution = updateDimension(next.realGameExecution, target, weight);
+    next.realGameRecognition = updateDimension(
+      next.realGameRecognition,
+      target,
+      weight,
+    );
+    next.realGameExecution = updateDimension(
+      next.realGameExecution,
+      target,
+      weight,
+    );
+  }
+  if (evidence.source === "humanGame") {
+    next.humanGameAttempts = (next.humanGameAttempts ?? 0) + 1;
+    const contextWeight =
+      weight *
+      clamp(.75 + (evidence.timeControlWeight ?? .75) * .25, .65, 1.08) *
+      clamp(
+        evidence.opponentRating
+          ? .85 + Math.min(2500, Math.max(400, evidence.opponentRating)) / 10000
+          : 1,
+        .85,
+        1.08,
+      );
+    next.humanGameRecognition = updateDimension(
+      next.humanGameRecognition ?? 0,
+      target,
+      contextWeight,
+    );
+    next.humanGameExecution = updateDimension(
+      next.humanGameExecution ?? 0,
+      target,
+      contextWeight,
+    );
+  }
+  if (evidence.source === "aiGameReview") {
+    next.aiGameAttempts = (next.aiGameAttempts ?? 0) + 1;
+    next.aiGameTransfer = updateDimension(
+      next.aiGameTransfer ?? 0,
+      target,
+      weight,
+    );
   }
 
   next.attempts += 1;
