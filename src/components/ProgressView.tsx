@@ -3,6 +3,7 @@ import {
   BarChart3,
   BrainCircuit,
   CheckCircle2,
+  ChevronRight,
   Clock3,
   RefreshCcw,
   ShieldCheck,
