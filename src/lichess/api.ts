@@ -145,6 +145,7 @@ async function fetchUserGamesText(
   params.set("moves", "true");
   params.set("clocks", "false");
   params.set("evals", "false");
+  params.set("opening", "true");
 
   if (options.since) {
     const since = new Date(options.since).getTime();
