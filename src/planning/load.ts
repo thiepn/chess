@@ -106,12 +106,12 @@ function recommendedStatus(
     );
 
   if (
-    forecast.adherence.comparableWeeks >= 4 &&
+    planForecast.adherence.comparableWeeks >= 4 &&
     (strongAcuteRamp || sustainedOverload)
   ) {
     recommendation = "recovery";
   } else if (
-    forecast.adherence.comparableWeeks >= 3 &&
+    planForecast.adherence.comparableWeeks >= 3 &&
     (
       overloadWeeks >= 1 ||
       rampRatio >= 1.2 ||
@@ -134,10 +134,17 @@ function recommendedStatus(
 export function buildLoadManagement(
   state: UserState,
   plan: TrainingPlanSettings,
-  forecast = buildTrainingPlanForecast(state, plan),
+  forecast: TrainingPlanForecast | undefined = undefined,
   now = new Date(),
 ): LoadManagementInsight {
-  const metrics = recommendedStatus(forecast);
+  const planForecast =
+    forecast ??
+    buildTrainingPlanForecast(
+      state,
+      plan,
+      now,
+    );
+  const metrics = recommendedStatus(planForecast);
   const automaticEnabled = plan.autoRecovery !== false;
   const manualActive = manualRecoveryActive(plan, now);
 
@@ -159,7 +166,7 @@ export function buildLoadManagement(
   const managedWeeklyMinutes = Math.max(
     Math.round(nominalFloor / 5) * 5,
     Math.round(
-      forecast.recalibration.effectiveWeeklyMinutes *
+      planForecast.recalibration.effectiveWeeklyMinutes *
         loadMultiplier /
         5,
     ) * 5,
@@ -182,7 +189,7 @@ export function buildLoadManagement(
           ? `Recent load is elevated: ${metrics.overloadWeeks} of the last 3 full weeks exceeded 110% of target, with a ${metrics.rampRatio}× latest-week ramp versus the prior baseline. P23 applies a temporary recovery load.`
           : metrics.recommendation === "watch"
             ? `Recent training load is elevated but does not yet justify a recovery week. P23 limits optional load growth and keeps sessions shorter while more evidence arrives.`
-            : forecast.adherence.comparableWeeks < 3
+            : planForecast.adherence.comparableWeeks < 3
               ? "P23 is collecting full-week history before making automatic load-management changes."
               : "Recent training volume is within the sustainable range; no recovery adjustment is needed.";
 
@@ -192,8 +199,8 @@ export function buildLoadManagement(
     automaticEnabled,
     manualRecoveryActive: manualActive,
     active,
-    evidenceWeeks: forecast.adherence.comparableWeeks,
-    confidence: forecast.adherence.confidence,
+    evidenceWeeks: planForecast.adherence.comparableWeeks,
+    confidence: planForecast.adherence.confidence,
     latestWeekMinutes: metrics.latestWeekMinutes,
     recentActiveDays: metrics.recentActiveDays,
     baselineWeeklyMinutes: metrics.baselineWeeklyMinutes,
