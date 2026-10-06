@@ -11,13 +11,21 @@ import {
   TrendingUp,
   Users,
   Gauge,
+  Activity,
+  CircleAlert,
+  Layers3,
 } from "lucide-react";
-import type { ProgressIntelligence, TrendPoint } from "../analytics/types";
+import type {
+  HumanGameCohortInsight,
+  ProgressIntelligence,
+  TrendPoint,
+} from "../analytics/types";
 import { skillTitle, stageTitle } from "../analytics/engine";
 
 interface ProgressViewProps {
   intelligence: ProgressIntelligence;
   onBack: () => void;
+  onTrainSkill?: (skillId: string) => void;
 }
 
 function deltaLabel(value: number) {
@@ -58,6 +66,44 @@ function calibrationText(
     return "Assessment performance is stronger than the current mastery estimates predict.";
   }
   return "More placement/checkpoint samples are needed before calibration is meaningful.";
+}
+
+function cohortDelta(item: HumanGameCohortInsight) {
+  if (Math.abs(item.deltaVsBaseline) < 1) return "≈ baseline";
+  return `${item.deltaVsBaseline > 0 ? "+" : ""}${Math.round(
+    item.deltaVsBaseline,
+  )} vs baseline`;
+}
+
+function CohortRows({
+  items,
+  empty,
+}: {
+  items: HumanGameCohortInsight[];
+  empty: string;
+}) {
+  if (!items.length) {
+    return <div className="progress-empty"><span>{empty}</span></div>;
+  }
+
+  return (
+    <div className="cohort-list">
+      {items.slice(0, 6).map((item) => (
+        <div className="cohort-row" key={`${item.dimension}:${item.key}`}>
+          <div>
+            <strong>{item.label}</strong>
+            <span>
+              {item.games} game{item.games === 1 ? "" : "s"} · quality {item.quality}% · result {item.resultPerformance}%
+            </span>
+          </div>
+          <div className={item.deltaVsBaseline >= 0 ? "cohort-delta positive" : "cohort-delta negative"}>
+            <strong>{cohortDelta(item)}</strong>
+            <small>{item.confidence}% confidence</small>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function TrendChart({ points }: { points: TrendPoint[] }) {
@@ -158,6 +204,7 @@ function TrendChart({ points }: { points: TrendPoint[] }) {
 export function ProgressView({
   intelligence,
   onBack,
+  onTrainSkill,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
   const strongestIntervention = intelligence.interventions[0];
@@ -287,6 +334,176 @@ export function ProgressView({
           Opponent rating only adds modest context; engine quality, consistency,
           curriculum mastery and demonstrated human transfer carry most of the model.
         </p>
+      </section>
+
+      <section className="progress-panel real-game-diagnostics-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">REAL-GAME DIAGNOSTICS</p>
+            <h2>Where your human chess changes with the conditions.</h2>
+          </div>
+          <Activity size={20} />
+        </div>
+
+        <div className="cohort-baseline-strip">
+          <div>
+            <span>Analyzed humans</span>
+            <strong>{intelligence.realGameDiagnostics.sampleCount}</strong>
+          </div>
+          <div>
+            <span>Baseline quality</span>
+            <strong>{intelligence.realGameDiagnostics.baselineQuality}%</strong>
+          </div>
+          <div>
+            <span>Practical score</span>
+            <strong>{intelligence.realGameDiagnostics.baselinePracticalScore}</strong>
+          </div>
+          <div>
+            <span>Recent form</span>
+            <strong>{intelligence.realGameDiagnostics.recentForm.direction}</strong>
+          </div>
+        </div>
+
+        {intelligence.realGameDiagnostics.diagnostics.length ? (
+          <div className="diagnostic-callouts">
+            {intelligence.realGameDiagnostics.diagnostics.map((item) => (
+              <article
+                className={`diagnostic-callout ${item.severity}`}
+                key={item.id}
+              >
+                <div>
+                  {item.severity === "priority" ? (
+                    <CircleAlert size={17} />
+                  ) : item.severity === "strength" ? (
+                    <Sparkles size={17} />
+                  ) : (
+                    <Target size={17} />
+                  )}
+                </div>
+                <div>
+                  <span>{item.severity}</span>
+                  <strong>{item.headline}</strong>
+                  <p>{item.detail}</p>
+                  <small>
+                    {item.games} game{item.games === 1 ? "" : "s"} · {item.confidence}% confidence
+                  </small>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="cohort-insufficient-note">
+            <Layers3 size={17} />
+            <span>
+              {intelligence.realGameDiagnostics.sampleCount < 3
+                ? "Analyze at least three human games before P17 declares a cohort meaningfully stronger or weaker."
+                : "No human-game cohort is currently far enough from your baseline to deserve a separate warning."}
+            </span>
+          </div>
+        )}
+
+        <div className="real-game-cohort-grid">
+          <article>
+            <div className="cohort-heading">
+              <span>OPENING PERFORMANCE</span>
+              <strong>Families, not tiny variations</strong>
+            </div>
+            <CohortRows
+              items={intelligence.realGameDiagnostics.openings}
+              empty="Opening cohorts will appear after analyzed human games."
+            />
+          </article>
+
+          <article>
+            <div className="cohort-heading">
+              <span>PLAYING CONDITIONS</span>
+              <strong>Time control and opponent level</strong>
+            </div>
+            <CohortRows
+              items={[
+                ...intelligence.realGameDiagnostics.timeControls,
+                ...intelligence.realGameDiagnostics.opponents,
+              ]}
+              empty="More human-game context is needed."
+            />
+          </article>
+
+          <article>
+            <div className="cohort-heading">
+              <span>COLOR & POSITION TYPE</span>
+              <strong>Where the game tends to go wrong</strong>
+            </div>
+            <CohortRows
+              items={[
+                ...intelligence.realGameDiagnostics.colors,
+                ...intelligence.realGameDiagnostics.positionTypes,
+              ]}
+              empty="More analyzed games are needed."
+            />
+          </article>
+
+          <article>
+            <div className="cohort-heading">
+              <span>PHASE PERFORMANCE</span>
+              <strong>Opening → middlegame → endgame</strong>
+            </div>
+            <div className="phase-diagnostic-list">
+              {intelligence.realGameDiagnostics.phases.map((phase) => (
+                <div key={phase.phase}>
+                  <span>{phase.phase}</span>
+                  <strong>{phase.quality}%</strong>
+                  <small>
+                    {phase.games} games · {phase.averageCentipawnLoss} ACPL · {phase.criticalPerGame} critical/game
+                  </small>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div className="real-game-bottom-grid">
+          <article className="recent-form-card">
+            <span>RECENT FORM</span>
+            <strong>
+              {intelligence.realGameDiagnostics.recentForm.direction === "insufficient"
+                ? "Building a comparison window"
+                : intelligence.realGameDiagnostics.recentForm.direction}
+            </strong>
+            <p>
+              Latest {intelligence.realGameDiagnostics.recentForm.recentGames} games:
+              {" "}{intelligence.realGameDiagnostics.recentForm.recentQuality}% quality
+              {intelligence.realGameDiagnostics.recentForm.previousGames >= 3
+                ? ` · ${intelligence.realGameDiagnostics.recentForm.qualityDelta >= 0 ? "+" : ""}${Math.round(intelligence.realGameDiagnostics.recentForm.qualityDelta)} vs prior sample`
+                : ""}
+            </p>
+          </article>
+
+          <article className="mistake-family-card">
+            <span>RECURRING HUMAN-GAME FAMILIES</span>
+            {intelligence.realGameDiagnostics.mistakeFamilies.length ? (
+              intelligence.realGameDiagnostics.mistakeFamilies.slice(0, 5).map((item) => (
+                <div key={item.skillId}>
+                  <div>
+                    <strong>{item.label}</strong>
+                    <small>
+                      {item.games} games · {item.recurrenceRate}% recurrence · impact {item.averageImpact}
+                    </small>
+                  </div>
+                  {onTrainSkill && (
+                    <button
+                      type="button"
+                      onClick={() => onTrainSkill(item.skillId)}
+                    >
+                      Train
+                    </button>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No recurring human-game mistake family has enough evidence yet.</p>
+            )}
+          </article>
+        </div>
       </section>
 
       <section className="progress-panel progress-trajectory">
