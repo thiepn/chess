@@ -15,8 +15,9 @@ const MAX_ANALYTICS_EVENTS = 3000;
 function transferValue(mastery: SkillMastery) {
   return Math.max(
     mastery.trainingTransfer,
-    mastery.realGameRecognition,
-    mastery.realGameExecution,
+    mastery.aiGameTransfer ?? 0,
+    mastery.humanGameRecognition ?? mastery.realGameRecognition ?? 0,
+    mastery.humanGameExecution ?? mastery.realGameExecution ?? 0,
   );
 }
 
