@@ -137,6 +137,15 @@ export interface PhasePerformanceInsight {
   quality: number;
 }
 
+export interface MistakeFamilyInsight {
+  skillId: string;
+  label: string;
+  games: number;
+  occurrences: number;
+  averageImpact: number;
+  recurrenceRate: number;
+}
+
 export interface RecentFormInsight {
   recentGames: number;
   previousGames: number;
@@ -171,6 +180,7 @@ export interface RealGameDiagnostics {
   openings: HumanGameCohortInsight[];
   positionTypes: HumanGameCohortInsight[];
   phases: PhasePerformanceInsight[];
+  mistakeFamilies: MistakeFamilyInsight[];
   recentForm: RecentFormInsight;
   diagnostics: PracticalDiagnostic[];
 }
