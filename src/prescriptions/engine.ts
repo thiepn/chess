@@ -9,9 +9,45 @@ import type { ImportedGame } from "../games/types";
 import { openingIdentityForGame } from "../openings/match";
 import { openingNodes } from "../openings/repertoire";
 import type {
+  PrescriptionBaseline,
   TrainingPrescription,
   TrainingPrescriptionAction,
 } from "./types";
+
+function baseline(
+  games: number,
+  score: number,
+  options: {
+    quality?: number;
+    resultPerformance?: number;
+    recurrenceRate?: number;
+  } = {},
+): PrescriptionBaseline {
+  return {
+    capturedAt: new Date().toISOString(),
+    games,
+    score: Math.round(score * 10) / 10,
+    ...options,
+  };
+}
+
+function diagnosticCohort(
+  diagnostic: PracticalDiagnostic,
+  diagnostics: RealGameDiagnostics,
+) {
+  const groups = [
+    ...diagnostics.colors,
+    ...diagnostics.timeControls,
+    ...diagnostics.opponents,
+    ...diagnostics.openings,
+    ...diagnostics.positionTypes,
+  ];
+  return groups.find(
+    (item) =>
+      item.dimension === diagnostic.dimension &&
+      item.key === diagnostic.cohortKey,
+  );
+}
 
 function humanGames(state: UserState) {
   return [...(state.games ?? [])]
@@ -232,6 +268,20 @@ function openingPrescription(
     composerEligible:
       diagnostic.games >= 3 &&
       diagnostic.confidence >= 50,
+    target: {
+      dimension: "opening",
+      key: cohort.key,
+      label: cohort.label,
+      skillId: "openings.principles",
+    },
+    baseline: baseline(
+      cohort.games,
+      cohort.practicalScore,
+      {
+        quality: cohort.quality,
+        resultPerformance: cohort.resultPerformance,
+      },
+    ),
     actions,
   };
 }
@@ -268,6 +318,17 @@ function mistakePrescription(
     composerEligible:
       family.games >= 3 &&
       diagnostic.confidence >= 50,
+    target: {
+      dimension: "mistake",
+      key: skillId,
+      label: skill.title,
+      skillId,
+    },
+    baseline: baseline(
+      family.games,
+      100 - family.recurrenceRate,
+      { recurrenceRate: family.recurrenceRate },
+    ),
     actions: mistakeActions(state, skillId),
   };
 }
@@ -337,6 +398,22 @@ function phasePrescription(
     composerEligible:
       diagnostic.games >= 3 &&
       diagnostic.confidence >= 50,
+    target: {
+      dimension: "phase",
+      key: phase,
+      label: `${phase} phase`,
+      skillId,
+    },
+    baseline: (() => {
+      const phaseInsight = diagnostics.phases.find(
+        (item) => item.phase === phase,
+      );
+      return baseline(
+        phaseInsight?.games ?? diagnostic.games,
+        phaseInsight?.quality ?? 0,
+        { quality: phaseInsight?.quality },
+      );
+    })(),
     actions: mistakeActions(state, skillId),
   };
 }
@@ -426,6 +503,34 @@ function conditionPrescription(
     composerEligible:
       diagnostic.games >= 3 &&
       diagnostic.confidence >= 50,
+    target: {
+      dimension:
+        diagnostic.dimension === "color" ||
+        diagnostic.dimension === "timeControl" ||
+        diagnostic.dimension === "opponent" ||
+        diagnostic.dimension === "positionType"
+          ? diagnostic.dimension
+          : "form",
+      key: diagnostic.cohortKey ?? "general",
+      label: diagnostic.headline,
+      skillId,
+    },
+    baseline: (() => {
+      const cohort = diagnosticCohort(
+        diagnostic,
+        diagnostics,
+      );
+      return baseline(
+        cohort?.games ?? diagnostic.games,
+        cohort?.practicalScore ??
+          diagnostics.baselinePracticalScore,
+        {
+          quality: cohort?.quality,
+          resultPerformance:
+            cohort?.resultPerformance,
+        },
+      );
+    })(),
     actions: mistakeActions(state, skillId),
   };
 }
@@ -433,6 +538,7 @@ function conditionPrescription(
 function formPrescription(
   state: UserState,
   diagnostic: PracticalDiagnostic,
+  diagnostics: RealGameDiagnostics,
 ): TrainingPrescription {
   const skillId = "practical.resilience";
   return {
@@ -452,6 +558,21 @@ function formPrescription(
     composerEligible:
       diagnostic.games >= 3 &&
       diagnostic.confidence >= 60,
+    target: {
+      dimension: "form",
+      key: "recent",
+      label: "Recent human-game form",
+      skillId,
+    },
+    baseline: baseline(
+      diagnostics.recentForm.recentGames,
+      diagnostics.recentForm.recentQuality,
+      {
+        quality: diagnostics.recentForm.recentQuality,
+        resultPerformance:
+          diagnostics.recentForm.recentResultPerformance,
+      },
+    ),
     actions: mistakeActions(state, skillId),
   };
 }
@@ -504,7 +625,11 @@ function prescriptionForDiagnostic(
     diagnostic.dimension === "form" &&
     diagnostic.id === "form:declining"
   ) {
-    return formPrescription(state, diagnostic);
+    return formPrescription(
+      state,
+      diagnostic,
+      diagnostics,
+    );
   }
 
   return undefined;
