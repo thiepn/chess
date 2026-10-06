@@ -90,6 +90,10 @@ export async function analyzeImportedGame(
   const mistakes = reviews
     .map((review) => buildPersonalMistake(review, now))
     .filter((value): value is PersonalMistake => Boolean(value))
+    .map((mistake) => ({
+      ...mistake,
+      gameSource: game.source,
+    }))
     .sort((a, b) => b.centipawnLoss - a.centipawnLoss)
     .slice(0, 8);
 
