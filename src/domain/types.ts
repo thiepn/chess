@@ -177,6 +177,7 @@ export type EvidenceSource =
   | "guided"
   | "themedPuzzle"
   | "mixedPuzzle"
+  | "calculation"
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
