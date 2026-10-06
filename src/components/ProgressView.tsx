@@ -429,6 +429,15 @@ export function ProgressView({
                     </span>
                   )}
                 </div>
+                {prescription.policy && (
+                  <div className={`prescription-policy-strip ${prescription.policy.stance}`}>
+                    <BrainCircuit size={14} />
+                    <span>
+                      Learned policy {prescription.policy.multiplier >= 1 ? "+" : ""}
+                      {Math.round((prescription.policy.multiplier - 1) * 100)}% · {prescription.policy.reason}
+                    </span>
+                  </div>
+                )}
               </article>
             ))}
           </div>
@@ -514,6 +523,103 @@ export function ProgressView({
           </div>
         )}
       </section>
+      <section className="progress-panel coach-policy-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P20 · COACH POLICY LEARNING</p>
+            <h2>Which interventions should the coach prefer next?</h2>
+          </div>
+          <BrainCircuit size={20} />
+        </div>
+
+        <div className="coach-policy-grid">
+          <div>
+            <span>Policy mode</span>
+            <strong>{intelligence.coachPolicy.mode.replace("-", " ")}</strong>
+          </div>
+          <div>
+            <span>Validated episodes</span>
+            <strong>{intelligence.coachPolicy.evaluatedEpisodes}</strong>
+          </div>
+          <div>
+            <span>Learning confidence</span>
+            <strong>{intelligence.coachPolicy.learningConfidence}%</strong>
+          </div>
+          <div>
+            <span>Preferred plan</span>
+            <strong>
+              {intelligence.coachPolicy.preferredKind
+                ? intelligence.coachPolicy.preferredKind.replace("-", " ")
+                : "Exploring"}
+            </strong>
+          </div>
+          <div>
+            <span>Preferred action</span>
+            <strong>
+              {intelligence.coachPolicy.preferredAction
+                ? intelligence.coachPolicy.preferredAction.replace("-", " ")
+                : "Exploring"}
+            </strong>
+          </div>
+        </div>
+
+        {(intelligence.coachPolicy.kindSignals.length > 0 ||
+          intelligence.coachPolicy.actionSignals.length > 0) ? (
+          <div className="coach-policy-signals">
+            {intelligence.coachPolicy.kindSignals.length > 0 && (
+              <div>
+                <span className="coach-policy-label">Plan families</span>
+                <div className="coach-policy-signal-grid">
+                  {intelligence.coachPolicy.kindSignals.map((item) => (
+                    <article key={item.key} className={`coach-policy-signal ${item.stance}`}>
+                      <strong>{item.label}</strong>
+                      <span>
+                        {item.multiplier >= 1 ? "+" : ""}
+                        {Math.round((item.multiplier - 1) * 100)}% policy weight
+                      </span>
+                      <small>
+                        {item.evaluated} validated · {item.improvedRate}% improved · avg {item.averageDelta >= 0 ? "+" : ""}{item.averageDelta}
+                      </small>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {intelligence.coachPolicy.actionSignals.length > 0 && (
+              <div>
+                <span className="coach-policy-label">Action families</span>
+                <div className="coach-policy-signal-grid">
+                  {intelligence.coachPolicy.actionSignals.map((item) => (
+                    <article key={item.key} className={`coach-policy-signal ${item.stance}`}>
+                      <strong>{item.label}</strong>
+                      <span>
+                        {item.multiplier >= 1 ? "+" : ""}
+                        {Math.round((item.multiplier - 1) * 100)}% policy weight
+                      </span>
+                      <small>
+                        {item.evaluated} attributed · {item.confidence}% confidence
+                      </small>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="cohort-insufficient-note">
+            <BrainCircuit size={17} />
+            <span>
+              P20 stays neutral until P19 has validated real before→after outcomes. It never treats clicks or training completion alone as proof that an intervention works.
+            </span>
+          </div>
+        )}
+
+        <p className="coach-policy-note">
+          Policy adjustments are deterministic, recency-weighted and deliberately small. One result cannot create a preference; weak or unseen action families remain available so the coach can keep learning instead of locking into an early guess.
+        </p>
+      </section>
+
       <section className="progress-panel real-game-diagnostics-panel">
         <div className="progress-section-heading">
           <div>
