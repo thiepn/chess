@@ -8,6 +8,7 @@ import { timeControlWeight } from "../games/practical";
 import { buildRealGameDiagnostics } from "./cohorts";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildCoachEffectiveness } from "../prescriptions/outcomes";
+import { buildCoachPolicyInsight } from "../prescriptions/policy";
 import type { CurriculumStageId, UserState } from "../domain/types";
 import type {
   AnalyticsIntervention,
@@ -603,6 +604,7 @@ export function buildProgressIntelligence(
       realGameDiagnostics,
     ),
     coachEffectiveness: buildCoachEffectiveness(state, now),
+    coachPolicy: buildCoachPolicyInsight(state, now),
     calibration: calibrationInsight(evidenceEvents),
     trend: trendPoints(state, now),
     interventions: interventionInsights(
