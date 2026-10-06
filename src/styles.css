@@ -8377,13 +8377,13 @@ html[data-motion="reduced"] .dashboard-grid {
   gap: 3px;
 }
 
-.home-forecast-strip > div.at-risk,
+.home-forecast-strip.at-risk > div,
 .plan-forecast-kpis .forecast-status.at-risk {
   border-color: rgba(236,161,101,.13);
   background: rgba(236,161,101,.025);
 }
 
-.home-forecast-strip > div.ahead,
+.home-forecast-strip.ahead > div,
 .plan-forecast-kpis .forecast-status.ahead {
   border-color: rgba(112,209,164,.12);
   background: rgba(112,209,164,.025);
