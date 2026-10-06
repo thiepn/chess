@@ -155,6 +155,10 @@ export function CalculationRunner({
     useState<
       "loading" | "ready" | "error"
     >("loading");
+  const [
+    referenceBusy,
+    setReferenceBusy,
+  ] = useState(false);
 
   const engineRef =
     useRef<StockfishBrowserEngine | null>(
@@ -252,7 +256,6 @@ export function CalculationRunner({
     );
     setSelectedMove(candidate.uci);
     setCandidateFen(applied.fen);
-    setPhase("reply");
     setBoardRevealed(
       !visualizationMode,
     );
@@ -263,16 +266,21 @@ export function CalculationRunner({
     )
       ? position.principalVariation[1]
       : undefined;
-    setBestReply(fallback);
 
+    if (fallback) {
+      setBestReply(fallback);
+      setPhase("reply");
+      return;
+    }
+
+    setReferenceBusy(true);
     const reference =
       await analyzeReference(
         applied.fen,
-        fallback,
       );
-    if (reference) {
-      setBestReply(reference);
-    }
+    setBestReply(reference);
+    setReferenceBusy(false);
+    setPhase("reply");
   }
 
   async function recordReply(
@@ -281,7 +289,6 @@ export function CalculationRunner({
   ) {
     setPredictedReply(uci);
     setReplyFen(fen);
-    setPhase("continuation");
     setBoardRevealed(
       !visualizationMode,
     );
@@ -298,16 +305,21 @@ export function CalculationRunner({
         ? position
             .principalVariation[2]
         : undefined;
-    setBestContinuation(fallback);
 
+    if (fallback) {
+      setBestContinuation(fallback);
+      setPhase("continuation");
+      return;
+    }
+
+    setReferenceBusy(true);
     const reference =
       await analyzeReference(
         fen,
-        fallback,
       );
-    if (reference) {
-      setBestContinuation(reference);
-    }
+    setBestContinuation(reference);
+    setReferenceBusy(false);
+    setPhase("continuation");
   }
 
   const score =
@@ -418,7 +430,8 @@ export function CalculationRunner({
               orientation={orientation}
               disabled={
                 phase === "result" ||
-                hiddenBoard
+                hiddenBoard ||
+                referenceBusy
               }
               onMove={(move) => {
                 const uci =
@@ -840,12 +853,14 @@ export function CalculationRunner({
                 Local Stockfish
               </span>
               <strong>
-                {engineStatus === "ready"
-                  ? "ready"
-                  : engineStatus ===
-                      "loading"
-                    ? "loading"
-                    : "fallback line"}
+                {referenceBusy
+                  ? "checking hidden reply"
+                  : engineStatus === "ready"
+                    ? "ready"
+                    : engineStatus ===
+                        "loading"
+                      ? "loading"
+                      : "fallback line"}
               </strong>
             </div>
 
