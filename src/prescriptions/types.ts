@@ -90,6 +90,45 @@ export interface CoachEffectivenessInsight {
   history: PrescriptionEffectivenessRow[];
 }
 
+export type CoachPolicyStance =
+  | "explore"
+  | "neutral"
+  | "prefer"
+  | "deprioritize";
+
+export interface CoachPolicySignal {
+  key: string;
+  label: string;
+  evaluated: number;
+  weightedEvidence: number;
+  averageDelta: number;
+  improvedRate: number;
+  score: number;
+  multiplier: number;
+  confidence: number;
+  stance: CoachPolicyStance;
+}
+
+export interface CoachPolicyInsight {
+  mode: "cold-start" | "learning" | "personalized";
+  evaluatedEpisodes: number;
+  learningConfidence: number;
+  kindSignals: CoachPolicySignal[];
+  actionSignals: CoachPolicySignal[];
+  preferredKind?: PrescriptionKind;
+  preferredAction?: PrescriptionActionKind;
+}
+
+export interface PrescriptionPolicyAdjustment {
+  multiplier: number;
+  confidence: number;
+  stance: CoachPolicyStance;
+  reason: string;
+  chosenActionKind?: PrescriptionActionKind;
+  kindSignal?: CoachPolicySignal;
+  actionSignal?: CoachPolicySignal;
+}
+
 export interface PrescriptionTrackingRecord {
   id: string;
   prescriptionId: string;
@@ -134,5 +173,6 @@ export interface TrainingPrescription {
   target: PrescriptionTarget;
   baseline: PrescriptionBaseline;
   outcome?: PrescriptionOutcomeEvaluation;
+  policy?: PrescriptionPolicyAdjustment;
   actions: TrainingPrescriptionAction[];
 }
