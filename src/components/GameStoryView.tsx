@@ -148,9 +148,6 @@ export function GameStoryView({
   const selectedReflection = selectedMoment
     ? reflections[selectedMoment.id]
     : undefined;
-  const selectedOpeningDeviation = selectedMoment
-    ? openingDeviations.find((deviation) => deviation.ply === selectedMoment.ply)
-    : undefined;
   const coachMoment = coachMomentId
     ? story?.moments.find((moment) => moment.id === coachMomentId)
     : undefined;
