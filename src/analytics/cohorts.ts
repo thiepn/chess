@@ -36,7 +36,7 @@ function humanGames(state: UserState) {
     .sort((a, b) => a.importedAt.localeCompare(b.importedAt));
 }
 
-function practicalScore(game: ImportedGame) {
+export function practicalScoreForGame(game: ImportedGame) {
   const metrics = game.practicalMetrics;
   if (!metrics) return 0;
 
@@ -73,7 +73,7 @@ function cohortMetrics(
   const blunderRate = average(
     metrics.map((item) => item!.blunderRate),
   );
-  const score = average(games.map(practicalScore));
+  const score = average(games.map(practicalScoreForGame));
 
   return {
     dimension,
@@ -131,7 +131,7 @@ function buildCohorts(
     );
 }
 
-function opponentIdentity(game: ImportedGame) {
+export function opponentCohortForGame(game: ImportedGame) {
   if (
     typeof game.playerRating !== "number" ||
     typeof game.opponentRating !== "number"
@@ -149,7 +149,7 @@ function opponentIdentity(game: ImportedGame) {
   return { key: "peer", label: "Similar-rated opponents" };
 }
 
-function positionType(game: ImportedGame) {
+export function positionTypeForGame(game: ImportedGame) {
   const phases = game.reviewStory?.phases ?? [];
   const opening = phases.find((phase) => phase.phase === "opening");
   const middlegame = phases.find(
@@ -578,7 +578,7 @@ export function buildRealGameDiagnostics(
     ),
   );
   const baselinePracticalScore = average(
-    games.map(practicalScore),
+    games.map(practicalScoreForGame),
   );
 
   const colors = buildCohorts(
@@ -609,7 +609,7 @@ export function buildRealGameDiagnostics(
   const opponents = buildCohorts(
     games,
     "opponent",
-    opponentIdentity,
+    opponentCohortForGame,
     baselinePracticalScore,
   );
 
@@ -629,7 +629,7 @@ export function buildRealGameDiagnostics(
   const positionTypes = buildCohorts(
     games,
     "positionType",
-    positionType,
+    positionTypeForGame,
     baselinePracticalScore,
   );
 
