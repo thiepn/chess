@@ -16,7 +16,30 @@ describe("mastery evidence timing", () => {
       quality: 1,
       difficulty: .6,
       occurredAt: "2026-10-05T12:00:00Z",
+      it("credits dedicated calculation evidence to execution and transfer", () => {
+    const previous = {
+      ...emptyMastery("calculation.candidates"),
+      understanding: 60,
+      recognition: 58,
+      mixedRecognition: 40,
+      execution: 35,
+      trainingTransfer: 20,
+    };
+
+    const next = applyEvidence(previous, {
+      skillId: "calculation.candidates",
+      source: "calculation",
+      success: true,
+      quality: .9,
+      difficulty: .8,
+      occurredAt: "2026-10-05T12:00:00Z",
     });
+
+    expect(next.execution).toBeGreaterThan(previous.execution);
+    expect(next.mixedRecognition).toBeGreaterThan(previous.mixedRecognition);
+    expect(next.trainingTransfer).toBeGreaterThan(previous.trainingTransfer);
+  });
+});
 
     expect(next.delayedRetention).toBe(20);
   });
