@@ -30,14 +30,12 @@ function branchFit(game: ImportedGame, repertoire: OpeningRepertoire) {
 export function chooseRepertoireForGame(game: ImportedGame) {
   if (game.startingFen) return undefined;
 
-  const best = candidateRepertoires(game)
+  return candidateRepertoires(game)
     .map((repertoire) => ({
       repertoire,
       fit: branchFit(game, repertoire),
     }))
-    .sort((a, b) => b.fit - a.fit)[0];
-
-  return best && best.fit > 0 ? best.repertoire : undefined;
+    .sort((a, b) => b.fit - a.fit)[0]?.repertoire;
 }
 
 function openingFamily(name: string) {
