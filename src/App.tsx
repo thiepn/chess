@@ -1359,6 +1359,10 @@ export default function App() {
           <ProgressView
             intelligence={progressIntelligence}
             onBack={() => setNav("home")}
+            onTrainSkill={(skillId) => {
+              startManualPractice(skillId);
+              setNav("home");
+            }}
           />
         ) : (
           <section className="placeholder">
