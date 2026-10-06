@@ -11511,3 +11511,336 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* P32 — Personal Repertoire 2.0 */
+
+.repertoire-health-score {
+  margin: 12px 0 8px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(118,151,255,.09);
+  background: rgba(118,151,255,.02);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  color: #8296d1;
+}
+
+.repertoire-health-score > div {
+  display: grid;
+  gap: 2px;
+}
+
+.repertoire-health-score span {
+  color: #65748a;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+}
+
+.repertoire-health-score strong {
+  color: #c3cde0;
+  font-size: 18px;
+}
+
+.repertoire-health-score small {
+  color: #647188;
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.repertoire-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.repertoire-repair-row {
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(236,161,101,.09);
+  background: rgba(236,161,101,.018);
+  color: #8f806f;
+  font: inherit;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.repertoire-repair-row > div {
+  display: grid;
+  gap: 2px;
+}
+
+.repertoire-repair-row span {
+  color: #70675d;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.repertoire-repair-row strong {
+  color: #b9a48e;
+  font-size: 9px;
+}
+
+.repertoire-repair-row small {
+  color: #71695f;
+  font-size: 7px;
+}
+
+.repertoire-branch-health {
+  display: grid;
+  gap: 5px;
+  margin: 9px 0;
+}
+
+.repertoire-branch-health button {
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  color: #7d899d;
+  font: inherit;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.repertoire-branch-health button > div {
+  display: grid;
+  gap: 2px;
+}
+
+.repertoire-branch-health strong {
+  color: #aeb9ca;
+  font-size: 8px;
+}
+
+.repertoire-branch-health span {
+  color: #617087;
+  font-size: 7px;
+}
+
+.repertoire-branch-health em {
+  color: #91a2d6;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.opening-structure-panel {
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(112,209,164,.08);
+  background: rgba(112,209,164,.012);
+  display: grid;
+  gap: 4px;
+}
+
+.opening-structure-panel span,
+.opening-motif-strip > span {
+  color: #647d71;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.opening-structure-panel strong {
+  color: #8fb3a0;
+  font-size: 8px;
+  line-height: 1.5;
+  font-weight: 650;
+}
+
+.opening-motif-strip {
+  display: grid;
+  gap: 5px;
+}
+
+.opening-motif-strip > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.opening-motif-strip strong {
+  padding: 5px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(118,151,255,.08);
+  background: rgba(118,151,255,.018);
+  color: #8091c1;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.opening-position-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.opening-position-actions .secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.opening-recall-stage {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 5px;
+  padding: 6px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+}
+
+.opening-recall-stage span {
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: #5f6d82;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.opening-recall-stage span.active {
+  background: rgba(118,151,255,.045);
+  color: #a9b9eb;
+}
+
+.opening-recall-stage span.done {
+  color: #77a88f;
+}
+
+.opening-structure-cue {
+  margin-top: 10px;
+  padding: 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(112,209,164,.07);
+  background: rgba(112,209,164,.01);
+  display: grid;
+  gap: 3px;
+}
+
+.opening-structure-cue span {
+  color: #5f786c;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.opening-structure-cue strong {
+  color: #89a899;
+  font-size: 8px;
+  line-height: 1.45;
+  font-weight: 650;
+}
+
+.opening-why-options {
+  display: grid;
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.opening-why-options button {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.04);
+  background: rgba(255,255,255,.012);
+  color: #8996aa;
+  font: inherit;
+  font-size: 8px;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+
+.opening-why-options button:hover:not(:disabled) {
+  border-color: rgba(118,151,255,.12);
+  background: rgba(118,151,255,.022);
+}
+
+.opening-why-options button.correct {
+  border-color: rgba(112,209,164,.13);
+  background: rgba(112,209,164,.02);
+  color: #9bc1ad;
+}
+
+.opening-line-progress {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.035);
+  background: rgba(255,255,255,.01);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.opening-line-progress span {
+  color: #627087;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.opening-line-progress strong {
+  overflow: hidden;
+  color: #9aa8bb;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opening-line-complete {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 9px;
+  text-align: center;
+  padding: 24px;
+}
+
+.opening-line-complete > svg {
+  color: #879be0;
+}
+
+.opening-line-complete h2 {
+  margin: 0;
+  color: #d1d9e6;
+  font-size: 22px;
+}
+
+.opening-line-complete p:not(.eyebrow) {
+  max-width: 560px;
+  margin: 0;
+  color: #738097;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .repertoire-metrics {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .opening-position-actions {
+    display: grid;
+  }
+
+  .opening-position-actions .secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
