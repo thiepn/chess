@@ -9,6 +9,7 @@ import type { ImportedGame } from "../games/types";
 import { openingIdentityForGame } from "../openings/match";
 import { openingNodes } from "../openings/repertoire";
 import { evaluatePrescriptionRecord } from "./outcomes";
+import { applyCoachPolicy } from "./policy";
 import type {
   PrescriptionBaseline,
   TrainingPrescription,
@@ -651,26 +652,7 @@ export function buildTrainingPrescriptions(
     .filter(
       (value): value is TrainingPrescription =>
         Boolean(value) && Boolean(value?.actions.length),
-    );
-
-  const seen = new Set<string>();
-
-  return prescriptions
-    .sort(
-      (a, b) =>
-        b.priority * (b.confidence / 100) -
-        a.priority * (a.confidence / 100),
     )
-    .filter((item) => {
-      const first = item.actions[0];
-      const signature =
-        first.skillId ??
-        first.repertoireId ??
-        item.id;
-      if (seen.has(signature)) return false;
-      seen.add(signature);
-      return true;
-    })
     .map((item) => {
       const record = [...(state.prescriptionHistory ?? [])]
         .reverse()
@@ -716,5 +698,25 @@ export function buildTrainingPrescriptions(
     .filter(
       (item) => item.outcome?.status !== "improved",
     )
+    .map((item) => applyCoachPolicy(state, item));
+
+  const seen = new Set<string>();
+
+  return prescriptions
+    .sort(
+      (a, b) =>
+        b.priority * (b.confidence / 100) -
+        a.priority * (a.confidence / 100),
+    )
+    .filter((item) => {
+      const first = item.actions[0];
+      const signature =
+        first.skillId ??
+        first.repertoireId ??
+        item.id;
+      if (seen.has(signature)) return false;
+      seen.add(signature);
+      return true;
+    })
     .slice(0, 5);
 }
