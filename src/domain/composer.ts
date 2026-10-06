@@ -14,6 +14,8 @@ import {
 import { trainingPolicyFor } from "../adaptation/policy";
 import { trainingScenarios } from "../play/scenarios";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
+import { buildEventRetrospective } from "../planning/retrospective";
+import { competitionPlanForState } from "../planning/cycle";
 import {
   buildTrainingHorizon,
   periodizationAdjustment,
@@ -222,6 +224,41 @@ export function buildCandidatePool(
         now,
       ),
     );
+  }
+
+  const eventRetrospective =
+    buildEventRetrospective(
+      state,
+      competitionPlanForState(state),
+      now,
+    );
+
+  if (eventRetrospective.followUpActive) {
+    for (
+      const priority of
+      eventRetrospective.repairPriorities.slice(0, 3)
+    ) {
+      const skill = skillById[priority.skillId];
+      if (!skill) continue;
+
+      result.push(
+        candidate(
+          state,
+          skill,
+          "game",
+          .88,
+          skill.importance *
+            (1.05 +
+              Math.min(
+                .35,
+                priority.games * .08 +
+                  priority.occurrences * .03,
+              )),
+          `P25 event repair: ${priority.label} recurred in ${priority.games} event game(s)`,
+          now,
+        ),
+      );
+    }
   }
 
   for (const prescription of buildTrainingPrescriptions(state)) {

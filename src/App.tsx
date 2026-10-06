@@ -24,6 +24,7 @@ import {
 import { applyEvidence, emptyMastery } from "./domain/mastery";
 import type {
   CompetitionPlanSettings,
+  CompetitionRetrospectiveNote,
   CurriculumStageId,
   LearningEvidence,
   SessionMode,
@@ -1305,6 +1306,64 @@ export default function App() {
     });
   }
 
+
+  function updateCompetitionRetrospective(
+    field:
+      | "whatWorked"
+      | "whatFailed"
+      | "nextCycleFocus",
+    value: string,
+  ) {
+    const eventDate =
+      progressIntelligence.trainingHorizon
+        .eventRetrospective.eventDate;
+    if (!eventDate) return;
+
+    setState((previous) => {
+      const existing = (
+        previous.competitionRetrospectives ?? []
+      ).find(
+        (item) => item.eventDate === eventDate,
+      );
+      const next: CompetitionRetrospectiveNote = {
+        id: existing?.id ?? `event:${eventDate}`,
+        eventDate,
+        updatedAt: new Date().toISOString(),
+        ...(existing?.whatWorked
+          ? { whatWorked: existing.whatWorked }
+          : {}),
+        ...(existing?.whatFailed
+          ? { whatFailed: existing.whatFailed }
+          : {}),
+        ...(existing?.nextCycleFocus
+          ? {
+              nextCycleFocus:
+                existing.nextCycleFocus,
+            }
+          : {}),
+        ...(value.trim()
+          ? { [field]: value }
+          : {}),
+      };
+
+      if (!value.trim()) {
+        delete next[field];
+      }
+
+      return {
+        ...previous,
+        competitionRetrospectives: [
+          ...(previous.competitionRetrospectives ?? [])
+            .filter(
+              (item) =>
+                item.eventDate !== eventDate,
+            ),
+          next,
+        ],
+      };
+    });
+  }
+
   if (!loaded) {
     return (
       <div className="app-loading-shell" aria-label="Loading chess">
@@ -1657,6 +1716,24 @@ export default function App() {
                   </label>
 
                   <label>
+                    <span>Event length</span>
+                    <select
+                      value={progressIntelligence.trainingHorizon.plan.competition?.eventDays ?? 1}
+                      onChange={(event) =>
+                        updateCompetitionPlan({
+                          eventDays: Number(event.target.value) as 1 | 2 | 3 | 5 | 7,
+                        })
+                      }
+                    >
+                      {[1, 2, 3, 5, 7].map((days) => (
+                        <option key={days} value={days}>
+                          {days} day{days === 1 ? "" : "s"}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
                     <span>Reset</span>
                     <select
                       value={progressIntelligence.trainingHorizon.plan.competition?.resetDays ?? 5}
@@ -1702,6 +1779,130 @@ export default function App() {
 
                 <p>{progressIntelligence.trainingHorizon.competitionCycle.reason}</p>
               </div>
+
+              {progressIntelligence.trainingHorizon.eventRetrospective.eventDate && (
+                <div className={`home-event-retrospective ${progressIntelligence.trainingHorizon.eventRetrospective.translationStatus}`}>
+                  <div className="home-event-retrospective-head">
+                    <div>
+                      <span>P25 · EVENT RETROSPECTIVE</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.eventLabel ?? "Competition review"}
+                      </strong>
+                      <small>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.eventDate}
+                        {progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate &&
+                        progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate !==
+                          progressIntelligence.trainingHorizon.eventRetrospective.eventDate
+                          ? ` → ${progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate}`
+                          : ""}
+                      </small>
+                    </div>
+                    <div className="event-translation-badge">
+                      <span>Transfer</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.translationStatus}
+                      </strong>
+                    </div>
+                  </div>
+
+                  <div className="event-retro-summary-grid">
+                    <div>
+                      <span>Event games</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.event.analyzedGames}/
+                        {progressIntelligence.trainingHorizon.eventRetrospective.event.games}
+                      </strong>
+                      <small>analyzed / matched</small>
+                    </div>
+                    <div>
+                      <span>Quality Δ</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.qualityDelta >= 0 ? "+" : ""}
+                        {progressIntelligence.trainingHorizon.eventRetrospective.qualityDelta}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>Result Δ</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.resultDelta >= 0 ? "+" : ""}
+                        {progressIntelligence.trainingHorizon.eventRetrospective.resultDelta}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>Error-rate Δ</span>
+                      <strong>
+                        {progressIntelligence.trainingHorizon.eventRetrospective.errorRateDelta >= 0 ? "+" : ""}
+                        {progressIntelligence.trainingHorizon.eventRetrospective.errorRateDelta}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {progressIntelligence.trainingHorizon.eventRetrospective.repairPriorities.length > 0 && (
+                    <div className="event-retro-priorities">
+                      {progressIntelligence.trainingHorizon.eventRetrospective.repairPriorities
+                        .slice(0, 3)
+                        .map((item) => (
+                          <span key={item.skillId}>
+                            {item.label} · {item.games} game{item.games === 1 ? "" : "s"}
+                          </span>
+                        ))}
+                    </div>
+                  )}
+
+                  <div className="event-retro-notes">
+                    <label>
+                      <span>What worked?</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          progressIntelligence.trainingHorizon.eventRetrospective.note?.whatWorked ?? ""
+                        }
+                        onChange={(event) =>
+                          updateCompetitionRetrospective(
+                            "whatWorked",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="Stable habits, openings, decisions..."
+                      />
+                    </label>
+                    <label>
+                      <span>What failed?</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          progressIntelligence.trainingHorizon.eventRetrospective.note?.whatFailed ?? ""
+                        }
+                        onChange={(event) =>
+                          updateCompetitionRetrospective(
+                            "whatFailed",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="Recurring mistakes, time trouble, preparation gaps..."
+                      />
+                    </label>
+                    <label>
+                      <span>Next cycle focus</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          progressIntelligence.trainingHorizon.eventRetrospective.note?.nextCycleFocus ?? ""
+                        }
+                        onChange={(event) =>
+                          updateCompetitionRetrospective(
+                            "nextCycleFocus",
+                            event.target.value,
+                          )
+                        }
+                        placeholder="One or two concrete priorities for the next block..."
+                      />
+                    </label>
+                  </div>
+
+                  <p>{progressIntelligence.trainingHorizon.eventRetrospective.reason}</p>
+                </div>
+              )}
 
               <div className="horizon-goal-switch" aria-label="Training goal">
                 {(Object.keys(trainingGoals) as TrainingGoalId[]).map((goalId) => (

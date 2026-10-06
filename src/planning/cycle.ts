@@ -43,6 +43,7 @@ export function defaultCompetitionPlan(): CompetitionPlanSettings {
     enabled: false,
     eventDate: "",
     prepWeeks: 6,
+    eventDays: 1,
     resetDays: 5,
   };
 }
@@ -61,6 +62,14 @@ export function competitionPlanForState(
     stored.prepWeeks === 12
       ? stored.prepWeeks
       : fallback.prepWeeks;
+  const eventDays =
+    stored.eventDays === 1 ||
+    stored.eventDays === 2 ||
+    stored.eventDays === 3 ||
+    stored.eventDays === 5 ||
+    stored.eventDays === 7
+      ? stored.eventDays
+      : fallback.eventDays;
   const resetDays =
     stored.resetDays === 3 ||
     stored.resetDays === 5 ||
@@ -72,6 +81,7 @@ export function competitionPlanForState(
     enabled: stored.enabled,
     eventDate: stored.eventDate ?? "",
     prepWeeks,
+    eventDays,
     resetDays,
     ...(stored.label?.trim()
       ? { label: stored.label.trim() }
@@ -149,17 +159,35 @@ function phaseFor(
       daysToEvent: dayDelta,
     };
   }
-  if (dayDelta === 0) {
+  const eventDays = settings.eventDays ?? 1;
+  const eventEnd = new Date(
+    event.getTime() + (eventDays - 1) * DAY,
+  );
+
+  if (
+    today.getTime() >= event.getTime() &&
+    today.getTime() <= eventEnd.getTime()
+  ) {
     return {
       phase: "event",
       event,
       start,
-      daysToEvent: 0,
-      daysFromEvent: 0,
+      daysToEvent: Math.max(0, dayDelta),
+      daysFromEvent: Math.max(
+        0,
+        Math.round(
+          (today.getTime() - event.getTime()) / DAY,
+        ),
+      ),
     };
   }
 
-  const daysFromEvent = Math.abs(dayDelta);
+  const daysFromEvent = Math.max(
+    0,
+    Math.round(
+      (today.getTime() - eventEnd.getTime()) / DAY,
+    ),
+  );
   if (daysFromEvent <= settings.resetDays) {
     return {
       phase: "reset",

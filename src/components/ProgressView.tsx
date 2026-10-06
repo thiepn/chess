@@ -1005,6 +1005,155 @@ export function ProgressView({
         </p>
       </section>
 
+      <section className="progress-panel event-retrospective-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P25 · EVENT RETROSPECTIVE</p>
+            <h2>Did preparation transfer when the games actually mattered?</h2>
+          </div>
+          <ListChecks size={20} />
+        </div>
+
+        <div className="event-retro-kpis">
+          <div>
+            <span>Event sample</span>
+            <strong>
+              {intelligence.trainingHorizon.eventRetrospective.event.analyzedGames}/
+              {intelligence.trainingHorizon.eventRetrospective.event.games}
+            </strong>
+            <small>analyzed / matched</small>
+          </div>
+          <div>
+            <span>Prep baseline</span>
+            <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.analyzedGames}</strong>
+            <small>analyzed pre-event games</small>
+          </div>
+          <div className={`event-translation-status ${intelligence.trainingHorizon.eventRetrospective.translationStatus}`}>
+            <span>Translation</span>
+            <strong>{intelligence.trainingHorizon.eventRetrospective.translationStatus}</strong>
+          </div>
+          <div>
+            <span>Quality Δ</span>
+            <strong>
+              {intelligence.trainingHorizon.eventRetrospective.qualityDelta >= 0 ? "+" : ""}
+              {intelligence.trainingHorizon.eventRetrospective.qualityDelta}
+            </strong>
+          </div>
+          <div>
+            <span>Error-rate Δ</span>
+            <strong>
+              {intelligence.trainingHorizon.eventRetrospective.errorRateDelta >= 0 ? "+" : ""}
+              {intelligence.trainingHorizon.eventRetrospective.errorRateDelta}
+            </strong>
+          </div>
+        </div>
+
+        <div className="event-baseline-comparison">
+          <article>
+            <span>Preparation games</span>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.quality}</strong>
+              <small>quality</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.resultPerformance}</strong>
+              <small>result</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.averageCentipawnLoss}</strong>
+              <small>ACPL</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.criticalErrorRate}%</strong>
+              <small>critical errors</small>
+            </div>
+          </article>
+          <article>
+            <span>Event games</span>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.event.quality}</strong>
+              <small>quality</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.event.resultPerformance}</strong>
+              <small>result</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.event.averageCentipawnLoss}</strong>
+              <small>ACPL</small>
+            </div>
+            <div>
+              <strong>{intelligence.trainingHorizon.eventRetrospective.event.criticalErrorRate}%</strong>
+              <small>critical errors</small>
+            </div>
+          </article>
+        </div>
+
+        {intelligence.trainingHorizon.eventRetrospective.repairPriorities.length > 0 && (
+          <div className="event-repair-grid">
+            {intelligence.trainingHorizon.eventRetrospective.repairPriorities.map((item) => (
+              <article key={item.skillId}>
+                <div>
+                  <strong>{item.label}</strong>
+                  <span>{item.games} event game{item.games === 1 ? "" : "s"}</span>
+                </div>
+                <small>
+                  {item.occurrences} occurrence{item.occurrences === 1 ? "" : "s"} · avg impact {item.averageImpact}cp
+                </small>
+              </article>
+            ))}
+          </div>
+        )}
+
+        {intelligence.trainingHorizon.eventRetrospective.strengthSkillIds.length > 0 && (
+          <div className="event-strength-strip">
+            <span>Event-stable skills</span>
+            <div>
+              {intelligence.trainingHorizon.eventRetrospective.strengthSkillIds.map((skillId) => (
+                <strong key={skillId}>{skillTitle(skillId)}</strong>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className={`recalibration-card ${intelligence.trainingHorizon.eventRetrospective.followUpActive ? "active" : ""}`}>
+          <RefreshCcw size={17} />
+          <div>
+            <strong>
+              {intelligence.trainingHorizon.eventRetrospective.followUpActive
+                ? "Post-event repair loop active"
+                : "No active post-event boost"}
+            </strong>
+            <span>
+              {intelligence.trainingHorizon.eventRetrospective.followUpActive
+                ? `Until ${intelligence.trainingHorizon.eventRetrospective.followUpUntil}, event-proven repair skills receive a bounded ${Math.round(intelligence.trainingHorizon.eventRetrospective.priorityMultiplier * 100)}% P25 priority multiplier.`
+                : intelligence.trainingHorizon.eventRetrospective.reason}
+            </span>
+          </div>
+        </div>
+
+        {intelligence.trainingHorizon.eventRetrospective.note && (
+          <div className="event-retro-note-grid">
+            <article>
+              <span>What worked</span>
+              <p>{intelligence.trainingHorizon.eventRetrospective.note.whatWorked || "—"}</p>
+            </article>
+            <article>
+              <span>What failed</span>
+              <p>{intelligence.trainingHorizon.eventRetrospective.note.whatFailed || "—"}</p>
+            </article>
+            <article>
+              <span>Next cycle</span>
+              <p>{intelligence.trainingHorizon.eventRetrospective.note.nextCycleFocus || "—"}</p>
+            </article>
+          </div>
+        )}
+
+        <p className="coach-policy-note">
+          P25 compares analyzed event games with analyzed preparation games from the configured P24 block. It requires at least two event games and three preparation games before claiming improved/stable/regressed transfer. Unanalyzed or missing games remain visible as incomplete evidence instead of being silently ignored.
+        </p>
+      </section>
+
       <section className="progress-panel real-game-diagnostics-panel">
         <div className="progress-section-heading">
           <div>

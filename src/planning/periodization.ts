@@ -17,7 +17,8 @@ import type {
 } from "./types";
 import { buildTrainingPlanForecast } from "./forecast";
 import { buildLoadManagement } from "./load";
-import { buildCompetitionCycle } from "./cycle";
+import { buildCompetitionCycle, competitionPlanForState } from "./cycle";
+import { buildEventRetrospective } from "./retrospective";
 
 const DAY = 86_400_000;
 const LEDGER_RETENTION_DAYS = 180;
@@ -325,6 +326,12 @@ export function buildTrainingHorizon(
     loadManagement,
     now,
   );
+  const eventRetrospective =
+    buildEventRetrospective(
+      state,
+      competitionPlanForState(state),
+      now,
+    );
   const managedWeeklyMinutes =
     competitionCycle.managedWeeklyMinutes;
   const start = mondayStart(now);
@@ -459,6 +466,7 @@ export function buildTrainingHorizon(
     managedWeeklyMinutes,
     loadManagement,
     competitionCycle,
+    eventRetrospective,
     allocations,
   };
 }
@@ -487,10 +495,21 @@ export function periodizationAdjustment(
   ].includes(item.source);
   const gap =
     allocation?.pressure ?? 0;
+  const eventPriority =
+    horizon.eventRetrospective.followUpActive &&
+    item.skillIds.some((skillId) =>
+      horizon.eventRetrospective.repairPriorities.some(
+        (priority) =>
+          priority.skillId === skillId,
+      ),
+    );
   let multiplier =
     (.86 + gap * .28) *
     (horizon.loadManagement.bucketMultipliers[bucket] ?? 1) *
-    (horizon.competitionCycle.bucketMultipliers[bucket] ?? 1);
+    (horizon.competitionCycle.bucketMultipliers[bucket] ?? 1) *
+    (eventPriority
+      ? horizon.eventRetrospective.priorityMultiplier
+      : 1);
 
   if (bucket === horizon.nextFocus) {
     multiplier += .08;
@@ -539,8 +558,15 @@ export function periodizationAdjustment(
     cycleFactor !== 1
       ? ` P24 ${horizon.competitionCycle.phase} block applies ${Math.round(cycleFactor * 100)}% competition-cycle pressure.`
       : "";
+  const retrospectiveNote =
+    eventPriority
+      ? ` P25 post-event follow-up applies ${Math.round(
+          horizon.eventRetrospective.priorityMultiplier *
+            100,
+        )}% priority to this event-proven repair skill.`
+      : "";
   const reason =
-    `${baseReason}${loadNote}${cycleNote}`;
+    `${baseReason}${loadNote}${cycleNote}${retrospectiveNote}`;
 
   return {
     bucket,

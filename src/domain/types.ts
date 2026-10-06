@@ -57,7 +57,17 @@ export interface CompetitionPlanSettings {
   eventDate: string;
   label?: string;
   prepWeeks: 4 | 6 | 8 | 12;
+  eventDays?: 1 | 2 | 3 | 5 | 7;
   resetDays: 3 | 5 | 7;
+}
+
+export interface CompetitionRetrospectiveNote {
+  id: string;
+  eventDate: string;
+  updatedAt: string;
+  whatWorked?: string;
+  whatFailed?: string;
+  nextCycleFocus?: string;
 }
 
 export interface TrainingPlanSettings {
@@ -280,6 +290,7 @@ export interface UserState {
   prescriptionHistory?: PrescriptionTrackingRecord[];
   trainingPlan?: TrainingPlanSettings;
   trainingLedger?: TrainingLedgerEntry[];
+  competitionRetrospectives?: CompetitionRetrospectiveNote[];
   focus?: {
     domain: DomainId;
     until?: string;
