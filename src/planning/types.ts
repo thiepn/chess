@@ -40,6 +40,7 @@ export interface TrainingHorizonInsight {
   recommendedSessionMinutes: number;
   horizonTargetMinutes: number;
   effectiveWeeklyMinutes: number;
+  managedWeeklyMinutes: number;
   allocations: TrainingBudgetAllocation[];
 }
 
@@ -111,4 +112,30 @@ export interface TrainingPlanForecast {
   adherence: TrainingAdherenceInsight;
   forecast: HorizonForecast;
   recalibration: HorizonRecalibration;
+}
+
+
+export type LoadManagementStatus =
+  | "normal"
+  | "watch"
+  | "recovery";
+
+export interface LoadManagementInsight {
+  recommendation: LoadManagementStatus;
+  appliedMode: LoadManagementStatus;
+  automaticEnabled: boolean;
+  manualRecoveryActive: boolean;
+  active: boolean;
+  evidenceWeeks: number;
+  confidence: number;
+  latestWeekMinutes: number;
+  recentActiveDays: number;
+  baselineWeeklyMinutes: number;
+  rampRatio: number;
+  overloadWeeks: number;
+  loadMultiplier: number;
+  managedWeeklyMinutes: number;
+  maxSessionMinutes: number;
+  bucketMultipliers: Record<TrainingBudgetBucket, number>;
+  reason: string;
 }
