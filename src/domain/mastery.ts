@@ -10,6 +10,7 @@ export const evidenceWeight: Record<LearningEvidence["source"], number> = {
   mixedPuzzle: .6,
   calculation: .75,
   endgameTechnique: .82,
+  openingRecall: .68,
   delayedReview: .7,
   trainingPosition: .8,
   engineGame: .85,
