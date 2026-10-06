@@ -229,6 +229,8 @@ This becomes a first-class runner, not LessonRunner fallback.
 
 ### P30 — Game Review 2.0: Understand, Retry, Transfer
 
+**Status:** implemented.
+
 **Purpose:** turn engine review into coaching.
 
 Preferred flow:
