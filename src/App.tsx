@@ -512,7 +512,11 @@ export default function App() {
       projectedMastery.effectiveMastery >= 60;
 
     emitExperienceEvent({
-      feedback: outcome.success ? "complete" : "error",
+      feedback:
+        outcome.success ||
+        outcome.lessonEvidence?.completed
+          ? "complete"
+          : "error",
       celebration: outcome.success
         ? crossed90
           ? "large"
