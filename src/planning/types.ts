@@ -41,6 +41,7 @@ export interface TrainingHorizonInsight {
   horizonTargetMinutes: number;
   effectiveWeeklyMinutes: number;
   managedWeeklyMinutes: number;
+  loadManagement: LoadManagementInsight;
   allocations: TrainingBudgetAllocation[];
 }
 
