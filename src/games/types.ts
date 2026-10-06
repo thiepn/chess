@@ -99,6 +99,8 @@ export interface ImportedGame {
   event?: string;
   site?: string;
   date?: string;
+  openingName?: string;
+  eco?: string;
   rated?: boolean;
   timeControl?: string;
   timeControlCategory?: TimeControlCategory;
