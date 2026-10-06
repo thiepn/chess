@@ -2,6 +2,7 @@ import { Chess } from "chess.js";
 import type { StockfishBrowserEngine } from "../engine/stockfish";
 import { buildPersonalMistake } from "./classify";
 import { buildGameReviewStory } from "./story";
+import { buildPracticalGameMetrics } from "./practical";
 import type {
   EngineMoveReview,
   GameAnalysisProgress,
@@ -93,6 +94,11 @@ export async function analyzeImportedGame(
     .slice(0, 8);
 
   const reviewStory = buildGameReviewStory(game, reviews, mistakes, now);
+  const practicalMetrics = buildPracticalGameMetrics(
+    game,
+    reviews,
+    mistakes,
+  );
 
   const analyzedGame: ImportedGame = {
     ...game,
@@ -100,6 +106,7 @@ export async function analyzeImportedGame(
     analysisEngine: engine.name,
     criticalMomentIds: mistakes.map((mistake) => mistake.id),
     reviewStory,
+    practicalMetrics,
   };
 
   options.onProgress?.({
