@@ -316,6 +316,23 @@ export default function App() {
       : null;
   }, [state.weaknesses]);
 
+  const firstActivity = session.activities[0];
+  const homeTrainingReason = !firstActivity
+    ? "No adaptive activity is due right now. Open the course to choose the next concept."
+    : firstActivity.source === "prescription"
+      ? "A real-game repair plan is the highest-confidence next step."
+      : firstActivity.source === "weakness"
+        ? "Your recent games keep pointing to this weakness."
+        : firstActivity.source === "review"
+          ? "This material is due now so it survives beyond short-term practice."
+          : firstActivity.source === "assessment"
+            ? "A checkpoint exposed a specific gap worth repairing."
+            : firstActivity.source === "curriculum"
+              ? "This is the next useful concept in your current course stage."
+              : firstActivity.source === "library"
+                ? "A saved position is due for retrieval."
+                : "The coach selected the highest-value work from your current evidence.";
+
   const topDomains = useMemo(() => {
     const grouped = new Map<string, number[]>();
     Object.values(state.mastery).forEach((item) => {
@@ -1378,11 +1395,12 @@ export default function App() {
   }
 
   const navItems = [
-    ["home", "Home", Sparkles],
+    ["home", "Train", Sparkles],
     ["learn", "Learn", BookOpen],
     ["play", "Play", Play],
     ["review", "Review", BarChart3],
     ["library", "Library", Library],
+    ["progress", "Progress", Target],
   ] as const;
 
   return (
@@ -1421,597 +1439,65 @@ export default function App() {
       <main className="main">
         {nav === "home" ? (
           <>
-            <header className="hero">
-              <div>
-                <p className="eyebrow">YOUR CHESS</p>
-                <h1>Train what matters.</h1>
-                <p className="hero-copy">
-                  Today is weighted toward piece safety, retention and the next
-                  curriculum step—not arbitrary puzzle volume.
-                </p>
+            <header className="train-home-hero">
+              <div className="train-home-copy">
+                <span className="train-now-kicker">
+                  <Sparkles size={14} /> Recommended now
+                </span>
+                <h1>{firstActivity?.title ?? "Train what matters."}</h1>
+                <p>{homeTrainingReason}</p>
+
+                <div className="train-home-actions">
+                  <button
+                    className="primary train-now-button"
+                    type="button"
+                    onClick={() => setActiveIndex(0)}
+                    disabled={!session.activities.length}
+                  >
+                    Train now
+                    <span>{session.plannedMinutes} min</span>
+                    <ChevronRight size={18} />
+                  </button>
+                  <button
+                    className="secondary"
+                    type="button"
+                    onClick={() => setNav("learn")}
+                  >
+                    Browse course
+                  </button>
+                </div>
+
+                <div className="train-home-context">
+                  <span>
+                    <strong>{session.activities.length}</strong> focused activit{session.activities.length === 1 ? "y" : "ies"}
+                  </span>
+                  <span>
+                    <strong>{progressIntelligence.trainingHorizon.nextFocusLabel}</strong> emphasis
+                  </span>
+                  <span>
+                    <strong>{progressIntelligence.trainingHorizon.completedMinutes}/{progressIntelligence.trainingHorizon.managedWeeklyMinutes}m</strong> this week
+                  </span>
+                </div>
               </div>
-              <div className="hero-emblem" aria-hidden="true">♞</div>
+
+              <div className="train-home-orb" aria-hidden="true">
+                <Clock3 size={22} />
+                <strong>{session.plannedMinutes}</strong>
+                <span>min</span>
+              </div>
             </header>
 
-            {!state.placement && (
-              <section className="home-placement-card">
-                <div className="home-placement-icon">
-                  <ClipboardCheck size={22} />
-                </div>
-                <div>
-                  <p className="eyebrow">PLACEMENT DIAGNOSTIC</p>
-                  <strong>Calibrate the course before it teaches too low or too high.</strong>
-                  <span>
-                    16 mixed positions sample every stage. No hints, no retries,
-                    and no stage is falsely marked mastered from placement alone.
-                  </span>
-                </div>
-                <button
-                  className="secondary"
-                  type="button"
-                  onClick={startPlacementAssessment}
-                >
-                  Start diagnostic
-                </button>
-              </section>
-            )}
-
-            <section className="home-training-horizon">
-              <div className="home-training-horizon-head">
-                <div>
-                  <p className="eyebrow">P21/P22 · TRAINING HORIZON</p>
-                  <h2>{progressIntelligence.trainingHorizon.goalLabel}</h2>
-                  <p>{progressIntelligence.trainingHorizon.goalDescription}</p>
-                </div>
-                <span className={`horizon-pace ${progressIntelligence.trainingHorizon.paceStatus}`}>
-                  {progressIntelligence.trainingHorizon.paceStatus.replace("-", " ")}
-                </span>
-              </div>
-
-              <div className="horizon-progress-line">
-                <span
-                  style={{
-                    width: `${Math.min(
-                      100,
-                      progressIntelligence.trainingHorizon.managedWeeklyMinutes
-                        ? progressIntelligence.trainingHorizon.completedMinutes /
-                          progressIntelligence.trainingHorizon.managedWeeklyMinutes *
-                          100
-                        : 0,
-                    )}%`,
-                  }}
-                />
-              </div>
-
-              <div className="horizon-summary-grid">
-                <div>
-                  <span>This week</span>
-                  <strong>
-                    {progressIntelligence.trainingHorizon.completedMinutes}/
-                    {progressIntelligence.trainingHorizon.managedWeeklyMinutes}m
-                  </strong>
-                </div>
-                <div>
-                  <span>Next emphasis</span>
-                  <strong>{progressIntelligence.trainingHorizon.nextFocusLabel}</strong>
-                </div>
-                <div>
-                  <span>Suggested session</span>
-                  <strong>
-                    {progressIntelligence.trainingHorizon.recommendedSessionMinutes}m
-                  </strong>
-                </div>
-                <div>
-                  <span>{progressIntelligence.trainingHorizon.plan.horizonWeeks}-week horizon</span>
-                  <strong>{progressIntelligence.trainingHorizon.horizonTargetMinutes}m</strong>
-                </div>
-              </div>
-
-              <div className={`home-forecast-strip ${progressIntelligence.trainingPlanForecast.forecast.status}`}>
-                <div>
-                  <span>Adherence</span>
-                  <strong>
-                    {progressIntelligence.trainingPlanForecast.adherence.comparableWeeks
-                      ? `${progressIntelligence.trainingPlanForecast.adherence.averageAdherence}%`
-                      : "Collecting"}
-                  </strong>
-                  <small>
-                    {progressIntelligence.trainingPlanForecast.adherence.comparableWeeks} comparable full week{progressIntelligence.trainingPlanForecast.adherence.comparableWeeks === 1 ? "" : "s"}
-                  </small>
-                </div>
-                <div>
-                  <span>Horizon forecast</span>
-                  <strong>{progressIntelligence.trainingPlanForecast.forecast.status.replace("-", " ")}</strong>
-                  <small>
-                    {progressIntelligence.trainingPlanForecast.forecast.status === "insufficient"
-                      ? "Needs two full weeks"
-                      : `${progressIntelligence.trainingPlanForecast.forecast.projectedCompletion}% of nominal target projected`}
-                  </small>
-                </div>
-                <div>
-                  <span>Sustainable pace</span>
-                  <strong>{progressIntelligence.trainingPlanForecast.forecast.sustainableWeeklyMinutes}m/week</strong>
-                  <small>{progressIntelligence.trainingPlanForecast.adherence.trend.replace("-", " ")} trend</small>
-                </div>
-                <div>
-                  <span>Recalibration</span>
-                  <strong>
-                    {progressIntelligence.trainingPlanForecast.recalibration.active
-                      ? `${progressIntelligence.trainingPlanForecast.recalibration.effectiveWeeklyMinutes}m effective`
-                      : "Nominal"}
-                  </strong>
-                  <small>
-                    {progressIntelligence.trainingPlanForecast.recalibration.active
-                      ? `${progressIntelligence.trainingPlanForecast.recalibration.nominalWeeklyMinutes}m goal preserved`
-                      : `${progressIntelligence.trainingPlanForecast.recalibration.confidence}% confidence`}
-                  </small>
-                </div>
-              </div>
-
-              <div className="horizon-recalibration-control">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={progressIntelligence.trainingHorizon.plan.autoRecalibrate !== false}
-                    onChange={(event) =>
-                      updateTrainingPlan({
-                        autoRecalibrate: event.target.checked,
-                      })
-                    }
-                  />
-                  <span>
-                    Automatic recalibration
-                    <small>
-                      Adjust effective load only after sustained adherence evidence; never change the nominal goal.
-                    </small>
-                  </span>
-                </label>
-                <p>{progressIntelligence.trainingPlanForecast.recalibration.reason}</p>
-              </div>
-
-              <div className={`home-load-management ${progressIntelligence.trainingHorizon.loadManagement.appliedMode}`}>
-                <div className="home-load-management-head">
-                  <div>
-                    <span>P23 · LOAD MANAGEMENT</span>
-                    <strong>
-                      {progressIntelligence.trainingHorizon.loadManagement.appliedMode === "recovery"
-                        ? "Recovery week"
-                        : progressIntelligence.trainingHorizon.loadManagement.appliedMode === "watch"
-                          ? "Load watch"
-                          : "Normal load"}
-                    </strong>
-                  </div>
-                  <small>
-                    {progressIntelligence.trainingHorizon.loadManagement.managedWeeklyMinutes}m managed · {progressIntelligence.trainingHorizon.effectiveWeeklyMinutes}m P22 effective
-                  </small>
-                </div>
-
-                <div className="home-load-metrics">
-                  <div>
-                    <span>Latest full week</span>
-                    <strong>{progressIntelligence.trainingHorizon.loadManagement.latestWeekMinutes}m</strong>
-                  </div>
-                  <div>
-                    <span>Prior baseline</span>
-                    <strong>{progressIntelligence.trainingHorizon.loadManagement.baselineWeeklyMinutes}m</strong>
-                  </div>
-                  <div>
-                    <span>Load ramp</span>
-                    <strong>{progressIntelligence.trainingHorizon.loadManagement.rampRatio}×</strong>
-                  </div>
-                  <div>
-                    <span>Overload weeks</span>
-                    <strong>{progressIntelligence.trainingHorizon.loadManagement.overloadWeeks}/3</strong>
-                  </div>
-                </div>
-
-                <div className="home-load-controls">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={progressIntelligence.trainingHorizon.plan.autoRecovery !== false}
-                      onChange={(event) =>
-                        updateTrainingPlan({
-                          autoRecovery: event.target.checked,
-                        })
-                      }
-                    />
-                    <span>Automatic recovery</span>
-                  </label>
-
-                  {progressIntelligence.trainingHorizon.loadManagement.manualRecoveryActive ? (
-                    <button
-                      type="button"
-                      className="secondary"
-                      onClick={() =>
-                        updateTrainingPlan({
-                          manualRecoveryUntil: "",
-                        })
-                      }
-                    >
-                      End recovery week
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="secondary"
-                      onClick={() =>
-                        updateTrainingPlan({
-                          manualRecoveryUntil: recoveryUntil(),
-                        })
-                      }
-                    >
-                      Start 7-day recovery
-                    </button>
-                  )}
-                </div>
-
-                <p>{progressIntelligence.trainingHorizon.loadManagement.reason}</p>
-              </div>
-
-              <div className={`home-competition-cycle ${progressIntelligence.trainingHorizon.competitionCycle.phase}`}>
-                <div className="home-cycle-head">
-                  <div>
-                    <span>P24 · COMPETITION CYCLE</span>
-                    <strong>
-                      {progressIntelligence.trainingHorizon.competitionCycle.phaseLabel}
-                    </strong>
-                    <small>
-                      {progressIntelligence.trainingHorizon.competitionCycle.enabled &&
-                      progressIntelligence.trainingHorizon.competitionCycle.eventDate
-                        ? `${progressIntelligence.trainingHorizon.competitionCycle.eventLabel ?? "Target event"} · ${progressIntelligence.trainingHorizon.competitionCycle.eventDate}`
-                        : "Optional event-specific block planning"}
-                    </small>
-                  </div>
-                  <div className={`cycle-readiness ${progressIntelligence.trainingHorizon.competitionCycle.readinessStatus}`}>
-                    <span>Prep readiness</span>
-                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.readinessScore}%</strong>
-                    <small>{progressIntelligence.trainingHorizon.competitionCycle.readinessStatus.replace("-", " ")}</small>
-                  </div>
-                </div>
-
-                <div className="cycle-controls">
-                  <label className="cycle-toggle">
-                    <input
-                      type="checkbox"
-                      checked={progressIntelligence.trainingHorizon.plan.competition?.enabled ?? false}
-                      onChange={(event) =>
-                        updateCompetitionPlan({
-                          enabled: event.target.checked,
-                        })
-                      }
-                    />
-                    <span>Competition cycle</span>
-                  </label>
-
-                  <label>
-                    <span>Event date</span>
-                    <input
-                      type="date"
-                      value={progressIntelligence.trainingHorizon.plan.competition?.eventDate ?? ""}
-                      onChange={(event) =>
-                        updateCompetitionPlan({
-                          eventDate: event.target.value,
-                        })
-                      }
-                    />
-                  </label>
-
-                  <label>
-                    <span>Prep window</span>
-                    <select
-                      value={progressIntelligence.trainingHorizon.plan.competition?.prepWeeks ?? 6}
-                      onChange={(event) =>
-                        updateCompetitionPlan({
-                          prepWeeks: Number(event.target.value) as 4 | 6 | 8 | 12,
-                        })
-                      }
-                    >
-                      {[4, 6, 8, 12].map((weeks) => (
-                        <option key={weeks} value={weeks}>
-                          {weeks} weeks
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label>
-                    <span>Event length</span>
-                    <select
-                      value={progressIntelligence.trainingHorizon.plan.competition?.eventDays ?? 1}
-                      onChange={(event) =>
-                        updateCompetitionPlan({
-                          eventDays: Number(event.target.value) as 1 | 2 | 3 | 5 | 7,
-                        })
-                      }
-                    >
-                      {[1, 2, 3, 5, 7].map((days) => (
-                        <option key={days} value={days}>
-                          {days} day{days === 1 ? "" : "s"}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label>
-                    <span>Reset</span>
-                    <select
-                      value={progressIntelligence.trainingHorizon.plan.competition?.resetDays ?? 5}
-                      onChange={(event) =>
-                        updateCompetitionPlan({
-                          resetDays: Number(event.target.value) as 3 | 5 | 7,
-                        })
-                      }
-                    >
-                      {[3, 5, 7].map((days) => (
-                        <option key={days} value={days}>
-                          {days} days
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-
-                <div className="cycle-summary-grid">
-                  <div>
-                    <span>Time to event</span>
-                    <strong>
-                      {progressIntelligence.trainingHorizon.competitionCycle.daysToEvent !== undefined
-                        ? `${progressIntelligence.trainingHorizon.competitionCycle.daysToEvent}d`
-                        : progressIntelligence.trainingHorizon.competitionCycle.daysFromEvent !== undefined
-                          ? `+${progressIntelligence.trainingHorizon.competitionCycle.daysFromEvent}d`
-                          : "—"}
-                    </strong>
-                  </div>
-                  <div>
-                    <span>Cycle load</span>
-                    <strong>{Math.round(progressIntelligence.trainingHorizon.competitionCycle.weeklyLoadMultiplier * 100)}%</strong>
-                  </div>
-                  <div>
-                    <span>Session cap</span>
-                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.maxSessionMinutes}m</strong>
-                  </div>
-                  <div>
-                    <span>Managed week</span>
-                    <strong>{progressIntelligence.trainingHorizon.competitionCycle.managedWeeklyMinutes}m</strong>
-                  </div>
-                </div>
-
-                <p>{progressIntelligence.trainingHorizon.competitionCycle.reason}</p>
-              </div>
-
-              {progressIntelligence.trainingHorizon.eventRetrospective.eventDate && (
-                <div className={`home-event-retrospective ${progressIntelligence.trainingHorizon.eventRetrospective.translationStatus}`}>
-                  <div className="home-event-retrospective-head">
-                    <div>
-                      <span>P25 · EVENT RETROSPECTIVE</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.eventLabel ?? "Competition review"}
-                      </strong>
-                      <small>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.eventDate}
-                        {progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate &&
-                        progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate !==
-                          progressIntelligence.trainingHorizon.eventRetrospective.eventDate
-                          ? ` → ${progressIntelligence.trainingHorizon.eventRetrospective.eventEndDate}`
-                          : ""}
-                      </small>
-                    </div>
-                    <div className="event-translation-badge">
-                      <span>Transfer</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.translationStatus}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div className="event-retro-summary-grid">
-                    <div>
-                      <span>Event games</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.event.analyzedGames}/
-                        {progressIntelligence.trainingHorizon.eventRetrospective.event.games}
-                      </strong>
-                      <small>analyzed / matched</small>
-                    </div>
-                    <div>
-                      <span>Quality Δ</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.qualityDelta >= 0 ? "+" : ""}
-                        {progressIntelligence.trainingHorizon.eventRetrospective.qualityDelta}
-                      </strong>
-                    </div>
-                    <div>
-                      <span>Result Δ</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.resultDelta >= 0 ? "+" : ""}
-                        {progressIntelligence.trainingHorizon.eventRetrospective.resultDelta}
-                      </strong>
-                    </div>
-                    <div>
-                      <span>Error-rate Δ</span>
-                      <strong>
-                        {progressIntelligence.trainingHorizon.eventRetrospective.errorRateDelta >= 0 ? "+" : ""}
-                        {progressIntelligence.trainingHorizon.eventRetrospective.errorRateDelta}
-                      </strong>
-                    </div>
-                  </div>
-
-                  {progressIntelligence.trainingHorizon.eventRetrospective.repairPriorities.length > 0 && (
-                    <div className="event-retro-priorities">
-                      {progressIntelligence.trainingHorizon.eventRetrospective.repairPriorities
-                        .slice(0, 3)
-                        .map((item) => (
-                          <span key={item.skillId}>
-                            {item.label} · {item.games} game{item.games === 1 ? "" : "s"}
-                          </span>
-                        ))}
-                    </div>
-                  )}
-
-                  <div className="event-retro-notes">
-                    <label>
-                      <span>What worked?</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          progressIntelligence.trainingHorizon.eventRetrospective.note?.whatWorked ?? ""
-                        }
-                        onChange={(event) =>
-                          updateCompetitionRetrospective(
-                            "whatWorked",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="Stable habits, openings, decisions..."
-                      />
-                    </label>
-                    <label>
-                      <span>What failed?</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          progressIntelligence.trainingHorizon.eventRetrospective.note?.whatFailed ?? ""
-                        }
-                        onChange={(event) =>
-                          updateCompetitionRetrospective(
-                            "whatFailed",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="Recurring mistakes, time trouble, preparation gaps..."
-                      />
-                    </label>
-                    <label>
-                      <span>Next cycle focus</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          progressIntelligence.trainingHorizon.eventRetrospective.note?.nextCycleFocus ?? ""
-                        }
-                        onChange={(event) =>
-                          updateCompetitionRetrospective(
-                            "nextCycleFocus",
-                            event.target.value,
-                          )
-                        }
-                        placeholder="One or two concrete priorities for the next block..."
-                      />
-                    </label>
-                  </div>
-
-                  <p>{progressIntelligence.trainingHorizon.eventRetrospective.reason}</p>
-                </div>
-              )}
-
-              <div className="horizon-goal-switch" aria-label="Training goal">
-                {(Object.keys(trainingGoals) as TrainingGoalId[]).map((goalId) => (
-                  <button
-                    type="button"
-                    key={goalId}
-                    className={
-                      progressIntelligence.trainingHorizon.plan.goal === goalId
-                        ? "active"
-                        : ""
-                    }
-                    aria-pressed={
-                      progressIntelligence.trainingHorizon.plan.goal === goalId
-                    }
-                    onClick={() => updateTrainingPlan({ goal: goalId })}
-                  >
-                    {trainingGoals[goalId].label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="horizon-controls">
-                <label>
-                  <span>Weekly budget</span>
-                  <select
-                    value={progressIntelligence.trainingHorizon.plan.weeklyMinutes}
-                    onChange={(event) =>
-                      updateTrainingPlan({
-                        weeklyMinutes: Number(event.target.value),
-                      })
-                    }
-                  >
-                    {[90, 150, 240, 360].map((minutes) => (
-                      <option value={minutes} key={minutes}>
-                        {minutes} min
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  <span>Horizon</span>
-                  <select
-                    value={progressIntelligence.trainingHorizon.plan.horizonWeeks}
-                    onChange={(event) =>
-                      updateTrainingPlan({
-                        horizonWeeks: Number(event.target.value) as 4 | 8 | 12,
-                      })
-                    }
-                  >
-                    {[4, 8, 12].map((weeks) => (
-                      <option value={weeks} key={weeks}>
-                        {weeks} weeks
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  <span>Sessions/week</span>
-                  <select
-                    value={progressIntelligence.trainingHorizon.plan.sessionsPerWeek}
-                    onChange={(event) =>
-                      updateTrainingPlan({
-                        sessionsPerWeek: Number(event.target.value),
-                      })
-                    }
-                  >
-                    {[3, 4, 5, 6, 7].map((count) => (
-                      <option value={count} key={count}>
-                        {count}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-
-              <div className="horizon-allocation-strip">
-                {progressIntelligence.trainingHorizon.allocations.map((item) => (
-                  <div key={item.bucket}>
-                    <div>
-                      <span>{item.label}</span>
-                      <small>
-                        {item.completedMinutes}/{item.targetMinutes}m
-                      </small>
-                    </div>
-                    <i>
-                      <span
-                        style={{
-                          width: `${Math.min(100, item.completion)}%`,
-                        }}
-                      />
-                    </i>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="mode-switch" aria-label="Training duration">
+            <section className="mode-switch train-mode-switch" aria-label="Training duration">
               {(Object.keys(sessionMinutes) as SessionMode[]).map((item) => (
                 <button
                   key={item}
-                  className={
-                    [
-                      "mode",
-                      mode === item ? "active" : "",
-                      progressIntelligence.trainingHorizon.recommendedSessionMode === item
-                        ? "recommended"
-                        : "",
-                    ].filter(Boolean).join(" ")
-                  }
+                  className={[
+                    "mode",
+                    mode === item ? "active" : "",
+                    progressIntelligence.trainingHorizon.recommendedSessionMode === item
+                      ? "recommended"
+                      : "",
+                  ].filter(Boolean).join(" ")}
                   aria-pressed={mode === item}
                   onClick={() => {
                     setMode(item);
@@ -2029,60 +1515,118 @@ export default function App() {
               ))}
             </section>
 
-            <section className="session-card">
-              <div className="session-heading">
+            <section className="train-session-preview">
+              <div className="train-session-preview-head">
                 <div>
-                  <span className="pill"><Sparkles size={14} /> Adaptive session</span>
-                  <h2>Today's training</h2>
-                  <p>
-                    {session.activities.length} focused activities · {session.plannedMinutes} min
-                  </p>
+                  <p className="eyebrow">TODAY'S SESSION</p>
+                  <h2>Know what you are doing before you start.</h2>
                 </div>
-                <div className="time-orb">
-                  <Clock3 size={20} />
-                  <strong>{session.plannedMinutes}</strong>
-                  <span>min</span>
-                </div>
+                <button
+                  type="button"
+                  className="text-action"
+                  onClick={() => setNav("progress")}
+                >
+                  Why this session? <ChevronRight size={15} />
+                </button>
               </div>
 
-              <div className="activity-list">
-                {session.activities.map((activity, index) => (
-                  <div className="activity-row" key={activity.id}>
+              <div className="train-session-activities">
+                {session.activities.slice(0, 4).map((activity, index) => (
+                  <article key={activity.id}>
                     <div className="activity-index">{index + 1}</div>
                     <div className="activity-icon">{activityIcon(activity)}</div>
-                    <div className="activity-copy">
+                    <div>
                       <small>{reasonLabel(activity)}</small>
                       <strong>{activity.title}</strong>
                       <span>{activity.subtitle}</span>
-                      {activity.adaptivePolicy && (
-                        <span className="adaptive-activity-note">
-                          {activity.adaptivePolicy.challenge} · {activity.activityType.replace(/([A-Z])/g, " $1")}
-                        </span>
-                      )}
-                      {activity.periodization && (
-                        <span className="periodization-activity-note">
-                          {activity.periodization.bucket} · {activity.periodization.reason}
-                        </span>
-                      )}
                     </div>
-                    <div className="activity-time">{activity.estimatedMinutes}m</div>
-                  </div>
+                    <em>{activity.estimatedMinutes}m</em>
+                  </article>
                 ))}
               </div>
 
+              <div className="train-session-footer">
+                <p>{homeTrainingReason}</p>
+                <button
+                  className="primary"
+                  type="button"
+                  onClick={() => setActiveIndex(0)}
+                  disabled={!session.activities.length}
+                >
+                  Start session <ChevronRight size={18} />
+                </button>
+              </div>
+            </section>
+
+            {!state.placement && (
+              <section className="home-placement-card train-secondary-card">
+                <div className="home-placement-icon">
+                  <ClipboardCheck size={22} />
+                </div>
+                <div>
+                  <p className="eyebrow">OPTIONAL PLACEMENT</p>
+                  <strong>Calibrate the course before studying deeply.</strong>
+                  <span>
+                    The diagnostic samples the full course, but it never blocks you from training now.
+                  </span>
+                </div>
+                <button
+                  className="secondary"
+                  type="button"
+                  onClick={startPlacementAssessment}
+                >
+                  Start diagnostic
+                </button>
+              </section>
+            )}
+
+            <section className="train-plan-strip">
+              <div>
+                <span>Current goal</span>
+                <strong>{progressIntelligence.trainingHorizon.goalLabel}</strong>
+              </div>
+              <div>
+                <span>Course stage</span>
+                <strong>{currentCourseStage.title}</strong>
+              </div>
+              <div>
+                <span>Weekly progress</span>
+                <strong>
+                  {progressIntelligence.trainingHorizon.completedMinutes}/
+                  {progressIntelligence.trainingHorizon.managedWeeklyMinutes}m
+                </strong>
+              </div>
               <button
-                className="primary"
-                onClick={() => setActiveIndex(0)}
-                disabled={!session.activities.length}
+                type="button"
+                className="secondary"
+                onClick={() => setNav("progress")}
               >
-                Start training <ChevronRight size={18} />
+                Plan & progress <ChevronRight size={15} />
               </button>
             </section>
+
+            {progressIntelligence.trainingHorizon.competitionCycle.enabled && (
+              <section className="train-competition-summary">
+                <Target size={18} />
+                <div>
+                  <span>Competition preparation</span>
+                  <strong>
+                    {progressIntelligence.trainingHorizon.competitionCycle.phaseLabel}
+                    {progressIntelligence.trainingHorizon.competitionCycle.daysToEvent !== undefined
+                      ? ` · ${progressIntelligence.trainingHorizon.competitionCycle.daysToEvent}d to event`
+                      : ""}
+                  </strong>
+                </div>
+                <small>
+                  preparation readiness {progressIntelligence.trainingHorizon.competitionCycle.readinessScore}%
+                </small>
+              </section>
+            )}
 
             <section className="home-course-gate">
               <div className="home-course-gate-copy">
                 <div>
-                  <p className="eyebrow">COURSE PROGRESSION</p>
+                  <p className="eyebrow">COURSE</p>
                   <span className={`gate-status ${currentCourseGate.status}`}>
                     {gateStatusLabel(currentCourseGate.status)}
                   </span>
@@ -2090,10 +1634,10 @@ export default function App() {
                 <h2>{currentCourseStage.title}</h2>
                 <p>
                   {currentCourseGate.blockers.length
-                    ? `Promotion still needs ${currentCourseGate.blockers
+                    ? `Next promotion still needs ${currentCourseGate.blockers
                         .map(gateBlockerLabel)
                         .join(", ")} evidence.`
-                    : "All promotion requirements are currently satisfied."}
+                    : "You are ready for the next checkpoint."}
                 </p>
               </div>
               <div className="home-course-metrics">
@@ -2132,16 +1676,16 @@ export default function App() {
                 <BarChart3 size={21} />
               </div>
               <div>
-                <p className="eyebrow">PROGRESS INTELLIGENCE</p>
+                <p className="eyebrow">PROGRESS</p>
                 <strong>
                   Practical {progressIntelligence.practicalStrength.rating} · {progressIntelligence.mastery}% mastery
                 </strong>
                 <span>
                   {progressIntelligence.realGameDiagnostics.diagnostics[0]
-                    ? `Priority signal: ${progressIntelligence.realGameDiagnostics.diagnostics[0].headline}`
+                    ? progressIntelligence.realGameDiagnostics.diagnostics[0].headline
                     : progressIntelligence.practicalStrength.humanGames
-                      ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}% · ${progressIntelligence.practicalStrength.confidence}% confidence.`
-                      : "Training-only estimate for now. Analyze human games to establish practical strength."}
+                      ? `${progressIntelligence.practicalStrength.humanGames} analyzed human game${progressIntelligence.practicalStrength.humanGames === 1 ? "" : "s"} · human transfer ${progressIntelligence.humanTransfer}%.`
+                      : "Analyze human games to establish practical transfer."}
                 </span>
               </div>
               <ChevronRight size={18} />
@@ -2151,25 +1695,18 @@ export default function App() {
               <section className="home-prescription-card">
                 <div className="home-prescription-top">
                   <div>
-                    <p className="eyebrow">NEXT REPAIR PLAN</p>
+                    <p className="eyebrow">COACH NOTE</p>
                     <h3>{topPrescription.title}</h3>
                   </div>
-                  <span>
-                    {topPrescription.confidence}% confidence
-                  </span>
+                  <span>{topPrescription.confidence}% confidence</span>
                 </div>
                 <p>{topPrescription.rationale}</p>
-                <div className="home-prescription-cues">
-                  {topPrescription.gamePlan.slice(0, 2).map((cue) => (
-                    <span key={cue}>{cue}</span>
-                  ))}
-                </div>
                 <button
                   className="secondary"
                   type="button"
                   onClick={() => setNav("progress")}
                 >
-                  Open repair plan <ChevronRight size={16} />
+                  See repair plan <ChevronRight size={16} />
                 </button>
               </section>
             )}
@@ -2292,6 +1829,21 @@ export default function App() {
               setNav("home");
             }}
             onRunPrescriptionAction={runPrescriptionAction}
+            onUpdateTrainingPlan={updateTrainingPlan}
+            onUpdateCompetitionPlan={updateCompetitionPlan}
+            onStartRecovery={() =>
+              updateTrainingPlan({
+                manualRecoveryUntil: recoveryUntil(),
+              })
+            }
+            onEndRecovery={() =>
+              updateTrainingPlan({
+                manualRecoveryUntil: "",
+              })
+            }
+            onUpdateCompetitionRetrospective={
+              updateCompetitionRetrospective
+            }
           />
         ) : (
           <section className="placeholder">
@@ -2302,9 +1854,9 @@ export default function App() {
             <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
             <p>
               This area is reserved for the next specialized product phase.
-              P3 now provides the shared interactive board and lesson engine.
+              The shared board and lesson engine are ready.
             </p>
-            <button className="secondary" onClick={() => setNav("home")}>Back home</button>
+            <button className="secondary" onClick={() => setNav("home")}>Back to Train</button>
           </section>
         )}
       </main>

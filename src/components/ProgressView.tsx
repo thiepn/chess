@@ -3,6 +3,7 @@ import {
   BarChart3,
   BrainCircuit,
   CheckCircle2,
+  ChevronRight,
   Clock3,
   RefreshCcw,
   ShieldCheck,
@@ -26,7 +27,27 @@ import type {
 import type {
   TrainingPrescriptionAction,
 } from "../prescriptions/types";
+import type {
+  CompetitionPlanSettings,
+  TrainingGoalId,
+  TrainingPlanSettings,
+} from "../domain/types";
+import { trainingGoals } from "../planning/periodization";
 import { skillTitle, stageTitle } from "../analytics/engine";
+
+type TrainingPlanPatch = Partial<
+  Pick<
+    TrainingPlanSettings,
+    | "goal"
+    | "weeklyMinutes"
+    | "horizonWeeks"
+    | "sessionsPerWeek"
+    | "autoRecalibrate"
+    | "autoRecovery"
+    | "manualRecoveryUntil"
+    | "competition"
+  >
+>;
 
 interface ProgressViewProps {
   intelligence: ProgressIntelligence;
@@ -35,6 +56,21 @@ interface ProgressViewProps {
   onRunPrescriptionAction?: (
     prescriptionId: string,
     action: TrainingPrescriptionAction,
+  ) => void;
+  onUpdateTrainingPlan?: (
+    patch: TrainingPlanPatch,
+  ) => void;
+  onUpdateCompetitionPlan?: (
+    patch: Partial<CompetitionPlanSettings>,
+  ) => void;
+  onStartRecovery?: () => void;
+  onEndRecovery?: () => void;
+  onUpdateCompetitionRetrospective?: (
+    field:
+      | "whatWorked"
+      | "whatFailed"
+      | "nextCycleFocus",
+    value: string,
   ) => void;
 }
 
@@ -216,6 +252,11 @@ export function ProgressView({
   onBack,
   onTrainSkill,
   onRunPrescriptionAction,
+  onUpdateTrainingPlan,
+  onUpdateCompetitionPlan,
+  onStartRecovery,
+  onEndRecovery,
+  onUpdateCompetitionRetrospective,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
   const strongestIntervention = intelligence.interventions[0];
@@ -223,7 +264,7 @@ export function ProgressView({
   return (
     <section className="progress-view">
       <button className="back-link" type="button" onClick={onBack}>
-        <ArrowLeft size={16} /> Home
+        <ArrowLeft size={16} /> Train
       </button>
 
       <header className="section-hero progress-hero">
@@ -271,6 +312,350 @@ export function ProgressView({
           </small>
         </article>
       </div>
+
+      <details className="progress-plan-controls">
+        <summary>
+          <div>
+            <Gauge size={18} />
+            <span>
+              <strong>Plan & competition settings</strong>
+              <small>
+                The coach uses these quietly in the background. Change them only when your real study goal changes.
+              </small>
+            </span>
+          </div>
+          <ChevronRight size={17} />
+        </summary>
+
+        <div className="progress-plan-controls-body">
+          <section>
+            <div className="planning-control-heading">
+              <span>Training goal</span>
+              <small>{intelligence.trainingHorizon.goalDescription}</small>
+            </div>
+            <div className="planning-goal-options">
+              {(Object.keys(trainingGoals) as TrainingGoalId[]).map((goalId) => (
+                <button
+                  type="button"
+                  key={goalId}
+                  className={
+                    intelligence.trainingHorizon.plan.goal === goalId
+                      ? "active"
+                      : ""
+                  }
+                  aria-pressed={
+                    intelligence.trainingHorizon.plan.goal === goalId
+                  }
+                  onClick={() =>
+                    onUpdateTrainingPlan?.({
+                      goal: goalId,
+                    })
+                  }
+                >
+                  {trainingGoals[goalId].label}
+                </button>
+              ))}
+            </div>
+
+            <div className="planning-select-grid">
+              <label>
+                <span>Weekly budget</span>
+                <select
+                  value={intelligence.trainingHorizon.plan.weeklyMinutes}
+                  onChange={(event) =>
+                    onUpdateTrainingPlan?.({
+                      weeklyMinutes: Number(
+                        event.target.value,
+                      ),
+                    })
+                  }
+                >
+                  {[90, 150, 240, 360].map((minutes) => (
+                    <option value={minutes} key={minutes}>
+                      {minutes} min
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                <span>Horizon</span>
+                <select
+                  value={intelligence.trainingHorizon.plan.horizonWeeks}
+                  onChange={(event) =>
+                    onUpdateTrainingPlan?.({
+                      horizonWeeks: Number(
+                        event.target.value,
+                      ) as 4 | 8 | 12,
+                    })
+                  }
+                >
+                  {[4, 8, 12].map((weeks) => (
+                    <option value={weeks} key={weeks}>
+                      {weeks} weeks
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                <span>Sessions/week</span>
+                <select
+                  value={intelligence.trainingHorizon.plan.sessionsPerWeek}
+                  onChange={(event) =>
+                    onUpdateTrainingPlan?.({
+                      sessionsPerWeek: Number(
+                        event.target.value,
+                      ),
+                    })
+                  }
+                >
+                  {[3, 4, 5, 6, 7].map((count) => (
+                    <option value={count} key={count}>
+                      {count}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="planning-toggle-grid">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    intelligence.trainingHorizon.plan.autoRecalibrate !== false
+                  }
+                  onChange={(event) =>
+                    onUpdateTrainingPlan?.({
+                      autoRecalibrate:
+                        event.target.checked,
+                    })
+                  }
+                />
+                <span>
+                  Automatic adherence adjustment
+                  <small>
+                    Changes operational load only after repeated full-week evidence.
+                  </small>
+                </span>
+              </label>
+
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    intelligence.trainingHorizon.plan.autoRecovery !== false
+                  }
+                  onChange={(event) =>
+                    onUpdateTrainingPlan?.({
+                      autoRecovery:
+                        event.target.checked,
+                    })
+                  }
+                />
+                <span>
+                  Automatic recovery
+                  <small>
+                    Keeps short-term overload from forcing more volume.
+                  </small>
+                </span>
+              </label>
+            </div>
+
+            <div className="planning-recovery-row">
+              <div>
+                <span>Manual recovery</span>
+                <small>
+                  {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                    ? "A seven-day recovery period is active."
+                    : "Optional. Essential review and repair remain protected."}
+                </small>
+              </div>
+              <button
+                type="button"
+                className="secondary"
+                onClick={
+                  intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                    ? onEndRecovery
+                    : onStartRecovery
+                }
+                disabled={
+                  intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                    ? !onEndRecovery
+                    : !onStartRecovery
+                }
+              >
+                {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                  ? "End recovery"
+                  : "Start 7-day recovery"}
+              </button>
+            </div>
+          </section>
+
+          <section>
+            <div className="planning-control-heading">
+              <span>Competition mode</span>
+              <small>
+                Keep this off unless you are preparing for a concrete event.
+              </small>
+            </div>
+
+            <label className="planning-competition-toggle">
+              <input
+                type="checkbox"
+                checked={
+                  intelligence.trainingHorizon.plan.competition?.enabled ?? false
+                }
+                onChange={(event) =>
+                  onUpdateCompetitionPlan?.({
+                    enabled: event.target.checked,
+                  })
+                }
+              />
+              <span>Use event-specific preparation and tapering</span>
+            </label>
+
+            {intelligence.trainingHorizon.plan.competition?.enabled && (
+              <>
+                <div className="planning-select-grid competition">
+                  <label>
+                    <span>Event date</span>
+                    <input
+                      type="date"
+                      value={
+                        intelligence.trainingHorizon.plan.competition?.eventDate ?? ""
+                      }
+                      onChange={(event) =>
+                        onUpdateCompetitionPlan?.({
+                          eventDate:
+                            event.target.value,
+                        })
+                      }
+                    />
+                  </label>
+
+                  <label>
+                    <span>Prep window</span>
+                    <select
+                      value={
+                        intelligence.trainingHorizon.plan.competition?.prepWeeks ?? 6
+                      }
+                      onChange={(event) =>
+                        onUpdateCompetitionPlan?.({
+                          prepWeeks: Number(
+                            event.target.value,
+                          ) as 4 | 6 | 8 | 12,
+                        })
+                      }
+                    >
+                      {[4, 6, 8, 12].map((weeks) => (
+                        <option value={weeks} key={weeks}>
+                          {weeks} weeks
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Event length</span>
+                    <select
+                      value={
+                        intelligence.trainingHorizon.plan.competition?.eventDays ?? 1
+                      }
+                      onChange={(event) =>
+                        onUpdateCompetitionPlan?.({
+                          eventDays: Number(
+                            event.target.value,
+                          ) as 1 | 2 | 3 | 5 | 7,
+                        })
+                      }
+                    >
+                      {[1, 2, 3, 5, 7].map((days) => (
+                        <option value={days} key={days}>
+                          {days} day{days === 1 ? "" : "s"}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Reset</span>
+                    <select
+                      value={
+                        intelligence.trainingHorizon.plan.competition?.resetDays ?? 5
+                      }
+                      onChange={(event) =>
+                        onUpdateCompetitionPlan?.({
+                          resetDays: Number(
+                            event.target.value,
+                          ) as 3 | 5 | 7,
+                        })
+                      }
+                    >
+                      {[3, 5, 7].map((days) => (
+                        <option value={days} key={days}>
+                          {days} days
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                {intelligence.trainingHorizon.eventRetrospective.eventDate && (
+                  <div className="planning-retrospective-notes">
+                    <label>
+                      <span>What worked?</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          intelligence.trainingHorizon.eventRetrospective.note?.whatWorked ?? ""
+                        }
+                        onChange={(event) =>
+                          onUpdateCompetitionRetrospective?.(
+                            "whatWorked",
+                            event.target.value,
+                          )
+                        }
+                      />
+                    </label>
+                    <label>
+                      <span>What failed?</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          intelligence.trainingHorizon.eventRetrospective.note?.whatFailed ?? ""
+                        }
+                        onChange={(event) =>
+                          onUpdateCompetitionRetrospective?.(
+                            "whatFailed",
+                            event.target.value,
+                          )
+                        }
+                      />
+                    </label>
+                    <label>
+                      <span>Next cycle focus</span>
+                      <textarea
+                        rows={2}
+                        value={
+                          intelligence.trainingHorizon.eventRetrospective.note?.nextCycleFocus ?? ""
+                        }
+                        onChange={(event) =>
+                          onUpdateCompetitionRetrospective?.(
+                            "nextCycleFocus",
+                            event.target.value,
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+        </div>
+      </details>
 
       <section className="progress-panel practical-strength-panel">
         <div className="progress-section-heading">
@@ -350,7 +735,7 @@ export function ProgressView({
       <section className="progress-panel prescription-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P18 · TRAINING PRESCRIPTIONS</p>
+            <p className="eyebrow">TRAINING PRESCRIPTIONS</p>
             <h2>Turn the diagnosis into the next repair plan.</h2>
           </div>
           <ListChecks size={20} />
@@ -445,7 +830,7 @@ export function ProgressView({
           <div className="cohort-insufficient-note">
             <ListChecks size={17} />
             <span>
-              P18 will create repair plans once P17 finds a repeatable human-game problem with enough evidence.
+              The coach will create a repair plan once real-game diagnostics find a repeatable problem with enough evidence.
             </span>
           </div>
         )}
@@ -454,7 +839,7 @@ export function ProgressView({
       <section className="progress-panel coach-effectiveness-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P19 · COACH EFFECTIVENESS</p>
+            <p className="eyebrow">COACH EFFECTIVENESS</p>
             <h2>Did the prescription survive the next human games?</h2>
           </div>
           <FlaskConical size={20} />
@@ -507,7 +892,7 @@ export function ProgressView({
         ) : (
           <div className="cohort-insufficient-note">
             <FlaskConical size={17} />
-            <span>Complete a P18 prescription, then analyze later matching human games. P19 needs three post-treatment games before claiming an effect.</span>
+            <span>Complete a repair plan, then analyze later matching human games. The coach needs three post-treatment games before claiming an effect.</span>
           </div>
         )}
 
@@ -526,7 +911,7 @@ export function ProgressView({
       <section className="progress-panel coach-policy-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P20 · COACH POLICY LEARNING</p>
+            <p className="eyebrow">COACH POLICY LEARNING</p>
             <h2>Which interventions should the coach prefer next?</h2>
           </div>
           <BrainCircuit size={20} />
@@ -610,7 +995,7 @@ export function ProgressView({
           <div className="cohort-insufficient-note">
             <BrainCircuit size={17} />
             <span>
-              P20 stays neutral until P19 has validated real before→after outcomes. It never treats clicks or training completion alone as proof that an intervention works.
+              The coach stays neutral until real before→after outcomes are validated. It never treats clicks or training completion alone as proof that an intervention works.
             </span>
           </div>
         )}
@@ -623,7 +1008,7 @@ export function ProgressView({
       <section className="progress-panel training-horizon-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P21 · TRAINING HORIZON</p>
+            <p className="eyebrow">TRAINING PLAN</p>
             <h2>Turn the weekly budget into the right mix of work.</h2>
           </div>
           <Gauge size={20} />
@@ -686,7 +1071,7 @@ export function ProgressView({
         <div className="training-horizon-note">
           <BrainCircuit size={16} />
           <span>
-            P21 uses completed training, not planned sessions. Missed days do not break the plan:
+            The weekly plan uses completed training, not planned sessions. Missed days do not break the plan:
             the remaining budget is redistributed through the next generated sessions. Urgent review,
             human-game repair and failed prescriptions stay protected even when their weekly bucket is full.
           </span>
@@ -696,7 +1081,7 @@ export function ProgressView({
       <section className="progress-panel plan-forecast-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P22 · PLAN ADHERENCE & FORECAST</p>
+            <p className="eyebrow">ADHERENCE & FORECAST</p>
             <h2>Is the current training horizon actually sustainable?</h2>
           </div>
           <TrendingUp size={20} />
@@ -776,7 +1161,7 @@ export function ProgressView({
           <div className="cohort-insufficient-note">
             <Clock3 size={17} />
             <span>
-              P22 starts forecasting only after full weeks under the current structural plan. Current-week activity still counts toward P21, but partial weeks are not treated as adherence evidence.
+              Forecasting starts only after full weeks under the current plan. Current-week activity still counts toward the weekly budget, but partial weeks are not treated as adherence evidence.
             </span>
           </div>
         )}
@@ -824,7 +1209,7 @@ export function ProgressView({
       <section className="progress-panel load-management-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P23 · LOAD MANAGEMENT</p>
+            <p className="eyebrow">LOAD MANAGEMENT</p>
             <h2>Keep the training plan sustainable without dropping essential work.</h2>
           </div>
           <RefreshCcw size={20} />
@@ -842,7 +1227,7 @@ export function ProgressView({
             <span>Managed week</span>
             <strong>{intelligence.trainingHorizon.loadManagement.managedWeeklyMinutes}m</strong>
             <small>
-              P22 effective {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
+              adherence-adjusted {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
             </small>
           </div>
           <div>
@@ -909,14 +1294,14 @@ export function ProgressView({
         </div>
 
         <p className="coach-policy-note">
-          P23 manages schedule load, not medical fatigue. Recovery mode shortens sessions and reduces course, transfer, repertoire and exploration pressure while retention and repair remain protected. Combined P22 + P23 automation can never reduce the managed weekly load below 70% of the nominal target.
+          Load management uses recorded training behavior, not medical fatigue. Recovery mode shortens sessions and reduces optional work while retention and repair remain protected. Automatic adjustments can never reduce managed weekly load below 70% of the nominal target.
         </p>
       </section>
 
       <section className="progress-panel competition-cycle-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P24 · COMPETITION CYCLE</p>
+            <p className="eyebrow">COMPETITION CYCLE</p>
             <h2>Shift from general growth toward event-specific readiness at the right time.</h2>
           </div>
           <Target size={20} />
@@ -947,7 +1332,7 @@ export function ProgressView({
             <strong>{intelligence.trainingHorizon.competitionCycle.maxSessionMinutes}m</strong>
             <small>
               {intelligence.trainingHorizon.competitionCycle.suppressedByRecovery
-                ? "P23 recovery dominates"
+                ? "recovery takes precedence"
                 : "cycle-specific"}
             </small>
           </div>
@@ -1001,14 +1386,14 @@ export function ProgressView({
         </div>
 
         <p className="coach-policy-note">
-          P24 readiness is preparation readiness, not a rating or win-probability prediction. It combines adherence, consistency, horizon risk and current load status. P23 recovery remains authoritative: an upcoming event can reduce or redirect work, but it cannot force intensity upward through an active recovery state.
+          Preparation readiness is not a rating or win-probability prediction. It combines adherence, consistency, plan risk and current load status. Recovery remains authoritative: an upcoming event can reduce or redirect work, but it cannot force intensity upward through an active recovery state.
         </p>
       </section>
 
       <section className="progress-panel event-retrospective-panel">
         <div className="progress-section-heading">
           <div>
-            <p className="eyebrow">P25 · EVENT RETROSPECTIVE</p>
+            <p className="eyebrow">EVENT RETROSPECTIVE</p>
             <h2>Did preparation transfer when the games actually mattered?</h2>
           </div>
           <ListChecks size={20} />
@@ -1126,7 +1511,7 @@ export function ProgressView({
             </strong>
             <span>
               {intelligence.trainingHorizon.eventRetrospective.followUpActive
-                ? `Until ${intelligence.trainingHorizon.eventRetrospective.followUpUntil}, event-proven repair skills receive a bounded ${Math.round(intelligence.trainingHorizon.eventRetrospective.priorityMultiplier * 100)}% P25 priority multiplier.`
+                ? `Until ${intelligence.trainingHorizon.eventRetrospective.followUpUntil}, event-proven repair skills receive a bounded ${Math.round(intelligence.trainingHorizon.eventRetrospective.priorityMultiplier * 100)}% post-event priority multiplier.`
                 : intelligence.trainingHorizon.eventRetrospective.reason}
             </span>
           </div>
@@ -1150,7 +1535,7 @@ export function ProgressView({
         )}
 
         <p className="coach-policy-note">
-          P25 compares analyzed event games with analyzed preparation games from the configured P24 block. It requires at least two event games and three preparation games before claiming improved/stable/regressed transfer. Unanalyzed or missing games remain visible as incomplete evidence instead of being silently ignored.
+          The event review compares analyzed event games with analyzed preparation games from the configured competition block. It requires at least two event games and three preparation games before claiming improved/stable/regressed transfer. Unanalyzed or missing games remain visible as incomplete evidence instead of being silently ignored.
         </p>
       </section>
 
@@ -1214,7 +1599,7 @@ export function ProgressView({
             <Layers3 size={17} />
             <span>
               {intelligence.realGameDiagnostics.sampleCount < 3
-                ? "Analyze at least three human games before P17 declares a cohort meaningfully stronger or weaker."
+                ? "Analyze at least three human games before real-game diagnostics declare a cohort meaningfully stronger or weaker."
                 : "No human-game cohort is currently far enough from your baseline to deserve a separate warning."}
             </span>
           </div>
@@ -1536,7 +1921,7 @@ export function ProgressView({
           <span>
             {intelligence.historyStartedAt
               ? `Tracking from ${new Date(intelligence.historyStartedAt).toLocaleDateString()} · active on ${intelligence.activeDays28}/28 recent days.`
-              : "P13 will build history as new learning evidence arrives."}
+              : "History will build as new learning evidence arrives."}
           </span>
         </div>
       </section>

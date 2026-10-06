@@ -133,6 +133,8 @@ The user should not need to understand P21–P25 to train effectively.
 
 ### P26 — Core Learning Experience Reset
 
+**Status:** implemented.
+
 **Purpose:** restore the product hierarchy before adding more capability.
 
 Deliver:
