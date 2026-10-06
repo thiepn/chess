@@ -189,7 +189,7 @@ export function buildLoadManagement(
           ? `Recent load is elevated: ${metrics.overloadWeeks} of the last 3 full weeks exceeded 110% of target, with a ${metrics.rampRatio}× latest-week ramp versus the prior baseline. P23 applies a temporary recovery load.`
           : metrics.recommendation === "watch"
             ? `Recent training load is elevated but does not yet justify a recovery week. P23 limits optional load growth and keeps sessions shorter while more evidence arrives.`
-            : forecast.adherence.comparableWeeks < 3
+            : planForecast.adherence.comparableWeeks < 3
               ? "P23 is collecting full-week history before making automatic load-management changes."
               : "Recent training volume is within the sustainable range; no recovery adjustment is needed.";
 
@@ -199,7 +199,7 @@ export function buildLoadManagement(
     automaticEnabled,
     manualRecoveryActive: manualActive,
     active,
-    evidenceWeeks: forecast.adherence.comparableWeeks,
+    evidenceWeeks: planForecast.adherence.comparableWeeks,
     confidence: planForecast.adherence.confidence,
     latestWeekMinutes: metrics.latestWeekMinutes,
     recentActiveDays: metrics.recentActiveDays,
