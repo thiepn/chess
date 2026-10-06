@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import type { SkillMastery } from "../domain/types";
 import type { LichessConnection } from "../lichess/types";
+import type { TrainingPrescription } from "../prescriptions/types";
 import { LichessSyncCard } from "./LichessSyncCard";
 import {
   aiProfiles,
@@ -34,6 +35,7 @@ interface PlayViewProps {
   lichessSyncing: boolean;
   lichessSyncMessage?: string | null;
   lichessSyncError?: string | null;
+  practicalPlan?: TrainingPrescription;
   onLinkLichess: (username: string) => Promise<void> | void;
   onUnlinkLichess: () => void;
   onSyncLichess: () => Promise<void> | void;
@@ -63,6 +65,7 @@ export function PlayView({
   lichessSyncing,
   lichessSyncMessage,
   lichessSyncError,
+  practicalPlan,
   onLinkLichess,
   onUnlinkLichess,
   onSyncLichess,
@@ -192,6 +195,26 @@ export function PlayView({
           </div>
           <span>No multiplayer backend required</span>
         </div>
+
+        {practicalPlan && (
+          <article className="human-game-plan-card">
+            <div className="human-game-plan-heading">
+              <div>
+                <p className="eyebrow">YOUR NEXT HUMAN GAME</p>
+                <strong>{practicalPlan.title}</strong>
+              </div>
+              <span>
+                {practicalPlan.evidenceGames} games · {practicalPlan.confidence}% confidence
+              </span>
+            </div>
+            <p>{practicalPlan.rationale}</p>
+            <ol>
+              {practicalPlan.gamePlan.map((cue) => (
+                <li key={cue}>{cue}</li>
+              ))}
+            </ol>
+          </article>
+        )}
 
         <LichessSyncCard
           connection={lichess}
