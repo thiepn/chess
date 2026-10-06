@@ -7,6 +7,13 @@ const severityValue: Record<PersonalMistake["severity"], number> = {
   inaccuracy: .45,
 };
 
+function sourceWeight(mistake: PersonalMistake) {
+  if (mistake.gameSource === "lichess") return 1;
+  if (mistake.gameSource === "training") return .68;
+  if (mistake.gameSource === "manual") return .88;
+  return .82;
+}
+
 export function weaknessesFromMistakes(
   mistakes: PersonalMistake[],
   now = new Date(),
@@ -23,15 +30,22 @@ export function weaknessesFromMistakes(
     .map(([skillId, items]) => {
       const count = items.length;
       const gameImpact =
-        items.reduce((sum, item) => sum + severityValue[item.severity], 0) /
-        count;
+        items.reduce(
+          (sum, item) =>
+            sum +
+            severityValue[item.severity] * sourceWeight(item),
+          0,
+        ) / count;
       const newest = Math.max(
         ...items.map((item) => new Date(item.createdAt).getTime()),
       );
       const ageDays = Math.max(0, (now.getTime() - newest) / 86_400_000);
       const recency = Math.exp(-ageDays / 21);
       const maxSeverity = Math.max(
-        ...items.map((item) => severityValue[item.severity]),
+        ...items.map(
+          (item) =>
+            severityValue[item.severity] * sourceWeight(item),
+        ),
       );
 
       return {
