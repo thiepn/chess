@@ -2289,7 +2289,6 @@ export default function App() {
                 See coach reasoning <ChevronRight size={16} />
               </button>
             </section>
-            </section>
           </>
         ) : nav === "learn" ? (
           learnMode === "openings" ? (
