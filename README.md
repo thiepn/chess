@@ -37,12 +37,13 @@ The default experience should answer one question: **what should I train now?**
 - P18 cohort-to-training prescriptions that convert strong P17 diagnoses into confidence-gated repair plans, repertoire-aware opening recall, exact human-mistake replay, focused curriculum repair, targeted scenarios, one-item composer injection, Home surfacing and next-human-game checklists
 - P19 prescription outcome tracking with issued/started/completed intervention episodes, frozen pre-treatment baselines, matched post-treatment human-game validation, three-game minimums, successful-plan retirement, persistent-plan escalation and coach-effectiveness analytics
 - P20 coach policy learning with recency-weighted/shrunk outcome evidence, learned plan/action-family preferences, deterministic action reordering, bounded prescription-priority adjustments, explicit exploration of weak/unseen alternatives, and transparent policy diagnostics
+- P21 goal-aware training horizons with configurable 4/8/12-week plans, real completed-training ledger, weekly functional budgets, adaptive under-allocation pressure, protected urgent work, pace-aware session recommendations, and Home/Progress periodization surfaces
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate.
+The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21 turns those priorities into a sustainable weekly study budget instead of optimizing each session in isolation.
 
 ## Run
 
@@ -1233,6 +1234,99 @@ Each active prescription also shows the policy adjustment that affected it.
 
 The policy is derived from existing durable prescription history. No new analytics service, database table or opaque permanent recommendation state is introduced.
 
+## Goal-aware training horizons and weekly periodization
+
+P21 adds the layer above the single-session composer.
+
+P2 can fit useful work into 10, 25 or 60 minutes. P14 chooses suitable difficulty and intervention mode. P18–P20 diagnose real-game problems, prescribe repairs and learn which intervention families appear to transfer. P21 decides how the available training time should be distributed across an entire week and multi-week horizon.
+
+### Durable training plan
+
+The user can choose:
+
+- goal: balanced growth, course progress, human-game transfer or competition preparation;
+- weekly study budget;
+- 4, 8 or 12-week horizon;
+- intended sessions per week.
+
+The default remains conservative: 150 minutes per week, five sessions, an eight-week balanced-growth horizon.
+
+### Real completed-training ledger
+
+P21 no longer relies on the old seed-style `recentDomainMinutes` field as the primary planning signal.
+
+Completed structured activities now append a compact ledger entry containing:
+
+- timestamp;
+- skill/domain;
+- candidate source;
+- activity mode;
+- planning bucket;
+- completed minutes.
+
+Only completed work counts toward the weekly budget. Merely generating or opening a session does not.
+
+Ledger history is bounded and follows the existing local/Supabase account-state path. No new backend table is required.
+
+### Functional weekly budgets
+
+Instead of assigning rigid weekdays, P21 allocates time across six learning functions:
+
+- retention;
+- repair;
+- course progression;
+- transfer/resistant play;
+- repertoire;
+- exploration.
+
+Each goal changes the target shares. Course progress, for example, reserves substantially more time for curriculum advancement, while human-transfer and competition-prep plans shift time toward repair and resistant play.
+
+### Rolling periodization instead of a brittle calendar
+
+The app continuously compares completed minutes with the current week's target allocation.
+
+Under-served buckets receive a bounded score boost in the next generated session. Buckets that already reached their weekly allocation cool down modestly so other needs get room.
+
+This makes skipped or moved sessions recover naturally: there is no hard-coded 'Tuesday = tactics' rule to break.
+
+### Protected urgent work
+
+Weekly quotas do not override chess evidence.
+
+Due reviews, recurring weaknesses, personal-game mistakes, checkpoint remediation and active prescriptions retain a priority floor even when their nominal bucket is already full. P21 therefore periodizes the plan without suppressing urgent forgetting or real-game failure signals.
+
+### Pace-aware session advice
+
+P21 reports:
+
+- completed vs planned weekly minutes;
+- expected progress through the current week;
+- ahead / on-track / behind / complete status;
+- largest remaining allocation gap;
+- suggested next session duration and matching Quick / Standard / Deep mode;
+- total planned minutes across the selected horizon.
+
+When a plan is created or changed midweek, pace starts from the plan-change time rather than incorrectly treating earlier days as missed study.
+
+### Explainability
+
+Home exposes the current horizon, goal controls, weekly budget, next emphasis and per-bucket progress.
+
+Generated activities carry a P21 periodization explanation showing which bucket they serve and why that bucket currently receives its multiplier.
+
+Progress contains a dedicated P21 panel with the full weekly allocation and remaining minutes.
+
+### Interaction with earlier phases
+
+P21 does not replace the existing intelligence layers:
+
+- P14 still decides the appropriate challenge and training mode;
+- P18/P19 still govern active repair urgency and outcome validation;
+- P20 still learns which prescription/action families transfer;
+- P21 only adjusts how the week's finite study budget is distributed.
+
+This separation keeps the planner understandable and prevents a weekly quota from becoming a hidden master score.
+
 ## Account sync
 
 Point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at the same Supabase project used by the thiepn account system, then apply `supabase/migrations/001_chess_learning_state.sql`.
@@ -1247,4 +1341,4 @@ Static curriculum lives in version control. Personal state lives behind a reposi
 
 ## Next phase
 
-P21 — Goal-Aware Training Horizons, Weekly Periodization & Study-Budget Allocation.
+P22 — Plan Adherence, Goal Forecasting & Automatic Horizon Recalibration.
