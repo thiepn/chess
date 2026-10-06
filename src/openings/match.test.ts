@@ -13,6 +13,24 @@ describe("opening repertoire matching", () => {
     expect(openingDeviationsForGame(game)).toHaveLength(0);
   });
 
+  it("matches the deeper Italian branch without a false deviation", () => {
+    const game = importPgn(
+      "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. c3 *",
+      "w",
+    );
+    expect(chooseRepertoireForGame(game)?.id).toBe("white-e4-simple");
+    expect(openingDeviationsForGame(game)).toHaveLength(0);
+  });
+
+  it("matches the deeper Black Caro-Kann branch without a false deviation", () => {
+    const game = importPgn(
+      "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 *",
+      "b",
+    );
+    expect(chooseRepertoireForGame(game)?.id).toBe("black-caro");
+    expect(openingDeviationsForGame(game)).toHaveLength(0);
+  });
+
   it("flags the learner leaving the preferred line", () => {
     const game = importPgn("1. d4 d5 2. c4 e6 *", "w");
     const deviations = openingDeviationsForGame(game);
