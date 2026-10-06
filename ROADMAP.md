@@ -182,6 +182,8 @@ Acceptance:
 
 ### P28 — Lesson Engine 2.0 & Curriculum Depth
 
+**Status:** implemented.
+
 **Purpose:** make lessons teach rather than merely introduce.
 
 Replace the universal two-step template with lesson scripts that can contain:
