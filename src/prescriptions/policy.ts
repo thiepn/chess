@@ -313,6 +313,15 @@ export function buildCoachPolicyInsight(
         ? "learning"
         : "personalized";
 
+  const preferredKind =
+    strongestPreferred<PrescriptionKind>(
+      kindSignals,
+    );
+  const preferredAction =
+    strongestPreferred<PrescriptionActionKind>(
+      actionSignals,
+    );
+
   return {
     mode,
     evaluatedEpisodes: rows.length,
@@ -326,14 +335,8 @@ export function buildCoachPolicyInsight(
     ),
     kindSignals,
     actionSignals,
-    preferredKind:
-      strongestPreferred<PrescriptionKind>(
-        kindSignals,
-      ),
-    preferredAction:
-      strongestPreferred<PrescriptionActionKind>(
-        actionSignals,
-      ),
+    ...(preferredKind ? { preferredKind } : {}),
+    ...(preferredAction ? { preferredAction } : {}),
   };
 }
 
@@ -440,9 +443,11 @@ export function applyCoachPolicy(
       ),
       stance,
       reason,
-      chosenActionKind,
-      kindSignal,
-      actionSignal,
+      ...(chosenActionKind
+        ? { chosenActionKind }
+        : {}),
+      ...(kindSignal ? { kindSignal } : {}),
+      ...(actionSignal ? { actionSignal } : {}),
     },
   };
 }
