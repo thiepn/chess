@@ -6,6 +6,7 @@ import { retentionProbability, weaknessPriority } from "./mastery";
 import { mistakePriority } from "../games/classify";
 import { dueOpeningNodes } from "../openings/progress";
 import { openingNodes, repertoires } from "../openings/repertoire";
+import { repertoireHealth } from "../openings/health";
 import { dueStudyTraining } from "../library/progress";
 import {
   assessmentRemediationSkillIds,
@@ -343,11 +344,25 @@ export function buildCandidatePool(
           repertoire.nodeIds.includes(item.nodeId),
       );
       const deviationNode = deviation ? openingNodes[deviation.nodeId] : undefined;
+      const health = repertoireHealth(
+        repertoire,
+        progress,
+        deviations,
+        state.games ?? [],
+      );
+      const weakDueNode =
+        health.weakestBranch
+          ? due.find(
+              (item) =>
+                item.id ===
+                health.weakestBranch?.nodeId,
+            )
+          : undefined;
       const node =
         deviationNode?.preferredChildId &&
         deviationNode.sideToMove === repertoire.color
           ? deviationNode
-          : due[0];
+          : weakDueNode ?? due[0];
 
       if (!node) continue;
 
@@ -362,6 +377,7 @@ export function buildCandidatePool(
       );
       item.id = `repertoire:${repertoire.id}:${node.id}`;
       item.openingNodeId = node.id;
+      item.openingTrainingMode = "recall";
       item.repertoireId = repertoire.id;
       result.push(item);
     }

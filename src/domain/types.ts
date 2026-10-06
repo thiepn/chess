@@ -1,6 +1,6 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "../games/types";
-import type { OpeningDeviation, OpeningProgress } from "../openings/types";
+import type { OpeningDeviation, OpeningProgress, OpeningTrainingMode } from "../openings/types";
 import type { SavedStudy } from "../library/types";
 import type { ExperienceSettings } from "../interaction/types";
 import type {
@@ -180,6 +180,7 @@ export type EvidenceSource =
   | "mixedPuzzle"
   | "calculation"
   | "endgameTechnique"
+  | "openingRecall"
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
@@ -240,6 +241,8 @@ export interface TrainingCandidate {
   mistakeId?: string;
   openingNodeId?: string;
   repertoireId?: string;
+  openingTrainingMode?: OpeningTrainingMode;
+  openingLineNodeId?: string;
   studyId?: string;
   scenarioId?: string;
   prescriptionId?: string;
@@ -270,6 +273,9 @@ export interface TrainingOutcome {
   calculationEvidence?: CalculationEvidence;
   endgamePositionId?: string;
   endgameEvidence?: EndgameEvidence;
+  openingNodeIds?: string[];
+  openingConceptCorrect?: boolean;
+  openingLineCompleted?: boolean;
 }
 
 export type SessionMode = "quick" | "standard" | "deep";

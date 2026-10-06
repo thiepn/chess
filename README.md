@@ -50,6 +50,7 @@ The default experience should answer one question: **what should I train now?**
 - P29 dedicated calculation trainer with candidate generation, best-reply prediction, multi-ply continuation, optional blind visualization, personal-game calculation positions, local Stockfish verification, depth/correctness scoring, and spaced retry scheduling
 - P30 Game Review 2.0 with self-analysis-first critical moments, answer-gated retry, decision-error classification, PGN move-time context, repertoire-deviation coaching, immediate related practice, and opt-in retained lessons that become spaced Library studies
 - P31 Endgame & Technique Trainer with theory recognition, full legal play-outs against local Stockfish, conversion/hold objectives, bounded survival thresholds, process-only hints, technique-specific scheduling, repeated-conversion and defensive-hold history, and delayed-retention evidence
+- P32 Personal Repertoire 2.0 with deeper compact branches, inherited structure/tactical context, game-grounded branch health, move-plus-purpose recall, optional full-line rehearsal, exact deviation repair, and dedicated opening evidence
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -1972,6 +1973,64 @@ A repeated attempt at least one day after the prior attempt can contribute delay
 
 The adaptive policy now routes established finish-stage skills into the dedicated play-out trainer instead of falling back to generic LessonRunner or the old P7 scenario route.
 
+## Personal Repertoire 2.0
+
+P32 keeps the repertoire intentionally compact but makes each branch more useful.
+
+The curated White repertoire now reaches practical recurring positions in the Italian, Alapin, Caro-Kann Advance and French Advance. The Black repertoires extend deeper into the Caro-Kann classical structure and QGD development sequence. These are still bounded personal systems rather than giant theory trees.
+
+Opening nodes now carry inherited **pawn-structure context** and **typical tactical motifs** alongside their existing plans, concepts, key squares and common mistakes. The explorer therefore answers four different questions:
+
+- what move belongs here;
+- why the move belongs here;
+- what structure this creates;
+- which tactical ideas repeatedly occur in that structure.
+
+### Move recall + why recall
+
+Spaced repertoire review is now two-stage:
+
+1. recover the repertoire move from the board;
+2. answer **Why this move?**
+
+The concept question distinguishes understanding from rote notation memory. A wrong purpose answer reduces training quality even if the move itself was remembered.
+
+Move recall, concept recall and optional line rehearsal are tracked separately in opening progress.
+
+### Optional full-line rehearsal
+
+Any sufficiently deep selected branch can be rehearsed from the repertoire root to that position.
+
+The learner must enter their own repertoire moves from the board. Curated opponent moves are supplied between them so the line stays deterministic without pretending every opponent has only one legal response.
+
+Full-line rehearsal is optional. It does not replace fast spaced key-position recall.
+
+### Game-grounded repertoire health
+
+Each repertoire now derives a health score from:
+
+- real games in which that repertoire was actually relevant;
+- deviation rate in those games;
+- spaced move recall;
+- why-this-move concept recall;
+- line-rehearsal evidence.
+
+Black repertoires are evaluated only when the opponent's first move genuinely enters that repertoire family. White first-move deviations still count as missed repertoire opportunities.
+
+The health view surfaces the weakest live branch and can launch exact repair with one click.
+
+### Exact branch repair
+
+Game-derived deviations remain attached to the precise repertoire node where the learner left the line.
+
+The daily composer now prefers a weak due branch when several repertoire nodes are simultaneously due, without ignoring spaced-review timing. A real unresolved game deviation still takes precedence over ordinary scheduled recall.
+
+### Dedicated opening evidence
+
+Opening training is now a first-class learning-evidence source instead of generic training-position evidence.
+
+Successful repertoire work updates opening recognition, execution and retention while the separate repertoire model continues to track move, concept and line evidence at node level.
+
 ## Next phase
 
-P32 — Personal Repertoire 2.0.
+P33 — Model Games & Strategic Pattern Learning.

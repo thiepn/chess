@@ -39,6 +39,42 @@ describe("opening recall progress", () => {
     expect(second.streak).toBe(2);
   });
 
+  it("tracks why-this-move evidence separately from move recall", () => {
+    const now = new Date("2026-10-05T12:00:00Z");
+    const first = applyOpeningAttempt(
+      createOpeningProgress("white-start", now),
+      true,
+      .8,
+      now,
+      { conceptCorrect: false },
+    );
+    const second = applyOpeningAttempt(
+      first,
+      true,
+      1,
+      new Date("2026-10-06T12:00:00Z"),
+      { conceptCorrect: true },
+    );
+
+    expect(second.conceptAttempts).toBe(2);
+    expect(second.conceptSuccesses).toBe(1);
+  });
+
+  it("tracks optional full-line rehearsal without replacing node recall", () => {
+    const now = new Date("2026-10-05T12:00:00Z");
+    const result = applyOpeningAttempt(
+      createOpeningProgress("italian-e5", now),
+      true,
+      .9,
+      now,
+      { lineCompleted: true },
+    );
+
+    expect(result.lineAttempts).toBe(1);
+    expect(result.lineSuccesses).toBe(1);
+    expect(result.attempts).toBe(1);
+  });
+
   it("treats unseen positions as due", () => {
     const due = dueOpeningNodes(
       repertoire,

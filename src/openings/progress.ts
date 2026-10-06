@@ -34,6 +34,10 @@ export function applyOpeningAttempt(
   success: boolean,
   quality: number,
   now = new Date(),
+  evidence?: {
+    conceptCorrect?: boolean;
+    lineCompleted?: boolean;
+  },
 ): OpeningProgress {
   const streak = success ? previous.streak + 1 : 0;
   const intervalDays = success
@@ -55,6 +59,18 @@ export function applyOpeningAttempt(
     streak,
     lastAttemptAt: now.toISOString(),
     lastQuality: quality,
+    conceptAttempts:
+      (previous.conceptAttempts ?? 0) +
+      (evidence?.conceptCorrect === undefined ? 0 : 1),
+    conceptSuccesses:
+      (previous.conceptSuccesses ?? 0) +
+      (evidence?.conceptCorrect ? 1 : 0),
+    lineAttempts:
+      (previous.lineAttempts ?? 0) +
+      (evidence?.lineCompleted === undefined ? 0 : 1),
+    lineSuccesses:
+      (previous.lineSuccesses ?? 0) +
+      (evidence?.lineCompleted ? 1 : 0),
     nextReviewAt: new Date(
       now.getTime() + intervalDays * 86_400_000,
     ).toISOString(),

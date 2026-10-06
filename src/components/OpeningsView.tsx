@@ -6,6 +6,9 @@ import {
   Compass,
   RotateCcw,
   Target,
+  Activity,
+  GitBranch,
+  ShieldCheck,
 } from "lucide-react";
 import { ChessBoard } from "./ChessBoard";
 import {
@@ -23,18 +26,24 @@ import type {
   OpeningDeviation,
   OpeningProgress,
 } from "../openings/types";
+import type { ImportedGame } from "../games/types";
+import { repertoireHealth } from "../openings/health";
 
 interface OpeningsViewProps {
   progress: Record<string, OpeningProgress>;
   deviations: OpeningDeviation[];
+  games: ImportedGame[];
   onTrainNode: (repertoireId: string, nodeId: string) => void;
+  onTrainLine: (repertoireId: string, nodeId: string) => void;
   onBack: () => void;
 }
 
 export function OpeningsView({
   progress,
   deviations,
+  games,
   onTrainNode,
+  onTrainLine,
   onBack,
 }: OpeningsViewProps) {
   const [repertoireId, setRepertoireId] = useState(repertoires[0].id);
@@ -46,8 +55,20 @@ export function OpeningsView({
   const due = dueOpeningNodes(repertoire, progress);
   const mastery = repertoireMastery(repertoire, progress);
   const trainable = trainableOpeningNodes(repertoire);
+  const health = repertoireHealth(
+    repertoire,
+    progress,
+    deviations,
+    games,
+  );
   const relevantDeviations = deviations.filter(
     (item) => item.repertoireId === repertoire.id && !item.resolved,
+  );
+  const hasConceptEvidence = repertoire.nodeIds.some(
+    (id) => (progress[id]?.conceptAttempts ?? 0) > 0,
+  );
+  const hasLineEvidence = repertoire.nodeIds.some(
+    (id) => (progress[id]?.lineAttempts ?? 0) > 0,
   );
 
   function switchRepertoire(nextId: string) {
@@ -102,20 +123,66 @@ export function OpeningsView({
           </div>
           <p>{repertoire.summary}</p>
 
+          <div className="repertoire-health-score">
+            <Activity size={18} />
+            <div>
+              <span>Repertoire health</span>
+              <strong>{health.health}%</strong>
+              <small>
+                {health.games
+                  ? `${health.games} real games · ${health.deviationRate}% deviation rate`
+                  : "No real-game sample yet · recall evidence only"}
+              </small>
+            </div>
+          </div>
+
           <div className="repertoire-metrics">
             <div>
-              <span>Recall mastery</span>
+              <span>Move recall</span>
               <strong>{mastery}%</strong>
+            </div>
+            <div>
+              <span>Why recall</span>
+              <strong>
+                {hasConceptEvidence ? `${health.conceptMastery}%` : "—"}
+              </strong>
+            </div>
+            <div>
+              <span>Line rehearsal</span>
+              <strong>
+                {hasLineEvidence ? `${health.lineMastery}%` : "—"}
+              </strong>
             </div>
             <div>
               <span>Due positions</span>
               <strong>{due.length}</strong>
             </div>
-            <div>
-              <span>Tracked positions</span>
-              <strong>{trainable.length}</strong>
-            </div>
           </div>
+
+          {health.weakestBranch && (
+            <button
+              className="repertoire-repair-row"
+              type="button"
+              onClick={() =>
+                onTrainNode(
+                  repertoire.id,
+                  health.weakestBranch!.nodeId,
+                )
+              }
+            >
+              <ShieldCheck size={16} />
+              <div>
+                <span>Weakest live branch</span>
+                <strong>{health.weakestBranch.label}</strong>
+                <small>
+                  {health.weakestBranch.games
+                    ? `${health.weakestBranch.deviations}/${health.weakestBranch.games} game deviations · ${health.weakestBranch.recall}% recall`
+                    : `${health.weakestBranch.recall}% recall · not yet tested in games`}
+                </small>
+              </div>
+              <ChevronRight size={16} />
+            </button>
+          )}
 
           <button
             className="primary repertoire-train-button"
@@ -142,6 +209,32 @@ export function OpeningsView({
             A deviation is only counted when <em>you</em> leave your chosen
             repertoire. Unmodeled opponent moves are not treated as errors.
           </p>
+          {health.branches.length > 0 && (
+            <div className="repertoire-branch-health">
+              {health.branches.slice(0, 3).map((branch) => (
+                <button
+                  key={branch.nodeId}
+                  type="button"
+                  onClick={() =>
+                    onTrainNode(
+                      repertoire.id,
+                      branch.nodeId,
+                    )
+                  }
+                >
+                  <div>
+                    <strong>{branch.label}</strong>
+                    <span>
+                      {branch.games
+                        ? `${branch.games} games · ${branch.deviationRate}% deviations`
+                        : "training evidence only"}
+                    </span>
+                  </div>
+                  <em>{branch.health}%</em>
+                </button>
+              ))}
+            </div>
+          )}
           {relevantDeviations.slice(0, 3).map((item) => {
             const node = openingNodes[item.nodeId];
             return (
@@ -226,6 +319,24 @@ export function OpeningsView({
                 <p>{selected.purpose}</p>
               </div>
 
+              {selected.structure && (
+                <div className="opening-structure-panel">
+                  <span>Pawn structure</span>
+                  <strong>{selected.structure}</strong>
+                </div>
+              )}
+
+              {selected.tacticalMotifs.length > 0 && (
+                <div className="opening-motif-strip">
+                  <span>Typical tactics</span>
+                  <div>
+                    {selected.tacticalMotifs.map((motif) => (
+                      <strong key={motif}>{motif}</strong>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {selected.concepts.length > 0 && (
                 <div className="opening-concept-grid">
                   {selected.concepts.map((concept) => (
@@ -253,16 +364,33 @@ export function OpeningsView({
                 </div>
               )}
 
-              {selected.sideToMove === repertoire.color &&
-                selected.preferredChildId && (
+              <div className="opening-position-actions">
+                {selected.sideToMove === repertoire.color &&
+                  selected.preferredChildId && (
+                    <button
+                      className="secondary"
+                      type="button"
+                      onClick={() => onTrainNode(repertoire.id, selected.id)}
+                    >
+                      Practice this position
+                    </button>
+                  )}
+                {path.length >= 3 && (
                   <button
                     className="secondary"
                     type="button"
-                    onClick={() => onTrainNode(repertoire.id, selected.id)}
+                    onClick={() =>
+                      onTrainLine(
+                        repertoire.id,
+                        selected.id,
+                      )
+                    }
                   >
-                    Practice this position
+                    <GitBranch size={15} />
+                    Rehearse branch to here
                   </button>
                 )}
+              </div>
             </div>
           </article>
         </div>

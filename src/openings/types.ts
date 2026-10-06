@@ -16,6 +16,8 @@ export interface OpeningNode {
   sanFromParent?: string;
   sideToMove: Color;
   purpose?: string;
+  structure?: string;
+  tacticalMotifs: string[];
   concepts: OpeningConcept[];
   plans: string[];
   commonMistakes: string[];
@@ -43,6 +45,10 @@ export interface OpeningProgress {
   lastAttemptAt?: string;
   nextReviewAt: string;
   lastQuality: number;
+  conceptAttempts?: number;
+  conceptSuccesses?: number;
+  lineAttempts?: number;
+  lineSuccesses?: number;
 }
 
 export interface OpeningDeviation {
@@ -85,4 +91,33 @@ export interface OpeningExplorerPosition {
   };
   moves: OpeningExplorerMove[];
   source: "repertoire" | "lichess";
+}
+
+
+export type OpeningTrainingMode =
+  | "recall"
+  | "line";
+
+export interface RepertoireBranchHealth {
+  nodeId: string;
+  label: string;
+  games: number;
+  deviations: number;
+  deviationRate: number;
+  recall: number;
+  conceptRecall: number;
+  health: number;
+}
+
+export interface RepertoireHealth {
+  repertoireId: string;
+  games: number;
+  deviations: number;
+  deviationRate: number;
+  recallMastery: number;
+  conceptMastery: number;
+  lineMastery: number;
+  health: number;
+  weakestBranch?: RepertoireBranchHealth;
+  branches: RepertoireBranchHealth[];
 }

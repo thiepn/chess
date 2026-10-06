@@ -281,6 +281,8 @@ Track:
 
 ### P32 — Personal Repertoire 2.0
 
+**Status:** implemented.
+
 **Purpose:** make openings useful without turning the app into memorization software.
 
 Deliver:

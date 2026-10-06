@@ -184,3 +184,28 @@ export function openingDeviationsForGame(
 
   return deviations;
 }
+
+
+export function matchedRepertoireNodeIds(
+  game: ImportedGame,
+  repertoire: OpeningRepertoire,
+) {
+  if (game.startingFen) return [] as string[];
+
+  const ids = [repertoire.rootNodeId];
+  let node = openingNodes[repertoire.rootNodeId];
+
+  for (const move of game.moves) {
+    const child = node.children
+      .map((id) => openingNodes[id])
+      .find(
+        (candidate) =>
+          candidate.moveFromParent === move.uci,
+      );
+    if (!child) break;
+    ids.push(child.id);
+    node = child;
+  }
+
+  return ids;
+}

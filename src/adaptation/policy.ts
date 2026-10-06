@@ -22,6 +22,7 @@ const evidenceModeMap: Partial<Record<string, TrainingMode>> = {
   mixedPuzzle: "mixedPuzzle",
   calculation: "calculation",
   endgameTechnique: "endgameDrill",
+  openingRecall: "openingRecall",
   delayedReview: "microReview",
   trainingPosition: "engineGame",
   engineGame: "engineGame",

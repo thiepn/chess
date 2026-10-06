@@ -515,7 +515,9 @@ export default function App() {
     const source: LearningEvidence["source"] =
       active.activityType === "calculation"
         ? "calculation"
-        : active.activityType === "endgameDrill" ||
+        : active.activityType === "openingRecall"
+          ? "openingRecall"
+          : active.activityType === "endgameDrill" ||
             active.activityType === "conversionChallenge"
           ? "endgameTechnique"
           : active.source === "review"
@@ -603,22 +605,51 @@ export default function App() {
       }
 
       if (active.openingNodeId) {
-        const prior =
-          openingProgress[active.openingNodeId] ??
-          createOpeningProgress(active.openingNodeId, new Date(occurredAt));
-        openingProgress[active.openingNodeId] = applyOpeningAttempt(
-          prior,
-          outcome.success,
-          outcome.quality,
-          new Date(occurredAt),
-        );
+        const openingNodeIds =
+          outcome.openingNodeIds?.length
+            ? outcome.openingNodeIds
+            : [active.openingNodeId];
 
-        openingDeviations = openingDeviations.map((deviation) =>
-          deviation.nodeId === active.openingNodeId &&
-          deviation.repertoireId === active.repertoireId
-            ? { ...deviation, resolved: outcome.success }
-            : deviation,
-        );
+        for (const nodeId of openingNodeIds) {
+          const prior =
+            openingProgress[nodeId] ??
+            createOpeningProgress(
+              nodeId,
+              new Date(occurredAt),
+            );
+          openingProgress[nodeId] =
+            applyOpeningAttempt(
+              prior,
+              outcome.success,
+              outcome.quality,
+              new Date(occurredAt),
+              {
+                conceptCorrect:
+                  nodeId ===
+                  active.openingNodeId
+                    ? outcome.openingConceptCorrect
+                    : undefined,
+                lineCompleted:
+                  outcome.openingLineCompleted,
+              },
+            );
+        }
+
+        openingDeviations =
+          openingDeviations.map(
+            (deviation) =>
+              openingNodeIds.includes(
+                deviation.nodeId,
+              ) &&
+              deviation.repertoireId ===
+                active.repertoireId
+                ? {
+                    ...deviation,
+                    resolved:
+                      outcome.success,
+                  }
+                : deviation,
+          );
       }
 
       if (outcome.studyId) {
@@ -1196,6 +1227,44 @@ export default function App() {
       repertoireId,
       prescriptionId,
       prescriptionActionId,
+    });
+  }
+
+  function startOpeningLinePractice(
+    repertoireId: string,
+    nodeId: string,
+  ) {
+    const skill =
+      skillById["openings.principles"];
+    const repertoire =
+      repertoireById[repertoireId];
+    const node = openingNodes[nodeId];
+    if (
+      !skill ||
+      !repertoire ||
+      !node ||
+      nodeId === repertoire.rootNodeId
+    ) {
+      return;
+    }
+
+    setManualActivity({
+      id: `opening-line:${repertoireId}:${nodeId}`,
+      source: "repertoire",
+      skillIds: [skill.id],
+      activityType: "openingRecall",
+      estimatedMinutes: 7,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .65,
+      reason: `${repertoire.versus}: full-line rehearsal`,
+      title: repertoire.name,
+      subtitle: `Rehearse to ${node.name}`,
+      openingNodeId: nodeId,
+      openingLineNodeId: nodeId,
+      openingTrainingMode: "line",
+      repertoireId,
     });
   }
 
@@ -2099,7 +2168,9 @@ export default function App() {
             <OpeningsView
               progress={state.openingProgress ?? {}}
               deviations={state.openingDeviations ?? []}
+              games={state.games ?? []}
               onTrainNode={startOpeningPractice}
+              onTrainLine={startOpeningLinePractice}
               onBack={() => setLearnMode("curriculum")}
             />
           ) : (
@@ -2343,6 +2414,8 @@ export default function App() {
               <OpeningTrainer
                 repertoire={activeRepertoire}
                 node={activeOpeningNode}
+                mode={active.openingTrainingMode}
+                lineNodeId={active.openingLineNodeId}
                 onComplete={completeActivity}
               />
             ) : active.activityType === "personalMistake" && activeMistake ? (
