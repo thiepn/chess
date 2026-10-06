@@ -17,6 +17,7 @@ import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildEventRetrospective } from "../planning/retrospective";
 import { competitionPlanForState } from "../planning/cycle";
 import { calculationPositionFor } from "../calculation/positions";
+import { endgamePositionFor } from "../endgames/positions";
 import {
   buildTrainingHorizon,
   periodizationAdjustment,
@@ -78,6 +79,17 @@ function candidate(
       ? trainingScenarios.find((item) => item.skillId === skill.id)
       : undefined;
 
+  const requestedEndgameMode =
+    activityType === "endgameDrill" ||
+    activityType === "conversionChallenge";
+  const endgamePosition = requestedEndgameMode
+    ? endgamePositionFor(
+        state,
+        skill.id,
+        now,
+      )
+    : undefined;
+
   const executableActivityType =
     activityType === "engineGame" && !scenario
       ? skill.trainingModes.includes("mixedPuzzle")
@@ -87,7 +99,13 @@ function candidate(
           : skill.trainingModes.includes("guidedDemo")
             ? "guidedDemo"
             : "conceptLesson"
-      : activityType;
+      : requestedEndgameMode && !endgamePosition
+        ? skill.trainingModes.includes("guidedDemo")
+          ? "guidedDemo"
+          : skill.trainingModes.includes("conceptLesson")
+            ? "conceptLesson"
+            : skill.trainingModes[0] ?? "conceptLesson"
+        : activityType;
 
   const resolvedPolicy =
     executableActivityType === adaptivePolicy.mode
@@ -122,6 +140,8 @@ function candidate(
     scenarioId: scenario?.id,
     calculationPositionId:
       calculationPosition?.id,
+    endgamePositionId:
+      endgamePosition?.id,
     adaptivePolicy: resolvedPolicy,
   };
 }
