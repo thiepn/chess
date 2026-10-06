@@ -14,18 +14,25 @@ import {
   Activity,
   CircleAlert,
   Layers3,
+  ListChecks,
 } from "lucide-react";
 import type {
   HumanGameCohortInsight,
   ProgressIntelligence,
   TrendPoint,
 } from "../analytics/types";
+import type {
+  TrainingPrescriptionAction,
+} from "../prescriptions/types";
 import { skillTitle, stageTitle } from "../analytics/engine";
 
 interface ProgressViewProps {
   intelligence: ProgressIntelligence;
   onBack: () => void;
   onTrainSkill?: (skillId: string) => void;
+  onRunPrescriptionAction?: (
+    action: TrainingPrescriptionAction,
+  ) => void;
 }
 
 function deltaLabel(value: number) {
@@ -205,6 +212,7 @@ export function ProgressView({
   intelligence,
   onBack,
   onTrainSkill,
+  onRunPrescriptionAction,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
   const strongestIntervention = intelligence.interventions[0];
@@ -334,6 +342,82 @@ export function ProgressView({
           Opponent rating only adds modest context; engine quality, consistency,
           curriculum mastery and demonstrated human transfer carry most of the model.
         </p>
+      </section>
+
+      <section className="progress-panel prescription-panel">
+        <div className="progress-section-heading">
+          <div>
+            <p className="eyebrow">P18 · TRAINING PRESCRIPTIONS</p>
+            <h2>Turn the diagnosis into the next repair plan.</h2>
+          </div>
+          <ListChecks size={20} />
+        </div>
+
+        {intelligence.prescriptions.length ? (
+          <div className="prescription-list">
+            {intelligence.prescriptions.map((prescription, index) => (
+              <article
+                className={
+                  index === 0
+                    ? "prescription-card primary"
+                    : "prescription-card"
+                }
+                key={prescription.id}
+              >
+                <div className="prescription-card-head">
+                  <div>
+                    <span>
+                      {index === 0 ? "TOP PLAN" : prescription.kind.replace("-", " ")}
+                    </span>
+                    <strong>{prescription.title}</strong>
+                  </div>
+                  <small>
+                    {prescription.evidenceGames} games · {prescription.confidence}% confidence
+                  </small>
+                </div>
+
+                <p>{prescription.rationale}</p>
+
+                <div className="prescription-game-plan">
+                  <span>Next-game plan</span>
+                  <ol>
+                    {prescription.gamePlan.map((cue) => (
+                      <li key={cue}>{cue}</li>
+                    ))}
+                  </ol>
+                </div>
+
+                <div className="prescription-actions">
+                  {prescription.actions.map((action) => (
+                    <button
+                      type="button"
+                      key={action.id}
+                      onClick={() =>
+                        onRunPrescriptionAction?.(action)
+                      }
+                      disabled={!onRunPrescriptionAction}
+                    >
+                      {action.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="prescription-auto-note">
+                  {prescription.composerEligible
+                    ? "High-confidence: this plan may contribute one activity to the next generated session."
+                    : "Suggestion only until more human-game evidence accumulates."}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="cohort-insufficient-note">
+            <ListChecks size={17} />
+            <span>
+              P18 will create repair plans once P17 finds a repeatable human-game problem with enough evidence.
+            </span>
+          </div>
+        )}
       </section>
 
       <section className="progress-panel real-game-diagnostics-panel">
