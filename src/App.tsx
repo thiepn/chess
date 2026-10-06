@@ -88,6 +88,9 @@ import {
   fetchLichessProfile,
   fetchRecentLichessGames,
 } from "./lichess/api";
+import type {
+  TrainingPrescriptionAction,
+} from "./prescriptions/types";
 
 const repo = createChessStateRepository();
 
@@ -98,6 +101,7 @@ const modeLabels: Record<SessionMode, string> = {
 };
 
 function activityIcon(activity: TrainingActivity) {
+  if (activity.source === "prescription") return <ClipboardCheck size={18} />;
   if (activity.source === "weakness") return <Target size={18} />;
   if (activity.source === "review") return <RefreshCcw size={18} />;
   if (activity.source === "assessment") return <ClipboardCheck size={18} />;
@@ -127,6 +131,7 @@ function gateBlockerLabel(key: keyof StageGateEvaluation["metrics"]) {
 }
 
 function reasonLabel(activity: TrainingActivity) {
+  if (activity.source === "prescription") return "FROM YOUR REAL-GAME PLAN";
   if (activity.source === "weakness") return "FROM YOUR WEAKNESSES";
   if (activity.source === "review") return "REVIEW DUE";
   if (activity.source === "curriculum") return "CURRICULUM";
@@ -251,6 +256,8 @@ export default function App() {
     () => buildProgressIntelligence(state),
     [state],
   );
+  const topPrescription =
+    progressIntelligence.prescriptions[0];
 
   const topWeakness = useMemo(() => {
     const weakness = [...state.weaknesses]
@@ -980,6 +987,50 @@ export default function App() {
     });
   }
 
+  function runPrescriptionAction(
+    action: TrainingPrescriptionAction,
+  ) {
+    if (
+      action.kind === "focused-practice" &&
+      action.skillId
+    ) {
+      startManualPractice(action.skillId);
+      setNav("home");
+      return;
+    }
+
+    if (
+      action.kind === "mistake-replay" &&
+      action.mistakeId
+    ) {
+      replayMistakePosition(action.mistakeId);
+      return;
+    }
+
+    if (
+      action.kind === "opening-recall" &&
+      action.repertoireId &&
+      action.openingNodeId
+    ) {
+      startOpeningPractice(
+        action.repertoireId,
+        action.openingNodeId,
+      );
+      setNav("home");
+      return;
+    }
+
+    if (
+      action.kind === "scenario" &&
+      action.scenarioId
+    ) {
+      const scenario = scenarioById[action.scenarioId];
+      if (!scenario) return;
+      setReplayScenario(scenario);
+      setNav("play");
+    }
+  }
+
   function startPlacementAssessment() {
     setActiveIndex(null);
     setManualActivity(null);
@@ -1249,6 +1300,33 @@ export default function App() {
               <ChevronRight size={18} />
             </button>
 
+            {topPrescription && (
+              <section className="home-prescription-card">
+                <div className="home-prescription-top">
+                  <div>
+                    <p className="eyebrow">NEXT REPAIR PLAN</p>
+                    <h3>{topPrescription.title}</h3>
+                  </div>
+                  <span>
+                    {topPrescription.confidence}% confidence
+                  </span>
+                </div>
+                <p>{topPrescription.rationale}</p>
+                <div className="home-prescription-cues">
+                  {topPrescription.gamePlan.slice(0, 2).map((cue) => (
+                    <span key={cue}>{cue}</span>
+                  ))}
+                </div>
+                <button
+                  className="secondary"
+                  type="button"
+                  onClick={() => setNav("progress")}
+                >
+                  Open repair plan <ChevronRight size={16} />
+                </button>
+              </section>
+            )}
+
             <section className="dashboard-grid">
               <article className="panel">
                 <div className="panel-title">
@@ -1326,6 +1404,7 @@ export default function App() {
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}
             lichessSyncError={lichessSyncError}
+            practicalPlan={topPrescription}
             onLinkLichess={linkLichess}
             onUnlinkLichess={unlinkLichess}
             onSyncLichess={() => syncLichessGames(false)}
@@ -1365,6 +1444,7 @@ export default function App() {
               startManualPractice(skillId);
               setNav("home");
             }}
+            onRunPrescriptionAction={runPrescriptionAction}
           />
         ) : (
           <section className="placeholder">
