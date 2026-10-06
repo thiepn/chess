@@ -37,6 +37,7 @@ interface LearnViewProps {
   onStartPlacement: () => void;
   onStartCheckpoint: (stageId: CurriculumStageId) => void;
   onOpenOpenings: () => void;
+  onOpenModelGames: () => void;
 }
 
 function masteryLabel(value: number) {
@@ -93,6 +94,7 @@ export function LearnView({
   onStartPlacement,
   onStartCheckpoint,
   onOpenOpenings,
+  onOpenModelGames,
 }: LearnViewProps) {
   const mastered = skills.filter(
     (skill) => skillMastery(mastery, skill.id) >= 75,
@@ -187,6 +189,24 @@ export function LearnView({
             Repertoire recall stays connected to the course but remains compact:
             Italian, Alapin, Caro-Kann and QGD structures rather than an opening
             encyclopedia.
+          </span>
+        </div>
+        <ChevronRight size={19} />
+      </button>
+
+      <button
+        className="opening-entry-card model-game-entry-card"
+        type="button"
+        onClick={onOpenModelGames}
+      >
+        <div className="opening-entry-icon"><BookOpen size={23} /></div>
+        <div>
+          <p className="eyebrow">MODEL GAMES</p>
+          <strong>Plans in complete games</strong>
+          <span>
+            Study a compact curated set through plan questions and
+            Guess-the-Move checkpoints, then save the positions worth
+            retaining into spaced practice.
           </span>
         </div>
         <ChevronRight size={19} />

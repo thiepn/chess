@@ -300,6 +300,8 @@ Avoid giant theory trees.
 
 ### P33 — Model Games & Strategic Pattern Learning
 
+**Status:** implemented.
+
 **Purpose:** teach strategy from complete games rather than isolated prose.
 
 Deliver:

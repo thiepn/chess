@@ -11,6 +11,7 @@ export const evidenceWeight: Record<LearningEvidence["source"], number> = {
   calculation: .75,
   endgameTechnique: .82,
   openingRecall: .68,
+  modelGame: .5,
   delayedReview: .7,
   trainingPosition: .8,
   engineGame: .85,
@@ -132,6 +133,23 @@ export function applyEvidence(
       next.delayedRetention,
       target,
       weight * .72,
+    );
+  }
+  if (evidence.source === "modelGame") {
+    next.understanding = updateDimension(
+      next.understanding,
+      target,
+      weight * .75,
+    );
+    next.recognition = updateDimension(
+      next.recognition,
+      target,
+      weight,
+    );
+    next.mixedRecognition = updateDimension(
+      next.mixedRecognition,
+      target,
+      weight * .55,
     );
   }
   if (evidence.source === "calculation") {

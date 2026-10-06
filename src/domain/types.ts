@@ -15,6 +15,7 @@ import type { PrescriptionTrackingRecord } from "../prescriptions/types";
 import type { LessonMasterySummary } from "../learning/types";
 import type { CalculationAttemptSummary, CalculationEvidence } from "../calculation/types";
 import type { EndgameAttemptSummary, EndgameEvidence } from "../endgames/types";
+import type { ModelGameProgress } from "../model-games/types";
 
 export type CurriculumStageId =
   | "learn"
@@ -181,6 +182,7 @@ export type EvidenceSource =
   | "calculation"
   | "endgameTechnique"
   | "openingRecall"
+  | "modelGame"
   | "delayedReview"
   | "trainingPosition"
   | "engineGame"
@@ -313,6 +315,7 @@ export interface UserState {
   calculationHistory?: Record<string, CalculationAttemptSummary>;
   endgameHistory?: Record<string, EndgameAttemptSummary>;
   gameReviewReflections?: Record<string, GameReviewReflection>;
+  modelGameProgress?: Record<string, ModelGameProgress>;
   focus?: {
     domain: DomainId;
     until?: string;
