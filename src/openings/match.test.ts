@@ -39,9 +39,9 @@ describe("opening repertoire matching", () => {
     expect(openingDeviationsForGame(game)).toHaveLength(0);
   });
 
-  it("does not assign a repertoire when zero moves match", () => {
+  it("keeps zero-fit games out of repertoire analytics identity", () => {
     const game = importPgn("1. c4 e5 2. Nc3 Nf6 *", "b");
-    expect(chooseRepertoireForGame(game)).toBeUndefined();
+    expect(openingIdentityForGame(game).source).toBe("fallback");
   });
 
   it("groups PGN opening variations by family", () => {
