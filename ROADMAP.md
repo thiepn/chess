@@ -255,6 +255,8 @@ Deliver:
 
 ### P31 — Endgame & Technique Trainer
 
+**Status:** implemented.
+
 **Purpose:** build repeatable practical endgame competence.
 
 Deliver dedicated runners for:
