@@ -490,7 +490,7 @@ export function periodizationAdjustment(
 
   multiplier = clamp(multiplier, .72, 1.24);
 
-  const reason =
+  const baseReason =
     bucket === horizon.nextFocus
       ? `${allocation?.label ?? trainingBucketLabels[bucket]} is the largest remaining weekly gap.`
       : allocation &&
@@ -498,6 +498,13 @@ export function periodizationAdjustment(
             allocation.targetMinutes
         ? `${allocation.label} has reached its weekly allocation, so other needs get more room.`
         : `${allocation?.label ?? trainingBucketLabels[bucket]} still has ${allocation?.remainingMinutes ?? 0} planned minute(s) this week.`;
+  const loadFactor =
+    horizon.loadManagement.bucketMultipliers[bucket] ?? 1;
+  const reason =
+    horizon.loadManagement.appliedMode === "normal" ||
+    loadFactor === 1
+      ? baseReason
+      : `${baseReason} P23 ${horizon.loadManagement.appliedMode} mode applies ${Math.round(loadFactor * 100)}% load pressure to this bucket.`;
 
   return {
     bucket,
