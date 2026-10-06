@@ -1,7 +1,35 @@
 import { Chess, type Color } from "chess.js";
 
 const standardStartingFen = new Chess().fen();
-import type { ImportedGame, ImportedGameMove, ImportedGameSource } from "./types";
+import type {
+  ImportedGame,
+  ImportedGameMove,
+  ImportedGameSource,
+  TimeControlCategory,
+} from "./types";
+
+function rating(value?: string) {
+  if (!value) return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? Math.round(parsed) : undefined;
+}
+
+export function classifyTimeControl(value?: string): TimeControlCategory {
+  if (!value) return "unknown";
+  if (value.includes("/")) return "correspondence";
+
+  const match = value.match(/^(\d+)(?:\+(\d+))?$/);
+  if (!match) return "unknown";
+
+  const initial = Number(match[1]);
+  const increment = Number(match[2] ?? 0);
+  const estimated = initial + increment * 40;
+
+  if (estimated < 180) return "bullet";
+  if (estimated < 600) return "blitz";
+  if (estimated < 1800) return "rapid";
+  return "classical";
+}
 
 function stableGameId(pgn: string) {
   let hash = 2166136261;
@@ -55,6 +83,12 @@ export function importPgn(
   const headerFen = headers.FEN;
   const startingFen =
     headerFen && headerFen !== standardStartingFen ? headerFen : undefined;
+  const whiteRating = rating(headers.WhiteElo);
+  const blackRating = rating(headers.BlackElo);
+  const playerRating = playerColor === "w" ? whiteRating : blackRating;
+  const opponentRating = playerColor === "w" ? blackRating : whiteRating;
+  const timeControl = headers.TimeControl;
+  const eventText = (headers.Event ?? "").toLocaleLowerCase();
 
   return {
     id: options.externalId
@@ -72,6 +106,16 @@ export function importPgn(
     event: headers.Event,
     site: headers.Site,
     date: headers.Date,
+    rated:
+      eventText.includes("rated")
+        ? true
+        : eventText.includes("casual")
+          ? false
+          : undefined,
+    timeControl,
+    timeControlCategory: classifyTimeControl(timeControl),
+    playerRating,
+    opponentRating,
     startingFen,
     moves,
     criticalMomentIds: [],
