@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { importPgn } from "../games/import";
-import { chooseRepertoireForGame, openingDeviationsForGame } from "./match";
+import {
+  chooseRepertoireForGame,
+  openingDeviationsForGame,
+  openingIdentityForGame,
+} from "./match";
 
 describe("opening repertoire matching", () => {
   it("matches a White Italian game to the 1.e4 repertoire", () => {
@@ -33,6 +37,26 @@ describe("opening repertoire matching", () => {
 
     expect(chooseRepertoireForGame(game)).toBeUndefined();
     expect(openingDeviationsForGame(game)).toHaveLength(0);
+  });
+
+  it("does not assign a repertoire when zero moves match", () => {
+    const game = importPgn("1. c4 e5 2. Nc3 Nf6 *", "b");
+    expect(chooseRepertoireForGame(game)).toBeUndefined();
+  });
+
+  it("groups PGN opening variations by family", () => {
+    const game = importPgn(
+      `[Opening "Caro-Kann Defense: Advance Variation"]
+[ECO "B12"]
+
+1. e4 c6 2. d4 d5 3. e5 *`,
+      "w",
+    );
+
+    const identity = openingIdentityForGame(game);
+    expect(identity.label).toBe("Caro-Kann Defense");
+    expect(identity.eco).toBe("B12");
+    expect(identity.source).toBe("header");
   });
 
   it("matches Black Caro-Kann moves without deviation", () => {
