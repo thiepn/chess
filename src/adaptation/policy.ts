@@ -51,10 +51,24 @@ function recentSkillEvents(
 
 function transferValue(mastery?: SkillMastery) {
   if (!mastery) return 0;
-  return Math.max(
+
+  const human = Math.max(
+    mastery.humanGameRecognition ?? 0,
+    mastery.humanGameExecution ?? 0,
+  );
+  const ai = Math.max(
     mastery.trainingTransfer,
+    mastery.aiGameTransfer ?? 0,
+  );
+  const legacy = Math.max(
     mastery.realGameRecognition,
     mastery.realGameExecution,
+  );
+
+  return Math.max(
+    human,
+    ai * .88,
+    legacy * .9,
   );
 }
 
