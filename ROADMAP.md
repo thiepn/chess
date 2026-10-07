@@ -699,7 +699,27 @@ Physical-device/browser inspection is still a release-qualification activity; P5
 
 ### P51 — Large-Desktop Composition
 
+**Status:** implemented.
+
 P47 absorbed the tablet portion. Tune 1440p+, ultrawide and unusually tall desktop compositions without dashboard stretching.
+
+Delivered:
+
+- added explicit large-desktop composition rules beginning at 1536px;
+- added separate ultrawide composition rules at 1920px+;
+- introduced bounded large-screen tokens for workspace width, analysis width, rail width, context width, reading measure and board caps;
+- Train uses additional width for a stable session rail, larger board lane and coach context instead of larger gaps;
+- tall Train runtimes can grow the board up to 48rem while remaining viewport-bounded;
+- Learn keeps chapter prose bounded and uses large width primarily for the curriculum rail + board + reading composition;
+- Play setup and active games gain a wider board lane and stable 360–380px setup/context pane;
+- Review analysis uses a bounded large board, fixed notation lane and stable teaching-insight pane;
+- Library analysis uses a bounded board lane plus a stable analysis/editor column while archive pages retain readable collection widths;
+- Progress expands quantitative space while keeping explanatory prose bounded;
+- 1920px+ rules center fixed-quality chess workspaces rather than stretching columns across the entire monitor;
+- P51 route CSS remains code-split with the corresponding Learn/Play/Review/Library/Progress routes; only Train loads with the default app;
+- added `npm run desktop:audit` and made it part of the Quality workflow;
+- added all P51 CSS files to the P48 material audit;
+- documented the large-screen policy in `docs/P51_LARGE_DESKTOP.md`.
 
 ### P52 — Accessibility Requalification
 
