@@ -32,5 +32,6 @@ jobs:
       - run: npm run desktop:audit
       - run: npm run a11y:audit
       - run: npm run theme:audit
+      - run: npm run content:audit
       - run: npm run build
       - run: npm run perf:budget
