@@ -3,11 +3,11 @@ import { auditCurriculum } from "./curriculum-audit";
 import { curriculumStages, skills } from "./curriculum";
 
 describe("curriculum completeness", () => {
-  it("has a substantial beginner-to-intermediate course", () => {
+  it("has a substantial beginner-through-advanced course", () => {
     const audit = auditCurriculum();
 
-    expect(audit.stageCount).toBe(8);
-    expect(audit.skillCount).toBeGreaterThanOrEqual(60);
+    expect(audit.stageCount).toBe(9);
+    expect(audit.skillCount).toBeGreaterThanOrEqual(80);
     expect(audit.authoredLessonCount).toBe(audit.skillCount);
     expect(audit.errors).toEqual([]);
   });
