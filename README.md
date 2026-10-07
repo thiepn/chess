@@ -2147,13 +2147,16 @@ The existing sound, haptic, celebration and motion preferences remain authoritat
 
 Long curriculum and progress surfaces use rendering containment so off-screen sections do not need to paint immediately.
 
-CI now runs `npm run perf:budget` after the production build and fails when generated app assets exceed:
+CI now runs `npm run perf:budget` after the production build. Secondary product routes are lazy-loaded and preloaded on navigation intent, so the budget distinguishes startup cost from code that is only needed later.
+
+The gate fails when generated app assets exceed:
 
 - **260 KiB gzip** for an individual JavaScript asset;
 - **42 KiB gzip** for an individual CSS asset;
-- **315 KiB gzip** for total app JS + CSS.
+- **260 KiB gzip** for the HTML-referenced initial app JS + CSS;
+- **315 KiB gzip** for all generated app JS + CSS, including lazy route chunks.
 
-Stockfish engine assets are intentionally excluded from that initial-app budget because they are a separate browser-engine payload.
+Stockfish engine assets are intentionally excluded because they are a separate browser-engine payload.
 
 ## Next phase
 
