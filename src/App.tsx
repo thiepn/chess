@@ -2812,6 +2812,8 @@ export default function App() {
           <LibraryView
             studies={state.savedStudies ?? []}
             games={state.games ?? []}
+            routePath={route.path}
+            onNavigate={navigate}
             onSaveStudy={saveStudy}
             onDeleteStudy={deleteStudy}
             onToggleFavorite={toggleStudyFavorite}
