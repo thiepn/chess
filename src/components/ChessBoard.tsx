@@ -189,6 +189,8 @@ export function ChessBoard({
     setSelected(null);
 
     if (candidate.inCheck()) feedback("check");
+    else if (move.promotion) feedback("promotion");
+    else if (castle) feedback("castle");
     else if (move.captured) feedback("capture");
     else feedback("move");
 
@@ -288,6 +290,7 @@ export function ChessBoard({
       <div
         className={`chess-board chess-board-v2 orientation-${orientation === "w" ? "white" : "black"}${boardFlipping ? " board-flipping" : ""}`}
         data-orientation={orientation}
+        data-last-move-kind={lastMove ? lastMoveKind : undefined}
         role="grid"
         aria-label={`Interactive chessboard. ${orientation === "w" ? "White" : "Black"} is at the bottom. Use arrow keys to move between squares and Enter or Space to select.`}
       >
@@ -302,10 +305,11 @@ export function ChessBoard({
           const displayMove = lastMove ?? presentationMove;
           const isSecondary =
             secondaryMove?.from === square || secondaryMove?.to === square;
-          const isLast =
-            displayMove?.from === square ||
-            displayMove?.to === square ||
-            isSecondary;
+          const isMoveOrigin =
+            displayMove?.from === square || secondaryMove?.from === square;
+          const isMoveDestination =
+            displayMove?.to === square || secondaryMove?.to === square;
+          const isLast = isMoveOrigin || isMoveDestination;
           const isChecked = checkedKing === square;
           const classes = [
             "board-square",
@@ -314,6 +318,9 @@ export function ChessBoard({
             isSelected ? "selected" : "",
             isLegal ? "legal-target" : "",
             isLast ? "last-move" : "",
+            isMoveOrigin ? "move-origin" : "",
+            isMoveDestination ? "move-destination" : "",
+            isMoveDestination ? `move-impact-${lastMoveKind}` : "",
             rejected === square ? "rejected" : "",
             isChecked ? "in-check" : "",
           ]
