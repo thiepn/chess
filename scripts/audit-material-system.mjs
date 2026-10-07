@@ -14,6 +14,7 @@ const flatCssFiles = [
   "src/styles/p47-progress-native.css",
   "src/styles/p47-train-native.css",
   "src/styles/p48-material.css",
+  "src/styles/p49-motion.css",
 ];
 
 const componentDir = path.join(root, "src", "components");
