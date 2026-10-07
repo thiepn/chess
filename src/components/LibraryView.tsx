@@ -577,6 +577,7 @@ export function LibraryView({
             className={study.favorite ? "favorite active" : "favorite"}
             onClick={() => onToggleFavorite(study.id)}
             aria-label={study.favorite ? "Remove favorite" : "Add favorite"}
+            aria-pressed={study.favorite}
           >
             <Heart size={14} />
           </button>
@@ -677,7 +678,7 @@ export function LibraryView({
             <strong id="library-workspace-title">{title}</strong>
           </div>
 
-          <div className="library-workspace-status">
+          <div className="library-workspace-status" role="status" aria-live="polite">
             {loadedStudyId ? (
               <span>Saved study</span>
             ) : source === "reference" ? (
@@ -775,6 +776,7 @@ export function LibraryView({
               <button
                 type="button"
                 className={cursor === 0 ? "active" : ""}
+                aria-current={cursor === 0 ? "step" : undefined}
                 onClick={() => {
                   setCursor(0);
                   setEvaluation(null);
@@ -787,6 +789,7 @@ export function LibraryView({
                   key={`${move.ply}-${move.uci}`}
                   type="button"
                   className={cursor === index + 1 ? "active" : ""}
+                  aria-current={cursor === index + 1 ? "step" : undefined}
                   onClick={() => {
                     setCursor(index + 1);
                     setEvaluation(null);
