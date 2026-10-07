@@ -255,3 +255,57 @@ Older training engines may retain behavioral class names such as `hint-card` or 
 - rebuilt route/material CSS for oversized radii;
 - active TSX for deprecated hero/card surface classes;
 - presence of the final P48 material layer after global styles.
+
+
+## P49 motion contract
+
+Motion communicates chess state. It does not decorate containers.
+
+### Priority order
+
+1. **Piece movement** — spatially connects source and destination.
+2. **Move consequence** — capture, promotion, castling, check and rejection have distinct feedback.
+3. **Reveal** — hints, solutions and analysis appear with short, low-amplitude motion.
+4. **Navigation** — route transitions are brief and subordinate to content.
+5. **Data change** — charts/meters animate only to show measured progression.
+6. **Celebration** — optional, restrained, never blocks the board.
+
+### Durations
+
+- press feedback: about 90ms;
+- legal-target / hint feedback: 120–170ms;
+- route entry: about 150ms;
+- normal piece move: about 180ms;
+- capture / castle: about 220–230ms;
+- promotion: about 270ms;
+- chart draw: under 600ms.
+
+### Prohibited motion
+
+- floating card hover animation;
+- repeated idle bobbing;
+- parallax;
+- long page transitions;
+- animation that delays the next chess action;
+- animation that hides notation or board state;
+- rainbow/glow-heavy celebration effects.
+
+### Reduced motion
+
+`data-motion="reduced"` is authoritative. Route transitions bypass the View Transition API and all P49 board-impact, reveal, chart and tactile animations are disabled.
+
+State changes must remain immediate and fully understandable without animation.
+
+### Tactile feedback
+
+Optional haptics/audio distinguish move classes where the chess event carries meaning:
+
+- move;
+- capture;
+- castling;
+- promotion;
+- check;
+- success/error;
+- answer/hint reveal.
+
+Sound remains opt-in. Haptics remain enhancement-only and must never be required to understand state.
