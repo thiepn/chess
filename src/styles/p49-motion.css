@@ -1,0 +1,418 @@
+/* P49 — chess-native motion & tactile interaction
+ *
+ * Motion follows chess state: moving pieces, board consequences, revealing
+ * analysis and transitioning between real app routes. It never exists just to
+ * make a container feel animated.
+ */
+
+:root {
+  --p49-route-in: 150ms;
+  --p49-route-out: 90ms;
+  --p49-impact: 230ms;
+  --p49-reveal: 170ms;
+  --p49-press: 90ms;
+  --p49-ease-out: cubic-bezier(.2,.8,.2,1);
+  --p49-ease-piece: cubic-bezier(.18,.86,.22,1);
+}
+
+/* Route transitions */
+
+::view-transition-old(chess-main) {
+  animation: p49-route-out var(--p49-route-out) ease both;
+}
+
+::view-transition-new(chess-main) {
+  animation: p49-route-in var(--p49-route-in) var(--p49-ease-out) both;
+}
+
+@keyframes p49-route-out {
+  to {
+    opacity: .55;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes p49-route-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* Tactile controls — compact press feedback, never floating-card motion. */
+
+.app-shell-v2 button:not(.board-square):not(:disabled),
+.experience-popover button:not(:disabled) {
+  transform-origin: center;
+  transition:
+    background var(--chess-motion-fast) ease,
+    border-color var(--chess-motion-fast) ease,
+    color var(--chess-motion-fast) ease,
+    opacity var(--chess-motion-fast) ease,
+    transform var(--p49-press) var(--p49-ease-out);
+}
+
+.app-shell-v2 button:not(.board-square):not(:disabled):active,
+.experience-popover button:not(:disabled):active {
+  transform: translateY(1px) scale(.985);
+}
+
+.app-nav-link::after,
+.app-progress-link::after,
+.mobile-nav button::before {
+  transform: scaleX(0);
+  transform-origin: center;
+  transition:
+    transform var(--chess-motion-ui) var(--p49-ease-out),
+    background var(--chess-motion-fast) ease;
+}
+
+.app-nav-link.active::after,
+.app-progress-link.active::after,
+.mobile-nav button.active::before {
+  transform: scaleX(1);
+}
+
+/* Board action language */
+
+.chess-board-v2 .board-square.move-origin::before,
+.chess-board-v2 .board-square.move-destination::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.chess-board-v2 .board-square.move-origin::before {
+  border: 2px solid rgba(53,123,216,.28);
+  animation: p49-origin-release 180ms ease-out both;
+}
+
+.chess-board-v2 .board-square.move-destination::before {
+  inset: 7%;
+  border: 2px solid rgba(53,123,216,.5);
+  animation: p49-move-impact var(--p49-impact) var(--p49-ease-out) both;
+}
+
+.chess-board-v2 .board-square.move-impact-capture::before {
+  border-color: rgba(200,100,100,.68);
+  animation-name: p49-capture-impact;
+}
+
+.chess-board-v2 .board-square.move-impact-promotion::before {
+  border-color: rgba(201,156,82,.82);
+  animation-name: p49-promotion-impact;
+}
+
+.chess-board-v2 .board-square.move-impact-castle::before {
+  border-color: rgba(53,123,216,.62);
+  animation-name: p49-castle-impact;
+}
+
+.chess-board-v2 .piece-land {
+  animation: p49-piece-arrive var(--chess-motion-piece) var(--p49-ease-piece);
+}
+
+.chess-board-v2 .piece-land-capture {
+  animation: p49-piece-capture 220ms var(--p49-ease-piece);
+}
+
+.chess-board-v2 .piece-land-promotion {
+  animation: p49-piece-promotion 270ms var(--p49-ease-piece);
+}
+
+.chess-board-v2 .piece-land-castle {
+  animation: p49-piece-castle 230ms var(--p49-ease-piece);
+}
+
+.chess-board-v2.board-flipping {
+  animation: p49-board-flip 180ms var(--p49-ease-out);
+}
+
+.chess-board-v2 .board-arrow {
+  stroke-dasharray: 10 3;
+  animation: p49-arrow-reveal 190ms var(--p49-ease-out) both;
+}
+
+.chess-board-v2 .move-dot,
+.chess-board-v2 .capture-ring {
+  animation: p49-target-enter 120ms var(--p49-ease-out) both;
+}
+
+.chess-board-v2 .board-square.rejected {
+  animation: p49-reject 230ms ease-out;
+}
+
+@keyframes p49-origin-release {
+  0% { opacity: .7; transform: scale(.92); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes p49-move-impact {
+  0% { opacity: 0; transform: scale(.7); }
+  40% { opacity: .9; }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+@keyframes p49-capture-impact {
+  0% { opacity: 0; transform: scale(.62) rotate(-3deg); }
+  42% { opacity: .95; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.12) rotate(2deg); }
+}
+
+@keyframes p49-promotion-impact {
+  0% { opacity: 0; transform: scale(.58); }
+  45% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0; transform: scale(1.16); }
+}
+
+@keyframes p49-castle-impact {
+  0% { opacity: 0; transform: scaleX(.7); }
+  45% { opacity: .88; }
+  100% { opacity: 0; transform: scaleX(1.08); }
+}
+
+@keyframes p49-piece-arrive {
+  from {
+    transform:
+      translate(var(--piece-dx, 0), var(--piece-dy, 0))
+      translateY(-1px)
+      scale(.985);
+  }
+  76% {
+    transform: translate(0,0) translateY(-2px) scale(1.025);
+  }
+  to {
+    transform: translate(0,0) translateY(-1px) scale(1);
+  }
+}
+
+@keyframes p49-piece-capture {
+  from {
+    transform:
+      translate(var(--piece-dx, 0), var(--piece-dy, 0))
+      translateY(-1px)
+      scale(.95);
+  }
+  68% {
+    transform: translate(0,0) translateY(-2px) scale(1.065);
+  }
+  to {
+    transform: translate(0,0) translateY(-1px) scale(1);
+  }
+}
+
+@keyframes p49-piece-promotion {
+  0% {
+    transform:
+      translate(var(--piece-dx, 0), var(--piece-dy, 0))
+      translateY(-1px)
+      scale(.78);
+    opacity: .58;
+  }
+  62% {
+    transform: translate(0,0) translateY(-3px) scale(1.09);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0,0) translateY(-1px) scale(1);
+  }
+}
+
+@keyframes p49-piece-castle {
+  from {
+    transform:
+      translate(var(--piece-dx, 0), var(--piece-dy, 0))
+      translateY(-1px);
+  }
+  72% {
+    transform: translate(0,0) translateY(-2px) scale(1.025);
+  }
+  to {
+    transform: translate(0,0) translateY(-1px);
+  }
+}
+
+@keyframes p49-board-flip {
+  0% { opacity: .72; transform: scale(.988); }
+  50% { opacity: .88; transform: scale(.996); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes p49-arrow-reveal {
+  from { opacity: 0; stroke-dashoffset: 20; }
+  to { opacity: .8; stroke-dashoffset: 0; }
+}
+
+@keyframes p49-target-enter {
+  from { opacity: 0; transform: scale(.62); }
+}
+
+@keyframes p49-reject {
+  0%, 100% { transform: translateX(0); }
+  28% { transform: translateX(-3px); }
+  58% { transform: translateX(3px); }
+  82% { transform: translateX(-1px); }
+}
+
+/* Solution / lesson / analysis reveal */
+
+.lesson-feedback.success,
+.puzzle-explanation-card,
+.review-retry-success,
+.review-transfer-card,
+.library-engine-result,
+.review-insight-v2 .moment-comparison,
+.review-insight-v2 .moment-line {
+  animation: p49-reveal var(--p49-reveal) var(--p49-ease-out) both;
+}
+
+.lesson-hint-stack .hint-card:last-child {
+  animation: p49-hint-reveal 140ms var(--p49-ease-out) both;
+}
+
+.analysis-progress {
+  animation: p49-analysis-enter 140ms ease both;
+}
+
+.library-engine-result > div,
+.moment-eval {
+  transition:
+    border-color var(--chess-motion-fast) ease,
+    color var(--chess-motion-fast) ease,
+    opacity var(--chess-motion-fast) ease;
+}
+
+.review-notation-row,
+.workspace-move-strip button,
+.review-phase-strip button {
+  transition:
+    background var(--chess-motion-fast) ease,
+    color var(--chess-motion-fast) ease,
+    box-shadow var(--chess-motion-fast) ease,
+    transform var(--p49-press) var(--p49-ease-out);
+}
+
+.review-notation-row.active,
+.workspace-move-strip button.active,
+.review-phase-strip button.active {
+  animation: p49-selection-settle 140ms var(--p49-ease-out) both;
+}
+
+@keyframes p49-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@keyframes p49-hint-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes p49-analysis-enter {
+  from { opacity: 0; }
+}
+
+@keyframes p49-selection-settle {
+  0% { transform: scale(.985); }
+  100% { transform: scale(1); }
+}
+
+/* Progress motion visualizes measured change rather than decoration. */
+
+.progress-v2-line {
+  stroke-dasharray: 1100;
+  stroke-dashoffset: 1100;
+  animation: p49-chart-draw 560ms var(--p49-ease-out) forwards;
+}
+
+.progress-v2-line.retention {
+  animation-delay: 55ms;
+}
+
+.progress-v2-line.transfer {
+  animation-delay: 110ms;
+}
+
+.progress-v2-week-line i,
+.progress-v2-allocations i,
+.progress-v2-phase-performance i {
+  transform-origin: left;
+  animation: p49-meter-fill 360ms var(--p49-ease-out) both;
+}
+
+.progress-v2-stage-list > div.certified .progress-v2-stage-mark {
+  animation: p49-certification-settle 180ms var(--p49-ease-out) both;
+}
+
+@keyframes p49-chart-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes p49-meter-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes p49-certification-settle {
+  0% { transform: scale(.82); opacity: .5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Touch feedback is visual as well as haptic. */
+
+@media (pointer: coarse) {
+  .app-shell-v2 button:not(.board-square):not(:disabled):active {
+    transform: scale(.975);
+  }
+
+  .chess-board-v2 .board-square:active:not([aria-disabled="true"]) .piece-v2 {
+    transform: translateY(-1px) scale(.965);
+  }
+}
+
+/* Reduced motion is authoritative. Keep state changes visible, instantaneous. */
+
+html[data-motion="reduced"]::view-transition-old(chess-main),
+html[data-motion="reduced"]::view-transition-new(chess-main),
+html[data-motion="reduced"] .chess-board-v2 .board-square.move-origin::before,
+html[data-motion="reduced"] .chess-board-v2 .board-square.move-destination::before,
+html[data-motion="reduced"] .chess-board-v2 .piece-land,
+html[data-motion="reduced"] .chess-board-v2.board-flipping,
+html[data-motion="reduced"] .chess-board-v2 .board-arrow,
+html[data-motion="reduced"] .chess-board-v2 .move-dot,
+html[data-motion="reduced"] .chess-board-v2 .capture-ring,
+html[data-motion="reduced"] .chess-board-v2 .board-square.rejected,
+html[data-motion="reduced"] .lesson-feedback.success,
+html[data-motion="reduced"] .puzzle-explanation-card,
+html[data-motion="reduced"] .review-retry-success,
+html[data-motion="reduced"] .review-transfer-card,
+html[data-motion="reduced"] .library-engine-result,
+html[data-motion="reduced"] .review-insight-v2 .moment-comparison,
+html[data-motion="reduced"] .review-insight-v2 .moment-line,
+html[data-motion="reduced"] .lesson-hint-stack .hint-card:last-child,
+html[data-motion="reduced"] .analysis-progress,
+html[data-motion="reduced"] .review-notation-row.active,
+html[data-motion="reduced"] .workspace-move-strip button.active,
+html[data-motion="reduced"] .review-phase-strip button.active,
+html[data-motion="reduced"] .progress-v2-line,
+html[data-motion="reduced"] .progress-v2-week-line i,
+html[data-motion="reduced"] .progress-v2-allocations i,
+html[data-motion="reduced"] .progress-v2-phase-performance i,
+html[data-motion="reduced"] .progress-v2-stage-list > div.certified .progress-v2-stage-mark {
+  animation: none !important;
+  transition: none !important;
+}
+
+html[data-motion="reduced"] .app-shell-v2 button,
+html[data-motion="reduced"] .app-nav-link::after,
+html[data-motion="reduced"] .app-progress-link::after,
+html[data-motion="reduced"] .mobile-nav button::before {
+  transition: none !important;
+}
