@@ -84,6 +84,13 @@
   /* Board-first desktop sizing targets */
   --chess-board-max-train: 44rem;
   --chess-board-max-review: 42rem;
+  --chess-board-max-large: 48rem;
+  --chess-board-max-review-large: 46rem;
   --chess-context-width: 22rem;
+  --chess-context-width-large: 24rem;
   --chess-rail-width: 11.25rem;
+  --chess-rail-width-large: 12.5rem;
+  --chess-workspace-max-wide: 104rem;
+  --chess-workspace-max-analysis: 100rem;
+  --chess-reading-max: 68ch;
 }
