@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import {
   BrainCircuit,
-  ChevronRight,
   FileUp,
   Link2,
   LoaderCircle,
