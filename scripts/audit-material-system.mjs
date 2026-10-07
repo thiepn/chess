@@ -61,15 +61,26 @@ for (const relative of flatCssFiles) {
 
 for (const file of sourceFiles) {
   const source = fs.readFileSync(file, "utf8");
+  const classes = new Set();
+
+  for (const match of source.matchAll(/className\s*=\s*"([^"]+)"/g)) {
+    match[1].split(/\s+/).filter(Boolean).forEach((item) => classes.add(item));
+  }
+
+  for (const match of source.matchAll(/className\s*=\s*'([^']+)'/g)) {
+    match[1].split(/\s+/).filter(Boolean).forEach((item) => classes.add(item));
+  }
+
+  for (const match of source.matchAll(/className\s*=\s*\{`([^`]*)`\}/g)) {
+    match[1]
+      .replace(/\$\{[^}]+\}/g, " ")
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((item) => classes.add(item));
+  }
+
   for (const className of bannedSurfaceClasses) {
-    const pattern = new RegExp(
-      `(?:className\\s*=\\s*["'`][^"'\\`]*\\b|\\b)${className.replace(
-        /[-/\\^$*+?.()|[\]{}]/g,
-        "\\$&",
-      )}\\b`,
-      "g",
-    );
-    if (pattern.test(source)) {
+    if (classes.has(className)) {
       failures.push(
         `${path.relative(root, file)}: legacy surface class "${className}" is not allowed`,
       );
