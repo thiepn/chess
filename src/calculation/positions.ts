@@ -80,7 +80,7 @@ const authoredPositions: CalculationPosition[] = [
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 3,
-  },,
+  },
   {
     id: "calc:advanced-combination",
     skillIds: [
