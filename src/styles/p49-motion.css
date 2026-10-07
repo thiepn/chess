@@ -377,6 +377,35 @@
   }
 }
 
+
+/* Optional celebrations remain compact and chess-colored, not rainbow confetti. */
+
+.celebration-layer i {
+  width: 5px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--chess-color-accent);
+  opacity: 0;
+}
+
+.celebration-layer i:nth-child(3n + 2) {
+  background: var(--chess-color-text-primary);
+}
+
+.celebration-layer i:nth-child(3n) {
+  background: var(--chess-color-concept);
+}
+
+.celebration-medium i {
+  --distance: 132px;
+}
+
+.celebration-large i {
+  --distance: 176px;
+  width: 6px;
+  height: 10px;
+}
+
 /* Reduced motion is authoritative. Keep state changes visible, instantaneous. */
 
 html[data-motion="reduced"]::view-transition-old(chess-main),
