@@ -674,7 +674,28 @@ Delivered:
 
 ### P50 — Mobile Native Defect Pass
 
-P47 absorbed the planned mobile-native rebuild. Keep P50 as a defect-only real-device follow-up after motion/material work.
+**Status:** implemented.
+
+P47 absorbed the planned mobile-native rebuild. P50 is the defect-only follow-up after material and motion work.
+
+Delivered:
+
+- centralized phone topbar height, bottom-nav safe height, native gutter and safe horizontal inset tokens;
+- removed route-specific 50px/52px safe-area offset duplication;
+- fixed phone sticky/full-bleed bars that used hard-coded -12px margins while the actual narrow-phone gutter could be 10px;
+- Play sticky start actions now align to asymmetric left/right safe-area gutters;
+- Review and Library sticky workspace headers now align to the same safe gutters;
+- general mobile topbar and app content now respect left/right display-cutout safe areas as well as top/bottom insets;
+- restored the Review story-preview control to the 44px touch minimum;
+- made compact Learn open/practice actions explicitly use the touch minimum;
+- constrained-landscape Learn, Review and Library workspaces suppress bottom navigation so board/context content is not covered by fixed navigation;
+- constrained-landscape Learn, Review, Library and active Train/Play workspaces respect horizontal notch safe areas;
+- added a dedicated <=720px Review landscape fallback using board-left + notation/insight-right instead of the overflowing three-column workstation;
+- preserved P47 desktop/tablet composition outside the defect breakpoints;
+- added `npm run mobile:audit` and made it part of the Quality workflow;
+- recorded the defect inventory and verification limits in `docs/P50_MOBILE_QUALIFICATION.md`.
+
+Physical-device/browser inspection is still a release-qualification activity; P50 does not claim physical-device testing where no device/browser automation was available.
 
 ### P51 — Large-Desktop Composition
 
