@@ -120,12 +120,12 @@ export function OpeningsView({
           <div className="repertoire-health-score">
             <Activity size={18} />
             <div>
-              <span>Repertoire health</span>
+              <span>Repertoire score</span>
               <strong>{health.health}%</strong>
               <small>
                 {health.games
                   ? `${health.games} real games · ${health.deviationRate}% deviation rate`
-                  : "No real-game sample yet · recall evidence only"}
+                  : "No games yet · practice only"}
               </small>
             </div>
           </div>
@@ -166,11 +166,11 @@ export function OpeningsView({
             >
               <ShieldCheck size={16} />
               <div>
-                <span>Weakest live branch</span>
+                <span>Most missed line</span>
                 <strong>{health.weakestBranch.label}</strong>
                 <small>
                   {health.weakestBranch.games
-                    ? `${health.weakestBranch.deviations}/${health.weakestBranch.games} game deviations · ${health.weakestBranch.recall}% recall`
+                    ? `${health.weakestBranch.deviations}/${health.weakestBranch.games} times off line · ${health.weakestBranch.recall}% recall`
                     : `${health.weakestBranch.recall}% recall · not yet tested in games`}
                 </small>
               </div>
@@ -195,13 +195,13 @@ export function OpeningsView({
           <div className="panel-title">
             <div>
               <p className="eyebrow">FROM YOUR GAMES</p>
-              <h3>{relevantDeviations.length} deviations</h3>
+              <h3>{relevantDeviations.length} off-repertoire moments</h3>
             </div>
             <Target size={20} />
           </div>
           <p>
-            A deviation is only counted when <em>you</em> leave your chosen
-            repertoire. Unmodeled opponent moves are not treated as errors.
+            This list only counts positions where <em>you</em> leave your chosen
+            repertoire. Unlisted opponent moves are not marked as mistakes.
           </p>
           {health.branches.length > 0 && (
             <div className="repertoire-branch-health">
@@ -220,8 +220,8 @@ export function OpeningsView({
                     <strong>{branch.label}</strong>
                     <span>
                       {branch.games
-                        ? `${branch.games} games · ${branch.deviationRate}% deviations`
-                        : "training evidence only"}
+                        ? `${branch.games} games · ${branch.deviationRate}% off line`
+                        : "practice only"}
                     </span>
                   </div>
                   <em>{branch.health}%</em>
