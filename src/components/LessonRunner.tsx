@@ -24,6 +24,7 @@ import type {
   LessonStep,
   LessonStepResult,
 } from "../learning/types";
+import { emitExperienceEvent } from "../interaction/events";
 import { ChessBoard } from "./ChessBoard";
 
 interface LessonRunnerProps {
@@ -178,6 +179,7 @@ export function LessonRunner({
       (value) => value + 1,
     );
     setFeedback(null);
+    emitExperienceEvent({ feedback: "reveal" });
   }
 
   function retry() {
