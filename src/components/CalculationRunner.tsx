@@ -562,9 +562,7 @@ export function CalculationRunner({
                   {position.prompt}
                 </p>
                 <div className="calculation-rule">
-                  <BrainCircuit
-                    size={17}
-                  />
+                  <Target size={17} />
                   <span>
                     Generate moves before
                     calculating deeply.
@@ -728,9 +726,7 @@ export function CalculationRunner({
                     aria-live="polite"
                     aria-atomic="true"
                   >
-                    <Sparkles
-                      size={19}
-                    />
+                    <CheckCircle2 size={19} />
                     <div>
                       <strong>
                         {score.success
