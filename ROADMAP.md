@@ -335,6 +335,8 @@ No new planning layer should be introduced here.
 
 ### P35 — Advanced Curriculum Expansion
 
+**Status:** implemented.
+
 **Purpose:** grow beyond the current beginner-to-intermediate ceiling only after the existing course is deep.
 
 Candidate areas:
