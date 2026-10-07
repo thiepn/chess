@@ -285,7 +285,7 @@ function chooseMode(
     return {
       mode: "endgameDrill" as TrainingMode,
       reason:
-        "You know the endgame idea. Now prove you can execute it against resistance.",
+        "You know the endgame idea. Now play it out against resistance and prove you can execute the technique.",
     };
   }
 
@@ -309,7 +309,7 @@ function chooseMode(
     return {
       mode: "calculation" as TrainingMode,
       reason:
-        "The idea is familiar. Now calculate candidates and replies without guidance.",
+        "The idea is familiar. Now train candidate generation and multi-ply calculation without guidance.",
     };
   }
 
