@@ -388,6 +388,14 @@ export default function App() {
       region.setAttribute("inert", "");
     }
 
+    window.requestAnimationFrame(() => {
+      const closeButton =
+        document.querySelector<HTMLButtonElement>(
+          ".training-overlay .close-button",
+        );
+      closeButton?.focus();
+    });
+
     return () => {
       document.body.style.overflow = previousOverflow;
       for (const region of backgroundRegions) {
@@ -2552,7 +2560,6 @@ export default function App() {
               type="button"
               onClick={() => setAssessmentSession(null)}
               aria-label="Close assessment"
-              autoFocus
             >
               ×
             </button>
@@ -2578,7 +2585,6 @@ export default function App() {
               type="button"
               onClick={() => setActiveModelGameId(null)}
               aria-label="Close model game"
-              autoFocus
             >
               ×
             </button>
