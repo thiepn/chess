@@ -475,3 +475,81 @@ Themes cannot override:
 - reduced-motion behavior;
 - screen-reader board semantics;
 - functional blue/green/red/gold meanings.
+
+
+## P54 visual content contract
+
+THIEPN Chess should sound like a chess workspace, not a SaaS product explaining its own machinery.
+
+### Copy hierarchy
+
+Prefer:
+
+1. the chess action — Analyze game, Practice position, Stage check;
+2. the observable result — Recall, In games, Results, Positions to revisit;
+3. the reason — From your games, Needs practice, Review due.
+
+Avoid exposing implementation nouns when a player-facing equivalent exists.
+
+Examples of internal-only vocabulary:
+
+- adaptive policy;
+- prescription;
+- evidence state;
+- calibration model;
+- intervention;
+- cohort;
+- remediation;
+- player model.
+
+These may remain in code and advanced calculations. They should not be the primary UI label.
+
+### Analytics language
+
+Progress may remain quantitatively rich, but its labels should explain the metric:
+
+- mastery → Skill level;
+- retention → Recall;
+- transfer → In games;
+- calibration → Estimate match;
+- evidence count → Tracked results;
+- interventions → Training methods.
+
+Technical details may appear only when they are standard chess concepts or needed to interpret a number.
+
+### Empty and status states
+
+Empty states are factual and specific.
+
+Prefer:
+
+- “No games yet.”
+- “No positions to revisit.”
+- “Nothing is due right now.”
+
+Avoid:
+
+- motivational filler;
+- congratulatory slogans;
+- guilt language;
+- generic “journey / level up / unlock” phrasing.
+
+### Icons
+
+Icons describe the action or state:
+
+- Target — position/focus;
+- Swords — game/opponent/play;
+- Search — analysis;
+- CheckCircle — solved/completed;
+- Shield — defense/draw/resistance;
+- Flag — game/attempt end;
+- Book/Bookmark — study/reference.
+
+Do not use generic AI-brain iconography for Stockfish, opponent selection, analysis or recommendations.
+
+Decorative sparkle iconography is reserved for the literal Celebrations preference, not ordinary success states.
+
+### Internal names
+
+P54 does not require renaming internal CSS classes, TypeScript properties, analytics models or persistence fields. The boundary is rendered content.
