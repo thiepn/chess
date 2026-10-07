@@ -1,4 +1,5 @@
 import { Chess, type Color, type Square } from "chess.js";
+import "../styles/p47-library-native.css";
 import {
   Bookmark,
   BookOpenCheck,
