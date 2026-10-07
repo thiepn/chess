@@ -150,7 +150,7 @@
 
   .learn-v2-open,
   .learn-v2-practice {
-    min-height: 42px;
+    min-height: var(--chess-touch-min);
     padding-inline: 10px;
   }
 }
