@@ -61,6 +61,7 @@ The default experience should answer one question: **what should I train now?**
 - P40 Train Page Reconstruction with a real training-room layout, selectable adaptive session rail, dominant board preview, contextual coach rail, compact session facts, and removal of the Train hero/dashboard card stack
 - P41 Train Runtime Migration with real `/train/session/:id` workspaces, modal-host removal, refresh-restorable runtime state, routed adaptive progression, and return-to-origin flows for focused training
 - P42 Learn Architecture Redesign with a chapter-based syllabus, real `/learn/:domain/:lessonId` textbook pages, embedded teaching boards, routed repertoire/model-game subpages, and removal of the Learn hero/KPI/card-grid composition
+- P43 Play Page Redesign with a board-preview setup desk, real `/play/game/:id` game routes, Untimed/10+0/15+10 clocks, tournament-style player strips, routed scenario/replay sessions, and removal of the Play hero/profile/scenario card grids
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2282,6 +2283,27 @@ Repertoire and model games are also real Learn subpages at `/learn/openings` and
 
 Mobile Learn uses horizontal chapter and lesson-step navigation, a full-width board, then the explanatory reading flow.
 
+## Play Page Redesign
+
+P43 replaces the old Play landing page and local game state with a board-centered playing workflow.
+
+`/play` is now a compact setup desk:
+
+- board preview;
+- White / Black choice;
+- Untimed, 10+0 and 15+10 training clocks;
+- opponent profile selection;
+- selectable targeted training positions;
+- Lichess/human-game connection as a subordinate section.
+
+The previous hero, normal-game promo card, AI profile card grid and large scenario card grid are removed.
+
+Starting a game navigates to a real page at `/play/game/:id`. Standard games and built-in training scenarios can reconstruct their setup from the route. Review-origin replay positions carry a session-scoped snapshot because their FEN and objective are generated dynamically.
+
+Active games now use tournament-style player strips around the P39 board, live clocks for timed standard games, move notation, scenario objective context and the existing Review transfer. Mobile app navigation hides during active play so the board and clocks are the primary interaction surface.
+
+Targeted scenario games stay untimed by default. The Stockfish opponent, PGN generation, scenario success scoring, Review ingestion and existing accessibility behavior remain intact.
+
 ## Next phase
 
-P43 — Play Page Redesign.
+P44 — Review Page Redesign.

@@ -1,18 +1,18 @@
-import { useMemo, useState } from "react";
-import type { Color } from "chess.js";
+import { useEffect, useMemo, useState } from "react";
+import { DEFAULT_POSITION, type Color } from "chess.js";
 import {
   BrainCircuit,
   ChevronRight,
-  Crown,
+  Clock3,
+  Compass,
+  Link2,
   Shield,
-  Sparkles,
   Swords,
   Target,
 } from "lucide-react";
 import type { SkillMastery } from "../domain/types";
 import type { LichessConnection } from "../lichess/types";
 import type { TrainingPrescription } from "../prescriptions/types";
-import { LichessSyncCard } from "./LichessSyncCard";
 import {
   aiProfiles,
   resolveAiProfile,
@@ -21,13 +21,21 @@ import {
   scenarioById,
   trainingScenarios,
 } from "../play/scenarios";
+import {
+  playGamePath,
+  resolvePlayRoute,
+  setupFromGameKey,
+} from "../play/playRoutes";
 import type {
   AiProfileId,
   PlayResult,
   PlaySetup,
+  TimeControlId,
   TrainingScenario,
 } from "../play/types";
+import { ChessBoard } from "./ChessBoard";
 import { GameArena } from "./GameArena";
+import { LichessSyncCard } from "./LichessSyncCard";
 
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
@@ -36,6 +44,8 @@ interface PlayViewProps {
   lichessSyncMessage?: string | null;
   lichessSyncError?: string | null;
   practicalPlan?: TrainingPrescription;
+  routePath: string;
+  onNavigate: (path: string) => void;
   onLinkLichess: (username: string) => Promise<void> | void;
   onUnlinkLichess: () => void;
   onSyncLichess: () => Promise<void> | void;
@@ -43,6 +53,14 @@ interface PlayViewProps {
   externalScenario?: TrainingScenario;
   onExternalScenarioExit?: () => void;
 }
+
+interface PlaySessionSnapshot {
+  path: string;
+  setup: PlaySetup;
+  scenario?: TrainingScenario;
+}
+
+const playSessionStorageKey = "chess:play-session-v1";
 
 const profileOrder: AiProfileId[] = [
   "gentle",
@@ -52,11 +70,26 @@ const profileOrder: AiProfileId[] = [
   "adaptive",
 ];
 
-function scenarioIcon(mode: TrainingScenario["mode"]) {
-  if (mode === "defense") return <Shield size={20} />;
-  if (mode === "conversion") return <Crown size={20} />;
-  if (mode === "endgame") return <Target size={20} />;
-  return <Swords size={20} />;
+const timeControls: Array<{
+  id: TimeControlId;
+  label: string;
+  description: string;
+}> = [
+  { id: "untimed", label: "Untimed", description: "Study pace" },
+  { id: "10+0", label: "10+0", description: "Rapid" },
+  { id: "15+10", label: "15+10", description: "Training" },
+];
+
+function readPlaySnapshot(path: string) {
+  try {
+    const raw = window.sessionStorage.getItem(playSessionStorageKey);
+    if (!raw) return undefined;
+    const parsed = JSON.parse(raw) as PlaySessionSnapshot;
+    return parsed.path === path ? parsed : undefined;
+  } catch {
+    window.sessionStorage.removeItem(playSessionStorageKey);
+    return undefined;
+  }
 }
 
 export function PlayView({
@@ -66,6 +99,8 @@ export function PlayView({
   lichessSyncMessage,
   lichessSyncError,
   practicalPlan,
+  routePath,
+  onNavigate,
   onLinkLichess,
   onUnlinkLichess,
   onSyncLichess,
@@ -73,147 +108,327 @@ export function PlayView({
   externalScenario,
   onExternalScenarioExit,
 }: PlayViewProps) {
-  const [setup, setSetup] = useState<PlaySetup | null>(null);
   const [side, setSide] = useState<Color>("w");
   const [profileId, setProfileId] = useState<AiProfileId>("adaptive");
+  const [timeControl, setTimeControl] = useState<TimeControlId>("15+10");
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
 
+  const route = resolvePlayRoute(routePath);
   const resolvedProfile = useMemo(
     () => resolveAiProfile(profileId, mastery),
     [mastery, profileId],
   );
 
-  if (externalScenario) {
-    const profile = resolveAiProfile(profileId, mastery);
-    return (
-      <GameArena
-        initialFen={externalScenario.fen}
-        playerColor={externalScenario.playerColor}
-        profile={profile}
-        scenario={externalScenario}
-        onExit={() => onExternalScenarioExit?.()}
-        onFinished={onGameFinished}
-      />
+  const snapshot = route.mode === "game"
+    ? readPlaySnapshot(routePath)
+    : undefined;
+
+  const routeSetup = route.gameKey
+    ? setupFromGameKey(route.gameKey)
+    : undefined;
+
+  const activeSetup = snapshot?.setup ?? routeSetup;
+  const activeScenario =
+    snapshot?.scenario ??
+    (activeSetup?.scenarioId
+      ? scenarioById[activeSetup.scenarioId]
+      : undefined);
+
+  const selectedScenario = selectedScenarioId
+    ? scenarioById[selectedScenarioId]
+    : undefined;
+
+  useEffect(() => {
+    if (!externalScenario || route.mode === "game") return;
+
+    const setup: PlaySetup = {
+      mode: externalScenario.mode,
+      playerColor: externalScenario.playerColor,
+      aiProfileId: profileId,
+      timeControl: "untimed",
+      scenarioId: externalScenario.id,
+    };
+    const path = playGamePath(setup);
+    const nextSnapshot: PlaySessionSnapshot = {
+      path,
+      setup,
+      scenario: externalScenario,
+    };
+    window.sessionStorage.setItem(
+      playSessionStorageKey,
+      JSON.stringify(nextSnapshot),
     );
+    onNavigate(path);
+  }, [externalScenario, onNavigate, profileId, route.mode]);
+
+  function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
+    const path = playGamePath(setup);
+    const nextSnapshot: PlaySessionSnapshot = {
+      path,
+      setup,
+      scenario,
+    };
+    window.sessionStorage.setItem(
+      playSessionStorageKey,
+      JSON.stringify(nextSnapshot),
+    );
+    onNavigate(path);
   }
 
-  if (setup) {
-    const scenario = setup.scenarioId
-      ? scenarioById[setup.scenarioId]
-      : undefined;
-    const profile = resolveAiProfile(setup.aiProfileId, mastery);
+  function exitGame() {
+    window.sessionStorage.removeItem(playSessionStorageKey);
+    if (externalScenario || activeScenario?.mode === "replay") {
+      onExternalScenarioExit?.();
+    }
+    onNavigate("/play");
+  }
+
+  if (route.mode === "game") {
+    const missingDynamicScenario =
+      Boolean(activeSetup?.scenarioId) &&
+      !activeScenario &&
+      !scenarioById[activeSetup!.scenarioId!];
+
+    if (!activeSetup || missingDynamicScenario) {
+      return (
+        <section className="play-game-recovery">
+          <strong>Game session unavailable</strong>
+          <p>
+            This game could not be restored. Return to Play and start a new one.
+          </p>
+          <button className="secondary" type="button" onClick={exitGame}>
+            Back to Play
+          </button>
+        </section>
+      );
+    }
+
+    const scenario = activeScenario ??
+      (activeSetup.scenarioId
+        ? scenarioById[activeSetup.scenarioId]
+        : undefined);
+    const profile = resolveAiProfile(activeSetup.aiProfileId, mastery);
+    const playerColor = scenario?.playerColor ?? activeSetup.playerColor;
 
     return (
-      <GameArena
-        initialFen={scenario?.fen ?? "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"}
-        playerColor={scenario?.playerColor ?? setup.playerColor}
-        profile={profile}
-        scenario={scenario}
-        onExit={() => setSetup(null)}
-        onFinished={onGameFinished}
-      />
+      <section className="play-game-page">
+        <GameArena
+          initialFen={scenario?.fen ?? DEFAULT_POSITION}
+          playerColor={playerColor}
+          profile={profile}
+          scenario={scenario}
+          timeControl={scenario ? "untimed" : activeSetup.timeControl}
+          onExit={exitGame}
+          onFinished={onGameFinished}
+          exitLabel="Back to Play"
+        />
+      </section>
     );
   }
 
   return (
-    <section className="play-view">
-      <header className="section-hero compact">
-        <div>
+    <section className="play-v2" aria-labelledby="play-setup-title">
+      <div className="play-v2-board-column">
+        <div className="play-v2-board-label">
+          <span>{selectedScenario ? selectedScenario.sourceLabel : "STANDARD GAME"}</span>
+          <span>{selectedScenario ? "Training position" : "Starting position"}</span>
+        </div>
+        <ChessBoard
+          key={selectedScenario?.id ?? "standard-preview"}
+          fen={selectedScenario?.fen ?? DEFAULT_POSITION}
+          orientation={selectedScenario?.playerColor ?? side}
+          disabled
+        />
+        <div className="play-v2-board-note">
+          {selectedScenario
+            ? selectedScenario.objective
+            : "A complete training game. The finished PGN is saved directly into Review."}
+        </div>
+      </div>
+
+      <aside className="play-v2-setup">
+        <div className="play-v2-setup-head">
           <p className="eyebrow">PLAY</p>
-          <h1>Play games that teach you.</h1>
+          <h1 id="play-setup-title">
+            {selectedScenario ? selectedScenario.title : "New game"}
+          </h1>
           <p>
-            Use a normal game when you want freedom, or start from a position
-            chosen to train a specific chess skill. Every completed game feeds
-            directly into Review.
+            {selectedScenario
+              ? selectedScenario.description
+              : "Choose the conditions, then play. No dashboard between you and the board."}
           </p>
         </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <Swords size={30} />
-        </div>
-      </header>
 
-      <section className="play-normal-card">
-        <div className="play-normal-copy">
-          <span className="pill">
-            <Sparkles size={14} /> Full game
-          </span>
-          <h2>Normal training game</h2>
-          <p>
-            Start from move one. The opponent is intentionally configurable
-            for learning—not presented as a fake precise Elo rating.
-          </p>
+        {!selectedScenario && (
+          <>
+            <fieldset className="play-v2-control-group">
+              <legend>Color</legend>
+              <div className="play-v2-segmented">
+                <button
+                  type="button"
+                  className={side === "w" ? "active" : ""}
+                  aria-pressed={side === "w"}
+                  onClick={() => setSide("w")}
+                >
+                  White
+                </button>
+                <button
+                  type="button"
+                  className={side === "b" ? "active" : ""}
+                  aria-pressed={side === "b"}
+                  onClick={() => setSide("b")}
+                >
+                  Black
+                </button>
+              </div>
+            </fieldset>
 
-          <div className="side-choice" aria-label="Choose your color">
-            <button
-              type="button"
-              className={side === "w" ? "active" : ""}
-              aria-pressed={side === "w"}
-              onClick={() => setSide("w")}
-            >
-              ♙ White
-            </button>
-            <button
-              type="button"
-              className={side === "b" ? "active" : ""}
-              aria-pressed={side === "b"}
-              onClick={() => setSide("b")}
-            >
-              ♟ Black
-            </button>
+            <fieldset className="play-v2-control-group">
+              <legend>Time</legend>
+              <div className="play-v2-time-list">
+                {timeControls.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={timeControl === item.id ? "active" : ""}
+                    aria-pressed={timeControl === item.id}
+                    onClick={() => setTimeControl(item.id)}
+                  >
+                    <Clock3 size={14} />
+                    <span>
+                      <strong>{item.label}</strong>
+                      <small>{item.description}</small>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          </>
+        )}
+
+        <fieldset className="play-v2-control-group">
+          <legend>Opponent</legend>
+          <div className="play-v2-opponent-list">
+            {profileOrder.map((id) => {
+              const profile =
+                id === "adaptive"
+                  ? resolveAiProfile("adaptive", mastery)
+                  : aiProfiles[id];
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  className={profileId === id ? "active" : ""}
+                  aria-pressed={profileId === id}
+                  onClick={() => setProfileId(id)}
+                >
+                  <BrainCircuit size={14} />
+                  <span>
+                    <strong>{profile.name}</strong>
+                    <small>{profile.accent}</small>
+                  </span>
+                  {id === "adaptive" && <em>Recommended</em>}
+                </button>
+              );
+            })}
           </div>
-        </div>
+        </fieldset>
 
-        <div className="play-launch">
-          <div className="selected-profile">
-            <BrainCircuit size={19} />
-            <div>
-              <span>Opponent</span>
-              <strong>{resolvedProfile.name}</strong>
-              <small>{resolvedProfile.accent}</small>
-            </div>
+        <div className="play-v2-start-block">
+          <div>
+            <span>Opponent</span>
+            <strong>{resolvedProfile.name}</strong>
           </div>
           <button
             className="primary"
             type="button"
-            onClick={() =>
-              setSetup({
-                mode: "standard",
-                playerColor: side,
-                aiProfileId: profileId,
-              })
-            }
+            onClick={() => {
+              if (selectedScenario) {
+                startGame(
+                  {
+                    mode: selectedScenario.mode,
+                    playerColor: selectedScenario.playerColor,
+                    aiProfileId: profileId,
+                    timeControl: "untimed",
+                    scenarioId: selectedScenario.id,
+                  },
+                  selectedScenario,
+                );
+              } else {
+                startGame({
+                  mode: "standard",
+                  playerColor: side,
+                  aiProfileId: profileId,
+                  timeControl,
+                });
+              }
+            }}
           >
-            Start game <ChevronRight size={18} />
+            {selectedScenario ? "Play position" : "Start game"}
+            <ChevronRight size={17} />
           </button>
+        </div>
+      </aside>
+
+      <section className="play-v2-scenarios" aria-labelledby="scenario-heading">
+        <header>
+          <div>
+            <p className="eyebrow">TRAINING POSITIONS</p>
+            <h2 id="scenario-heading">Start where the decision matters</h2>
+          </div>
+          {selectedScenario && (
+            <button type="button" onClick={() => setSelectedScenarioId(null)}>
+              Standard game
+            </button>
+          )}
+        </header>
+
+        <div className="play-v2-scenario-list">
+          {trainingScenarios.map((scenario) => (
+            <button
+              key={scenario.id}
+              type="button"
+              className={selectedScenarioId === scenario.id ? "active" : ""}
+              aria-pressed={selectedScenarioId === scenario.id}
+              onClick={() => setSelectedScenarioId(scenario.id)}
+            >
+              <span className="play-v2-scenario-icon">
+                {scenario.mode === "defense" ? (
+                  <Shield size={16} />
+                ) : scenario.mode === "endgame" ? (
+                  <Target size={16} />
+                ) : scenario.mode === "opening" ? (
+                  <Compass size={16} />
+                ) : (
+                  <Swords size={16} />
+                )}
+              </span>
+              <span>
+                <small>{scenario.sourceLabel}</small>
+                <strong>{scenario.title}</strong>
+                <em>{scenario.subtitle}</em>
+              </span>
+              <ChevronRight size={15} />
+            </button>
+          ))}
         </div>
       </section>
 
-      <section className="play-section human-play-section">
-        <div className="review-section-heading">
+      <section className="play-v2-human" aria-labelledby="human-play-title">
+        <header>
+          <Link2 size={17} />
           <div>
-            <p className="eyebrow">HUMAN PLAY</p>
-            <h2>Play people. Bring the game back automatically.</h2>
+            <p className="eyebrow">HUMAN GAMES</p>
+            <h2 id="human-play-title">Lichess connection</h2>
           </div>
-          <span>No multiplayer backend required</span>
-        </div>
+        </header>
 
         {practicalPlan && (
-          <article className="human-game-plan-card">
-            <div className="human-game-plan-heading">
-              <div>
-                <p className="eyebrow">YOUR NEXT HUMAN GAME</p>
-                <strong>{practicalPlan.title}</strong>
-              </div>
-              <span>
-                {practicalPlan.evidenceGames} games · {practicalPlan.confidence}% confidence
-              </span>
-            </div>
+          <div className="play-v2-game-plan">
+            <span>Next-game focus</span>
+            <strong>{practicalPlan.title}</strong>
             <p>{practicalPlan.rationale}</p>
-            <ol>
-              {practicalPlan.gamePlan.map((cue) => (
-                <li key={cue}>{cue}</li>
-              ))}
-            </ol>
-          </article>
+          </div>
         )}
 
         <LichessSyncCard
@@ -225,83 +440,6 @@ export function PlayView({
           onUnlink={onUnlinkLichess}
           onSync={onSyncLichess}
         />
-      </section>
-
-      <section className="play-section">
-        <div className="review-section-heading">
-          <div>
-            <p className="eyebrow">OPPONENT</p>
-            <h2>Choose the pressure.</h2>
-          </div>
-          <span>Adaptive is the default</span>
-        </div>
-
-        <div className="ai-profile-grid">
-          {profileOrder.map((id) => {
-            const profile =
-              id === "adaptive"
-                ? resolveAiProfile("adaptive", mastery)
-                : aiProfiles[id];
-            const active = profileId === id;
-
-            return (
-              <button
-                type="button"
-                key={id}
-                className={active ? "ai-profile-card active" : "ai-profile-card"}
-                aria-pressed={active}
-                onClick={() => setProfileId(id)}
-              >
-                <div>
-                  <BrainCircuit size={18} />
-                  {id === "adaptive" && <i>Recommended</i>}
-                </div>
-                <strong>{profile.name}</strong>
-                <span>{profile.description}</span>
-                <small>{profile.accent}</small>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="play-section">
-        <div className="review-section-heading">
-          <div>
-            <p className="eyebrow">TRAINING GAMES</p>
-            <h2>Start where the lesson begins.</h2>
-          </div>
-          <span>Real play from targeted positions</span>
-        </div>
-
-        <div className="scenario-grid">
-          {trainingScenarios.map((scenario) => (
-            <article className="scenario-card" key={scenario.id}>
-              <div className="scenario-icon">{scenarioIcon(scenario.mode)}</div>
-              <div className="scenario-label">{scenario.sourceLabel}</div>
-              <h3>{scenario.title}</h3>
-              <strong>{scenario.subtitle}</strong>
-              <p>{scenario.description}</p>
-              <div className="scenario-objective">
-                <span>Objective</span>
-                <strong>{scenario.objective}</strong>
-              </div>
-              <button
-                type="button"
-                onClick={() =>
-                  setSetup({
-                    mode: scenario.mode,
-                    playerColor: scenario.playerColor,
-                    aiProfileId: profileId,
-                    scenarioId: scenario.id,
-                  })
-                }
-              >
-                Play position <ChevronRight size={16} />
-              </button>
-            </article>
-          ))}
-        </div>
       </section>
     </section>
   );
