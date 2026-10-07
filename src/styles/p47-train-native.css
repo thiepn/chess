@@ -1,9 +1,5 @@
 /* P47 — native shell + Train layouts */
 
-:root {
-  --chess-native-gutter: clamp(10px, 2.4vw, 18px);
-}
-
 @media (pointer: coarse) {
   .app-shell-v2 button,
   .app-shell-v2 [role="button"],
@@ -171,7 +167,7 @@
 
 @media (max-width: 820px) {
   .app-topbar {
-    min-height: calc(50px + env(safe-area-inset-top));
+    min-height: var(--chess-mobile-topbar-safe-height);
   }
 
   .app-brand {
@@ -184,7 +180,7 @@
   }
 
   .mobile-nav {
-    min-height: calc(var(--chess-mobile-nav-height) + env(safe-area-inset-bottom));
+    min-height: var(--chess-mobile-nav-safe-height);
     padding-inline: max(5px, env(safe-area-inset-left)) max(5px, env(safe-area-inset-right));
   }
 
@@ -220,7 +216,7 @@
 
   .train-task-actions {
     position: sticky;
-    bottom: calc(var(--chess-mobile-nav-height) + env(safe-area-inset-bottom));
+    bottom: var(--chess-mobile-nav-safe-height);
     z-index: 15;
     margin-inline: calc(var(--chess-native-gutter) * -1);
     padding: 10px var(--chess-native-gutter);
@@ -236,7 +232,7 @@
   }
 
   .training-session-open .train-runtime-header {
-    top: calc(50px + env(safe-area-inset-top));
+    top: var(--chess-mobile-topbar-safe-height);
   }
 
   .training-session-open .train-runtime-progress {
