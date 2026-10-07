@@ -26,5 +26,6 @@ jobs:
       - run: npm run puzzles:production
       - run: npm run puzzles:audit
       - run: npm test
+      - run: npm run design:audit
       - run: npm run build
       - run: npm run perf:budget
