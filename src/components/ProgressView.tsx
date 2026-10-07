@@ -7,10 +7,7 @@ import {
   ChevronRight,
   Clock3,
   Gauge,
-  RefreshCcw,
   ShieldCheck,
-  Sparkles,
-  Target,
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
