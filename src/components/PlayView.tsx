@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { DEFAULT_POSITION, type Color } from "chess.js";
 import {
-  BrainCircuit,
   ChevronRight,
   Clock3,
   Compass,
@@ -233,7 +232,7 @@ export function PlayView({
       <div className="play-v2-board-column">
         <div className="play-v2-board-label">
           <span>{selectedScenario ? selectedScenario.sourceLabel : "STANDARD GAME"}</span>
-          <span>{selectedScenario ? "Training position" : "Starting position"}</span>
+          <span>{selectedScenario ? "Practice position" : "Starting position"}</span>
         </div>
         <ChessBoard
           key={selectedScenario?.id ?? "standard-preview"}
@@ -244,7 +243,7 @@ export function PlayView({
         <div className="play-v2-board-note">
           {selectedScenario
             ? selectedScenario.objective
-            : "A complete training game. The finished PGN is saved directly into Review."}
+            : "Play a full game. When it ends, the game is ready in Review."}
         </div>
       </div>
 
@@ -257,7 +256,7 @@ export function PlayView({
           <p>
             {selectedScenario
               ? selectedScenario.description
-              : "Choose the conditions, then play. No dashboard between you and the board."}
+              : "Choose your color, time, and opponent, then play."}
           </p>
         </div>
 
@@ -324,12 +323,12 @@ export function PlayView({
                   aria-pressed={profileId === id}
                   onClick={() => setProfileId(id)}
                 >
-                  <BrainCircuit size={14} />
+                  <Shield size={14} />
                   <span>
                     <strong>{profile.name}</strong>
                     <small>{profile.accent}</small>
                   </span>
-                  {id === "adaptive" && <em>Recommended</em>}
+                  {id === "adaptive" && <em>Your level</em>}
                 </button>
               );
             })}
@@ -375,7 +374,7 @@ export function PlayView({
       <section className="play-v2-scenarios" aria-labelledby="scenario-heading">
         <header>
           <div>
-            <p className="eyebrow">TRAINING POSITIONS</p>
+            <p className="eyebrow">PRACTICE POSITIONS</p>
             <h2 id="scenario-heading">Start where the decision matters</h2>
           </div>
           {selectedScenario && (
