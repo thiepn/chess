@@ -66,6 +66,7 @@ The default experience should answer one question: **what should I train now?**
 - P45 Library Page Redesign with a routed chess archive, real study/reference/game workspaces, collection pages for studies/positions/endgames/games, canonical Repertoire/Model Game links, and removal of the Library hero/metrics/local-tab/card-grid composition
 - P46 Progress Analytics Redesign with practical-strength-first hierarchy, dominant eight-week trajectory, curriculum/skill development record, chess-specific human-game transfer analytics, and advanced planning/evidence moved into expandable technical sections
 - P47 Mobile / Tablet Native Layouts with safe-area support, touch-target enforcement, portrait-tablet compositions, low-height landscape chess workspaces, board-first phone flows and route-code-split native CSS
+- P48 Material & Component Cleanup with flat chess-native surfaces, separator-based board-side regions, removal of ~66 KB raw dead legacy CSS, and a CI material-regression audit
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2424,6 +2425,29 @@ P47 styles are route-code-split for Learn, Play, Review, Library and Progress. O
 
 The target viewport matrix is documented in `docs/P47_DEVICE_MATRIX.md`.
 
+## Material & Component Cleanup
+
+P48 removes the remaining generic SaaS material language that survived the route rebuild.
+
+The active design contract is now:
+
+- flat graphite/ivory workspace regions;
+- thin separators instead of floating cards;
+- board-side rails instead of rounded panels;
+- archive/list rows instead of promo tiles;
+- semantic edge markers for hints, errors, repair and success states;
+- flat functional-blue primary controls;
+- restrained graphite secondary controls;
+- elevated material only for legitimate popovers/dialogs and the chessboard itself.
+
+The phase also removes dead pre-redesign CSS rather than continuing to layer overrides. Old curriculum-browser, review-dashboard and analytics/planning-dashboard blocks were deleted from the initial stylesheet, removing roughly 66 KB of raw CSS.
+
+Shared runtime surfaces were normalized without changing their behavior: lesson hints, puzzle explanations, assessment tools, endgame tools, active-game side context/results, Review transfer/repair states, Lichess connection UI and Model Game study entries.
+
+A new `npm run design:audit` Quality gate prevents rebuilt route CSS from adding gradients or oversized radii and prevents deprecated hero/card classes from returning to active TSX.
+
+The full contract and allowed exceptions are documented in `docs/P48_MATERIAL_CONTRACT.md`.
+
 ## Next phase
 
-P48 — Material & Component Cleanup.
+P49 — Motion & Tactile Interaction.
