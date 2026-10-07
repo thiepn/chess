@@ -219,6 +219,8 @@ export default function App() {
     useState<AssessmentSession | null>(null);
   const { route, navigate, navigatePage } = useAppRouter();
   const page = route.page;
+  const mainContentRef = useRef<HTMLElement>(null);
+  const previousRoutePath = useRef(route.path);
   const learnRoute = resolveLearnRoute(route.path);
   const learnSection = learnRoute.section;
   const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
@@ -237,6 +239,25 @@ export default function App() {
   useEffect(() => {
     if (loaded) void repo.save(state);
   }, [state, loaded]);
+
+  useEffect(() => {
+    const routeLabel =
+      page === "progress"
+        ? "Progress"
+        : page === "settings"
+          ? "Settings"
+          : primaryAppPages.find((item) => item.id === page)?.label ?? "Chess";
+
+    document.title = `${routeLabel} · Chess`;
+
+    if (previousRoutePath.current === route.path) return;
+    previousRoutePath.current = route.path;
+
+    window.requestAnimationFrame(() => {
+      mainContentRef.current?.focus({ preventScroll: true });
+    });
+  }, [page, route.path]);
+
 
   useEffect(() => {
     if (!loaded || !state.lichess?.autoSync) return;
@@ -2271,6 +2292,9 @@ export default function App() {
           .filter(Boolean)
           .join(" ")}
       >
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
         <header className="app-topbar">
           <button
             className="app-brand"
@@ -2338,7 +2362,12 @@ export default function App() {
           </div>
         </header>
 
-        <main className="main app-main">
+        <main
+          id="main-content"
+          ref={mainContentRef}
+          className="main app-main"
+          tabIndex={-1}
+        >
         <Suspense fallback={<RouteLoading />}>
         {page === "train" ? (
           trainingSessionOpen ? (
