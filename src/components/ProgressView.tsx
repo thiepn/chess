@@ -2,7 +2,6 @@ import {
   Activity,
   ArrowLeft,
   BarChart3,
-  BrainCircuit,
   CheckCircle2,
   ChevronRight,
   Clock3,
@@ -71,32 +70,53 @@ function calibrationText(
   label: ProgressIntelligence["calibration"]["label"],
 ) {
   if (label === "well-calibrated") {
-    return "Model estimates and checkpoint performance are aligned.";
+    return "Your current level estimate matches recent stage checks.";
   }
   if (label === "overconfident") {
-    return "Checkpoint performance is below the current mastery estimate.";
+    return "Recent stage checks are below your current level estimate.";
   }
   if (label === "underconfident") {
-    return "Checkpoint performance is stronger than the current estimate.";
+    return "Recent stage checks are above your current level estimate.";
   }
-  return "More placement/checkpoint evidence is needed.";
+  return "Complete more placement or stage checks before comparing the estimate.";
+}
+
+function estimateMatchLabel(
+  label: ProgressIntelligence["calibration"]["label"],
+) {
+  if (label === "well-calibrated") return "Matches checks";
+  if (label === "overconfident") return "Estimate is high";
+  if (label === "underconfident") return "Estimate is low";
+  return "More checks needed";
+}
+
+function coachBasisLabel(value: string) {
+  if (value === "grounded") return "Recent games + training";
+  if (value === "building") return "Still learning your play";
+  return "Getting started";
+}
+
+function coachModeLabel(value: string) {
+  return value
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function interventionLabel(value: string) {
   const labels: Record<string, string> = {
-    review: "Spaced review",
-    weakness: "Weakness training",
-    game: "Personal mistakes",
-    curriculum: "Curriculum",
-    repertoire: "Opening recall",
-    library: "Saved studies",
-    assessment: "Checkpoint repair",
-    calibration: "Calibration",
-    focus: "Manual focus",
-    manual: "Manual study",
-    placement: "Placement",
-    checkpoint: "Checkpoint",
-    play: "Training games",
+    review: "Review",
+    weakness: "Focused practice",
+    game: "Own-game positions",
+    curriculum: "Course lessons",
+    repertoire: "Opening practice",
+    library: "Saved positions",
+    assessment: "Stage-check follow-up",
+    calibration: "Level check",
+    focus: "Focused practice",
+    manual: "Chosen study",
+    placement: "Placement check",
+    checkpoint: "Stage check",
+    play: "Practice games",
     "game-review": "Game review",
   };
   return labels[value] ?? value;
@@ -136,7 +156,7 @@ function TrendChart({ points }: { points: TrendPoint[] }) {
       <svg
         viewBox={`0 0 ${width} ${height}`}
         role="img"
-        aria-label="Eight-week mastery, retention and transfer trend"
+        aria-label="Eight-week skill level, recall and game-use trend"
       >
         {[25, 50, 75, 100].map((value) => {
           const y = padY + (1 - value / 100) * innerHeight;
@@ -190,9 +210,9 @@ function TrendChart({ points }: { points: TrendPoint[] }) {
       </svg>
 
       <div className="progress-v2-chart-legend">
-        <span><i className="mastery" />Mastery</span>
-        <span><i className="retention" />Retention</span>
-        <span><i className="transfer" />Transfer</span>
+        <span><i className="mastery" />Skill level</span>
+        <span><i className="retention" />Recall</span>
+        <span><i className="transfer" />In games</span>
       </div>
     </div>
   );
@@ -216,7 +236,7 @@ function CohortRows({
           <span>
             <strong>{item.label}</strong>
             <small>
-              {item.games} game{item.games === 1 ? "" : "s"} · {item.confidence}% conf.
+              {item.games} game{item.games === 1 ? "" : "s"} · {item.confidence}% confidence
             </small>
           </span>
           <span>
@@ -262,7 +282,7 @@ export function ProgressView({
 
         <div className="progress-v2-evidence">
           <BarChart3 size={14} />
-          <span>{intelligence.evidenceCount30} evidence · 30d</span>
+          <span>{intelligence.evidenceCount30} tracked results · 30d</span>
         </div>
       </header>
 
@@ -278,7 +298,7 @@ export function ProgressView({
               <strong>{practical.confidence}%</strong>
             </div>
             <div>
-              <span>Human games</span>
+              <span>Your games</span>
               <strong>{practical.humanGames}</strong>
             </div>
             <div>
@@ -287,7 +307,7 @@ export function ProgressView({
             </div>
             {practical.averageOpponentRating !== undefined && (
               <div>
-                <span>Avg opponent</span>
+                <span>Avg. opponent</span>
                 <strong>{practical.averageOpponentRating}</strong>
               </div>
             )}
@@ -310,30 +330,30 @@ export function ProgressView({
 
       <section className="progress-v2-metric-strip" aria-label="Core development metrics">
         <div>
-          <span>Mastery</span>
+          <span>Skill level</span>
           <strong>{intelligence.mastery}%</strong>
           <small>{deltaLabel(intelligence.masteryDelta30)}</small>
         </div>
         <div>
-          <span>Retention</span>
+          <span>Recall</span>
           <strong>{intelligence.retention}%</strong>
           <small>Expected recall</small>
         </div>
         <div>
-          <span>Transfer</span>
+          <span>In games</span>
           <strong>{intelligence.transfer}%</strong>
           <small>
-            Human {intelligence.humanTransfer}% · AI {intelligence.aiTransfer}%
+            Games {intelligence.humanTransfer}% · Practice {intelligence.aiTransfer}%
           </small>
         </div>
         <div>
-          <span>Calibration</span>
+          <span>Estimate match</span>
           <strong>
             {calibrated ? `${intelligence.calibration.score}%` : "—"}
           </strong>
           <small>
             {calibrated
-              ? intelligence.calibration.label.replace("-", " ")
+              ? estimateMatchLabel(intelligence.calibration.label)
               : `${intelligence.calibration.sampleCount}/5 samples`}
           </small>
         </div>
@@ -343,8 +363,8 @@ export function ProgressView({
         <div className="progress-v2-stage-record">
           <header>
             <div>
-              <span>Curriculum record</span>
-              <strong>Stage velocity</strong>
+              <span>Course progress</span>
+              <strong>Stage pace</strong>
             </div>
             <Clock3 size={16} />
           </header>
@@ -374,7 +394,7 @@ export function ProgressView({
                 </span>
                 <span className="progress-v2-stage-scores">
                   <strong>{stage.mastery}%</strong>
-                  <small>R {stage.retention} · T {stage.transfer}</small>
+                  <small>Recall {stage.retention}% · Games {stage.transfer}%</small>
                 </span>
               </div>
             ))}
@@ -397,7 +417,7 @@ export function ProgressView({
                     <span>
                       <strong>{skillTitle(item.skillId)}</strong>
                       <small>
-                        human {item.humanTransfer}% · retention {item.retention}%
+                        games {item.humanTransfer}% · recall {item.retention}%
                       </small>
                     </span>
                     <strong className="positive">
@@ -416,7 +436,7 @@ export function ProgressView({
           <section>
             <header>
               <div>
-                <span>Weak transfer</span>
+                <span>Not showing in games</span>
                 <strong>Needs attention</strong>
               </div>
               <TrendingDown size={16} />
@@ -427,7 +447,7 @@ export function ProgressView({
                   <span>
                     <strong>{skillTitle(item.skillId)}</strong>
                     <small>
-                      mastery {item.current}% · human {item.humanTransfer}%
+                      skill {item.current}% · games {item.humanTransfer}%
                     </small>
                   </span>
                   {onTrainSkill ? (
@@ -449,19 +469,19 @@ export function ProgressView({
         <aside className="progress-v2-coach">
           <header>
             <div>
-              <span>Coach readout</span>
+              <span>Training focus</span>
               <strong>{intelligence.coachBrief.headline}</strong>
             </div>
-            <BrainCircuit size={16} />
+            <Gauge size={16} />
           </header>
 
           <p>{intelligence.coachBrief.summary}</p>
 
           <div className="progress-v2-coach-state">
-            <span>Evidence</span>
-            <strong>{intelligence.coachBrief.evidenceState}</strong>
+            <span>Basis</span>
+            <strong>{coachBasisLabel(intelligence.coachBrief.evidenceState)}</strong>
             <small>
-              {intelligence.coachBrief.confidence}% · {intelligence.coachBrief.humanGames} human games
+              {intelligence.coachBrief.confidence}% confidence · {intelligence.coachBrief.humanGames} of your games
             </small>
           </div>
 
@@ -474,7 +494,7 @@ export function ProgressView({
                   <p>{prescription.rationale}</p>
                 </div>
                 <small>
-                  {prescription.evidenceGames} games · {prescription.confidence}% conf.
+                  {prescription.evidenceGames} games · {prescription.confidence}% confidence
                 </small>
                 {prescription.actions.length > 0 && onRunPrescriptionAction && (
                   <button
@@ -499,8 +519,8 @@ export function ProgressView({
       <section className="progress-v2-real-games">
         <header>
           <div>
-            <span>Human chess</span>
-            <strong>Real-game transfer</strong>
+            <span>Your games</span>
+            <strong>How training shows up</strong>
           </div>
           <div>
             <small>{intelligence.realGameDiagnostics.sampleCount} analyzed</small>
@@ -514,7 +534,7 @@ export function ProgressView({
             <strong>{intelligence.realGameDiagnostics.baselineQuality}%</strong>
           </div>
           <div>
-            <span>Practical score</span>
+            <span>Game score</span>
             <strong>{intelligence.realGameDiagnostics.baselinePracticalScore}</strong>
           </div>
           <div>
@@ -522,7 +542,7 @@ export function ProgressView({
             <strong>{intelligence.realGameDiagnostics.recentForm.direction}</strong>
           </div>
           <div>
-            <span>Result</span>
+            <span>Results</span>
             <strong>{intelligence.realGameDiagnostics.baselineResultPerformance}%</strong>
           </div>
         </div>
@@ -533,7 +553,7 @@ export function ProgressView({
               <span>
                 <strong>{phase.phase}</strong>
                 <small>
-                  {phase.games} games · {phase.averageCentipawnLoss} ACPL
+                  {phase.games} games · avg loss {(phase.averageCentipawnLoss / 100).toFixed(2)}
                 </small>
               </span>
               <div>
@@ -552,7 +572,7 @@ export function ProgressView({
             </header>
             <CohortRows
               items={intelligence.realGameDiagnostics.openings}
-              empty="Analyze more human games to build opening cohorts."
+              empty="Analyze more of your games to compare openings."
             />
           </section>
 
@@ -567,14 +587,14 @@ export function ProgressView({
                 ...intelligence.realGameDiagnostics.colors,
                 ...intelligence.realGameDiagnostics.opponents,
               ]}
-              empty="More contextual game evidence is needed."
+              empty="Analyze more games to compare time controls, colors, and opponents."
             />
           </section>
         </div>
 
         <section className="progress-v2-mistake-families">
           <header>
-            <span>Recurring human-game mistakes</span>
+            <span>Patterns in your games</span>
             <strong>{intelligence.realGameDiagnostics.mistakeFamilies.length}</strong>
           </header>
 
@@ -602,7 +622,7 @@ export function ProgressView({
                 ))
             ) : (
               <div className="progress-v2-empty">
-                No recurring human-game family has enough evidence yet.
+                No repeated mistake pattern yet.
               </div>
             )}
           </div>
@@ -782,7 +802,7 @@ export function ProgressView({
                     })
                   }
                 />
-                <span>Automatic recovery</span>
+                <span>Automatic lighter weeks</span>
               </label>
             </div>
 
@@ -790,12 +810,12 @@ export function ProgressView({
               <span>
                 <strong>
                   {horizon.loadManagement.manualRecoveryActive
-                    ? "Manual recovery active"
+                    ? "Lighter week active"
                     : horizon.loadManagement.appliedMode === "recovery"
-                      ? "Automatic recovery active"
+                      ? "Automatic lighter week active"
                       : horizon.loadManagement.appliedMode === "watch"
-                        ? "Load watch"
-                        : "Normal load"}
+                        ? "Training load is high"
+                        : "Normal training"}
                 </strong>
                 <small>{horizon.loadManagement.reason}</small>
               </span>
@@ -813,8 +833,8 @@ export function ProgressView({
                 }
               >
                 {horizon.loadManagement.manualRecoveryActive
-                  ? "End recovery"
-                  : "Start 7-day recovery"}
+                  ? "End lighter week"
+                  : "Start 7 lighter days"}
               </button>
             </div>
           </section>
@@ -1008,9 +1028,9 @@ export function ProgressView({
           <div>
             <ShieldCheck size={16} />
             <span>
-              <strong>Evidence & model diagnostics</strong>
+              <strong>How progress is estimated</strong>
               <small>
-                Calibration, intervention outcomes and coach validation
+                Level checks, training results and recommendation history
               </small>
             </span>
           </div>
@@ -1020,38 +1040,38 @@ export function ProgressView({
         <div className="progress-v2-evidence-body">
           <section>
             <header>
-              <span>Calibration</span>
+              <span>Estimate match</span>
               <strong>
                 {calibrated
                   ? `${intelligence.calibration.score}%`
-                  : "Collecting evidence"}
+                  : "Not enough checks yet"}
               </strong>
             </header>
             <p>{calibrationText(intelligence.calibration.label)}</p>
             <small>
-              {intelligence.calibration.sampleCount} assessment samples · bias {intelligence.calibration.bias.toFixed(1)}
+              {intelligence.calibration.sampleCount} stage checks · estimate offset {intelligence.calibration.bias.toFixed(1)}
             </small>
           </section>
 
           <section>
             <header>
-              <span>Coach effectiveness</span>
+              <span>Training suggestions</span>
               <strong>{intelligence.coachEffectiveness.validationRate}%</strong>
             </header>
             <div className="progress-v2-evidence-facts">
-              <span>{intelligence.coachEffectiveness.issued} issued</span>
+              <span>{intelligence.coachEffectiveness.issued} suggested</span>
               <span>{intelligence.coachEffectiveness.completed} completed</span>
-              <span>{intelligence.coachEffectiveness.evaluated} evaluated</span>
+              <span>{intelligence.coachEffectiveness.evaluated} checked</span>
               <span>{intelligence.coachEffectiveness.improved} improved</span>
             </div>
             <p>
-              Policy: {intelligence.coachPolicy.mode} · {intelligence.coachPolicy.learningConfidence}% learning confidence.
+              Mode: {coachModeLabel(intelligence.coachPolicy.mode)} · {intelligence.coachPolicy.learningConfidence}% confidence.
             </p>
           </section>
 
           <section>
             <header>
-              <span>Interventions</span>
+              <span>Training methods</span>
               <strong>{intelligence.interventions.length}</strong>
             </header>
             <div className="progress-v2-interventions">
@@ -1073,17 +1093,17 @@ export function ProgressView({
           <section>
             <header>
               <span>History</span>
-              <strong>{intelligence.evidenceCount} events</strong>
+              <strong>{intelligence.evidenceCount} tracked results</strong>
             </header>
             <p>
               {intelligence.historyStartedAt
                 ? `Tracking from ${new Date(
                     intelligence.historyStartedAt,
                   ).toLocaleDateString()}.`
-                : "Longitudinal history has started."}
+                : "Progress tracking has started."}
             </p>
             <small>
-              {intelligence.resolvedMistakeCount} repaired mistakes · {intelligence.unresolvedMistakeCount} unresolved
+              {intelligence.resolvedMistakeCount} positions practiced · {intelligence.unresolvedMistakeCount} still open
             </small>
           </section>
         </div>
