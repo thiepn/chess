@@ -42,7 +42,7 @@ function stepLabel(step: LessonStep) {
     check: "Concept check",
     guided: "Guided practice",
     retrieval: "Independent retrieval",
-    transfer: "Transfer",
+    transfer: "Apply it",
     takeaway: "Takeaway",
   } as const;
   return labels[step.stage];
@@ -371,7 +371,7 @@ export function LessonRunner({
                   ] ??
                   (step.support ===
                   "transfer"
-                    ? "That move is legal, but it does not transfer the lesson correctly. Re-identify the condition that made the concept work before choosing a move."
+                    ? "That move is legal, but it does not apply the idea correctly. Re-identify the condition that made the concept work before choosing a move."
                     : "That move is legal, but it does not express the lesson yet. Recheck the position, the opponent's strongest reply, and the purpose of your move."),
               );
               return false;
