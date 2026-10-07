@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess</title>
+  </head>
+  <body>
+    <script>
+      (() => {
+        const key = "chess:spa-redirect";
+        const isGithubProject =
+          location.hostname.endsWith(".github.io") &&
+          location.pathname.split("/").filter(Boolean).length > 1;
+        const segments = location.pathname.split("/").filter(Boolean);
+        const base = isGithubProject ? `/${segments[0]}/` : "/";
+        const appPath = isGithubProject
+          ? `/${segments.slice(1).join("/")}`
+          : location.pathname;
+
+        sessionStorage.setItem(
+          key,
+          `${appPath || "/"}${location.search}${location.hash}`,
+        );
+        location.replace(`${location.origin}${base}`);
+      })();
+    </script>
+  </body>
+</html>
