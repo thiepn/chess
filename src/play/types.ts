@@ -9,6 +9,8 @@ export type PlayMode =
   | "endgame"
   | "replay";
 
+export type TimeControlId = "untimed" | "10+0" | "15+10";
+
 export type AiProfileId =
   | "gentle"
   | "developing"
@@ -45,6 +47,7 @@ export interface PlaySetup {
   mode: PlayMode;
   playerColor: Color;
   aiProfileId: AiProfileId;
+  timeControl?: TimeControlId;
   scenarioId?: string;
 }
 
@@ -57,7 +60,8 @@ export interface PlayResult {
     | "insufficient"
     | "threefold"
     | "fifty-move"
-    | "resignation";
+    | "resignation"
+    | "timeout";
   pgn: string;
   importedGame: ImportedGame;
   scenarioId?: string;
