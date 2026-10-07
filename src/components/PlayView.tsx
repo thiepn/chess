@@ -36,6 +36,7 @@ import type {
 import { ChessBoard } from "./ChessBoard";
 import { GameArena } from "./GameArena";
 import { LichessSyncCard } from "./LichessSyncCard";
+import "../styles/p47-play-native.css";
 
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
