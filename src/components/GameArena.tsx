@@ -177,28 +177,23 @@ export function GameArena({
     const interval = window.setInterval(() => {
       const active = gameRef.current.turn();
       if (active === "w") {
-        setWhiteMs((current) => {
-          const next = Math.max(0, current - 1000);
-          if (next === 0 && current > 0) {
-            const outcome = playerColor === "w" ? "loss" : "win";
-            void finalize(outcome, "timeout");
-          }
-          return next;
-        });
+        setWhiteMs((current) => Math.max(0, current - 1000));
       } else {
-        setBlackMs((current) => {
-          const next = Math.max(0, current - 1000);
-          if (next === 0 && current > 0) {
-            const outcome = playerColor === "b" ? "loss" : "win";
-            void finalize(outcome, "timeout");
-          }
-          return next;
-        });
+        setBlackMs((current) => Math.max(0, current - 1000));
       }
     }, 1000);
 
     return () => window.clearInterval(interval);
-  }, [fen, playerColor, result, timeControl]);
+  }, [fen, result, timeControl]);
+
+  useEffect(() => {
+    if (timeControl === "untimed" || result || finishedRef.current) return;
+    if (whiteMs <= 0) {
+      void finalize(playerColor === "w" ? "loss" : "win", "timeout");
+    } else if (blackMs <= 0) {
+      void finalize(playerColor === "b" ? "loss" : "win", "timeout");
+    }
+  }, [blackMs, playerColor, result, timeControl, whiteMs]);
 
   function applyIncrement(color: Color) {
     if (!clockConfig.incrementMs) return;
