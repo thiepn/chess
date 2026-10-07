@@ -53,6 +53,7 @@ The default experience should answer one question: **what should I train now?**
 - P32 Personal Repertoire 2.0 with deeper compact branches, inherited structure/tactical context, game-grounded branch health, move-plus-purpose recall, optional full-line rehearsal, exact deviation repair, and dedicated opening evidence
 - P33 Model Games & Strategic Pattern Learning with a compact annotated complete-game library, active plan questions, Guess-the-Move checkpoints, repertoire-linked strategic patterns, evidence-aware scoring, persistent progress, and one-click promotion of model positions into spaced Library training
 - P34 Adaptive Coach Simplification with one consolidated coach brief, confidence-aware cold-start states, plain-language recommendations, at-most-three actionable decisions, and explicit later-human-game validation of whether training actually transferred
+- P35 Advanced Curriculum Expansion with a ninth Advanced stage, 18 higher-level skills, authored transfer lessons, dedicated advanced calculation and endgame positions, tactical puzzle-corpus mappings, resistant strategy scenarios, and advanced concepts embedded into complete model games
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2071,6 +2072,40 @@ Recommendation outcome tracking remains strict: completing training is not proof
 
 Adaptive session explanations also stop exposing target-success percentages, policy confidence and other implementation jargon. The learner sees the chess reason for the activity and the practical challenge level instead.
 
+## Advanced Curriculum Expansion
+
+P35 raises the course ceiling with a ninth **Advanced — Handle complex positions** stage aimed roughly at the 1500–2000+ transition.
+
+The stage deliberately stays compact: 18 skills rather than a large encyclopedia.
+
+It covers:
+
+- combined tactical motifs and defensive tactics;
+- branching calculation and stable-position evaluation;
+- positional imbalances;
+- bishop-versus-knight decisions;
+- strategic exchanges and transformations;
+- restriction and prophylaxis;
+- piece coordination;
+- isolated queen's pawn, hanging pawns and minority attacks;
+- repertoire-specific middlegames;
+- checking distance and cutoffs in rook endings;
+- opposite-colored bishop endings;
+- minor-piece endings;
+- two-weakness conversion;
+- practical simplify-versus-complicate decisions.
+
+The expansion reuses the richer learning stack instead of creating a separate advanced-course engine:
+
+- **P28 lessons:** every advanced skill has the full model → example → contrast → guided → retrieval → transfer → takeaway sequence.
+- **P27 tactics:** advanced combinations and defensive resources map into the production Lichess CC0 puzzle corpus.
+- **P29 calculation:** branching, evaluation, combinations and defensive tactics have authored multi-ply calculation positions.
+- **P31 endings:** advanced rook, opposite-bishop, minor-piece and two-weakness positions are played out against resistance.
+- **P32 repertoire:** repertoire middlegames connect opening memory to recurring structures and plans.
+- **P33 model games:** exchanges, imbalances, coordination and repertoire structures now appear as active decisions inside complete games.
+
+Placement now samples the Advanced stage as well, and the Advanced gate requires stronger transfer evidence than earlier stages.
+
 ## Next phase
 
-P35 — Advanced Curriculum Expansion.
+P36 — Premium UX, Mobile & Delight Pass.
