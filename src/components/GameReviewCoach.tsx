@@ -549,8 +549,8 @@ export function GameReviewCoach({
                 <div className="review-retry-result">
                   <strong>
                     {resultMoveSan} is legal,
-                    but it does not repair the
-                    moment.
+                    but it does not solve the
+                    problem.
                   </strong>
                   <span>
                     You can reset and try once
