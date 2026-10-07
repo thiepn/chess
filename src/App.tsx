@@ -155,6 +155,20 @@ function RouteLoading() {
   );
 }
 
+function preloadNavRoute(id: string) {
+  if (id === "learn") {
+    void import("./components/LearnView");
+  } else if (id === "play") {
+    void import("./components/PlayView");
+  } else if (id === "review") {
+    void import("./components/ReviewView");
+  } else if (id === "library") {
+    void import("./components/LibraryView");
+  } else if (id === "progress") {
+    void import("./components/ProgressView");
+  }
+}
+
 const repo = createChessStateRepository();
 
 const modeLabels: Record<SessionMode, string> = {
@@ -2157,6 +2171,8 @@ export default function App() {
               className={nav === id ? "nav-item active" : "nav-item"}
               aria-current={nav === id ? "page" : undefined}
               title={id === "home" ? "Train · keyboard shortcut T" : label}
+              onPointerEnter={() => preloadNavRoute(id)}
+              onFocus={() => preloadNavRoute(id)}
               onClick={() => {
                 setNav(id);
                 emitExperienceEvent({ feedback: "navigate" });
@@ -2573,6 +2589,8 @@ export default function App() {
             key={id}
             className={nav === id ? "active" : ""}
             aria-current={nav === id ? "page" : undefined}
+            onPointerDown={() => preloadNavRoute(id)}
+            onFocus={() => preloadNavRoute(id)}
             onClick={() => {
               setNav(id);
               emitExperienceEvent({ feedback: "navigate" });
