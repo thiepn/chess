@@ -63,6 +63,7 @@ The default experience should answer one question: **what should I train now?**
 - P42 Learn Architecture Redesign with a chapter-based syllabus, real `/learn/:domain/:lessonId` textbook pages, embedded teaching boards, routed repertoire/model-game subpages, and removal of the Learn hero/KPI/card-grid composition
 - P43 Play Page Redesign with a board-preview setup desk, real `/play/game/:id` game routes, Untimed/10+0/15+10 clocks, tournament-style player strips, routed scenario/replay sessions, and removal of the Play hero/profile/scenario card grids
 - P44 Review Page Redesign with a routed `/review/:gameId` analysis workstation, synchronized board/notation/critical-moment teaching, clickable evaluation trace, compact review index, and removal of the Review/story hero-card composition
+- P45 Library Page Redesign with a routed chess archive, real study/reference/game workspaces, collection pages for studies/positions/endgames/games, canonical Repertoire/Model Game links, and removal of the Library hero/metrics/local-tab/card-grid composition
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2336,6 +2337,40 @@ P30's self-analysis-first behavior is preserved. Critical errors can still be re
 
 On phones, the review stays board-first, followed by a bounded notation list and then the decision explanation.
 
+## Library Page Redesign
+
+P45 turns Library into a routed chess study archive rather than a hero + metrics + local-tab page.
+
+`/library` now provides:
+
+- archive navigation;
+- recent personal studies;
+- Positions and Endgames collections;
+- direct Repertoire and Model Games destinations;
+- recent played/imported games;
+- due recall positions and reference material.
+
+Primary Library routes are now:
+
+- `/library/studies`
+- `/library/positions`
+- `/library/endgames`
+- `/library/games`
+- `/library/workspace`
+- `/library/studies/:id`
+- `/library/references/:id`
+- `/library/games/:id`
+
+The old local `workspace / saved / references / games` tab state is removed.
+
+Opening a study, reference or game hydrates that resource directly into the shared analysis-board workspace: P39 board, move line, Stockfish-on-demand, notes, tags, study kind, FEN/PGN import and save/promote-to-training behavior remain intact.
+
+Saving a brand-new analysis converts the temporary `/library/workspace` route into its permanent saved-study URL.
+
+Repertoire and Model Games are exposed from the Library but intentionally keep the canonical P42 pages at `/learn/openings` and `/learn/model-games`. P45 does not duplicate those mature study systems under a second route.
+
+Library-specific redesign CSS is loaded with the lazy Library chunk rather than added to the initial global stylesheet.
+
 ## Next phase
 
-P45 — Library Page Redesign.
+P46 — Progress Analytics Redesign.
