@@ -67,6 +67,7 @@ The default experience should answer one question: **what should I train now?**
 - P46 Progress Analytics Redesign with practical-strength-first hierarchy, dominant eight-week trajectory, curriculum/skill development record, chess-specific human-game transfer analytics, and advanced planning/evidence moved into expandable technical sections
 - P47 Mobile / Tablet Native Layouts with safe-area support, touch-target enforcement, portrait-tablet compositions, low-height landscape chess workspaces, board-first phone flows and route-code-split native CSS
 - P48 Material & Component Cleanup with flat chess-native surfaces, separator-based board-side regions, removal of ~66 KB raw dead legacy CSS, and a CI material-regression audit
+- P49 Motion & Tactile Interaction with chess-state piece/impact motion, route view transitions, dedicated castle/promotion/reveal haptics, restrained solution/analysis reveals, reduced-motion enforcement and a CI motion audit
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2448,6 +2449,39 @@ A new `npm run design:audit` Quality gate prevents rebuilt route CSS from adding
 
 The full contract and allowed exceptions are documented in `docs/P48_MATERIAL_CONTRACT.md`.
 
+## Motion & Tactile Interaction
+
+P49 makes motion communicate chess state instead of decorating containers.
+
+Board motion now distinguishes:
+
+- ordinary moves;
+- captures;
+- castling;
+- promotion;
+- check;
+- rejected moves;
+- legal targets;
+- board orientation changes.
+
+Move origin and destination receive brief state-specific impact treatment, while the moving piece keeps a short spatial glide from source to destination.
+
+Castling and promotion also have their own optional haptic/audio signatures instead of being treated as generic moves.
+
+Answer and hint reveal is deliberately subtle. Lesson hints, coached best-move reveal, puzzle explanations, analysis results and Review comparisons use short reveal motion rather than modal or celebratory animation.
+
+Route navigation uses the browser View Transition API when available. Reduced-motion and unsupported browsers bypass it cleanly.
+
+Progress motion is data-driven: trajectory lines and completion meters draw/fill to communicate measured change.
+
+Touch controls use compact press-state motion alongside optional haptics. Optional celebrations remain available, but P49 restyles them into restrained blue/ivory/gold chess-result sparks.
+
+All new motion is disabled under the existing reduced-motion setting.
+
+A new `npm run motion:audit` Quality gate verifies route-transition fallback/reduced-motion behavior, chess-specific feedback events, board impact classes and reveal feedback hooks.
+
+The contract is documented in `docs/P49_MOTION_CONTRACT.md`.
+
 ## Next phase
 
-P49 — Motion & Tactile Interaction.
+P50 — Mobile Native Defect Pass.
