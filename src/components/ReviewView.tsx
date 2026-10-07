@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react";
+import "../styles/review-v2.css";
 import {
   BrainCircuit,
   FileUp,
