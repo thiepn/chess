@@ -383,6 +383,35 @@ export default function App() {
   }, [dialogOpen]);
 
   useEffect(() => {
+    if (!dialogOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+
+      event.preventDefault();
+      if (assessmentSession) {
+        setAssessmentSession(null);
+        return;
+      }
+      if (activeModelGameId) {
+        setActiveModelGameId(null);
+        return;
+      }
+
+      setActiveIndex(null);
+      setManualActivity(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () =>
+      window.removeEventListener("keydown", closeOnEscape);
+  }, [
+    dialogOpen,
+    assessmentSession,
+    activeModelGameId,
+  ]);
+
+  useEffect(() => {
     const handleShortcut = (event: KeyboardEvent) => {
       if (dialogOpen || event.defaultPrevented) return;
       if (event.metaKey || event.ctrlKey || event.altKey) return;
