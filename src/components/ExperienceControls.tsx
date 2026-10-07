@@ -1,5 +1,7 @@
 import {
   Accessibility,
+  Grid2X2,
+  Palette,
   Settings2,
   Sparkles,
   Vibrate,
@@ -9,7 +11,18 @@ import {
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
-import type { MotionPreference } from "../interaction/types";
+import type {
+  AppTheme,
+  BoardTheme,
+  MotionPreference,
+  PieceStyle,
+} from "../interaction/types";
+import {
+  appThemeOptions,
+  boardThemeOptions,
+  pieceStyleOptions,
+} from "../interaction/customization";
+import { ChessPiece } from "./ChessPiece";
 
 export function ExperienceControls() {
   const [open, setOpen] = useState(false);
@@ -78,6 +91,104 @@ export function ExperienceControls() {
             </div>
             <Accessibility size={18} />
           </div>
+
+          <div className="experience-divider" />
+
+          <fieldset className="appearance-setting-group">
+            <legend>
+              <Palette size={15} aria-hidden="true" />
+              App finish
+            </legend>
+            <div className="appearance-choice-row app-theme-choices">
+              {appThemeOptions.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="appearance-choice"
+                  aria-pressed={settings.appTheme === option.id}
+                  title={option.description}
+                  onClick={() => {
+                    updateSettings({ appTheme: option.id as AppTheme });
+                    feedback("select");
+                  }}
+                >
+                  <span
+                    className="app-theme-swatch"
+                    data-preview-app-theme={option.id}
+                    aria-hidden="true"
+                  >
+                    <i />
+                    <i />
+                  </span>
+                  <span>{option.label}</span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset className="appearance-setting-group">
+            <legend>
+              <Grid2X2 size={15} aria-hidden="true" />
+              Board
+            </legend>
+            <div className="appearance-choice-row board-theme-choices">
+              {boardThemeOptions.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="appearance-choice"
+                  aria-pressed={settings.boardTheme === option.id}
+                  title={option.description}
+                  onClick={() => {
+                    updateSettings({ boardTheme: option.id as BoardTheme });
+                    feedback("select");
+                  }}
+                >
+                  <span
+                    className="board-theme-swatch"
+                    data-preview-board-theme={option.id}
+                    aria-hidden="true"
+                  >
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span>{option.label}</span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset className="appearance-setting-group">
+            <legend>Pieces</legend>
+            <div className="appearance-choice-row piece-style-choices">
+              {pieceStyleOptions.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className="appearance-choice piece-style-choice"
+                  aria-pressed={settings.pieceStyle === option.id}
+                  title={option.description}
+                  onClick={() => {
+                    updateSettings({ pieceStyle: option.id as PieceStyle });
+                    feedback("select");
+                  }}
+                >
+                  <span className="piece-style-preview" aria-hidden="true">
+                    <ChessPiece
+                      color="w"
+                      type="n"
+                      styleVariant={option.id}
+                    />
+                  </span>
+                  <span>{option.label}</span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="experience-divider" />
 
           <SettingToggle
             icon={settings.sound ? <Volume2 size={16} /> : <VolumeX size={16} />}
