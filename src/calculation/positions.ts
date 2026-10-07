@@ -62,6 +62,7 @@ const authoredPositions: CalculationPosition[] = [
     skillIds: [
       "calculation.move-order",
       "calculation.reply",
+      "calculation.evaluation",
     ],
     title: "Move order before execution",
     prompt:
@@ -79,7 +80,54 @@ const authoredPositions: CalculationPosition[] = [
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 3,
+  },,
+  {
+    id: "calc:advanced-combination",
+    skillIds: [
+      "tactics.combinations",
+      "calculation.branching",
+      "calculation.evaluation",
+    ],
+    title: "Calculate through the tactical transformation",
+    prompt:
+      "Generate more than one forcing candidate, then calculate the branch until the back-rank idea transforms into a second threat.",
+    fen: "3q2k1/5ppp/8/8/8/3B4/5PPP/4R1K1 w - - 0 1",
+    playerColor: "w",
+    bestMove: "e1e8",
+    principalVariation: [
+      "e1e8",
+      "d8e8",
+      "d3h7",
+    ],
+    explanation:
+      "Re8+ forces the queen to take on e8. Bxh7+ then carries the initiative into a new tactical geometry. The point is not the first motif; it is tracking how one forcing idea creates the next.",
+    source: "authored",
+    sourceLabel: "Advanced calculation course",
+    difficulty: 5,
   },
+  {
+    id: "calc:defensive-countercheck",
+    skillIds: [
+      "tactics.defensive-resources",
+      "calculation.branching",
+    ],
+    title: "Defend with a countercheck",
+    prompt:
+      "Do not accept a passive defense. Search checks first and calculate whether the attacker can neutralize the forcing resource.",
+    fen: "6k1/5ppp/8/8/8/8/4rPPP/3R2K1 w - - 0 1",
+    playerColor: "w",
+    bestMove: "d1d8",
+    principalVariation: [
+      "d1d8",
+      "e2e8",
+      "d8e8",
+    ],
+    explanation:
+      "Rd8+ changes the move order. Black must answer the check, and after ...Re8 Rxe8+ the dangerous rook disappears. Defensive calculation is strongest when it forces the attacker to respond.",
+    source: "authored",
+    sourceLabel: "Advanced calculation course",
+    difficulty: 5,
+  }
 ];
 
 function dueScore(
