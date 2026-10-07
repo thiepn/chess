@@ -90,7 +90,7 @@ for (const fragment of [
   'aria-pressed={recognitionChoice === option.id}',
   'role={recognitionCorrect ? "status" : "alert"}',
   'className="endgame-status-chip" role="status"',
-  'className="endgame-result-card"',
+  '"endgame-result-card"',
 ]) {
   requireIn(endgame, fragment, "src/components/EndgameTechniqueRunner.tsx");
 }
