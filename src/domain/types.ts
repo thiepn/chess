@@ -25,7 +25,8 @@ export type CurriculumStageId =
   | "thinking"
   | "fight"
   | "finish"
-  | "practical";
+  | "practical"
+  | "advanced";
 
 export type DomainId =
   | "rules"

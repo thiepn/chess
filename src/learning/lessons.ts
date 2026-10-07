@@ -41,6 +41,20 @@ const PASSED = "4k3/8/8/4P3/8/8/4K3/8 w - - 0 1";
 const LUCENA = "2K5/2P1k3/8/8/8/8/r7/3R4 w - - 0 1";
 const PHILIDOR = "8/8/r3k3/4P3/4K3/8/8/7R b - - 0 1";
 const DRAW_RULE = "7k/8/8/8/8/8/5K2/7R w - - 0 1";
+const ADV_COMBO = "3q2k1/5ppp/8/8/8/3B4/5PPP/4R1K1 w - - 0 1";
+const ADV_DEFENSE = "6k1/5ppp/8/8/8/8/4rPPP/3R2K1 w - - 0 1";
+const ADV_IMBALANCE = "4k3/8/8/3n4/3P4/2B5/8/4K3 w - - 0 1";
+const ADV_MINOR = "4k3/8/3p4/3n4/2B1P3/8/8/4K3 w - - 0 1";
+const ADV_RESTRICTION = "4k3/8/3n4/8/4P3/2B5/8/4K3 w - - 0 1";
+const ADV_COORDINATION = "4k3/8/8/8/8/8/3Q4/R3K3 w Q - 0 1";
+const ADV_IQP = "4k3/8/8/3P4/8/8/8/4K3 w - - 0 1";
+const ADV_HANGING = "4k3/8/8/8/2PP4/8/8/4K3 w - - 0 1";
+const ADV_MINORITY = "4k3/ppp5/8/8/1PP5/8/8/4K3 w - - 0 1";
+const ADV_REPERTOIRE = "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 4 5";
+const ADV_ROOK_CHECKS = "8/5k2/4P3/8/8/8/6R1/6K1 w - - 0 1";
+const ADV_OPPOSITE_BISHOPS = "4k3/8/8/4p3/3P4/2B5/8/4Kb2 w - - 0 1";
+const ADV_MINOR_ENDING = "4k3/8/8/3p4/3P4/3N4/8/4K3 w - - 0 1";
+const ADV_TWO_WEAKNESSES = "4k3/p6p/8/8/8/8/P6P/R3K3 w Q - 0 1";
 
 const seeds: Record<string, LessonSeed> = {
   "rules.board": {
@@ -663,6 +677,169 @@ const seeds: Record<string, LessonSeed> = {
     prompt: "Stabilize the position by saving the attacked queen.",
     hint: "Qe4 removes the immediate material loss.",
   },
+
+  "tactics.combinations": {
+    title: "Combine motifs instead of naming one",
+    summary: "Strong combinations often work because one forcing move creates a second tactical mechanism.",
+    body: "At advanced level, labels are only search cues. Calculate how deflection, overload, open lines and mating threats interact after every forced reply.",
+    fen: ADV_COMBO,
+    move: "e1e8",
+    prompt: "Start the forcing sequence by using the back rank to overload Black's queen.",
+    hint: "A rook check on the eighth rank forces the defender to commit.",
+  },
+  "tactics.defensive-resources": {
+    title: "Look for forcing defense",
+    summary: "Before accepting a passive defense, search for checks, exchanges and zwischenzugs that change the move order.",
+    body: "Defensive calculation should be active. A forcing resource can make the attacker answer you, trade the key attacking piece or reverse the initiative.",
+    fen: ADV_DEFENSE,
+    move: "d1d8",
+    prompt: "Find the countercheck that forces Black to stop attacking and answer you.",
+    hint: "The white rook can reach the eighth rank with check.",
+  },
+  "calculation.branching": {
+    title: "Compare branches, not one favorite line",
+    summary: "Keep at least two serious candidates alive until their resulting positions can be compared.",
+    body: "Tunnel vision is a calculation error even when the line you calculated is legal. Generate candidates, calculate the opponent's best reply in each branch, then compare outcomes.",
+    fen: ADV_COMBO,
+    move: "e1e8",
+    prompt: "Choose the forcing branch only after recognizing why Black's best reply still leaves White with follow-up play.",
+    hint: "Start with the move that forces the queen to respond.",
+  },
+  "calculation.evaluation": {
+    title: "Stop at a stable position",
+    summary: "A line is finished when forcing moves run out and you can evaluate the resulting position accurately.",
+    body: "Do not calculate forever and do not stop after the first gain. At the end of a branch, compare material, king safety, activity, pawn structure and remaining forcing moves.",
+    fen: CAPTURE,
+    move: "e2d3",
+    prompt: "Take the pawn, then evaluate the stable material and activity change rather than stopping at the capture itself.",
+    hint: "The queen can capture d3 safely.",
+  },
+  "strategy.imbalances": {
+    title: "Let the imbalance choose the plan",
+    summary: "Plans come from what is unequal: piece quality, structure, space, king safety, material or initiative.",
+    body: "Avoid generic improvement moves. Identify the most important imbalance, decide whether it is temporary or permanent, and choose a plan that increases your useful advantage or attacks theirs.",
+    fen: ADV_IMBALANCE,
+    move: "c3a5",
+    prompt: "Preserve the bishop's long-range potential instead of drifting into the knight's preferred closed fight.",
+    hint: "Use the bishop's ability to work from distance.",
+  },
+  "strategy.bishop-vs-knight": {
+    title: "Judge the minor pieces by the position",
+    summary: "A bishop or knight is good only relative to pawn structure, targets, outposts and the side of the board where play happens.",
+    body: "Do not use a universal bishop-versus-knight rule. Open positions and play on both wings often favor bishops; stable outposts and closed structures can make knights dominant.",
+    fen: ADV_MINOR,
+    move: "c4d5",
+    prompt: "Exchange the bishop for the centralized knight when removing the dominant blockader solves the position's main problem.",
+    hint: "The knight on d5 is the key centralized piece.",
+  },
+  "strategy.exchanges": {
+    title: "Exchange to transform the position",
+    summary: "The point of an exchange is the new position it creates, not the act of trading itself.",
+    body: "Before exchanging, ask which imbalance disappears, which piece becomes stronger, what pawn structure remains and whether counterplay increases or decreases.",
+    fen: TRADE,
+    move: "d2d4",
+    prompt: "Exchange the rooks and judge the simplified result.",
+    hint: "The white rook can capture on d4.",
+  },
+  "strategy.restriction": {
+    title: "Take away the opponent's good squares",
+    summary: "Restriction improves your position by reducing the opponent's useful choices before you attack.",
+    body: "Prophylaxis is not passive waiting. Fix a piece, control a break or take away an outpost so the opponent cannot activate while you improve.",
+    fen: ADV_RESTRICTION,
+    move: "e4e5",
+    prompt: "Gain space with tempo and drive the knight away from its useful square.",
+    hint: "The e-pawn can advance and attack d6.",
+  },
+  "strategy.coordination": {
+    title: "Make pieces work on the same job",
+    summary: "Coordination is stronger than isolated activity: pieces should support the same break, file, target or invasion square.",
+    body: "Two active pieces can still be poorly coordinated if they pursue unrelated goals. Look for moves that connect their influence and make the next operation easier.",
+    fen: ADV_COORDINATION,
+    move: "a1d1",
+    prompt: "Bring the rook onto the same file as the queen so the heavy pieces coordinate.",
+    hint: "The d-file lets rook and queen support the same direction.",
+  },
+  "pawns.iqp": {
+    title: "Use the IQP before it becomes weak",
+    summary: "An isolated queen's pawn gives space and dynamic breaks now, but may become a fixed target after pieces are exchanged.",
+    body: "The IQP is a time-sensitive imbalance. Favor activity, piece coordination and the d5-d6 or d4-d5 break while enough pieces remain to use the open lines.",
+    fen: ADV_IQP,
+    move: "d5d6",
+    prompt: "Advance the isolated pawn while it can still gain space and create activity.",
+    hint: "The isolated pawn's strength is mobility, not passive defense.",
+  },
+  "pawns.hanging": {
+    title: "Use hanging pawns as a dynamic unit",
+    summary: "Connected c- and d-pawns control space and support breaks, but one advance can leave the other permanently weak.",
+    body: "Do not push hanging pawns automatically. Advance when the break gains activity or creates a passed pawn; otherwise keep them mutually supporting.",
+    fen: ADV_HANGING,
+    move: "c4c5",
+    prompt: "Advance one hanging pawn to gain space while preserving the d4 pawn's central support.",
+    hint: "The c-pawn can gain a tempo of space without abandoning the pair completely.",
+  },
+  "pawns.minority": {
+    title: "Create a weakness with the minority",
+    summary: "A minority attack uses fewer pawns to force a fixed target in the opponent's larger pawn group.",
+    body: "The goal is not to win a pawn by force. Advance until exchanges create a backward or isolated pawn that your pieces can attack later.",
+    fen: ADV_MINORITY,
+    move: "b4b5",
+    prompt: "Continue the queenside minority advance and prepare contact with Black's pawn chain.",
+    hint: "Push the b-pawn to create the first pawn contact.",
+  },
+  "strategy.repertoire-middlegames": {
+    title: "Know the middlegame your opening is aiming for",
+    summary: "Opening knowledge is useful when it predicts structures, breaks and piece routes after memorized moves end.",
+    body: "Connect your repertoire to recurring middlegames. Ask which pawn break matters, which minor piece is often misplaced and where the rooks belong once development finishes.",
+    fen: ADV_REPERTOIRE,
+    move: "d2d3",
+    prompt: "Complete the Italian structure with a flexible d3 setup before choosing the central break.",
+    hint: "Support e4 and keep both c3-d4 and later central plans available.",
+  },
+  "endgames.rook-checks": {
+    title: "Use checking distance and cutoffs",
+    summary: "Rook endings are often decided by whether the rook can check from far enough away while the king is cut off.",
+    body: "An active rook needs space. Cut the king from the pawn, use side or rear checks with enough distance, and avoid placing the rook where the enemy king can attack it with tempo.",
+    fen: ADV_ROOK_CHECKS,
+    move: "g2g7",
+    prompt: "Activate the rook with a side check that keeps distance from the king.",
+    hint: "The seventh rank gives the rook a checking line across the board.",
+  },
+  "endgames.opposite-bishops": {
+    title: "Blockade the color you can control",
+    summary: "Opposite-colored bishops make passed-pawn blockades unusually resilient because each bishop controls squares the other cannot contest.",
+    body: "Material count can mislead. Build a blockade on your bishop's color, keep the king near the other wing and avoid creating passers that the enemy bishop can stop forever.",
+    fen: ADV_OPPOSITE_BISHOPS,
+    move: "d4d5",
+    prompt: "Fix the pawn structure and create a blockadeable target rather than opening both wings immediately.",
+    hint: "Advance the central pawn one square.",
+  },
+  "endgames.minor-piece": {
+    title: "Activate the king before chasing pawns",
+    summary: "Minor-piece endings magnify king activity, outposts and fixed pawn targets.",
+    body: "When queens and rooks are gone, the king becomes an attacking piece. Coordinate it with the minor piece and improve the piece before collecting pawns that can run away.",
+    fen: ADV_MINOR_ENDING,
+    move: "d3e5",
+    prompt: "Centralize the knight onto an active square that attacks the pawn structure.",
+    hint: "The knight can jump toward e5.",
+  },
+  "conversion.two-weaknesses": {
+    title: "Open a second front",
+    summary: "A single weakness can often be defended; two separated weaknesses overload the defender.",
+    body: "When direct pressure stalls, keep the first target fixed and transfer pieces to the other wing. Force the defender to stretch before making the final entry.",
+    fen: ADV_TWO_WEAKNESSES,
+    move: "a1d1",
+    prompt: "Centralize the rook so it can switch between both wings instead of attacking only one pawn.",
+    hint: "The rook needs a flexible file from which it can transfer laterally.",
+  },
+  "practical.complications": {
+    title: "Choose the right level of complexity",
+    summary: "Simplify when clarity protects your advantage; complicate when concrete activity gives you better practical chances.",
+    body: "Complexity is a tool, not a goal. Consider objective evaluation, clock, king safety and the opponent's resources. Never choose chaos only because the position is uncomfortable.",
+    fen: TRADE,
+    move: "d2d4",
+    prompt: "Choose the simplifying exchange when reducing counterplay is the practical priority.",
+    hint: "Trade the rooks rather than preserving unnecessary tension.",
+  },
 };
 
 interface LessonTransferSeed {
@@ -920,6 +1097,133 @@ const transferSeeds: Record<string, LessonTransferSeed> = {
       "Keep the rook active laterally on rank six.",
       "Play Re6.",
     ],
+  },
+
+  "tactics.combinations": {
+    fen: MATE,
+    acceptedMoves: ["e1e8"],
+    prompt: "Recognize the final forcing motif after a different tactical buildup and finish the back rank.",
+    success: "You transferred the combination search into a new mating geometry.",
+    hints: ["Look for the most forcing move first.", "The king has no useful flight square.", "Play Re8#."],
+  },
+  "tactics.defensive-resources": {
+    fen: CHECK,
+    acceptedMoves: ["e1d1"],
+    prompt: "The position is forcing. Find the concrete defensive move before considering any long-term plan.",
+    success: "You prioritized the forcing defensive requirement before strategic wishes.",
+    hints: ["Start with checks against your king.", "Leave the attacked file.", "Move Ke1-d1."],
+  },
+  "calculation.branching": {
+    fen: FORK,
+    acceptedMoves: ["d6f7"],
+    prompt: "Compare the forcing candidates and choose the branch that attacks both king and queen.",
+    success: "You selected the branch with the strongest forcing consequences.",
+    hints: ["List all checks first.", "The knight can attack two major targets.", "Play Nf7+."],
+  },
+  "calculation.evaluation": {
+    fen: TRADE,
+    acceptedMoves: ["d2d4"],
+    prompt: "Calculate the exchange, then stop at the simplified position and evaluate what remains.",
+    success: "You ended the line at a stable position and evaluated the result instead of calculating aimlessly.",
+    hints: ["The forcing exchange is easy; the evaluation after it is the real task.", "Both rooks occupy the d-file.", "Play Rxd4."],
+  },
+  "strategy.imbalances": {
+    fen: PAWN_BREAK,
+    acceptedMoves: ["e4e5"],
+    prompt: "Use the space and pawn-break imbalance to gain time against Black's central structure.",
+    success: "You let the position's most important imbalance dictate the plan.",
+    hints: ["Compare space and pawn mobility.", "A central pawn move attacks d6.", "Play e5."],
+  },
+  "strategy.bishop-vs-knight": {
+    fen: OUTPOST,
+    acceptedMoves: ["d5f6"],
+    prompt: "Use the knight's outpost to create a concrete threat before considering an exchange.",
+    success: "You evaluated the minor piece by its square and targets rather than by a fixed rule.",
+    hints: ["The knight is stable and central.", "Look for a jump toward the king side.", "Play Nf6."],
+  },
+  "strategy.exchanges": {
+    fen: EXCHANGE_ATTACKER,
+    acceptedMoves: ["d3d4"],
+    prompt: "Exchange the active rook when the resulting position removes the opponent's only source of activity.",
+    success: "You judged the transformation, not merely the equal material trade.",
+    hints: ["Identify the opponent's most active piece.", "The rooks face each other on the d-file.", "Play Rxd4."],
+  },
+  "strategy.restriction": {
+    fen: OUTPOST,
+    acceptedMoves: ["d5f6"],
+    prompt: "Use the stable knight to restrict key king-side squares rather than abandoning the outpost.",
+    success: "You carried the restriction principle into a different piece geometry.",
+    hints: ["Preserve the stable piece.", "Look for a square that increases control near the king.", "Play Nf6."],
+  },
+  "strategy.coordination": {
+    fen: OPEN_FILE,
+    acceptedMoves: ["a1a8"],
+    prompt: "Use the open file so the rook coordinates with the king-side pressure instead of remaining disconnected.",
+    success: "You activated the heavy piece on the line where it can participate immediately.",
+    hints: ["Find the completely open file.", "The rook can invade the eighth rank.", "Play Ra8+."],
+  },
+  "pawns.iqp": {
+    fen: PAWN_BREAK,
+    acceptedMoves: ["e4e5"],
+    prompt: "Use the central pawn's mobility to create activity before the structure becomes static.",
+    success: "You treated the isolated-pawn idea dynamically rather than as a permanent weakness label.",
+    hints: ["Look for the freeing pawn advance.", "The e-pawn can gain space with tempo.", "Play e5."],
+  },
+  "pawns.hanging": {
+    fen: "4k3/8/8/2PP4/8/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["d5d6"],
+    prompt: "Advance the connected pawn only when the pair remains capable of supporting a passed pawn.",
+    success: "You used hanging-pawn mobility in a second structure.",
+    hints: ["Keep the connected pair coordinated.", "The d-pawn can advance safely.", "Play d6."],
+  },
+  "pawns.minority": {
+    fen: "4k3/ppp5/8/1P6/2P5/8/8/4K3 w - - 0 1",
+    acceptedMoves: ["c4c5"],
+    prompt: "Continue making contact so the minority can create a fixed queenside target.",
+    success: "You transferred the minority-attack goal from the move to the weakness it is trying to create.",
+    hints: ["The objective is pawn contact.", "Advance the remaining queenside pawn.", "Play c5."],
+  },
+  "strategy.repertoire-middlegames": {
+    fen: "r1bq1rk1/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQR1K1 w - - 6 6",
+    acceptedMoves: ["d2d4"],
+    prompt: "Recognize the familiar Italian center and choose the thematic central expansion when development permits it.",
+    success: "You connected opening memory to the middlegame break rather than to a memorized move number.",
+    hints: ["Name the structure before calculating.", "White can challenge the center directly.", "Play d4."],
+  },
+  "endgames.rook-checks": {
+    fen: "8/2k5/3P4/8/8/8/1R6/1K6 w - - 0 1",
+    acceptedMoves: ["b2b7"],
+    prompt: "Use checking distance from the side in the mirrored rook-ending geometry.",
+    success: "You reproduced the active-checking principle on the other side of the board.",
+    hints: ["Keep distance from the king.", "The seventh rank gives a side check.", "Play Rb7+."],
+  },
+  "endgames.opposite-bishops": {
+    fen: "4k3/8/8/3p4/4P3/5B2/8/2b1K3 w - - 0 1",
+    acceptedMoves: ["f3g4"],
+    prompt: "Improve the bishop while preserving control of the color complex that supports the blockade.",
+    success: "You maintained the correct-color blockade idea in a different bishop ending.",
+    hints: ["Do not chase the opposite bishop directly.", "Improve your bishop on its own color complex.", "Play Bg4."],
+  },
+  "endgames.minor-piece": {
+    fen: "4k3/8/8/4p3/4P3/5N2/8/4K3 w - - 0 1",
+    acceptedMoves: ["f3e5"],
+    prompt: "Centralize the knight and attack the fixed central pawn.",
+    success: "You used king-and-minor-piece ending logic in a different setup.",
+    hints: ["Central activity matters more after heavy pieces disappear.", "The e5 square contains the target.", "Play Nxe5."],
+  },
+  "conversion.two-weaknesses": {
+    fen: "4k3/p6p/8/8/8/8/P6P/3RK3 w - - 0 1",
+    acceptedMoves: ["d1d7"],
+    prompt: "Use the active rook to penetrate centrally so it can attack either wing.",
+    success: "You created the mobility needed to pressure two separated weaknesses.",
+    hints: ["Do not commit to only one wing.", "Use the open d-file for penetration.", "Play Rd7."],
+  },
+  "practical.complications": {
+    fen: ADV_COMBO,
+    acceptedMoves: ["e1e8"],
+    prompt: "Here simplification is not the priority: choose the forcing line because the tactical conditions justify complexity.",
+    success: "You matched the level of complexity to the concrete position instead of following a fixed preference.",
+    hints: ["The king is vulnerable now.", "A forcing rook move changes the evaluation immediately.", "Play Re8+."],
   },
 };
 

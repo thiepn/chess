@@ -63,7 +63,7 @@ describe("course assessment engine", () => {
       new Date("2026-10-05T12:00:00Z"),
     );
 
-    expect(session.items).toHaveLength(16);
+    expect(session.items).toHaveLength(18);
     for (const stage of curriculumStages) {
       expect(
         session.items.filter((item) => item.stageId === stage.id),
@@ -291,7 +291,7 @@ describe("course assessment engine", () => {
       new Date("2026-10-05T12:10:00Z"),
     );
 
-    expect(applied.state.placement?.recommendedStageId).toBe("practical");
+    expect(applied.state.placement?.recommendedStageId).toBe("advanced");
     expect(applied.state.stageCertifications).toBeUndefined();
     expect(
       applied.state.mastery[session.items[0].skillId]?.attempts,

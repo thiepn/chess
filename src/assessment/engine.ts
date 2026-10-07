@@ -42,6 +42,8 @@ const placementAnchorIds = [
   "conversion.simplify",
   "practical.plan",
   "practical.post-move-check",
+  "strategy.imbalances",
+  "calculation.branching",
 ];
 
 const transferRequirements: Record<CurriculumStageId, number> = {
@@ -53,6 +55,7 @@ const transferRequirements: Record<CurriculumStageId, number> = {
   fight: 28,
   finish: 22,
   practical: 30,
+  advanced: 35,
 };
 
 export const baseStageRequirements: Omit<StageGateRequirements, "transfer"> = {

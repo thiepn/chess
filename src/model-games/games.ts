@@ -115,6 +115,7 @@ export const modelGames: ModelGame[] = [
       "strategy.piece-activity",
       "openings.king-safety",
       "strategy.open-files",
+      "strategy.exchanges",
     ],
     repertoireId: "white-e4-simple",
     checkpoints: [
@@ -206,6 +207,27 @@ export const modelGames: ModelGame[] = [
         turningPoint:
           "The final mating pattern is a consequence of accumulated activity, not a disconnected tactical trick.",
       }),
+      checkpoint({
+        id: "opera-transform-exchange",
+        ply: 24,
+        skillId: "strategy.exchanges",
+        title: "Exchange to keep the initiative",
+        prompt:
+          "White is about to give up one rook on d7. Why is this exchange strategically justified?",
+        options: [
+          option("a", "Because the exchange clears the d-file so the remaining rook can enter with tempo while Black stays uncoordinated.", true, "Correct. The value of the exchange is the transformed position: one active rook replaces another on the decisive file."),
+          option("b", "Because exchanging rooks is always desirable when attacking.", false, "Automatic exchanges can kill an attack. Here it works only because the remaining rook gains the open file immediately."),
+          option("c", "Because material no longer matters once the enemy king is uncastled.", false, "Material still matters; the exchange is justified by concrete activity and coordination."),
+        ],
+        hints: [
+          "Look at what happens to the d-file after Rxd7.",
+          "Ask which white rook can replace the exchanged rook immediately.",
+        ],
+        explanation:
+          "Rxd7! is not a generic simplification. It removes Black's key defender and clears d1-d8 so the other rook can occupy the file with tempo.",
+        plan:
+          "Judge an exchange by the position it creates: which lines open, which defender disappears, and which remaining piece becomes stronger.",
+      }),
     ],
   },
   {
@@ -227,6 +249,7 @@ export const modelGames: ModelGame[] = [
       "strategy.piece-activity",
       "openings.king-safety",
       "strategy.open-files",
+      "strategy.repertoire-middlegames",
     ],
     repertoireId: "black-caro",
     checkpoints: [
@@ -250,6 +273,27 @@ export const modelGames: ModelGame[] = [
           "Capablanca played ...c5. It immediately questions d4 and ensures that White's advanced center must make concrete decisions.",
         plan:
           "In the Advance Caro-Kann, do not confuse solidity with passivity: use ...c5 to attack the base of the chain.",
+      }),
+      checkpoint({
+        id: "caro-repertoire-middlegame",
+        ply: 13,
+        skillId: "strategy.repertoire-middlegames",
+        title: "Recognize the structure after theory ends",
+        prompt:
+          "Forget the exact opening move number. Which recurring Caro-Kann middlegame idea should Black recognize here?",
+        options: [
+          option("a", "Challenge the d4 base with ...c5 and develop around the opened queenside and central lines.", true, "Correct. The structure tells you the plan even when the move order is unfamiliar."),
+          option("b", "Keep the c6 pawn fixed forever because the Caro-Kann is a defensive opening.", false, "The c-pawn was placed on c6 largely to support the freeing ...c5 or ...e5 ideas later."),
+          option("c", "Attack only on the kingside because White has more space.", false, "The central pawn chain points to its base; Black should first challenge the structure."),
+        ],
+        hints: [
+          "Name the pawn chain before thinking about opening names.",
+          "The base of White's advanced center is d4.",
+        ],
+        explanation:
+          "The useful repertoire memory is structural: after ...c5, Black contests d4, develops with purpose and stops White's space advantage from becoming permanent.",
+        plan:
+          "Carry structures and breaks out of the opening, not just memorized coordinates.",
       }),
       checkpoint({
         id: "caro-nf5",
@@ -337,6 +381,7 @@ export const modelGames: ModelGame[] = [
       "pawns.breaks",
       "defense.counterplay",
       "attack.king-safety",
+      "strategy.imbalances",
     ],
     repertoireId: "black-qgd",
     checkpoints: [
@@ -406,6 +451,27 @@ export const modelGames: ModelGame[] = [
           "From this point the game is no longer about maintaining a QGD shell. It becomes a dynamic fight in which initiative matters more than static structure.",
       }),
       checkpoint({
+        id: "qgd-imbalance",
+        ply: 57,
+        skillId: "strategy.imbalances",
+        title: "Re-evaluate the imbalances",
+        prompt:
+          "Before ...e5, what has changed enough that Black should stop thinking of the position as a quiet QGD?",
+        options: [
+          option("a", "Black's pieces are coordinated and central pawn mobility can create initiative, so dynamic activity now outweighs preserving the static shell.", true, "Correct. The relevant imbalance has shifted from structure to activity and initiative."),
+          option("b", "Nothing important has changed; Black should preserve the original pawn structure at all costs.", false, "Plans must change when piece activity and pawn breaks change the position's dominant features."),
+          option("c", "Black should simplify only because the world-championship match situation demands it.", false, "The board position, not the event narrative, justifies the central transformation."),
+        ],
+        hints: [
+          "Compare piece activity now with the position before ...c5.",
+          "Ask whether the e6 pawn is still more valuable as a defender or as a lever.",
+        ],
+        explanation:
+          "The important imbalance is now dynamic: Black's coordinated pieces make ...e5 possible, and opening the center favors activity over static restraint.",
+        plan:
+          "Re-evaluate imbalances after every major structural change; the best plan can change even when the material does not.",
+      }),
+      checkpoint({
         id: "qgd-f5",
         ply: 59,
         skillId: "defense.counterplay",
@@ -447,6 +513,7 @@ export const modelGames: ModelGame[] = [
       "pawns.breaks",
       "attack.open-lines",
       "attack.sacrifice",
+      "strategy.coordination",
     ],
     checkpoints: [
       checkpoint({
@@ -513,6 +580,27 @@ export const modelGames: ModelGame[] = [
           "Use a pawn break when the resulting open lines and passed pawns favor your active pieces.",
         turningPoint:
           "The strategic buildup has now produced tactical conditions. From here calculation becomes inseparable from the positional plan.",
+      }),
+      checkpoint({
+        id: "avro-coordination",
+        ply: 46,
+        skillId: "strategy.coordination",
+        title: "Make every piece support the break",
+        prompt:
+          "Why is f5 powerful now rather than several moves earlier?",
+        options: [
+          option("a", "White's queen, rooks, bishop, knight and central pawns now support the same kingside-central transformation.", true, "Correct. The break works because the pieces are coordinated around the resulting open lines and passed pawn."),
+          option("b", "Pawn breaks become stronger automatically as the game gets longer.", false, "Timing comes from piece placement and the opponent's resources, not move number."),
+          option("c", "The move is good only because it attacks a piece immediately.", false, "The deeper point is the structural transformation and the coordinated follow-up."),
+        ],
+        hints: [
+          "Count how many white pieces become more active after the f-file and e-file structure changes.",
+          "Compare the break with the earlier position before e4-e5.",
+        ],
+        explanation:
+          "f5 succeeds because White's pieces are no longer pursuing separate goals. They all benefit from the same transformation: open lines, a passed e-pawn and access to Black's king.",
+        plan:
+          "Before a major break, ask whether your pieces are coordinated to use the position that will exist after the pawns move.",
       }),
       checkpoint({
         id: "avro-ba3",
