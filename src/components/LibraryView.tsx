@@ -6,7 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   FlipHorizontal2,
-  FolderOpen,
   Gamepad2,
   Heart,
   Library,
