@@ -15,6 +15,12 @@ const flatCssFiles = [
   "src/styles/p47-train-native.css",
   "src/styles/p48-material.css",
   "src/styles/p49-motion.css",
+  "src/styles/p51-train-large.css",
+  "src/styles/p51-learn-large.css",
+  "src/styles/p51-play-large.css",
+  "src/styles/p51-review-large.css",
+  "src/styles/p51-library-large.css",
+  "src/styles/p51-progress-large.css",
 ];
 
 const componentDir = path.join(root, "src", "components");
