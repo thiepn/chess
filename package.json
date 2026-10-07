@@ -16,7 +16,8 @@
     "puzzles:audit": "node scripts/audit-puzzle-corpus.mjs public/data/puzzles",
     "puzzles:ensure": "node scripts/ensure-puzzle-corpus.mjs",
     "perf:budget": "node scripts/check-performance-budget.mjs",
-    "design:audit": "node scripts/audit-material-system.mjs"
+    "design:audit": "node scripts/audit-material-system.mjs",
+    "motion:audit": "node scripts/audit-motion-system.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
