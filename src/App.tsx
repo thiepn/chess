@@ -279,6 +279,8 @@ export default function App() {
     : undefined;
   const trainingSessionOpen =
     page === "train" && route.path.startsWith("/train/session/");
+  const playSessionOpen =
+    page === "play" && route.path.startsWith("/play/game/");
   const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
@@ -2257,7 +2259,16 @@ export default function App() {
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className={trainingSessionOpen ? "app-shell app-shell-v2 training-session-open" : "app-shell app-shell-v2"}>
+      <div
+        className={[
+          "app-shell",
+          "app-shell-v2",
+          trainingSessionOpen ? "training-session-open" : "",
+          playSessionOpen ? "play-session-open" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <header className="app-topbar">
           <button
             className="app-brand"
@@ -2760,6 +2771,8 @@ export default function App() {
         ) : page === "play" ? (
           <PlayView
             mastery={state.mastery}
+            routePath={route.path}
+            onNavigate={navigate}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}
@@ -2842,7 +2855,7 @@ export default function App() {
         </Suspense>
       </main>
 
-      {!trainingSessionOpen && (
+      {!trainingSessionOpen && !playSessionOpen && (
         <nav className="mobile-nav" aria-label="Primary navigation">
           {navItems.map(({ id, label, Icon }) => (
             <button
