@@ -370,7 +370,7 @@ export function ReviewView({
             </span>
             <span>
               <strong>{unresolved.length}</strong>
-              to repair
+              to revisit
             </span>
           </div>
         </header>
