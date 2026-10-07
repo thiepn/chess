@@ -119,7 +119,7 @@ export function GameArena({
   const clockConfig = useMemo(() => timeControlConfig(timeControl), [timeControl]);
   const [whiteMs, setWhiteMs] = useState(clockConfig.initialMs);
   const [blackMs, setBlackMs] = useState(clockConfig.initialMs);
-  const { feedback, celebrate } = useExperience();
+  const { feedback, celebrate, settings } = useExperience();
 
   useEffect(() => {
     setWhiteMs(clockConfig.initialMs);
@@ -426,7 +426,11 @@ export function GameArena({
           <div className="game-player-strip player">
             <div>
               <span className="game-player-mark you" aria-hidden="true">
-                <ChessPiece color={playerColor} type="p" />
+                <ChessPiece
+                  color={playerColor}
+                  type="p"
+                  styleVariant={settings.pieceStyle}
+                />
               </span>
               <span>
                 <strong>You</strong>
