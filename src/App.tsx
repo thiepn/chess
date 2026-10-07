@@ -535,8 +535,19 @@ export default function App() {
     mode,
     route.path,
     runtimeReady,
+    trainingReturnPath,
     trainingSessionOpen,
   ]);
+
+  useEffect(() => {
+    if (trainingSessionOpen) return;
+    if (!runtimeReady) return;
+    setActiveIndex(null);
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+  }, [runtimeReady, trainingSessionOpen]);
 
   useEffect(() => {
     if (!trainingSessionOpen) return;
@@ -2338,7 +2349,11 @@ export default function App() {
                   </span>
                   <strong>
                     {assessmentSession
-                      ? assessmentSession.title
+                      ? assessmentSession.kind === "placement"
+                        ? "Course placement"
+                        : assessmentSession.stageId
+                          ? `${curriculumStages.find((stage) => stage.id === assessmentSession.stageId)?.title ?? "Stage"} checkpoint`
+                          : "Stage checkpoint"
                       : activeModelGame
                         ? activeModelGame.title
                         : active?.title ?? "Training session"}
@@ -2380,14 +2395,25 @@ export default function App() {
               <div
                 className={[
                   "train-runtime-body",
-                  active?.activityType === "engineGame" ? "runtime-game" : "",
-                  active?.activityType === "calculation" ? "runtime-calculation" : "",
+                  active && active.activityType !== "engineGame"
+                    ? "board-first-sheet"
+                    : "",
+                  active?.activityType === "engineGame"
+                    ? "runtime-game adaptive-game-sheet"
+                    : "",
+                  active?.activityType === "calculation"
+                    ? "runtime-calculation calculation-sheet"
+                    : "",
                   active?.activityType === "endgameDrill" ||
                   active?.activityType === "conversionChallenge"
-                    ? "runtime-endgame"
+                    ? "runtime-endgame endgame-technique-sheet"
                     : "",
-                  assessmentSession ? "runtime-assessment" : "",
-                  activeModelGame ? "runtime-model-game" : "",
+                  assessmentSession
+                    ? "runtime-assessment assessment-sheet"
+                    : "",
+                  activeModelGame
+                    ? "runtime-model-game model-game-sheet"
+                    : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
