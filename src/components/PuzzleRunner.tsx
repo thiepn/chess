@@ -315,7 +315,7 @@ export function PuzzleRunner({
             </div>
 
             {feedback && !solved && (
-              <div className="lesson-feedback error">
+              <div className="lesson-feedback error" role="alert" aria-atomic="true">
                 <span>{feedback}</span>
                 <button type="button" onClick={resetCurrentPosition}>
                   <RotateCcw size={15} /> Reset
@@ -324,7 +324,7 @@ export function PuzzleRunner({
             )}
 
             {showHint && !solved && (
-              <div className="hint-card">
+              <div className="hint-card" role="status" aria-live="polite">
                 <Lightbulb size={18} />
                 <div>
                   <strong>Directional hint</strong>
@@ -335,7 +335,7 @@ export function PuzzleRunner({
 
             {solved && (
               <>
-                <div className="lesson-feedback success">
+                <div className="lesson-feedback success" role="status" aria-live="polite" aria-atomic="true">
                   <Sparkles size={19} />
                   <div>
                     <strong>Correct sequence</strong>
@@ -418,7 +418,7 @@ export function PuzzleRunner({
                   )}
 
                   {verification && (
-                    <div className="puzzle-engine-result">
+                    <div className="puzzle-engine-result" role="status" aria-live="polite" aria-atomic="true">
                       <span>Stockfish · depth {verification.depth}</span>
                       <strong>
                         {sanForUci(
@@ -437,7 +437,7 @@ export function PuzzleRunner({
                   )}
 
                   {verificationError && (
-                    <small className="puzzle-engine-error">
+                    <small className="puzzle-engine-error" role="alert">
                       {verificationError}
                     </small>
                   )}
