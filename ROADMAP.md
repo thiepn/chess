@@ -1,4 +1,4 @@
-# Chess — Revised Product Roadmap after P25
+# Chess — Product Roadmap after P36 Visual Reset
 
 ## North star
 
@@ -377,23 +377,122 @@ Deliver:
 
 The target is inviting and polished like Chess.com, while remaining calmer and more learning-focused rather than over-gamified.
 
-### P37 — Real-Use Qualification & Defect-Only Hardening
+### P37 — Visual Architecture Lock
 
-**Purpose:** stop adding features and use the app as a learner.
+**Status:** implemented.
 
-Run repeated real workflows:
+**Purpose:** lock the post-P36 chess-specific visual direction before rebuilding page architecture.
 
-- open → Train now;
-- Learn → Practice;
-- play human game → import/sync → review → retry → retrain;
-- opening deviation → recall;
-- mistake → spaced return;
-- endgame drill → later retention;
-- week of ordinary use on desktop and mobile.
+Deliver:
 
-Fix friction, weak explanations, bad recommendations, repetitive content and interaction defects.
+- authoritative `DESIGN_SYSTEM_V2.md`;
+- namespaced `--chess-*` tokens that do not repaint the legacy shell prematurely;
+- Train as the future default route;
+- five primary route-level destinations: Train / Learn / Play / Review / Library;
+- Progress and Settings as secondary destinations;
+- explicit ban on giant sentence heroes, generic permanent sidebars and modal-only primary workflows;
+- page identities for training room, interactive chess book, tournament board, analysis desk, study archive and player-development record;
+- board-first sizing, color, typography, shape, motion and accessibility contracts;
+- executable architecture invariants in tests.
 
-Do not add another analytics subsystem during this phase.
+Acceptance:
+
+- future phases can implement screens without inventing visual rules;
+- legacy P0–P36 product logic remains untouched;
+- tokens are available to code but legacy variables remain unmapped until migration;
+- the design contract explicitly prevents a cosmetic-only reskin of the current dashboard.
+
+### P38 — Real Routing & App Shell
+
+Replace pseudo-routing and the permanent SaaS sidebar with route-level pages, a compact desktop top bar and mobile bottom navigation. Train becomes the default destination. Primary workflows stop depending on giant overlays.
+
+### P39 — Board Design System 2.0
+
+Replace Unicode pieces with a proper SVG set, migrate to the locked ivory/graphite board palette, standardize move/check/teaching semantics and preserve P36 keyboard/screen-reader behavior.
+
+### P40 — Train Page Reconstruction
+
+Remove the dashboard-like Train home and replace it with a training rail + dominant board + contextual coaching workspace.
+
+### P41 — Train Runtime Migration
+
+Move lessons, puzzles, calculation, endgames, opening recall, personal mistakes, saved studies and assessments into the route-level Train workspace.
+
+### P42 — Learn Architecture Redesign
+
+Turn Learn into an interactive chess textbook with curriculum navigation, teaching board and lesson content rather than course-dashboard cards.
+
+### P43 — Play Page Redesign
+
+Make Play a genuine chess playing surface with board, clocks, notation and compact pre-game configuration.
+
+### P44 — Review Page Redesign
+
+Build a serious board + notation + critical-moment analysis workstation around the existing self-analysis-first P30 behavior.
+
+### P45 — Library Page Redesign
+
+Build route-level repertoire, model-game, saved-position, endgame, game and study workspaces.
+
+### P46 — Progress Page Reconstruction
+
+Move the analytics-heavy material where it belongs: a chess-specific player-development record rather than the default product surface.
+
+### P47 — Visual Identity & Typography
+
+Introduce the Chess mark, restrained editorial typography and recognizable product identity without reviving marketing-style hero composition.
+
+### P48 — Material & Component Cleanup
+
+Remove legacy card/panel/hero defaults, reduce excessive rounding/shadows and migrate surfaces to rails, lists, separators, notation regions and board-side tools.
+
+### P49 — Motion & Tactile Interaction
+
+Center motion on chess actions: piece movement, capture, castling, promotion, board flip, solution reveal and analysis transitions.
+
+### P50 — Mobile-Native Rebuild
+
+Qualify each primary route as a native mobile composition rather than stacked desktop UI.
+
+### P51 — Tablet & Large-Desktop Composition
+
+Tune board/context composition for landscape tablets, portrait tablets, 1440p+ and ultrawide screens without dashboard stretching.
+
+### P52 — Accessibility Requalification
+
+Re-test keyboard navigation, screen readers, focus, reduced motion, touch targets and color-independent board semantics after the structural migration.
+
+### P53 — Theme & Board Customization
+
+Add a small high-quality set of board/piece options only after the default experience is visually strong.
+
+### P54 — Visual Content Pass
+
+Remove placeholder copy, internal jargon, generic icons, duplicate labels and any remaining SaaS-style motivational language.
+
+### P55 — Cross-Page Workflow Integration
+
+Verify Review → Train, Learn → Train, Library → Train and Play → Review as real routed workflows with preserved context.
+
+### P56 — Performance & Route Optimization
+
+Lazy-load real routes, preload likely destinations, cache piece assets, optimize long lists and preserve the P36 production budgets.
+
+### P57 — Visual Regression Suite
+
+Capture deterministic desktop/mobile states for Train, Learn, Play, Review, Library and Progress to prevent design drift.
+
+### P58 — Real-Device UX Qualification
+
+Use the rebuilt app through real training, play and review sessions on phones, tablets, laptops and desktops.
+
+### P59 — Visual QA Against Locked Design
+
+Score the implementation against the P37 design contract and repair any category below the release target.
+
+### P60 — Defect-Only Release Candidate
+
+Freeze features. Only defects, accessibility, responsive, performance, copy and persistence/routing fixes are allowed before V1.0.
 
 ## Product-priority order from now on
 
@@ -414,7 +513,7 @@ Planning is now deliberately last.
 
 ## Explicitly cancelled / deferred
 
-Do not build these next:
+Do not build these during the visual migration:
 
 - cross-cycle competition memory;
 - longitudinal tournament comparison dashboards;
