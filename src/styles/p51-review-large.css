@@ -1,0 +1,68 @@
+/* P51 — large desktop Review composition */
+
+@media (min-width: 1536px) {
+  .app-shell-v2 .app-main:has(.review-v2),
+  .app-shell-v2 .app-main:has(.review-workstation),
+  .app-shell-v2 .app-main:has(.review-v2-upgrade) {
+    width: min(var(--chess-workspace-max-wide), 100%);
+  }
+
+  .review-v2 {
+    grid-template-columns: 250px minmax(560px, 1fr) 320px;
+    gap: clamp(24px, 2vw, 34px);
+  }
+
+  .review-v2-main {
+    max-width: 980px;
+  }
+
+  .review-v2-main-head p:not(.eyebrow) {
+    max-width: var(--chess-reading-max);
+  }
+
+  .review-workspace-v2 {
+    grid-template-columns:
+      minmax(650px, 1fr)
+      230px
+      minmax(320px, 360px);
+    gap: clamp(22px, 1.8vw, 30px);
+  }
+
+  .review-board-v2 .chess-board-wrap {
+    width: min(
+      100%,
+      calc(100dvh - 245px),
+      var(--chess-board-max-review-large)
+    );
+  }
+
+  .review-board-v2 .story-preview-controls,
+  .review-board-story {
+    width: min(100%, var(--chess-board-max-review-large));
+  }
+
+  .review-insight-v2 {
+    max-width: 360px;
+  }
+
+  .review-insight-v2 .moment-summary,
+  .review-insight-v2 .moment-coach-summary {
+    max-width: 42ch;
+  }
+}
+
+@media (min-width: 1536px) and (min-height: 1100px) {
+  .review-board-v2 .chess-board-wrap {
+    width: min(100%, var(--chess-board-max-review-large));
+  }
+}
+
+@media (min-width: 1920px) {
+  .review-workspace-v2 {
+    grid-template-columns:
+      minmax(700px, 780px)
+      240px
+      360px;
+    justify-content: center;
+  }
+}
