@@ -184,7 +184,12 @@ export function PlayView({
   }
 
   if (route.mode === "game") {
-    if (!activeSetup) {
+    const missingDynamicScenario =
+      Boolean(activeSetup?.scenarioId) &&
+      !activeScenario &&
+      !scenarioById[activeSetup!.scenarioId!];
+
+    if (!activeSetup || missingDynamicScenario) {
       return (
         <section className="play-game-recovery">
           <strong>Game session unavailable</strong>
