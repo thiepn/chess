@@ -13399,3 +13399,24 @@ html[data-motion="reduced"] .train-now-button {
   animation: none !important;
   transition: none !important;
 }
+
+
+.route-loading {
+  min-height: min(62vh, 620px);
+  display: grid;
+  place-content: center;
+  justify-items: stretch;
+  gap: 9px;
+  width: min(420px, 82vw);
+  margin: 0 auto;
+}
+
+.route-loading .loading-shimmer {
+  display: block;
+  height: 11px;
+  border-radius: 999px;
+}
+
+.route-loading .loading-shimmer.short {
+  width: 62%;
+}
