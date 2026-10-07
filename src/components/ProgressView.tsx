@@ -386,7 +386,7 @@ export function ProgressView({
                   <strong>{stageTitle(stage.stageId)}</strong>
                   <small>
                     {stage.certifiedAt
-                      ? `${stage.days}d to certify`
+                      ? `${stage.days}d to pass`
                       : stage.startedAt
                         ? `${stage.days}d active`
                         : "Not started"}
