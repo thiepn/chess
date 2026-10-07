@@ -5,13 +5,11 @@ import {
   BookOpen,
   BrainCircuit,
   ChevronRight,
-  Clock3,
   ClipboardCheck,
   Compass,
   Library,
   Play,
   RefreshCcw,
-  Sparkles,
   Swords,
   Target,
 } from "lucide-react";
@@ -36,6 +34,7 @@ import type {
 import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
 import { LessonRunner } from "./components/LessonRunner";
+import { ChessBoard } from "./components/ChessBoard";
 import { PuzzleRunner } from "./components/PuzzleRunner";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { CalculationRunner } from "./components/CalculationRunner";
@@ -108,6 +107,7 @@ import {
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
+import { lessonForSkill } from "./learning/lessons";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 
@@ -191,24 +191,6 @@ function activityIcon(activity: TrainingActivity) {
   return <BrainCircuit size={18} />;
 }
 
-function gateStatusLabel(status: StageGateEvaluation["status"]) {
-  if (status === "passed") return "Certified";
-  if (status === "ready") return "Checkpoint ready";
-  if (status === "placed") return "Placement cleared";
-  if (status === "remediation") return "Repair needed";
-  if (status === "provisional") return "Evidence pending";
-  if (status === "locked") return "Locked";
-  return "Building evidence";
-}
-
-function gateBlockerLabel(key: keyof StageGateEvaluation["metrics"]) {
-  if (key === "coverage") return "breadth";
-  if (key === "mastery") return "mastery";
-  if (key === "retention") return "retention";
-  if (key === "transfer") return "transfer";
-  return "checkpoint";
-}
-
 function reasonLabel(activity: TrainingActivity) {
   if (activity.source === "prescription") return "FROM YOUR REAL-GAME PLAN";
   if (activity.source === "weakness") return "FROM YOUR WEAKNESSES";
@@ -224,6 +206,7 @@ export default function App() {
   const [state, setState] = useState<UserState>(initialUserState);
   const [loaded, setLoaded] = useState(false);
   const [mode, setMode] = useState<SessionMode>("standard");
+  const [previewIndex, setPreviewIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [learnMode, setLearnMode] = useState<"curriculum" | "openings" | "model-games">("curriculum");
@@ -385,7 +368,6 @@ export default function App() {
     );
   }, [stageGates, state.placement]);
 
-  const currentCourseGate = stageGates[currentCourseStage.id];
   const progressIntelligence = useMemo(
     () => buildProgressIntelligence(state),
     [state],
@@ -418,6 +400,32 @@ export default function App() {
   }, [loaded, progressIntelligence.prescriptions]);
 
   const firstActivity = session.activities[0];
+  const boundedPreviewIndex = Math.min(
+    previewIndex,
+    Math.max(0, session.activities.length - 1),
+  );
+  const previewActivity = session.activities[boundedPreviewIndex] ?? firstActivity;
+  const previewSkill = previewActivity
+    ? skillById[previewActivity.skillIds[0]]
+    : null;
+  const previewLesson = useMemo(
+    () =>
+      previewActivity && previewSkill
+        ? lessonForSkill(
+            previewSkill.id,
+            previewSkill.title,
+            previewSkill.description,
+            previewActivity.activityType,
+          )
+        : null,
+    [previewActivity, previewSkill],
+  );
+  const previewFen = previewLesson?.steps[0]?.fen;
+
+  useEffect(() => {
+    if (previewIndex < session.activities.length) return;
+    setPreviewIndex(0);
+  }, [previewIndex, session.activities.length]);
 
   useEffect(() => {
     if (!dialogOpen) return;
@@ -2234,268 +2242,176 @@ export default function App() {
         <main className="main app-main">
         <Suspense fallback={<RouteLoading />}>
         {page === "train" ? (
-          <>
-            <header className="train-home-hero">
-              <div className="train-home-copy">
-                <span className="train-now-kicker">
-                  <Sparkles size={14} /> Recommended now
-                </span>
-                <h1>{firstActivity?.title ?? "Train what matters."}</h1>
-                <p>{homeTrainingReason}</p>
-
-                <div className="train-home-actions">
-                  <button
-                    className="primary train-now-button"
-                    type="button"
-                    onClick={() => setActiveIndex(0)}
-                    disabled={!session.activities.length}
-                    title="Start recommended training · T"
-                  >
-                    Train now
-                    <span>{session.plannedMinutes} min</span>
-                    <ChevronRight size={18} />
-                  </button>
-                  <button
-                    className="secondary"
-                    type="button"
-                    onClick={() => navigatePage("learn")}
-                  >
-                    Browse course
-                  </button>
-                </div>
-
-                <div className="train-home-context">
-                  <span>
-                    <strong>{session.activities.length}</strong> focused activit{session.activities.length === 1 ? "y" : "ies"}
-                  </span>
-                  <span>
-                    <strong>{progressIntelligence.trainingHorizon.nextFocusLabel}</strong> emphasis
-                  </span>
-                  <span>
-                    <strong>{progressIntelligence.trainingHorizon.completedMinutes}/{progressIntelligence.trainingHorizon.managedWeeklyMinutes}m</strong> this week
-                  </span>
-                </div>
-              </div>
-
-              <div className="train-home-orb" aria-hidden="true">
-                <Clock3 size={22} />
-                <strong>{session.plannedMinutes}</strong>
-                <span>min</span>
-              </div>
-            </header>
-
-            <section className="mode-switch train-mode-switch" aria-label="Training duration">
-              {(Object.keys(sessionMinutes) as SessionMode[]).map((item) => (
-                <button
-                  key={item}
-                  className={[
-                    "mode",
-                    mode === item ? "active" : "",
-                    progressIntelligence.trainingHorizon.recommendedSessionMode === item
-                      ? "recommended"
-                      : "",
-                  ].filter(Boolean).join(" ")}
-                  aria-pressed={mode === item}
-                  onClick={() => {
-                    setMode(item);
-                    setActiveIndex(null);
-                  }}
-                >
-                  <strong>{modeLabels[item]}</strong>
-                  <span>
-                    {sessionMinutes[item]} min
-                    {progressIntelligence.trainingHorizon.recommendedSessionMode === item
-                      ? " · suggested"
-                      : ""}
-                  </span>
-                </button>
-              ))}
-            </section>
-
-            <section className="train-session-preview">
-              <div className="train-session-preview-head">
+          <section className="train-room" aria-labelledby="train-room-title">
+            <aside className="train-room-rail" aria-label="Training session">
+              <div className="train-room-rail-heading">
                 <div>
-                  <p className="eyebrow">TODAY'S SESSION</p>
-                  <h2>Know what you are doing before you start.</h2>
+                  <span>Session</span>
+                  <strong>{session.plannedMinutes} min</strong>
                 </div>
-                <button
-                  type="button"
-                  className="text-action"
-                  onClick={() => navigatePage("progress")}
-                >
-                  Why this session? <ChevronRight size={15} />
-                </button>
+                <span>{session.activities.length} positions</span>
               </div>
 
-              <div className="train-session-activities">
-                {session.activities.slice(0, 4).map((activity, index) => (
-                  <article key={activity.id}>
-                    <div className="activity-index">{index + 1}</div>
-                    <div className="activity-icon">{activityIcon(activity)}</div>
-                    <div>
-                      <small>{reasonLabel(activity)}</small>
-                      <strong>{activity.title}</strong>
-                      <span>{activity.subtitle}</span>
-                    </div>
-                    <em>{activity.estimatedMinutes}m</em>
-                  </article>
+              <div className="train-duration-tabs" aria-label="Training duration">
+                {(Object.keys(sessionMinutes) as SessionMode[]).map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    className={mode === item ? "active" : ""}
+                    aria-pressed={mode === item}
+                    onClick={() => {
+                      setMode(item);
+                      setPreviewIndex(0);
+                      setActiveIndex(null);
+                    }}
+                  >
+                    <strong>{modeLabels[item]}</strong>
+                    <span>{sessionMinutes[item]}m</span>
+                  </button>
                 ))}
               </div>
 
-              <div className="train-session-footer">
-                <p>{homeTrainingReason}</p>
-                <button
-                  className="primary"
-                  type="button"
-                  onClick={() => setActiveIndex(0)}
-                  disabled={!session.activities.length}
-                >
-                  Start session <ChevronRight size={18} />
-                </button>
+              <div className="train-queue" role="list" aria-label="Today's training queue">
+                {session.activities.map((activity, index) => (
+                  <button
+                    key={activity.id}
+                    type="button"
+                    role="listitem"
+                    className={boundedPreviewIndex === index ? "train-queue-item active" : "train-queue-item"}
+                    aria-current={boundedPreviewIndex === index ? "true" : undefined}
+                    onClick={() => setPreviewIndex(index)}
+                  >
+                    <span className="train-queue-index">{index + 1}</span>
+                    <span className="train-queue-icon">{activityIcon(activity)}</span>
+                    <span className="train-queue-copy">
+                      <small>{reasonLabel(activity)}</small>
+                      <strong>{activity.title}</strong>
+                    </span>
+                    <span className="train-queue-time">{activity.estimatedMinutes}m</span>
+                  </button>
+                ))}
               </div>
-            </section>
 
-            {!state.placement && (
-              <section className="home-placement-card train-secondary-card">
-                <div className="home-placement-icon">
-                  <ClipboardCheck size={22} />
-                </div>
-                <div>
-                  <p className="eyebrow">OPTIONAL PLACEMENT</p>
-                  <strong>Calibrate the course before studying deeply.</strong>
-                  <span>
-                    The diagnostic samples the full course, but it never blocks you from training now.
-                  </span>
-                </div>
+              <button
+                type="button"
+                className="train-rail-progress"
+                onClick={() => navigatePage("progress")}
+              >
+                <Target size={15} />
+                Training history
+              </button>
+            </aside>
+
+            <div className="train-room-board-column">
+              <div className="train-board-context">
+                <span>{previewSkill ? domainLabels[previewSkill.domain] : "Training"}</span>
+                <span>{boundedPreviewIndex + 1} / {Math.max(1, session.activities.length)}</span>
+              </div>
+
+              <div className="train-preview-board">
+                {previewFen ? (
+                  <ChessBoard
+                    key={`train-preview-${previewActivity?.id ?? "empty"}-${mode}`}
+                    fen={previewFen}
+                    orientation={previewFen.split(/\s+/)[1] === "b" ? "b" : "w"}
+                    disabled
+                  />
+                ) : (
+                  <div className="train-preview-empty" aria-live="polite">
+                    No training position is due.
+                  </div>
+                )}
+              </div>
+
+              <div className="train-board-status">
+                <span>
+                  {previewActivity
+                    ? reasonLabel(previewActivity).toLowerCase()
+                    : "adaptive session"}
+                </span>
+                <span>
+                  {progressIntelligence.trainingHorizon.completedMinutes}/
+                  {progressIntelligence.trainingHorizon.managedWeeklyMinutes} min this week
+                </span>
+              </div>
+            </div>
+
+            <aside className="train-room-coach">
+              <div className="train-task-copy">
+                <p className="eyebrow">
+                  {previewActivity ? reasonLabel(previewActivity) : "TRAINING"}
+                </p>
+                <h1 id="train-room-title">
+                  {previewActivity?.title ?? "No training due"}
+                </h1>
+                <p className="train-task-subtitle">
+                  {previewActivity?.subtitle ??
+                    "Your adaptive queue is clear. Browse the course to choose a concept."}
+                </p>
+                {previewActivity && (
+                  <p className="train-task-reason">
+                    {boundedPreviewIndex === 0
+                      ? homeTrainingReason
+                      : `Part ${boundedPreviewIndex + 1} of today's adaptive session.`}
+                  </p>
+                )}
+              </div>
+
+              <div className="train-task-actions">
+                <button
+                  className="primary train-room-start"
+                  type="button"
+                  onClick={() => setActiveIndex(boundedPreviewIndex)}
+                  disabled={!previewActivity}
+                >
+                  Start training
+                  <ChevronRight size={17} />
+                </button>
                 <button
                   className="secondary"
                   type="button"
+                  onClick={() => navigatePage("learn")}
+                >
+                  Study concept
+                </button>
+              </div>
+
+              <dl className="train-session-facts">
+                <div>
+                  <dt>Course</dt>
+                  <dd>{currentCourseStage.title}</dd>
+                </div>
+                <div>
+                  <dt>Focus</dt>
+                  <dd>{progressIntelligence.trainingHorizon.nextFocusLabel}</dd>
+                </div>
+                <div>
+                  <dt>Goal</dt>
+                  <dd>{progressIntelligence.trainingHorizon.goalLabel}</dd>
+                </div>
+              </dl>
+
+              {!state.placement && (
+                <button
+                  className="train-placement-action"
+                  type="button"
                   onClick={startPlacementAssessment}
                 >
-                  Start diagnostic
-                </button>
-              </section>
-            )}
-
-            <section className="train-plan-strip">
-              <div>
-                <span>Current goal</span>
-                <strong>{progressIntelligence.trainingHorizon.goalLabel}</strong>
-              </div>
-              <div>
-                <span>Course stage</span>
-                <strong>{currentCourseStage.title}</strong>
-              </div>
-              <div>
-                <span>Weekly progress</span>
-                <strong>
-                  {progressIntelligence.trainingHorizon.completedMinutes}/
-                  {progressIntelligence.trainingHorizon.managedWeeklyMinutes}m
-                </strong>
-              </div>
-              <button
-                type="button"
-                className="secondary"
-                onClick={() => navigatePage("progress")}
-              >
-                Plan & progress <ChevronRight size={15} />
-              </button>
-            </section>
-
-            {progressIntelligence.trainingHorizon.competitionCycle.enabled && (
-              <section className="train-competition-summary">
-                <Target size={18} />
-                <div>
-                  <span>Competition preparation</span>
-                  <strong>
-                    {progressIntelligence.trainingHorizon.competitionCycle.phaseLabel}
-                    {progressIntelligence.trainingHorizon.competitionCycle.daysToEvent !== undefined
-                      ? ` · ${progressIntelligence.trainingHorizon.competitionCycle.daysToEvent}d to event`
-                      : ""}
-                  </strong>
-                </div>
-                <small>
-                  preparation readiness {progressIntelligence.trainingHorizon.competitionCycle.readinessScore}%
-                </small>
-              </section>
-            )}
-
-            <section className="home-course-gate">
-              <div className="home-course-gate-copy">
-                <div>
-                  <p className="eyebrow">COURSE</p>
-                  <span className={`gate-status ${currentCourseGate.status}`}>
-                    {gateStatusLabel(currentCourseGate.status)}
+                  <ClipboardCheck size={16} />
+                  <span>
+                    <strong>Placement diagnostic</strong>
+                    <small>Optional · calibrates the course</small>
                   </span>
-                </div>
-                <h2>{currentCourseStage.title}</h2>
-                <p>
-                  {currentCourseGate.blockers.length
-                    ? `Next promotion still needs ${currentCourseGate.blockers
-                        .map(gateBlockerLabel)
-                        .join(", ")} evidence.`
-                    : "You are ready for the next checkpoint."}
-                </p>
-              </div>
-              <div className="home-course-metrics">
-                <div>
-                  <span>Mastery</span>
-                  <strong>{currentCourseGate.metrics.mastery}%</strong>
-                </div>
-                <div>
-                  <span>Retention</span>
-                  <strong>{currentCourseGate.metrics.retention}%</strong>
-                </div>
-                <div>
-                  <span>Transfer</span>
-                  <strong>{currentCourseGate.metrics.transfer}%</strong>
-                </div>
-                <div>
-                  <span>Checkpoint</span>
-                  <strong>{currentCourseGate.metrics.checkpoint}%</strong>
-                </div>
-              </div>
-              <button
-                className="secondary"
-                type="button"
-                onClick={() => navigatePage("learn")}
-              >
-                Open course <ChevronRight size={16} />
-              </button>
-            </section>
+                </button>
+              )}
 
-            <section className={`home-coach-brief ${progressIntelligence.coachBrief.evidenceState}`}>
-              <div className="home-coach-brief-head">
-                <div>
-                  <p className="eyebrow">COACH</p>
-                  <h3>{progressIntelligence.coachBrief.headline}</h3>
-                </div>
-                <span>
-                  {progressIntelligence.coachBrief.confidenceLabel}
-                </span>
+              <div className="train-coach-note">
+                <span>Coach</span>
+                <strong>{progressIntelligence.coachBrief.headline}</strong>
+                <p>{progressIntelligence.coachBrief.summary}</p>
               </div>
-
-              <p>{progressIntelligence.coachBrief.summary}</p>
-
-              <div className="home-coach-brief-evidence">
-                <span>
-                  {progressIntelligence.coachBrief.decisions[0]?.evidenceLabel ??
-                    `${progressIntelligence.coachBrief.humanGames} human games analyzed`}
-                </span>
-                <span className={`coach-behavior-state ${progressIntelligence.coachBrief.behaviorCheck.state}`}>
-                  {progressIntelligence.coachBrief.behaviorCheck.label}
-                </span>
-              </div>
-
-              <button
-                className="secondary"
-                type="button"
-                onClick={() => navigatePage("progress")}
-              >
-                See coach reasoning <ChevronRight size={16} />
-              </button>
-            </section>
-          </>
+            </aside>
+          </section>
         ) : page === "learn" ? (
           learnMode === "openings" ? (
             <OpeningsView
