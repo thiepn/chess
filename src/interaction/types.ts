@@ -1,10 +1,16 @@
 export type MotionPreference = "system" | "full" | "reduced";
+export type AppTheme = "graphite" | "obsidian" | "warm-graphite";
+export type BoardTheme = "tournament" | "walnut" | "slate";
+export type PieceStyle = "classic" | "club" | "minimal";
 
 export interface ExperienceSettings {
   motion: MotionPreference;
   sound: boolean;
   haptics: boolean;
   celebrations: boolean;
+  appTheme: AppTheme;
+  boardTheme: BoardTheme;
+  pieceStyle: PieceStyle;
 }
 
 export type FeedbackEvent =
@@ -28,4 +34,7 @@ export const defaultExperienceSettings: ExperienceSettings = {
   sound: false,
   haptics: true,
   celebrations: true,
+  appTheme: "graphite",
+  boardTheme: "tournament",
+  pieceStyle: "classic",
 };
