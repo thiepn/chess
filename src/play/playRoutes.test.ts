@@ -16,10 +16,11 @@ describe("P43 Play routes", () => {
       mode: "standard" as const,
       playerColor: "b" as const,
       aiProfileId: "adaptive" as const,
+      timeControl: "10+0" as const,
     };
-    expect(playGameKey(setup)).toBe("standard:b:adaptive");
+    expect(playGameKey(setup)).toBe("standard:b:adaptive:10+0");
     expect(playGamePath(setup)).toBe(
-      "/play/game/standard%3Ab%3Aadaptive",
+      "/play/game/standard%3Ab%3Aadaptive%3A10%2B0",
     );
   });
 
@@ -41,10 +42,10 @@ describe("P43 Play routes", () => {
 
   it("resolves the active game route", () => {
     expect(
-      resolvePlayRoute("/play/game/standard%3Aw%3Aclub"),
+      resolvePlayRoute("/play/game/standard%3Aw%3Aclub%3A15%2B10"),
     ).toEqual({
       mode: "game",
-      gameKey: "standard:w:club",
+      gameKey: "standard:w:club:15+10",
     });
   });
 });
