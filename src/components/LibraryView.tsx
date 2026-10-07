@@ -4,18 +4,17 @@ import "../styles/p51-library-large.css";
 import {
   Bookmark,
   BookOpenCheck,
-  BrainCircuit,
   ChevronLeft,
   ChevronRight,
   FlipHorizontal2,
-  Gamepad2,
   Heart,
   Library,
   LoaderCircle,
   RotateCcw,
   Save,
   Search,
-  Sparkles,
+  Swords,
+  Plus,
   Target,
   Trash2,
   Undo2,
@@ -530,7 +529,7 @@ export function LibraryView({
             Repertoire
           </button>
           <button type="button" onClick={() => onNavigate("/learn/model-games")}>
-            <Gamepad2 size={14} />
+            <Swords size={14} />
             Model games
           </button>
         </div>
@@ -540,7 +539,7 @@ export function LibraryView({
           className="library-v2-new-study"
           onClick={() => onNavigate("/library/workspace")}
         >
-          <BrainCircuit size={14} />
+          <Target size={14} />
           Analysis board
         </button>
       </aside>
@@ -584,7 +583,7 @@ export function LibraryView({
           {study.training && (
             <button type="button" onClick={() => onTrainStudy(study.id)}>
               <Target size={14} />
-              Train
+              Practice
             </button>
           )}
           <button
@@ -610,7 +609,7 @@ export function LibraryView({
       >
         <span className="library-v2-reference-icon">
           {reference.kind === "game" ? (
-            <Gamepad2 size={16} />
+            <Swords size={16} />
           ) : (
             <BookOpenCheck size={16} />
           )}
@@ -698,7 +697,7 @@ export function LibraryView({
                 type="button"
                 onClick={() => onNavigate("/library/workspace")}
               >
-                <Sparkles size={15} />
+                <Plus size={15} />
                 New
               </button>
               <button
@@ -809,7 +808,7 @@ export function LibraryView({
             <section className="library-engine-v2">
               <header>
                 <div>
-                  <BrainCircuit size={16} />
+                  <Search size={16} />
                   <span>Stockfish</span>
                 </div>
                 <button
@@ -820,7 +819,7 @@ export function LibraryView({
                   {evaluating ? (
                     <LoaderCircle className="spin" size={14} />
                   ) : (
-                    <Sparkles size={14} />
+                    <Search size={14} />
                   )}
                   {evaluating ? "Analyzing" : "Analyze"}
                 </button>
@@ -840,7 +839,7 @@ export function LibraryView({
                 </div>
               ) : (
                 <p className="library-engine-empty">
-                  Engine output stays hidden until requested.
+                  Analyze the current position to see Stockfish’s best line.
                 </p>
               )}
             </section>
@@ -957,9 +956,9 @@ export function LibraryView({
               <div>
                 <Target size={15} />
                 <span>
-                  <strong>Recall training</strong>
+                  <strong>Practice this position</strong>
                   <small>
-                    Save the engine best move as a position to remember.
+                    Use Stockfish’s best move as the target when you practice this saved position.
                   </small>
                 </span>
               </div>
@@ -997,7 +996,7 @@ export function LibraryView({
                 onClick={() => saveStudy(true)}
               >
                 <Target size={15} />
-                Save + train
+                Save + practice
               </button>
               {loadedStudyId && (
                 <button
@@ -1006,7 +1005,7 @@ export function LibraryView({
                   onClick={() => onTrainStudy(loadedStudyId)}
                   disabled={!studies.find((study) => study.id === loadedStudyId)?.training}
                 >
-                  Train now
+                  Practice now
                 </button>
               )}
             </div>
@@ -1067,7 +1066,7 @@ export function LibraryView({
                   .map(renderGameRow)
               ) : (
                 <div className="library-v2-empty">
-                  <Gamepad2 size={20} />
+                  <Swords size={20} />
                   <strong>No games yet.</strong>
                   <span>Games from Play and Review appear here automatically.</span>
                 </div>
@@ -1119,7 +1118,7 @@ export function LibraryView({
             <h1 id="library-index-title">Library</h1>
           </div>
           <button type="button" onClick={() => onNavigate("/library/workspace")}>
-            <BrainCircuit size={15} />
+            <Bookmark size={15} />
             New study
           </button>
         </header>
@@ -1210,7 +1209,7 @@ export function LibraryView({
               recentGames.map(renderGameRow)
             ) : (
               <div className="library-v2-empty">
-                <Gamepad2 size={20} />
+                <Swords size={20} />
                 <strong>No games yet.</strong>
                 <span>Play or import a game to add it to the archive.</span>
               </div>
