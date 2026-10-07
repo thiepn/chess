@@ -446,9 +446,7 @@ export function EndgameTechniqueRunner({
                 aria-live={recognitionCorrect ? "polite" : "assertive"}
                 aria-atomic="true"
               >
-                <BrainCircuit
-                  size={16}
-                />
+                <Target size={16} />
                 <span>
                   {
                     position
@@ -699,9 +697,7 @@ export function EndgameTechniqueRunner({
             >
               <div>
                 {score.success ? (
-                  <Sparkles
-                    size={21}
-                  />
+                  <CheckCircle2 size={21} />
                 ) : (
                   <RotateCcw
                     size={21}
