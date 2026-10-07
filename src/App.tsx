@@ -234,6 +234,11 @@ export default function App() {
   const activeModelGame = activeModelGameId
     ? modelGameById[activeModelGameId]
     : undefined;
+  const dialogOpen = Boolean(
+    assessmentSession ||
+    activeModelGame ||
+    active,
+  );
   const activeCalculationPosition =
     active &&
     activeSkill &&
@@ -357,6 +362,56 @@ export default function App() {
   }, [loaded, progressIntelligence.prescriptions]);
 
   const firstActivity = session.activities[0];
+
+  useEffect(() => {
+    if (!dialogOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const returnFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.requestAnimationFrame(() => {
+        returnFocus?.focus();
+      });
+    };
+  }, [dialogOpen]);
+
+  useEffect(() => {
+    const handleShortcut = (event: KeyboardEvent) => {
+      if (dialogOpen || event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.matches("input, textarea, select, [contenteditable='true']") ||
+          target.closest("[role='dialog']"))
+      ) {
+        return;
+      }
+
+      if (
+        event.key.toLowerCase() === "t" &&
+        session.activities.length
+      ) {
+        event.preventDefault();
+        setNav("home");
+        setActiveIndex(0);
+        emitExperienceEvent({ feedback: "navigate" });
+      }
+    };
+
+    window.addEventListener("keydown", handleShortcut);
+    return () =>
+      window.removeEventListener("keydown", handleShortcut);
+  }, [dialogOpen, session.activities.length]);
+
   const homeTrainingReason = !firstActivity
     ? "No adaptive activity is due right now. Open the course to choose the next concept."
     : firstActivity.source === "prescription"
@@ -1999,7 +2054,7 @@ export default function App() {
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className="app-shell">
+      <div className={dialogOpen ? "app-shell training-open" : "app-shell"}>
       <aside className="sidebar">
         <div className="brand-mark">♞</div>
         <nav>
@@ -2008,6 +2063,7 @@ export default function App() {
               key={id}
               className={nav === id ? "nav-item active" : "nav-item"}
               aria-current={nav === id ? "page" : undefined}
+              title={id === "home" ? "Train · keyboard shortcut T" : label}
               onClick={() => {
                 setNav(id);
                 emitExperienceEvent({ feedback: "navigate" });
@@ -2015,6 +2071,9 @@ export default function App() {
             >
               <Icon size={19} />
               <span>{label}</span>
+              {id === "home" && (
+                <kbd className="nav-shortcut" aria-hidden="true">T</kbd>
+              )}
             </button>
           ))}
         </nav>
@@ -2044,6 +2103,7 @@ export default function App() {
                     type="button"
                     onClick={() => setActiveIndex(0)}
                     disabled={!session.activities.length}
+                    title="Start recommended training · T"
                   >
                     Train now
                     <span>{session.plannedMinutes} min</span>
@@ -2406,11 +2466,13 @@ export default function App() {
         )}
       </main>
 
-      <div className="mobile-experience">
-        <ExperienceControls />
-      </div>
+      {!dialogOpen && (
+        <div className="mobile-experience">
+          <ExperienceControls />
+        </div>
+      )}
 
-      <nav className="mobile-nav">
+      {!dialogOpen && <nav className="mobile-nav">
         {navItems.map(([id, label, Icon]) => (
           <button
             key={id}
@@ -2425,7 +2487,7 @@ export default function App() {
             <span>{label}</span>
           </button>
         ))}
-      </nav>
+      </nav>}
 
       {assessmentSession && (
         <div
@@ -2438,12 +2500,13 @@ export default function App() {
               : "Stage checkpoint"
           }
         >
-          <section className="training-sheet assessment-sheet">
+          <section className="training-sheet assessment-sheet immersive-training-sheet">
             <button
               className="close-button"
               type="button"
               onClick={() => setAssessmentSession(null)}
               aria-label="Close assessment"
+              autoFocus
             >
               ×
             </button>
@@ -2463,12 +2526,13 @@ export default function App() {
           aria-modal="true"
           aria-label={`Model game: ${activeModelGame.title}`}
         >
-          <section className="training-sheet model-game-sheet">
+          <section className="training-sheet model-game-sheet immersive-training-sheet">
             <button
               className="close-button"
               type="button"
               onClick={() => setActiveModelGameId(null)}
               aria-label="Close model game"
+              autoFocus
             >
               ×
             </button>
@@ -2488,17 +2552,22 @@ export default function App() {
       )}
 
       {active && activeSkill && (
-        <div className="training-overlay" role="dialog" aria-modal="true">
+        <div
+          className="training-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${active.title} training activity`}
+        >
           <section
             className={
               active.activityType === "engineGame"
-                ? "training-sheet adaptive-game-sheet"
+                ? "training-sheet adaptive-game-sheet immersive-training-sheet board-first-sheet"
                 : active.activityType === "calculation"
-                  ? "training-sheet calculation-sheet"
+                  ? "training-sheet calculation-sheet immersive-training-sheet board-first-sheet"
                   : active.activityType === "endgameDrill" ||
                       active.activityType === "conversionChallenge"
-                    ? "training-sheet endgame-technique-sheet"
-                    : "training-sheet"
+                    ? "training-sheet endgame-technique-sheet immersive-training-sheet board-first-sheet"
+                    : "training-sheet immersive-training-sheet board-first-sheet"
             }
           >
             <div className="training-progress">
