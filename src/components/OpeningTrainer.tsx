@@ -490,9 +490,7 @@ function OpeningRecallTrainer({
                     aria-atomic="true"
                   >
                     {stage === "done" && (
-                      <Sparkles
-                        size={18}
-                      />
+                      <CheckCircle2 size={18} />
                     )}
                     <span>
                       {conceptFeedback}
