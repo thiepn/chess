@@ -275,7 +275,7 @@ export function AssessmentRunner({
             <span>
               {session.kind === "placement"
                 ? "Placement affects where the course begins, not whether material stays accessible."
-                : "Checkpoint results are combined with mastery, retention and transfer evidence."}
+                : "Stage checks are combined with your course progress, later reviews, and game results."}
             </span>
             <button
               className="primary"
