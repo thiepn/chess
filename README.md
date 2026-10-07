@@ -62,6 +62,7 @@ The default experience should answer one question: **what should I train now?**
 - P41 Train Runtime Migration with real `/train/session/:id` workspaces, modal-host removal, refresh-restorable runtime state, routed adaptive progression, and return-to-origin flows for focused training
 - P42 Learn Architecture Redesign with a chapter-based syllabus, real `/learn/:domain/:lessonId` textbook pages, embedded teaching boards, routed repertoire/model-game subpages, and removal of the Learn hero/KPI/card-grid composition
 - P43 Play Page Redesign with a board-preview setup desk, real `/play/game/:id` game routes, Untimed/10+0/15+10 clocks, tournament-style player strips, routed scenario/replay sessions, and removal of the Play hero/profile/scenario card grids
+- P44 Review Page Redesign with a routed `/review/:gameId` analysis workstation, synchronized board/notation/critical-moment teaching, clickable evaluation trace, compact review index, and removal of the Review/story hero-card composition
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2304,6 +2305,37 @@ Active games now use tournament-style player strips around the P39 board, live c
 
 Targeted scenario games stay untimed by default. The Stockfish opponent, PGN generation, scenario success scoring, Review ingestion and existing accessibility behavior remain intact.
 
+## Review Page Redesign
+
+P44 turns Review into a real chess analysis workspace.
+
+`/review` is now the review index:
+
+- compact game-history rail;
+- focused PGN/Lichess analysis desk;
+- unresolved personal-mistake repair queue.
+
+The previous Review hero, overview panels, latest-story promo card, mistake-card grid and separate history block are no longer the default composition.
+
+Analyzed games open on real pages:
+
+- `/review/:gameId`
+
+The game page is a persistent workstation with:
+
+- the shared P39 board;
+- synchronized move notation;
+- compact opening / middlegame / endgame navigation;
+- the selected critical-moment teaching panel;
+- Position / Your move / Better move board states;
+- a compact clickable evaluation trace across critical moments.
+
+The old story hero, phase-card grid, separate move-timeline section and separate story-moment card strip are removed. The board, notation and current decision remain visible together.
+
+P30's self-analysis-first behavior is preserved. Critical errors can still be reflected on before the better move is revealed, then replayed, repaired, retained or transferred into targeted practice.
+
+On phones, the review stays board-first, followed by a bounded notation list and then the decision explanation.
+
 ## Next phase
 
-P44 — Review Page Redesign.
+P45 — Library Page Redesign.
