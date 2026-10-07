@@ -3,6 +3,7 @@ import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef, use
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
+import { ChessPiece, chessPieceNames } from "./ChessPiece";
 
 interface BoardMove {
   from: Square;
@@ -21,11 +22,6 @@ interface ChessBoardProps {
   onMove?: (move: BoardMove) => boolean;
   presentationMove?: { from: Square; to: Square };
 }
-
-const pieces: Record<Color, Record<PieceSymbol, string>> = {
-  w: { k: "♔", q: "♕", r: "♖", b: "♗", n: "♘", p: "♙" },
-  b: { k: "♚", q: "♛", r: "♜", b: "♝", n: "♞", p: "♟" },
-};
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
 
@@ -63,7 +59,10 @@ export function ChessBoard({
   const [selected, setSelected] = useState<Square | null>(null);
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
+  const [lastMoveKind, setLastMoveKind] = useState<"move" | "capture" | "promotion" | "castle">("move");
   const [secondaryMove, setSecondaryMove] = useState<{ from: Square; to: Square } | null>(null);
+  const [boardFlipping, setBoardFlipping] = useState(false);
+  const previousOrientation = useRef(orientation);
   const [rejected, setRejected] = useState<Square | null>(null);
   const [focusedSquare, setFocusedSquare] = useState<Square>(
     () => squareList(orientation)[0],
@@ -78,8 +77,17 @@ export function ChessBoard({
     setSelected(null);
     setLastMove(null);
     setSecondaryMove(null);
+    setLastMoveKind("move");
     setRejected(null);
   }, [fen]);
+
+  useEffect(() => {
+    if (previousOrientation.current === orientation) return;
+    previousOrientation.current = orientation;
+    setBoardFlipping(true);
+    const timer = window.setTimeout(() => setBoardFlipping(false), 190);
+    return () => window.clearTimeout(timer);
+  }, [orientation]);
 
   const chess = useMemo(() => new Chess(position), [position]);
   const squares = useMemo(() => squareList(orientation), [orientation]);
@@ -168,6 +176,15 @@ export function ChessBoard({
     positionRef.current = candidate.fen();
     setPosition(candidate.fen());
     setLastMove({ from, to });
+    setLastMoveKind(
+      castle
+        ? "castle"
+        : move.promotion
+          ? "promotion"
+          : move.captured
+            ? "capture"
+            : "move",
+    );
     setSecondaryMove(castle);
     setSelected(null);
 
@@ -252,15 +269,7 @@ export function ChessBoard({
   function squareLabel(square: Square) {
     const piece = chess.get(square);
     if (!piece) return `${square}, empty`;
-    const names: Record<PieceSymbol, string> = {
-      k: "king",
-      q: "queen",
-      r: "rook",
-      b: "bishop",
-      n: "knight",
-      p: "pawn",
-    };
-    return `${square}, ${piece.color === "w" ? "white" : "black"} ${names[piece.type]}`;
+    return `${square}, ${piece.color === "w" ? "white" : "black"} ${chessPieceNames[piece.type]}`;
   }
 
   const boardStatus = selected
@@ -277,7 +286,8 @@ export function ChessBoard({
         {boardStatus}
       </span>
       <div
-        className="chess-board"
+        className={`chess-board chess-board-v2 orientation-${orientation === "w" ? "white" : "black"}${boardFlipping ? " board-flipping" : ""}`}
+        data-orientation={orientation}
         role="grid"
         aria-label={`Interactive chessboard. ${orientation === "w" ? "White" : "Black"} is at the bottom. Use arrow keys to move between squares and Enter or Space to select.`}
       >
@@ -369,15 +379,20 @@ export function ChessBoard({
                   <span
                     className={[
                       "piece",
+                      "piece-v2",
                       piece.color === "w" ? "white-piece" : "black-piece",
                       landingMove ? "piece-land" : "",
+                      landingMove && displayMove?.to === square
+                        ? `piece-land-${lastMoveKind}`
+                        : "",
                     ]
                       .filter(Boolean)
                       .join(" ")}
                     style={style}
                     aria-hidden="true"
+                    data-piece={`${piece.color}${piece.type}`}
                   >
-                    {pieces[piece.color][piece.type]}
+                    <ChessPiece color={piece.color} type={piece.type} />
                   </span>
                 );
               })()}
@@ -397,16 +412,16 @@ export function ChessBoard({
           >
             <defs>
               <marker id="arrow-focus" markerWidth=".65" markerHeight=".65" refX=".5" refY=".25" orient="auto">
-                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#829cff" />
+                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#357bd8" />
               </marker>
               <marker id="arrow-good" markerWidth=".65" markerHeight=".65" refX=".5" refY=".25" orient="auto">
-                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#57d49b" />
+                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#5fa77a" />
               </marker>
               <marker id="arrow-danger" markerWidth=".65" markerHeight=".65" refX=".5" refY=".25" orient="auto">
-                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#ff758d" />
+                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#c86464" />
               </marker>
               <marker id="arrow-hint" markerWidth=".65" markerHeight=".65" refX=".5" refY=".25" orient="auto">
-                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#ffc96b" />
+                <path d="M0,0 L0.55,0.25 L0,0.5 Z" fill="#c99c52" />
               </marker>
             </defs>
             {arrows.map((arrow, index) => {
