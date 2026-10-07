@@ -556,7 +556,26 @@ Delivered:
 
 ### P45 — Library Page Redesign
 
+**Status:** implemented.
+
 Build route-level repertoire, model-game, saved-position, endgame, game and study workspaces.
+
+Delivered:
+
+- removed the Library hero, metric strip, local workspace/saved/reference/game tabs and card-grid navigation;
+- rebuilt `/library` as a chess study archive with collection rail, recent studies, study-system links, recent games and contextual recall queue;
+- added real collection pages at `/library/studies`, `/library/positions`, `/library/endgames` and `/library/games`;
+- added `/library/workspace` as the canonical new-analysis-board route;
+- saved studies open on real `/library/studies/:id` workspace pages;
+- reference positions and reference games open on real `/library/references/:id` workspace pages;
+- played/imported games open on real `/library/games/:id` study workspaces;
+- deep-linked resources hydrate directly into the existing analysis-board engine, notation, notes, tags and save/train logic;
+- endgame and position collections combine personal material with the curated reference shelf without duplicating data;
+- Repertoire and Model Games are first-class Library destinations but retain their canonical P42 routes (`/learn/openings` and `/learn/model-games`) instead of creating competing duplicate workspaces;
+- saving a new analysis promotes `/library/workspace` into the saved study's routed page;
+- recall-due studies can launch directly into the P41 training runtime;
+- mobile uses a horizontal archive rail and board-first resource workspace;
+- Library-specific redesign CSS is lazy-loaded with the Library route.
 
 ### P46 — Progress Page Reconstruction
 
