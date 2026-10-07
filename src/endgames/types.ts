@@ -15,7 +15,11 @@ export type EndgameTechniqueId =
   | "lucena"
   | "philidor"
   | "simplify"
-  | "active-defense";
+  | "active-defense"
+  | "checking-distance"
+  | "opposite-bishop-blockade"
+  | "minor-piece-activity"
+  | "two-weaknesses";
 
 export interface EndgameRecognitionOption {
   id: string;
