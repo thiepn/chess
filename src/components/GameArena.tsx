@@ -1,6 +1,7 @@
 import { Chess, type Color, type Square } from "chess.js";
 import {
   BrainCircuit,
+  Clock3,
   Flag,
   LoaderCircle,
   RotateCcw,
@@ -12,7 +13,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { useExperience } from "../interaction/ExperienceProvider";
 import { importPgn } from "../games/import";
-import type { AiProfile, PlayResult, TrainingScenario } from "../play/types";
+import type {
+  AiProfile,
+  PlayResult,
+  TimeControlId,
+  TrainingScenario,
+} from "../play/types";
 import { ChessBoard } from "./ChessBoard";
 
 interface GameArenaProps {
@@ -23,6 +29,7 @@ interface GameArenaProps {
   onExit: () => void;
   onFinished: (result: PlayResult) => Promise<boolean> | boolean;
   exitLabel?: string;
+  timeControl?: TimeControlId;
 }
 
 function uciMove(chess: Chess, encoded: string) {
@@ -62,6 +69,20 @@ function resultHeader(
   return whiteWon ? "1-0" : "0-1";
 }
 
+function timeControlConfig(id: TimeControlId) {
+  if (id === "10+0") return { initialMs: 10 * 60_000, incrementMs: 0, label: "10+0" };
+  if (id === "15+10") return { initialMs: 15 * 60_000, incrementMs: 10_000, label: "15+10" };
+  return { initialMs: 0, incrementMs: 0, label: "Untimed" };
+}
+
+function clockLabel(ms: number) {
+  const safe = Math.max(0, ms);
+  const totalSeconds = Math.ceil(safe / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
 function outcomeLabel(outcome: PlayResult["outcome"]) {
   if (outcome === "win") return "You won";
   if (outcome === "draw") return "Draw";
@@ -77,6 +98,7 @@ export function GameArena({
   onExit,
   onFinished,
   exitLabel = "Back to Play",
+  timeControl = "untimed",
 }: GameArenaProps) {
   const gameRef = useRef(new Chess(initialFen));
   const engineRef = useRef<StockfishBrowserEngine | null>(null);
@@ -93,7 +115,15 @@ export function GameArena({
   const [result, setResult] = useState<PlayResult | null>(null);
   const [sendingReview, setSendingReview] = useState(false);
   const [reviewSent, setReviewSent] = useState(false);
+  const clockConfig = useMemo(() => timeControlConfig(timeControl), [timeControl]);
+  const [whiteMs, setWhiteMs] = useState(clockConfig.initialMs);
+  const [blackMs, setBlackMs] = useState(clockConfig.initialMs);
   const { feedback, celebrate } = useExperience();
+
+  useEffect(() => {
+    setWhiteMs(clockConfig.initialMs);
+    setBlackMs(clockConfig.initialMs);
+  }, [clockConfig.initialMs, initialFen, playerColor]);
 
   useEffect(() => {
     const chess = gameRef.current;
@@ -140,6 +170,44 @@ export function GameArena({
 
   const playerToMove =
     gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
+
+  useEffect(() => {
+    if (timeControl === "untimed" || result || gameRef.current.isGameOver()) return;
+
+    const interval = window.setInterval(() => {
+      const active = gameRef.current.turn();
+      if (active === "w") {
+        setWhiteMs((current) => {
+          const next = Math.max(0, current - 1000);
+          if (next === 0 && current > 0) {
+            const outcome = playerColor === "w" ? "loss" : "win";
+            void finalize(outcome, "timeout");
+          }
+          return next;
+        });
+      } else {
+        setBlackMs((current) => {
+          const next = Math.max(0, current - 1000);
+          if (next === 0 && current > 0) {
+            const outcome = playerColor === "b" ? "loss" : "win";
+            void finalize(outcome, "timeout");
+          }
+          return next;
+        });
+      }
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [fen, playerColor, result, timeControl]);
+
+  function applyIncrement(color: Color) {
+    if (!clockConfig.incrementMs) return;
+    if (color === "w") {
+      setWhiteMs((current) => current + clockConfig.incrementMs);
+    } else {
+      setBlackMs((current) => current + clockConfig.incrementMs);
+    }
+  }
 
   const lastMove = useMemo(() => moves.at(-1), [moves]);
   const moveRows = useMemo(() => {
@@ -248,6 +316,7 @@ export function GameArena({
         }
 
         setMoves((previous) => [...previous, move.san]);
+        applyIncrement(move.color);
         setPresentationMove({
           from: move.from as Square,
           to: move.to as Square,
@@ -300,6 +369,26 @@ export function GameArena({
 
       <div className="game-layout">
         <div className="game-board-column">
+          <div className="game-player-strip opponent">
+            <div>
+              <span className="game-player-mark" aria-hidden="true">
+                <BrainCircuit size={15} />
+              </span>
+              <span>
+                <strong>{profile.name}</strong>
+                <small>{playerColor === "w" ? "Black" : "White"} · {profile.accent}</small>
+              </span>
+            </div>
+            <div className={gameRef.current.turn() !== playerColor && !result ? "game-clock active" : "game-clock"}>
+              <Clock3 size={14} />
+              <strong>
+                {timeControl === "untimed"
+                  ? "—:—"
+                  : clockLabel(playerColor === "w" ? blackMs : whiteMs)}
+              </strong>
+            </div>
+          </div>
+
           <ChessBoard
             fen={fen}
             orientation={playerColor}
@@ -323,12 +412,33 @@ export function GameArena({
               if (!move) return false;
 
               setMoves((previous) => [...previous, move.san]);
+              applyIncrement(move.color);
               setPresentationMove(undefined);
               setFen(chess.fen());
               finishIfNeeded();
               return true;
             }}
           />
+
+          <div className="game-player-strip player">
+            <div>
+              <span className="game-player-mark you" aria-hidden="true">
+                {playerColor === "w" ? "♙" : "♟"}
+              </span>
+              <span>
+                <strong>You</strong>
+                <small>{playerColor === "w" ? "White" : "Black"} · {clockConfig.label}</small>
+              </span>
+            </div>
+            <div className={playerToMove && !result ? "game-clock active" : "game-clock"}>
+              <Clock3 size={14} />
+              <strong>
+                {timeControl === "untimed"
+                  ? "—:—"
+                  : clockLabel(playerColor === "w" ? whiteMs : blackMs)}
+              </strong>
+            </div>
+          </div>
 
           <div className="game-turn-line" aria-live="polite">
             <span>
@@ -370,8 +480,8 @@ export function GameArena({
           )}
 
           <div className="game-profile-card">
-            <span>Opponent</span>
-            <strong>{profile.name}</strong>
+            <span>Game</span>
+            <strong>{clockConfig.label} · {profile.name}</strong>
             <p>{profile.description}</p>
           </div>
 
