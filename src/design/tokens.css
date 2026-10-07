@@ -65,6 +65,10 @@
   /* Application shell targets */
   --chess-topbar-height: 3.625rem;
   --chess-mobile-nav-height: 3.75rem;
+  --chess-mobile-topbar-base-height: 3.125rem;
+  --chess-mobile-topbar-safe-height: calc(var(--chess-mobile-topbar-base-height) + env(safe-area-inset-top));
+  --chess-mobile-nav-safe-height: calc(var(--chess-mobile-nav-height) + env(safe-area-inset-bottom));
+  --chess-native-gutter: clamp(0.625rem, 2.4vw, 1.125rem);
   --chess-touch-min: 2.75rem;
   --chess-touch-preferred: 3rem;
 
