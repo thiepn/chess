@@ -20,7 +20,8 @@
     "motion:audit": "node scripts/audit-motion-system.mjs",
     "mobile:audit": "node scripts/audit-mobile-native.mjs",
     "desktop:audit": "node scripts/audit-large-desktop.mjs",
-    "a11y:audit": "node scripts/audit-accessibility.mjs"
+    "a11y:audit": "node scripts/audit-accessibility.mjs",
+    "theme:audit": "node scripts/audit-theme-customization.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
