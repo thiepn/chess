@@ -60,11 +60,11 @@ function masteryLabel(value: number) {
 }
 
 function gateLabel(status: StageGateStatus) {
-  if (status === "passed") return "Certified";
-  if (status === "provisional") return "Evidence pending";
-  if (status === "remediation") return "Repair needed";
-  if (status === "ready") return "Checkpoint ready";
-  if (status === "placed") return "Placement cleared";
+  if (status === "passed") return "Passed";
+  if (status === "provisional") return "More results needed";
+  if (status === "remediation") return "Review needed";
+  if (status === "ready") return "Ready to check";
+  if (status === "placed") return "Starting point set";
   if (status === "locked") return "Locked";
   return "Learning";
 }
@@ -401,9 +401,9 @@ export function LearnView({
               {gateLabel(gate.status)}
             </span>
             <div>
-              <strong>Stage checkpoint</strong>
+              <strong>Stage check</strong>
               <span>
-                Mastery {gate.metrics.mastery}% · retention {gate.metrics.retention}% · transfer {gate.metrics.transfer}%
+                Understanding {gate.metrics.mastery}% · recall {gate.metrics.retention}% · in games {gate.metrics.transfer}%
               </span>
             </div>
           </div>
@@ -414,7 +414,7 @@ export function LearnView({
             onClick={() => onStartCheckpoint(stage.id)}
           >
             <ClipboardCheck size={15} />
-            {gate.metrics.checkpoint ? "Retake" : "Checkpoint"}
+            {gate.metrics.checkpoint ? "Check again" : "Stage check"}
           </button>
         </div>
 
@@ -424,11 +424,11 @@ export function LearnView({
               <ClipboardCheck size={16} />
               <span>
                 <strong>Not sure where to begin?</strong>
-                <small>The placement diagnostic can skip material you already know.</small>
+                <small>A short placement check can skip lessons you already know.</small>
               </span>
             </div>
             <button type="button" onClick={onStartPlacement}>
-              Take diagnostic
+              Find my level
             </button>
           </div>
         )}
