@@ -309,3 +309,19 @@ Optional haptics/audio distinguish move classes where the chess event carries me
 - answer/hint reveal.
 
 Sound remains opt-in. Haptics remain enhancement-only and must never be required to understand state.
+
+
+## P50 mobile shell invariants
+
+Mobile layout code must use the shared shell tokens rather than route-specific literal offsets:
+
+- `--chess-mobile-topbar-safe-height`;
+- `--chess-mobile-nav-safe-height`;
+- `--chess-native-gutter`;
+- `--chess-native-inline-start`;
+- `--chess-native-inline-end`;
+- `--chess-touch-min`.
+
+Focused low-height landscape chess workspaces may suppress global chrome when keeping it would cover the board, notation or teaching context. The route must retain its own local exit/back affordance.
+
+Full-bleed sticky regions must negate the actual safe inline gutter, not a hard-coded pixel value.
