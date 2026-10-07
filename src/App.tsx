@@ -2311,6 +2311,212 @@ export default function App() {
         <main className="main app-main">
         <Suspense fallback={<RouteLoading />}>
         {page === "train" ? (
+          trainingSessionOpen ? (
+            <section className="train-runtime-page" aria-label="Training workspace">
+              <header className="train-runtime-header">
+                <button
+                  type="button"
+                  className="train-runtime-back"
+                  onClick={() => closeTrainingRuntime()}
+                  aria-label="Leave training workspace"
+                >
+                  <span aria-hidden="true">←</span>
+                  <span>Train</span>
+                </button>
+
+                <div className="train-runtime-title">
+                  <span>
+                    {assessmentSession
+                      ? assessmentSession.kind === "placement"
+                        ? "Placement diagnostic"
+                        : "Stage checkpoint"
+                      : activeModelGame
+                        ? "Model game"
+                        : active
+                          ? reasonLabel(active)
+                          : "Training"}
+                  </span>
+                  <strong>
+                    {assessmentSession
+                      ? assessmentSession.title
+                      : activeModelGame
+                        ? activeModelGame.title
+                        : active?.title ?? "Training session"}
+                  </strong>
+                </div>
+
+                <div className="train-runtime-meta">
+                  {active && activeSkill ? (
+                    <>
+                      <span>{domainLabels[activeSkill.domain]}</span>
+                      <span>{active.estimatedMinutes} min</span>
+                      <span>
+                        {manualActivity
+                          ? "Focused"
+                          : `${(activeIndex ?? 0) + 1} / ${session.activities.length}`}
+                      </span>
+                    </>
+                  ) : activeModelGame ? (
+                    <span>Guided study</span>
+                  ) : assessmentSession ? (
+                    <span>Assessment</span>
+                  ) : null}
+                </div>
+              </header>
+
+              <div className="train-runtime-progress" aria-hidden="true">
+                <span
+                  style={{
+                    width:
+                      active && !manualActivity
+                        ? `${(((activeIndex ?? 0) + 1) / Math.max(1, session.activities.length)) * 100}%`
+                        : runtimeReady
+                          ? "100%"
+                          : "0%",
+                  }}
+                />
+              </div>
+
+              <div
+                className={[
+                  "train-runtime-body",
+                  active?.activityType === "engineGame" ? "runtime-game" : "",
+                  active?.activityType === "calculation" ? "runtime-calculation" : "",
+                  active?.activityType === "endgameDrill" ||
+                  active?.activityType === "conversionChallenge"
+                    ? "runtime-endgame"
+                    : "",
+                  assessmentSession ? "runtime-assessment" : "",
+                  activeModelGame ? "runtime-model-game" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {assessmentSession ? (
+                  <AssessmentRunner
+                    session={assessmentSession}
+                    onComplete={completeAssessment}
+                    onCancel={() => closeTrainingRuntime()}
+                  />
+                ) : activeModelGame ? (
+                  <ModelGameRunner
+                    game={activeModelGame}
+                    progress={state.modelGameProgress?.[activeModelGame.id]}
+                    savedStudyIds={(state.savedStudies ?? []).map((study) => study.id)}
+                    onCheckpointResult={(result) =>
+                      completeModelGameCheckpoint(activeModelGame.id, result)
+                    }
+                    onSaveCheckpoint={saveModelGameCheckpoint}
+                    onComplete={completeModelGame}
+                    onExit={() => closeTrainingRuntime()}
+                  />
+                ) : active && activeSkill ? (
+                  <>
+                    {active.adaptivePolicy && (
+                      <div className="train-runtime-policy">
+                        <BrainCircuit size={16} />
+                        <div>
+                          <strong>{active.adaptivePolicy.reason}</strong>
+                          <span>
+                            {active.adaptivePolicy.challenge === "recovery"
+                              ? "Extra support today"
+                              : active.adaptivePolicy.challenge === "supported"
+                                ? "Supported practice"
+                                : active.adaptivePolicy.challenge === "stretch"
+                                  ? "Harder test"
+                                  : active.adaptivePolicy.challenge === "maintenance"
+                                    ? "Keep it sharp"
+                                    : "Normal challenge"}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="train-runtime-runner">
+                      {active.activityType === "engineGame" && activeScenario ? (
+                        <GameArena
+                          initialFen={activeScenario.fen}
+                          playerColor={activeScenario.playerColor}
+                          profile={activeGameProfile}
+                          scenario={activeScenario}
+                          onExit={() => closeTrainingRuntime()}
+                          onFinished={handlePlayFinished}
+                          exitLabel="Finish activity"
+                        />
+                      ) : active.activityType === "savedStudy" && activeStudy ? (
+                        <SavedStudyTrainer
+                          study={activeStudy}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "openingRecall" &&
+                      activeOpeningNode &&
+                      activeRepertoire ? (
+                        <OpeningTrainer
+                          repertoire={activeRepertoire}
+                          node={activeOpeningNode}
+                          mode={active.openingTrainingMode}
+                          lineNodeId={active.openingLineNodeId}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "personalMistake" && activeMistake ? (
+                        <PersonalMistakeRunner
+                          mistake={activeMistake}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "calculation" &&
+                      activeCalculationPosition ? (
+                        <CalculationRunner
+                          activity={active}
+                          skill={activeSkill}
+                          position={activeCalculationPosition}
+                          onComplete={completeActivity}
+                        />
+                      ) : (active.activityType === "endgameDrill" ||
+                            active.activityType === "conversionChallenge") &&
+                          activeEndgamePosition ? (
+                        <EndgameTechniqueRunner
+                          activity={active}
+                          skill={activeSkill}
+                          position={activeEndgamePosition}
+                          delayedRetention={activeEndgameDelayedRetention}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "themedPuzzle" ||
+                      active.activityType === "mixedPuzzle" ? (
+                        <PuzzleRunner
+                          activity={active}
+                          skill={activeSkill}
+                          mastery={state.mastery[activeSkill.id]}
+                          history={state.puzzleHistory}
+                          onComplete={completeActivity}
+                        />
+                      ) : (
+                        <LessonRunner
+                          activity={active}
+                          skill={activeSkill}
+                          onComplete={completeActivity}
+                        />
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="train-runtime-recovery" aria-live="polite">
+                    <strong>Training session unavailable</strong>
+                    <p>
+                      This session could not be restored. Return to Train and start it again.
+                    </p>
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() => closeTrainingRuntime("/train")}
+                    >
+                      Back to Train
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+          ) : (
           <section className="train-room" aria-labelledby="train-room-title">
             <aside className="train-room-rail" aria-label="Training session">
               <div className="train-room-rail-heading">
@@ -2481,6 +2687,7 @@ export default function App() {
               </div>
             </aside>
           </section>
+          )
         ) : page === "learn" ? (
           learnMode === "openings" ? (
             <OpeningsView
@@ -2618,219 +2825,6 @@ export default function App() {
         </nav>
       )}
 
-      {assessmentSession && (
-        <div
-          className="training-overlay assessment-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={
-            assessmentSession.kind === "placement"
-              ? "Placement diagnostic"
-              : "Stage checkpoint"
-          }
-        >
-          <section className="training-sheet assessment-sheet immersive-training-sheet">
-            <button
-              className="close-button"
-              type="button"
-              onClick={() => setAssessmentSession(null)}
-              aria-label="Close assessment"
-            >
-              ×
-            </button>
-            <AssessmentRunner
-              session={assessmentSession}
-              onComplete={completeAssessment}
-              onCancel={() => setAssessmentSession(null)}
-            />
-          </section>
-        </div>
-      )}
-
-      {activeModelGame && (
-        <div
-          className="training-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Model game: ${activeModelGame.title}`}
-        >
-          <section className="training-sheet model-game-sheet immersive-training-sheet">
-            <button
-              className="close-button"
-              type="button"
-              onClick={() => setActiveModelGameId(null)}
-              aria-label="Close model game"
-            >
-              ×
-            </button>
-            <ModelGameRunner
-              game={activeModelGame}
-              progress={state.modelGameProgress?.[activeModelGame.id]}
-              savedStudyIds={(state.savedStudies ?? []).map((study) => study.id)}
-              onCheckpointResult={(result) =>
-                completeModelGameCheckpoint(activeModelGame.id, result)
-              }
-              onSaveCheckpoint={saveModelGameCheckpoint}
-              onComplete={completeModelGame}
-              onExit={() => setActiveModelGameId(null)}
-            />
-          </section>
-        </div>
-      )}
-
-      {active && activeSkill && (
-        <div
-          className="training-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${active.title} training activity`}
-        >
-          <section
-            className={
-              active.activityType === "engineGame"
-                ? "training-sheet adaptive-game-sheet immersive-training-sheet board-first-sheet"
-                : active.activityType === "calculation"
-                  ? "training-sheet calculation-sheet immersive-training-sheet board-first-sheet"
-                  : active.activityType === "endgameDrill" ||
-                      active.activityType === "conversionChallenge"
-                    ? "training-sheet endgame-technique-sheet immersive-training-sheet board-first-sheet"
-                    : "training-sheet immersive-training-sheet board-first-sheet"
-            }
-          >
-            <div className="training-progress">
-              <span
-                style={{
-                  width: manualActivity
-                    ? "100%"
-                    : `${(((activeIndex ?? 0) + 1) / Math.max(1, session.activities.length)) * 100}%`,
-                }}
-              />
-            </div>
-            <button
-              className="close-button"
-              onClick={() => {
-                setActiveIndex(null);
-                setManualActivity(null);
-              }}
-              aria-label="Close session"
-            >
-              ×
-            </button>
-            <div className="lesson-shell-heading">
-              <div>
-                <p className="eyebrow">{reasonLabel(active)}</p>
-                <strong>{active.title}</strong>
-              </div>
-              <div className="lesson-context">
-                <span>{domainLabels[activeSkill.domain]}</span>
-                <span>{active.estimatedMinutes} min</span>
-                <span>Difficulty {activeSkill.difficulty}/5</span>
-                {active.adaptivePolicy && (
-                  <span className="adaptive-challenge-chip">
-                    {active.adaptivePolicy.challenge === "recovery"
-                      ? "Extra support"
-                      : active.adaptivePolicy.challenge === "supported"
-                        ? "Supported"
-                        : active.adaptivePolicy.challenge === "stretch"
-                          ? "Harder"
-                          : active.adaptivePolicy.challenge === "maintenance"
-                            ? "Keep sharp"
-                            : "Normal"}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {active.adaptivePolicy && (
-              <div className="adaptive-policy-strip">
-                <BrainCircuit size={16} />
-                <div>
-                  <strong>{active.adaptivePolicy.reason}</strong>
-                  <span>
-                    {active.adaptivePolicy.challenge === "recovery"
-                      ? "Extra support today"
-                      : active.adaptivePolicy.challenge === "supported"
-                        ? "Supported practice"
-                        : active.adaptivePolicy.challenge === "stretch"
-                          ? "Harder test"
-                          : active.adaptivePolicy.challenge === "maintenance"
-                            ? "Keep it sharp"
-                            : "Normal challenge"}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {active.activityType === "engineGame" && activeScenario ? (
-              <GameArena
-                initialFen={activeScenario.fen}
-                playerColor={activeScenario.playerColor}
-                profile={activeGameProfile}
-                scenario={activeScenario}
-                onExit={() => {
-                  setActiveIndex(null);
-                  setManualActivity(null);
-                }}
-                onFinished={handlePlayFinished}
-                exitLabel="Finish activity"
-              />
-            ) : active.activityType === "savedStudy" && activeStudy ? (
-              <SavedStudyTrainer
-                study={activeStudy}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "openingRecall" &&
-            activeOpeningNode &&
-            activeRepertoire ? (
-              <OpeningTrainer
-                repertoire={activeRepertoire}
-                node={activeOpeningNode}
-                mode={active.openingTrainingMode}
-                lineNodeId={active.openingLineNodeId}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "personalMistake" && activeMistake ? (
-              <PersonalMistakeRunner
-                mistake={activeMistake}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "calculation" &&
-            activeCalculationPosition ? (
-              <CalculationRunner
-                activity={active}
-                skill={activeSkill}
-                position={activeCalculationPosition}
-                onComplete={completeActivity}
-              />
-            ) : (active.activityType === "endgameDrill" ||
-                  active.activityType === "conversionChallenge") &&
-                activeEndgamePosition ? (
-              <EndgameTechniqueRunner
-                activity={active}
-                skill={activeSkill}
-                position={activeEndgamePosition}
-                delayedRetention={activeEndgameDelayedRetention}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "themedPuzzle" ||
-            active.activityType === "mixedPuzzle" ? (
-              <PuzzleRunner
-                activity={active}
-                skill={activeSkill}
-                mastery={state.mastery[activeSkill.id]}
-                history={state.puzzleHistory}
-                onComplete={completeActivity}
-              />
-            ) : (
-              <LessonRunner
-                activity={active}
-                skill={activeSkill}
-                onComplete={completeActivity}
-              />
-            )}
-          </section>
-        </div>
-      )}
       </div>
     </ExperienceProvider>
   );
