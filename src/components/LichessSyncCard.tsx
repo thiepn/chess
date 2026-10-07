@@ -65,6 +65,7 @@ export function LichessSyncCard({
         </div>
         <div className="lichess-link-form">
           <input
+            aria-label="Lichess username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             placeholder="Lichess username"
@@ -85,7 +86,7 @@ export function LichessSyncCard({
             Link
           </button>
         </div>
-        {error && <div className="lichess-inline-error">{error}</div>}
+        {error && <div className="lichess-inline-error" role="alert">{error}</div>}
       </article>
     );
   }
@@ -148,8 +149,8 @@ export function LichessSyncCard({
         </button>
       </div>
 
-      {message && <div className="lichess-inline-message">{message}</div>}
-      {error && <div className="lichess-inline-error">{error}</div>}
+      {message && <div className="lichess-inline-message" role="status" aria-live="polite">{message}</div>}
+      {error && <div className="lichess-inline-error" role="alert">{error}</div>}
     </article>
   );
 }
