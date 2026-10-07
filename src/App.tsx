@@ -214,7 +214,7 @@ export default function App() {
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
-  const { route, navigatePage } = useAppRouter();
+  const { route, navigate, navigatePage } = useAppRouter();
   const page = route.page;
   const [lichessSyncing, setLichessSyncing] = useState(false);
   const lichessSyncInFlight = useRef(false);
@@ -273,10 +273,12 @@ export default function App() {
   const activeModelGame = activeModelGameId
     ? modelGameById[activeModelGameId]
     : undefined;
-  const dialogOpen = Boolean(
+  const trainingSessionOpen =
+    page === "train" && route.path.startsWith("/train/session/");
+  const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
-    active,
+    (active && activeSkill),
   );
   const activeCalculationPosition =
     active &&
@@ -427,81 +429,131 @@ export default function App() {
     setPreviewIndex(0);
   }, [previewIndex, session.activities.length]);
 
+  function trainingPath(id: string) {
+    return `/train/session/${encodeURIComponent(id)}`;
+  }
+
+  function closeTrainingRuntime() {
+    setActiveIndex(null);
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate("/train");
+  }
+
+  function openAdaptiveActivity(index: number) {
+    const activity = session.activities[index];
+    if (!activity) return;
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    setActiveIndex(index);
+    navigate(trainingPath(activity.id));
+  }
+
+  function openManualActivity(activity: TrainingActivity) {
+    setActiveIndex(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    setManualActivity(activity);
+    navigate(trainingPath(activity.id));
+  }
+
   useEffect(() => {
-    if (!dialogOpen) return;
+    if (!loaded || !trainingSessionOpen || runtimeReady) return;
 
-    const previousOverflow = document.body.style.overflow;
-    const returnFocus =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    document.body.style.overflow = "hidden";
-
-    const backgroundRegions = [
-      document.querySelector(".app-topbar"),
-      document.querySelector(".main"),
-      document.querySelector(".mobile-nav"),
-    ].filter(
-      (node): node is HTMLElement =>
-        node instanceof HTMLElement,
-    );
-
-    for (const region of backgroundRegions) {
-      region.setAttribute("inert", "");
+    const stored = window.sessionStorage.getItem("chess:training-runtime-v1");
+    if (stored) {
+      try {
+        const snapshot = JSON.parse(stored) as {
+          path?: string;
+          mode?: SessionMode;
+          activeIndex?: number | null;
+          manualActivity?: TrainingActivity | null;
+          activeModelGameId?: string | null;
+          assessmentSession?: AssessmentSession | null;
+        };
+        if (snapshot.path === route.path) {
+          if (snapshot.mode) setMode(snapshot.mode);
+          setActiveIndex(snapshot.activeIndex ?? null);
+          setManualActivity(snapshot.manualActivity ?? null);
+          setActiveModelGameId(snapshot.activeModelGameId ?? null);
+          setAssessmentSession(snapshot.assessmentSession ?? null);
+          return;
+        }
+      } catch {
+        window.sessionStorage.removeItem("chess:training-runtime-v1");
+      }
     }
 
-    window.requestAnimationFrame(() => {
-      const closeButton =
-        document.querySelector<HTMLButtonElement>(
-          ".training-overlay .close-button",
-        );
-      closeButton?.focus();
-    });
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      for (const region of backgroundRegions) {
-        region.removeAttribute("inert");
-      }
-      window.requestAnimationFrame(() => {
-        returnFocus?.focus();
-      });
-    };
-  }, [dialogOpen]);
-
-  useEffect(() => {
-    if (!dialogOpen) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-
-      event.preventDefault();
-      if (assessmentSession) {
-        setAssessmentSession(null);
-        return;
-      }
-      if (activeModelGameId) {
-        setActiveModelGameId(null);
-        return;
-      }
-
-      setActiveIndex(null);
-      setManualActivity(null);
-    };
-
-    window.addEventListener("keydown", closeOnEscape);
-    return () =>
-      window.removeEventListener("keydown", closeOnEscape);
+    const encodedId = route.path.slice("/train/session/".length);
+    const routeId = decodeURIComponent(encodedId);
+    const adaptiveIndex = session.activities.findIndex(
+      (activity) => activity.id === routeId,
+    );
+    if (adaptiveIndex >= 0) {
+      setActiveIndex(adaptiveIndex);
+      return;
+    }
   }, [
-    dialogOpen,
+    active,
+    activeModelGame,
     assessmentSession,
-    activeModelGameId,
+    loaded,
+    route.path,
+    runtimeReady,
+    session.activities,
+    trainingSessionOpen,
   ]);
 
   useEffect(() => {
+    if (!trainingSessionOpen || !runtimeReady) return;
+    window.sessionStorage.setItem(
+      "chess:training-runtime-v1",
+      JSON.stringify({
+        path: route.path,
+        mode,
+        activeIndex,
+        manualActivity,
+        activeModelGameId,
+        assessmentSession,
+      }),
+    );
+  }, [
+    activeIndex,
+    activeModelGameId,
+    assessmentSession,
+    manualActivity,
+    mode,
+    route.path,
+    runtimeReady,
+    trainingSessionOpen,
+  ]);
+
+  useEffect(() => {
+    if (!trainingSessionOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        target.closest(".chess-board")
+      ) {
+        return;
+      }
+      event.preventDefault();
+      closeTrainingRuntime();
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [trainingSessionOpen, route.path]);
+
+  useEffect(() => {
     const handleShortcut = (event: KeyboardEvent) => {
-      if (dialogOpen || event.defaultPrevented) return;
+      if (trainingSessionOpen || event.defaultPrevented) return;
       if (event.metaKey || event.ctrlKey || event.altKey) return;
 
       const target = event.target;
@@ -518,8 +570,7 @@ export default function App() {
         session.activities.length
       ) {
         event.preventDefault();
-        navigatePage("train");
-        setActiveIndex(0);
+        openAdaptiveActivity(0);
         emitExperienceEvent({ feedback: "navigate" });
       }
     };
@@ -527,7 +578,7 @@ export default function App() {
     window.addEventListener("keydown", handleShortcut);
     return () =>
       window.removeEventListener("keydown", handleShortcut);
-  }, [dialogOpen, session.activities.length]);
+  }, [trainingSessionOpen, session.activities.length]);
 
   const homeTrainingReason = !firstActivity
     ? "No adaptive activity is due right now. Open the course to choose the next concept."
@@ -2175,7 +2226,7 @@ export default function App() {
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className={dialogOpen ? "app-shell app-shell-v2 training-open" : "app-shell app-shell-v2"}>
+      <div className={trainingSessionOpen ? "app-shell app-shell-v2 training-session-open" : "app-shell app-shell-v2"}>
         <header className="app-topbar">
           <button
             className="app-brand"
@@ -2361,7 +2412,7 @@ export default function App() {
                 <button
                   className="primary train-room-start"
                   type="button"
-                  onClick={() => setActiveIndex(boundedPreviewIndex)}
+                  onClick={() => openAdaptiveActivity(boundedPreviewIndex)}
                   disabled={!previewActivity}
                 >
                   Start training
@@ -2528,7 +2579,7 @@ export default function App() {
         </Suspense>
       </main>
 
-      {!dialogOpen && (
+      {!trainingSessionOpen && (
         <nav className="mobile-nav" aria-label="Primary navigation">
           {navItems.map(({ id, label, Icon }) => (
             <button
