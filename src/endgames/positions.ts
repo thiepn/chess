@@ -449,7 +449,7 @@ export const endgamePositions: EndgamePosition[] = [
     ],
     successNote: "You held a difficult rook ending through active defense.",
     failureNote: "Create active counterplay before the opponent coordinates king and rook.",
-  },,
+  },
   {
     id: "endgame:advanced-rook-checks",
     skillId: "endgames.rook-checks",
