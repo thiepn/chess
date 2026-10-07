@@ -1,4 +1,4 @@
-import { Lightbulb, RotateCcw, Sparkles } from "lucide-react";
+import { CheckCircle2, Lightbulb, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import type { TrainingOutcome } from "../domain/types";
 import type { SavedStudy } from "../library/types";
@@ -112,10 +112,10 @@ export function SavedStudyTrainer({
 
             {solved && (
               <div className="lesson-feedback success">
-                <Sparkles size={19} />
+                <CheckCircle2 size={19} />
                 <div>
                   <strong>{training.targetSan} — remembered.</strong>
-                  <span>This position will be spaced farther out if recall stays reliable.</span>
+                  <span>You’ll see this position less often if you keep remembering it.</span>
                 </div>
               </div>
             )}

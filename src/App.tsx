@@ -3,7 +3,6 @@ import {
   BarChart3,
   Bookmark,
   BookOpen,
-  BrainCircuit,
   ChevronRight,
   ClipboardCheck,
   Compass,
@@ -191,17 +190,17 @@ function activityIcon(activity: TrainingActivity) {
   if (activity.activityType === "openingRecall") return <Compass size={18} />;
   if (activity.activityType === "savedStudy") return <Bookmark size={18} />;
   if (activity.activityType === "engineGame") return <Swords size={18} />;
-  return <BrainCircuit size={18} />;
+  return <Swords size={18} />;
 }
 
 function reasonLabel(activity: TrainingActivity) {
-  if (activity.source === "prescription") return "FROM YOUR REAL-GAME PLAN";
-  if (activity.source === "weakness") return "FROM YOUR WEAKNESSES";
+  if (activity.source === "prescription") return "FROM YOUR GAMES";
+  if (activity.source === "weakness") return "NEEDS PRACTICE";
   if (activity.source === "review") return "REVIEW DUE";
-  if (activity.source === "curriculum") return "CURRICULUM";
+  if (activity.source === "curriculum") return "COURSE";
   if (activity.source === "focus") return "CURRENT FOCUS";
   if (activity.source === "library") return "FROM YOUR LIBRARY";
-  if (activity.source === "assessment") return "CHECKPOINT REMEDIATION";
+  if (activity.source === "assessment") return "CHECKPOINT FOLLOW-UP";
   return activity.source.toUpperCase();
 }
 
@@ -627,21 +626,21 @@ export default function App() {
   }, [trainingSessionOpen, session.activities.length]);
 
   const homeTrainingReason = !firstActivity
-    ? "No adaptive activity is due right now. Open the course to choose the next concept."
+    ? "No training is due right now. Open Learn to choose a concept."
     : firstActivity.source === "prescription"
       ? progressIntelligence.coachBrief.decisions[0]?.title
-        ? `${progressIntelligence.coachBrief.decisions[0].title} is the most useful repair before adding more material.`
-        : "A repeated game problem is worth repairing before adding more material."
+        ? `${progressIntelligence.coachBrief.decisions[0].title} is the best next focus before starting something new.`
+        : "A repeated game problem is worth revisiting before starting something new."
       : firstActivity.source === "weakness"
-        ? "Your recent games keep pointing to this weakness."
+        ? "Your recent games keep pointing to this area."
         : firstActivity.source === "review"
-          ? "This material is due now so it survives beyond short-term practice."
+          ? "Review this now so it stays available in future games."
           : firstActivity.source === "assessment"
-            ? "A checkpoint exposed a specific gap worth repairing."
+            ? "A checkpoint showed a specific gap to revisit."
             : firstActivity.source === "curriculum"
               ? "This is the next useful concept in your current course stage."
               : firstActivity.source === "library"
-                ? "A saved position is due for retrieval."
+                ? "A saved position is ready to revisit."
                 : "This session focuses on the work most likely to help your next games.";
 
   async function linkLichess(username: string) {
@@ -1449,7 +1448,7 @@ export default function App() {
       urgency: 1,
       reason: `From move ${mistake.moveNumber}: your own game`,
       title: skill.title,
-      subtitle: "Personal mistake repair",
+      subtitle: "Review your mistake",
       mistakeId: mistake.id,
     });
   }
@@ -1921,9 +1920,9 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: 0,
-      reason: "Manual curriculum study",
+      reason: "Course study",
       title: skill.title,
-      subtitle: "Guided curriculum",
+      subtitle: "Guided lesson",
     });
   }
 
@@ -1975,7 +1974,7 @@ export default function App() {
       novelty: 0,
       urgency: .5,
       reason: prescriptionId
-        ? "Real-game prescription"
+        ? "From your recent games"
         : "Focused practice",
       title: skill.title,
       subtitle:
@@ -1983,11 +1982,11 @@ export default function App() {
         activityType === "conversionChallenge"
           ? "Recognition + play-out against resistance"
           : activityType === "calculation"
-            ? "Candidate generation & line calculation"
+            ? "Candidate moves & calculation"
             : activityType === "mixedPuzzle" ||
               activityType === "themedPuzzle"
-            ? "Adaptive retrieval practice"
-            : "Guided concept repair",
+            ? "Recall practice"
+            : "Guided practice",
       calculationPositionId:
         activityType === "calculation"
           ? calculationPositionFor(
@@ -2387,7 +2386,7 @@ export default function App() {
                   <span>
                     {assessmentSession
                       ? assessmentSession.kind === "placement"
-                        ? "Placement diagnostic"
+                        ? "Placement check"
                         : "Stage checkpoint"
                       : activeModelGame
                         ? "Model game"
@@ -2488,7 +2487,7 @@ export default function App() {
                   <>
                     {active.adaptivePolicy && (
                       <div className="train-runtime-policy">
-                        <BrainCircuit size={16} />
+                        <Target size={16} />
                         <div>
                           <strong>{active.adaptivePolicy.reason}</strong>
                           <span>
@@ -2676,7 +2675,7 @@ export default function App() {
                 <span>
                   {previewActivity
                     ? reasonLabel(previewActivity).toLowerCase()
-                    : "adaptive session"}
+                    : "today’s session"}
                 </span>
                 <span>
                   {progressIntelligence.trainingHorizon.completedMinutes}/
@@ -2695,13 +2694,13 @@ export default function App() {
                 </h1>
                 <p className="train-task-subtitle">
                   {previewActivity?.subtitle ??
-                    "Your adaptive queue is clear. Browse the course to choose a concept."}
+                    "Nothing is due right now. Open Learn to choose a concept."}
                 </p>
                 {previewActivity && (
                   <p className="train-task-reason">
                     {boundedPreviewIndex === 0
                       ? homeTrainingReason
-                      : `Part ${boundedPreviewIndex + 1} of today's adaptive session.`}
+                      : `Part ${boundedPreviewIndex + 1} of today’s session.`}
                   </p>
                 )}
               </div>
@@ -2748,14 +2747,14 @@ export default function App() {
                 >
                   <ClipboardCheck size={16} />
                   <span>
-                    <strong>Placement diagnostic</strong>
-                    <small>Optional · calibrates the course</small>
+                    <strong>Placement check</strong>
+                    <small>Optional · finds your starting point</small>
                   </span>
                 </button>
               )}
 
               <div className="train-coach-note">
-                <span>Coach</span>
+                <span>Next focus</span>
                 <strong>{progressIntelligence.coachBrief.headline}</strong>
                 <p>{progressIntelligence.coachBrief.summary}</p>
               </div>

@@ -125,15 +125,15 @@ export function AssessmentRunner({
         <p className="eyebrow">
           {session.kind === "placement"
             ? "PLACEMENT COMPLETE"
-            : "CHECKPOINT COMPLETE"}
+            : "STAGE CHECK COMPLETE"}
         </p>
         <h2>{score}%</h2>
         <p className="assessment-summary-copy">
           {session.kind === "placement"
-            ? "This is a placement signal, not a permanent rating. It seeds the player model and chooses where the course should begin testing you."
+            ? "This is only a starting-point check. It chooses where the course begins, and later results can move you."
             : score >= 80
-              ? "The checkpoint score is strong enough. Certification still checks breadth, delayed retention and transfer outside the lesson."
-              : "The checkpoint found gaps worth repairing before certification. Those missed skills will be pushed into adaptive training."}
+              ? "You passed this stage check. Later reviews and games still contribute to your course progress."
+              : "This stage check found a few skills to revisit. They will appear in your next training sessions."}
         </p>
 
         <div className="assessment-breakdown">
@@ -170,13 +170,12 @@ export function AssessmentRunner({
         <div>
           <p className="eyebrow">
             {session.kind === "placement"
-              ? "PLACEMENT DIAGNOSTIC"
-              : `${stageTitle(item.stageId).toUpperCase()} CHECKPOINT`}
+              ? "PLACEMENT CHECK"
+              : `${stageTitle(item.stageId).toUpperCase()} STAGE CHECK`}
           </p>
           <h2>Find the best move.</h2>
           <p>
-            No hints and no retries. The first legal move is your assessment
-            answer.
+            No hints and no retries. Your first legal move counts.
           </p>
         </div>
         <div className="assessment-count">
@@ -276,7 +275,7 @@ export function AssessmentRunner({
             <span>
               {session.kind === "placement"
                 ? "Placement affects where the course begins, not whether material stays accessible."
-                : "Checkpoint results are combined with mastery, retention and transfer evidence."}
+                : "Stage checks are combined with your course progress, later reviews, and game results."}
             </span>
             <button
               className="primary"

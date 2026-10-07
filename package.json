@@ -21,7 +21,8 @@
     "mobile:audit": "node scripts/audit-mobile-native.mjs",
     "desktop:audit": "node scripts/audit-large-desktop.mjs",
     "a11y:audit": "node scripts/audit-accessibility.mjs",
-    "theme:audit": "node scripts/audit-theme-customization.mjs"
+    "theme:audit": "node scripts/audit-theme-customization.mjs",
+    "content:audit": "node scripts/audit-visual-content.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

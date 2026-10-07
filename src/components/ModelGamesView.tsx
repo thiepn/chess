@@ -168,8 +168,8 @@ export function ModelGamesView({
         </div>
         <p>
           Each checkpoint asks for the plan first. Only then do you play
-          the historical move. Hints reduce evidence, reveal-only study is
-          capped, and any useful position can be saved into spaced training.
+          the historical move. Hints lower the score for that decision, and
+          any useful position can be saved for later practice.
         </p>
       </section>
     </section>

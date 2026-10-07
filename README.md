@@ -72,6 +72,7 @@ The default experience should answer one question: **what should I train now?**
 - P51 Large-Desktop Composition with bounded 1536px+ workspaces, explicit 1920px+ ultrawide layouts, controlled board growth, readable text measures and CI desktop-layout auditing
 - P52 Accessibility Requalification with skip navigation, route focus restoration, richer board/screen-reader semantics, modal focus management, status/progress/current-state ARIA, forced-colors support and CI accessibility auditing
 - P53 Theme & Board Customization with three curated app finishes, three board palettes, three piece treatments, backward-compatible persistence normalization and CI theme auditing
+- P54 Visual Content Pass with player-facing chess language, action-specific iconography, removal of internal/model jargon and CI content-regression auditing
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2586,6 +2587,33 @@ A new `npm run theme:audit` gate verifies the curated option set, persistence no
 
 The complete policy is documented in `docs/P53_CUSTOMIZATION.md`.
 
+## Visual Content Pass
+
+P54 removes the remaining implementation-language and generic product copy from the rebuilt interface.
+
+The rule is simple: **the UI names the chess action or observable result, not the system that produced it.**
+
+Examples:
+
+- “adaptive session” → “today’s session”;
+- “placement diagnostic” → “placement check”;
+- “checkpoint remediation” → “checkpoint follow-up”;
+- “mastery / retention / transfer” → “skill level / recall / in games”;
+- “coach readout” → “training focus”;
+- “evidence & model diagnostics” → “how progress is estimated”;
+- “repair queue” → “practice again”;
+- “real-game transfer” → “how training shows up”.
+
+Review, puzzles, assessments, openings and saved studies were also cleaned so success/error states no longer talk about player models, recognition evidence, mastery evidence, internal phase versions or adaptive training.
+
+Generic BrainCircuit, Gamepad2 and decorative Sparkles icons were removed from chess surfaces and replaced with action-specific symbols. The sparkle remains only for the literal Celebrations preference.
+
+Internal identifiers and analytics types were intentionally not renamed; they are implementation details and changing them would add risk without improving the user experience.
+
+A new `npm run content:audit` Quality gate blocks the removed phrases, generic icons and motivational filler from returning.
+
+The complete contract is documented in `docs/P54_VISUAL_CONTENT.md`.
+
 ## Next phase
 
-P54 — Visual Content Pass.
+P55 — Cross-Page Workflow Integration.

@@ -3,7 +3,6 @@ import "../styles/review-v2.css";
 import "../styles/p47-review-native.css";
 import "../styles/p51-review-large.css";
 import {
-  BrainCircuit,
   FileUp,
   Link2,
   LoaderCircle,
@@ -277,9 +276,9 @@ export function ReviewView({
               {reanalyzingGameId === selectedGame.id ? (
                 <LoaderCircle className="spin" size={16} />
               ) : (
-                <BrainCircuit size={16} />
+                <Target size={16} />
               )}
-              Generate analysis
+              Analyze game
             </button>
           </div>
         </section>
@@ -348,7 +347,7 @@ export function ReviewView({
             ))
           ) : (
             <div className="review-v2-empty-list">
-              <BrainCircuit size={18} />
+              <Swords size={18} />
               <span>No games yet.</span>
             </div>
           )}
@@ -361,7 +360,7 @@ export function ReviewView({
             <p className="eyebrow">ANALYSIS DESK</p>
             <h1>Import a game</h1>
             <p>
-              Stockfish supports the review; only useful learning moments become future training.
+              Analyze the game, inspect critical moments, and save positions you want to practice.
             </p>
           </div>
           <div className="review-v2-summary">
@@ -371,7 +370,7 @@ export function ReviewView({
             </span>
             <span>
               <strong>{unresolved.length}</strong>
-              to repair
+              to revisit
             </span>
           </div>
         </header>
@@ -549,7 +548,7 @@ export function ReviewView({
               {batchAnalyzing ? (
                 <LoaderCircle className="spin" size={15} />
               ) : (
-                <BrainCircuit size={15} />
+                <Target size={15} />
               )}
               {batchAnalyzing ? "Analyzing…" : "Analyze new synced games"}
             </button>
@@ -561,7 +560,7 @@ export function ReviewView({
       <aside className="review-v2-repair" aria-labelledby="repair-title">
         <header>
           <div>
-            <p className="eyebrow">REPAIR QUEUE</p>
+            <p className="eyebrow">PRACTICE AGAIN</p>
             <h2 id="repair-title">{unresolved.length} positions</h2>
           </div>
           <Target size={17} />
@@ -580,7 +579,7 @@ export function ReviewView({
                   <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
                   <button type="button" onClick={() => onTrainMistake(mistake.id)}>
                     <Swords size={14} />
-                    Repair
+                    Practice
                   </button>
                 </div>
               </div>
@@ -588,7 +587,7 @@ export function ReviewView({
           ) : (
             <div className="review-v2-repair-empty">
               <Target size={18} />
-              <strong>No repair queue</strong>
+              <strong>No positions to revisit</strong>
               <span>Critical positions from analyzed games will appear here.</span>
             </div>
           )}
@@ -597,7 +596,7 @@ export function ReviewView({
         {mistakes.some((mistake) => mistake.resolved) && (
           <div className="review-v2-repaired">
             <RotateCcw size={14} />
-            {mistakes.filter((mistake) => mistake.resolved).length} repaired positions
+            {mistakes.filter((mistake) => mistake.resolved).length} practiced positions
           </div>
         )}
       </aside>

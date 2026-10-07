@@ -776,7 +776,32 @@ Delivered:
 
 ### P54 — Visual Content Pass
 
+**Status:** implemented.
+
 Remove placeholder copy, internal jargon, generic icons, duplicate labels and any remaining SaaS-style motivational language.
+
+Delivered:
+
+- removed self-referential product language such as “dashboard” from Play;
+- translated Train source labels from implementation terms into player-facing reasons such as From your games, Needs practice, Course and Checkpoint follow-up;
+- replaced adaptive/diagnostic/repair phrasing in Train with session, placement check, revisit and practice language;
+- simplified Learn checkpoint and placement copy while keeping the underlying stage-gate calculations unchanged;
+- renamed Progress presentation metrics from Mastery / Retention / Transfer / Calibration to Skill level / Recall / In games / Estimate match;
+- translated Progress model vocabulary such as evidence, interventions, coach readout and real-game transfer into tracked results, training methods, training focus and how training shows up;
+- rewrote the advanced Progress detail panel as “How progress is estimated” rather than exposing model-diagnostic language;
+- replaced Review repair-queue language with Practice again / positions to revisit;
+- rewrote Review import/reanalysis copy around concrete actions: analyze, inspect critical moments, save positions;
+- simplified opening-repertoire terms such as recall evidence, live branch and deviation-rate presentation;
+- removed internal version wording such as “P8 story” from game review;
+- removed mastery/recognition-evidence language from puzzle and lesson success feedback;
+- rewrote placement/stage-check summaries so they explain course effects without referencing player models, certification evidence or adaptive training;
+- replaced generic BrainCircuit, Gamepad2 and decorative Sparkles icons on chess surfaces with Target, Swords, Search, CheckCircle and other action-specific symbols;
+- kept Sparkles only where it literally represents the optional Celebrations setting;
+- updated Library “train” actions to “practice” where the action is recalling a saved position;
+- added `npm run content:audit` and made it part of the Quality workflow;
+- documented the copy/icon rules in `docs/P54_VISUAL_CONTENT.md`.
+
+Internal model/type names remain unchanged when they are not user-visible. P54 is a presentation-language pass, not an analytics architecture rewrite.
 
 ### P55 — Cross-Page Workflow Integration
 

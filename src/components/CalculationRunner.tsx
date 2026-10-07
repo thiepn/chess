@@ -1,11 +1,10 @@
 import { Chess } from "chess.js";
 import {
-  BrainCircuit,
   ChevronRight,
   Eye,
   EyeOff,
   RotateCcw,
-  Sparkles,
+  CheckCircle2,
   Target,
 } from "lucide-react";
 import {
@@ -563,9 +562,7 @@ export function CalculationRunner({
                   {position.prompt}
                 </p>
                 <div className="calculation-rule">
-                  <BrainCircuit
-                    size={17}
-                  />
+                  <Target size={17} />
                   <span>
                     Generate moves before
                     calculating deeply.
@@ -702,9 +699,7 @@ export function CalculationRunner({
                   the resulting position?
                 </p>
                 <div className="calculation-rule">
-                  <BrainCircuit
-                    size={17}
-                  />
+                  <Target size={17} />
                   <span>
                     Rebuild every piece on
                     its new square before
@@ -729,9 +724,7 @@ export function CalculationRunner({
                     aria-live="polite"
                     aria-atomic="true"
                   >
-                    <Sparkles
-                      size={19}
-                    />
+                    <CheckCircle2 size={19} />
                     <div>
                       <strong>
                         {score.success

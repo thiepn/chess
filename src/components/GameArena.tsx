@@ -1,12 +1,12 @@
 import { Chess, type Color, type Square } from "chess.js";
 import {
-  BrainCircuit,
   Clock3,
   Flag,
   LoaderCircle,
   RotateCcw,
   Shield,
-  Sparkles,
+  CheckCircle2,
+  Target,
   Swords,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -358,7 +358,7 @@ export function GameArena({
           <RotateCcw size={15} /> Exit game
         </button>
         <div className="game-opponent" aria-live="polite">
-          <BrainCircuit size={15} />
+          <Swords size={15} />
           <span>{engineStatus}</span>
         </div>
       </div>
@@ -368,7 +368,7 @@ export function GameArena({
           <div className="game-player-strip opponent">
             <div>
               <span className="game-player-mark" aria-hidden="true">
-                <BrainCircuit size={15} />
+                <Swords size={15} />
               </span>
               <span>
                 <strong>{profile.name}</strong>
@@ -541,7 +541,7 @@ export function GameArena({
             <div className="game-result-card">
               <div className="game-result-symbol">
                 {result.outcome === "win" ? (
-                  <Sparkles size={24} />
+                  <CheckCircle2 size={24} />
                 ) : result.outcome === "draw" ? (
                   <Shield size={24} />
                 ) : (
@@ -568,12 +568,12 @@ export function GameArena({
                   </>
                 ) : reviewSent ? (
                   <>
-                    <BrainCircuit size={16} />
+                    <CheckCircle2 size={16} />
                     <span>Saved and analyzed for Review</span>
                   </>
                 ) : (
                   <>
-                    <BrainCircuit size={16} />
+                    <CheckCircle2 size={16} />
                     <span>Saved to Review · analysis can be retried</span>
                   </>
                 )}
@@ -592,6 +592,6 @@ export function GameArena({
 
 function TargetIcon({ mode }: { mode: TrainingScenario["mode"] }) {
   if (mode === "defense") return <Shield size={20} />;
-  if (mode === "conversion") return <Sparkles size={20} />;
+  if (mode === "conversion") return <Target size={20} />;
   return <Swords size={20} />;
 }

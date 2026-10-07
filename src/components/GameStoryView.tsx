@@ -1,10 +1,9 @@
 import { Chess, type Square } from "chess.js";
 import {
   ArrowLeft,
-  BrainCircuit,
+  CheckCircle2,
   ChevronLeft,
   Play,
-  Sparkles,
   Swords,
   Target,
 } from "lucide-react";
@@ -208,8 +207,8 @@ export function GameStoryView({
           <ChevronLeft size={16} /> Review
         </button>
         <div className="empty-bank">
-          <BrainCircuit size={24} />
-          <strong>This game has no P8 story yet.</strong>
+          <Target size={24} />
+          <strong>This game does not have a review yet.</strong>
           <span>Analyze it again to generate the visual review.</span>
         </div>
       </section>
@@ -472,7 +471,7 @@ function MomentDetails({
     <>
       <div className="moment-heading">
         <div className={`moment-symbol ${moment.kind}`}>
-          {moment.kind === "strong" ? <Sparkles size={20} /> : <BrainCircuit size={20} />}
+          {moment.kind === "strong" ? <CheckCircle2 size={20} /> : <Target size={20} />}
         </div>
         <div>
           <p className="eyebrow">
@@ -542,7 +541,7 @@ function MomentDetails({
 
       {mistake && (
         <button className="moment-coach-primary" type="button" onClick={onCoach}>
-          <BrainCircuit size={16} /> Review this decision first
+          <Target size={16} /> Review this decision first
         </button>
       )}
 
@@ -560,17 +559,16 @@ function MomentDetails({
             type="button"
             onClick={() => onTrainMistake(mistake.id)}
           >
-            <Swords size={16} /> Repair now
+            <Swords size={16} /> Practice position
           </button>
         </div>
       )}
 
       {!mistake && (
         <div className="strong-moment-note">
-          <Sparkles size={15} />
+          <CheckCircle2 size={15} />
           <span>
-            This is a positive reference point. There is nothing to add to the
-            mistake bank here.
+            Strong move. Keep this position as a reference.
           </span>
         </div>
       )}

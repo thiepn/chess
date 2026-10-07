@@ -1,5 +1,5 @@
 import { Chess, type Color, type Square } from "chess.js";
-import { BrainCircuit, Check, ChevronRight, ExternalLink, Lightbulb, LoaderCircle, RotateCcw, Sparkles } from "lucide-react";
+import { Check, ChevronRight, ExternalLink, Lightbulb, LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type {
   ChessSkill,
@@ -336,13 +336,13 @@ export function PuzzleRunner({
             {solved && (
               <>
                 <div className="lesson-feedback success" role="status" aria-live="polite" aria-atomic="true">
-                  <Sparkles size={19} />
+                  <Check size={19} />
                   <div>
                     <strong>Correct sequence</strong>
                     <span>
                       {wrongAttempts === 0 && hintsUsed === 0
-                        ? "Clean solve. This is strong recognition evidence."
-                        : "Solved. Hints and retries will reduce the mastery evidence rather than being treated as a clean solve."}
+                        ? "Clean solve. You recognized the sequence immediately."
+                        : "Solved. Hints and retries are recorded separately."}
                     </span>
                   </div>
                 </div>
@@ -391,7 +391,7 @@ export function PuzzleRunner({
 
                 <section className="puzzle-verification">
                   <div>
-                    <BrainCircuit size={17} />
+                    <Check size={17} />
                     <span>
                       <strong>Optional engine check</strong>
                       <small>

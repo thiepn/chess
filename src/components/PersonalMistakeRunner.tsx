@@ -1,5 +1,5 @@
 import { Chess, type Color, type Square } from "chess.js";
-import { ChevronRight, Lightbulb, RotateCcw, Sparkles } from "lucide-react";
+import { CheckCircle2, ChevronRight, Lightbulb, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { TrainingOutcome } from "../domain/types";
 import type { PersonalMistake } from "../games/types";
@@ -108,7 +108,7 @@ export function PersonalMistakeRunner({
               }
 
               setWrongAttempts((value) => value + 1);
-              setFeedback("That is legal, but it does not repair the mistake. Re-read the position before moving again.");
+              setFeedback("That move is legal, but it does not solve the problem. Re-read the position before moving again.");
               return false;
             }}
           />
@@ -121,7 +121,7 @@ export function PersonalMistakeRunner({
         <div className="lesson-instruction">
           <div>
             <p className="eyebrow">FROM YOUR GAME</p>
-            <h2>{solved ? "You found the repair." : "What should you play instead?"}</h2>
+            <h2>{solved ? "You found the better move." : "What should you play instead?"}</h2>
             <p className="lesson-prompt">
               {solved
                 ? mistake.explanation
@@ -150,7 +150,7 @@ export function PersonalMistakeRunner({
             {solved && (
               <>
                 <div className="lesson-feedback success">
-                  <Sparkles size={19} />
+                  <CheckCircle2 size={19} />
                   <div>
                     <strong>{bestSan} was stronger.</strong>
                     <span>

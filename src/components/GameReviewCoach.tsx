@@ -1,13 +1,12 @@
 import { Chess } from "chess.js";
 import {
   Bookmark,
-  BrainCircuit,
+  CheckCircle2,
   ChevronRight,
   Clock3,
   Eye,
   Lightbulb,
   RotateCcw,
-  Sparkles,
   Target,
   X,
 } from "lucide-react";
@@ -550,8 +549,8 @@ export function GameReviewCoach({
                 <div className="review-retry-result">
                   <strong>
                     {resultMoveSan} is legal,
-                    but it does not repair the
-                    moment.
+                    but it does not solve the
+                    problem.
                   </strong>
                   <span>
                     You can reset and try once
@@ -617,7 +616,7 @@ export function GameReviewCoach({
           <div className="review-explain-layout">
             <div className="review-explanation-main">
               <div className="review-error-summary">
-                <BrainCircuit size={19} />
+                <Target size={19} />
                 <div>
                   <strong>
                     {errorLabel(
@@ -840,9 +839,9 @@ export function GameReviewCoach({
 
               {retrySuccess && (
                 <div className="review-retry-success">
-                  <Sparkles size={15} />
+                  <CheckCircle2 size={15} />
                   <span>
-                    You found the repair before
+                    You found the better move before
                     the answer was shown.
                   </span>
                 </div>
