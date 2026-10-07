@@ -70,7 +70,7 @@ export function ExperienceControls() {
         aria-expanded={open}
         aria-controls={dialogId}
         aria-haspopup="dialog"
-        aria-label="Interaction settings"
+        aria-label="Experience settings"
       >
         {open ? <X size={17} /> : <Settings2 size={17} />}
         <span>Experience</span>
@@ -86,8 +86,8 @@ export function ExperienceControls() {
         >
           <div className="experience-popover-heading">
             <div>
-              <p className="eyebrow">INTERACTION</p>
-              <strong id={headingId}>Interaction settings</strong>
+              <p className="eyebrow">EXPERIENCE</p>
+              <strong id={headingId}>Experience settings</strong>
             </div>
             <Accessibility size={18} />
           </div>
@@ -106,6 +106,7 @@ export function ExperienceControls() {
                   type="button"
                   className="appearance-choice"
                   aria-pressed={settings.appTheme === option.id}
+                  aria-label={`${option.label}. ${option.description}`}
                   title={option.description}
                   onClick={() => {
                     updateSettings({ appTheme: option.id as AppTheme });
@@ -138,6 +139,7 @@ export function ExperienceControls() {
                   type="button"
                   className="appearance-choice"
                   aria-pressed={settings.boardTheme === option.id}
+                  aria-label={`${option.label}. ${option.description}`}
                   title={option.description}
                   onClick={() => {
                     updateSettings({ boardTheme: option.id as BoardTheme });
@@ -169,6 +171,7 @@ export function ExperienceControls() {
                   type="button"
                   className="appearance-choice piece-style-choice"
                   aria-pressed={settings.pieceStyle === option.id}
+                  aria-label={`${option.label}. ${option.description}`}
                   title={option.description}
                   onClick={() => {
                     updateSettings({ pieceStyle: option.id as PieceStyle });
@@ -187,6 +190,21 @@ export function ExperienceControls() {
               ))}
             </div>
           </fieldset>
+
+          <button
+            type="button"
+            className="appearance-reset"
+            onClick={() => {
+              updateSettings({
+                appTheme: "graphite",
+                boardTheme: "tournament",
+                pieceStyle: "classic",
+              });
+              feedback("select");
+            }}
+          >
+            Reset appearance
+          </button>
 
           <div className="experience-divider" />
 
