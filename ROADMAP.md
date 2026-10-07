@@ -753,7 +753,26 @@ Automated/static requalification does not claim manual NVDA, JAWS, VoiceOver, Ta
 
 ### P53 — Theme & Board Customization
 
+**Status:** implemented.
+
 Add a small high-quality set of board/piece options only after the default experience is visually strong.
+
+Delivered:
+
+- added three curated dark app finishes: Graphite, Obsidian and Warm graphite;
+- added three board palettes: Tournament, Walnut and Slate;
+- added three piece treatments: Classic, Club and Minimal;
+- kept blue/correct/error/concept semantic colors non-customizable so training/review meaning remains stable;
+- added persistent `appTheme`, `boardTheme` and `pieceStyle` fields to the existing experience settings;
+- normalized pre-P53 and invalid persisted settings back to safe defaults;
+- applied theme state through root data attributes so every route and board receives the same customization;
+- applied piece style to both full chessboards and the Play player marker;
+- expanded the Experience dialog with accessible pressed-state selectors, visual swatches and an appearance-only reset;
+- app finishes also map legacy neutral surface variables so older secondary components do not visually detach from the selected finish;
+- customization CSS loads before the P52 accessibility layer so focus/forced-colors rules remain authoritative;
+- added `npm run theme:audit` and dedicated Vitest coverage for option sets, backward-compatible normalization and invalid saved values;
+- added P53 CSS to the material audit;
+- documented the customization contract in `docs/P53_CUSTOMIZATION.md`.
 
 ### P54 — Visual Content Pass
 
