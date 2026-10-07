@@ -96,6 +96,16 @@ export const curriculumStages: CurriculumStage[] = [
       "Time use, plans, phase transitions, final move checks and recovery after mistakes.",
     targetRating: "1200–1600",
   },
+  {
+    id: "advanced",
+    order: 8,
+    title: "Handle complex positions",
+    shortTitle: "Advanced",
+    promise: "Choose plans and calculate accurately when several good ideas compete.",
+    description:
+      "Combinations, imbalances, structures, restriction, transformations, coordination and advanced endings.",
+    targetRating: "1500–2000+",
+  },
 ];
 
 const ratingByStage: Record<CurriculumStageId, number> = {
@@ -107,6 +117,7 @@ const ratingByStage: Record<CurriculumStageId, number> = {
   fight: 1050,
   finish: 950,
   practical: 1200,
+  advanced: 1550,
 };
 
 const skill = (
@@ -224,6 +235,27 @@ export const skills: ChessSkill[] = [
   skill("practical.transition", "practical", "practical", "Handle phase transitions", "Notice when opening principles, middlegame plans or endgame rules should take over.", .84, 4, [soft("openings.principles"), soft("endgames.opposition")], ["conceptLesson", "gameReview"], ["practical"]),
   skill("practical.post-move-check", "practical", "practical", "Check the position after every move", "Re-evaluate checks, captures and threats after the board changes.", .96, 3, [hard("fundamentals.blunder-check"), soft("defense.threats")], ["conceptLesson", "engineGame", "gameReview"], ["practical", "thinking"]),
   skill("practical.resilience", "practical", "practical", "Recover after a mistake", "Stop one error from becoming three by reassessing the new position objectively.", .82, 4, [soft("practical.post-move-check")], ["conceptLesson", "engineGame", "gameReview"], ["practical", "psychology"]),
+
+
+  // Stage 8 — Advanced chess
+  skill("tactics.combinations", "advanced", "tactics", "Combine tactical motifs", "Link deflection, overload, clearance, pins and mating ideas into one forcing sequence.", .94, 5, [hard("calculation.forcing-lines"), soft("tactics.overload"), helpful("tactics.clearance")], ["conceptLesson", "themedPuzzle", "mixedPuzzle", "calculation"], ["advanced", "tactic", "combination"]),
+  skill("tactics.defensive-resources", "advanced", "defense", "Find defensive tactics", "Search for counterchecks, zwischenzugs, tactical exchanges and forcing resources before accepting a worse position.", .92, 5, [hard("defense.threats"), hard("calculation.reply")], ["conceptLesson", "mixedPuzzle", "calculation", "defenseChallenge"], ["advanced", "defense", "tactic"]),
+  skill("calculation.branching", "advanced", "calculation", "Compare calculation branches", "Hold several serious candidate lines in mind and compare the resulting positions instead of following one attractive line.", .96, 5, [hard("calculation.candidates"), hard("calculation.reply"), soft("calculation.visualization")], ["conceptLesson", "calculation"], ["advanced", "calculation", "branches"]),
+  skill("calculation.evaluation", "advanced", "calculation", "Know when to stop calculating", "End a line at a stable position and evaluate material, king safety, activity, structure and long-term features accurately.", .94, 5, [hard("calculation.forcing-lines"), soft("strategy.imbalances")], ["conceptLesson", "calculation"], ["advanced", "calculation", "evaluation"]),
+  skill("strategy.imbalances", "advanced", "strategy", "Read positional imbalances", "Compare material, space, pawn structure, king safety, piece quality and initiative to decide what the position demands.", .98, 5, [hard("practical.plan"), soft("strategy.piece-activity"), soft("pawns.weaknesses")], ["conceptLesson", "mixedPuzzle", "engineGame"], ["advanced", "strategy", "imbalances"]),
+  skill("strategy.bishop-vs-knight", "advanced", "strategy", "Bishop versus knight", "Judge minor pieces by pawn structure, open diagonals, outposts, color complexes and the location of play.", .9, 5, [hard("strategy.imbalances"), soft("strategy.outposts")], ["conceptLesson", "mixedPuzzle"], ["advanced", "strategy", "minor-piece"]),
+  skill("strategy.exchanges", "advanced", "strategy", "Transform with exchanges", "Use exchanges to change the important imbalance rather than trading automatically because a piece is attacked.", .94, 5, [hard("fundamentals.trades"), hard("strategy.imbalances")], ["conceptLesson", "mixedPuzzle", "engineGame"], ["advanced", "strategy", "exchange"]),
+  skill("strategy.restriction", "advanced", "strategy", "Restrict before attacking", "Take useful squares away, limit counterplay and improve pieces while the opponent has fewer active choices.", .93, 5, [hard("defense.prophylaxis"), soft("strategy.worst-piece")], ["conceptLesson", "mixedPuzzle", "engineGame"], ["advanced", "strategy", "restriction"]),
+  skill("strategy.coordination", "advanced", "strategy", "Coordinate the pieces", "Make pieces support the same target, break or invasion square instead of improving them independently.", .94, 5, [hard("strategy.piece-activity"), soft("practical.plan")], ["conceptLesson", "mixedPuzzle", "engineGame"], ["advanced", "strategy", "coordination"]),
+  skill("pawns.iqp", "advanced", "pawns", "Isolated queen's pawn", "Use the IQP's activity and central breaks before it becomes a static endgame weakness.", .9, 5, [hard("pawns.weaknesses"), hard("pawns.breaks")], ["conceptLesson", "mixedPuzzle"], ["advanced", "pawn-structure", "iqp"]),
+  skill("pawns.hanging", "advanced", "pawns", "Hanging pawns", "Use connected c- and d-pawns for space and breaks while recognizing when advancing one creates targets.", .87, 5, [hard("pawns.breaks"), soft("strategy.imbalances")], ["conceptLesson", "mixedPuzzle"], ["advanced", "pawn-structure", "hanging-pawns"]),
+  skill("pawns.minority", "advanced", "pawns", "Minority attack", "Use a smaller queenside pawn group to create a fixed weakness in a larger pawn majority.", .85, 5, [hard("pawns.weaknesses"), soft("practical.plan")], ["conceptLesson", "mixedPuzzle"], ["advanced", "pawn-structure", "minority-attack"]),
+  skill("strategy.repertoire-middlegames", "advanced", "strategy", "Play repertoire middlegames", "Recognize the recurring structures, breaks, piece placements and plans that arise from your own openings.", .94, 5, [hard("practical.transition"), soft("openings.principles"), soft("strategy.imbalances")], ["conceptLesson", "openingPosition", "engineGame"], ["advanced", "strategy", "repertoire"]),
+  skill("endgames.rook-checks", "advanced", "endgames", "Rook checks and cutoffs", "Use checking distance, king cutoffs and active rook placement to convert or defend rook endings.", .93, 5, [hard("endgames.rook-activity"), soft("endgames.lucena"), soft("endgames.philidor")], ["conceptLesson", "endgameDrill"], ["advanced", "endgame", "rook"]),
+  skill("endgames.opposite-bishops", "advanced", "endgames", "Opposite-colored bishops", "Understand blockades, passed pawns and why extra pawns may not be enough when bishops control different colors.", .86, 5, [hard("pawns.passed"), soft("conversion.simplify")], ["conceptLesson", "endgameDrill"], ["advanced", "endgame", "bishop"]),
+  skill("endgames.minor-piece", "advanced", "endgames", "Minor-piece endings", "Use king activity, pawn targets, outposts and piece quality in bishop and knight endings.", .9, 5, [hard("strategy.bishop-vs-knight"), soft("endgames.opposition")], ["conceptLesson", "endgameDrill"], ["advanced", "endgame", "minor-piece"]),
+  skill("conversion.two-weaknesses", "advanced", "conversion", "Create a second weakness", "When one target is fully defended, open a second front so the defender cannot protect both sides indefinitely.", .92, 5, [hard("conversion.simplify"), hard("strategy.imbalances"), soft("strategy.coordination")], ["conceptLesson", "conversionChallenge"], ["advanced", "conversion", "technique"]),
+  skill("practical.complications", "advanced", "practical", "Choose when to simplify or complicate", "Match the position, clock and opponent resources to the right level of complexity without replacing objective chess with hope.", .86, 5, [hard("practical.time"), hard("calculation.evaluation"), soft("conversion.simplify")], ["conceptLesson", "engineGame", "gameReview"], ["advanced", "practical", "decision-making"]),
 ];
 
 export const skillById = Object.fromEntries(skills.map((item) => [item.id, item]));
