@@ -58,6 +58,7 @@ The default experience should answer one question: **what should I train now?**
 - P37 Visual Architecture Lock with the authoritative non-SaaS chess design contract, namespaced graphite/ivory design tokens, route-level page architecture, Train-as-default navigation model, explicit modal/sidebar/hero constraints, and regression-tested visual architecture invariants
 - P38 Real Routing & App Shell with URL-backed Train/Learn/Play/Review/Library pages, History back/forward synchronization, GitHub Pages deep-link restoration, a compact desktop top bar, five-destination mobile navigation, and removal of the permanent SaaS sidebar
 - P39 Board Design System 2.0 with custom SVG chess pieces, ivory/graphite board materials, standardized chess-state semantics, move-type motion, orientation transitions, and preserved keyboard/screen-reader board behavior
+- P40 Train Page Reconstruction with a real training-room layout, selectable adaptive session rail, dominant board preview, contextual coach rail, compact session facts, and removal of the Train hero/dashboard card stack
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2212,6 +2213,25 @@ Move feedback now distinguishes ordinary movement, captures, promotions, castlin
 
 P36 accessibility remains authoritative: keyboard square navigation, Enter/Space activation, square labels, legal-target announcements and check announcements all remain in the same board component.
 
+## Train Page Reconstruction
+
+P40 removes the old Train dashboard composition.
+
+The Train route now opens directly into a training-room layout:
+
+- a narrow adaptive-session rail on the left;
+- the P39 chessboard as the dominant center surface;
+- contextual task/coaching controls on the right;
+- compact session facts rather than KPI cards.
+
+There is no giant Recommended-now hero, minute orb, plan strip, course-metrics card or standalone coach dashboard on Train anymore.
+
+The session queue is real rather than decorative: selecting an item changes the board preview and the Start training action launches that exact adaptive activity. Quick, Standard and Deep remain available as compact duration controls.
+
+On phones the queue becomes a horizontal strip, the chessboard occupies the main width, and task controls follow directly below it. The page no longer behaves like a stacked desktop dashboard.
+
+P40 deliberately preserves the existing P36 training runners as compatibility overlays. P41 is responsible for moving lessons, puzzles, calculation, endgames, opening recall, mistake repair, saved studies and assessments into the route-level training workspace.
+
 ## Next phase
 
-P40 — Train Page Reconstruction.
+P41 — Train Runtime Migration.
