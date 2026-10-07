@@ -64,6 +64,7 @@ The default experience should answer one question: **what should I train now?**
 - P43 Play Page Redesign with a board-preview setup desk, real `/play/game/:id` game routes, Untimed/10+0/15+10 clocks, tournament-style player strips, routed scenario/replay sessions, and removal of the Play hero/profile/scenario card grids
 - P44 Review Page Redesign with a routed `/review/:gameId` analysis workstation, synchronized board/notation/critical-moment teaching, clickable evaluation trace, compact review index, and removal of the Review/story hero-card composition
 - P45 Library Page Redesign with a routed chess archive, real study/reference/game workspaces, collection pages for studies/positions/endgames/games, canonical Repertoire/Model Game links, and removal of the Library hero/metrics/local-tab/card-grid composition
+- P46 Progress Analytics Redesign with practical-strength-first hierarchy, dominant eight-week trajectory, curriculum/skill development record, chess-specific human-game transfer analytics, and advanced planning/evidence moved into expandable technical sections
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2371,6 +2372,29 @@ Repertoire and Model Games are exposed from the Library but intentionally keep t
 
 Library-specific redesign CSS is loaded with the lazy Library chunk rather than added to the initial global stylesheet.
 
+## Progress Analytics Redesign
+
+P46 reconstructs Progress as a chess-specific player-development record.
+
+The old giant Progress hero and equal-weight analytics panel stack are no longer the primary composition. The page now reads in the order a player actually needs:
+
+1. practical strength;
+2. eight-week mastery / retention / transfer trajectory;
+3. current development metrics;
+4. curriculum velocity and skill movement;
+5. coach recommendations;
+6. human-game transfer and recurring weaknesses.
+
+Practical strength is the visual anchor, including confidence, human-game sample, consistency and opponent context. The primary chart remains the longitudinal eight-week trajectory rather than decorative dashboard metrics.
+
+Human-game analytics are grouped around chess questions: opening families, phase performance, playing conditions, recent form and recurring mistake families. Weak skills and recurring families can still launch focused training directly.
+
+The full planning system is preserved but moved into an expandable Training plan & competition cycle section. Weekly allocation, adherence/forecast context, load management, manual recovery, automatic recovery, goal settings, competition preparation and event retrospective notes remain editable.
+
+Calibration, intervention effectiveness, coach validation and longitudinal evidence history are likewise preserved inside an expandable Evidence & model diagnostics section.
+
+P46-specific CSS loads with the lazy Progress chunk rather than increasing the initial global stylesheet.
+
 ## Next phase
 
-P46 — Progress Analytics Redesign.
+P47 — Mobile / Tablet Native Layouts.

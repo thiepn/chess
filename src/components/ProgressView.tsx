@@ -1,39 +1,30 @@
 import {
+  Activity,
   ArrowLeft,
   BarChart3,
   BrainCircuit,
   CheckCircle2,
   ChevronRight,
   Clock3,
-  RefreshCcw,
-  ShieldCheck,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Users,
   Gauge,
-  Activity,
-  CircleAlert,
-  Layers3,
-  ListChecks,
-  FlaskConical,
+  ShieldCheck,
   TrendingDown,
+  TrendingUp,
 } from "lucide-react";
 import type {
   HumanGameCohortInsight,
   ProgressIntelligence,
   TrendPoint,
 } from "../analytics/types";
-import type {
-  TrainingPrescriptionAction,
-} from "../prescriptions/types";
+import { skillTitle, stageTitle } from "../analytics/engine";
 import type {
   CompetitionPlanSettings,
   TrainingGoalId,
   TrainingPlanSettings,
 } from "../domain/types";
 import { trainingGoals } from "../planning/periodization";
-import { skillTitle, stageTitle } from "../analytics/engine";
+import type { TrainingPrescriptionAction } from "../prescriptions/types";
+import "../styles/progress-v2.css";
 
 type TrainingPlanPatch = Partial<
   Pick<
@@ -57,26 +48,36 @@ interface ProgressViewProps {
     prescriptionId: string,
     action: TrainingPrescriptionAction,
   ) => void;
-  onUpdateTrainingPlan?: (
-    patch: TrainingPlanPatch,
-  ) => void;
+  onUpdateTrainingPlan?: (patch: TrainingPlanPatch) => void;
   onUpdateCompetitionPlan?: (
     patch: Partial<CompetitionPlanSettings>,
   ) => void;
   onStartRecovery?: () => void;
   onEndRecovery?: () => void;
   onUpdateCompetitionRetrospective?: (
-    field:
-      | "whatWorked"
-      | "whatFailed"
-      | "nextCycleFocus",
+    field: "whatWorked" | "whatFailed" | "nextCycleFocus",
     value: string,
   ) => void;
 }
 
 function deltaLabel(value: number) {
-  if (Math.abs(value) < .1) return "No measured change";
-  return `${value > 0 ? "+" : ""}${value.toFixed(1)} in 30 days`;
+  if (Math.abs(value) < 0.1) return "No measured change";
+  return `${value > 0 ? "+" : ""}${value.toFixed(1)} / 30d`;
+}
+
+function calibrationText(
+  label: ProgressIntelligence["calibration"]["label"],
+) {
+  if (label === "well-calibrated") {
+    return "Model estimates and checkpoint performance are aligned.";
+  }
+  if (label === "overconfident") {
+    return "Checkpoint performance is below the current mastery estimate.";
+  }
+  if (label === "underconfident") {
+    return "Checkpoint performance is stronger than the current estimate.";
+  }
+  return "More placement/checkpoint evidence is needed.";
 }
 
 function interventionLabel(value: string) {
@@ -99,26 +100,100 @@ function interventionLabel(value: string) {
   return labels[value] ?? value;
 }
 
-function calibrationText(
-  label: ProgressIntelligence["calibration"]["label"],
-) {
-  if (label === "well-calibrated") {
-    return "The player model is predicting assessment performance reasonably well.";
-  }
-  if (label === "overconfident") {
-    return "The model currently expects more success than checkpoints are showing.";
-  }
-  if (label === "underconfident") {
-    return "Assessment performance is stronger than the current mastery estimates predict.";
-  }
-  return "More placement/checkpoint samples are needed before calibration is meaningful.";
-}
-
 function cohortDelta(item: HumanGameCohortInsight) {
   if (Math.abs(item.deltaVsBaseline) < 1) return "≈ baseline";
   return `${item.deltaVsBaseline > 0 ? "+" : ""}${Math.round(
     item.deltaVsBaseline,
-  )} vs baseline`;
+  )}`;
+}
+
+function TrendChart({ points }: { points: TrendPoint[] }) {
+  const width = 760;
+  const height = 220;
+  const padX = 30;
+  const padY = 18;
+  const innerWidth = width - padX * 2;
+  const innerHeight = height - padY * 2 - 16;
+
+  function pathFor(key: "mastery" | "retention" | "transfer") {
+    return points
+      .map((point, index) => {
+        const x =
+          padX +
+          (points.length <= 1
+            ? innerWidth / 2
+            : (index / (points.length - 1)) * innerWidth);
+        const y = padY + (1 - point[key] / 100) * innerHeight;
+        return `${x},${y}`;
+      })
+      .join(" ");
+  }
+
+  return (
+    <div className="progress-v2-chart">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        role="img"
+        aria-label="Eight-week mastery, retention and transfer trend"
+      >
+        {[25, 50, 75, 100].map((value) => {
+          const y = padY + (1 - value / 100) * innerHeight;
+          return (
+            <g key={value}>
+              <line
+                className="progress-v2-grid"
+                x1={padX}
+                x2={width - padX}
+                y1={y}
+                y2={y}
+              />
+              <text className="progress-v2-grid-label" x={3} y={y + 3}>
+                {value}
+              </text>
+            </g>
+          );
+        })}
+
+        <polyline
+          className="progress-v2-line mastery"
+          points={pathFor("mastery")}
+        />
+        <polyline
+          className="progress-v2-line retention"
+          points={pathFor("retention")}
+        />
+        <polyline
+          className="progress-v2-line transfer"
+          points={pathFor("transfer")}
+        />
+
+        {points.map((point, index) => {
+          const x =
+            padX +
+            (points.length <= 1
+              ? innerWidth / 2
+              : (index / (points.length - 1)) * innerWidth);
+          return (
+            <text
+              key={point.at}
+              className="progress-v2-axis-label"
+              x={x}
+              y={height - 2}
+              textAnchor="middle"
+            >
+              {point.label}
+            </text>
+          );
+        })}
+      </svg>
+
+      <div className="progress-v2-chart-legend">
+        <span><i className="mastery" />Mastery</span>
+        <span><i className="retention" />Retention</span>
+        <span><i className="transfer" />Transfer</span>
+      </div>
+    </div>
+  );
 }
 
 function CohortRows({
@@ -129,120 +204,27 @@ function CohortRows({
   empty: string;
 }) {
   if (!items.length) {
-    return <div className="progress-empty"><span>{empty}</span></div>;
+    return <div className="progress-v2-empty">{empty}</div>;
   }
 
   return (
-    <div className="cohort-list">
+    <div className="progress-v2-cohorts">
       {items.slice(0, 6).map((item) => (
-        <div className="cohort-row" key={`${item.dimension}:${item.key}`}>
-          <div>
+        <div key={`${item.dimension}:${item.key}`}>
+          <span>
             <strong>{item.label}</strong>
-            <span>
-              {item.games} game{item.games === 1 ? "" : "s"} · quality {item.quality}% · result {item.resultPerformance}%
-            </span>
-          </div>
-          <div className={item.deltaVsBaseline >= 0 ? "cohort-delta positive" : "cohort-delta negative"}>
-            <strong>{cohortDelta(item)}</strong>
-            <small>{item.confidence}% confidence</small>
-          </div>
+            <small>
+              {item.games} game{item.games === 1 ? "" : "s"} · {item.confidence}% conf.
+            </small>
+          </span>
+          <span>
+            <strong>{item.quality}%</strong>
+            <small className={item.deltaVsBaseline >= 0 ? "positive" : "negative"}>
+              {cohortDelta(item)}
+            </small>
+          </span>
         </div>
       ))}
-    </div>
-  );
-}
-
-function TrendChart({ points }: { points: TrendPoint[] }) {
-  const width = 720;
-  const height = 230;
-  const padX = 30;
-  const padY = 24;
-  const innerWidth = width - padX * 2;
-  const innerHeight = height - padY * 2;
-
-  function pathFor(key: "mastery" | "retention" | "transfer") {
-    return points
-      .map((point, index) => {
-        const x =
-          padX +
-          (points.length <= 1
-            ? 0
-            : (index / (points.length - 1)) * innerWidth);
-        const y =
-          padY +
-          (1 - point[key] / 100) * innerHeight;
-        return `${x},${y}`;
-      })
-      .join(" ");
-  }
-
-  return (
-    <div className="progress-chart-wrap">
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        role="img"
-        aria-label="Eight-week mastery, retention and transfer trend"
-      >
-        {[0, 25, 50, 75, 100].map((value) => {
-          const y = padY + (1 - value / 100) * innerHeight;
-          return (
-            <g key={value}>
-              <line
-                className="progress-grid-line"
-                x1={padX}
-                x2={width - padX}
-                y1={y}
-                y2={y}
-              />
-              <text
-                className="progress-grid-label"
-                x={4}
-                y={y + 3}
-              >
-                {value}
-              </text>
-            </g>
-          );
-        })}
-
-        <polyline
-          className="progress-line mastery"
-          points={pathFor("mastery")}
-        />
-        <polyline
-          className="progress-line retention"
-          points={pathFor("retention")}
-        />
-        <polyline
-          className="progress-line transfer"
-          points={pathFor("transfer")}
-        />
-
-        {points.map((point, index) => {
-          const x =
-            padX +
-            (points.length <= 1
-              ? 0
-              : (index / (points.length - 1)) * innerWidth);
-          return (
-            <text
-              key={point.at}
-              className="progress-axis-label"
-              x={x}
-              y={height - 3}
-              textAnchor="middle"
-            >
-              {point.label}
-            </text>
-          );
-        })}
-      </svg>
-
-      <div className="progress-chart-legend">
-        <span><i className="mastery" /> Mastery</span>
-        <span><i className="retention" /> Retention</span>
-        <span><i className="transfer" /> Transfer</span>
-      </div>
     </div>
   );
 }
@@ -259,47 +241,91 @@ export function ProgressView({
   onUpdateCompetitionRetrospective,
 }: ProgressViewProps) {
   const calibrated = intelligence.calibration.sampleCount >= 5;
+  const practical = intelligence.practicalStrength;
+  const horizon = intelligence.trainingHorizon;
+  const forecast = intelligence.trainingPlanForecast;
 
   return (
-    <section className="progress-view">
-      <button className="back-link" type="button" onClick={onBack}>
-        <ArrowLeft size={16} /> Train
-      </button>
+    <section className="progress-v2" aria-labelledby="progress-v2-title">
+      <header className="progress-v2-head">
+        <button type="button" className="progress-v2-back" onClick={onBack}>
+          <ArrowLeft size={15} />
+          Train
+        </button>
 
-      <header className="section-hero progress-hero">
         <div>
-          <p className="eyebrow">YOUR PROGRESS</p>
-          <h1>Are you actually getting better?</h1>
-          <p>
-            This view separates short-term success from retained skill,
-            what is improving, what still needs work, and whether the coach’s recommendations are helping in real games.
-          </p>
+          <span>Player development</span>
+          <strong id="progress-v2-title">Progress</strong>
         </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <TrendingUp size={30} />
+
+        <div className="progress-v2-evidence">
+          <BarChart3 size={14} />
+          <span>{intelligence.evidenceCount30} evidence · 30d</span>
         </div>
       </header>
 
-      <div className="progress-kpi-grid">
-        <article>
-          <div><BrainCircuit size={18} /><span>Effective mastery</span></div>
+      <section className="progress-v2-overview" aria-label="Practical strength">
+        <aside className="progress-v2-rating">
+          <span>Practical strength</span>
+          <strong>{practical.rating}</strong>
+          <small>{practical.status}</small>
+
+          <div className="progress-v2-rating-meta">
+            <div>
+              <span>Confidence</span>
+              <strong>{practical.confidence}%</strong>
+            </div>
+            <div>
+              <span>Human games</span>
+              <strong>{practical.humanGames}</strong>
+            </div>
+            <div>
+              <span>Consistency</span>
+              <strong>{practical.consistency}%</strong>
+            </div>
+            {practical.averageOpponentRating !== undefined && (
+              <div>
+                <span>Avg opponent</span>
+                <strong>{practical.averageOpponentRating}</strong>
+              </div>
+            )}
+          </div>
+        </aside>
+
+        <div className="progress-v2-trajectory">
+          <header>
+            <div>
+              <span>8-week development</span>
+              <strong>{deltaLabel(intelligence.masteryDelta30)}</strong>
+            </div>
+            <small>
+              {intelligence.activeDays28}/28 active days
+            </small>
+          </header>
+          <TrendChart points={intelligence.trend} />
+        </div>
+      </section>
+
+      <section className="progress-v2-metric-strip" aria-label="Core development metrics">
+        <div>
+          <span>Mastery</span>
           <strong>{intelligence.mastery}%</strong>
           <small>{deltaLabel(intelligence.masteryDelta30)}</small>
-        </article>
-        <article>
-          <div><RefreshCcw size={18} /><span>Retention health</span></div>
+        </div>
+        <div>
+          <span>Retention</span>
           <strong>{intelligence.retention}%</strong>
-          <small>Expected recall from current stability</small>
-        </article>
-        <article>
-          <div><Target size={18} /><span>Transfer</span></div>
+          <small>Expected recall</small>
+        </div>
+        <div>
+          <span>Transfer</span>
           <strong>{intelligence.transfer}%</strong>
           <small>
             Human {intelligence.humanTransfer}% · AI {intelligence.aiTransfer}%
           </small>
-        </article>
-        <article>
-          <div><ShieldCheck size={18} /><span>Calibration</span></div>
+        </div>
+        <div>
+          <span>Calibration</span>
           <strong>
             {calibrated ? `${intelligence.calibration.score}%` : "—"}
           </strong>
@@ -308,63 +334,380 @@ export function ProgressView({
               ? intelligence.calibration.label.replace("-", " ")
               : `${intelligence.calibration.sampleCount}/5 samples`}
           </small>
-        </article>
-      </div>
+        </div>
+      </section>
 
-      <details className="progress-plan-controls">
+      <section className="progress-v2-development">
+        <div className="progress-v2-stage-record">
+          <header>
+            <div>
+              <span>Curriculum record</span>
+              <strong>Stage velocity</strong>
+            </div>
+            <Clock3 size={16} />
+          </header>
+
+          <div className="progress-v2-stage-list">
+            {intelligence.stages.map((stage) => (
+              <div
+                key={stage.stageId}
+                className={stage.certifiedAt ? "certified" : ""}
+              >
+                <span className="progress-v2-stage-mark">
+                  {stage.certifiedAt ? (
+                    <CheckCircle2 size={13} />
+                  ) : (
+                    <i />
+                  )}
+                </span>
+                <span className="progress-v2-stage-copy">
+                  <strong>{stageTitle(stage.stageId)}</strong>
+                  <small>
+                    {stage.certifiedAt
+                      ? `${stage.days}d to certify`
+                      : stage.startedAt
+                        ? `${stage.days}d active`
+                        : "Not started"}
+                  </small>
+                </span>
+                <span className="progress-v2-stage-scores">
+                  <strong>{stage.mastery}%</strong>
+                  <small>R {stage.retention} · T {stage.transfer}</small>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="progress-v2-skills">
+          <section>
+            <header>
+              <div>
+                <span>Moving up</span>
+                <strong>Improving</strong>
+              </div>
+              <TrendingUp size={16} />
+            </header>
+            <div>
+              {intelligence.improving.length ? (
+                intelligence.improving.slice(0, 6).map((item) => (
+                  <div className="progress-v2-skill-row" key={item.skillId}>
+                    <span>
+                      <strong>{skillTitle(item.skillId)}</strong>
+                      <small>
+                        human {item.humanTransfer}% · retention {item.retention}%
+                      </small>
+                    </span>
+                    <strong className="positive">
+                      +{Math.max(0, item.delta30).toFixed(1)}
+                    </strong>
+                  </div>
+                ))
+              ) : (
+                <div className="progress-v2-empty">
+                  More recent evidence is needed.
+                </div>
+              )}
+            </div>
+          </section>
+
+          <section>
+            <header>
+              <div>
+                <span>Weak transfer</span>
+                <strong>Needs attention</strong>
+              </div>
+              <TrendingDown size={16} />
+            </header>
+            <div>
+              {intelligence.needsAttention.slice(0, 7).map((item) => (
+                <div className="progress-v2-skill-row" key={item.skillId}>
+                  <span>
+                    <strong>{skillTitle(item.skillId)}</strong>
+                    <small>
+                      mastery {item.current}% · human {item.humanTransfer}%
+                    </small>
+                  </span>
+                  {onTrainSkill ? (
+                    <button
+                      type="button"
+                      onClick={() => onTrainSkill(item.skillId)}
+                    >
+                      Train
+                    </button>
+                  ) : (
+                    <strong>{item.current}%</strong>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <aside className="progress-v2-coach">
+          <header>
+            <div>
+              <span>Coach readout</span>
+              <strong>{intelligence.coachBrief.headline}</strong>
+            </div>
+            <BrainCircuit size={16} />
+          </header>
+
+          <p>{intelligence.coachBrief.summary}</p>
+
+          <div className="progress-v2-coach-state">
+            <span>Evidence</span>
+            <strong>{intelligence.coachBrief.evidenceState}</strong>
+            <small>
+              {intelligence.coachBrief.confidence}% · {intelligence.coachBrief.humanGames} human games
+            </small>
+          </div>
+
+          <div className="progress-v2-prescriptions">
+            {intelligence.prescriptions.slice(0, 4).map((prescription) => (
+              <article key={prescription.id}>
+                <div>
+                  <span>{prescription.target.label}</span>
+                  <strong>{prescription.title}</strong>
+                  <p>{prescription.rationale}</p>
+                </div>
+                <small>
+                  {prescription.evidenceGames} games · {prescription.confidence}% conf.
+                </small>
+                {prescription.actions.length > 0 && onRunPrescriptionAction && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onRunPrescriptionAction(
+                        prescription.id,
+                        prescription.actions[0],
+                      )
+                    }
+                  >
+                    {prescription.actions[0].label}
+                    <ChevronRight size={13} />
+                  </button>
+                )}
+              </article>
+            ))}
+          </div>
+        </aside>
+      </section>
+
+      <section className="progress-v2-real-games">
+        <header>
+          <div>
+            <span>Human chess</span>
+            <strong>Real-game transfer</strong>
+          </div>
+          <div>
+            <small>{intelligence.realGameDiagnostics.sampleCount} analyzed</small>
+            <Activity size={16} />
+          </div>
+        </header>
+
+        <div className="progress-v2-real-baseline">
+          <div>
+            <span>Quality</span>
+            <strong>{intelligence.realGameDiagnostics.baselineQuality}%</strong>
+          </div>
+          <div>
+            <span>Practical score</span>
+            <strong>{intelligence.realGameDiagnostics.baselinePracticalScore}</strong>
+          </div>
+          <div>
+            <span>Recent form</span>
+            <strong>{intelligence.realGameDiagnostics.recentForm.direction}</strong>
+          </div>
+          <div>
+            <span>Result</span>
+            <strong>{intelligence.realGameDiagnostics.baselineResultPerformance}%</strong>
+          </div>
+        </div>
+
+        <div className="progress-v2-phase-performance">
+          {intelligence.realGameDiagnostics.phases.map((phase) => (
+            <div key={phase.phase}>
+              <span>
+                <strong>{phase.phase}</strong>
+                <small>
+                  {phase.games} games · {phase.averageCentipawnLoss} ACPL
+                </small>
+              </span>
+              <div>
+                <i style={{ width: `${phase.quality}%` }} />
+              </div>
+              <strong>{phase.quality}%</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="progress-v2-real-grid">
+          <section>
+            <header>
+              <span>Opening families</span>
+              <strong>Where structure matters</strong>
+            </header>
+            <CohortRows
+              items={intelligence.realGameDiagnostics.openings}
+              empty="Analyze more human games to build opening cohorts."
+            />
+          </section>
+
+          <section>
+            <header>
+              <span>Playing conditions</span>
+              <strong>Time, color and opposition</strong>
+            </header>
+            <CohortRows
+              items={[
+                ...intelligence.realGameDiagnostics.timeControls,
+                ...intelligence.realGameDiagnostics.colors,
+                ...intelligence.realGameDiagnostics.opponents,
+              ]}
+              empty="More contextual game evidence is needed."
+            />
+          </section>
+        </div>
+
+        <section className="progress-v2-mistake-families">
+          <header>
+            <span>Recurring human-game mistakes</span>
+            <strong>{intelligence.realGameDiagnostics.mistakeFamilies.length}</strong>
+          </header>
+
+          <div>
+            {intelligence.realGameDiagnostics.mistakeFamilies.length ? (
+              intelligence.realGameDiagnostics.mistakeFamilies
+                .slice(0, 7)
+                .map((item) => (
+                  <div key={item.skillId}>
+                    <span>
+                      <strong>{item.label}</strong>
+                      <small>
+                        {item.games} games · {item.recurrenceRate}% recurrence · {item.averageImpact}cp
+                      </small>
+                    </span>
+                    {onTrainSkill && (
+                      <button
+                        type="button"
+                        onClick={() => onTrainSkill(item.skillId)}
+                      >
+                        Repair
+                      </button>
+                    )}
+                  </div>
+                ))
+            ) : (
+              <div className="progress-v2-empty">
+                No recurring human-game family has enough evidence yet.
+              </div>
+            )}
+          </div>
+        </section>
+      </section>
+
+      <details className="progress-v2-plan">
         <summary>
           <div>
-            <Gauge size={18} />
+            <Gauge size={16} />
             <span>
-              <strong>Plan & competition settings</strong>
+              <strong>Training plan & competition cycle</strong>
               <small>
-                The coach uses these quietly in the background. Change them only when your real study goal changes.
+                {horizon.completedMinutes}/{horizon.managedWeeklyMinutes} min this week · {horizon.paceStatus}
               </small>
             </span>
           </div>
-          <ChevronRight size={17} />
+          <ChevronRight size={16} />
         </summary>
 
-        <div className="progress-plan-controls-body">
-          <section>
-            <div className="planning-control-heading">
-              <span>Training goal</span>
-              <small>{intelligence.trainingHorizon.goalDescription}</small>
+        <div className="progress-v2-plan-body">
+          <section className="progress-v2-week">
+            <header>
+              <span>Current week</span>
+              <strong>{horizon.goalLabel}</strong>
+            </header>
+
+            <div className="progress-v2-week-line">
+              <div>
+                <i
+                  style={{
+                    width: `${Math.min(
+                      100,
+                      (horizon.completedMinutes /
+                        Math.max(1, horizon.managedWeeklyMinutes)) *
+                        100,
+                    )}%`,
+                  }}
+                />
+              </div>
+              <span>
+                {horizon.completedMinutes} / {horizon.managedWeeklyMinutes} min
+              </span>
             </div>
-            <div className="planning-goal-options">
+
+            <div className="progress-v2-week-facts">
+              <div>
+                <span>Next focus</span>
+                <strong>{horizon.nextFocusLabel}</strong>
+              </div>
+              <div>
+                <span>Next session</span>
+                <strong>{horizon.recommendedSessionMinutes} min</strong>
+              </div>
+              <div>
+                <span>Remaining</span>
+                <strong>{horizon.remainingMinutes} min</strong>
+              </div>
+              <div>
+                <span>Forecast</span>
+                <strong>{forecast.forecast.status}</strong>
+              </div>
+            </div>
+
+            <div className="progress-v2-allocations">
+              {horizon.allocations.map((item) => (
+                <div key={item.bucket}>
+                  <span>
+                    <strong>{item.label}</strong>
+                    <small>{item.completedMinutes}/{item.targetMinutes} min</small>
+                  </span>
+                  <div>
+                    <i style={{ width: `${Math.min(100, item.completion)}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="progress-v2-plan-settings">
+            <header>
+              <span>Plan settings</span>
+              <small>{horizon.goalDescription}</small>
+            </header>
+
+            <div className="progress-v2-goals">
               {(Object.keys(trainingGoals) as TrainingGoalId[]).map((goalId) => (
                 <button
-                  type="button"
                   key={goalId}
-                  className={
-                    intelligence.trainingHorizon.plan.goal === goalId
-                      ? "active"
-                      : ""
-                  }
-                  aria-pressed={
-                    intelligence.trainingHorizon.plan.goal === goalId
-                  }
-                  onClick={() =>
-                    onUpdateTrainingPlan?.({
-                      goal: goalId,
-                    })
-                  }
+                  type="button"
+                  className={horizon.plan.goal === goalId ? "active" : ""}
+                  aria-pressed={horizon.plan.goal === goalId}
+                  onClick={() => onUpdateTrainingPlan?.({ goal: goalId })}
                 >
                   {trainingGoals[goalId].label}
                 </button>
               ))}
             </div>
 
-            <div className="planning-select-grid">
+            <div className="progress-v2-select-grid">
               <label>
                 <span>Weekly budget</span>
                 <select
-                  value={intelligence.trainingHorizon.plan.weeklyMinutes}
+                  value={horizon.plan.weeklyMinutes}
                   onChange={(event) =>
                     onUpdateTrainingPlan?.({
-                      weeklyMinutes: Number(
-                        event.target.value,
-                      ),
+                      weeklyMinutes: Number(event.target.value),
                     })
                   }
                 >
@@ -379,12 +722,10 @@ export function ProgressView({
               <label>
                 <span>Horizon</span>
                 <select
-                  value={intelligence.trainingHorizon.plan.horizonWeeks}
+                  value={horizon.plan.horizonWeeks}
                   onChange={(event) =>
                     onUpdateTrainingPlan?.({
-                      horizonWeeks: Number(
-                        event.target.value,
-                      ) as 4 | 8 | 12,
+                      horizonWeeks: Number(event.target.value) as 4 | 8 | 12,
                     })
                   }
                 >
@@ -397,14 +738,12 @@ export function ProgressView({
               </label>
 
               <label>
-                <span>Sessions/week</span>
+                <span>Sessions / week</span>
                 <select
-                  value={intelligence.trainingHorizon.plan.sessionsPerWeek}
+                  value={horizon.plan.sessionsPerWeek}
                   onChange={(event) =>
                     onUpdateTrainingPlan?.({
-                      sessionsPerWeek: Number(
-                        event.target.value,
-                      ),
+                      sessionsPerWeek: Number(event.target.value),
                     })
                   }
                 >
@@ -417,1287 +756,336 @@ export function ProgressView({
               </label>
             </div>
 
-            <div className="planning-toggle-grid">
+            <div className="progress-v2-toggle-grid">
               <label>
                 <input
                   type="checkbox"
-                  checked={
-                    intelligence.trainingHorizon.plan.autoRecalibrate !== false
-                  }
+                  checked={horizon.plan.autoRecalibrate !== false}
                   onChange={(event) =>
                     onUpdateTrainingPlan?.({
-                      autoRecalibrate:
-                        event.target.checked,
+                      autoRecalibrate: event.target.checked,
                     })
                   }
                 />
-                <span>
-                  Automatic adherence adjustment
-                  <small>
-                    Changes operational load only after repeated full-week evidence.
-                  </small>
-                </span>
+                <span>Automatic adherence adjustment</span>
               </label>
 
               <label>
                 <input
                   type="checkbox"
-                  checked={
-                    intelligence.trainingHorizon.plan.autoRecovery !== false
-                  }
+                  checked={horizon.plan.autoRecovery !== false}
                   onChange={(event) =>
                     onUpdateTrainingPlan?.({
-                      autoRecovery:
-                        event.target.checked,
+                      autoRecovery: event.target.checked,
                     })
                   }
                 />
-                <span>
-                  Automatic recovery
-                  <small>
-                    Keeps short-term overload from forcing more volume.
-                  </small>
-                </span>
+                <span>Automatic recovery</span>
               </label>
             </div>
 
-            <div className="planning-recovery-row">
-              <div>
-                <span>Manual recovery</span>
-                <small>
-                  {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
-                    ? "A seven-day recovery period is active."
-                    : "Optional. Essential review and repair remain protected."}
-                </small>
-              </div>
+            <div className="progress-v2-recovery">
+              <span>
+                <strong>
+                  {horizon.loadManagement.manualRecoveryActive
+                    ? "Manual recovery active"
+                    : horizon.loadManagement.appliedMode === "recovery"
+                      ? "Automatic recovery active"
+                      : horizon.loadManagement.appliedMode === "watch"
+                        ? "Load watch"
+                        : "Normal load"}
+                </strong>
+                <small>{horizon.loadManagement.reason}</small>
+              </span>
               <button
                 type="button"
-                className="secondary"
                 onClick={
-                  intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                  horizon.loadManagement.manualRecoveryActive
                     ? onEndRecovery
                     : onStartRecovery
                 }
                 disabled={
-                  intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                  horizon.loadManagement.manualRecoveryActive
                     ? !onEndRecovery
                     : !onStartRecovery
                 }
               >
-                {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
+                {horizon.loadManagement.manualRecoveryActive
                   ? "End recovery"
                   : "Start 7-day recovery"}
               </button>
             </div>
           </section>
 
-          <section>
-            <div className="planning-control-heading">
-              <span>Competition mode</span>
-              <small>
-                Keep this off unless you are preparing for a concrete event.
-              </small>
-            </div>
+          <section className="progress-v2-competition">
+            <header>
+              <span>Competition cycle</span>
+              <strong>{horizon.competitionCycle.phaseLabel}</strong>
+            </header>
 
-            <label className="planning-competition-toggle">
+            <label className="progress-v2-competition-toggle">
               <input
                 type="checkbox"
-                checked={
-                  intelligence.trainingHorizon.plan.competition?.enabled ?? false
-                }
+                checked={horizon.plan.competition?.enabled ?? false}
                 onChange={(event) =>
-                  onUpdateCompetitionPlan?.({
-                    enabled: event.target.checked,
-                  })
+                  onUpdateCompetitionPlan?.({ enabled: event.target.checked })
                 }
               />
-              <span>Use event-specific preparation and tapering</span>
+              <span>Use event-specific preparation</span>
             </label>
 
-            {intelligence.trainingHorizon.plan.competition?.enabled && (
-              <>
-                <div className="planning-select-grid competition">
+            {horizon.plan.competition?.enabled && (
+              <div className="progress-v2-select-grid competition">
+                <label>
+                  <span>Event date</span>
+                  <input
+                    type="date"
+                    value={horizon.plan.competition?.eventDate ?? ""}
+                    onChange={(event) =>
+                      onUpdateCompetitionPlan?.({
+                        eventDate: event.target.value,
+                      })
+                    }
+                  />
+                </label>
+
+                <label>
+                  <span>Prep window</span>
+                  <select
+                    value={horizon.plan.competition?.prepWeeks ?? 6}
+                    onChange={(event) =>
+                      onUpdateCompetitionPlan?.({
+                        prepWeeks: Number(event.target.value) as 4 | 6 | 8 | 12,
+                      })
+                    }
+                  >
+                    {[4, 6, 8, 12].map((weeks) => (
+                      <option value={weeks} key={weeks}>
+                        {weeks} weeks
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  <span>Event days</span>
+                  <select
+                    value={horizon.plan.competition?.eventDays ?? 1}
+                    onChange={(event) =>
+                      onUpdateCompetitionPlan?.({
+                        eventDays: Number(event.target.value) as 1 | 2 | 3 | 5 | 7,
+                      })
+                    }
+                  >
+                    {[1, 2, 3, 5, 7].map((days) => (
+                      <option value={days} key={days}>
+                        {days}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  <span>Reset</span>
+                  <select
+                    value={horizon.plan.competition?.resetDays ?? 5}
+                    onChange={(event) =>
+                      onUpdateCompetitionPlan?.({
+                        resetDays: Number(event.target.value) as 3 | 5 | 7,
+                      })
+                    }
+                  >
+                    {[3, 5, 7].map((days) => (
+                      <option value={days} key={days}>
+                        {days} days
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            )}
+
+            {horizon.competitionCycle.enabled && (
+              <div className="progress-v2-readiness">
+                <div>
+                  <span>Readiness</span>
+                  <strong>{horizon.competitionCycle.readinessScore}%</strong>
+                  <small>{horizon.competitionCycle.readinessStatus}</small>
+                </div>
+                <div>
+                  <span>Managed load</span>
+                  <strong>{horizon.competitionCycle.managedWeeklyMinutes}m</strong>
+                  <small>{Math.round(horizon.competitionCycle.weeklyLoadMultiplier * 100)}%</small>
+                </div>
+                <p>{horizon.competitionCycle.reason}</p>
+              </div>
+            )}
+
+            {horizon.eventRetrospective.available && (
+              <div className="progress-v2-retro">
+                <header>
+                  <span>Event retrospective</span>
+                  <strong>{horizon.eventRetrospective.translationStatus}</strong>
+                </header>
+
+                <div className="progress-v2-retro-metrics">
+                  <span>
+                    <strong>
+                      {horizon.eventRetrospective.event.analyzedGames}/
+                      {horizon.eventRetrospective.event.games}
+                    </strong>
+                    event games
+                  </span>
+                  <span>
+                    <strong>
+                      {horizon.eventRetrospective.qualityDelta >= 0 ? "+" : ""}
+                      {horizon.eventRetrospective.qualityDelta}
+                    </strong>
+                    quality Δ
+                  </span>
+                  <span>
+                    <strong>
+                      {horizon.eventRetrospective.errorRateDelta >= 0 ? "+" : ""}
+                      {horizon.eventRetrospective.errorRateDelta}
+                    </strong>
+                    error Δ
+                  </span>
+                </div>
+
+                <div className="progress-v2-retro-notes">
                   <label>
-                    <span>Event date</span>
-                    <input
-                      type="date"
-                      value={
-                        intelligence.trainingHorizon.plan.competition?.eventDate ?? ""
-                      }
+                    <span>What worked?</span>
+                    <textarea
+                      rows={2}
+                      value={horizon.eventRetrospective.note?.whatWorked ?? ""}
                       onChange={(event) =>
-                        onUpdateCompetitionPlan?.({
-                          eventDate:
-                            event.target.value,
-                        })
+                        onUpdateCompetitionRetrospective?.(
+                          "whatWorked",
+                          event.target.value,
+                        )
                       }
                     />
                   </label>
-
                   <label>
-                    <span>Prep window</span>
-                    <select
-                      value={
-                        intelligence.trainingHorizon.plan.competition?.prepWeeks ?? 6
-                      }
+                    <span>What failed?</span>
+                    <textarea
+                      rows={2}
+                      value={horizon.eventRetrospective.note?.whatFailed ?? ""}
                       onChange={(event) =>
-                        onUpdateCompetitionPlan?.({
-                          prepWeeks: Number(
-                            event.target.value,
-                          ) as 4 | 6 | 8 | 12,
-                        })
+                        onUpdateCompetitionRetrospective?.(
+                          "whatFailed",
+                          event.target.value,
+                        )
                       }
-                    >
-                      {[4, 6, 8, 12].map((weeks) => (
-                        <option value={weeks} key={weeks}>
-                          {weeks} weeks
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </label>
-
                   <label>
-                    <span>Event length</span>
-                    <select
+                    <span>Next cycle</span>
+                    <textarea
+                      rows={2}
                       value={
-                        intelligence.trainingHorizon.plan.competition?.eventDays ?? 1
+                        horizon.eventRetrospective.note?.nextCycleFocus ?? ""
                       }
                       onChange={(event) =>
-                        onUpdateCompetitionPlan?.({
-                          eventDays: Number(
-                            event.target.value,
-                          ) as 1 | 2 | 3 | 5 | 7,
-                        })
+                        onUpdateCompetitionRetrospective?.(
+                          "nextCycleFocus",
+                          event.target.value,
+                        )
                       }
-                    >
-                      {[1, 2, 3, 5, 7].map((days) => (
-                        <option value={days} key={days}>
-                          {days} day{days === 1 ? "" : "s"}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label>
-                    <span>Reset</span>
-                    <select
-                      value={
-                        intelligence.trainingHorizon.plan.competition?.resetDays ?? 5
-                      }
-                      onChange={(event) =>
-                        onUpdateCompetitionPlan?.({
-                          resetDays: Number(
-                            event.target.value,
-                          ) as 3 | 5 | 7,
-                        })
-                      }
-                    >
-                      {[3, 5, 7].map((days) => (
-                        <option value={days} key={days}>
-                          {days} days
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </label>
                 </div>
-
-                {intelligence.trainingHorizon.eventRetrospective.eventDate && (
-                  <div className="planning-retrospective-notes">
-                    <label>
-                      <span>What worked?</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          intelligence.trainingHorizon.eventRetrospective.note?.whatWorked ?? ""
-                        }
-                        onChange={(event) =>
-                          onUpdateCompetitionRetrospective?.(
-                            "whatWorked",
-                            event.target.value,
-                          )
-                        }
-                      />
-                    </label>
-                    <label>
-                      <span>What failed?</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          intelligence.trainingHorizon.eventRetrospective.note?.whatFailed ?? ""
-                        }
-                        onChange={(event) =>
-                          onUpdateCompetitionRetrospective?.(
-                            "whatFailed",
-                            event.target.value,
-                          )
-                        }
-                      />
-                    </label>
-                    <label>
-                      <span>Next cycle focus</span>
-                      <textarea
-                        rows={2}
-                        value={
-                          intelligence.trainingHorizon.eventRetrospective.note?.nextCycleFocus ?? ""
-                        }
-                        onChange={(event) =>
-                          onUpdateCompetitionRetrospective?.(
-                            "nextCycleFocus",
-                            event.target.value,
-                          )
-                        }
-                      />
-                    </label>
-                  </div>
-                )}
-              </>
+              </div>
             )}
           </section>
         </div>
       </details>
 
-      <section className="progress-panel practical-strength-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">PRACTICAL STRENGTH</p>
-            <h2>Human-game performance, separated from training.</h2>
-          </div>
-          <Gauge size={20} />
-        </div>
-
-        <div className="practical-strength-grid">
-          <div className="practical-rating-card">
-            <span>THIEPN practical rating</span>
-            <strong>{intelligence.practicalStrength.rating}</strong>
-            <small>
-              {intelligence.practicalStrength.status} · {intelligence.practicalStrength.confidence}% confidence
-            </small>
-          </div>
-
-          <div className="practical-signal-grid">
-            <div>
-              <span>Human transfer</span>
-              <strong>{intelligence.practicalStrength.humanTransfer}%</strong>
-            </div>
-            <div>
-              <span>AI / training transfer</span>
-              <strong>{intelligence.practicalStrength.aiTransfer}%</strong>
-            </div>
-            <div>
-              <span>Human-game quality</span>
-              <strong>{intelligence.practicalStrength.quality}%</strong>
-            </div>
-            <div>
-              <span>Consistency</span>
-              <strong>{intelligence.practicalStrength.consistency}%</strong>
-            </div>
-          </div>
-        </div>
-
-        <div className="practical-context-row">
-          <div>
-            <Users size={16} />
-            <span>
-              {intelligence.practicalStrength.humanGames} analyzed human game{intelligence.practicalStrength.humanGames === 1 ? "" : "s"}
-              {intelligence.practicalStrength.averageOpponentRating
-                ? ` · avg opponent ${intelligence.practicalStrength.averageOpponentRating}`
-                : ""}
-            </span>
-          </div>
-          <div>
-            <Target size={16} />
-            <span>
-              result performance {intelligence.practicalStrength.resultPerformance}%
-            </span>
-          </div>
-        </div>
-
-        {intelligence.practicalStrength.timeControls.length > 0 && (
-          <div className="practical-time-controls">
-            {intelligence.practicalStrength.timeControls.map((item) => (
-              <div key={item.category}>
-                <span>{item.category}</span>
-                <strong>{item.quality}%</strong>
-                <small>{item.games} game{item.games === 1 ? "" : "s"}</small>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <p className="practical-rating-note">
-          This is an internal learning-strength estimate, not a Lichess Elo clone.
-          Opponent rating only adds modest context; engine quality, consistency,
-          curriculum mastery and demonstrated human transfer carry most of the model.
-        </p>
-      </section>
-
-      <section className={`progress-panel coach-brief-panel ${intelligence.coachBrief.evidenceState}`}>
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">COACH</p>
-            <h2>{intelligence.coachBrief.headline}</h2>
-          </div>
-          <BrainCircuit size={20} />
-        </div>
-
-        <div className="coach-brief-status">
-          <span>{intelligence.coachBrief.confidenceLabel}</span>
-          <strong>
-            {intelligence.coachBrief.evidenceState === "cold-start"
-              ? `${intelligence.coachBrief.humanGames}/3 human games`
-              : intelligence.coachBrief.confidence
-                ? `${intelligence.coachBrief.confidence}% confidence`
-                : "Evidence building"}
-          </strong>
-        </div>
-
-        <p className="coach-brief-summary">
-          {intelligence.coachBrief.summary}
-        </p>
-
-        <div className="coach-decision-list">
-          {intelligence.coachBrief.decisions.map((decision, index) => (
-            <article
-              className={index === 0 ? "coach-decision primary" : "coach-decision"}
-              key={decision.id}
-            >
-              <div className="coach-decision-head">
-                <div>
-                  <span>{index === 0 ? "WORK ON THIS FIRST" : "NEXT"}</span>
-                  <strong>{decision.title}</strong>
-                </div>
-                <small>{decision.evidenceLabel}</small>
-              </div>
-
-              <p>{decision.why}</p>
-
-              {decision.nextGameCue && (
-                <div className="coach-next-game-cue">
-                  <Target size={15} />
-                  <div>
-                    <span>Next-game cue</span>
-                    <strong>{decision.nextGameCue}</strong>
-                  </div>
-                </div>
-              )}
-
-              {decision.action && decision.prescriptionId && (
-                <button
-                  type="button"
-                  className="secondary"
-                  disabled={!onRunPrescriptionAction}
-                  onClick={() =>
-                    onRunPrescriptionAction?.(
-                      decision.prescriptionId!,
-                      decision.action!,
-                    )
-                  }
-                >
-                  {decision.action.label}
-                  <ChevronRight size={15} />
-                </button>
-              )}
-            </article>
-          ))}
-        </div>
-
-        <div className={`coach-behavior-check ${intelligence.coachBrief.behaviorCheck.state}`}>
-          <div className="coach-behavior-icon">
-            {intelligence.coachBrief.behaviorCheck.state === "helping" ? (
-              <CheckCircle2 size={18} />
-            ) : intelligence.coachBrief.behaviorCheck.state === "worsening" ? (
-              <TrendingDown size={18} />
-            ) : intelligence.coachBrief.behaviorCheck.state === "waiting" ? (
-              <Clock3 size={18} />
-            ) : (
-              <Activity size={18} />
-            )}
-          </div>
-          <div>
-            <span>DID THE TRAINING HELP IN REAL GAMES?</span>
-            <strong>{intelligence.coachBrief.behaviorCheck.label}</strong>
-            <p>{intelligence.coachBrief.behaviorCheck.detail}</p>
-            {intelligence.coachBrief.behaviorCheck.target && (
-              <small>
-                Watching: {intelligence.coachBrief.behaviorCheck.target}
-                {intelligence.coachBrief.behaviorCheck.postGames
-                  ? ` · ${intelligence.coachBrief.behaviorCheck.postGames} later matching game${intelligence.coachBrief.behaviorCheck.postGames === 1 ? "" : "s"}`
-                  : ""}
-              </small>
-            )}
-          </div>
-        </div>
-
-        <details className="coach-method-details">
-          <summary>How the coach decides</summary>
-          <p>
-            The coach combines your course progress, spaced recall, mistakes,
-            opening deviations and analyzed human games. It does not treat
-            training completion as proof of improvement. Recommendations are
-            judged again only when later matching human games exist.
-          </p>
-        </details>
-      </section>
-
-      <details className="progress-advanced-evidence">
+      <details className="progress-v2-evidence-details">
         <summary>
           <div>
-            <span>Advanced planning & evidence</span>
-            <small>Weekly planning, cohort diagnostics, competition cycles and event analysis</small>
+            <ShieldCheck size={16} />
+            <span>
+              <strong>Evidence & model diagnostics</strong>
+              <small>
+                Calibration, intervention outcomes and coach validation
+              </small>
+            </span>
           </div>
           <ChevronRight size={16} />
         </summary>
-        <div className="progress-advanced-evidence-body">
-      <section className="progress-panel training-horizon-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">TRAINING PLAN</p>
-            <h2>Turn the weekly budget into the right mix of work.</h2>
-          </div>
-          <Gauge size={20} />
-        </div>
 
-        <div className="training-horizon-kpis">
-          <div>
-            <span>Goal</span>
-            <strong>{intelligence.trainingHorizon.goalLabel}</strong>
-          </div>
-          <div>
-            <span>Weekly budget</span>
-            <strong>
-              {intelligence.trainingHorizon.completedMinutes}/
-              {intelligence.trainingHorizon.managedWeeklyMinutes}m
-            </strong>
-          </div>
-          <div>
-            <span>Pace</span>
-            <strong>{intelligence.trainingHorizon.paceStatus.replace("-", " ")}</strong>
-          </div>
-          <div>
-            <span>Next emphasis</span>
-            <strong>{intelligence.trainingHorizon.nextFocusLabel}</strong>
-          </div>
-          <div>
-            <span>Suggested session</span>
-            <strong>{intelligence.trainingHorizon.recommendedSessionMinutes}m</strong>
-          </div>
-        </div>
-
-        <div className="training-allocation-grid">
-          {intelligence.trainingHorizon.allocations.map((item) => (
-            <article
-              className={
-                item.bucket === intelligence.trainingHorizon.nextFocus
-                  ? "training-allocation-card priority"
-                  : "training-allocation-card"
-              }
-              key={item.bucket}
-            >
-              <div>
-                <strong>{item.label}</strong>
-                <span>{Math.round(item.share * 100)}% of week</span>
-              </div>
-              <div className="training-allocation-meter">
-                <span
-                  style={{
-                    width: `${Math.min(100, item.completion)}%`,
-                  }}
-                />
-              </div>
-              <small>
-                {item.completedMinutes}/{item.targetMinutes}m · {item.remainingMinutes}m remaining
-              </small>
-            </article>
-          ))}
-        </div>
-
-        <div className="training-horizon-note">
-          <BrainCircuit size={16} />
-          <span>
-            The weekly plan uses completed training, not planned sessions. Missed days do not break the plan:
-            the remaining budget is redistributed through the next generated sessions. Urgent review,
-            human-game repair and failed prescriptions stay protected even when their weekly bucket is full.
-          </span>
-        </div>
-      </section>
-
-      <section className="progress-panel plan-forecast-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">ADHERENCE & FORECAST</p>
-            <h2>Is the current training horizon actually sustainable?</h2>
-          </div>
-          <TrendingUp size={20} />
-        </div>
-
-        <div className="plan-forecast-kpis">
-          <div>
-            <span>Adherence</span>
-            <strong>
-              {intelligence.trainingPlanForecast.adherence.comparableWeeks
-                ? `${intelligence.trainingPlanForecast.adherence.averageAdherence}%`
-                : "—"}
-            </strong>
-            <small>
-              {intelligence.trainingPlanForecast.adherence.comparableWeeks} comparable week{intelligence.trainingPlanForecast.adherence.comparableWeeks === 1 ? "" : "s"}
-            </small>
-          </div>
-          <div>
-            <span>Consistency</span>
-            <strong>
-              {intelligence.trainingPlanForecast.adherence.comparableWeeks >= 2
-                ? `${intelligence.trainingPlanForecast.adherence.consistency}%`
-                : "—"}
-            </strong>
-            <small>{intelligence.trainingPlanForecast.adherence.trend.replace("-", " ")}</small>
-          </div>
-          <div>
-            <span>Sustainable pace</span>
-            <strong>{intelligence.trainingPlanForecast.forecast.sustainableWeeklyMinutes}m</strong>
-            <small>per week</small>
-          </div>
-          <div className={`forecast-status ${intelligence.trainingPlanForecast.forecast.status}`}>
-            <span>Forecast</span>
-            <strong>{intelligence.trainingPlanForecast.forecast.status.replace("-", " ")}</strong>
-            <small>
-              {intelligence.trainingPlanForecast.forecast.status === "insufficient"
-                ? "More history needed"
-                : `${intelligence.trainingPlanForecast.forecast.projectedCompletion}% projected`}
-            </small>
-          </div>
-          <div>
-            <span>Effective load</span>
-            <strong>{intelligence.trainingPlanForecast.recalibration.effectiveWeeklyMinutes}m</strong>
-            <small>
-              nominal {intelligence.trainingPlanForecast.recalibration.nominalWeeklyMinutes}m
-            </small>
-          </div>
-        </div>
-
-        {intelligence.trainingPlanForecast.adherence.weeks.length > 0 ? (
-          <div className="adherence-history">
-            {intelligence.trainingPlanForecast.adherence.weeks.map((week) => (
-              <article key={week.weekStart}>
-                <div>
-                  <span>
-                    {new Date(week.weekStart).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
-                  <strong>{week.adherence}%</strong>
-                </div>
-                <div className="adherence-week-meter">
-                  <span
-                    style={{
-                      width: `${Math.min(100, week.adherence)}%`,
-                    }}
-                  />
-                </div>
-                <small>
-                  {week.completedMinutes}/{week.targetMinutes}m · {week.activeDays} active day{week.activeDays === 1 ? "" : "s"}
-                </small>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="cohort-insufficient-note">
-            <Clock3 size={17} />
-            <span>
-              Forecasting starts only after full weeks under the current plan. Current-week activity still counts toward the weekly budget, but partial weeks are not treated as adherence evidence.
-            </span>
-          </div>
-        )}
-
-        <div className={`recalibration-card ${intelligence.trainingPlanForecast.recalibration.active ? "active" : ""}`}>
-          <BrainCircuit size={17} />
-          <div>
-            <strong>
-              {intelligence.trainingPlanForecast.recalibration.active
-                ? "Effective load recalibrated"
-                : intelligence.trainingPlanForecast.recalibration.enabled
-                  ? "Automatic recalibration standing by"
-                  : "Automatic recalibration disabled"}
-            </strong>
-            <span>{intelligence.trainingPlanForecast.recalibration.reason}</span>
-          </div>
-        </div>
-
-        {intelligence.trainingPlanForecast.forecast.status !== "insufficient" && (
-          <div className="forecast-detail-grid">
-            <div>
-              <span>Nominal horizon</span>
-              <strong>{intelligence.trainingPlanForecast.forecast.nominalTargetMinutes}m</strong>
-            </div>
-            <div>
-              <span>Projected total</span>
-              <strong>{intelligence.trainingPlanForecast.forecast.projectedTotalMinutes}m</strong>
-            </div>
-            <div>
-              <span>Projected shortfall</span>
-              <strong>{intelligence.trainingPlanForecast.forecast.projectedShortfallMinutes}m</strong>
-            </div>
-            <div>
-              <span>Forecast confidence</span>
-              <strong>{intelligence.trainingPlanForecast.forecast.confidence}%</strong>
-            </div>
-          </div>
-        )}
-
-        <p className="coach-policy-note">
-          Recalibration changes only the operational weekly allocation used by the composer. It never edits the selected goal, nominal weekly target, or horizon length, so the forecast remains an honest comparison against the plan you chose.
-        </p>
-      </section>
-
-      <section className="progress-panel load-management-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">LOAD MANAGEMENT</p>
-            <h2>Keep the training plan sustainable without dropping essential work.</h2>
-          </div>
-          <RefreshCcw size={20} />
-        </div>
-
-        <div className="load-management-kpis">
-          <div>
-            <span>Mode</span>
-            <strong>{intelligence.trainingHorizon.loadManagement.appliedMode}</strong>
-            <small>
-              recommended {intelligence.trainingHorizon.loadManagement.recommendation}
-            </small>
-          </div>
-          <div>
-            <span>Managed week</span>
-            <strong>{intelligence.trainingHorizon.loadManagement.managedWeeklyMinutes}m</strong>
-            <small>
-              adherence-adjusted {intelligence.trainingHorizon.effectiveWeeklyMinutes}m
-            </small>
-          </div>
-          <div>
-            <span>Latest load</span>
-            <strong>{intelligence.trainingHorizon.loadManagement.latestWeekMinutes}m</strong>
-            <small>
-              baseline {intelligence.trainingHorizon.loadManagement.baselineWeeklyMinutes}m
-            </small>
-          </div>
-          <div>
-            <span>Ramp</span>
-            <strong>{intelligence.trainingHorizon.loadManagement.rampRatio}×</strong>
-            <small>
-              {intelligence.trainingHorizon.loadManagement.recentActiveDays} active day{intelligence.trainingHorizon.loadManagement.recentActiveDays === 1 ? "" : "s"}
-            </small>
-          </div>
-          <div>
-            <span>Overload weeks</span>
-            <strong>{intelligence.trainingHorizon.loadManagement.overloadWeeks}/3</strong>
-            <small>
-              {intelligence.trainingHorizon.loadManagement.confidence}% evidence confidence
-            </small>
-          </div>
-        </div>
-
-        <div className="load-bucket-policy-grid">
-          {Object.entries(
-            intelligence.trainingHorizon.loadManagement.bucketMultipliers,
-          ).map(([bucket, multiplier]) => (
-            <article
-              key={bucket}
-              className={
-                multiplier > 1
-                  ? "protected"
-                  : multiplier < 1
-                    ? "reduced"
-                    : ""
-              }
-            >
-              <span>{bucket}</span>
+        <div className="progress-v2-evidence-body">
+          <section>
+            <header>
+              <span>Calibration</span>
               <strong>
-                {multiplier === 1
-                  ? "100%"
-                  : `${Math.round(multiplier * 100)}%`}
+                {calibrated
+                  ? `${intelligence.calibration.score}%`
+                  : "Collecting evidence"}
               </strong>
-            </article>
-          ))}
-        </div>
-
-        <div className={`recalibration-card ${intelligence.trainingHorizon.loadManagement.active ? "active" : ""}`}>
-          <Gauge size={17} />
-          <div>
-            <strong>
-              {intelligence.trainingHorizon.loadManagement.manualRecoveryActive
-                ? "Manual recovery week active"
-                : intelligence.trainingHorizon.loadManagement.appliedMode === "recovery"
-                  ? "Automatic recovery week active"
-                  : intelligence.trainingHorizon.loadManagement.appliedMode === "watch"
-                    ? "Load watch active"
-                    : "No recovery adjustment"}
-            </strong>
-            <span>{intelligence.trainingHorizon.loadManagement.reason}</span>
-          </div>
-        </div>
-
-        <p className="coach-policy-note">
-          Load management uses recorded training behavior, not medical fatigue. Recovery mode shortens sessions and reduces optional work while retention and repair remain protected. Automatic adjustments can never reduce managed weekly load below 70% of the nominal target.
-        </p>
-      </section>
-
-      <section className="progress-panel competition-cycle-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">COMPETITION CYCLE</p>
-            <h2>Shift from general growth toward event-specific readiness at the right time.</h2>
-          </div>
-          <Target size={20} />
-        </div>
-
-        <div className="competition-cycle-kpis">
-          <div>
-            <span>Phase</span>
-            <strong>{intelligence.trainingHorizon.competitionCycle.phaseLabel}</strong>
-          </div>
-          <div>
-            <span>Prep readiness</span>
-            <strong>{intelligence.trainingHorizon.competitionCycle.readinessScore}%</strong>
-            <small>{intelligence.trainingHorizon.competitionCycle.readinessStatus.replace("-", " ")}</small>
-          </div>
-          <div>
-            <span>Event</span>
-            <strong>{intelligence.trainingHorizon.competitionCycle.eventDate ?? "—"}</strong>
-            <small>{intelligence.trainingHorizon.competitionCycle.eventLabel ?? "No named event"}</small>
-          </div>
-          <div>
-            <span>Cycle load</span>
-            <strong>{Math.round(intelligence.trainingHorizon.competitionCycle.weeklyLoadMultiplier * 100)}%</strong>
-            <small>{intelligence.trainingHorizon.competitionCycle.managedWeeklyMinutes}m managed</small>
-          </div>
-          <div>
-            <span>Session cap</span>
-            <strong>{intelligence.trainingHorizon.competitionCycle.maxSessionMinutes}m</strong>
+            </header>
+            <p>{calibrationText(intelligence.calibration.label)}</p>
             <small>
-              {intelligence.trainingHorizon.competitionCycle.suppressedByRecovery
-                ? "recovery takes precedence"
-                : "cycle-specific"}
+              {intelligence.calibration.sampleCount} assessment samples · bias {intelligence.calibration.bias.toFixed(1)}
             </small>
-          </div>
-        </div>
+          </section>
 
-        <div className="cycle-phase-track">
-          {["base", "build", "sharpen", "taper", "event", "reset"].map((phase) => (
-            <div
-              key={phase}
-              className={
-                intelligence.trainingHorizon.competitionCycle.phase === phase
-                  ? "active"
-                  : ""
-              }
-            >
-              <span>{phase}</span>
+          <section>
+            <header>
+              <span>Coach effectiveness</span>
+              <strong>{intelligence.coachEffectiveness.validationRate}%</strong>
+            </header>
+            <div className="progress-v2-evidence-facts">
+              <span>{intelligence.coachEffectiveness.issued} issued</span>
+              <span>{intelligence.coachEffectiveness.completed} completed</span>
+              <span>{intelligence.coachEffectiveness.evaluated} evaluated</span>
+              <span>{intelligence.coachEffectiveness.improved} improved</span>
             </div>
-          ))}
-        </div>
-
-        <div className="load-bucket-policy-grid competition-buckets">
-          {Object.entries(
-            intelligence.trainingHorizon.competitionCycle.bucketMultipliers,
-          ).map(([bucket, multiplier]) => (
-            <article
-              key={bucket}
-              className={
-                multiplier > 1
-                  ? "protected"
-                  : multiplier < 1
-                    ? "reduced"
-                    : ""
-              }
-            >
-              <span>{bucket}</span>
-              <strong>{Math.round(multiplier * 100)}%</strong>
-            </article>
-          ))}
-        </div>
-
-        <div className={`recalibration-card ${intelligence.trainingHorizon.competitionCycle.active ? "active" : ""}`}>
-          <Target size={17} />
-          <div>
-            <strong>
-              {intelligence.trainingHorizon.competitionCycle.enabled
-                ? intelligence.trainingHorizon.competitionCycle.phaseLabel
-                : "Competition cycle disabled"}
-            </strong>
-            <span>{intelligence.trainingHorizon.competitionCycle.reason}</span>
-          </div>
-        </div>
-
-        <p className="coach-policy-note">
-          Preparation readiness is not a rating or win-probability prediction. It combines adherence, consistency, plan risk and current load status. Recovery remains authoritative: an upcoming event can reduce or redirect work, but it cannot force intensity upward through an active recovery state.
-        </p>
-      </section>
-
-      <section className="progress-panel event-retrospective-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">EVENT RETROSPECTIVE</p>
-            <h2>Did preparation transfer when the games actually mattered?</h2>
-          </div>
-          <ListChecks size={20} />
-        </div>
-
-        <div className="event-retro-kpis">
-          <div>
-            <span>Event sample</span>
-            <strong>
-              {intelligence.trainingHorizon.eventRetrospective.event.analyzedGames}/
-              {intelligence.trainingHorizon.eventRetrospective.event.games}
-            </strong>
-            <small>analyzed / matched</small>
-          </div>
-          <div>
-            <span>Prep baseline</span>
-            <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.analyzedGames}</strong>
-            <small>analyzed pre-event games</small>
-          </div>
-          <div className={`event-translation-status ${intelligence.trainingHorizon.eventRetrospective.translationStatus}`}>
-            <span>Translation</span>
-            <strong>{intelligence.trainingHorizon.eventRetrospective.translationStatus}</strong>
-          </div>
-          <div>
-            <span>Quality Δ</span>
-            <strong>
-              {intelligence.trainingHorizon.eventRetrospective.qualityDelta >= 0 ? "+" : ""}
-              {intelligence.trainingHorizon.eventRetrospective.qualityDelta}
-            </strong>
-          </div>
-          <div>
-            <span>Error-rate Δ</span>
-            <strong>
-              {intelligence.trainingHorizon.eventRetrospective.errorRateDelta >= 0 ? "+" : ""}
-              {intelligence.trainingHorizon.eventRetrospective.errorRateDelta}
-            </strong>
-          </div>
-        </div>
-
-        <div className="event-baseline-comparison">
-          <article>
-            <span>Preparation games</span>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.quality}</strong>
-              <small>quality</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.resultPerformance}</strong>
-              <small>result</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.averageCentipawnLoss}</strong>
-              <small>ACPL</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.preparation.criticalErrorRate}%</strong>
-              <small>critical errors</small>
-            </div>
-          </article>
-          <article>
-            <span>Event games</span>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.event.quality}</strong>
-              <small>quality</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.event.resultPerformance}</strong>
-              <small>result</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.event.averageCentipawnLoss}</strong>
-              <small>ACPL</small>
-            </div>
-            <div>
-              <strong>{intelligence.trainingHorizon.eventRetrospective.event.criticalErrorRate}%</strong>
-              <small>critical errors</small>
-            </div>
-          </article>
-        </div>
-
-        {intelligence.trainingHorizon.eventRetrospective.repairPriorities.length > 0 && (
-          <div className="event-repair-grid">
-            {intelligence.trainingHorizon.eventRetrospective.repairPriorities.map((item) => (
-              <article key={item.skillId}>
-                <div>
-                  <strong>{item.label}</strong>
-                  <span>{item.games} event game{item.games === 1 ? "" : "s"}</span>
-                </div>
-                <small>
-                  {item.occurrences} occurrence{item.occurrences === 1 ? "" : "s"} · avg impact {item.averageImpact}cp
-                </small>
-              </article>
-            ))}
-          </div>
-        )}
-
-        {intelligence.trainingHorizon.eventRetrospective.strengthSkillIds.length > 0 && (
-          <div className="event-strength-strip">
-            <span>Event-stable skills</span>
-            <div>
-              {intelligence.trainingHorizon.eventRetrospective.strengthSkillIds.map((skillId) => (
-                <strong key={skillId}>{skillTitle(skillId)}</strong>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className={`recalibration-card ${intelligence.trainingHorizon.eventRetrospective.followUpActive ? "active" : ""}`}>
-          <RefreshCcw size={17} />
-          <div>
-            <strong>
-              {intelligence.trainingHorizon.eventRetrospective.followUpActive
-                ? "Post-event repair loop active"
-                : "No active post-event boost"}
-            </strong>
-            <span>
-              {intelligence.trainingHorizon.eventRetrospective.followUpActive
-                ? `Until ${intelligence.trainingHorizon.eventRetrospective.followUpUntil}, event-proven repair skills receive a bounded ${Math.round(intelligence.trainingHorizon.eventRetrospective.priorityMultiplier * 100)}% post-event priority multiplier.`
-                : intelligence.trainingHorizon.eventRetrospective.reason}
-            </span>
-          </div>
-        </div>
-
-        {intelligence.trainingHorizon.eventRetrospective.note && (
-          <div className="event-retro-note-grid">
-            <article>
-              <span>What worked</span>
-              <p>{intelligence.trainingHorizon.eventRetrospective.note.whatWorked || "—"}</p>
-            </article>
-            <article>
-              <span>What failed</span>
-              <p>{intelligence.trainingHorizon.eventRetrospective.note.whatFailed || "—"}</p>
-            </article>
-            <article>
-              <span>Next cycle</span>
-              <p>{intelligence.trainingHorizon.eventRetrospective.note.nextCycleFocus || "—"}</p>
-            </article>
-          </div>
-        )}
-
-        <p className="coach-policy-note">
-          The event review compares analyzed event games with analyzed preparation games from the configured competition block. It requires at least two event games and three preparation games before claiming improved/stable/regressed transfer. Unanalyzed or missing games remain visible as incomplete evidence instead of being silently ignored.
-        </p>
-      </section>
-
-      <section className="progress-panel real-game-diagnostics-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">REAL-GAME DIAGNOSTICS</p>
-            <h2>Where your human chess changes with the conditions.</h2>
-          </div>
-          <Activity size={20} />
-        </div>
-
-        <div className="cohort-baseline-strip">
-          <div>
-            <span>Analyzed humans</span>
-            <strong>{intelligence.realGameDiagnostics.sampleCount}</strong>
-          </div>
-          <div>
-            <span>Baseline quality</span>
-            <strong>{intelligence.realGameDiagnostics.baselineQuality}%</strong>
-          </div>
-          <div>
-            <span>Practical score</span>
-            <strong>{intelligence.realGameDiagnostics.baselinePracticalScore}</strong>
-          </div>
-          <div>
-            <span>Recent form</span>
-            <strong>{intelligence.realGameDiagnostics.recentForm.direction}</strong>
-          </div>
-        </div>
-
-        {intelligence.realGameDiagnostics.diagnostics.length ? (
-          <div className="diagnostic-callouts">
-            {intelligence.realGameDiagnostics.diagnostics.map((item) => (
-              <article
-                className={`diagnostic-callout ${item.severity}`}
-                key={item.id}
-              >
-                <div>
-                  {item.severity === "priority" ? (
-                    <CircleAlert size={17} />
-                  ) : item.severity === "strength" ? (
-                    <Sparkles size={17} />
-                  ) : (
-                    <Target size={17} />
-                  )}
-                </div>
-                <div>
-                  <span>{item.severity}</span>
-                  <strong>{item.headline}</strong>
-                  <p>{item.detail}</p>
-                  <small>
-                    {item.games} game{item.games === 1 ? "" : "s"} · {item.confidence}% confidence
-                  </small>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="cohort-insufficient-note">
-            <Layers3 size={17} />
-            <span>
-              {intelligence.realGameDiagnostics.sampleCount < 3
-                ? "Analyze at least three human games before real-game diagnostics declare a cohort meaningfully stronger or weaker."
-                : "No human-game cohort is currently far enough from your baseline to deserve a separate warning."}
-            </span>
-          </div>
-        )}
-
-        <div className="real-game-cohort-grid">
-          <article>
-            <div className="cohort-heading">
-              <span>OPENING PERFORMANCE</span>
-              <strong>Families, not tiny variations</strong>
-            </div>
-            <CohortRows
-              items={intelligence.realGameDiagnostics.openings}
-              empty="Opening cohorts will appear after analyzed human games."
-            />
-          </article>
-
-          <article>
-            <div className="cohort-heading">
-              <span>PLAYING CONDITIONS</span>
-              <strong>Time control and opponent level</strong>
-            </div>
-            <CohortRows
-              items={[
-                ...intelligence.realGameDiagnostics.timeControls,
-                ...intelligence.realGameDiagnostics.opponents,
-              ]}
-              empty="More human-game context is needed."
-            />
-          </article>
-
-          <article>
-            <div className="cohort-heading">
-              <span>COLOR & POSITION TYPE</span>
-              <strong>Where the game tends to go wrong</strong>
-            </div>
-            <CohortRows
-              items={[
-                ...intelligence.realGameDiagnostics.colors,
-                ...intelligence.realGameDiagnostics.positionTypes,
-              ]}
-              empty="More analyzed games are needed."
-            />
-          </article>
-
-          <article>
-            <div className="cohort-heading">
-              <span>PHASE PERFORMANCE</span>
-              <strong>Opening → middlegame → endgame</strong>
-            </div>
-            <div className="phase-diagnostic-list">
-              {intelligence.realGameDiagnostics.phases.map((phase) => (
-                <div key={phase.phase}>
-                  <span>{phase.phase}</span>
-                  <strong>{phase.quality}%</strong>
-                  <small>
-                    {phase.games} games · {phase.averageCentipawnLoss} ACPL · {phase.criticalPerGame} critical/game
-                  </small>
-                </div>
-              ))}
-            </div>
-          </article>
-        </div>
-
-        <div className="real-game-bottom-grid">
-          <article className="recent-form-card">
-            <span>RECENT FORM</span>
-            <strong>
-              {intelligence.realGameDiagnostics.recentForm.direction === "insufficient"
-                ? "Building a comparison window"
-                : intelligence.realGameDiagnostics.recentForm.direction}
-            </strong>
             <p>
-              Latest {intelligence.realGameDiagnostics.recentForm.recentGames} games:
-              {" "}{intelligence.realGameDiagnostics.recentForm.recentQuality}% quality
-              {intelligence.realGameDiagnostics.recentForm.previousGames >= 3
-                ? ` · ${intelligence.realGameDiagnostics.recentForm.qualityDelta >= 0 ? "+" : ""}${Math.round(intelligence.realGameDiagnostics.recentForm.qualityDelta)} vs prior sample`
-                : ""}
+              Policy: {intelligence.coachPolicy.mode} · {intelligence.coachPolicy.learningConfidence}% learning confidence.
             </p>
-          </article>
+          </section>
 
-          <article className="mistake-family-card">
-            <span>RECURRING HUMAN-GAME FAMILIES</span>
-            {intelligence.realGameDiagnostics.mistakeFamilies.length ? (
-              intelligence.realGameDiagnostics.mistakeFamilies.slice(0, 5).map((item) => (
-                <div key={item.skillId}>
-                  <div>
-                    <strong>{item.label}</strong>
-                    <small>
-                      {item.games} games · {item.recurrenceRate}% recurrence · impact {item.averageImpact}
-                    </small>
-                  </div>
-                  {onTrainSkill && (
-                    <button
-                      type="button"
-                      onClick={() => onTrainSkill(item.skillId)}
-                    >
-                      Train
-                    </button>
-                  )}
+          <section>
+            <header>
+              <span>Interventions</span>
+              <strong>{intelligence.interventions.length}</strong>
+            </header>
+            <div className="progress-v2-interventions">
+              {intelligence.interventions.slice(0, 8).map((item) => (
+                <div key={item.intervention}>
+                  <span>
+                    <strong>{interventionLabel(item.intervention)}</strong>
+                    <small>{item.attempts} attempts · {item.successRate}% success</small>
+                  </span>
+                  <strong>
+                    {item.averageMasteryGain >= 0 ? "+" : ""}
+                    {item.averageMasteryGain.toFixed(1)}
+                  </strong>
                 </div>
-              ))
-            ) : (
-              <p>No recurring human-game mistake family has enough evidence yet.</p>
-            )}
-          </article>
-        </div>
-      </section>
+              ))}
+            </div>
+          </section>
 
-
+          <section>
+            <header>
+              <span>History</span>
+              <strong>{intelligence.evidenceCount} events</strong>
+            </header>
+            <p>
+              {intelligence.historyStartedAt
+                ? `Tracking from ${new Date(
+                    intelligence.historyStartedAt,
+                  ).toLocaleDateString()}.`
+                : "Longitudinal history has started."}
+            </p>
+            <small>
+              {intelligence.resolvedMistakeCount} repaired mistakes · {intelligence.unresolvedMistakeCount} unresolved
+            </small>
+          </section>
         </div>
       </details>
-
-      <section className="progress-panel progress-trajectory">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">8-WEEK TRAJECTORY</p>
-            <h2>Learning that survives the lesson.</h2>
-          </div>
-          <div className="progress-evidence-chip">
-            <BarChart3 size={15} />
-            <span>{intelligence.evidenceCount30} evidence events · 30d</span>
-          </div>
-        </div>
-
-        <TrendChart points={intelligence.trend} />
-
-        <div className="progress-calibration-note">
-          <ShieldCheck size={18} />
-          <div>
-            <strong>
-              Calibration: {calibrated
-                ? intelligence.calibration.label.replace("-", " ")
-                : "collecting evidence"}
-            </strong>
-            <span>{calibrationText(intelligence.calibration.label)}</span>
-          </div>
-        </div>
-      </section>
-
-      <div className="progress-two-column">
-        <section className="progress-panel">
-          <div className="progress-section-heading">
-            <div>
-              <p className="eyebrow">WHAT IS IMPROVING</p>
-              <h2>Skills moving in the right direction.</h2>
-            </div>
-            <TrendingUp size={19} />
-          </div>
-
-          <div className="progress-skill-list">
-            {intelligence.improving.length ? (
-              intelligence.improving.map((item) => (
-                <div className="progress-skill-row" key={item.skillId}>
-                  <div>
-                    <strong>{skillTitle(item.skillId)}</strong>
-                    <span>
-                      {item.evidenceCount30} recent evidence · human {item.humanTransfer}% · AI {item.aiTransfer}%
-                    </span>
-                  </div>
-                  <div className="progress-skill-value positive">
-                    +{Math.max(0, item.delta30).toFixed(1)}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="progress-empty">
-                <span>New history will appear here as you train.</span>
-              </div>
-            )}
-          </div>
-        </section>
-
-        <section className="progress-panel">
-          <div className="progress-section-heading">
-            <div>
-              <p className="eyebrow">NEEDS ATTENTION</p>
-              <h2>Low retention or weak transfer.</h2>
-            </div>
-            <Target size={19} />
-          </div>
-
-          <div className="progress-skill-list">
-            {intelligence.needsAttention.map((item) => (
-              <div className="progress-skill-row" key={item.skillId}>
-                <div>
-                  <strong>{skillTitle(item.skillId)}</strong>
-                  <span>
-                    mastery {item.current}% · retention {item.retention}% · human {item.humanTransfer}% · AI {item.aiTransfer}%
-                  </span>
-                </div>
-                <div className="progress-skill-value">
-                  {item.current}%
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <section className="progress-panel">
-        <div className="progress-section-heading">
-          <div>
-            <p className="eyebrow">STAGE VELOCITY</p>
-            <h2>How quickly competence becomes certified.</h2>
-          </div>
-          <Clock3 size={19} />
-        </div>
-
-        <div className="stage-velocity-grid">
-          {intelligence.stages.map((stage) => (
-            <article
-              className={stage.certifiedAt ? "stage-velocity certified" : "stage-velocity"}
-              key={stage.stageId}
-            >
-              <div className="stage-velocity-top">
-                <span>{stageTitle(stage.stageId)}</span>
-                {stage.certifiedAt ? (
-                  <CheckCircle2 size={15} />
-                ) : (
-                  <Clock3 size={15} />
-                )}
-              </div>
-              <strong>
-                {stage.certifiedAt
-                  ? `${stage.days}d to certify`
-                  : stage.startedAt
-                    ? `${stage.days}d active`
-                    : "Not started"}
-              </strong>
-              <div>
-                <span>M {stage.mastery}%</span>
-                <span>R {stage.retention}%</span>
-                <span>T {stage.transfer}%</span>
-              </div>
-              <small>{stage.evidenceCount} evidence events</small>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="progress-history-note">
-        <BarChart3 size={18} />
-        <div>
-          <strong>
-            {intelligence.evidenceCount
-              ? `${intelligence.evidenceCount} longitudinal evidence events`
-              : "Longitudinal history has started"}
-          </strong>
-          <span>
-            {intelligence.historyStartedAt
-              ? `Tracking from ${new Date(intelligence.historyStartedAt).toLocaleDateString()} · active on ${intelligence.activeDays28}/28 recent days.`
-              : "History will build as new learning evidence arrives."}
-          </span>
-        </div>
-      </section>
     </section>
   );
 }
