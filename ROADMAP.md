@@ -404,7 +404,28 @@ Acceptance:
 
 ### P38 — Real Routing & App Shell
 
-Replace pseudo-routing and the permanent SaaS sidebar with route-level pages, a compact desktop top bar and mobile bottom navigation. Train becomes the default destination. Primary workflows stop depending on giant overlays.
+**Status:** implemented.
+
+Replace pseudo-routing and the permanent SaaS sidebar with route-level pages, a compact desktop top bar and mobile bottom navigation. Train becomes the default destination.
+
+Delivered:
+
+- URL-backed History API routing for Train / Learn / Play / Review / Library / Progress / Settings;
+- automatic `/` → `/train` canonicalization and unknown-route fallback;
+- browser Back / Forward synchronization;
+- nested route-family preservation so later phases can own lesson/game/repertoire detail URLs without another shell rewrite;
+- GitHub Pages 404 restoration for direct deep links;
+- compact graphite desktop top bar replacing the 220px permanent sidebar;
+- five-destination mobile bottom navigation;
+- Progress demoted to a secondary top-bar action;
+- existing route chunks continue to preload on navigation intent;
+- dialog focus-inert behavior migrated from the old sidebar to the new top bar/main/mobile shell.
+
+Compatibility boundary:
+
+- top-level product destinations are now genuine pages;
+- P36 training/assessment/model-game runners remain compatibility overlays until P40–P41 reconstruct Train and migrate the runtimes into full-page workspaces;
+- P38 does not cosmetically redesign the page interiors ahead of their dedicated phases.
 
 ### P39 — Board Design System 2.0
 

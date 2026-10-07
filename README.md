@@ -56,6 +56,7 @@ The default experience should answer one question: **what should I train now?**
 - P35 Advanced Curriculum Expansion with a ninth Advanced stage, 18 higher-level skills, authored transfer lessons, dedicated advanced calculation and endgame positions, tactical puzzle-corpus mappings, resistant strategy scenarios, and advanced concepts embedded into complete model games
 - P36 Premium UX, Mobile & Delight Pass with immersive board-first training workspaces, full-screen mobile training, landscape board/instruction layouts, roving-keyboard chessboard navigation, focus-safe dialogs, 48px coarse-pointer controls, reduced-motion compatibility, one-key recommended training, long-page rendering containment, and CI-enforced production asset budgets
 - P37 Visual Architecture Lock with the authoritative non-SaaS chess design contract, namespaced graphite/ivory design tokens, route-level page architecture, Train-as-default navigation model, explicit modal/sidebar/hero constraints, and regression-tested visual architecture invariants
+- P38 Real Routing & App Shell with URL-backed Train/Learn/Play/Review/Library pages, History back/forward synchronization, GitHub Pages deep-link restoration, a compact desktop top bar, five-destination mobile navigation, and removal of the permanent SaaS sidebar
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2178,6 +2179,26 @@ Non-negotiable post-P37 rules:
 - Progress is where analytics-heavy composition belongs;
 - graphite / ivory foundations replace pervasive blue-purple SaaS styling during migration.
 
+## Real Routing & App Shell
+
+P38 replaces the old in-memory `nav` switch and permanent left sidebar with a URL-backed application shell.
+
+Primary pages now have stable URLs:
+
+- `/train`
+- `/learn`
+- `/play`
+- `/review`
+- `/library`
+
+Progress and Settings are secondary destinations at `/progress` and `/settings`.
+
+The shell uses browser History state, supports Back/Forward, canonicalizes the root to `/train`, and preserves nested route families for later page-specific phases. A static-host fallback restores direct deep links when GitHub Pages serves `404.html`.
+
+Desktop now uses a compact top application bar instead of the previous permanent 220px SaaS-style sidebar. Phones keep five primary destinations in bottom navigation. Progress is available as a secondary top-bar action.
+
+P38 intentionally stops at the shell boundary: the existing P36 activity dialogs remain functional compatibility runners until P40–P41 replace the Train page and move those runtimes into route-level workspaces. This avoids mixing routing migration with the much larger training-surface reconstruction.
+
 ## Next phase
 
-P38 — Real Routing & App Shell.
+P39 — Board Design System 2.0.

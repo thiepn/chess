@@ -108,6 +108,8 @@ import {
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
+import { primaryAppPages } from "./design/appArchitecture";
+import { useAppRouter } from "./routing/appRouter";
 
 const LearnView = lazy(() =>
   import("./components/LearnView").then((module) => ({
@@ -229,7 +231,8 @@ export default function App() {
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
-  const [nav, setNav] = useState("home");
+  const { route, navigatePage } = useAppRouter();
+  const page = route.page;
   const [lichessSyncing, setLichessSyncing] = useState(false);
   const lichessSyncInFlight = useRef(false);
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
@@ -428,10 +431,9 @@ export default function App() {
     document.body.style.overflow = "hidden";
 
     const backgroundRegions = [
-      document.querySelector(".sidebar"),
+      document.querySelector(".app-topbar"),
       document.querySelector(".main"),
       document.querySelector(".mobile-nav"),
-      document.querySelector(".mobile-experience"),
     ].filter(
       (node): node is HTMLElement =>
         node instanceof HTMLElement,
@@ -508,7 +510,7 @@ export default function App() {
         session.activities.length
       ) {
         event.preventDefault();
-        setNav("home");
+        navigatePage("train");
         setActiveIndex(0);
         emitExperienceEvent({ feedback: "navigate" });
       }
@@ -1318,7 +1320,7 @@ export default function App() {
       prescriptionId,
       prescriptionActionId,
     });
-    setNav("play");
+    navigatePage("play");
   }
 
   function startMistakePractice(mistakeId: string) {
@@ -1625,7 +1627,7 @@ export default function App() {
     });
     setActiveModelGameId(null);
     setLearnMode("model-games");
-    setNav("learn");
+    navigatePage("learn");
   }
 
   function updateGameReviewReflection(
@@ -1926,7 +1928,7 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      setNav("home");
+      navigatePage("train");
       return;
     }
 
@@ -1953,7 +1955,7 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      setNav("home");
+      navigatePage("train");
       return;
     }
 
@@ -1968,7 +1970,7 @@ export default function App() {
         prescriptionId: prescription.id,
         prescriptionActionId: action.id,
       });
-      setNav("play");
+      navigatePage("play");
     }
   }
 
@@ -2147,57 +2149,91 @@ export default function App() {
     );
   }
 
-  const navItems = [
-    ["home", "Train", Sparkles],
-    ["learn", "Learn", BookOpen],
-    ["play", "Play", Play],
-    ["review", "Review", BarChart3],
-    ["library", "Library", Library],
-    ["progress", "Progress", Target],
-  ] as const;
+  const navIconById = {
+    train: Swords,
+    learn: BookOpen,
+    play: Play,
+    review: BarChart3,
+    library: Library,
+  } as const;
+
+  const navItems = primaryAppPages.map((item) => ({
+    ...item,
+    Icon: navIconById[item.id],
+  }));
 
   return (
     <ExperienceProvider
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className={dialogOpen ? "app-shell training-open" : "app-shell"}>
-      <aside className="sidebar">
-        <div className="brand-mark">♞</div>
-        <nav aria-label="Primary navigation">
-          {navItems.map(([id, label, Icon]) => (
+      <div className={dialogOpen ? "app-shell app-shell-v2 training-open" : "app-shell app-shell-v2"}>
+        <header className="app-topbar">
+          <button
+            className="app-brand"
+            type="button"
+            onClick={() => navigatePage("train")}
+            aria-label="Chess · Train"
+          >
+            <span className="app-brand-piece" aria-hidden="true">♞</span>
+            <strong>Chess</strong>
+          </button>
+
+          <nav className="app-topnav" aria-label="Primary navigation">
+            {navItems.map(({ id, label, Icon }) => (
+              <button
+                key={id}
+                type="button"
+                className={page === id ? "app-nav-link active" : "app-nav-link"}
+                aria-current={page === id ? "page" : undefined}
+                title={id === "train" ? "Train · keyboard shortcut T" : label}
+                onPointerEnter={() => preloadNavRoute(id)}
+                onFocus={() => preloadNavRoute(id)}
+                onClick={() => {
+                  navigatePage(id);
+                  emitExperienceEvent({ feedback: "navigate" });
+                }}
+              >
+                <Icon size={16} />
+                <span>{label}</span>
+                {id === "train" && (
+                  <kbd className="nav-shortcut" aria-hidden="true">T</kbd>
+                )}
+              </button>
+            ))}
+          </nav>
+
+          <div className="app-top-actions">
             <button
-              key={id}
-              className={nav === id ? "nav-item active" : "nav-item"}
-              aria-current={nav === id ? "page" : undefined}
-              title={id === "home" ? "Train · keyboard shortcut T" : label}
-              onPointerEnter={() => preloadNavRoute(id)}
-              onFocus={() => preloadNavRoute(id)}
+              type="button"
+              className={page === "progress" ? "app-progress-link active" : "app-progress-link"}
+              aria-current={page === "progress" ? "page" : undefined}
+              onPointerEnter={() => preloadNavRoute("progress")}
+              onFocus={() => preloadNavRoute("progress")}
               onClick={() => {
-                setNav(id);
+                navigatePage("progress");
                 emitExperienceEvent({ feedback: "navigate" });
               }}
             >
-              <Icon size={19} />
-              <span>{label}</span>
-              {id === "home" && (
-                <kbd className="nav-shortcut" aria-hidden="true">T</kbd>
-              )}
+              <Target size={17} />
+              <span>Progress</span>
             </button>
-          ))}
-        </nav>
-        <div className="sidebar-experience">
-          <ExperienceControls />
-        </div>
-        <div className="sync-chip">
-          <span className="sync-dot" />
-          {repo.mode === "supabase" ? "Account sync" : "Local-first"}
-        </div>
-      </aside>
+            <div className="topbar-experience">
+              <ExperienceControls />
+            </div>
+            <span
+              className="topbar-sync"
+              title={repo.mode === "supabase" ? "Account sync" : "Local-first"}
+              aria-label={repo.mode === "supabase" ? "Account sync enabled" : "Local-first storage"}
+            >
+              <span className="sync-dot" />
+            </span>
+          </div>
+        </header>
 
-      <main className="main">
+        <main className="main app-main">
         <Suspense fallback={<RouteLoading />}>
-        {nav === "home" ? (
+        {page === "train" ? (
           <>
             <header className="train-home-hero">
               <div className="train-home-copy">
@@ -2222,7 +2258,7 @@ export default function App() {
                   <button
                     className="secondary"
                     type="button"
-                    onClick={() => setNav("learn")}
+                    onClick={() => navigatePage("learn")}
                   >
                     Browse course
                   </button>
@@ -2285,7 +2321,7 @@ export default function App() {
                 <button
                   type="button"
                   className="text-action"
-                  onClick={() => setNav("progress")}
+                  onClick={() => navigatePage("progress")}
                 >
                   Why this session? <ChevronRight size={15} />
                 </button>
@@ -2360,7 +2396,7 @@ export default function App() {
               <button
                 type="button"
                 className="secondary"
-                onClick={() => setNav("progress")}
+                onClick={() => navigatePage("progress")}
               >
                 Plan & progress <ChevronRight size={15} />
               </button>
@@ -2422,7 +2458,7 @@ export default function App() {
               <button
                 className="secondary"
                 type="button"
-                onClick={() => setNav("learn")}
+                onClick={() => navigatePage("learn")}
               >
                 Open course <ChevronRight size={16} />
               </button>
@@ -2454,13 +2490,13 @@ export default function App() {
               <button
                 className="secondary"
                 type="button"
-                onClick={() => setNav("progress")}
+                onClick={() => navigatePage("progress")}
               >
                 See coach reasoning <ChevronRight size={16} />
               </button>
             </section>
           </>
-        ) : nav === "learn" ? (
+        ) : page === "learn" ? (
           learnMode === "openings" ? (
             <OpeningsView
               progress={state.openingProgress ?? {}}
@@ -2490,7 +2526,7 @@ export default function App() {
               onOpenModelGames={() => setLearnMode("model-games")}
             />
           )
-        ) : nav === "play" ? (
+        ) : page === "play" ? (
           <PlayView
             mastery={state.mastery}
             lichess={state.lichess}
@@ -2505,7 +2541,7 @@ export default function App() {
             externalScenario={replayScenario}
             onExternalScenarioExit={() => setReplayScenario(undefined)}
           />
-        ) : nav === "review" ? (
+        ) : page === "review" ? (
           <ReviewView
             games={state.games ?? []}
             mistakes={state.mistakes ?? []}
@@ -2526,7 +2562,7 @@ export default function App() {
             onPracticeSkill={startManualPractice}
             onPracticeOpening={startOpeningPractice}
           />
-        ) : nav === "library" ? (
+        ) : page === "library" ? (
           <LibraryView
             studies={state.savedStudies ?? []}
             games={state.games ?? []}
@@ -2535,13 +2571,13 @@ export default function App() {
             onToggleFavorite={toggleStudyFavorite}
             onTrainStudy={startStudyTraining}
           />
-        ) : nav === "progress" ? (
+        ) : page === "progress" ? (
           <ProgressView
             intelligence={progressIntelligence}
-            onBack={() => setNav("home")}
+            onBack={() => navigatePage("train")}
             onTrainSkill={(skillId) => {
               startManualPractice(skillId);
-              setNav("home");
+              navigatePage("train");
             }}
             onRunPrescriptionAction={runPrescriptionAction}
             onUpdateTrainingPlan={updateTrainingPlan}
@@ -2561,46 +2597,42 @@ export default function App() {
             }
           />
         ) : (
-          <section className="placeholder">
-            <div className="placeholder-icon">
-              <Library />
+          <section className="settings-page" aria-labelledby="settings-title">
+            <div>
+              <p className="eyebrow">SETTINGS</p>
+              <h1 id="settings-title">Interaction preferences</h1>
+              <p>Sound, haptics, celebrations and motion remain available from the compact app controls.</p>
             </div>
-            <p className="eyebrow">{nav.toUpperCase()}</p>
-            <h2>{nav[0].toUpperCase() + nav.slice(1)} foundation ready</h2>
-            <p>
-              This area is reserved for the next specialized product phase.
-              The shared board and lesson engine are ready.
-            </p>
-            <button className="secondary" onClick={() => setNav("home")}>Back to Train</button>
+            <ExperienceControls />
+            <button className="secondary" type="button" onClick={() => navigatePage("train")}>
+              Back to Train
+            </button>
           </section>
         )}
         </Suspense>
       </main>
 
       {!dialogOpen && (
-        <div className="mobile-experience">
-          <ExperienceControls />
-        </div>
+        <nav className="mobile-nav" aria-label="Primary navigation">
+          {navItems.map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              className={page === id ? "active" : ""}
+              aria-current={page === id ? "page" : undefined}
+              onPointerDown={() => preloadNavRoute(id)}
+              onFocus={() => preloadNavRoute(id)}
+              onClick={() => {
+                navigatePage(id);
+                emitExperienceEvent({ feedback: "navigate" });
+              }}
+            >
+              <Icon size={20} />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
       )}
-
-      {!dialogOpen && <nav className="mobile-nav" aria-label="Primary navigation">
-        {navItems.map(([id, label, Icon]) => (
-          <button
-            key={id}
-            className={nav === id ? "active" : ""}
-            aria-current={nav === id ? "page" : undefined}
-            onPointerDown={() => preloadNavRoute(id)}
-            onFocus={() => preloadNavRoute(id)}
-            onClick={() => {
-              setNav(id);
-              emitExperienceEvent({ feedback: "navigate" });
-            }}
-          >
-            <Icon size={20} />
-            <span>{label}</span>
-          </button>
-        ))}
-      </nav>}
 
       {assessmentSession && (
         <div
