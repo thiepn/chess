@@ -579,7 +579,25 @@ Delivered:
 
 ### P46 — Progress Page Reconstruction
 
+**Status:** implemented.
+
 Move the analytics-heavy material where it belongs: a chess-specific player-development record rather than the default product surface.
+
+Delivered:
+
+- removed the giant Progress hero and equal-weight KPI/dashboard panel stack;
+- practical strength is now the primary player record, with rating, confidence, human-game sample and consistency;
+- the 8-week mastery / retention / transfer trajectory is the dominant quantitative visualization;
+- mastery, retention, transfer and calibration remain visible as a compact development strip rather than standalone cards;
+- curriculum certification is presented as a stage-velocity record;
+- improving and weak-transfer skills are compact actionable rows with direct Train actions;
+- coach prescriptions are integrated beside development evidence rather than living in a separate dashboard section;
+- human-game transfer has a dedicated chess-specific section with baseline quality, phase performance, opening cohorts, playing-condition cohorts and recurring mistake families;
+- training plan, load management, recovery and competition controls are preserved inside an expandable planning section;
+- event retrospective editing remains available inside the competition cycle rather than occupying the primary analytics surface;
+- calibration, intervention outcomes, coach effectiveness and longitudinal history are preserved inside an expandable evidence/model-diagnostics section;
+- Progress-specific redesign CSS is lazy-loaded with the Progress route;
+- mobile collapses the record into practical strength → trajectory → stage/skills → real games, with horizontal stage navigation and no giant analytics cards.
 
 ### P47 — Visual Identity & Typography
 
