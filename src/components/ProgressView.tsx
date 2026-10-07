@@ -427,7 +427,7 @@ export function ProgressView({
                 ))
               ) : (
                 <div className="progress-v2-empty">
-                  More recent evidence is needed.
+                  More recent training or game results are needed.
                 </div>
               )}
             </div>
