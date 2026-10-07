@@ -65,6 +65,7 @@ The default experience should answer one question: **what should I train now?**
 - P44 Review Page Redesign with a routed `/review/:gameId` analysis workstation, synchronized board/notation/critical-moment teaching, clickable evaluation trace, compact review index, and removal of the Review/story hero-card composition
 - P45 Library Page Redesign with a routed chess archive, real study/reference/game workspaces, collection pages for studies/positions/endgames/games, canonical Repertoire/Model Game links, and removal of the Library hero/metrics/local-tab/card-grid composition
 - P46 Progress Analytics Redesign with practical-strength-first hierarchy, dominant eight-week trajectory, curriculum/skill development record, chess-specific human-game transfer analytics, and advanced planning/evidence moved into expandable technical sections
+- P47 Mobile / Tablet Native Layouts with safe-area support, touch-target enforcement, portrait-tablet compositions, low-height landscape chess workspaces, board-first phone flows and route-code-split native CSS
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2395,6 +2396,34 @@ Calibration, intervention effectiveness, coach validation and longitudinal evide
 
 P46-specific CSS loads with the lazy Progress chunk rather than increasing the initial global stylesheet.
 
+## Mobile / Tablet Native Layouts
+
+P47 qualifies the redesigned application as device-native rather than relying on desktop layouts that merely stack at a breakpoint.
+
+The document viewport now opts into edge-to-edge safe-area behavior with `viewport-fit=cover`. Mobile top chrome, bottom navigation and sticky actions account for display cutouts and home-indicator areas.
+
+The device behavior is intentionally different by form factor:
+
+- phone portrait: board-first flows, horizontal route-local rails, touch-sized actions and bounded secondary content;
+- phone landscape / low-height viewport: active chess workspaces use board + context side-by-side and can suppress global chrome;
+- tablet portrait: board-first or record-first composition with desktop side rails converted into horizontal/local navigation;
+- tablet landscape: board + teaching/notation/context remain side-by-side where useful instead of collapsing prematurely.
+
+Route-specific behavior:
+
+- **Train:** horizontal queue on touch, portrait board-first sessions, landscape split training runtime;
+- **Learn:** horizontally scrollable curriculum/lesson rails, board-first portrait reading, board + reading landscape;
+- **Play:** portrait board-first setup and full tournament-style landscape games;
+- **Review:** board → bounded notation → teaching on portrait; board + notation + insight in constrained landscape;
+- **Library:** touch archive rail, portrait board-first analysis and landscape board + controls;
+- **Progress:** tablet-native player-development record, horizontal stage navigation and touch-safe plan/evidence controls.
+
+Coarse-pointer controls enforce 44px minimum targets across the redesigned route surfaces.
+
+P47 styles are route-code-split for Learn, Play, Review, Library and Progress. Only the shell/Train rules load with the default route.
+
+The target viewport matrix is documented in `docs/P47_DEVICE_MATRIX.md`.
+
 ## Next phase
 
-P47 — Mobile / Tablet Native Layouts.
+P48 — Material & Component Cleanup.

@@ -599,9 +599,28 @@ Delivered:
 - Progress-specific redesign CSS is lazy-loaded with the Progress route;
 - mobile collapses the record into practical strength → trajectory → stage/skills → real games, with horizontal stage navigation and no giant analytics cards.
 
-### P47 — Visual Identity & Typography
+### P47 — Mobile / Tablet Native Layouts
 
-Introduce the Chess mark, restrained editorial typography and recognizable product identity without reviving marketing-style hero composition.
+**Status:** implemented.
+
+Qualify the rebuilt application as deliberate phone and tablet compositions rather than stacked desktop UI.
+
+Delivered:
+
+- enabled `viewport-fit=cover` and safe-area-aware top/bottom chrome for installed/mobile use;
+- added coarse-pointer minimum-target rules across primary interactive surfaces;
+- added a distinct portrait-tablet mode for Train, Learn, Play, Review, Library and Progress;
+- added landscape-tablet tuning that preserves board + context side-by-side where that is the natural chess interaction;
+- rebuilt low-height phone landscape for active Train, Play, Review and Library workspaces so board + context share the viewport instead of forcing vertical scroll;
+- active training and games can suppress global chrome in constrained landscape while preserving route-local exit controls;
+- Train uses horizontal session queues on touch devices, bounded boards and safe-area-aware sticky actions;
+- Learn uses touch-scrollable chapter/lesson rails, board-first portrait lessons and split board/reading landscape lessons;
+- Play uses a portrait board-first setup flow, touch-sized controls and tournament-style landscape active games;
+- Review uses board-first portrait analysis with bounded notation and a three-pane landscape workstation where space permits;
+- Library uses sticky/horizontal archive navigation, portrait board-first analysis and split landscape analysis controls;
+- Progress uses a tablet-native player record layout, horizontal stage record and touch-safe expandable planning/evidence sections;
+- route-specific P47 CSS remains lazy-loaded for Learn, Play, Review, Library and Progress; only the default Train/shell native rules are part of the initial app chunk;
+- device targets and acceptance expectations are recorded in `docs/P47_DEVICE_MATRIX.md`.
 
 ### P48 — Material & Component Cleanup
 
@@ -611,13 +630,13 @@ Remove legacy card/panel/hero defaults, reduce excessive rounding/shadows and mi
 
 Center motion on chess actions: piece movement, capture, castling, promotion, board flip, solution reveal and analysis transitions.
 
-### P50 — Mobile-Native Rebuild
+### P50 — Mobile Native Defect Pass
 
-Qualify each primary route as a native mobile composition rather than stacked desktop UI.
+P47 absorbed the planned mobile-native rebuild. Keep P50 as a defect-only real-device follow-up after motion/material work.
 
-### P51 — Tablet & Large-Desktop Composition
+### P51 — Large-Desktop Composition
 
-Tune board/context composition for landscape tablets, portrait tablets, 1440p+ and ultrawide screens without dashboard stretching.
+P47 absorbed the tablet portion. Tune 1440p+, ultrawide and unusually tall desktop compositions without dashboard stretching.
 
 ### P52 — Accessibility Requalification
 
