@@ -20,6 +20,7 @@ import type {
   ReviewErrorType,
   ReviewThoughtTag,
 } from "../games/types";
+import { emitExperienceEvent } from "../interaction/events";
 import type { OpeningDeviation } from "../openings/types";
 import {
   openingNodes,
@@ -304,6 +305,7 @@ export function GameReviewCoach({
       hintUsed,
     });
     setStage("explain");
+    emitExperienceEvent({ feedback: "reveal" });
   }
 
   const primarySkillId =
