@@ -31,7 +31,7 @@ export function resolvePlayRoute(path: string): PlayRouteState {
 export function playGameKey(setup: PlaySetup) {
   return setup.scenarioId
     ? `scenario:${setup.scenarioId}:${setup.aiProfileId}`
-    : `standard:${setup.playerColor}:${setup.aiProfileId}`;
+    : `standard:${setup.playerColor}:${setup.aiProfileId}:${setup.timeControl ?? "untimed"}`;
 }
 
 export function playGamePath(setup: PlaySetup) {
@@ -50,6 +50,7 @@ export function setupFromGameKey(gameKey: string): PlaySetup | undefined {
       mode: "standard",
       playerColor: parts[1],
       aiProfileId: parts[2] as PlaySetup["aiProfileId"],
+      timeControl: (parts[3] ?? "untimed") as PlaySetup["timeControl"],
     };
   }
 
