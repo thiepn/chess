@@ -450,7 +450,23 @@ Delivered:
 
 ### P40 — Train Page Reconstruction
 
+**Status:** implemented.
+
 Remove the dashboard-like Train home and replace it with a training rail + dominant board + contextual coaching workspace.
+
+Delivered:
+
+- removed the giant Recommended-now hero and motivational headline pattern;
+- removed the Train-page KPI/card stack, plan strip, course metric card and standalone coach card;
+- converted the adaptive session into a narrow, directly selectable training queue;
+- retained Quick / Standard / Deep session duration as compact controls rather than dashboard tabs;
+- added a large P39 board preview as the visual center of the page;
+- preview selection follows the actual adaptive queue and can launch the exact queued activity;
+- moved activity title, explanation and primary action into a restrained board-adjacent coaching rail;
+- retained course stage, focus and goal as compact contextual facts rather than headline metrics;
+- made placement diagnostic an optional subordinate action;
+- added responsive composition: three-zone desktop, two-zone compact desktop, horizontal queue + board-first mobile;
+- preserved P36 training runners as compatibility overlays until P41.
 
 ### P41 — Train Runtime Migration
 
