@@ -32,10 +32,14 @@ export function nextBoardFocusIndex(
     return Math.min(rowEnd, current + 1);
   }
   if (key === "ArrowUp") {
-    return Math.max(0, current - width);
+    return current - width >= 0
+      ? current - width
+      : current;
   }
   if (key === "ArrowDown") {
-    return Math.min(total - 1, current + width);
+    return current + width < total
+      ? current + width
+      : current;
   }
   if (key === "Home") return rowStart;
   return rowEnd;
