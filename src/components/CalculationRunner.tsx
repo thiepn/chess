@@ -401,6 +401,7 @@ export function CalculationRunner({
               ]
                 .filter(Boolean)
                 .join(" ")}
+              aria-current={id === phase ? "step" : undefined}
             >
               <span>{index + 1}</span>
               <strong>{label}</strong>
@@ -724,6 +725,9 @@ export function CalculationRunner({
                         ? "success"
                         : "repair",
                     ].join(" ")}
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
                   >
                     <Sparkles
                       size={19}
@@ -845,7 +849,7 @@ export function CalculationRunner({
           </div>
 
           <div className="lesson-controls">
-            <div className="calculation-engine-state">
+            <div className="calculation-engine-state" role="status" aria-live="polite">
               <span>
                 Local Stockfish
               </span>
