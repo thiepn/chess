@@ -1,5 +1,5 @@
 import { Chess, type Color, type PieceSymbol, type Square } from "chess.js";
-import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
@@ -68,6 +68,7 @@ export function ChessBoard({
     () => squareList(orientation)[0],
   );
   const squareRefs = useRef(new Map<Square, HTMLButtonElement>());
+  const instructionsId = useId();
   const { feedback } = useExperience();
 
   useEffect(() => {
@@ -270,21 +271,72 @@ export function ChessBoard({
 
   function squareLabel(square: Square) {
     const piece = chess.get(square);
-    if (!piece) return `${square}, empty`;
-    return `${square}, ${piece.color === "w" ? "white" : "black"} ${chessPieceNames[piece.type]}`;
+    const parts = [
+      piece
+        ? `${square}, ${piece.color === "w" ? "white" : "black"} ${chessPieceNames[piece.type]}`
+        : `${square}, empty`,
+    ];
+
+    if (selected === square) parts.push("selected");
+    if (legalTargets.has(square)) {
+      parts.push(piece ? "legal capture target" : "legal move target");
+    }
+    if (checkedKing === square) parts.push("king in check");
+    if (lastMove?.from === square) parts.push("last move origin");
+    if (lastMove?.to === square) {
+      parts.push(
+        lastMoveKind === "capture"
+          ? "last move destination, capture"
+          : lastMoveKind === "promotion"
+            ? "last move destination, promotion"
+            : lastMoveKind === "castle"
+              ? "last move destination, castling"
+              : "last move destination",
+      );
+    }
+
+    const tone = highlightMap.get(square);
+    if (tone === "good") parts.push("recommended square");
+    else if (tone === "danger") parts.push("danger square");
+    else if (tone === "hint") parts.push("hint square");
+    else if (tone === "focus") parts.push("focus square");
+
+    return parts.join(", ");
   }
 
+  const arrowStatus = arrows.length
+    ? ` ${arrows
+        .map(
+          (arrow) =>
+            `${arrow.tone ?? "focus"} arrow from ${arrow.from} to ${arrow.to}`,
+        )
+        .join(". ")}.`
+    : "";
+
   const boardStatus = selected
-    ? `${squareLabel(selected)} selected. ${legalTargets.size} legal move${legalTargets.size === 1 ? "" : "s"}.`
+    ? `${squareLabel(selected)}. ${legalTargets.size} legal move${legalTargets.size === 1 ? "" : "s"}.${arrowStatus}`
     : checkedKing
-      ? `${chess.turn() === "w" ? "White" : "Black"} king is in check.`
+      ? `${chess.turn() === "w" ? "White" : "Black"} king is in check.${arrowStatus}`
       : lastMove
-        ? `Move played from ${lastMove.from} to ${lastMove.to}.`
-        : "No square selected.";
+        ? `${
+            lastMoveKind === "capture"
+              ? "Capture"
+              : lastMoveKind === "promotion"
+                ? "Promotion"
+                : lastMoveKind === "castle"
+                  ? "Castling move"
+                  : "Move"
+          } from ${lastMove.from} to ${lastMove.to}.${arrowStatus}`
+        : `No square selected.${arrowStatus}`;
 
   return (
     <div className="chess-board-wrap">
-      <span className="sr-only" aria-live="polite">
+      <span id={instructionsId} className="sr-only">
+        {disabled
+          ? "Chessboard preview. Use arrow keys to inspect squares."
+          : "Use arrow keys to move between squares. Press Enter or Space to select a piece or destination. Press Escape to clear a selected square."}
+      </span>
+      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {boardStatus}
       </span>
       <div
@@ -292,7 +344,10 @@ export function ChessBoard({
         data-orientation={orientation}
         data-last-move-kind={lastMove ? lastMoveKind : undefined}
         role="grid"
-        aria-label={`Interactive chessboard. ${orientation === "w" ? "White" : "Black"} is at the bottom. Use arrow keys to move between squares and Enter or Space to select.`}
+        aria-rowcount={8}
+        aria-colcount={8}
+        aria-describedby={instructionsId}
+        aria-label={`${disabled ? "Chessboard preview" : "Interactive chessboard"}. ${orientation === "w" ? "White" : "Black"} is at the bottom.`}
       >
         {squares.map((square, index) => {
           const piece = chess.get(square);
