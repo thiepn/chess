@@ -470,7 +470,7 @@ export function LessonRunner({
 
                 {feedback &&
                   !solved && (
-                    <div className="lesson-feedback error">
+                    <div className="lesson-feedback error" role="alert" aria-atomic="true">
                       <span>
                         {feedback}
                       </span>
@@ -478,7 +478,7 @@ export function LessonRunner({
                   )}
 
                 {solved && (
-                  <div className="lesson-feedback success">
+                  <div className="lesson-feedback success" role="status" aria-live="polite" aria-atomic="true">
                     <Sparkles
                       size={19}
                     />
@@ -506,7 +506,7 @@ export function LessonRunner({
                 {revealedHints.length >
                   0 &&
                   !solved && (
-                    <div className="lesson-hint-stack">
+                    <div className="lesson-hint-stack" role="status" aria-live="polite" aria-relevant="additions">
                       {revealedHints.map(
                         (
                           hint,
@@ -539,7 +539,7 @@ export function LessonRunner({
 
                 {feedback &&
                   !solved && (
-                    <div className="lesson-feedback error">
+                    <div className="lesson-feedback error" role="alert" aria-atomic="true">
                       <span>
                         {feedback}
                       </span>
@@ -556,7 +556,7 @@ export function LessonRunner({
                   )}
 
                 {solved && (
-                  <div className="lesson-feedback success">
+                  <div className="lesson-feedback success" role="status" aria-live="polite" aria-atomic="true">
                     <div
                       className="success-burst"
                       aria-hidden="true"
