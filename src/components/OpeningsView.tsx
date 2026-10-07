@@ -79,22 +79,16 @@ export function OpeningsView({
 
   return (
     <section className="openings-view">
-      <button className="back-link" type="button" onClick={onBack}>
-        <ChevronLeft size={16} /> Learn
-      </button>
-
-      <header className="section-hero compact opening-hero">
+      <header className="learn-subpage-head">
+        <button className="learn-v2-back" type="button" onClick={onBack}>
+          <ChevronLeft size={16} /> Course
+        </button>
         <div>
-          <p className="eyebrow">YOUR REPERTOIRE</p>
-          <h1>Know plans, not move dumps.</h1>
+          <p className="eyebrow">REPERTOIRE</p>
+          <h1>Opening plans</h1>
           <p>
-            Three compact systems cover your default White game and your main
-            Black responses. Lines stay short until repeated games prove you
-            actually need more depth.
+            Compact systems, recurring structures and recall from your own games.
           </p>
-        </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <Compass size={30} />
         </div>
       </header>
 
