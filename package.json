@@ -18,7 +18,8 @@
     "perf:budget": "node scripts/check-performance-budget.mjs",
     "design:audit": "node scripts/audit-material-system.mjs",
     "motion:audit": "node scripts/audit-motion-system.mjs",
-    "mobile:audit": "node scripts/audit-mobile-native.mjs"
+    "mobile:audit": "node scripts/audit-mobile-native.mjs",
+    "desktop:audit": "node scripts/audit-large-desktop.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
