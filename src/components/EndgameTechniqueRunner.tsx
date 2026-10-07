@@ -1,13 +1,12 @@
 import { Chess, type Square } from "chess.js";
 import {
-  BrainCircuit,
   ChevronRight,
   Flag,
   Lightbulb,
   LoaderCircle,
   RotateCcw,
   Shield,
-  Sparkles,
+  CheckCircle2,
   Target,
 } from "lucide-react";
 import {
@@ -512,7 +511,7 @@ export function EndgameTechniqueRunner({
             "hold" ? (
             <Shield size={15} />
           ) : (
-            <Sparkles size={15} />
+            <Flag size={15} />
           )}
           <span>
             {thinking
@@ -812,7 +811,7 @@ export function EndgameTechniqueRunner({
           )}
 
           <div className="endgame-source-note">
-            <BrainCircuit size={14} />
+            <Target size={14} />
             <span>
               Recognition and practical
               execution are scored
