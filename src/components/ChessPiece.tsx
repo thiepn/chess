@@ -1,10 +1,12 @@
 import type { ReactElement } from "react";
 import type { Color, PieceSymbol } from "chess.js";
+import type { PieceStyle } from "../interaction/types";
 
 interface ChessPieceProps {
   color: Color;
   type: PieceSymbol;
   className?: string;
+  styleVariant?: PieceStyle;
 }
 
 export const chessPieceNames: Record<PieceSymbol, string> = {
@@ -120,11 +122,21 @@ const pieceByType: Record<PieceSymbol, () => ReactElement> = {
   k: King,
 };
 
-export function ChessPiece({ color, type, className = "" }: ChessPieceProps) {
+export function ChessPiece({
+  color,
+  type,
+  className = "",
+  styleVariant = "classic",
+}: ChessPieceProps) {
   const Shape = pieceByType[type];
   return (
     <svg
-      className={["chess-piece-svg", `chess-piece-${color}`, className]
+      className={[
+        "chess-piece-svg",
+        `chess-piece-${color}`,
+        `piece-style-${styleVariant}`,
+        className,
+      ]
         .filter(Boolean)
         .join(" ")}
       viewBox="0 0 100 100"
