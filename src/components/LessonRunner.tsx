@@ -598,8 +598,8 @@ export function LessonRunner({
                 }
               </strong>
               <small>
-                first try · hints reduce
-                mastery evidence
+                first try · hints are counted
+                separately
               </small>
             </div>
 
