@@ -624,7 +624,28 @@ Delivered:
 
 ### P48 — Material & Component Cleanup
 
+**Status:** implemented.
+
 Remove legacy card/panel/hero defaults, reduce excessive rounding/shadows and migrate surfaces to rails, lists, separators, notation regions and board-side tools.
+
+Delivered:
+
+- removed dead pre-redesign curriculum, review, analytics and planning CSS blocks from the initial stylesheet;
+- deleted roughly 66 KB of raw legacy CSS instead of stacking new overrides indefinitely;
+- established a final flat material layer in `src/styles/p48-material.css`;
+- primary actions are now flat functional blue with no glow/elevation treatment;
+- secondary controls use graphite/transparent surfaces and thin separators;
+- instructional hints use compact semantic edge markers rather than rounded cards;
+- active analysis/review status messages use flat rails with semantic borders;
+- Game, Assessment, Endgame, Model Game and Opening side tools use board-side separator regions instead of floating panels;
+- Game opponent/result context is flattened into notation/workspace sections;
+- Lichess connection UI is a restrained connected-service region rather than a gradient card;
+- active Model Game collection entries are flattened into archive-style rows;
+- legitimate popovers/dialogs remain raised surfaces, but use restrained graphite material and the P37 radius tokens;
+- mobile board-side regions switch from vertical separators to horizontal separators;
+- added `npm run design:audit` and made it part of the Quality workflow;
+- the material audit blocks gradients / oversized radii in rebuilt route CSS and prevents deprecated hero/card surface classes from returning to active TSX;
+- recorded the P48 contract in `docs/P48_MATERIAL_CONTRACT.md`.
 
 ### P49 — Motion & Tactile Interaction
 
