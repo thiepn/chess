@@ -7,13 +7,31 @@ import {
   VolumeX,
   X,
 } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { MotionPreference } from "../interaction/types";
 
 export function ExperienceControls() {
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const { settings, updateSettings, feedback } = useExperience();
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+      window.requestAnimationFrame(() => {
+        triggerRef.current?.focus();
+      });
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () =>
+      window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   function toggle() {
     setOpen((value) => !value);
@@ -23,6 +41,7 @@ export function ExperienceControls() {
   return (
     <div className={open ? "experience-controls open" : "experience-controls"}>
       <button
+        ref={triggerRef}
         type="button"
         className="experience-trigger"
         onClick={toggle}
