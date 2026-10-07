@@ -512,7 +512,24 @@ Delivered:
 
 ### P43 — Play Page Redesign
 
+**Status:** implemented.
+
 Make Play a genuine chess playing surface with board, clocks, notation and compact pre-game configuration.
+
+Delivered:
+
+- removed the Play hero, large normal-game promo card, AI profile card grid and scenario-card grid;
+- rebuilt `/play` as a compact setup desk with board preview, color, time control and opponent controls;
+- normal games support Untimed, 10+0 and 15+10 training clocks;
+- targeted scenarios remain untimed by default so the training objective stays primary;
+- scenarios are presented as a dense selectable position list rather than promotional cards;
+- active games use real `/play/game/:id` URLs with stable standard/scenario session keys;
+- standard and built-in scenario routes can reconstruct their setup from the URL;
+- dynamically generated Review replay positions persist a session-scoped snapshot and fail safely when that snapshot is unavailable;
+- active games use the P39 board with player strips, live clocks, move notation, objective context and result transfer;
+- mobile bottom navigation hides during an active game so the board becomes the temporary primary surface;
+- Review-origin replay positions and prescription scenarios return cleanly to Play without modal state;
+- retained Stockfish opponent logic, PGN creation, Review ingestion, scenario scoring and experience feedback.
 
 ### P44 — Review Page Redesign
 
