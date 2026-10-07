@@ -1,11 +1,10 @@
 import { Chess } from "chess.js";
 import {
-  BrainCircuit,
   ChevronRight,
   Eye,
   EyeOff,
   RotateCcw,
-  Sparkles,
+  CheckCircle2,
   Target,
 } from "lucide-react";
 import {
