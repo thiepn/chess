@@ -3,7 +3,6 @@ import {
   ChevronRight,
   Lightbulb,
   RotateCcw,
-  Sparkles,
 } from "lucide-react";
 import type { Color } from "chess.js";
 import {
@@ -479,9 +478,7 @@ export function LessonRunner({
 
                 {solved && (
                   <div className="lesson-feedback success" role="status" aria-live="polite" aria-atomic="true">
-                    <Sparkles
-                      size={19}
-                    />
+                    <CheckCircle2 size={19} />
                     <div>
                       <strong>
                         {
@@ -567,9 +564,7 @@ export function LessonRunner({
                       <span />
                       <span />
                     </div>
-                    <Sparkles
-                      size={19}
-                    />
+                    <CheckCircle2 size={19} />
                     <div>
                       <strong>
                         {
