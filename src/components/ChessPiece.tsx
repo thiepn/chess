@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import type { Color, PieceSymbol } from "chess.js";
 
 interface ChessPieceProps {
@@ -110,7 +111,7 @@ function King() {
   );
 }
 
-const pieceByType: Record<PieceSymbol, () => JSX.Element> = {
+const pieceByType: Record<PieceSymbol, () => ReactElement> = {
   p: Pawn,
   r: Rook,
   n: Knight,
