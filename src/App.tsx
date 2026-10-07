@@ -209,6 +209,7 @@ export default function App() {
   const [previewIndex, setPreviewIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
+  const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [learnMode, setLearnMode] = useState<"curriculum" | "openings" | "model-games">("curriculum");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
@@ -433,18 +434,19 @@ export default function App() {
     return `/train/session/${encodeURIComponent(id)}`;
   }
 
-  function closeTrainingRuntime() {
+  function closeTrainingRuntime(returnPath = trainingReturnPath) {
     setActiveIndex(null);
     setManualActivity(null);
     setActiveModelGameId(null);
     setAssessmentSession(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate("/train");
+    navigate(returnPath || "/train");
   }
 
   function openAdaptiveActivity(index: number) {
     const activity = session.activities[index];
     if (!activity) return;
+    setTrainingReturnPath("/train");
     setManualActivity(null);
     setActiveModelGameId(null);
     setAssessmentSession(null);
@@ -453,6 +455,7 @@ export default function App() {
   }
 
   function openManualActivity(activity: TrainingActivity) {
+    setTrainingReturnPath(route.path === "/train" ? "/train" : route.path);
     setActiveIndex(null);
     setActiveModelGameId(null);
     setAssessmentSession(null);
@@ -473,6 +476,7 @@ export default function App() {
           manualActivity?: TrainingActivity | null;
           activeModelGameId?: string | null;
           assessmentSession?: AssessmentSession | null;
+          trainingReturnPath?: string;
         };
         if (snapshot.path === route.path) {
           if (snapshot.mode) setMode(snapshot.mode);
@@ -480,6 +484,7 @@ export default function App() {
           setManualActivity(snapshot.manualActivity ?? null);
           setActiveModelGameId(snapshot.activeModelGameId ?? null);
           setAssessmentSession(snapshot.assessmentSession ?? null);
+          setTrainingReturnPath(snapshot.trainingReturnPath ?? "/train");
           return;
         }
       } catch {
@@ -504,6 +509,7 @@ export default function App() {
     route.path,
     runtimeReady,
     session.activities,
+    trainingReturnPath,
     trainingSessionOpen,
   ]);
 
@@ -518,6 +524,7 @@ export default function App() {
         manualActivity,
         activeModelGameId,
         assessmentSession,
+        trainingReturnPath,
       }),
     );
   }, [
@@ -1073,14 +1080,14 @@ export default function App() {
     });
 
     if (manualActivity) {
-      setManualActivity(null);
+      closeTrainingRuntime();
       return;
     }
 
     if (activeIndex !== null && activeIndex < session.activities.length - 1) {
-      setActiveIndex(activeIndex + 1);
+      openAdaptiveActivity(activeIndex + 1);
     } else {
-      setActiveIndex(null);
+      closeTrainingRuntime("/train");
     }
   }
 
@@ -1391,7 +1398,7 @@ export default function App() {
       .find(Boolean);
     if (!skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `mistake:${mistake.id}`,
       source: "game",
       skillIds: [skill.id],
@@ -1419,7 +1426,7 @@ export default function App() {
     const node = openingNodes[nodeId];
     if (!skill || !repertoire || !node?.preferredChildId) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `opening:${repertoireId}:${nodeId}`,
       source: "repertoire",
       skillIds: [skill.id],
@@ -1457,7 +1464,7 @@ export default function App() {
       return;
     }
 
-    setManualActivity({
+    openManualActivity({
       id: `opening-line:${repertoireId}:${nodeId}`,
       source: "repertoire",
       skillIds: [skill.id],
@@ -1489,9 +1496,12 @@ export default function App() {
 
   function startModelGame(gameId: string) {
     if (!modelGameById[gameId]) return;
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setAssessmentSession(null);
     setActiveModelGameId(gameId);
+    navigate(trainingPath(`model-game:${gameId}`));
   }
 
   function completeModelGameCheckpoint(
@@ -1686,7 +1696,8 @@ export default function App() {
     });
     setActiveModelGameId(null);
     setLearnMode("model-games");
-    navigatePage("learn");
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate(trainingReturnPath || "/learn");
   }
 
   function updateGameReviewReflection(
@@ -1841,7 +1852,7 @@ export default function App() {
     const skill = training ? skillById[training.skillId] : undefined;
     if (!study || !training || !skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `library:${study.id}`,
       source: "library",
       skillIds: [skill.id],
@@ -1862,7 +1873,7 @@ export default function App() {
     const skill = skillById[skillId];
     if (!skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `manual:${skillId}`,
       source: "curriculum",
       skillIds: [skillId],
@@ -1905,7 +1916,7 @@ export default function App() {
                   ? "microReview"
                   : "conceptLesson";
 
-    setManualActivity({
+    openManualActivity({
       id: `practice:${skillId}`,
       source: "focus",
       skillIds: [skillId],
@@ -1987,7 +1998,6 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      navigatePage("train");
       return;
     }
 
@@ -2014,7 +2024,6 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      navigatePage("train");
       return;
     }
 
@@ -2034,21 +2043,27 @@ export default function App() {
   }
 
   function startPlacementAssessment() {
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setActiveModelGameId(null);
     setAssessmentSession(buildPlacementAssessment());
+    navigate(trainingPath("assessment:placement"));
   }
 
   function startStageCheckpoint(stageId: CurriculumStageId) {
     if (stageGates[stageId].status === "locked") return;
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setActiveModelGameId(null);
     setAssessmentSession(
       buildStageCheckpoint(
         stageId,
         checkpointAttemptCount(state, stageId),
       ),
     );
+    navigate(trainingPath(`assessment:checkpoint:${stageId}`));
   }
 
   function completeAssessment(results: AssessmentItemResult[]) {
@@ -2062,7 +2077,10 @@ export default function App() {
     );
 
     setState(applied.state);
+    const returnPath = trainingReturnPath;
     setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate(returnPath || "/train");
 
     emitExperienceEvent({
       feedback:
@@ -2544,7 +2562,6 @@ export default function App() {
             onBack={() => navigatePage("train")}
             onTrainSkill={(skillId) => {
               startManualPractice(skillId);
-              navigatePage("train");
             }}
             onRunPrescriptionAction={runPrescriptionAction}
             onUpdateTrainingPlan={updateTrainingPlan}
