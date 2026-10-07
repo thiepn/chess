@@ -67,7 +67,7 @@ export const trainingScenarios: TrainingScenario[] = [
     objective: "Convert the king-and-pawn ending.",
     successResults: ["win"],
     sourceLabel: "Endgame training",
-  },,
+  },
   {
     id: "advanced-imbalances",
     mode: "conversion",
