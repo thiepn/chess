@@ -359,3 +359,55 @@ Boards remain additionally constrained by viewport height so a wide but short di
 ### Ultrawide behavior
 
 At 1920px+ the primary chess workspace is centered. Rails and context columns become stable/fixed-quality tracks instead of absorbing arbitrary extra width.
+
+
+## P52 accessibility contract
+
+Accessibility is part of the chess interaction model, not a parallel visual theme.
+
+### Navigation and focus
+
+- the app shell must expose a keyboard-visible skip link to `#main-content`;
+- route changes update `document.title` and move focus to the main landmark without forced scrolling;
+- visible focus must survive component-level `outline: none` rules;
+- modal dialogs trap focus, close with Escape and restore prior focus;
+- non-modal interaction settings move focus into the dialog but do not trap Tab.
+
+### Chessboard
+
+The board uses one roving `tabIndex=0` square and arrow-key spatial navigation.
+
+Accessible names/status must expose:
+
+- square coordinate and piece;
+- selected state;
+- legal move/capture target;
+- king in check;
+- last-move origin/destination and consequence;
+- semantic highlight meaning;
+- instructional arrows.
+
+Board meaning cannot depend on color, sound, haptics or motion.
+
+### Dynamic feedback
+
+Use:
+
+- `role="status"` / polite live regions for success, readiness and informational change;
+- `role="alert"` for actionable errors;
+- `role="progressbar"` with numeric values for measurable progress;
+- `aria-pressed` for toggle/choice controls;
+- `aria-current="step"` for current move/sequence position;
+- `role="timer"` with `aria-live="off"` for chess clocks.
+
+### Contrast modes
+
+The default palette remains P37-authoritative. P52 additionally supports:
+
+- `prefers-contrast: more`;
+- Windows `forced-colors: active`;
+- explicit visible focus rings independent of hue.
+
+### Qualification boundary
+
+Automated/static checks protect structure and regressions. Final release QA should still include manual keyboard-only operation and representative assistive-technology passes (NVDA/JAWS/VoiceOver/TalkBack where available).

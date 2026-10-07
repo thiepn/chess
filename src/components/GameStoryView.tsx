@@ -266,6 +266,7 @@ export function GameStoryView({
             type="button"
             key={phase.phase}
             className={selectedPhase?.phase === phase.phase ? "active" : ""}
+            aria-pressed={selectedPhase?.phase === phase.phase}
             onClick={() => {
               const move = game.moves.find(
                 (item) =>
@@ -299,6 +300,7 @@ export function GameStoryView({
             <button
               type="button"
               className={preview === "position" ? "active" : ""}
+              aria-pressed={preview === "position"}
               onClick={() => setPreview("position")}
             >
               Position
@@ -308,6 +310,7 @@ export function GameStoryView({
                 <button
                   type="button"
                   className={preview === "actual" ? "active actual" : ""}
+                  aria-pressed={preview === "actual"}
                   onClick={() => setPreview("actual")}
                 >
                   Your move
@@ -316,6 +319,7 @@ export function GameStoryView({
                   <button
                     type="button"
                     className={preview === "better" ? "active better" : ""}
+                    aria-pressed={preview === "better"}
                     onClick={() => setPreview("better")}
                   >
                     Better move
@@ -358,6 +362,7 @@ export function GameStoryView({
                       ]
                         .filter(Boolean)
                         .join(" ")}
+                      aria-current={selectedPly === move.ply ? "step" : undefined}
                       onClick={() => setSelectedPly(move.ply)}
                     >
                       {move.san}
@@ -422,6 +427,7 @@ export function GameStoryView({
                   top: `${top}%`,
                 }}
                 aria-label={`${phaseLabel(moment.phase)}, move ${moment.moveNumber}: ${moment.title}`}
+                aria-current={selectedPly === moment.ply ? "step" : undefined}
                 onClick={() => setSelectedPly(moment.ply)}
               />
             );

@@ -185,7 +185,14 @@ export function AssessmentRunner({
         </div>
       </div>
 
-      <div className="assessment-progress" aria-label="Assessment progress">
+      <div
+        className="assessment-progress"
+        role="progressbar"
+        aria-label="Assessment progress"
+        aria-valuemin={0}
+        aria-valuemax={session.items.length}
+        aria-valuenow={index + (answered ? 1 : 0)}
+      >
         <i
           style={{
             width: `${((index + (answered ? 1 : 0)) / session.items.length) * 100}%`,
@@ -235,7 +242,9 @@ export function AssessmentRunner({
                   ? "assessment-result correct"
                   : "assessment-result incorrect"
               }
+              role="status"
               aria-live="polite"
+              aria-atomic="true"
             >
               {answered.success ? (
                 <CheckCircle2 size={23} />

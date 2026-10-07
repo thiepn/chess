@@ -375,8 +375,15 @@ export function GameArena({
                 <small>{playerColor === "w" ? "Black" : "White"} · {profile.accent}</small>
               </span>
             </div>
-            <div className={gameRef.current.turn() !== playerColor && !result ? "game-clock active" : "game-clock"}>
-              <Clock3 size={14} />
+            <div
+              className={gameRef.current.turn() !== playerColor && !result ? "game-clock active" : "game-clock"}
+              role="timer"
+              aria-live="off"
+              aria-label={`${profile.name} clock, ${timeControl === "untimed"
+                  ? "—:—"
+                  : clockLabel(playerColor === "w" ? blackMs : whiteMs)}`}
+            >
+              <Clock3 size={14} aria-hidden="true" />
               <strong>
                 {timeControl === "untimed"
                   ? "—:—"
@@ -426,8 +433,15 @@ export function GameArena({
                 <small>{playerColor === "w" ? "White" : "Black"} · {clockConfig.label}</small>
               </span>
             </div>
-            <div className={playerToMove && !result ? "game-clock active" : "game-clock"}>
-              <Clock3 size={14} />
+            <div
+              className={playerToMove && !result ? "game-clock active" : "game-clock"}
+              role="timer"
+              aria-live="off"
+              aria-label={`Your clock, ${timeControl === "untimed"
+                  ? "—:—"
+                  : clockLabel(playerColor === "w" ? whiteMs : blackMs)}`}
+            >
+              <Clock3 size={14} aria-hidden="true" />
               <strong>
                 {timeControl === "untimed"
                   ? "—:—"

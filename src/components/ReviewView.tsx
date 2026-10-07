@@ -441,11 +441,12 @@ export function ReviewView({
           />
 
           <div className="review-v2-import-footer">
-            <div className="review-v2-color" aria-label="Your color">
+            <div className="review-v2-color" role="group" aria-label="Your color">
               <button
                 className={playerColor === "w" ? "active" : ""}
                 onClick={() => setPlayerColor("w")}
                 type="button"
+                aria-pressed={playerColor === "w"}
               >
                 White
               </button>
@@ -453,6 +454,7 @@ export function ReviewView({
                 className={playerColor === "b" ? "active" : ""}
                 onClick={() => setPlayerColor("b")}
                 type="button"
+                aria-pressed={playerColor === "b"}
               >
                 Black
               </button>
@@ -484,7 +486,7 @@ export function ReviewView({
           </div>
 
           {progress && analyzing && (
-            <div className="analysis-progress">
+            <div className="analysis-progress" role="status" aria-live="polite" aria-atomic="true">
               <div>
                 <span>
                   {progress.phase === "loading-engine"
@@ -495,7 +497,14 @@ export function ReviewView({
                 </span>
                 <strong>{progress.total ? `${progress.completed}/${progress.total}` : "…"}</strong>
               </div>
-              <div className="track">
+              <div
+                className="track"
+                role="progressbar"
+                aria-label="Game analysis progress"
+                aria-valuemin={0}
+                aria-valuemax={progress.total || 1}
+                aria-valuenow={progress.total ? progress.completed : 0}
+              >
                 <i
                   style={{
                     width: progress.total
@@ -508,7 +517,7 @@ export function ReviewView({
           )}
 
           {error && (
-            <div className="analysis-error">
+            <div className="analysis-error" role="alert">
               <strong>Analysis unavailable</strong>
               <span>{error}</span>
             </div>
@@ -545,7 +554,7 @@ export function ReviewView({
               {batchAnalyzing ? "Analyzing…" : "Analyze new synced games"}
             </button>
           )}
-          {batchStatus && <span>{batchStatus}</span>}
+          {batchStatus && <span role="status" aria-live="polite">{batchStatus}</span>}
         </section>
       </main>
 

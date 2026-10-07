@@ -7,13 +7,16 @@ import {
   VolumeX,
   X,
 } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { MotionPreference } from "../interaction/types";
 
 export function ExperienceControls() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const dialogId = useId();
+  const headingId = useId();
   const { settings, updateSettings, feedback } = useExperience();
 
   useEffect(() => {
@@ -29,6 +32,12 @@ export function ExperienceControls() {
     };
 
     window.addEventListener("keydown", closeOnEscape);
+    window.requestAnimationFrame(() => {
+      dialogRef.current
+        ?.querySelector<HTMLElement>("input, select, button")
+        ?.focus();
+    });
+
     return () =>
       window.removeEventListener("keydown", closeOnEscape);
   }, [open]);
@@ -46,6 +55,8 @@ export function ExperienceControls() {
         className="experience-trigger"
         onClick={toggle}
         aria-expanded={open}
+        aria-controls={dialogId}
+        aria-haspopup="dialog"
         aria-label="Interaction settings"
       >
         {open ? <X size={17} /> : <Settings2 size={17} />}
@@ -53,11 +64,17 @@ export function ExperienceControls() {
       </button>
 
       {open && (
-        <div className="experience-popover" role="dialog" aria-label="Interaction settings">
+        <div
+          ref={dialogRef}
+          id={dialogId}
+          className="experience-popover"
+          role="dialog"
+          aria-labelledby={headingId}
+        >
           <div className="experience-popover-heading">
             <div>
               <p className="eyebrow">INTERACTION</p>
-              <strong>Feel, don’t distract.</strong>
+              <strong id={headingId}>Interaction settings</strong>
             </div>
             <Accessibility size={18} />
           </div>

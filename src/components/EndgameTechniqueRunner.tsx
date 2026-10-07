@@ -422,6 +422,7 @@ export function EndgameTechniqueRunner({
                         ? "active"
                         : ""
                     }
+                    aria-pressed={recognitionChoice === option.id}
                     onClick={() =>
                       setRecognitionChoice(
                         option.id,
@@ -442,6 +443,9 @@ export function EndgameTechniqueRunner({
                     ? "correct"
                     : "incorrect",
                 ].join(" ")}
+                role={recognitionCorrect ? "status" : "alert"}
+                aria-live={recognitionCorrect ? "polite" : "assertive"}
+                aria-atomic="true"
               >
                 <BrainCircuit
                   size={16}
@@ -498,7 +502,7 @@ export function EndgameTechniqueRunner({
           <h2>{position.title}</h2>
           <p>{position.objective}</p>
         </div>
-        <div className="endgame-status-chip">
+        <div className="endgame-status-chip" role="status" aria-live="polite">
           {thinking ? (
             <LoaderCircle
               className="spin"
@@ -607,7 +611,7 @@ export function EndgameTechniqueRunner({
           </div>
 
           {visibleCue && (
-            <div className="hint-card">
+            <div className="hint-card" role="status" aria-live="polite">
               <Lightbulb
                 size={16}
               />
@@ -653,7 +657,7 @@ export function EndgameTechniqueRunner({
           </div>
 
           {engineError && (
-            <div className="analysis-error">
+            <div className="analysis-error" role="alert">
               <strong>
                 Resistance unavailable
               </strong>
@@ -690,6 +694,9 @@ export function EndgameTechniqueRunner({
                   ? "success"
                   : "repair",
               ].join(" ")}
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
             >
               <div>
                 {score.success ? (

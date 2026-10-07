@@ -70,6 +70,7 @@ The default experience should answer one question: **what should I train now?**
 - P49 Motion & Tactile Interaction with chess-state piece/impact motion, route view transitions, dedicated castle/promotion/reveal haptics, restrained solution/analysis reveals, reduced-motion enforcement and a CI motion audit
 - P50 Mobile Native Defect Pass with shared safe-area shell tokens, narrow-phone full-bleed fixes, constrained-landscape nav suppression, a 568–667px Review fallback, and CI mobile-layout auditing
 - P51 Large-Desktop Composition with bounded 1536px+ workspaces, explicit 1920px+ ultrawide layouts, controlled board growth, readable text measures and CI desktop-layout auditing
+- P52 Accessibility Requalification with skip navigation, route focus restoration, richer board/screen-reader semantics, modal focus management, status/progress/current-state ARIA, forced-colors support and CI accessibility auditing
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2530,6 +2531,33 @@ A new `npm run desktop:audit` gate verifies large-screen breakpoints, ultrawide 
 
 The policy is documented in `docs/P51_LARGE_DESKTOP.md`.
 
+## Accessibility Requalification
+
+P52 requalifies the rebuilt product after the routing, responsive, material and motion migrations.
+
+The shell now includes a keyboard-visible **Skip to main content** link. Route changes update the document title and move programmatic focus to the main landmark so keyboard and screen-reader users do not remain stranded in the previous page's navigation control.
+
+The chessboard retains its roving-tabindex keyboard model and now exposes richer non-visual state:
+
+- board orientation and keyboard instructions;
+- selected square and legal move count;
+- legal move vs legal capture targets;
+- king-in-check state;
+- last-move origin and destination;
+- capture, castling and promotion result state;
+- focus/good/danger/hint square meaning;
+- instructional arrow origin/destination.
+
+Dynamic training/review states now use explicit status, alert, progressbar, pressed/current and timer semantics instead of relying on color or animation alone.
+
+The coached Review modal now traps focus, closes on Escape and restores focus to the invoking control. The interaction-settings dialog exposes proper ownership/label relationships and moves focus into its controls when opened.
+
+P52 also adds a final accessibility CSS layer with persistent focus-visible treatment, higher-contrast support and Windows forced-colors behavior.
+
+A new `npm run a11y:audit` Quality gate verifies the accessibility contract alongside the existing design, motion, mobile and desktop audits.
+
+The complete scope and remaining manual-assistive-technology qualification boundary are documented in `docs/P52_ACCESSIBILITY.md`.
+
 ## Next phase
 
-P52 — Accessibility Requalification.
+P53 — Theme & Board Customization.

@@ -723,7 +723,33 @@ Delivered:
 
 ### P52 — Accessibility Requalification
 
+**Status:** implemented.
+
 Re-test keyboard navigation, screen readers, focus, reduced motion, touch targets and color-independent board semantics after the structural migration.
+
+Delivered:
+
+- added a keyboard-visible skip link to the main content landmark;
+- route changes now update the document title and restore programmatic focus to the main landmark without forcing scroll;
+- the interaction-settings popover now exposes dialog ownership via `aria-controls`, `aria-haspopup="dialog"` and `aria-labelledby`, and moves focus into its controls when opened;
+- coached Review modal now traps Tab, closes on Escape and restores focus to the invoking control;
+- board instructions are explicitly associated with the chess grid;
+- board live announcements now expose selection, legal-target count, check, last-move origin/destination, capture, promotion, castling and instructional arrows;
+- board square accessible names now include legal capture/move target, check, last-move and semantic highlight information rather than relying on color;
+- board grid exposes row/column counts while preserving roving-tabindex keyboard navigation;
+- lesson, puzzle, opening, endgame, calculation and assessment feedback/results now use status/alert semantics where appropriate;
+- Endgame recognition and Review/Play selection controls expose pressed/current state programmatically;
+- Assessment and Review analysis progress expose progressbar semantics and numeric values;
+- Library favorites expose pressed state and workspace notation exposes the current move via `aria-current="step"`;
+- Game clocks expose timer labels without live-region countdown spam;
+- Lichess username input now has an accessible name and sync/error feedback is announced;
+- added final focus-ring protection for links and controls, including components whose legacy CSS still resets native outlines;
+- added `prefers-contrast: more` and Windows forced-colors handling for focus, board selection, legal targets and critical markers;
+- P52 retains the existing reduced-motion, 44px touch-target and safe-area contracts from P47–P50;
+- added `npm run a11y:audit` and made it part of the Quality workflow;
+- documented the qualification scope in `docs/P52_ACCESSIBILITY.md`.
+
+Automated/static requalification does not claim manual NVDA, JAWS, VoiceOver, TalkBack or switch-control testing where those assistive-technology environments were not available.
 
 ### P53 — Theme & Board Customization
 

@@ -386,7 +386,7 @@ function OpeningRecallTrainer({
                 )}
 
                 {showHint && (
-                  <div className="hint-card">
+                  <div className="hint-card" role="status" aria-live="polite">
                     <Lightbulb
                       size={18}
                     />
@@ -405,7 +405,7 @@ function OpeningRecallTrainer({
                 )}
 
                 {feedback && (
-                  <div className="lesson-feedback error">
+                  <div className="lesson-feedback error" role="alert" aria-atomic="true">
                     <span>
                       {feedback}
                     </span>
@@ -485,6 +485,9 @@ function OpeningRecallTrainer({
                         ? "lesson-feedback success"
                         : "lesson-feedback error"
                     }
+                    role={stage === "done" ? "status" : "alert"}
+                    aria-live={stage === "done" ? "polite" : "assertive"}
+                    aria-atomic="true"
                   >
                     {stage === "done" && (
                       <Sparkles
