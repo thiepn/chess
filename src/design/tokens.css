@@ -1,0 +1,83 @@
+/*
+ * P37 — THIEPN Chess visual architecture tokens.
+ *
+ * These are intentionally namespaced and do not alias the legacy P0–P36
+ * variables yet. P38+ migrates real page surfaces deliberately instead of
+ * repainting the old dashboard.
+ */
+
+:root {
+  /* Color — graphite / ivory */
+  --chess-color-bg-app: #0d0f10;
+  --chess-color-bg-workspace: #131516;
+  --chess-color-bg-raised: #191b1c;
+  --chess-color-bg-inset: #101213;
+  --chess-color-text-primary: #f0eee9;
+  --chess-color-text-secondary: #aba9a3;
+  --chess-color-text-muted: #747570;
+  --chess-color-separator: rgba(255, 255, 255, 0.08);
+  --chess-color-separator-strong: rgba(255, 255, 255, 0.13);
+
+  /* Functional chess semantics */
+  --chess-color-accent: #357bd8;
+  --chess-color-accent-soft: rgba(53, 123, 216, 0.16);
+  --chess-color-correct: #5fa77a;
+  --chess-color-error: #c86464;
+  --chess-color-concept: #c99c52;
+
+  /* Board target palette */
+  --chess-board-light: #d5cebd;
+  --chess-board-dark: #62665f;
+  --chess-board-frame: #171918;
+  --chess-board-coordinate-light: rgba(20, 22, 21, 0.5);
+  --chess-board-coordinate-dark: rgba(244, 241, 233, 0.48);
+
+  /* Typography */
+  --chess-font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --chess-font-editorial: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --chess-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --chess-text-xs: 0.75rem;
+  --chess-text-sm: 0.875rem;
+  --chess-text-md: 1rem;
+  --chess-text-lg: 1.125rem;
+  --chess-text-section: clamp(1.125rem, 1.5vw, 1.375rem);
+  --chess-text-title: clamp(1.375rem, 2vw, 1.75rem);
+  --chess-text-page: clamp(1.5rem, 2.4vw, 1.875rem);
+
+  /* Spacing */
+  --chess-space-1: 0.25rem;
+  --chess-space-2: 0.5rem;
+  --chess-space-3: 0.75rem;
+  --chess-space-4: 1rem;
+  --chess-space-5: 1.25rem;
+  --chess-space-6: 1.5rem;
+  --chess-space-8: 2rem;
+  --chess-space-10: 2.5rem;
+  --chess-space-12: 3rem;
+
+  /* Shape */
+  --chess-radius-control: 0.5rem;
+  --chess-radius-panel: 0.75rem;
+  --chess-radius-board: 0.625rem;
+  --chess-radius-pill: 999px;
+
+  /* Application shell targets */
+  --chess-topbar-height: 3.625rem;
+  --chess-mobile-nav-height: 3.75rem;
+  --chess-touch-min: 2.75rem;
+  --chess-touch-preferred: 3rem;
+
+  /* Motion */
+  --chess-motion-fast: 120ms;
+  --chess-motion-ui: 170ms;
+  --chess-motion-piece: 180ms;
+  --chess-motion-page: 150ms;
+  --chess-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Board-first desktop sizing targets */
+  --chess-board-max-train: 44rem;
+  --chess-board-max-review: 42rem;
+  --chess-context-width: 22rem;
+  --chess-rail-width: 11.25rem;
+}
