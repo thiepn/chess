@@ -13241,7 +13241,7 @@ summary:focus-visible,
 
   .immersive-training-sheet .lesson-button-row {
     position: sticky;
-    bottom: calc(-1 * max(22px, env(safe-area-inset-bottom)));
+    bottom: 0;
     z-index: 18;
     margin: 10px -2px 0;
     padding:
