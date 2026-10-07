@@ -209,12 +209,13 @@ export default function App() {
   const [previewIndex, setPreviewIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
+  const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [learnMode, setLearnMode] = useState<"curriculum" | "openings" | "model-games">("curriculum");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
-  const { route, navigatePage } = useAppRouter();
+  const { route, navigate, navigatePage } = useAppRouter();
   const page = route.page;
   const [lichessSyncing, setLichessSyncing] = useState(false);
   const lichessSyncInFlight = useRef(false);
@@ -273,10 +274,12 @@ export default function App() {
   const activeModelGame = activeModelGameId
     ? modelGameById[activeModelGameId]
     : undefined;
-  const dialogOpen = Boolean(
+  const trainingSessionOpen =
+    page === "train" && route.path.startsWith("/train/session/");
+  const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
-    active,
+    (active && activeSkill),
   );
   const activeCalculationPosition =
     active &&
@@ -427,81 +430,148 @@ export default function App() {
     setPreviewIndex(0);
   }, [previewIndex, session.activities.length]);
 
+  function trainingPath(id: string) {
+    return `/train/session/${encodeURIComponent(id)}`;
+  }
+
+  function closeTrainingRuntime(returnPath = trainingReturnPath) {
+    setActiveIndex(null);
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate(returnPath || "/train");
+  }
+
+  function openAdaptiveActivity(index: number) {
+    const activity = session.activities[index];
+    if (!activity) return;
+    setTrainingReturnPath("/train");
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    setActiveIndex(index);
+    navigate(trainingPath(activity.id));
+  }
+
+  function openManualActivity(activity: TrainingActivity) {
+    setTrainingReturnPath(route.path === "/train" ? "/train" : route.path);
+    setActiveIndex(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    setManualActivity(activity);
+    navigate(trainingPath(activity.id));
+  }
+
   useEffect(() => {
-    if (!dialogOpen) return;
+    if (!loaded || !trainingSessionOpen || runtimeReady) return;
 
-    const previousOverflow = document.body.style.overflow;
-    const returnFocus =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-
-    document.body.style.overflow = "hidden";
-
-    const backgroundRegions = [
-      document.querySelector(".app-topbar"),
-      document.querySelector(".main"),
-      document.querySelector(".mobile-nav"),
-    ].filter(
-      (node): node is HTMLElement =>
-        node instanceof HTMLElement,
-    );
-
-    for (const region of backgroundRegions) {
-      region.setAttribute("inert", "");
+    const stored = window.sessionStorage.getItem("chess:training-runtime-v1");
+    if (stored) {
+      try {
+        const snapshot = JSON.parse(stored) as {
+          path?: string;
+          mode?: SessionMode;
+          activeIndex?: number | null;
+          manualActivity?: TrainingActivity | null;
+          activeModelGameId?: string | null;
+          assessmentSession?: AssessmentSession | null;
+          trainingReturnPath?: string;
+        };
+        if (snapshot.path === route.path) {
+          if (snapshot.mode) setMode(snapshot.mode);
+          setActiveIndex(snapshot.activeIndex ?? null);
+          setManualActivity(snapshot.manualActivity ?? null);
+          setActiveModelGameId(snapshot.activeModelGameId ?? null);
+          setAssessmentSession(snapshot.assessmentSession ?? null);
+          setTrainingReturnPath(snapshot.trainingReturnPath ?? "/train");
+          return;
+        }
+      } catch {
+        window.sessionStorage.removeItem("chess:training-runtime-v1");
+      }
     }
 
-    window.requestAnimationFrame(() => {
-      const closeButton =
-        document.querySelector<HTMLButtonElement>(
-          ".training-overlay .close-button",
-        );
-      closeButton?.focus();
-    });
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      for (const region of backgroundRegions) {
-        region.removeAttribute("inert");
-      }
-      window.requestAnimationFrame(() => {
-        returnFocus?.focus();
-      });
-    };
-  }, [dialogOpen]);
-
-  useEffect(() => {
-    if (!dialogOpen) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented) return;
-
-      event.preventDefault();
-      if (assessmentSession) {
-        setAssessmentSession(null);
-        return;
-      }
-      if (activeModelGameId) {
-        setActiveModelGameId(null);
-        return;
-      }
-
-      setActiveIndex(null);
-      setManualActivity(null);
-    };
-
-    window.addEventListener("keydown", closeOnEscape);
-    return () =>
-      window.removeEventListener("keydown", closeOnEscape);
+    const encodedId = route.path.slice("/train/session/".length);
+    const routeId = decodeURIComponent(encodedId);
+    const adaptiveIndex = session.activities.findIndex(
+      (activity) => activity.id === routeId,
+    );
+    if (adaptiveIndex >= 0) {
+      setActiveIndex(adaptiveIndex);
+      return;
+    }
   }, [
-    dialogOpen,
+    active,
+    activeModelGame,
     assessmentSession,
-    activeModelGameId,
+    loaded,
+    route.path,
+    runtimeReady,
+    session.activities,
+    trainingReturnPath,
+    trainingSessionOpen,
   ]);
 
   useEffect(() => {
+    if (!trainingSessionOpen || !runtimeReady) return;
+    window.sessionStorage.setItem(
+      "chess:training-runtime-v1",
+      JSON.stringify({
+        path: route.path,
+        mode,
+        activeIndex,
+        manualActivity,
+        activeModelGameId,
+        assessmentSession,
+        trainingReturnPath,
+      }),
+    );
+  }, [
+    activeIndex,
+    activeModelGameId,
+    assessmentSession,
+    manualActivity,
+    mode,
+    route.path,
+    runtimeReady,
+    trainingReturnPath,
+    trainingSessionOpen,
+  ]);
+
+  useEffect(() => {
+    if (trainingSessionOpen) return;
+    if (!runtimeReady) return;
+    setActiveIndex(null);
+    setManualActivity(null);
+    setActiveModelGameId(null);
+    setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+  }, [runtimeReady, trainingSessionOpen]);
+
+  useEffect(() => {
+    if (!trainingSessionOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        target.closest(".chess-board")
+      ) {
+        return;
+      }
+      event.preventDefault();
+      closeTrainingRuntime();
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [trainingSessionOpen, route.path]);
+
+  useEffect(() => {
     const handleShortcut = (event: KeyboardEvent) => {
-      if (dialogOpen || event.defaultPrevented) return;
+      if (trainingSessionOpen || event.defaultPrevented) return;
       if (event.metaKey || event.ctrlKey || event.altKey) return;
 
       const target = event.target;
@@ -518,8 +588,7 @@ export default function App() {
         session.activities.length
       ) {
         event.preventDefault();
-        navigatePage("train");
-        setActiveIndex(0);
+        openAdaptiveActivity(0);
         emitExperienceEvent({ feedback: "navigate" });
       }
     };
@@ -527,7 +596,7 @@ export default function App() {
     window.addEventListener("keydown", handleShortcut);
     return () =>
       window.removeEventListener("keydown", handleShortcut);
-  }, [dialogOpen, session.activities.length]);
+  }, [trainingSessionOpen, session.activities.length]);
 
   const homeTrainingReason = !firstActivity
     ? "No adaptive activity is due right now. Open the course to choose the next concept."
@@ -1022,14 +1091,14 @@ export default function App() {
     });
 
     if (manualActivity) {
-      setManualActivity(null);
+      closeTrainingRuntime();
       return;
     }
 
     if (activeIndex !== null && activeIndex < session.activities.length - 1) {
-      setActiveIndex(activeIndex + 1);
+      openAdaptiveActivity(activeIndex + 1);
     } else {
-      setActiveIndex(null);
+      closeTrainingRuntime("/train");
     }
   }
 
@@ -1340,7 +1409,7 @@ export default function App() {
       .find(Boolean);
     if (!skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `mistake:${mistake.id}`,
       source: "game",
       skillIds: [skill.id],
@@ -1368,7 +1437,7 @@ export default function App() {
     const node = openingNodes[nodeId];
     if (!skill || !repertoire || !node?.preferredChildId) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `opening:${repertoireId}:${nodeId}`,
       source: "repertoire",
       skillIds: [skill.id],
@@ -1406,7 +1475,7 @@ export default function App() {
       return;
     }
 
-    setManualActivity({
+    openManualActivity({
       id: `opening-line:${repertoireId}:${nodeId}`,
       source: "repertoire",
       skillIds: [skill.id],
@@ -1438,9 +1507,12 @@ export default function App() {
 
   function startModelGame(gameId: string) {
     if (!modelGameById[gameId]) return;
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setAssessmentSession(null);
     setActiveModelGameId(gameId);
+    navigate(trainingPath(`model-game:${gameId}`));
   }
 
   function completeModelGameCheckpoint(
@@ -1635,7 +1707,8 @@ export default function App() {
     });
     setActiveModelGameId(null);
     setLearnMode("model-games");
-    navigatePage("learn");
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate(trainingReturnPath || "/learn");
   }
 
   function updateGameReviewReflection(
@@ -1790,7 +1863,7 @@ export default function App() {
     const skill = training ? skillById[training.skillId] : undefined;
     if (!study || !training || !skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `library:${study.id}`,
       source: "library",
       skillIds: [skill.id],
@@ -1811,7 +1884,7 @@ export default function App() {
     const skill = skillById[skillId];
     if (!skill) return;
 
-    setManualActivity({
+    openManualActivity({
       id: `manual:${skillId}`,
       source: "curriculum",
       skillIds: [skillId],
@@ -1854,7 +1927,7 @@ export default function App() {
                   ? "microReview"
                   : "conceptLesson";
 
-    setManualActivity({
+    openManualActivity({
       id: `practice:${skillId}`,
       source: "focus",
       skillIds: [skillId],
@@ -1936,7 +2009,6 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      navigatePage("train");
       return;
     }
 
@@ -1963,7 +2035,6 @@ export default function App() {
         prescription.id,
         action.id,
       );
-      navigatePage("train");
       return;
     }
 
@@ -1983,21 +2054,27 @@ export default function App() {
   }
 
   function startPlacementAssessment() {
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setActiveModelGameId(null);
     setAssessmentSession(buildPlacementAssessment());
+    navigate(trainingPath("assessment:placement"));
   }
 
   function startStageCheckpoint(stageId: CurriculumStageId) {
     if (stageGates[stageId].status === "locked") return;
+    setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
+    setActiveModelGameId(null);
     setAssessmentSession(
       buildStageCheckpoint(
         stageId,
         checkpointAttemptCount(state, stageId),
       ),
     );
+    navigate(trainingPath(`assessment:checkpoint:${stageId}`));
   }
 
   function completeAssessment(results: AssessmentItemResult[]) {
@@ -2011,7 +2088,10 @@ export default function App() {
     );
 
     setState(applied.state);
+    const returnPath = trainingReturnPath;
     setAssessmentSession(null);
+    window.sessionStorage.removeItem("chess:training-runtime-v1");
+    navigate(returnPath || "/train");
 
     emitExperienceEvent({
       feedback:
@@ -2175,7 +2255,7 @@ export default function App() {
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className={dialogOpen ? "app-shell app-shell-v2 training-open" : "app-shell app-shell-v2"}>
+      <div className={trainingSessionOpen ? "app-shell app-shell-v2 training-session-open" : "app-shell app-shell-v2"}>
         <header className="app-topbar">
           <button
             className="app-brand"
@@ -2242,6 +2322,227 @@ export default function App() {
         <main className="main app-main">
         <Suspense fallback={<RouteLoading />}>
         {page === "train" ? (
+          trainingSessionOpen ? (
+            <section className="train-runtime-page" aria-label="Training workspace">
+              <header className="train-runtime-header">
+                <button
+                  type="button"
+                  className="train-runtime-back"
+                  onClick={() => closeTrainingRuntime()}
+                  aria-label="Leave training workspace"
+                >
+                  <span aria-hidden="true">←</span>
+                  <span>Train</span>
+                </button>
+
+                <div className="train-runtime-title">
+                  <span>
+                    {assessmentSession
+                      ? assessmentSession.kind === "placement"
+                        ? "Placement diagnostic"
+                        : "Stage checkpoint"
+                      : activeModelGame
+                        ? "Model game"
+                        : active
+                          ? reasonLabel(active)
+                          : "Training"}
+                  </span>
+                  <strong>
+                    {assessmentSession
+                      ? assessmentSession.kind === "placement"
+                        ? "Course placement"
+                        : assessmentSession.stageId
+                          ? `${curriculumStages.find((stage) => stage.id === assessmentSession.stageId)?.title ?? "Stage"} checkpoint`
+                          : "Stage checkpoint"
+                      : activeModelGame
+                        ? activeModelGame.title
+                        : active?.title ?? "Training session"}
+                  </strong>
+                </div>
+
+                <div className="train-runtime-meta">
+                  {active && activeSkill ? (
+                    <>
+                      <span>{domainLabels[activeSkill.domain]}</span>
+                      <span>{active.estimatedMinutes} min</span>
+                      <span>
+                        {manualActivity
+                          ? "Focused"
+                          : `${(activeIndex ?? 0) + 1} / ${session.activities.length}`}
+                      </span>
+                    </>
+                  ) : activeModelGame ? (
+                    <span>Guided study</span>
+                  ) : assessmentSession ? (
+                    <span>Assessment</span>
+                  ) : null}
+                </div>
+              </header>
+
+              <div className="train-runtime-progress" aria-hidden="true">
+                <span
+                  style={{
+                    width:
+                      active && !manualActivity
+                        ? `${(((activeIndex ?? 0) + 1) / Math.max(1, session.activities.length)) * 100}%`
+                        : runtimeReady
+                          ? "100%"
+                          : "0%",
+                  }}
+                />
+              </div>
+
+              <div
+                className={[
+                  "train-runtime-body",
+                  active && active.activityType !== "engineGame"
+                    ? "board-first-sheet"
+                    : "",
+                  active?.activityType === "engineGame"
+                    ? "runtime-game adaptive-game-sheet"
+                    : "",
+                  active?.activityType === "calculation"
+                    ? "runtime-calculation calculation-sheet"
+                    : "",
+                  active?.activityType === "endgameDrill" ||
+                  active?.activityType === "conversionChallenge"
+                    ? "runtime-endgame endgame-technique-sheet"
+                    : "",
+                  assessmentSession
+                    ? "runtime-assessment assessment-sheet"
+                    : "",
+                  activeModelGame
+                    ? "runtime-model-game model-game-sheet"
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {assessmentSession ? (
+                  <AssessmentRunner
+                    session={assessmentSession}
+                    onComplete={completeAssessment}
+                    onCancel={() => closeTrainingRuntime()}
+                  />
+                ) : activeModelGame ? (
+                  <ModelGameRunner
+                    game={activeModelGame}
+                    progress={state.modelGameProgress?.[activeModelGame.id]}
+                    savedStudyIds={(state.savedStudies ?? []).map((study) => study.id)}
+                    onCheckpointResult={(result) =>
+                      completeModelGameCheckpoint(activeModelGame.id, result)
+                    }
+                    onSaveCheckpoint={saveModelGameCheckpoint}
+                    onComplete={completeModelGame}
+                    onExit={() => closeTrainingRuntime()}
+                  />
+                ) : active && activeSkill ? (
+                  <>
+                    {active.adaptivePolicy && (
+                      <div className="train-runtime-policy">
+                        <BrainCircuit size={16} />
+                        <div>
+                          <strong>{active.adaptivePolicy.reason}</strong>
+                          <span>
+                            {active.adaptivePolicy.challenge === "recovery"
+                              ? "Extra support today"
+                              : active.adaptivePolicy.challenge === "supported"
+                                ? "Supported practice"
+                                : active.adaptivePolicy.challenge === "stretch"
+                                  ? "Harder test"
+                                  : active.adaptivePolicy.challenge === "maintenance"
+                                    ? "Keep it sharp"
+                                    : "Normal challenge"}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="train-runtime-runner">
+                      {active.activityType === "engineGame" && activeScenario ? (
+                        <GameArena
+                          initialFen={activeScenario.fen}
+                          playerColor={activeScenario.playerColor}
+                          profile={activeGameProfile}
+                          scenario={activeScenario}
+                          onExit={() => closeTrainingRuntime()}
+                          onFinished={handlePlayFinished}
+                          exitLabel="Finish activity"
+                        />
+                      ) : active.activityType === "savedStudy" && activeStudy ? (
+                        <SavedStudyTrainer
+                          study={activeStudy}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "openingRecall" &&
+                      activeOpeningNode &&
+                      activeRepertoire ? (
+                        <OpeningTrainer
+                          repertoire={activeRepertoire}
+                          node={activeOpeningNode}
+                          mode={active.openingTrainingMode}
+                          lineNodeId={active.openingLineNodeId}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "personalMistake" && activeMistake ? (
+                        <PersonalMistakeRunner
+                          mistake={activeMistake}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "calculation" &&
+                      activeCalculationPosition ? (
+                        <CalculationRunner
+                          activity={active}
+                          skill={activeSkill}
+                          position={activeCalculationPosition}
+                          onComplete={completeActivity}
+                        />
+                      ) : (active.activityType === "endgameDrill" ||
+                            active.activityType === "conversionChallenge") &&
+                          activeEndgamePosition ? (
+                        <EndgameTechniqueRunner
+                          activity={active}
+                          skill={activeSkill}
+                          position={activeEndgamePosition}
+                          delayedRetention={activeEndgameDelayedRetention}
+                          onComplete={completeActivity}
+                        />
+                      ) : active.activityType === "themedPuzzle" ||
+                      active.activityType === "mixedPuzzle" ? (
+                        <PuzzleRunner
+                          activity={active}
+                          skill={activeSkill}
+                          mastery={state.mastery[activeSkill.id]}
+                          history={state.puzzleHistory}
+                          onComplete={completeActivity}
+                        />
+                      ) : (
+                        <LessonRunner
+                          activity={active}
+                          skill={activeSkill}
+                          onComplete={completeActivity}
+                        />
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="train-runtime-recovery" aria-live="polite">
+                    <strong>Training session unavailable</strong>
+                    <p>
+                      This session could not be restored. Return to Train and start it again.
+                    </p>
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() => closeTrainingRuntime("/train")}
+                    >
+                      Back to Train
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+          ) : (
           <section className="train-room" aria-labelledby="train-room-title">
             <aside className="train-room-rail" aria-label="Training session">
               <div className="train-room-rail-heading">
@@ -2361,7 +2662,7 @@ export default function App() {
                 <button
                   className="primary train-room-start"
                   type="button"
-                  onClick={() => setActiveIndex(boundedPreviewIndex)}
+                  onClick={() => openAdaptiveActivity(boundedPreviewIndex)}
                   disabled={!previewActivity}
                 >
                   Start training
@@ -2412,6 +2713,7 @@ export default function App() {
               </div>
             </aside>
           </section>
+          )
         ) : page === "learn" ? (
           learnMode === "openings" ? (
             <OpeningsView
@@ -2493,7 +2795,6 @@ export default function App() {
             onBack={() => navigatePage("train")}
             onTrainSkill={(skillId) => {
               startManualPractice(skillId);
-              navigatePage("train");
             }}
             onRunPrescriptionAction={runPrescriptionAction}
             onUpdateTrainingPlan={updateTrainingPlan}
@@ -2528,7 +2829,7 @@ export default function App() {
         </Suspense>
       </main>
 
-      {!dialogOpen && (
+      {!trainingSessionOpen && (
         <nav className="mobile-nav" aria-label="Primary navigation">
           {navItems.map(({ id, label, Icon }) => (
             <button
@@ -2550,219 +2851,6 @@ export default function App() {
         </nav>
       )}
 
-      {assessmentSession && (
-        <div
-          className="training-overlay assessment-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={
-            assessmentSession.kind === "placement"
-              ? "Placement diagnostic"
-              : "Stage checkpoint"
-          }
-        >
-          <section className="training-sheet assessment-sheet immersive-training-sheet">
-            <button
-              className="close-button"
-              type="button"
-              onClick={() => setAssessmentSession(null)}
-              aria-label="Close assessment"
-            >
-              ×
-            </button>
-            <AssessmentRunner
-              session={assessmentSession}
-              onComplete={completeAssessment}
-              onCancel={() => setAssessmentSession(null)}
-            />
-          </section>
-        </div>
-      )}
-
-      {activeModelGame && (
-        <div
-          className="training-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Model game: ${activeModelGame.title}`}
-        >
-          <section className="training-sheet model-game-sheet immersive-training-sheet">
-            <button
-              className="close-button"
-              type="button"
-              onClick={() => setActiveModelGameId(null)}
-              aria-label="Close model game"
-            >
-              ×
-            </button>
-            <ModelGameRunner
-              game={activeModelGame}
-              progress={state.modelGameProgress?.[activeModelGame.id]}
-              savedStudyIds={(state.savedStudies ?? []).map((study) => study.id)}
-              onCheckpointResult={(result) =>
-                completeModelGameCheckpoint(activeModelGame.id, result)
-              }
-              onSaveCheckpoint={saveModelGameCheckpoint}
-              onComplete={completeModelGame}
-              onExit={() => setActiveModelGameId(null)}
-            />
-          </section>
-        </div>
-      )}
-
-      {active && activeSkill && (
-        <div
-          className="training-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${active.title} training activity`}
-        >
-          <section
-            className={
-              active.activityType === "engineGame"
-                ? "training-sheet adaptive-game-sheet immersive-training-sheet board-first-sheet"
-                : active.activityType === "calculation"
-                  ? "training-sheet calculation-sheet immersive-training-sheet board-first-sheet"
-                  : active.activityType === "endgameDrill" ||
-                      active.activityType === "conversionChallenge"
-                    ? "training-sheet endgame-technique-sheet immersive-training-sheet board-first-sheet"
-                    : "training-sheet immersive-training-sheet board-first-sheet"
-            }
-          >
-            <div className="training-progress">
-              <span
-                style={{
-                  width: manualActivity
-                    ? "100%"
-                    : `${(((activeIndex ?? 0) + 1) / Math.max(1, session.activities.length)) * 100}%`,
-                }}
-              />
-            </div>
-            <button
-              className="close-button"
-              onClick={() => {
-                setActiveIndex(null);
-                setManualActivity(null);
-              }}
-              aria-label="Close session"
-            >
-              ×
-            </button>
-            <div className="lesson-shell-heading">
-              <div>
-                <p className="eyebrow">{reasonLabel(active)}</p>
-                <strong>{active.title}</strong>
-              </div>
-              <div className="lesson-context">
-                <span>{domainLabels[activeSkill.domain]}</span>
-                <span>{active.estimatedMinutes} min</span>
-                <span>Difficulty {activeSkill.difficulty}/5</span>
-                {active.adaptivePolicy && (
-                  <span className="adaptive-challenge-chip">
-                    {active.adaptivePolicy.challenge === "recovery"
-                      ? "Extra support"
-                      : active.adaptivePolicy.challenge === "supported"
-                        ? "Supported"
-                        : active.adaptivePolicy.challenge === "stretch"
-                          ? "Harder"
-                          : active.adaptivePolicy.challenge === "maintenance"
-                            ? "Keep sharp"
-                            : "Normal"}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {active.adaptivePolicy && (
-              <div className="adaptive-policy-strip">
-                <BrainCircuit size={16} />
-                <div>
-                  <strong>{active.adaptivePolicy.reason}</strong>
-                  <span>
-                    {active.adaptivePolicy.challenge === "recovery"
-                      ? "Extra support today"
-                      : active.adaptivePolicy.challenge === "supported"
-                        ? "Supported practice"
-                        : active.adaptivePolicy.challenge === "stretch"
-                          ? "Harder test"
-                          : active.adaptivePolicy.challenge === "maintenance"
-                            ? "Keep it sharp"
-                            : "Normal challenge"}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {active.activityType === "engineGame" && activeScenario ? (
-              <GameArena
-                initialFen={activeScenario.fen}
-                playerColor={activeScenario.playerColor}
-                profile={activeGameProfile}
-                scenario={activeScenario}
-                onExit={() => {
-                  setActiveIndex(null);
-                  setManualActivity(null);
-                }}
-                onFinished={handlePlayFinished}
-                exitLabel="Finish activity"
-              />
-            ) : active.activityType === "savedStudy" && activeStudy ? (
-              <SavedStudyTrainer
-                study={activeStudy}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "openingRecall" &&
-            activeOpeningNode &&
-            activeRepertoire ? (
-              <OpeningTrainer
-                repertoire={activeRepertoire}
-                node={activeOpeningNode}
-                mode={active.openingTrainingMode}
-                lineNodeId={active.openingLineNodeId}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "personalMistake" && activeMistake ? (
-              <PersonalMistakeRunner
-                mistake={activeMistake}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "calculation" &&
-            activeCalculationPosition ? (
-              <CalculationRunner
-                activity={active}
-                skill={activeSkill}
-                position={activeCalculationPosition}
-                onComplete={completeActivity}
-              />
-            ) : (active.activityType === "endgameDrill" ||
-                  active.activityType === "conversionChallenge") &&
-                activeEndgamePosition ? (
-              <EndgameTechniqueRunner
-                activity={active}
-                skill={activeSkill}
-                position={activeEndgamePosition}
-                delayedRetention={activeEndgameDelayedRetention}
-                onComplete={completeActivity}
-              />
-            ) : active.activityType === "themedPuzzle" ||
-            active.activityType === "mixedPuzzle" ? (
-              <PuzzleRunner
-                activity={active}
-                skill={activeSkill}
-                mastery={state.mastery[activeSkill.id]}
-                history={state.puzzleHistory}
-                onComplete={completeActivity}
-              />
-            ) : (
-              <LessonRunner
-                activity={active}
-                skill={activeSkill}
-                onComplete={completeActivity}
-              />
-            )}
-          </section>
-        </div>
-      )}
       </div>
     </ExperienceProvider>
   );

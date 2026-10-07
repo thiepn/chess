@@ -59,6 +59,7 @@ The default experience should answer one question: **what should I train now?**
 - P38 Real Routing & App Shell with URL-backed Train/Learn/Play/Review/Library pages, History back/forward synchronization, GitHub Pages deep-link restoration, a compact desktop top bar, five-destination mobile navigation, and removal of the permanent SaaS sidebar
 - P39 Board Design System 2.0 with custom SVG chess pieces, ivory/graphite board materials, standardized chess-state semantics, move-type motion, orientation transitions, and preserved keyboard/screen-reader board behavior
 - P40 Train Page Reconstruction with a real training-room layout, selectable adaptive session rail, dominant board preview, contextual coach rail, compact session facts, and removal of the Train hero/dashboard card stack
+- P41 Train Runtime Migration with real `/train/session/:id` workspaces, modal-host removal, refresh-restorable runtime state, routed adaptive progression, and return-to-origin flows for focused training
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2232,6 +2233,29 @@ On phones the queue becomes a horizontal strip, the chessboard occupies the main
 
 P40 deliberately preserves the existing P36 training runners as compatibility overlays. P41 is responsible for moving lessons, puzzles, calculation, endgames, opening recall, mistake repair, saved studies and assessments into the route-level training workspace.
 
+## Train Runtime Migration
+
+P41 removes the old modal training host.
+
+Training activities now run on genuine session pages at `/train/session/:id`. The mature runner components are reused inside a route-level workspace instead of being rewritten:
+
+- guided lessons;
+- themed and mixed puzzles;
+- calculation;
+- endgame technique and conversion;
+- opening recall and line rehearsal;
+- personal mistake repair;
+- saved-study recall;
+- adaptive engine-game activities;
+- placement and stage-checkpoint assessments;
+- model-game study.
+
+Adaptive sessions advance by navigating to the next session URL. Focused practice launched from Learn, Review, Library or Progress remembers its origin and returns there when the activity finishes or is cancelled.
+
+The active runtime is stored only as a small session-scoped snapshot. Refreshing an active training URL restores the runner when possible; ordinary adaptive session IDs can also be recovered from the freshly composed session.
+
+The P36 focus/inert dialog machinery is no longer required for training because the training surface is now the page itself. Chessboard keyboard navigation and runner-level accessibility behavior remain unchanged.
+
 ## Next phase
 
-P41 — Train Runtime Migration.
+P42 — Learn Architecture Redesign.

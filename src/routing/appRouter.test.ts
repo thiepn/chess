@@ -11,6 +11,10 @@ describe("P38 app routing", () => {
   });
 
   it("resolves primary and nested route families by page", () => {
+    expect(resolveAppRoute("/train/session/adaptive%3Atactics")).toMatchObject({
+      page: "train",
+      path: "/train/session/adaptive%3Atactics",
+    });
     expect(resolveAppRoute("/learn")).toMatchObject({ page: "learn" });
     expect(resolveAppRoute("/learn/tactics/pins")).toMatchObject({
       page: "learn",

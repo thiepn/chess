@@ -470,7 +470,24 @@ Delivered:
 
 ### P41 — Train Runtime Migration
 
+**Status:** implemented.
+
 Move lessons, puzzles, calculation, endgames, opening recall, personal mistakes, saved studies and assessments into the route-level Train workspace.
+
+Delivered:
+
+- `/train/session/:id` is now the real host for training activity runtimes;
+- removed the legacy full-screen `training-overlay` / modal host from App;
+- migrated LessonRunner, PuzzleRunner, CalculationRunner, EndgameTechniqueRunner, OpeningTrainer, PersonalMistakeRunner and SavedStudyTrainer into the route-level workspace;
+- migrated placement and stage-checkpoint AssessmentRunner into the same page architecture;
+- migrated ModelGameRunner out of its modal host as well;
+- adaptive-session completion advances to the next queued activity by changing the session URL;
+- focused/manual training returns to the page that launched it (Learn, Review, Library, Progress or Train);
+- cancellation/escape exits through route navigation rather than dialog teardown;
+- training runtime state is session-scoped and refresh-restorable;
+- direct adaptive session URLs can recover the matching activity from the current composed session;
+- mobile primary navigation hides during an active training workspace while the real page remains browser-history aware;
+- retained existing learning, Stockfish, scoring, persistence and accessibility logic rather than rewriting mature runners.
 
 ### P42 — Learn Architecture Redesign
 
