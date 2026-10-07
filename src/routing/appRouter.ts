@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import {
   defaultAppPath,
   primaryAppPages,
@@ -106,6 +107,26 @@ function restoreStaticHostRedirect() {
   );
 }
 
+type ViewTransitionCapableDocument = Document & {
+  startViewTransition?: (update: () => void) => {
+    finished: Promise<void>;
+  };
+};
+
+function commitRouteUpdate(update: () => void) {
+  const documentWithTransitions = document as ViewTransitionCapableDocument;
+  const reduced = document.documentElement.dataset.motion === "reduced";
+
+  if (!reduced && documentWithTransitions.startViewTransition) {
+    documentWithTransitions.startViewTransition(() => {
+      flushSync(update);
+    });
+    return;
+  }
+
+  update();
+}
+
 function readBrowserRoute() {
   restoreStaticHostRedirect();
   const route = resolveAppRoute(stripBase(window.location.pathname));
@@ -129,7 +150,7 @@ export function useAppRouter() {
 
   useEffect(() => {
     const onPopState = () => {
-      setRoute(readBrowserRoute());
+      commitRouteUpdate(() => setRoute(readBrowserRoute()));
       window.scrollTo({ top: 0, behavior: "auto" });
     };
 
@@ -149,7 +170,7 @@ export function useAppRouter() {
       const target = next.isFallback ? defaultAppPath : next.path;
       const method = options?.replace ? "replaceState" : "pushState";
       window.history[method](null, "", browserPath(target));
-      setRoute(resolveAppRoute(target));
+      commitRouteUpdate(() => setRoute(resolveAppRoute(target)));
       if (!options?.preserveScroll) {
         window.scrollTo({ top: 0, behavior: "auto" });
       }
