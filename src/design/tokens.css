@@ -69,6 +69,8 @@
   --chess-mobile-topbar-safe-height: calc(var(--chess-mobile-topbar-base-height) + env(safe-area-inset-top));
   --chess-mobile-nav-safe-height: calc(var(--chess-mobile-nav-height) + env(safe-area-inset-bottom));
   --chess-native-gutter: clamp(0.625rem, 2.4vw, 1.125rem);
+  --chess-native-inline-start: max(var(--chess-native-gutter), env(safe-area-inset-left));
+  --chess-native-inline-end: max(var(--chess-native-gutter), env(safe-area-inset-right));
   --chess-touch-min: 2.75rem;
   --chess-touch-preferred: 3rem;
 
