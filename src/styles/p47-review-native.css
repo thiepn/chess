@@ -58,8 +58,10 @@
     position: sticky;
     top: var(--chess-mobile-topbar-safe-height);
     z-index: 16;
-    margin-inline: calc(var(--chess-native-gutter) * -1);
-    padding-inline: var(--chess-native-gutter);
+    margin-left: calc(var(--chess-native-inline-start) * -1);
+    margin-right: calc(var(--chess-native-inline-end) * -1);
+    padding-left: var(--chess-native-inline-start);
+    padding-right: var(--chess-native-inline-end);
     background: rgba(13,15,16,.97);
     backdrop-filter: blur(14px);
   }
@@ -140,7 +142,7 @@
 
 @media (max-width: 720px) and (orientation: landscape) and (max-height: 650px) {
   .review-workspace-v2 {
-    grid-template-columns: minmax(260px, 54vw) minmax(220px, 1fr);
+    grid-template-columns: minmax(250px, 50vw) minmax(220px, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
     gap: 8px 10px;
   }
@@ -152,7 +154,7 @@
   }
 
   .review-board-v2 .chess-board-wrap {
-    width: min(52vw, calc(100dvh - 82px));
+    width: min(48vw, calc(100dvh - 82px));
   }
 
   .review-notation-v2 {
