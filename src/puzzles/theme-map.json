@@ -16,7 +16,8 @@
   "defensiveMove": [
     "defense.threats",
     "defense.prophylaxis",
-    "defense.exchange-attackers"
+    "defense.exchange-attackers",
+    "tactics.defensive-resources"
   ],
   "mate": [
     "rules.mate",
@@ -28,7 +29,8 @@
   ],
   "mateIn2": [
     "attack.mating-net",
-    "calculation.forcing-lines"
+    "calculation.forcing-lines",
+    "tactics.combinations"
   ],
   "capturingDefender": [
     "fundamentals.defended",
@@ -40,27 +42,32 @@
   ],
   "doubleCheck": [
     "tactics.discovered",
-    "calculation.forcing-lines"
+    "calculation.forcing-lines",
+    "tactics.combinations"
   ],
   "attraction": [
     "tactics.decoy"
   ],
   "deflection": [
     "tactics.deflection",
-    "tactics.overload"
+    "tactics.overload",
+    "tactics.combinations"
   ],
   "clearance": [
-    "tactics.clearance"
+    "tactics.clearance",
+    "tactics.combinations"
   ],
   "overloadedPiece": [
-    "tactics.overload"
+    "tactics.overload",
+    "tactics.combinations"
   ],
   "backRankMate": [
     "tactics.back-rank",
     "attack.mating-net"
   ],
   "sacrifice": [
-    "attack.sacrifice"
+    "attack.sacrifice",
+    "tactics.combinations"
   ],
   "quietMove": [
     "calculation.quiet",
@@ -139,7 +146,9 @@
     "attack.defenders"
   ],
   "intermezzo": [
-    "calculation.forcing-lines"
+    "calculation.forcing-lines",
+    "tactics.combinations",
+    "tactics.defensive-resources"
   ],
   "zugzwang": [
     "endgames.opposition",
