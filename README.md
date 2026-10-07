@@ -57,6 +57,7 @@ The default experience should answer one question: **what should I train now?**
 - P36 Premium UX, Mobile & Delight Pass with immersive board-first training workspaces, full-screen mobile training, landscape board/instruction layouts, roving-keyboard chessboard navigation, focus-safe dialogs, 48px coarse-pointer controls, reduced-motion compatibility, one-key recommended training, long-page rendering containment, and CI-enforced production asset budgets
 - P37 Visual Architecture Lock with the authoritative non-SaaS chess design contract, namespaced graphite/ivory design tokens, route-level page architecture, Train-as-default navigation model, explicit modal/sidebar/hero constraints, and regression-tested visual architecture invariants
 - P38 Real Routing & App Shell with URL-backed Train/Learn/Play/Review/Library pages, History back/forward synchronization, GitHub Pages deep-link restoration, a compact desktop top bar, five-destination mobile navigation, and removal of the permanent SaaS sidebar
+- P39 Board Design System 2.0 with custom SVG chess pieces, ivory/graphite board materials, standardized chess-state semantics, move-type motion, orientation transitions, and preserved keyboard/screen-reader board behavior
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2199,6 +2200,18 @@ Desktop now uses a compact top application bar instead of the previous permanent
 
 P38 intentionally stops at the shell boundary: the existing P36 activity dialogs remain functional compatibility runners until P40–P41 replace the Train page and move those runtimes into route-level workspaces. This avoids mixing routing migration with the much larger training-surface reconstruction.
 
+## Board Design System 2.0
+
+P39 replaces the last platform-dependent chessboard visuals with a first-class board identity.
+
+The board no longer renders Unicode chess characters. All six piece types now use a custom SVG family with one geometry system for both colors, so pieces remain visually consistent across Android, iOS, Windows, Linux and macOS.
+
+The default board now uses the locked P37 warm-ivory / graphite palette. Selection and last-move state use restrained blue, teaching/candidate state uses muted gold, successful instructional state uses green, and danger/check state uses red. Check is shown with a perimeter cue rather than a bright full-square flood.
+
+Move feedback now distinguishes ordinary movement, captures, promotions, castling and board-orientation changes. Reduced-motion mode disables the added motion.
+
+P36 accessibility remains authoritative: keyboard square navigation, Enter/Space activation, square labels, legal-target announcements and check announcements all remain in the same board component.
+
 ## Next phase
 
-P39 — Board Design System 2.0.
+P40 — Train Page Reconstruction.
