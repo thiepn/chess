@@ -123,7 +123,7 @@ Use shadows sparingly. The chessboard may have subtle physical depth; ordinary l
 
 ## 8. Board contract
 
-P39 will replace the legacy visual board system. The target behavior is already locked:
+**P39 implementation status: complete.** The board now uses the locked visual system:
 
 - warm ivory / graphite default squares
 - proper SVG chess pieces; no Unicode piece glyphs in the finished design
