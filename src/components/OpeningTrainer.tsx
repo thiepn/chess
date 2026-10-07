@@ -3,7 +3,7 @@ import {
   GitBranch,
   Lightbulb,
   RotateCcw,
-  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { Square } from "chess.js";
