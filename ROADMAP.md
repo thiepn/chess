@@ -429,7 +429,24 @@ Compatibility boundary:
 
 ### P39 — Board Design System 2.0
 
+**Status:** implemented.
+
 Replace Unicode pieces with a proper SVG set, migrate to the locked ivory/graphite board palette, standardize move/check/teaching semantics and preserve P36 keyboard/screen-reader behavior.
+
+Delivered:
+
+- custom deterministic SVG Staunton-inspired piece family for king, queen, rook, bishop, knight and pawn;
+- identical geometry across platforms instead of operating-system Unicode chess glyphs;
+- warm ivory / graphite board palette from the P37 token contract;
+- restrained integrated coordinates;
+- blue selection and last-move semantics;
+- green correct, gold teaching/hint and red danger/check semantics;
+- legal-move dot and capture-ring targets;
+- red perimeter check cue instead of flooding the king square;
+- distinct move, capture, promotion, castling and orientation-flip motion;
+- reduced-motion suppression for all new animation;
+- retained roving keyboard navigation, square announcements, legal-target counts and check announcements;
+- regression coverage ensuring SVG pieces replace Unicode glyph output.
 
 ### P40 — Train Page Reconstruction
 
