@@ -118,7 +118,7 @@ export function LearnView({
       <header className="section-hero curriculum-hero">
         <div>
           <p className="eyebrow">GUIDED CURRICULUM</p>
-          <h1>From first move to practical chess.</h1>
+          <h1>From first move to complex positions.</h1>
           <p>
             Lessons build knowledge. Checkpoints certify whether the skill
             survives mixed positions, delayed recall and transfer into play.
@@ -168,7 +168,7 @@ export function LearnView({
           <span>
             {placementStage
               ? "Placement unlocks the appropriate part of the course, but stage certification still requires a real checkpoint plus retention and transfer evidence."
-              : "A 16-position mixed diagnostic samples every stage without hints. It seeds the player model without pretending two positions are full mastery."}
+              : "An 18-position mixed diagnostic samples every stage without hints. It seeds the player model without pretending two positions are full mastery."}
           </span>
         </div>
         <button className="secondary" type="button" onClick={onStartPlacement}>
