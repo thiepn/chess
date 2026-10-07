@@ -26,6 +26,7 @@ import { trainingGoals } from "../planning/periodization";
 import type { TrainingPrescriptionAction } from "../prescriptions/types";
 import "../styles/progress-v2.css";
 import "../styles/p47-progress-native.css";
+import "../styles/p51-progress-large.css";
 
 type TrainingPlanPatch = Partial<
   Pick<
