@@ -2,10 +2,12 @@ import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 
-const assetsDir = path.resolve("dist/assets");
+const distDir = path.resolve("dist");
+const assetsDir = path.join(distDir, "assets");
 const budgets = {
   maxJsGzip: 260 * 1024,
   maxCssGzip: 42 * 1024,
+  maxInitialAppGzip: 260 * 1024,
   maxTotalAppGzip: 315 * 1024,
 };
 
@@ -26,7 +28,24 @@ const files = fs
     };
   });
 
+const indexHtml = fs.readFileSync(
+  path.join(distDir, "index.html"),
+  "utf8",
+);
+const initialNames = new Set(
+  [...indexHtml.matchAll(/assets\/([^"'<>]+\.(?:js|css))/g)].map(
+    (match) => match[1],
+  ),
+);
+if (!initialNames.size) {
+  throw new Error("Could not resolve initial JS/CSS assets from dist/index.html.");
+}
+
+const initialFiles = files.filter((asset) =>
+  initialNames.has(asset.file),
+);
 const failures = [];
+
 for (const asset of files) {
   const limit =
     asset.type === "js"
@@ -39,20 +58,37 @@ for (const asset of files) {
   }
 }
 
-const total = files.reduce((sum, file) => sum + file.gzip, 0);
+const initialTotal = initialFiles.reduce(
+  (sum, file) => sum + file.gzip,
+  0,
+);
+const total = files.reduce(
+  (sum, file) => sum + file.gzip,
+  0,
+);
+
+if (initialTotal > budgets.maxInitialAppGzip) {
+  failures.push(
+    `initial app: ${(initialTotal / 1024).toFixed(1)} KiB gzip exceeds ${(budgets.maxInitialAppGzip / 1024).toFixed(0)} KiB budget`,
+  );
+}
 if (total > budgets.maxTotalAppGzip) {
   failures.push(
-    `initial app JS+CSS: ${(total / 1024).toFixed(1)} KiB gzip exceeds ${(budgets.maxTotalAppGzip / 1024).toFixed(0)} KiB budget`,
+    `all app JS+CSS: ${(total / 1024).toFixed(1)} KiB gzip exceeds ${(budgets.maxTotalAppGzip / 1024).toFixed(0)} KiB budget`,
   );
 }
 
 for (const asset of files.sort((a, b) => b.gzip - a.gzip)) {
+  const initial = initialNames.has(asset.file) ? " · initial" : "";
   console.log(
-    `${asset.file}: ${(asset.raw / 1024).toFixed(1)} KiB raw · ${(asset.gzip / 1024).toFixed(1)} KiB gzip`,
+    `${asset.file}: ${(asset.raw / 1024).toFixed(1)} KiB raw · ${(asset.gzip / 1024).toFixed(1)} KiB gzip${initial}`,
   );
 }
 console.log(
-  `App asset total: ${(total / 1024).toFixed(1)} KiB gzip · budget ${(budgets.maxTotalAppGzip / 1024).toFixed(0)} KiB`,
+  `Initial app: ${(initialTotal / 1024).toFixed(1)} KiB gzip · budget ${(budgets.maxInitialAppGzip / 1024).toFixed(0)} KiB`,
+);
+console.log(
+  `All app JS+CSS: ${(total / 1024).toFixed(1)} KiB gzip · budget ${(budgets.maxTotalAppGzip / 1024).toFixed(0)} KiB`,
 );
 
 if (failures.length) {
