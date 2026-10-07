@@ -15,7 +15,8 @@
     "puzzles:production": "node scripts/build-puzzle-corpus.mjs scripts/data/lichess-production-baseline.csv --out public/data/puzzles --max-per-skill 250 --min-popularity 55 --min-plays 10 --min-rating 600 --max-rating 2400 --max-rd 220 --source-label \"Lichess CC0 production baseline\"",
     "puzzles:audit": "node scripts/audit-puzzle-corpus.mjs public/data/puzzles",
     "puzzles:ensure": "node scripts/ensure-puzzle-corpus.mjs",
-    "perf:budget": "node scripts/check-performance-budget.mjs"
+    "perf:budget": "node scripts/check-performance-budget.mjs",
+    "design:audit": "node scripts/audit-material-system.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

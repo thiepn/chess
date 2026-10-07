@@ -211,3 +211,47 @@ Before V1.0, the app should score at least:
 The governing principle is:
 
 > The chess activity determines the interface. The design system supports it; it does not force every activity into the same template.
+
+
+## P48 material contract
+
+The visual architecture is not card-first. A surface should earn elevation by behavior, not by being a section.
+
+### Default surface hierarchy
+
+1. **Workspace** — app/route background with no container chrome.
+2. **Region** — separated by a 1px divider or subtle background shift.
+3. **Rail / notation area** — bounded by one or two separators; square or token-radius controls only.
+4. **Board frame** — tactile, slightly raised, and allowed a restrained shadow.
+5. **Popover / dialog** — legitimately elevated because it overlaps another interaction layer.
+
+Ordinary lesson sections, game context, analytics groups, library rows and review explanations must not become floating cards.
+
+### Shape
+
+- controls: `--chess-radius-control`;
+- board frame: `--chess-radius-board` / `--chess-radius-panel`;
+- ordinary content regions: no radius by default;
+- pills only for compact status/metadata where the pill shape carries meaning;
+- no 16px+ radius values in rebuilt route CSS.
+
+### Color and depth
+
+- no decorative gradients in rebuilt route CSS;
+- no violet/blue glow surfaces;
+- primary blue is functional, not atmospheric;
+- semantic green/gold/red indicate chess meaning, not decoration;
+- shadows are reserved for the board and legitimate overlap surfaces.
+
+### Legacy-component compatibility
+
+Older training engines may retain behavioral class names such as `hint-card` or `assessment-panel`, but P48 visually normalizes them into notes, rails and side regions. New code must not create new hero/card architecture using deprecated surface classes.
+
+### Enforcement
+
+`npm run design:audit` checks:
+
+- rebuilt route/material CSS for gradients;
+- rebuilt route/material CSS for oversized radii;
+- active TSX for deprecated hero/card surface classes;
+- presence of the final P48 material layer after global styles.
