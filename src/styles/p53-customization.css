@@ -1,0 +1,360 @@
+/* P53 — curated theme and board customization */
+
+/* App finishes: neutral-only. Functional semantic colors stay unchanged. */
+
+html[data-app-theme="graphite"] {
+  color-scheme: dark;
+  --bg: #0d0f10;
+  --surface: rgba(25, 27, 28, 0.94);
+  --line: rgba(255, 255, 255, 0.08);
+  --muted: #aba9a3;
+  --chess-color-bg-app: #0d0f10;
+  --chess-color-bg-workspace: #131516;
+  --chess-color-bg-raised: #191b1c;
+  --chess-color-bg-inset: #101213;
+  --chess-color-text-primary: #f0eee9;
+  --chess-color-text-secondary: #aba9a3;
+  --chess-color-text-muted: #747570;
+  --chess-color-separator: rgba(255, 255, 255, 0.08);
+  --chess-color-separator-strong: rgba(255, 255, 255, 0.13);
+}
+
+html[data-app-theme="obsidian"] {
+  color-scheme: dark;
+  --bg: #090a0b;
+  --surface: rgba(20, 22, 23, 0.95);
+  --line: rgba(255, 255, 255, 0.075);
+  --muted: #aaa9a5;
+  --chess-color-bg-app: #090a0b;
+  --chess-color-bg-workspace: #0e1011;
+  --chess-color-bg-raised: #141617;
+  --chess-color-bg-inset: #0b0d0e;
+  --chess-color-text-primary: #f1f0ec;
+  --chess-color-text-secondary: #aaa9a5;
+  --chess-color-text-muted: #737570;
+  --chess-color-separator: rgba(255, 255, 255, 0.075);
+  --chess-color-separator-strong: rgba(255, 255, 255, 0.12);
+}
+
+html[data-app-theme="warm-graphite"] {
+  color-scheme: dark;
+  --bg: #11100f;
+  --surface: rgba(29, 26, 23, 0.95);
+  --line: rgba(244, 232, 215, 0.08);
+  --muted: #b2aaa0;
+  --chess-color-bg-app: #11100f;
+  --chess-color-bg-workspace: #171513;
+  --chess-color-bg-raised: #1d1a17;
+  --chess-color-bg-inset: #13110f;
+  --chess-color-text-primary: #f2eee6;
+  --chess-color-text-secondary: #b2aaa0;
+  --chess-color-text-muted: #7e766e;
+  --chess-color-separator: rgba(244, 232, 215, 0.08);
+  --chess-color-separator-strong: rgba(244, 232, 215, 0.14);
+}
+
+body,
+.app-shell-v2 {
+  background: var(--chess-color-bg-app);
+  color: var(--chess-color-text-primary);
+}
+
+.app-topbar,
+.mobile-nav {
+  background: var(--chess-color-bg-app);
+  border-color: var(--chess-color-separator);
+}
+
+/* Board palettes. Semantic overlays remain the P39/P52 colors. */
+
+html[data-board-theme="tournament"] {
+  --chess-board-light: #d5cebd;
+  --chess-board-dark: #62665f;
+  --chess-board-frame: #171918;
+  --chess-board-coordinate-light: rgba(20, 22, 21, 0.54);
+  --chess-board-coordinate-dark: rgba(244, 241, 233, 0.52);
+}
+
+html[data-board-theme="walnut"] {
+  --chess-board-light: #d9c5a5;
+  --chess-board-dark: #805f45;
+  --chess-board-frame: #211915;
+  --chess-board-coordinate-light: rgba(42, 30, 22, 0.58);
+  --chess-board-coordinate-dark: rgba(255, 246, 231, 0.58);
+}
+
+html[data-board-theme="slate"] {
+  --chess-board-light: #cbd1ce;
+  --chess-board-dark: #59666a;
+  --chess-board-frame: #121719;
+  --chess-board-coordinate-light: rgba(18, 28, 30, 0.56);
+  --chess-board-coordinate-dark: rgba(244, 248, 247, 0.56);
+}
+
+/* Piece treatments retain recognizable Staunton silhouettes. */
+
+.chess-piece-svg.piece-style-classic {
+  transform-origin: 50% 55%;
+}
+
+.chess-piece-svg.piece-style-club {
+  transform: scale(1.045);
+  transform-origin: 50% 58%;
+}
+
+.chess-piece-svg.piece-style-club .piece-outline,
+.chess-piece-svg.piece-style-club .piece-detail {
+  stroke-width: 3.05;
+}
+
+.chess-piece-svg.piece-style-club .bishop-cut {
+  stroke-width: 4.35;
+}
+
+.chess-piece-svg.piece-style-club .king-cross {
+  stroke-width: 4.5;
+}
+
+.chess-piece-w.piece-style-club {
+  --piece-fill: #f3ede0;
+  --piece-stroke: #474640;
+}
+
+.chess-piece-b.piece-style-club {
+  --piece-fill: #232625;
+  --piece-stroke: #ddd7cb;
+}
+
+.chess-piece-svg.piece-style-minimal {
+  transform: scale(0.965);
+  transform-origin: 50% 58%;
+}
+
+.chess-piece-svg.piece-style-minimal .piece-outline {
+  stroke-width: 2;
+}
+
+.chess-piece-svg.piece-style-minimal .piece-detail {
+  stroke-width: 2.15;
+  opacity: 0.88;
+}
+
+.chess-piece-svg.piece-style-minimal .bishop-cut {
+  stroke-width: 3.2;
+}
+
+.chess-piece-svg.piece-style-minimal .king-cross {
+  stroke-width: 3.4;
+}
+
+.chess-piece-w.piece-style-minimal {
+  --piece-fill: #ece9e0;
+  --piece-stroke: #62625d;
+}
+
+.chess-piece-b.piece-style-minimal {
+  --piece-fill: #303332;
+  --piece-stroke: #d0cec7;
+}
+
+/* Experience appearance selector */
+
+.experience-popover {
+  width: min(350px, calc(100vw - 24px));
+  max-height: min(78dvh, 660px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.appearance-reset {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--chess-color-text-muted);
+  cursor: pointer;
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+.appearance-reset:hover {
+  color: var(--chess-color-text-secondary);
+  background: var(--chess-color-bg-raised);
+}
+
+.experience-divider {
+  height: 1px;
+  margin: 6px 2px;
+  background: var(--chess-color-separator);
+}
+
+.appearance-setting-group {
+  min-width: 0;
+  margin: 0;
+  padding: 8px 0 10px;
+  border: 0;
+}
+
+.appearance-setting-group legend {
+  width: 100%;
+  padding: 0 4px 7px;
+  color: var(--chess-color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.appearance-choice-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.appearance-choice {
+  min-width: 0;
+  min-height: 58px;
+  padding: 7px 6px;
+  border: 1px solid var(--chess-color-separator);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--chess-color-text-muted);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.appearance-choice:hover {
+  border-color: var(--chess-color-separator-strong);
+  color: var(--chess-color-text-secondary);
+  background: var(--chess-color-bg-raised);
+}
+
+.appearance-choice[aria-pressed="true"] {
+  border-color: var(--chess-color-accent);
+  color: var(--chess-color-text-primary);
+  box-shadow: inset 0 -2px 0 var(--chess-color-accent);
+}
+
+.app-theme-swatch {
+  width: 34px;
+  height: 22px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 1fr 0.42fr;
+  gap: 3px;
+  background: #0d0f10;
+}
+
+.app-theme-swatch i {
+  display: block;
+  border-radius: 2px;
+  background: #191b1c;
+}
+
+.app-theme-swatch[data-preview-app-theme="obsidian"] {
+  background: #090a0b;
+}
+
+.app-theme-swatch[data-preview-app-theme="obsidian"] i {
+  background: #141617;
+}
+
+.app-theme-swatch[data-preview-app-theme="warm-graphite"] {
+  background: #11100f;
+}
+
+.app-theme-swatch[data-preview-app-theme="warm-graphite"] i {
+  background: #1d1a17;
+}
+
+.board-theme-swatch {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #171918;
+  border-radius: 5px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.board-theme-swatch i:nth-child(1),
+.board-theme-swatch i:nth-child(4) {
+  background: #d5cebd;
+}
+
+.board-theme-swatch i:nth-child(2),
+.board-theme-swatch i:nth-child(3) {
+  background: #62665f;
+}
+
+.board-theme-swatch[data-preview-board-theme="walnut"] {
+  border-color: #211915;
+}
+
+.board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(1),
+.board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(4) {
+  background: #d9c5a5;
+}
+
+.board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(2),
+.board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(3) {
+  background: #805f45;
+}
+
+.board-theme-swatch[data-preview-board-theme="slate"] {
+  border-color: #121719;
+}
+
+.board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(1),
+.board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(4) {
+  background: #cbd1ce;
+}
+
+.board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(2),
+.board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(3) {
+  background: #59666a;
+}
+
+.piece-style-preview {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+}
+
+.piece-style-preview .chess-piece-svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 520px) {
+  .experience-popover {
+    width: min(342px, calc(100vw - 20px));
+    max-height: min(76dvh, 610px);
+  }
+
+  .appearance-choice {
+    min-height: var(--chess-touch-min);
+    padding-inline: 4px;
+  }
+}
+
+@media (forced-colors: active) {
+  .appearance-choice[aria-pressed="true"] {
+    border-color: Highlight;
+  }
+
+  .app-theme-swatch,
+  .board-theme-swatch {
+    border-color: CanvasText;
+  }
+}

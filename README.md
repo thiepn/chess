@@ -71,6 +71,7 @@ The default experience should answer one question: **what should I train now?**
 - P50 Mobile Native Defect Pass with shared safe-area shell tokens, narrow-phone full-bleed fixes, constrained-landscape nav suppression, a 568–667px Review fallback, and CI mobile-layout auditing
 - P51 Large-Desktop Composition with bounded 1536px+ workspaces, explicit 1920px+ ultrawide layouts, controlled board growth, readable text measures and CI desktop-layout auditing
 - P52 Accessibility Requalification with skip navigation, route focus restoration, richer board/screen-reader semantics, modal focus management, status/progress/current-state ARIA, forced-colors support and CI accessibility auditing
+- P53 Theme & Board Customization with three curated app finishes, three board palettes, three piece treatments, backward-compatible persistence normalization and CI theme auditing
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2558,6 +2559,33 @@ A new `npm run a11y:audit` Quality gate verifies the accessibility contract alon
 
 The complete scope and remaining manual-assistive-technology qualification boundary are documented in `docs/P52_ACCESSIBILITY.md`.
 
+## Theme & Board Customization
+
+P53 adds customization only after the default P37–P52 visual system is stable.
+
+The option set is intentionally small:
+
+- **App finish:** Graphite, Obsidian, Warm graphite;
+- **Board:** Tournament, Walnut, Slate;
+- **Pieces:** Classic, Club, Minimal.
+
+The app finishes only change neutral shell/surface values. Functional chess semantics remain fixed:
+
+- blue — selection/focus;
+- green — correct;
+- red — error/check;
+- gold — concept/hint.
+
+That means a custom theme cannot change the meaning of training or Review feedback.
+
+Customization is stored inside the existing experience settings and therefore follows the same local/Supabase persistence path as motion, sound and haptics. Pre-P53 saved states are normalized automatically to Graphite + Tournament + Classic instead of producing missing values.
+
+The Experience dialog now includes accessible pressed-state selectors, compact previews and **Reset appearance** without resetting sound/haptics/motion preferences.
+
+A new `npm run theme:audit` gate verifies the curated option set, persistence normalization, root theme wiring, board/piece application, protected semantic colors and CSS load order.
+
+The complete policy is documented in `docs/P53_CUSTOMIZATION.md`.
+
 ## Next phase
 
-P53 — Theme & Board Customization.
+P54 — Visual Content Pass.

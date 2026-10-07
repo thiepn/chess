@@ -411,3 +411,67 @@ The default palette remains P37-authoritative. P52 additionally supports:
 ### Qualification boundary
 
 Automated/static checks protect structure and regressions. Final release QA should still include manual keyboard-only operation and representative assistive-technology passes (NVDA/JAWS/VoiceOver/TalkBack where available).
+
+
+## P53 customization contract
+
+Customization is deliberately narrower than the core visual system.
+
+### App finishes
+
+Allowed:
+
+- **Graphite** — the P37 default;
+- **Obsidian** — deeper neutral black;
+- **Warm graphite** — warmer charcoal.
+
+All remain dark, low-chroma and chess-workspace-oriented. P53 does not add a bright marketing theme, colored dashboard shell or green-tinted dark mode.
+
+### Board palettes
+
+Allowed:
+
+- **Tournament** — ivory / graphite;
+- **Walnut** — restrained warm brown;
+- **Slate** — cool stone gray.
+
+Board customization may change only:
+
+- light square;
+- dark square;
+- board frame;
+- coordinate contrast.
+
+It must not redefine selection, correct, danger/check or hint semantics.
+
+### Piece treatments
+
+Allowed:
+
+- **Classic** — balanced default Staunton treatment;
+- **Club** — slightly larger/heavier tournament treatment;
+- **Minimal** — quieter, lighter-detail analysis treatment.
+
+All three retain the same recognizable SVG piece geometry and accessible piece names.
+
+### Persistence
+
+Customization lives in `ExperienceSettings`:
+
+- `appTheme`;
+- `boardTheme`;
+- `pieceStyle`.
+
+Persisted data must be normalized. Missing or unknown values resolve to the default Graphite / Tournament / Classic combination.
+
+### Accessibility precedence
+
+`p53-customization.css` loads before `p52-accessibility.css`.
+
+Themes cannot override:
+
+- focus-ring behavior;
+- forced-colors behavior;
+- reduced-motion behavior;
+- screen-reader board semantics;
+- functional blue/green/red/gold meanings.

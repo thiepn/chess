@@ -69,7 +69,7 @@ export function ChessBoard({
   );
   const squareRefs = useRef(new Map<Square, HTMLButtonElement>());
   const instructionsId = useId();
-  const { feedback } = useExperience();
+  const { feedback, settings } = useExperience();
 
   useEffect(() => {
     if (positionRef.current === fen) return;
@@ -454,7 +454,11 @@ export function ChessBoard({
                     aria-hidden="true"
                     data-piece={`${piece.color}${piece.type}`}
                   >
-                    <ChessPiece color={piece.color} type={piece.type} />
+                    <ChessPiece
+                      color={piece.color}
+                      type={piece.type}
+                      styleVariant={settings.pieceStyle}
+                    />
                   </span>
                 );
               })()}
