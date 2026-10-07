@@ -32,6 +32,7 @@ import { lessonForSkill } from "../learning/lessons";
 import type { LessonStep } from "../learning/types";
 import { supportsPuzzlePractice } from "../puzzles/support";
 import { ChessBoard } from "./ChessBoard";
+import "../styles/p47-learn-native.css";
 
 interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
