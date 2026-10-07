@@ -11,7 +11,7 @@ import {
   Target,
   X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type {
   GameReviewReflection,
   GameStoryMoment,
@@ -191,6 +191,8 @@ export function GameReviewCoach({
   onPracticeSkill,
   onPracticeOpening,
 }: GameReviewCoachProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const headingId = useId();
   const [stage, setStage] =
     useState<CoachStage>(
       reflection?.retryMove
@@ -228,6 +230,52 @@ export function GameReviewCoach({
   );
   const [boardVersion, setBoardVersion] =
     useState(0);
+
+  useEffect(() => {
+    const previousFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    const focusableSelector =
+      'button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+      ).filter((element) => !element.hasAttribute("hidden"));
+
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.requestAnimationFrame(() => {
+      dialogRef.current?.querySelector<HTMLElement>(".close-button")?.focus();
+    });
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [onClose]);
 
   const candidates = useMemo(
     () => candidateSans(moment),
@@ -319,10 +367,11 @@ export function GameReviewCoach({
 
   return (
     <div
+      ref={dialogRef}
       className="review-coach-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label="Coached game review"
+      aria-labelledby={headingId}
     >
       <section className="review-coach">
         <button
@@ -340,7 +389,7 @@ export function GameReviewCoach({
               COACHED REVIEW · MOVE{" "}
               {moment.moveNumber}
             </p>
-            <h2>
+            <h2 id={headingId}>
               {stage === "reflect"
                 ? "What were you thinking?"
                 : stage === "retry"
