@@ -491,7 +491,24 @@ Delivered:
 
 ### P42 — Learn Architecture Redesign
 
+**Status:** implemented.
+
 Turn Learn into an interactive chess textbook with curriculum navigation, teaching board and lesson content rather than course-dashboard cards.
+
+Delivered:
+
+- removed the giant Learn hero, course KPI overview, placement card, repertoire card, model-game card and rounded skill-card grid from the curriculum root;
+- rebuilt `/learn` as a syllabus with a persistent chapter rail and compact stage progression;
+- stage content is now presented as a structured list of chess concepts rather than promotional cards;
+- stage checkpoint, mastery, retention and transfer evidence remain available as subordinate learning context;
+- placement is reduced to an optional inline diagnostic action;
+- concepts open on real `/learn/:domain/:lessonId` pages;
+- concept pages render the lesson script as an interactive textbook: step outline, embedded P39 board, editorial explanation and guided navigation;
+- Begin lesson / Practice hands off into the P41 routed training runtime instead of opening a Learn modal;
+- `/learn/openings` and `/learn/model-games` are real subpages rather than local `learnMode` state;
+- removed giant hero treatment from repertoire and model-game subpages;
+- added explicit Learn route parsing/building with regression tests;
+- mobile uses horizontally scrollable chapter/lesson rails with board-first lesson pages.
 
 ### P43 — Play Page Redesign
 

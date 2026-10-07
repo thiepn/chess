@@ -1,21 +1,25 @@
+import { Chess } from "chess.js";
 import {
   BookOpen,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   ClipboardCheck,
   Compass,
   LockKeyhole,
-  Route,
-  ShieldCheck,
+  Play,
 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import {
   curriculumStages,
   domainLabels,
   isSkillUnlocked,
   readyCurriculumSkills,
+  skillById,
   skills,
 } from "../domain/curriculum";
 import type {
+  ChessSkill,
   CurriculumStageId,
   SkillMastery,
 } from "../domain/types";
@@ -24,14 +28,19 @@ import type {
   StageGateEvaluation,
   StageGateStatus,
 } from "../assessment/types";
-import { lessonScripts } from "../learning/lessons";
+import { lessonForSkill } from "../learning/lessons";
+import type { LessonStep } from "../learning/types";
 import { supportsPuzzlePractice } from "../puzzles/support";
+import { ChessBoard } from "./ChessBoard";
 
 interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
   gates: Record<CurriculumStageId, StageGateEvaluation>;
   placement?: PlacementProfile;
   curriculumFloor: number;
+  selectedSkillId?: string;
+  onOpenSkill: (skillId: string) => void;
+  onBackToCourse: () => void;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
   onStartPlacement: () => void;
@@ -65,22 +74,178 @@ function skillMastery(
   return Math.round(mastery[skillId]?.effectiveMastery ?? 0);
 }
 
-function GateMetric({
-  label,
-  value,
-  target,
+function lessonStepCopy(step: LessonStep) {
+  if (step.type === "explain") {
+    return {
+      eyebrow: step.eyebrow ?? step.stage,
+      title: step.title,
+      body: step.body,
+    };
+  }
+
+  return {
+    eyebrow: step.eyebrow ?? step.stage,
+    title: step.title,
+    body: step.prompt,
+  };
+}
+
+function stageAverage(
+  stageId: CurriculumStageId,
+  mastery: Record<string, SkillMastery>,
+) {
+  const stageSkills = skills.filter((skill) => skill.stage === stageId);
+  if (!stageSkills.length) return 0;
+  return Math.round(
+    stageSkills.reduce(
+      (sum, skill) => sum + skillMastery(mastery, skill.id),
+      0,
+    ) / stageSkills.length,
+  );
+}
+
+function LessonPage({
+  skill,
+  mastery,
+  onBack,
+  onStartLesson,
+  onStartPractice,
 }: {
-  label: string;
-  value: number;
-  target: number;
+  skill: ChessSkill;
+  mastery: Record<string, SkillMastery>;
+  onBack: () => void;
+  onStartLesson: (skillId: string) => void;
+  onStartPractice: (skillId: string) => void;
 }) {
-  const met = value >= target;
+  const lesson = useMemo(
+    () =>
+      lessonForSkill(
+        skill.id,
+        skill.title,
+        skill.description,
+        skill.trainingModes[0] ?? "conceptLesson",
+      ),
+    [skill],
+  );
+  const [stepIndex, setStepIndex] = useState(0);
+
+  useEffect(() => {
+    setStepIndex(0);
+  }, [skill.id]);
+
+  const step = lesson.steps[Math.min(stepIndex, lesson.steps.length - 1)];
+  const copy = lessonStepCopy(step);
+  const orientation = new Chess(step.fen).turn() === "b" ? "b" : "w";
+  const value = skillMastery(mastery, skill.id);
+  const practiceAvailable = supportsPuzzlePractice(skill.id);
+
   return (
-    <div className={met ? "gate-metric met" : "gate-metric"}>
-      <span>{label}</span>
-      <strong>{value}%</strong>
-      <small>need {target}%</small>
-    </div>
+    <section className="learn-v2 lesson-page-v2" aria-labelledby="lesson-page-title">
+      <aside className="learn-v2-lesson-rail" aria-label="Lesson outline">
+        <button className="learn-v2-back" type="button" onClick={onBack}>
+          <ChevronLeft size={16} />
+          Course
+        </button>
+
+        <div className="learn-v2-lesson-identity">
+          <span>{domainLabels[skill.domain]}</span>
+          <strong>{lesson.title}</strong>
+          <small>{masteryLabel(value)} · {value}% mastery</small>
+        </div>
+
+        <div className="learn-v2-step-list">
+          {lesson.steps.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              className={index === stepIndex ? "active" : ""}
+              aria-current={index === stepIndex ? "step" : undefined}
+              onClick={() => setStepIndex(index)}
+            >
+              <span>{index + 1}</span>
+              <div>
+                <small>{item.stage}</small>
+                <strong>{item.title}</strong>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className="learn-v2-lesson-actions">
+          <button
+            className="primary"
+            type="button"
+            onClick={() => onStartLesson(skill.id)}
+          >
+            Begin lesson
+            <ChevronRight size={16} />
+          </button>
+          {practiceAvailable && (
+            <button
+              className="secondary"
+              type="button"
+              onClick={() => onStartPractice(skill.id)}
+            >
+              Practice positions
+            </button>
+          )}
+        </div>
+      </aside>
+
+      <div className="learn-v2-board-column">
+        <div className="learn-v2-board-context">
+          <span>{copy.eyebrow}</span>
+          <span>{stepIndex + 1} / {lesson.steps.length}</span>
+        </div>
+        <ChessBoard
+          key={`${skill.id}:${step.id}`}
+          fen={step.fen}
+          orientation={orientation}
+          disabled
+          highlights={step.type === "explain" ? step.highlights : undefined}
+          arrows={step.type === "explain" ? step.arrows : undefined}
+        />
+        <div className="learn-v2-board-caption">
+          Preview the idea here. Interactive moves begin in the guided lesson.
+        </div>
+      </div>
+
+      <article className="learn-v2-reading">
+        <p className="eyebrow">{domainLabels[skill.domain].toUpperCase()}</p>
+        <h1 id="lesson-page-title">{copy.title}</h1>
+        <p className="learn-v2-reading-body">{copy.body}</p>
+
+        <div className="learn-v2-reading-note">
+          <span>Concept</span>
+          <strong>{skill.title}</strong>
+          <p>{skill.description}</p>
+        </div>
+
+        <div className="learn-v2-reading-nav">
+          <button
+            type="button"
+            className="secondary"
+            disabled={stepIndex === 0}
+            onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            className="secondary"
+            disabled={stepIndex >= lesson.steps.length - 1}
+            onClick={() =>
+              setStepIndex((index) =>
+                Math.min(lesson.steps.length - 1, index + 1),
+              )
+            }
+          >
+            Next idea
+            <ChevronRight size={15} />
+          </button>
+        </div>
+      </article>
+    </section>
   );
 }
 
@@ -89,6 +254,9 @@ export function LearnView({
   gates,
   placement,
   curriculumFloor,
+  selectedSkillId,
+  onOpenSkill,
+  onBackToCourse,
   onStartLesson,
   onStartPractice,
   onStartPlacement,
@@ -96,303 +264,252 @@ export function LearnView({
   onOpenOpenings,
   onOpenModelGames,
 }: LearnViewProps) {
-  const mastered = skills.filter(
-    (skill) => skillMastery(mastery, skill.id) >= 75,
-  ).length;
-  const interactive = skills.filter((skill) => lessonScripts[skill.id]).length;
-  const recommendedId = readyCurriculumSkills(
+  const selectedSkill = selectedSkillId
+    ? skillById[selectedSkillId]
+    : undefined;
+
+  const recommendedSkill = readyCurriculumSkills(
     mastery,
     curriculumFloor,
-  )[0]?.id;
-  const certified = curriculumStages.filter(
-    (stage) => gates[stage.id]?.status === "passed",
-  ).length;
+  )[0];
+
   const placementStage = placement
     ? curriculumStages.find(
         (stage) => stage.id === placement.recommendedStageId,
       )
     : undefined;
 
+  const initialStage =
+    selectedSkill?.stage ??
+    recommendedSkill?.stage ??
+    placementStage?.id ??
+    curriculumStages[0].id;
+
+  const [selectedStageId, setSelectedStageId] =
+    useState<CurriculumStageId>(initialStage);
+
+  useEffect(() => {
+    if (selectedSkill?.stage) {
+      setSelectedStageId(selectedSkill.stage);
+    }
+  }, [selectedSkill?.stage]);
+
+  if (selectedSkill) {
+    return (
+      <LessonPage
+        skill={selectedSkill}
+        mastery={mastery}
+        onBack={onBackToCourse}
+        onStartLesson={onStartLesson}
+        onStartPractice={onStartPractice}
+      />
+    );
+  }
+
+  const stage =
+    curriculumStages.find((item) => item.id === selectedStageId) ??
+    curriculumStages[0];
+  const stageSkills = skills.filter((skill) => skill.stage === stage.id);
+  const gate = gates[stage.id];
+  const average = stageAverage(stage.id, mastery);
+  const mastered = stageSkills.filter(
+    (skill) => skillMastery(mastery, skill.id) >= 75,
+  ).length;
+
   return (
-    <section className="learn-view">
-      <header className="section-hero curriculum-hero">
-        <div>
-          <p className="eyebrow">GUIDED CURRICULUM</p>
-          <h1>From first move to complex positions.</h1>
-          <p>
-            Lessons build knowledge. Checkpoints certify whether the skill
-            survives mixed positions, delayed recall and transfer into play.
-          </p>
+    <section className="learn-v2" aria-labelledby="learn-course-title">
+      <aside className="learn-v2-stage-rail" aria-label="Course chapters">
+        <div className="learn-v2-course-mark">
+          <BookOpen size={17} />
+          <div>
+            <span>Course</span>
+            <strong>Chess foundations → advanced play</strong>
+          </div>
         </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <BookOpen size={30} />
-        </div>
-      </header>
 
-      <div className="curriculum-overview">
-        <div>
-          <Route size={18} />
-          <span>Course</span>
-          <strong>{curriculumStages.length} stages</strong>
-        </div>
-        <div>
-          <BookOpen size={18} />
-          <span>Atomic skills</span>
-          <strong>{skills.length}</strong>
-        </div>
-        <div>
-          <ShieldCheck size={18} />
-          <span>Certified stages</span>
-          <strong>{certified}/{curriculumStages.length}</strong>
-        </div>
-        <div>
-          <span className="overview-progress-ring">
-            {Math.round((mastered / Math.max(1, skills.length)) * 100)}%
-          </span>
-          <span>Skill mastery</span>
-          <strong>{mastered} / {interactive}</strong>
-        </div>
-      </div>
+        <nav className="learn-v2-stage-nav" aria-label="Curriculum stages">
+          {curriculumStages.map((item) => {
+            const itemAverage = stageAverage(item.id, mastery);
+            const itemGate = gates[item.id];
+            return (
+              <button
+                key={item.id}
+                type="button"
+                className={item.id === stage.id ? "active" : ""}
+                aria-current={item.id === stage.id ? "page" : undefined}
+                onClick={() => setSelectedStageId(item.id)}
+              >
+                <span className="learn-v2-stage-number">{item.order + 1}</span>
+                <span className="learn-v2-stage-label">
+                  <strong>{item.shortTitle}</strong>
+                  <small>{item.targetRating}</small>
+                </span>
+                <span
+                  className={[
+                    "learn-v2-stage-state",
+                    itemGate.status === "passed" ? "passed" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {itemGate.status === "passed" ? (
+                    <CheckCircle2 size={13} />
+                  ) : (
+                    `${itemAverage}%`
+                  )}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
 
-      <section className="placement-card">
-        <div className="placement-card-icon">
-          <ClipboardCheck size={23} />
+        <div className="learn-v2-tools">
+          <button type="button" onClick={onOpenOpenings}>
+            <Compass size={15} />
+            Repertoire
+          </button>
+          <button type="button" onClick={onOpenModelGames}>
+            <Play size={15} />
+            Model games
+          </button>
         </div>
-        <div>
-          <p className="eyebrow">COURSE PLACEMENT</p>
-          <strong>
-            {placementStage
-              ? `Placed at: ${placementStage.title}`
-              : "Find the right starting point"}
-          </strong>
-          <span>
-            {placementStage
-              ? "Placement unlocks the appropriate part of the course, but stage certification still requires a real checkpoint plus retention and transfer evidence."
-              : "An 18-position mixed diagnostic samples every stage without hints. It seeds the player model without pretending two positions are full mastery."}
-          </span>
+      </aside>
+
+      <main className="learn-v2-chapter">
+        <header className="learn-v2-chapter-head">
+          <div>
+            <p className="eyebrow">{stage.targetRating.toUpperCase()}</p>
+            <h1 id="learn-course-title">{stage.title}</h1>
+            <strong>{stage.promise}</strong>
+            <p>{stage.description}</p>
+          </div>
+
+          <div className="learn-v2-stage-progress">
+            <span>{mastered}/{stageSkills.length} mastered</span>
+            <strong>{average}%</strong>
+            <div className="learn-v2-progress-track">
+              <i style={{ width: `${average}%` }} />
+            </div>
+          </div>
+        </header>
+
+        <div className="learn-v2-stage-actions">
+          <div className="learn-v2-gate-copy">
+            <span className={`gate-status ${gate.status}`}>
+              {gateLabel(gate.status)}
+            </span>
+            <div>
+              <strong>Stage checkpoint</strong>
+              <span>
+                Mastery {gate.metrics.mastery}% · retention {gate.metrics.retention}% · transfer {gate.metrics.transfer}%
+              </span>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="secondary"
+            disabled={gate.status === "locked"}
+            onClick={() => onStartCheckpoint(stage.id)}
+          >
+            <ClipboardCheck size={15} />
+            {gate.metrics.checkpoint ? "Retake" : "Checkpoint"}
+          </button>
         </div>
-        <button className="secondary" type="button" onClick={onStartPlacement}>
-          {placement ? "Re-run diagnostic" : "Take diagnostic"}
-        </button>
-      </section>
 
-      <button
-        className="opening-entry-card"
-        type="button"
-        onClick={onOpenOpenings}
-      >
-        <div className="opening-entry-icon"><Compass size={23} /></div>
-        <div>
-          <p className="eyebrow">YOUR OPENINGS</p>
-          <strong>Concept-first repertoire</strong>
-          <span>
-            Repertoire recall stays connected to the course but remains compact:
-            Italian, Alapin, Caro-Kann and QGD structures rather than an opening
-            encyclopedia.
-          </span>
-        </div>
-        <ChevronRight size={19} />
-      </button>
+        {!placement && (
+          <div className="learn-v2-placement">
+            <div>
+              <ClipboardCheck size={16} />
+              <span>
+                <strong>Not sure where to begin?</strong>
+                <small>The placement diagnostic can skip material you already know.</small>
+              </span>
+            </div>
+            <button type="button" onClick={onStartPlacement}>
+              Take diagnostic
+            </button>
+          </div>
+        )}
 
-      <button
-        className="opening-entry-card model-game-entry-card"
-        type="button"
-        onClick={onOpenModelGames}
-      >
-        <div className="opening-entry-icon"><BookOpen size={23} /></div>
-        <div>
-          <p className="eyebrow">MODEL GAMES</p>
-          <strong>Plans in complete games</strong>
-          <span>
-            Study a compact curated set through plan questions and
-            Guess-the-Move checkpoints, then save the positions worth
-            retaining into spaced practice.
-          </span>
-        </div>
-        <ChevronRight size={19} />
-      </button>
+        <div className="learn-v2-skill-list" role="list">
+          {stageSkills.map((skill, index) => {
+            const value = skillMastery(mastery, skill.id);
+            const unlocked = isSkillUnlocked(skill, mastery);
+            const practiceAvailable = supportsPuzzlePractice(skill.id);
+            const prerequisites = skill.prerequisites
+              .map((relation) => skillById[relation.skillId])
+              .filter(Boolean);
 
-      <div className="curriculum-stage-list">
-        {curriculumStages.map((stage) => {
-          const stageSkills = skills.filter((skill) => skill.stage === stage.id);
-          const stageMastered = stageSkills.filter(
-            (skill) => skillMastery(mastery, skill.id) >= 75,
-          ).length;
-          const average = stageSkills.length
-            ? Math.round(
-                stageSkills.reduce(
-                  (sum, skill) => sum + skillMastery(mastery, skill.id),
-                  0,
-                ) / stageSkills.length,
-              )
-            : 0;
-          const gate = gates[stage.id];
+            return (
+              <article
+                key={skill.id}
+                role="listitem"
+                className={[
+                  "learn-v2-skill-row",
+                  unlocked ? "" : "locked",
+                  recommendedSkill?.id === skill.id ? "recommended" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                <span className="learn-v2-skill-index">{index + 1}</span>
 
-          return (
-            <section className="curriculum-stage" key={stage.id}>
-              <header className="curriculum-stage-heading">
-                <div className="stage-number">{stage.order + 1}</div>
-                <div className="stage-copy">
-                  <div className="stage-title-row">
-                    <div>
-                      <p className="eyebrow">{stage.targetRating}</p>
-                      <h2>{stage.title}</h2>
-                    </div>
-                    <div className="stage-mastery">
-                      <span>{stageMastered}/{stageSkills.length} mastered</span>
-                      <strong>{average}%</strong>
-                    </div>
+                <div className="learn-v2-skill-copy">
+                  <div>
+                    <span>{domainLabels[skill.domain]}</span>
+                    {recommendedSkill?.id === skill.id && <small>Next</small>}
                   </div>
-                  <strong className="stage-promise">{stage.promise}</strong>
-                  <p>{stage.description}</p>
-                  <div className="track stage-track">
-                    <i style={{ width: `${average}%` }} />
-                  </div>
-
-                  <div className="stage-gate-panel">
-                    <div className="stage-gate-heading">
-                      <div>
-                        <span className={`gate-status ${gate.status}`}>
-                          {gateLabel(gate.status)}
-                        </span>
-                        <strong>Promotion gate</strong>
-                      </div>
-                      <button
-                        type="button"
-                        className="stage-checkpoint-button"
-                        disabled={gate.status === "locked"}
-                        onClick={() => onStartCheckpoint(stage.id)}
-                      >
-                        <ClipboardCheck size={15} />
-                        {gate.metrics.checkpoint
-                          ? "Retake checkpoint"
-                          : "Take checkpoint"}
-                      </button>
+                  <strong>{skill.title}</strong>
+                  <p>{skill.description}</p>
+                  {!unlocked && prerequisites.length > 0 && (
+                    <div className="learn-v2-prerequisite">
+                      <LockKeyhole size={12} />
+                      First: {prerequisites.slice(0, 2).map((item) => item.title).join(" · ")}
                     </div>
+                  )}
+                </div>
 
-                    <div className="gate-metrics">
-                      <GateMetric
-                        label="Breadth"
-                        value={gate.metrics.coverage}
-                        target={gate.requirements.coverage}
-                      />
-                      <GateMetric
-                        label="Mastery"
-                        value={gate.metrics.mastery}
-                        target={gate.requirements.mastery}
-                      />
-                      <GateMetric
-                        label="Retention"
-                        value={gate.metrics.retention}
-                        target={gate.requirements.retention}
-                      />
-                      <GateMetric
-                        label="Transfer"
-                        value={gate.metrics.transfer}
-                        target={gate.requirements.transfer}
-                      />
-                      <GateMetric
-                        label="Checkpoint"
-                        value={gate.metrics.checkpoint}
-                        target={gate.requirements.checkpoint}
-                      />
-                    </div>
+                <div className="learn-v2-skill-mastery">
+                  <span>{masteryLabel(value)}</span>
+                  <strong>{value}%</strong>
+                  <div className="learn-v2-progress-track">
+                    <i style={{ width: `${value}%` }} />
                   </div>
                 </div>
-              </header>
 
-              <div className="curriculum-card-grid">
-                {stageSkills.map((skill, index) => {
-                  const value = skillMastery(mastery, skill.id);
-                  const unlocked = isSkillUnlocked(skill, mastery);
-                  const practiceAvailable = supportsPuzzlePractice(skill.id);
-                  const prerequisites = skill.prerequisites
-                    .map((relation) =>
-                      skills.find((item) => item.id === relation.skillId),
-                    )
-                    .filter(Boolean);
-
-                  return (
-                    <article
-                      className={
-                        unlocked
-                          ? "curriculum-card"
-                          : "curriculum-card unavailable"
-                      }
-                      key={skill.id}
-                    >
-                      <div className="curriculum-card-top">
-                        <div className="curriculum-sequence">
-                          <span>{index + 1}</span>
-                          <small>{domainLabels[skill.domain]}</small>
-                        </div>
-                        <div className="curriculum-card-state">
-                          {recommendedId === skill.id && (
-                            <span className="recommended-next">Next</span>
-                          )}
-                          <span className="mastery-state">
-                            {masteryLabel(value)}
-                          </span>
-                        </div>
-                      </div>
-
-                      <h3>{skill.title}</h3>
-                      <p>{skill.description}</p>
-
-                      {prerequisites.length > 0 && !unlocked && (
-                        <div className="curriculum-prereqs">
-                          <LockKeyhole size={13} />
-                          <span>
-                            First: {prerequisites
-                              .slice(0, 2)
-                              .map((item) => item!.title)
-                              .join(" · ")}
-                          </span>
-                        </div>
+                <div className="learn-v2-skill-actions">
+                  {unlocked ? (
+                    <>
+                      <button
+                        type="button"
+                        className="learn-v2-open"
+                        onClick={() => onOpenSkill(skill.id)}
+                      >
+                        Open
+                        <ChevronRight size={15} />
+                      </button>
+                      {practiceAvailable && (
+                        <button
+                          type="button"
+                          className="learn-v2-practice"
+                          onClick={() => onStartPractice(skill.id)}
+                        >
+                          Practice
+                        </button>
                       )}
-
-                      <div className="curriculum-progress">
-                        <div>
-                          <span>Mastery</span>
-                          <strong>{value}%</strong>
-                        </div>
-                        <div className="track">
-                          <i style={{ width: `${value}%` }} />
-                        </div>
-                      </div>
-
-                      {unlocked ? (
-                        <div className="curriculum-actions">
-                          <button
-                            className="curriculum-start"
-                            type="button"
-                            onClick={() => onStartLesson(skill.id)}
-                          >
-                            Study <ChevronRight size={16} />
-                          </button>
-                          {practiceAvailable && (
-                            <button
-                              className="curriculum-practice"
-                              type="button"
-                              onClick={() => onStartPractice(skill.id)}
-                            >
-                              Practice
-                            </button>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="curriculum-locked">
-                          <LockKeyhole size={14} /> Build the prerequisite first
-                        </div>
-                      )}
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+                    </>
+                  ) : (
+                    <span className="learn-v2-locked-label">
+                      <LockKeyhole size={13} />
+                      Locked
+                    </span>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </main>
     </section>
   );
 }

@@ -60,6 +60,7 @@ The default experience should answer one question: **what should I train now?**
 - P39 Board Design System 2.0 with custom SVG chess pieces, ivory/graphite board materials, standardized chess-state semantics, move-type motion, orientation transitions, and preserved keyboard/screen-reader board behavior
 - P40 Train Page Reconstruction with a real training-room layout, selectable adaptive session rail, dominant board preview, contextual coach rail, compact session facts, and removal of the Train hero/dashboard card stack
 - P41 Train Runtime Migration with real `/train/session/:id` workspaces, modal-host removal, refresh-restorable runtime state, routed adaptive progression, and return-to-origin flows for focused training
+- P42 Learn Architecture Redesign with a chapter-based syllabus, real `/learn/:domain/:lessonId` textbook pages, embedded teaching boards, routed repertoire/model-game subpages, and removal of the Learn hero/KPI/card-grid composition
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2256,6 +2257,31 @@ The active runtime is stored only as a small session-scoped snapshot. Refreshing
 
 The P36 focus/inert dialog machinery is no longer required for training because the training surface is now the page itself. Chessboard keyboard navigation and runner-level accessibility behavior remain unchanged.
 
+## Learn Architecture Redesign
+
+P42 replaces the old course dashboard with a chess syllabus and interactive textbook.
+
+`/learn` now uses a chapter rail for the nine curriculum stages and a structured skill list for the selected chapter. The previous giant hero, four overview KPI blocks, placement card, repertoire card, model-game card and grid of rounded skill cards are no longer the default Learn composition.
+
+Individual concepts open as real pages:
+
+- `/learn/:domain/:lessonId`
+
+A lesson page combines:
+
+- lesson-step outline;
+- the shared P39 board;
+- lesson-script positions and annotations;
+- compact editorial explanation;
+- Previous / Next idea navigation;
+- explicit Begin lesson / Practice actions.
+
+Interactive execution still belongs to P41's routed training workspace, so starting a lesson or practice activity transitions into `/train/session/:id` and returns to the originating Learn page afterward.
+
+Repertoire and model games are also real Learn subpages at `/learn/openings` and `/learn/model-games`; the former local `learnMode` state is removed. Their headers now use the same compact application-page language instead of SaaS-style hero banners.
+
+Mobile Learn uses horizontal chapter and lesson-step navigation, a full-width board, then the explanatory reading flow.
+
 ## Next phase
 
-P42 — Learn Architecture Redesign.
+P43 — Play Page Redesign.

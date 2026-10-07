@@ -108,6 +108,7 @@ import {
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
 import { lessonForSkill } from "./learning/lessons";
+import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 
@@ -210,13 +211,15 @@ export default function App() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
-  const [learnMode, setLearnMode] = useState<"curriculum" | "openings" | "model-games">("curriculum");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
   const { route, navigate, navigatePage } = useAppRouter();
   const page = route.page;
+  const learnRoute = resolveLearnRoute(route.path);
+  const learnSection = learnRoute.section;
+  const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
   const [lichessSyncing, setLichessSyncing] = useState(false);
   const lichessSyncInFlight = useRef(false);
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
@@ -1706,9 +1709,8 @@ export default function App() {
       celebration: "small",
     });
     setActiveModelGameId(null);
-    setLearnMode("model-games");
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(trainingReturnPath || "/learn");
+    navigate(trainingReturnPath || "/learn/model-games");
   }
 
   function updateGameReviewReflection(
@@ -2278,7 +2280,11 @@ export default function App() {
                 onPointerEnter={() => preloadNavRoute(id)}
                 onFocus={() => preloadNavRoute(id)}
                 onClick={() => {
-                  navigatePage(id);
+                  if (id === "learn") {
+                    navigate("/learn");
+                  } else {
+                    navigatePage(id);
+                  }
                   emitExperienceEvent({ feedback: "navigate" });
                 }}
               >
@@ -2715,20 +2721,20 @@ export default function App() {
           </section>
           )
         ) : page === "learn" ? (
-          learnMode === "openings" ? (
+          learnSection === "openings" ? (
             <OpeningsView
               progress={state.openingProgress ?? {}}
               deviations={state.openingDeviations ?? []}
               games={state.games ?? []}
               onTrainNode={startOpeningPractice}
               onTrainLine={startOpeningLinePractice}
-              onBack={() => setLearnMode("curriculum")}
+              onBack={() => navigate("/learn")}
             />
-          ) : learnMode === "model-games" ? (
+          ) : learnSection === "model-games" ? (
             <ModelGamesView
               progress={state.modelGameProgress ?? {}}
               onStartGame={startModelGame}
-              onBack={() => setLearnMode("curriculum")}
+              onBack={() => navigate("/learn")}
             />
           ) : (
             <LearnView
@@ -2736,12 +2742,19 @@ export default function App() {
               gates={stageGates}
               placement={state.placement}
               curriculumFloor={courseCurriculumFloor(state)}
+              selectedSkillId={learnSkillId}
+              onOpenSkill={(skillId) => {
+                const skill = skillById[skillId];
+                if (!skill) return;
+                navigate(learnSkillPath(skill));
+              }}
+              onBackToCourse={() => navigate("/learn")}
               onStartLesson={startManualLesson}
               onStartPractice={startManualPractice}
               onStartPlacement={startPlacementAssessment}
               onStartCheckpoint={startStageCheckpoint}
-              onOpenOpenings={() => setLearnMode("openings")}
-              onOpenModelGames={() => setLearnMode("model-games")}
+              onOpenOpenings={() => navigate("/learn/openings")}
+              onOpenModelGames={() => navigate("/learn/model-games")}
             />
           )
         ) : page === "play" ? (
@@ -2840,7 +2853,11 @@ export default function App() {
               onPointerDown={() => preloadNavRoute(id)}
               onFocus={() => preloadNavRoute(id)}
               onClick={() => {
-                navigatePage(id);
+                if (id === "learn") {
+                  navigate("/learn");
+                } else {
+                  navigatePage(id);
+                }
                 emitExperienceEvent({ feedback: "navigate" });
               }}
             >
