@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BarChart3,
   Bookmark,
@@ -37,19 +37,15 @@ import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
 import { LessonRunner } from "./components/LessonRunner";
 import { PuzzleRunner } from "./components/PuzzleRunner";
-import { LearnView } from "./components/LearnView";
-import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { CalculationRunner } from "./components/CalculationRunner";
 import { EndgameTechniqueRunner } from "./components/EndgameTechniqueRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
-import { OpeningsView } from "./components/OpeningsView";
 import { OpeningTrainer } from "./components/OpeningTrainer";
 import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
-import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
@@ -63,10 +59,8 @@ import {
 import { scenarioById } from "./play/scenarios";
 import { aiProfiles, resolveAiProfile } from "./play/profiles";
 import type { PlayResult, TrainingScenario } from "./play/types";
-import { LibraryView } from "./components/LibraryView";
 import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
 import type { SavedStudy } from "./library/types";
-import { ModelGamesView } from "./components/ModelGamesView";
 import { ModelGameRunner } from "./components/ModelGameRunner";
 import { modelGameById, modelGameCheckpointPosition } from "./model-games/games";
 import { recordModelGameCheckpoint, recordModelGameCompletion } from "./model-games/progress";
@@ -95,7 +89,6 @@ import {
   ensureAnalyticsState,
 } from "./analytics/record";
 import { buildProgressIntelligence } from "./analytics/engine";
-import { ProgressView } from "./components/ProgressView";
 import {
   fetchLichessProfile,
   fetchRecentLichessGames,
@@ -115,6 +108,52 @@ import {
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
+
+const LearnView = lazy(() =>
+  import("./components/LearnView").then((module) => ({
+    default: module.LearnView,
+  })),
+);
+const ReviewView = lazy(() =>
+  import("./components/ReviewView").then((module) => ({
+    default: module.ReviewView,
+  })),
+);
+const OpeningsView = lazy(() =>
+  import("./components/OpeningsView").then((module) => ({
+    default: module.OpeningsView,
+  })),
+);
+const PlayView = lazy(() =>
+  import("./components/PlayView").then((module) => ({
+    default: module.PlayView,
+  })),
+);
+const LibraryView = lazy(() =>
+  import("./components/LibraryView").then((module) => ({
+    default: module.LibraryView,
+  })),
+);
+const ModelGamesView = lazy(() =>
+  import("./components/ModelGamesView").then((module) => ({
+    default: module.ModelGamesView,
+  })),
+);
+const ProgressView = lazy(() =>
+  import("./components/ProgressView").then((module) => ({
+    default: module.ProgressView,
+  })),
+);
+
+function RouteLoading() {
+  return (
+    <section className="route-loading" aria-live="polite" aria-label="Loading view">
+      <span className="loading-shimmer" />
+      <span className="loading-shimmer" />
+      <span className="loading-shimmer short" />
+    </section>
+  );
+}
 
 const repo = createChessStateRepository();
 
@@ -2141,6 +2180,7 @@ export default function App() {
       </aside>
 
       <main className="main">
+        <Suspense fallback={<RouteLoading />}>
         {nav === "home" ? (
           <>
             <header className="train-home-hero">
@@ -2518,6 +2558,7 @@ export default function App() {
             <button className="secondary" onClick={() => setNav("home")}>Back to Train</button>
           </section>
         )}
+        </Suspense>
       </main>
 
       {!dialogOpen && (
