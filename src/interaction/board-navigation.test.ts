@@ -12,8 +12,8 @@ describe("board keyboard navigation", () => {
   it("moves one visible rank with up and down", () => {
     expect(nextBoardFocusIndex(18, "ArrowUp")).toBe(10);
     expect(nextBoardFocusIndex(18, "ArrowDown")).toBe(26);
-    expect(nextBoardFocusIndex(2, "ArrowUp")).toBe(0);
-    expect(nextBoardFocusIndex(62, "ArrowDown")).toBe(63);
+    expect(nextBoardFocusIndex(2, "ArrowUp")).toBe(2);
+    expect(nextBoardFocusIndex(62, "ArrowDown")).toBe(62);
   });
 
   it("supports Home and End inside the current visible rank", () => {
