@@ -14,6 +14,7 @@ import type {
   ExperienceSettings,
   FeedbackEvent,
 } from "./types";
+import { normalizeExperienceSettings } from "./customization";
 import type { ExperienceEventDetail } from "./events";
 
 interface ExperienceContextValue {
@@ -101,14 +102,18 @@ export function ExperienceProvider({
   children: ReactNode;
 }) {
   const audioRef = useRef<AudioContext | null>(null);
+  const resolvedSettings = useMemo(
+    () => normalizeExperienceSettings(settings),
+    [settings],
+  );
   const [systemReduced, setSystemReduced] = useState(systemPrefersReducedMotion);
   const [celebrationNonce, setCelebrationNonce] = useState(0);
   const [celebrationLevel, setCelebrationLevel] =
     useState<CelebrationLevel>("small");
 
   const reducedMotion =
-    settings.motion === "reduced" ||
-    (settings.motion === "system" && systemReduced);
+    resolvedSettings.motion === "reduced" ||
+    (resolvedSettings.motion === "system" && systemReduced);
 
   useEffect(
     () => () => {
@@ -129,24 +134,33 @@ export function ExperienceProvider({
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.motion = reducedMotion ? "reduced" : "full";
-  }, [reducedMotion]);
+    const root = document.documentElement;
+    root.dataset.motion = reducedMotion ? "reduced" : "full";
+    root.dataset.appTheme = resolvedSettings.appTheme;
+    root.dataset.boardTheme = resolvedSettings.boardTheme;
+    root.dataset.pieceStyle = resolvedSettings.pieceStyle;
+  }, [
+    reducedMotion,
+    resolvedSettings.appTheme,
+    resolvedSettings.boardTheme,
+    resolvedSettings.pieceStyle,
+  ]);
 
   const updateSettings = useCallback(
     (patch: Partial<ExperienceSettings>) => {
-      onChange({ ...settings, ...patch });
+      onChange({ ...resolvedSettings, ...patch });
     },
-    [onChange, settings],
+    [onChange, resolvedSettings],
   );
 
   const feedback = useCallback(
     (event: FeedbackEvent) => {
-      if (settings.haptics && navigator.vibrate) {
+      if (resolvedSettings.haptics && navigator.vibrate) {
         const pattern = vibrationMap[event];
         if (pattern) navigator.vibrate(pattern);
       }
 
-      if (!settings.sound) return;
+      if (!resolvedSettings.sound) return;
 
       try {
         const audioWindow = window as unknown as {
@@ -185,16 +199,16 @@ export function ExperienceProvider({
         // Audio feedback is enhancement-only.
       }
     },
-    [settings.haptics, settings.sound],
+    [resolvedSettings.haptics, resolvedSettings.sound],
   );
 
   const celebrate = useCallback(
     (level: CelebrationLevel = "small") => {
-      if (!settings.celebrations || reducedMotion) return;
+      if (!resolvedSettings.celebrations || reducedMotion) return;
       setCelebrationLevel(level);
       setCelebrationNonce((value) => value + 1);
     },
-    [reducedMotion, settings.celebrations],
+    [reducedMotion, resolvedSettings.celebrations],
   );
 
   useEffect(() => {
@@ -210,13 +224,13 @@ export function ExperienceProvider({
 
   const value = useMemo(
     () => ({
-      settings,
+      settings: resolvedSettings,
       reducedMotion,
       updateSettings,
       feedback,
       celebrate,
     }),
-    [celebrate, feedback, reducedMotion, settings, updateSettings],
+    [celebrate, feedback, reducedMotion, resolvedSettings, updateSettings],
   );
 
   return (
