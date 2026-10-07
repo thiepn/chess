@@ -699,9 +699,7 @@ export function CalculationRunner({
                   the resulting position?
                 </p>
                 <div className="calculation-rule">
-                  <BrainCircuit
-                    size={17}
-                  />
+                  <Target size={17} />
                   <span>
                     Rebuild every piece on
                     its new square before
