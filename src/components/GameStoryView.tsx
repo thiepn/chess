@@ -3,7 +3,6 @@ import {
   ArrowLeft,
   BrainCircuit,
   ChevronLeft,
-  ChevronRight,
   Play,
   Sparkles,
   Swords,
@@ -224,63 +223,69 @@ export function GameStoryView({
         ? moveArrow(selectedMoment.bestMove, "good")
         : [];
 
-  return (
-    <section className="game-story-view">
-      <button className="back-link" type="button" onClick={onBack}>
-        <ChevronLeft size={16} /> Review
-      </button>
+  const selectedPhase =
+    story.phases.find(
+      (phase) =>
+        selectedPly >= phase.startPly &&
+        selectedPly <= phase.endPly,
+    ) ?? story.phases[0];
 
-      <header className="story-hero">
-        <div>
-          <div className="story-verdict-row">
+  return (
+    <section className="review-workstation" aria-labelledby="review-game-title">
+      <header className="review-workstation-head">
+        <button className="review-v2-back" type="button" onClick={onBack}>
+          <ChevronLeft size={15} /> Games
+        </button>
+
+        <div className="review-workstation-identity">
+          <div>
             <span className={`story-verdict ${story.verdict}`}>
               {verdictLabel(story.verdict)}
             </span>
-            <span>{game.white} — {game.black}</span>
             <span>{game.result}</span>
+            <span>{game.openingName ?? "Reviewed game"}</span>
           </div>
-          <h1>{story.headline}</h1>
-          <p>{story.summary}</p>
+          <strong id="review-game-title">
+            {game.white} — {game.black}
+          </strong>
         </div>
-        <div className="story-priority">
-          <Target size={19} />
-          <span>Priority from this game</span>
-          <strong>
+
+        <div className="review-workstation-priority">
+          <Target size={15} />
+          <span>
             {story.prioritySkillId
               ? skillById[story.prioritySkillId]?.title ?? story.prioritySkillId
               : "No urgent weakness"}
-          </strong>
+          </span>
         </div>
       </header>
 
-      <div className="story-phase-grid">
+      <div className="review-phase-strip" aria-label="Game phases">
         {story.phases.map((phase) => (
           <button
             type="button"
             key={phase.phase}
-            className={`story-phase ${phase.phase}`}
+            className={selectedPhase?.phase === phase.phase ? "active" : ""}
             onClick={() => {
               const move = game.moves.find(
-                (item) => item.ply >= phase.startPly && item.ply <= phase.endPly,
+                (item) =>
+                  item.ply >= phase.startPly &&
+                  item.ply <= phase.endPly,
               );
               if (move) setSelectedPly(move.ply);
             }}
           >
-            <div>
-              <span>{phaseLabel(phase.phase)}</span>
-              <strong>{phase.headline}</strong>
-            </div>
-            <p>{phase.summary}</p>
-            <div className="phase-metrics">
-              <span>Avg loss {(phase.averageCentipawnLoss / 100).toFixed(1)}</span>
-              <span>{phase.criticalCount} critical</span>
-            </div>
+            <span>{phaseLabel(phase.phase)}</span>
+            <strong>{phase.headline}</strong>
+            <small>
+              {(phase.averageCentipawnLoss / 100).toFixed(1)} avg loss · {phase.criticalCount} critical
+            </small>
           </button>
         ))}
       </div>
 
-      <section className="story-workspace">
-        <div className="story-board-column">
+      <section className="review-workspace-v2">
+        <div className="review-board-v2">
           <ChessBoard
             key={`${selectedPly}-${preview}-${boardFen}`}
             fen={boardFen}
@@ -319,9 +324,53 @@ export function GameStoryView({
               </>
             )}
           </div>
+
+          <div className="review-board-story">
+            <strong>{story.headline}</strong>
+            <span>{story.summary}</span>
+          </div>
         </div>
 
-        <aside className="story-moment-panel">
+        <aside className="review-notation-v2" aria-label="Move notation">
+          <header>
+            <span>Moves</span>
+            <strong>{game.moves.length} plies</strong>
+          </header>
+
+          <div className="review-notation-list">
+            {moveRows.map((row) => (
+              <div className="review-notation-row" key={row.number}>
+                <span>{row.number}.</span>
+                {([row.w, row.b] as const).map((move, colorIndex) => {
+                  if (!move) return <span key={colorIndex} />;
+                  const moment = story.moments.find(
+                    (item) => item.ply === move.ply,
+                  );
+                  return (
+                    <button
+                      key={move.ply}
+                      type="button"
+                      className={[
+                        selectedPly === move.ply ? "active" : "",
+                        moment ? "moment" : "",
+                        moment?.severity ?? "",
+                        moment?.kind ?? "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      onClick={() => setSelectedPly(move.ply)}
+                    >
+                      {move.san}
+                      {moment && <i />}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </aside>
+
+        <aside className="review-insight-v2">
           {selectedMoment ? (
             <MomentDetails
               moment={selectedMoment}
@@ -333,83 +382,50 @@ export function GameStoryView({
             />
           ) : selectedMove ? (
             <div className="ordinary-move">
-              <p className="eyebrow">MOVE {selectedMove.moveNumber}</p>
+              <p className="eyebrow">
+                {phaseLabel(selectedPhase?.phase ?? "middlegame")} · MOVE {selectedMove.moveNumber}
+              </p>
               <h2>{selectedMove.san}</h2>
               <p>
-                This move is part of the complete timeline but was not one of
-                the few moments selected for deeper review.
+                This move was not promoted into the critical-moment set. Use the notation to continue through the game.
               </p>
             </div>
           ) : null}
         </aside>
       </section>
 
-      <section className="story-timeline-section">
-        <div className="review-section-heading">
-          <div>
-            <p className="eyebrow">MOVE TIMELINE</p>
-            <h2>Replay the whole game.</h2>
-          </div>
-          <span>Highlighted moves are story moments</span>
+      <section className="review-eval-strip" aria-label="Critical moment evaluation trace">
+        <div className="review-eval-label">
+          <span>Critical moments</span>
+          <strong>{story.moments.length}</strong>
         </div>
-
-        <div className="story-timeline">
-          {moveRows.map((row) => (
-            <div className="timeline-row" key={row.number}>
-              <span className="timeline-number">{row.number}.</span>
-              {([row.w, row.b] as const).map((move, colorIndex) => {
-                if (!move) return <span key={colorIndex} />;
-                const moment = story.moments.find(
-                  (item) => item.ply === move.ply,
-                );
-                return (
-                  <button
-                    key={move.ply}
-                    type="button"
-                    className={[
-                      selectedPly === move.ply ? "active" : "",
-                      moment ? `moment ${moment.kind}` : "",
-                      moment?.severity ?? "",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    onClick={() => setSelectedPly(move.ply)}
-                  >
-                    {move.san}
-                    {moment && <i />}
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="story-moment-strip">
-        <div className="review-section-heading">
-          <div>
-            <p className="eyebrow">THE STORY</p>
-            <h2>{story.moments.length} moments worth remembering.</h2>
-          </div>
-        </div>
-
-        <div className="story-moment-cards">
-          {story.moments.map((moment, index) => (
-            <button
-              key={moment.id}
-              type="button"
-              className={selectedPly === moment.ply ? "active" : ""}
-              onClick={() => setSelectedPly(moment.ply)}
-            >
-              <span>{index + 1}</span>
-              <div>
-                <small>{phaseLabel(moment.phase)} · move {moment.moveNumber}</small>
-                <strong>{moment.title}</strong>
-                <p>{moment.summary}</p>
-              </div>
-              <ChevronRight size={16} />
-            </button>
-          ))}
+        <div className="review-eval-track">
+          {story.moments.map((moment, index) => {
+            const normalized = Math.max(
+              -6,
+              Math.min(6, moment.evaluationAfter / 100),
+            );
+            const top = 50 - (normalized / 6) * 38;
+            return (
+              <button
+                key={moment.id}
+                type="button"
+                className={[
+                  selectedPly === moment.ply ? "active" : "",
+                  moment.severity ?? "",
+                  moment.kind,
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                style={{
+                  left: `${story.moments.length <= 1 ? 50 : (index / (story.moments.length - 1)) * 100}%`,
+                  top: `${top}%`,
+                }}
+                aria-label={`${phaseLabel(moment.phase)}, move ${moment.moveNumber}: ${moment.title}`}
+                onClick={() => setSelectedPly(moment.ply)}
+              />
+            );
+          })}
         </div>
       </section>
 
