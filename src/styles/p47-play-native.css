@@ -79,10 +79,13 @@
 
   .play-v2-start-block {
     position: sticky;
-    bottom: calc(var(--chess-mobile-nav-height) + env(safe-area-inset-bottom));
+    bottom: var(--chess-mobile-nav-safe-height);
     z-index: 16;
-    margin-inline: -12px;
-    padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    margin-inline: calc(var(--chess-native-gutter) * -1);
+    padding:
+      10px
+      var(--chess-native-gutter)
+      max(10px, env(safe-area-inset-bottom));
     background: rgba(13,15,16,.97);
     border-top: 1px solid var(--chess-color-separator);
     backdrop-filter: blur(14px);
