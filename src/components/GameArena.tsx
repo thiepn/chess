@@ -20,6 +20,7 @@ import type {
   TrainingScenario,
 } from "../play/types";
 import { ChessBoard } from "./ChessBoard";
+import { ChessPiece } from "./ChessPiece";
 
 interface GameArenaProps {
   initialFen: string;
@@ -418,7 +419,7 @@ export function GameArena({
           <div className="game-player-strip player">
             <div>
               <span className="game-player-mark you" aria-hidden="true">
-                {playerColor === "w" ? "♙" : "♟"}
+                <ChessPiece color={playerColor} type="p" />
               </span>
               <span>
                 <strong>You</strong>
