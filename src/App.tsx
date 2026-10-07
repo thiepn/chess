@@ -2788,6 +2788,8 @@ export default function App() {
         ) : page === "review" ? (
           <ReviewView
             games={state.games ?? []}
+            routePath={route.path}
+            onNavigate={navigate}
             mistakes={state.mistakes ?? []}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}

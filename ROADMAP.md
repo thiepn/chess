@@ -533,7 +533,26 @@ Delivered:
 
 ### P44 — Review Page Redesign
 
+**Status:** implemented.
+
 Build a serious board + notation + critical-moment analysis workstation around the existing self-analysis-first P30 behavior.
+
+Delivered:
+
+- `/review` is now a game-analysis index rather than a hero/dashboard;
+- game history is a compact review rail with direct routed entry into analyzed games;
+- PGN/Lichess import is a focused analysis desk rather than a promotional card;
+- unresolved mistakes are presented as a repair queue rather than a card grid;
+- analyzed games open on real `/review/:gameId` URLs;
+- unstructured stored games can be upgraded in-place to the visual review;
+- detailed review now uses one persistent workstation: board, notation, critical-moment teaching and evaluation trace;
+- removed the story hero, phase-card grid, separate move-timeline section and separate story-card strip;
+- game phases are compact navigation, not headline content;
+- move notation and critical moments remain synchronized with the board;
+- selected moments still preserve self-analysis-before-reveal, replay, repair, retention and transfer logic;
+- added compact clickable critical-moment evaluation trace;
+- mobile uses board-first review, then bounded notation, then teaching context;
+- Review route parsing/building is covered by regression tests.
 
 ### P45 — Library Page Redesign
 

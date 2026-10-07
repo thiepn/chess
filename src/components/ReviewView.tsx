@@ -1,32 +1,36 @@
 import { useMemo, useRef, useState } from "react";
+import "../styles/review-v2.css";
 import {
   BrainCircuit,
   FileUp,
+  Link2,
   LoaderCircle,
   RotateCcw,
   Swords,
   Target,
   Upload,
-  Link2,
 } from "lucide-react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { analyzeImportedGame } from "../games/analyze";
 import { importPgn, playerMoveCount } from "../games/import";
 import { fetchLichessPgn } from "../games/lichess";
-import type { LichessConnection } from "../lichess/types";
-import { LichessSyncCard } from "./LichessSyncCard";
 import type {
   GameAnalysisProgress,
   GameReviewReflection,
   ImportedGame,
   PersonalMistake,
 } from "../games/types";
-import { GameStoryView } from "./GameStoryView";
+import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
+import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
+import { GameStoryView } from "./GameStoryView";
+import { LichessSyncCard } from "./LichessSyncCard";
 
 interface ReviewViewProps {
   games: ImportedGame[];
   mistakes: PersonalMistake[];
+  routePath: string;
+  onNavigate: (path: string) => void;
   lichess?: LichessConnection;
   lichessSyncing: boolean;
   lichessSyncMessage?: string | null;
@@ -54,6 +58,8 @@ function severityLabel(value: PersonalMistake["severity"]) {
 export function ReviewView({
   games,
   mistakes,
+  routePath,
+  onNavigate,
   lichess,
   lichessSyncing,
   lichessSyncMessage,
@@ -78,22 +84,32 @@ export function ReviewView({
   const [progress, setProgress] = useState<GameAnalysisProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
-  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const [reanalyzingGameId, setReanalyzingGameId] = useState<string | null>(null);
   const [batchAnalyzing, setBatchAnalyzing] = useState(false);
   const [batchStatus, setBatchStatus] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const route = resolveReviewRoute(routePath);
+  const selectedGame = route.gameId
+    ? games.find((game) => game.id === route.gameId)
+    : undefined;
+
   const unresolved = useMemo(
-    () => mistakes.filter((mistake) => !mistake.resolved),
+    () =>
+      mistakes
+        .filter((mistake) => !mistake.resolved)
+        .sort((a, b) => {
+          const severity = { blunder: 3, mistake: 2, inaccuracy: 1 };
+          return (
+            severity[b.severity] - severity[a.severity] ||
+            b.centipawnLoss - a.centipawnLoss
+          );
+        }),
     [mistakes],
   );
 
-  const latestStoryGame = useMemo(
-    () =>
-      [...games]
-        .reverse()
-        .find((game) => Boolean(game.reviewStory)),
+  const sortedGames = useMemo(
+    () => [...games].sort((a, b) => b.importedAt.localeCompare(a.importedAt)),
     [games],
   );
 
@@ -124,8 +140,8 @@ export function ReviewView({
       });
 
       onAnalyzed(result.game, result.mistakes);
-      setSelectedGameId(result.game.id);
       setPgn("");
+      onNavigate(reviewGamePath(result.game.id));
     } catch (cause) {
       setError(
         cause instanceof Error
@@ -158,7 +174,7 @@ export function ReviewView({
         onProgress: setProgress,
       });
       onAnalyzed(result.game, result.mistakes);
-      setSelectedGameId(result.game.id);
+      onNavigate(reviewGamePath(result.game.id));
     } catch (cause) {
       setError(
         cause instanceof Error
@@ -175,9 +191,8 @@ export function ReviewView({
   async function analyzeSyncedGames() {
     if (analyzing || batchAnalyzing) return;
 
-    const pending = [...games]
+    const pending = sortedGames
       .filter((game) => game.source === "lichess" && !game.analyzedAt)
-      .sort((a, b) => b.importedAt.localeCompare(a.importedAt))
       .slice(0, 5);
 
     if (!pending.length) {
@@ -226,16 +241,54 @@ export function ReviewView({
     }
   }
 
-  const selectedGame = selectedGameId
-    ? games.find((game) => game.id === selectedGameId)
-    : undefined;
+  if (route.mode === "game") {
+    if (!selectedGame) {
+      return (
+        <section className="review-v2-recovery">
+          <strong>Game not found</strong>
+          <p>This review is no longer available in local history.</p>
+          <button className="secondary" type="button" onClick={() => onNavigate("/review")}>
+            Back to Review
+          </button>
+        </section>
+      );
+    }
 
-  if (selectedGame) {
+    if (!selectedGame.reviewStory) {
+      return (
+        <section className="review-v2-upgrade">
+          <button className="review-v2-back" type="button" onClick={() => onNavigate("/review")}>
+            ← Review
+          </button>
+          <div>
+            <p className="eyebrow">ANALYSIS REQUIRED</p>
+            <h1>{selectedGame.white} — {selectedGame.black}</h1>
+            <p>
+              This game is saved, but it does not yet have the structured visual review.
+            </p>
+            <button
+              className="primary"
+              type="button"
+              disabled={reanalyzingGameId === selectedGame.id}
+              onClick={() => void reanalyzeStoredGame(selectedGame)}
+            >
+              {reanalyzingGameId === selectedGame.id ? (
+                <LoaderCircle className="spin" size={16} />
+              ) : (
+                <BrainCircuit size={16} />
+              )}
+              Generate analysis
+            </button>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <GameStoryView
         game={selectedGame}
         mistakes={mistakes.filter((mistake) => mistake.gameId === selectedGame.id)}
-        onBack={() => setSelectedGameId(null)}
+        onBack={() => onNavigate("/review")}
         onTrainMistake={onTrainMistake}
         onReplayMistake={onReplayMistake}
         reflections={reflections}
@@ -251,124 +304,126 @@ export function ReviewView({
   }
 
   return (
-    <section className="review-view">
-      <header className="section-hero compact">
-        <div>
-          <p className="eyebrow">GAME REVIEW</p>
-          <h1>Turn your games into training.</h1>
-          <p>
-            Import a finished PGN. Stockfish checks your moves, but only
-            meaningful learning moments are promoted into the mistake bank.
-          </p>
-        </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <BrainCircuit size={30} />
-        </div>
-      </header>
-
-      <section className="review-lichess-section">
-        <LichessSyncCard
-          connection={lichess}
-          syncing={lichessSyncing}
-          message={lichessSyncMessage}
-          error={lichessSyncError}
-          compact
-          onLink={onLinkLichess}
-          onUnlink={onUnlinkLichess}
-          onSync={onSyncLichess}
-        />
-
-        {lichess && (
-          <button
-            className="review-batch-analyze"
-            type="button"
-            disabled={
-              batchAnalyzing ||
-              !games.some(
-                (game) => game.source === "lichess" && !game.analyzedAt,
-              )
-            }
-            onClick={() => void analyzeSyncedGames()}
-          >
-            {batchAnalyzing ? (
-              <LoaderCircle className="spin" size={16} />
-            ) : (
-              <BrainCircuit size={16} />
-            )}
-            {batchAnalyzing ? "Analyzing synced games…" : "Analyze new human games"}
-          </button>
-        )}
-
-        {batchStatus && <span className="review-batch-status">{batchStatus}</span>}
-      </section>
-
-      <div className="review-grid">
-        <article className="panel import-panel">
-          <div className="panel-title">
-            <div>
-              <p className="eyebrow">IMPORT</p>
-              <h3>Analyze a game</h3>
-            </div>
-            <FileUp size={20} />
+    <section className="review-v2" aria-labelledby="review-title">
+      <aside className="review-v2-history" aria-label="Game history">
+        <div className="review-v2-history-head">
+          <div>
+            <span>Review</span>
+            <strong id="review-title">Games</strong>
           </div>
+          <small>{games.length}</small>
+        </div>
 
-          <div className="lichess-import-row">
-            <input
-              value={lichessUrl}
-              onChange={(event) => setLichessUrl(event.target.value)}
-              placeholder="Lichess game URL or ID"
-              disabled={analyzing || batchAnalyzing || fetchingLichess}
-            />
-            <button
-              type="button"
-              disabled={!lichessUrl.trim() || analyzing || batchAnalyzing || fetchingLichess}
-              onClick={async () => {
-                setError(null);
-                setFetchingLichess(true);
-                try {
-                  setPgn(await fetchLichessPgn(lichessUrl));
-                } catch (cause) {
-                  setError(
-                    cause instanceof Error
-                      ? cause.message
-                      : "Could not fetch the Lichess game.",
-                  );
-                } finally {
-                  setFetchingLichess(false);
+        <div className="review-v2-game-list">
+          {sortedGames.length ? (
+            sortedGames.map((game) => (
+              <button
+                key={game.id}
+                type="button"
+                onClick={() =>
+                  game.reviewStory
+                    ? onNavigate(reviewGamePath(game.id))
+                    : void reanalyzeStoredGame(game)
                 }
-              }}
-            >
-              {fetchingLichess ? <LoaderCircle className="spin" size={15} /> : <Link2 size={15} />}
-              Fetch
-            </button>
+                disabled={reanalyzingGameId === game.id}
+              >
+                <span className="review-v2-result">{game.result}</span>
+                <span className="review-v2-game-copy">
+                  <strong>{game.white} — {game.black}</strong>
+                  <small>
+                    {game.openingName ?? game.event ?? "Chess game"}
+                    {game.source === "lichess" ? " · Lichess" : ""}
+                  </small>
+                </span>
+                <span className="review-v2-game-state">
+                  {reanalyzingGameId === game.id
+                    ? "Analyzing"
+                    : game.reviewStory
+                      ? `${game.reviewStory.moments.length} moments`
+                      : "Analyze"}
+                </span>
+              </button>
+            ))
+          ) : (
+            <div className="review-v2-empty-list">
+              <BrainCircuit size={18} />
+              <span>No games yet.</span>
+            </div>
+          )}
+        </div>
+      </aside>
+
+      <main className="review-v2-main">
+        <header className="review-v2-main-head">
+          <div>
+            <p className="eyebrow">ANALYSIS DESK</p>
+            <h1>Import a game</h1>
+            <p>
+              Stockfish supports the review; only useful learning moments become future training.
+            </p>
+          </div>
+          <div className="review-v2-summary">
+            <span>
+              <strong>{games.filter((game) => game.analyzedAt).length}</strong>
+              analyzed
+            </span>
+            <span>
+              <strong>{unresolved.length}</strong>
+              to repair
+            </span>
+          </div>
+        </header>
+
+        <section className="review-v2-import">
+          <div className="review-v2-import-source">
+            <label htmlFor="review-lichess-url">Lichess game</label>
+            <div>
+              <input
+                id="review-lichess-url"
+                value={lichessUrl}
+                onChange={(event) => setLichessUrl(event.target.value)}
+                placeholder="Game URL or ID"
+                disabled={analyzing || batchAnalyzing || fetchingLichess}
+              />
+              <button
+                type="button"
+                disabled={!lichessUrl.trim() || analyzing || batchAnalyzing || fetchingLichess}
+                onClick={async () => {
+                  setError(null);
+                  setFetchingLichess(true);
+                  try {
+                    setPgn(await fetchLichessPgn(lichessUrl));
+                  } catch (cause) {
+                    setError(
+                      cause instanceof Error
+                        ? cause.message
+                        : "Could not fetch the Lichess game.",
+                    );
+                  } finally {
+                    setFetchingLichess(false);
+                  }
+                }}
+              >
+                {fetchingLichess ? (
+                  <LoaderCircle className="spin" size={14} />
+                ) : (
+                  <Link2 size={14} />
+                )}
+                Fetch
+              </button>
+            </div>
           </div>
 
-          <div className="import-divider"><span>or paste/upload PGN</span></div>
-
-          <div className="color-picker" aria-label="Your color">
-            <button
-              className={playerColor === "w" ? "active" : ""}
-              onClick={() => setPlayerColor("w")}
-              type="button"
-            >
-              ♙ I was White
-            </button>
-            <button
-              className={playerColor === "b" ? "active" : ""}
-              onClick={() => setPlayerColor("b")}
-              type="button"
-            >
-              ♟ I was Black
-            </button>
+          <div className="review-v2-import-source">
+            <label htmlFor="review-pgn">PGN</label>
+            <textarea
+              id="review-pgn"
+              value={pgn}
+              onChange={(event) => setPgn(event.target.value)}
+              placeholder="Paste PGN…"
+              spellCheck={false}
+            />
           </div>
-
-          <textarea
-            className="pgn-input"
-            value={pgn}
-            onChange={(event) => setPgn(event.target.value)}
-            placeholder={"Paste PGN here…\n\n1. e4 e5 2. Nf3 Nc6 …"}
-            spellCheck={false}
-          />
 
           <input
             ref={fileRef}
@@ -383,24 +438,47 @@ export function ReviewView({
             }}
           />
 
-          <div className="import-actions">
-            <button
-              className="secondary"
-              type="button"
-              onClick={() => fileRef.current?.click()}
-              disabled={analyzing || batchAnalyzing}
-            >
-              <Upload size={16} /> PGN file
-            </button>
-            <button
-              className="primary"
-              type="button"
-              onClick={analyze}
-              disabled={!pgn.trim() || analyzing || batchAnalyzing}
-            >
-              {analyzing ? <LoaderCircle className="spin" size={17} /> : <BrainCircuit size={17} />}
-              {analyzing ? "Analyzing…" : "Analyze my game"}
-            </button>
+          <div className="review-v2-import-footer">
+            <div className="review-v2-color" aria-label="Your color">
+              <button
+                className={playerColor === "w" ? "active" : ""}
+                onClick={() => setPlayerColor("w")}
+                type="button"
+              >
+                White
+              </button>
+              <button
+                className={playerColor === "b" ? "active" : ""}
+                onClick={() => setPlayerColor("b")}
+                type="button"
+              >
+                Black
+              </button>
+            </div>
+
+            <div>
+              <button
+                className="secondary"
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                disabled={analyzing || batchAnalyzing}
+              >
+                <Upload size={15} /> PGN file
+              </button>
+              <button
+                className="primary"
+                type="button"
+                onClick={() => void analyze()}
+                disabled={!pgn.trim() || analyzing || batchAnalyzing}
+              >
+                {analyzing ? (
+                  <LoaderCircle className="spin" size={16} />
+                ) : (
+                  <FileUp size={16} />
+                )}
+                {analyzing ? "Analyzing" : "Analyze"}
+              </button>
+            </div>
           </div>
 
           {progress && analyzing && (
@@ -411,13 +489,9 @@ export function ReviewView({
                     ? "Loading Stockfish"
                     : progress.phase === "classifying"
                       ? "Selecting learning moments"
-                      : "Analyzing your moves"}
+                      : "Analyzing moves"}
                 </span>
-                <strong>
-                  {progress.total
-                    ? `${progress.completed}/${progress.total}`
-                    : "…"}
-                </strong>
+                <strong>{progress.total ? `${progress.completed}/${progress.total}` : "…"}</strong>
               </div>
               <div className="track">
                 <i
@@ -437,170 +511,85 @@ export function ReviewView({
               <span>{error}</span>
             </div>
           )}
-        </article>
+        </section>
 
-        <article className="panel mistake-summary-panel">
-          <div className="panel-title">
-            <div>
-              <p className="eyebrow">PERSONAL BANK</p>
-              <h3>{unresolved.length} positions to repair</h3>
-            </div>
-            <Target size={20} />
-          </div>
-          <p>
-            These are not every engine disagreement. They are positions with
-            enough practical impact to justify future training.
-          </p>
+        <section className="review-v2-sync">
+          <LichessSyncCard
+            connection={lichess}
+            syncing={lichessSyncing}
+            message={lichessSyncMessage}
+            error={lichessSyncError}
+            compact
+            onLink={onLinkLichess}
+            onUnlink={onUnlinkLichess}
+            onSync={onSyncLichess}
+          />
+          {lichess && (
+            <button
+              type="button"
+              disabled={
+                batchAnalyzing ||
+                !games.some(
+                  (game) => game.source === "lichess" && !game.analyzedAt,
+                )
+              }
+              onClick={() => void analyzeSyncedGames()}
+            >
+              {batchAnalyzing ? (
+                <LoaderCircle className="spin" size={15} />
+              ) : (
+                <BrainCircuit size={15} />
+              )}
+              {batchAnalyzing ? "Analyzing…" : "Analyze new synced games"}
+            </button>
+          )}
+          {batchStatus && <span>{batchStatus}</span>}
+        </section>
+      </main>
 
-          <div className="bank-stats">
-            <div>
-              <span>Games analyzed</span>
-              <strong>{games.filter((game) => game.analyzedAt).length}</strong>
-            </div>
-            <div>
-              <span>Blunders</span>
-              <strong>{unresolved.filter((item) => item.severity === "blunder").length}</strong>
-            </div>
-            <div>
-              <span>Repaired</span>
-              <strong>{mistakes.filter((item) => item.resolved).length}</strong>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      {latestStoryGame?.reviewStory && (
-        <button
-          className="latest-story-card"
-          type="button"
-          onClick={() => setSelectedGameId(latestStoryGame.id)}
-        >
-          <div className="latest-story-kicker">
-            <BrainCircuit size={18} />
-            <span>LATEST GAME STORY</span>
-          </div>
+      <aside className="review-v2-repair" aria-labelledby="repair-title">
+        <header>
           <div>
-            <h2>{latestStoryGame.reviewStory.headline}</h2>
-            <p>{latestStoryGame.reviewStory.summary}</p>
+            <p className="eyebrow">REPAIR QUEUE</p>
+            <h2 id="repair-title">{unresolved.length} positions</h2>
           </div>
-          <div className="latest-story-meta">
-            <span>{latestStoryGame.white} — {latestStoryGame.black}</span>
-            <strong>{latestStoryGame.reviewStory.moments.length} moments</strong>
-          </div>
-        </button>
-      )}
+          <Target size={17} />
+        </header>
 
-      <section className="mistake-bank">
-        <div className="review-section-heading">
-          <div>
-            <p className="eyebrow">CRITICAL MOMENTS</p>
-            <h2>Mistake bank</h2>
-          </div>
-          <span>Highest-impact positions first</span>
+        <div className="review-v2-repair-list">
+          {unresolved.length ? (
+            unresolved.slice(0, 12).map((mistake) => (
+              <div key={mistake.id} className={`review-v2-repair-row ${mistake.severity}`}>
+                <div>
+                  <span>{severityLabel(mistake.severity)} · move {mistake.moveNumber}</span>
+                  <strong>{mistake.actualSan}</strong>
+                  <p>{mistake.explanation}</p>
+                </div>
+                <div>
+                  <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
+                  <button type="button" onClick={() => onTrainMistake(mistake.id)}>
+                    <Swords size={14} />
+                    Repair
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="review-v2-repair-empty">
+              <Target size={18} />
+              <strong>No repair queue</strong>
+              <span>Critical positions from analyzed games will appear here.</span>
+            </div>
+          )}
         </div>
 
-        {mistakes.length ? (
-          <div className="mistake-card-grid">
-            {[...mistakes]
-              .sort((a, b) => {
-                const severity = { blunder: 3, mistake: 2, inaccuracy: 1 };
-                return (
-                  severity[b.severity] - severity[a.severity] ||
-                  b.centipawnLoss - a.centipawnLoss
-                );
-              })
-              .map((mistake) => (
-                <article
-                  key={mistake.id}
-                  className={`mistake-card ${mistake.severity} ${mistake.resolved ? "resolved" : ""}`}
-                >
-                  <div className="mistake-card-top">
-                    <span>{severityLabel(mistake.severity)}</span>
-                    <strong>Move {mistake.moveNumber}</strong>
-                  </div>
-                  <h3>{mistake.actualSan}</h3>
-                  <p>{mistake.explanation}</p>
-                  <div className="mistake-tags">
-                    {mistake.skillIds.slice(0, 2).map((skillId) => (
-                      <span key={skillId}>{skillId.split(".").at(-1)?.replaceAll("-", " ")}</span>
-                    ))}
-                  </div>
-                  <div className="mistake-card-footer">
-                    <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
-                    <button type="button" onClick={() => onTrainMistake(mistake.id)}>
-                      {mistake.resolved ? <RotateCcw size={15} /> : <Swords size={15} />}
-                      {mistake.resolved ? "Train again" : "Repair"}
-                    </button>
-                  </div>
-                </article>
-              ))}
-          </div>
-        ) : (
-          <div className="empty-bank">
-            <Target size={24} />
-            <strong>No personal mistakes yet.</strong>
-            <span>Import a game above. Only meaningful moments will appear here.</span>
+        {mistakes.some((mistake) => mistake.resolved) && (
+          <div className="review-v2-repaired">
+            <RotateCcw size={14} />
+            {mistakes.filter((mistake) => mistake.resolved).length} repaired positions
           </div>
         )}
-      </section>
-
-      {games.length > 0 && (
-        <section className="game-history">
-          <div className="review-section-heading">
-            <div>
-              <p className="eyebrow">HISTORY</p>
-              <h2>Analyzed games</h2>
-            </div>
-          </div>
-          <div className="game-history-list">
-            {[...games].reverse().slice(0, 8).map((game) => (
-              <button
-                className="game-history-row"
-                type="button"
-                key={game.id}
-                onClick={() => {
-                  if (game.reviewStory) {
-                    setSelectedGameId(game.id);
-                  } else {
-                    void reanalyzeStoredGame(game);
-                  }
-                }}
-                disabled={reanalyzingGameId === game.id}
-              >
-                <div>
-                  <strong>{game.white} — {game.black}</strong>
-                  <span>
-                    {game.result} · {game.moves.length} plies
-                    {game.source === "lichess" ? " · Lichess human game" : ""}
-                    {game.timeControlCategory && game.timeControlCategory !== "unknown"
-                      ? ` · ${game.timeControlCategory}`
-                      : ""}
-                    {game.opponentRating ? ` · opp ${game.opponentRating}` : ""}
-                  </span>
-                </div>
-                <div>
-                  <span>
-                    {reanalyzingGameId === game.id
-                      ? "Generating story…"
-                      : game.reviewStory
-                        ? "Visual review"
-                        : "Upgrade review"}
-                  </span>
-                  <strong>
-                    {reanalyzingGameId === game.id
-                      ? "Stockfish"
-                      : game.practicalMetrics
-                        ? `Quality ${game.practicalMetrics.qualityScore}% · ACPL ${game.practicalMetrics.averageCentipawnLoss}`
-                        : game.reviewStory
-                          ? `${game.reviewStory.moments.length} story moments`
-                          : "Generate P8 story"}
-                  </strong>
-                </div>
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
+      </aside>
     </section>
   );
 }
