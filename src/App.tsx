@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BarChart3,
   Bookmark,
@@ -37,19 +37,15 @@ import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
 import { LessonRunner } from "./components/LessonRunner";
 import { PuzzleRunner } from "./components/PuzzleRunner";
-import { LearnView } from "./components/LearnView";
-import { ReviewView } from "./components/ReviewView";
 import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
 import { CalculationRunner } from "./components/CalculationRunner";
 import { EndgameTechniqueRunner } from "./components/EndgameTechniqueRunner";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
-import { OpeningsView } from "./components/OpeningsView";
 import { OpeningTrainer } from "./components/OpeningTrainer";
 import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
-import { PlayView } from "./components/PlayView";
 import { GameArena } from "./components/GameArena";
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
@@ -63,10 +59,8 @@ import {
 import { scenarioById } from "./play/scenarios";
 import { aiProfiles, resolveAiProfile } from "./play/profiles";
 import type { PlayResult, TrainingScenario } from "./play/types";
-import { LibraryView } from "./components/LibraryView";
 import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
 import type { SavedStudy } from "./library/types";
-import { ModelGamesView } from "./components/ModelGamesView";
 import { ModelGameRunner } from "./components/ModelGameRunner";
 import { modelGameById, modelGameCheckpointPosition } from "./model-games/games";
 import { recordModelGameCheckpoint, recordModelGameCompletion } from "./model-games/progress";
@@ -95,7 +89,6 @@ import {
   ensureAnalyticsState,
 } from "./analytics/record";
 import { buildProgressIntelligence } from "./analytics/engine";
-import { ProgressView } from "./components/ProgressView";
 import {
   fetchLichessProfile,
   fetchRecentLichessGames,
@@ -115,6 +108,66 @@ import {
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
+
+const LearnView = lazy(() =>
+  import("./components/LearnView").then((module) => ({
+    default: module.LearnView,
+  })),
+);
+const ReviewView = lazy(() =>
+  import("./components/ReviewView").then((module) => ({
+    default: module.ReviewView,
+  })),
+);
+const OpeningsView = lazy(() =>
+  import("./components/OpeningsView").then((module) => ({
+    default: module.OpeningsView,
+  })),
+);
+const PlayView = lazy(() =>
+  import("./components/PlayView").then((module) => ({
+    default: module.PlayView,
+  })),
+);
+const LibraryView = lazy(() =>
+  import("./components/LibraryView").then((module) => ({
+    default: module.LibraryView,
+  })),
+);
+const ModelGamesView = lazy(() =>
+  import("./components/ModelGamesView").then((module) => ({
+    default: module.ModelGamesView,
+  })),
+);
+const ProgressView = lazy(() =>
+  import("./components/ProgressView").then((module) => ({
+    default: module.ProgressView,
+  })),
+);
+
+function RouteLoading() {
+  return (
+    <section className="route-loading" aria-live="polite" aria-label="Loading view">
+      <span className="loading-shimmer" />
+      <span className="loading-shimmer" />
+      <span className="loading-shimmer short" />
+    </section>
+  );
+}
+
+function preloadNavRoute(id: string) {
+  if (id === "learn") {
+    void import("./components/LearnView");
+  } else if (id === "play") {
+    void import("./components/PlayView");
+  } else if (id === "review") {
+    void import("./components/ReviewView");
+  } else if (id === "library") {
+    void import("./components/LibraryView");
+  } else if (id === "progress") {
+    void import("./components/ProgressView");
+  }
+}
 
 const repo = createChessStateRepository();
 
@@ -234,6 +287,11 @@ export default function App() {
   const activeModelGame = activeModelGameId
     ? modelGameById[activeModelGameId]
     : undefined;
+  const dialogOpen = Boolean(
+    assessmentSession ||
+    activeModelGame ||
+    active,
+  );
   const activeCalculationPosition =
     active &&
     activeSkill &&
@@ -357,6 +415,110 @@ export default function App() {
   }, [loaded, progressIntelligence.prescriptions]);
 
   const firstActivity = session.activities[0];
+
+  useEffect(() => {
+    if (!dialogOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const returnFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    document.body.style.overflow = "hidden";
+
+    const backgroundRegions = [
+      document.querySelector(".sidebar"),
+      document.querySelector(".main"),
+      document.querySelector(".mobile-nav"),
+      document.querySelector(".mobile-experience"),
+    ].filter(
+      (node): node is HTMLElement =>
+        node instanceof HTMLElement,
+    );
+
+    for (const region of backgroundRegions) {
+      region.setAttribute("inert", "");
+    }
+
+    window.requestAnimationFrame(() => {
+      const closeButton =
+        document.querySelector<HTMLButtonElement>(
+          ".training-overlay .close-button",
+        );
+      closeButton?.focus();
+    });
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      for (const region of backgroundRegions) {
+        region.removeAttribute("inert");
+      }
+      window.requestAnimationFrame(() => {
+        returnFocus?.focus();
+      });
+    };
+  }, [dialogOpen]);
+
+  useEffect(() => {
+    if (!dialogOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented) return;
+
+      event.preventDefault();
+      if (assessmentSession) {
+        setAssessmentSession(null);
+        return;
+      }
+      if (activeModelGameId) {
+        setActiveModelGameId(null);
+        return;
+      }
+
+      setActiveIndex(null);
+      setManualActivity(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () =>
+      window.removeEventListener("keydown", closeOnEscape);
+  }, [
+    dialogOpen,
+    assessmentSession,
+    activeModelGameId,
+  ]);
+
+  useEffect(() => {
+    const handleShortcut = (event: KeyboardEvent) => {
+      if (dialogOpen || event.defaultPrevented) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.matches("input, textarea, select, [contenteditable='true']") ||
+          target.closest("[role='dialog']"))
+      ) {
+        return;
+      }
+
+      if (
+        event.key.toLowerCase() === "t" &&
+        session.activities.length
+      ) {
+        event.preventDefault();
+        setNav("home");
+        setActiveIndex(0);
+        emitExperienceEvent({ feedback: "navigate" });
+      }
+    };
+
+    window.addEventListener("keydown", handleShortcut);
+    return () =>
+      window.removeEventListener("keydown", handleShortcut);
+  }, [dialogOpen, session.activities.length]);
+
   const homeTrainingReason = !firstActivity
     ? "No adaptive activity is due right now. Open the course to choose the next concept."
     : firstActivity.source === "prescription"
@@ -1999,15 +2161,18 @@ export default function App() {
       settings={state.experience ?? defaultExperienceSettings}
       onChange={updateExperience}
     >
-      <div className="app-shell">
+      <div className={dialogOpen ? "app-shell training-open" : "app-shell"}>
       <aside className="sidebar">
         <div className="brand-mark">♞</div>
-        <nav>
+        <nav aria-label="Primary navigation">
           {navItems.map(([id, label, Icon]) => (
             <button
               key={id}
               className={nav === id ? "nav-item active" : "nav-item"}
               aria-current={nav === id ? "page" : undefined}
+              title={id === "home" ? "Train · keyboard shortcut T" : label}
+              onPointerEnter={() => preloadNavRoute(id)}
+              onFocus={() => preloadNavRoute(id)}
               onClick={() => {
                 setNav(id);
                 emitExperienceEvent({ feedback: "navigate" });
@@ -2015,6 +2180,9 @@ export default function App() {
             >
               <Icon size={19} />
               <span>{label}</span>
+              {id === "home" && (
+                <kbd className="nav-shortcut" aria-hidden="true">T</kbd>
+              )}
             </button>
           ))}
         </nav>
@@ -2028,6 +2196,7 @@ export default function App() {
       </aside>
 
       <main className="main">
+        <Suspense fallback={<RouteLoading />}>
         {nav === "home" ? (
           <>
             <header className="train-home-hero">
@@ -2044,6 +2213,7 @@ export default function App() {
                     type="button"
                     onClick={() => setActiveIndex(0)}
                     disabled={!session.activities.length}
+                    title="Start recommended training · T"
                   >
                     Train now
                     <span>{session.plannedMinutes} min</span>
@@ -2404,18 +2574,23 @@ export default function App() {
             <button className="secondary" onClick={() => setNav("home")}>Back to Train</button>
           </section>
         )}
+        </Suspense>
       </main>
 
-      <div className="mobile-experience">
-        <ExperienceControls />
-      </div>
+      {!dialogOpen && (
+        <div className="mobile-experience">
+          <ExperienceControls />
+        </div>
+      )}
 
-      <nav className="mobile-nav">
+      {!dialogOpen && <nav className="mobile-nav" aria-label="Primary navigation">
         {navItems.map(([id, label, Icon]) => (
           <button
             key={id}
             className={nav === id ? "active" : ""}
             aria-current={nav === id ? "page" : undefined}
+            onPointerDown={() => preloadNavRoute(id)}
+            onFocus={() => preloadNavRoute(id)}
             onClick={() => {
               setNav(id);
               emitExperienceEvent({ feedback: "navigate" });
@@ -2425,7 +2600,7 @@ export default function App() {
             <span>{label}</span>
           </button>
         ))}
-      </nav>
+      </nav>}
 
       {assessmentSession && (
         <div
@@ -2438,7 +2613,7 @@ export default function App() {
               : "Stage checkpoint"
           }
         >
-          <section className="training-sheet assessment-sheet">
+          <section className="training-sheet assessment-sheet immersive-training-sheet">
             <button
               className="close-button"
               type="button"
@@ -2463,7 +2638,7 @@ export default function App() {
           aria-modal="true"
           aria-label={`Model game: ${activeModelGame.title}`}
         >
-          <section className="training-sheet model-game-sheet">
+          <section className="training-sheet model-game-sheet immersive-training-sheet">
             <button
               className="close-button"
               type="button"
@@ -2488,17 +2663,22 @@ export default function App() {
       )}
 
       {active && activeSkill && (
-        <div className="training-overlay" role="dialog" aria-modal="true">
+        <div
+          className="training-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${active.title} training activity`}
+        >
           <section
             className={
               active.activityType === "engineGame"
-                ? "training-sheet adaptive-game-sheet"
+                ? "training-sheet adaptive-game-sheet immersive-training-sheet board-first-sheet"
                 : active.activityType === "calculation"
-                  ? "training-sheet calculation-sheet"
+                  ? "training-sheet calculation-sheet immersive-training-sheet board-first-sheet"
                   : active.activityType === "endgameDrill" ||
                       active.activityType === "conversionChallenge"
-                    ? "training-sheet endgame-technique-sheet"
-                    : "training-sheet"
+                    ? "training-sheet endgame-technique-sheet immersive-training-sheet board-first-sheet"
+                    : "training-sheet immersive-training-sheet board-first-sheet"
             }
           >
             <div className="training-progress">

@@ -54,12 +54,13 @@ The default experience should answer one question: **what should I train now?**
 - P33 Model Games & Strategic Pattern Learning with a compact annotated complete-game library, active plan questions, Guess-the-Move checkpoints, repertoire-linked strategic patterns, evidence-aware scoring, persistent progress, and one-click promotion of model positions into spaced Library training
 - P34 Adaptive Coach Simplification with one consolidated coach brief, confidence-aware cold-start states, plain-language recommendations, at-most-three actionable decisions, and explicit later-human-game validation of whether training actually transferred
 - P35 Advanced Curriculum Expansion with a ninth Advanced stage, 18 higher-level skills, authored transfer lessons, dedicated advanced calculation and endgame positions, tactical puzzle-corpus mappings, resistant strategy scenarios, and advanced concepts embedded into complete model games
+- P36 Premium UX, Mobile & Delight Pass with immersive board-first training workspaces, full-screen mobile training, landscape board/instruction layouts, roving-keyboard chessboard navigation, focus-safe dialogs, 48px coarse-pointer controls, reduced-motion compatibility, one-key recommended training, long-page rendering containment, and CI-enforced production asset budgets
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
 - Reduced-motion and keyboard-friendly interaction defaults
 
-The curriculum is now a complete beginner-to-intermediate course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21–P25 provide optional planning, adherence, load and competition intelligence in the background; P26 restores the product hierarchy so that the user encounters the recommended training decision first and advanced planning only when they deliberately open Progress; P27 turns the puzzle pipeline into a real daily practice substrate with real Lichess positions, stronger spacing and explicit post-solve teaching.
+The curriculum is now a complete beginner-through-advanced course rather than a representative seed graph. P3 established the visual lesson engine; P4 supplies scalable practice; P5 converts real games into evidence; P6 keeps opening study compact and concept-first; P7 makes Play part of the learning system; P8 turns engine output into a visual game story; P9 provides a serious free-study workspace; P10 standardizes interaction quality; P11 fills the course with a coherent 68-skill progression and authored lesson coverage; P12 makes progression evidence-based instead of equating lesson completion with competence; P13 makes the resulting player model interpretable across time instead of exposing only the latest score; P14 closes the loop by using that evidence to choose how difficult the next activity should be and which intervention should come next; P15 brings real human games into that same loop without building a proprietary multiplayer service; P16 makes real human performance a distinct and more valuable evidence source instead of mixing it with AI practice; P17 explains the conditions under which that human performance changes; P18 converts those diagnoses into concrete next actions and pre-game plans; P19 checks whether those interventions actually improve later matching human-game performance; P20 lets repeated validated outcomes modestly influence which repair mechanisms the coach prefers next without allowing small samples to dominate; P21–P25 provide optional planning, adherence, load and competition intelligence in the background; P26 restores the product hierarchy so that the user encounters the recommended training decision first and advanced planning only when they deliberately open Progress; P27 turns the puzzle pipeline into a real daily practice substrate with real Lichess positions, stronger spacing and explicit post-solve teaching.
 
 ## Run
 
@@ -68,6 +69,7 @@ npm install
 npm run dev
 npm test
 npm run build
+npm run perf:budget
 ```
 
 ## Lichess puzzle corpus
@@ -2106,6 +2108,56 @@ The expansion reuses the richer learning stack instead of creating a separate ad
 
 Placement now samples the Advanced stage as well, and the Advanced gate requires stronger transfer evidence than earlier stages.
 
+## Premium UX, Mobile & Delight Pass
+
+P36 treats the existing learning system as the product and improves how it feels to use rather than adding another learning subsystem.
+
+### Board-first training
+
+Board-heavy activities now open in an immersive workspace that uses the available viewport instead of a small centered sheet.
+
+- desktop lessons, puzzles and calculation keep the board stable while instructions progress;
+- model games, assessments and endgames use the same board-first visual hierarchy;
+- phones use full-screen training rather than a bottom sheet;
+- compact landscape devices switch to a side-by-side board/instruction layout;
+- safe-area insets and sticky training controls are respected.
+
+### Keyboard and accessibility
+
+The chessboard now uses a roving tab stop: keyboard users enter the board once and move through squares with **Arrow keys**, **Home** and **End**. Enter/Space still activates the focused square. Board selection, legal-move count and check state are announced through a polite live region.
+
+Training dialogs:
+
+- remove the background application from the focus tree with the inert attribute;
+- lock background scrolling;
+- focus the close action after opening;
+- restore focus to the launch control after closing;
+- support **Escape** consistently;
+- preserve Escape inside the board first when it is being used to clear a selected square.
+
+The desktop **T** shortcut starts the currently recommended training activity from anywhere outside a dialog.
+
+### Touch and motion
+
+Coarse-pointer controls use a 48px minimum interaction target where practical. Mobile board surfaces avoid expensive overlay blur, navigation respects device safe areas, and training controls remain reachable at the bottom of long activities.
+
+The existing sound, haptic, celebration and motion preferences remain authoritative. Reduced-motion mode disables P36 transitions rather than creating a second accessibility setting.
+
+### Performance budget
+
+Long curriculum and progress surfaces use rendering containment so off-screen sections do not need to paint immediately.
+
+CI now runs `npm run perf:budget` after the production build. Secondary product routes are lazy-loaded and preloaded on navigation intent, so the budget distinguishes startup cost from code that is only needed later.
+
+The gate fails when generated app assets exceed:
+
+- **260 KiB gzip** for an individual JavaScript asset;
+- **42 KiB gzip** for an individual CSS asset;
+- **260 KiB gzip** for the HTML-referenced initial app JS + CSS;
+- **315 KiB gzip** for all generated app JS + CSS, including lazy route chunks.
+
+Stockfish engine assets are intentionally excluded because they are a separate browser-engine payload.
+
 ## Next phase
 
-P36 — Premium UX, Mobile & Delight Pass.
+P37 — Real-Use Qualification & Defect-Only Hardening.
