@@ -55,6 +55,7 @@ The default experience should answer one question: **what should I train now?**
 - P34 Adaptive Coach Simplification with one consolidated coach brief, confidence-aware cold-start states, plain-language recommendations, at-most-three actionable decisions, and explicit later-human-game validation of whether training actually transferred
 - P35 Advanced Curriculum Expansion with a ninth Advanced stage, 18 higher-level skills, authored transfer lessons, dedicated advanced calculation and endgame positions, tactical puzzle-corpus mappings, resistant strategy scenarios, and advanced concepts embedded into complete model games
 - P36 Premium UX, Mobile & Delight Pass with immersive board-first training workspaces, full-screen mobile training, landscape board/instruction layouts, roving-keyboard chessboard navigation, focus-safe dialogs, 48px coarse-pointer controls, reduced-motion compatibility, one-key recommended training, long-page rendering containment, and CI-enforced production asset budgets
+- P37 Visual Architecture Lock with the authoritative non-SaaS chess design contract, namespaced graphite/ivory design tokens, route-level page architecture, Train-as-default navigation model, explicit modal/sidebar/hero constraints, and regression-tested visual architecture invariants
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2158,6 +2159,25 @@ The gate fails when generated app assets exceed:
 
 Stockfish engine assets are intentionally excluded because they are a separate browser-engine payload.
 
+## Visual Architecture Lock
+
+P37 freezes the redesign direction before structural migration.
+
+The authoritative contract is [DESIGN_SYSTEM_V2.md](./DESIGN_SYSTEM_V2.md). New work uses the namespaced tokens in `src/design/tokens.css` and the route/page contract in `src/design/appArchitecture.ts`.
+
+The lock deliberately does **not** alias the legacy P0–P36 color variables to the new palette. This avoids producing a superficially recolored version of the existing dashboard. P38+ changes architecture first, then migrates visual surfaces intentionally.
+
+Non-negotiable post-P37 rules:
+
+- no giant sentence hero as the default page pattern;
+- no dashboard before useful chess activity;
+- Train / Learn / Play / Review / Library are real pages;
+- no permanent generic SaaS sidebar;
+- board-first composition whenever a position is active;
+- primary chess workflows are not modal-only surfaces;
+- Progress is where analytics-heavy composition belongs;
+- graphite / ivory foundations replace pervasive blue-purple SaaS styling during migration.
+
 ## Next phase
 
-P37 — Real-Use Qualification & Defect-Only Hardening.
+P38 — Real Routing & App Shell.
