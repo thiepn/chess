@@ -64,3 +64,24 @@ Landscape resource: board/move strip left, analysis/editor controls right.
 ### Progress
 
 Portrait/tablet: practical-strength record and trajectory lead. Stage progression becomes horizontally browsable where appropriate; technical planning remains subordinate.
+
+
+## P50 defect qualification
+
+P50 re-audited the P47 matrix after the P48 material and P49 motion layers.
+
+### Closed defects
+
+| Defect | Affected class | Resolution |
+| --- | --- | --- |
+| Full-bleed bars used `-12px` while narrow-phone content can use a 10px gutter | Phone portrait | Replaced with shared safe inline gutter tokens |
+| Horizontal display cutouts were not part of the general mobile shell gutter | Landscape notch devices | App topbar/main now use left/right safe-area-aware gutters |
+| Fixed bottom navigation could overlap focused workspaces after global topbar was hidden | Low-height landscape Learn/Review/Library | Bottom navigation is suppressed for those focused workspaces |
+| Review remained three columns down to very narrow landscape widths | 568–667px landscape phones | Added <=720px two-column board + notation/insight fallback |
+| Review preview controls could resolve to 42px after the coarse-pointer rule | Touch Review | Restored `--chess-touch-min` |
+| Compact Learn action rule encoded 42px despite the touch contract | Small touch Learn | Uses `--chess-touch-min` explicitly |
+| Topbar/nav safe heights were repeated as literal calculations | All phone layouts | Centralized in design tokens |
+
+### Qualification boundary
+
+Static/CI qualification verifies CSS contracts and responsive breakpoints. Physical-device inspection remains necessary for browser-specific rendering details such as Safari dynamic toolbar behavior, OEM Android webview quirks, font rasterization and device-specific haptic behavior.
