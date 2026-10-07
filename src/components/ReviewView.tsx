@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import "../styles/review-v2.css";
 import "../styles/p47-review-native.css";
+import "../styles/p51-review-large.css";
 import {
   BrainCircuit,
   FileUp,
