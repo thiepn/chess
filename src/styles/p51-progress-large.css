@@ -1,0 +1,47 @@
+/* P51 — large desktop Progress composition */
+
+@media (min-width: 1536px) {
+  .app-shell-v2 .app-main:has(.progress-v2) {
+    width: min(var(--chess-workspace-max-analysis), 100%);
+  }
+
+  .progress-v2-overview {
+    grid-template-columns: 270px minmax(0, 1fr);
+    gap: 42px;
+  }
+
+  .progress-v2-trajectory {
+    max-width: 980px;
+  }
+
+  .progress-v2-development {
+    grid-template-columns:
+      minmax(230px, 270px)
+      minmax(360px, 1fr)
+      minmax(320px, 360px);
+    gap: 34px;
+  }
+
+  .progress-v2-real-grid,
+  .progress-v2-plan-body,
+  .progress-v2-evidence-body {
+    gap: 32px 44px;
+  }
+
+  .progress-v2-coach > p,
+  .progress-v2-readiness p,
+  .progress-v2-evidence-body section > p {
+    max-width: var(--chess-reading-max);
+  }
+}
+
+@media (min-width: 1920px) {
+  .progress-v2 {
+    max-width: var(--chess-workspace-max-analysis);
+    margin-inline: auto;
+  }
+
+  .progress-v2-trajectory {
+    max-width: 1060px;
+  }
+}

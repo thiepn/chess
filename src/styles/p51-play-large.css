@@ -1,0 +1,66 @@
+/* P51 — large desktop Play composition */
+
+@media (min-width: 1536px) {
+  .app-shell-v2 .app-main:has(.play-v2),
+  .app-shell-v2.play-session-open .app-main {
+    width: min(var(--chess-workspace-max-wide), 100%);
+  }
+
+  .play-v2 {
+    grid-template-columns: minmax(680px, 1fr) 360px;
+    gap: clamp(28px, 2.4vw, 42px);
+  }
+
+  .play-v2-board-column {
+    justify-self: center;
+    width: min(100%, 820px);
+  }
+
+  .play-v2-board-column .chess-board-wrap {
+    width: min(100%, calc(100dvh - 180px), var(--chess-board-max-large));
+  }
+
+  .play-v2-setup {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .play-game-page .game-layout {
+    grid-template-columns: minmax(680px, 1fr) minmax(330px, 380px);
+    gap: clamp(28px, 2.4vw, 42px);
+  }
+
+  .play-game-page .game-board-column {
+    justify-self: center;
+    width: min(100%, 820px);
+  }
+
+  .play-game-page .game-board-column .chess-board-wrap {
+    width: min(100%, calc(100dvh - 190px), var(--chess-board-max-large));
+  }
+
+  .play-game-page .game-turn-line,
+  .game-player-strip {
+    width: min(100%, var(--chess-board-max-large));
+  }
+
+  .play-game-page .game-side-panel {
+    width: 100%;
+    max-width: 380px;
+  }
+}
+
+@media (min-width: 1536px) and (min-height: 1050px) {
+  .play-v2-board-column .chess-board-wrap,
+  .play-game-page .game-board-column .chess-board-wrap {
+    width: min(100%, var(--chess-board-max-large));
+  }
+}
+
+@media (min-width: 1920px) {
+  .play-v2,
+  .play-game-page .game-layout {
+    grid-template-columns: minmax(720px, 820px) 380px;
+    justify-content: center;
+  }
+}

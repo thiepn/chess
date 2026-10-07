@@ -69,6 +69,7 @@ The default experience should answer one question: **what should I train now?**
 - P48 Material & Component Cleanup with flat chess-native surfaces, separator-based board-side regions, removal of ~66 KB raw dead legacy CSS, and a CI material-regression audit
 - P49 Motion & Tactile Interaction with chess-state piece/impact motion, route view transitions, dedicated castle/promotion/reveal haptics, restrained solution/analysis reveals, reduced-motion enforcement and a CI motion audit
 - P50 Mobile Native Defect Pass with shared safe-area shell tokens, narrow-phone full-bleed fixes, constrained-landscape nav suppression, a 568–667px Review fallback, and CI mobile-layout auditing
+- P51 Large-Desktop Composition with bounded 1536px+ workspaces, explicit 1920px+ ultrawide layouts, controlled board growth, readable text measures and CI desktop-layout auditing
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2503,6 +2504,32 @@ The defect report and qualification boundaries are documented in `docs/P50_MOBIL
 
 P50 is code/device-class qualification. It does not falsely claim physical-device testing where no physical browser/device runner was available.
 
+## Large-Desktop Composition
+
+P51 qualifies 1536px+ and ultrawide desktop layouts without turning the app into a stretched dashboard.
+
+Large displays now follow two explicit tiers:
+
+- **1536px+** — large desktop: modest board growth and more stable rail/context widths;
+- **1920px+** — ultrawide: bounded, centered chess workspaces rather than ever-growing columns.
+
+The extra pixels are allocated according to the activity:
+
+- **Train:** wider board lane, stable session rail and coach context;
+- **Learn:** curriculum rail + board + reading; chapter prose remains bounded;
+- **Play:** larger board lane with a stable setup/game context pane;
+- **Review:** board + fixed notation lane + teaching insight;
+- **Library:** board + analysis/editor controls; archive collections remain bounded;
+- **Progress:** more quantitative/chart space while explanatory text retains a readable measure.
+
+Tall displays can grow board-centric routes to a 48rem board cap, while Review uses a dedicated 46rem cap.
+
+The large-screen rules remain route-code-split for Learn, Play, Review, Library and Progress.
+
+A new `npm run desktop:audit` gate verifies large-screen breakpoints, ultrawide rules, route imports, board caps, reading-measure constraints and separation from mobile/tablet breakpoints.
+
+The policy is documented in `docs/P51_LARGE_DESKTOP.md`.
+
 ## Next phase
 
-P51 — Large-Desktop Composition.
+P52 — Accessibility Requalification.

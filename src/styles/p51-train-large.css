@@ -1,0 +1,98 @@
+/* P51 — large desktop Train composition */
+
+@media (min-width: 1536px) {
+  .app-shell-v2 .app-main:has(.train-room),
+  .app-shell-v2.training-session-open .app-main {
+    width: min(var(--chess-workspace-max-wide), 100%);
+  }
+
+  .train-room {
+    grid-template-columns:
+      minmax(190px, var(--chess-rail-width-large))
+      minmax(620px, 1fr)
+      minmax(330px, var(--chess-context-width-large));
+    gap: clamp(24px, 2vw, 34px);
+  }
+
+  .train-room-rail {
+    padding-right: 18px;
+  }
+
+  .train-room-coach {
+    padding-left: 8px;
+  }
+
+  .train-preview-board {
+    width: min(
+      100%,
+      var(--chess-board-max-large),
+      calc(100dvh - var(--chess-topbar-height) - 126px)
+    );
+  }
+
+  .train-board-context,
+  .train-board-status {
+    width: min(100%, var(--chess-board-max-large));
+  }
+
+  .train-task-copy h1 {
+    max-width: 16ch;
+  }
+
+  .train-task-subtitle,
+  .train-task-reason,
+  .train-coach-note p {
+    max-width: 36ch;
+  }
+
+  .train-runtime-page {
+    width: min(var(--chess-workspace-max-analysis), 100%);
+  }
+
+  .train-runtime-body.board-first-sheet .lesson-stage,
+  .train-runtime-body.calculation-sheet .calculation-stage,
+  .train-runtime-body.endgame-technique-sheet .endgame-recognition-layout,
+  .train-runtime-body.endgame-technique-sheet .endgame-play-layout,
+  .train-runtime-body.model-game-sheet .model-game-runner-layout,
+  .train-runtime-body.assessment-sheet .assessment-stage,
+  .train-runtime-body.adaptive-game-sheet .game-layout {
+    grid-template-columns: minmax(640px, 1fr) minmax(340px, 390px);
+    gap: clamp(28px, 2.4vw, 42px);
+  }
+
+  .train-runtime-body.board-first-sheet .chess-board-wrap,
+  .train-runtime-body.model-game-sheet .chess-board-wrap,
+  .train-runtime-body.assessment-sheet .chess-board-wrap,
+  .train-runtime-body.endgame-technique-sheet .chess-board-wrap,
+  .train-runtime-body.adaptive-game-sheet .chess-board-wrap {
+    width: min(100%, calc(100dvh - 176px), var(--chess-board-max-large));
+  }
+}
+
+@media (min-width: 1920px) {
+  .train-room {
+    grid-template-columns:
+      var(--chess-rail-width-large)
+      minmax(700px, 1fr)
+      var(--chess-context-width-large);
+  }
+
+  .train-room-board-column {
+    justify-self: center;
+    width: min(100%, 860px);
+  }
+}
+
+@media (min-width: 1536px) and (min-height: 1050px) {
+  .train-preview-board {
+    width: min(100%, var(--chess-board-max-large));
+  }
+
+  .train-runtime-body.board-first-sheet .chess-board-wrap,
+  .train-runtime-body.model-game-sheet .chess-board-wrap,
+  .train-runtime-body.assessment-sheet .chess-board-wrap,
+  .train-runtime-body.endgame-technique-sheet .chess-board-wrap,
+  .train-runtime-body.adaptive-game-sheet .chess-board-wrap {
+    width: min(100%, var(--chess-board-max-large));
+  }
+}

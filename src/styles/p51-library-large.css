@@ -1,0 +1,70 @@
+/* P51 — large desktop Library composition */
+
+@media (min-width: 1536px) {
+  .app-shell-v2 .app-main:has(.library-v2),
+  .app-shell-v2 .app-main:has(.library-workspace-v2) {
+    width: min(var(--chess-workspace-max-wide), 100%);
+  }
+
+  .library-v2 {
+    grid-template-columns: 220px minmax(620px, 1fr) 290px;
+    gap: clamp(24px, 2vw, 34px);
+  }
+
+  .library-v2-index,
+  .library-v2-collection {
+    max-width: 1040px;
+  }
+
+  .library-v2-index-head > div,
+  .library-v2-collection-head > div {
+    max-width: var(--chess-reading-max);
+  }
+
+  .library-analysis-v2 {
+    grid-template-columns: minmax(680px, 1fr) minmax(350px, 390px);
+    gap: clamp(28px, 2.2vw, 40px);
+  }
+
+  .library-board-v2 {
+    justify-self: center;
+    width: min(100%, 820px);
+  }
+
+  .library-board-v2 .chess-board-wrap {
+    width: min(
+      100%,
+      calc(100dvh - 205px),
+      var(--chess-board-max-large)
+    );
+  }
+
+  .library-workspace-v2 .workspace-toolbar,
+  .library-workspace-v2 .workspace-move-strip {
+    width: min(
+      100%,
+      calc(100dvh - 150px),
+      var(--chess-board-max-large)
+    );
+  }
+
+  .library-workspace-controls {
+    width: 100%;
+    max-width: 390px;
+  }
+}
+
+@media (min-width: 1536px) and (min-height: 1100px) {
+  .library-board-v2 .chess-board-wrap,
+  .library-workspace-v2 .workspace-toolbar,
+  .library-workspace-v2 .workspace-move-strip {
+    width: min(100%, var(--chess-board-max-large));
+  }
+}
+
+@media (min-width: 1920px) {
+  .library-analysis-v2 {
+    grid-template-columns: minmax(720px, 800px) 390px;
+    justify-content: center;
+  }
+}
