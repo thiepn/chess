@@ -1,7 +1,8 @@
 import { Chess, type Color, type PieceSymbol, type Square } from "chess.js";
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useExperience } from "../interaction/ExperienceProvider";
 import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
+import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
 
 interface BoardMove {
   from: Square;
@@ -64,6 +65,10 @@ export function ChessBoard({
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
   const [secondaryMove, setSecondaryMove] = useState<{ from: Square; to: Square } | null>(null);
   const [rejected, setRejected] = useState<Square | null>(null);
+  const [focusedSquare, setFocusedSquare] = useState<Square>(
+    () => squareList(orientation)[0],
+  );
+  const squareRefs = useRef(new Map<Square, HTMLButtonElement>());
   const { feedback } = useExperience();
 
   useEffect(() => {
@@ -78,6 +83,10 @@ export function ChessBoard({
 
   const chess = useMemo(() => new Chess(position), [position]);
   const squares = useMemo(() => squareList(orientation), [orientation]);
+
+  useEffect(() => {
+    setFocusedSquare(squares[0]);
+  }, [squares]);
   const legalTargets = useMemo(() => {
     if (!selected || disabled) return new Set<Square>();
     return new Set(
@@ -169,7 +178,49 @@ export function ChessBoard({
     return true;
   }
 
+  function focusSquare(square: Square) {
+    setFocusedSquare(square);
+    window.requestAnimationFrame(() => {
+      squareRefs.current.get(square)?.focus();
+    });
+  }
+
+  function handleSquareKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    square: Square,
+  ) {
+    if (event.key === "Escape" && selected) {
+      event.preventDefault();
+      event.stopPropagation();
+      setSelected(null);
+      return;
+    }
+
+    if (
+      ![
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+        "Home",
+        "End",
+      ].includes(event.key)
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    const currentIndex = squares.indexOf(square);
+    const nextIndex = nextBoardFocusIndex(
+      currentIndex,
+      event.key as BoardNavigationKey,
+      squares.length,
+    );
+    focusSquare(squares[nextIndex]);
+  }
+
   function selectSquare(square: Square) {
+    setFocusedSquare(square);
     if (disabled) return;
 
     const piece = chess.get(square);
@@ -212,9 +263,24 @@ export function ChessBoard({
     return `${square}, ${piece.color === "w" ? "white" : "black"} ${names[piece.type]}`;
   }
 
+  const boardStatus = selected
+    ? `${squareLabel(selected)} selected. ${legalTargets.size} legal move${legalTargets.size === 1 ? "" : "s"}.`
+    : checkedKing
+      ? `${chess.turn() === "w" ? "White" : "Black"} king is in check.`
+      : lastMove
+        ? `Move played from ${lastMove.from} to ${lastMove.to}.`
+        : "No square selected.";
+
   return (
     <div className="chess-board-wrap">
-      <div className="chess-board" role="grid" aria-label="Interactive chessboard">
+      <span className="sr-only" aria-live="polite">
+        {boardStatus}
+      </span>
+      <div
+        className="chess-board"
+        role="grid"
+        aria-label={`Interactive chessboard. ${orientation === "w" ? "White" : "Black"} is at the bottom. Use arrow keys to move between squares and Enter or Space to select.`}
+      >
         {squares.map((square, index) => {
           const piece = chess.get(square);
           const file = square.charCodeAt(0) - 97;
@@ -255,8 +321,17 @@ export function ChessBoard({
               role="gridcell"
               key={square}
               className={classes}
+              ref={(node) => {
+                if (node) squareRefs.current.set(square, node);
+                else squareRefs.current.delete(square);
+              }}
+              data-square={square}
+              tabIndex={square === focusedSquare ? 0 : -1}
               aria-label={squareLabel(square)}
               aria-selected={isSelected}
+              aria-disabled={disabled}
+              onFocus={() => setFocusedSquare(square)}
+              onKeyDown={(event) => handleSquareKeyDown(event, square)}
               onClick={() => selectSquare(square)}
               draggable={!disabled && !!piece && piece.color === chess.turn()}
               onDragStart={() => setDragFrom(square)}
