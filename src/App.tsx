@@ -374,8 +374,25 @@ export default function App() {
 
     document.body.style.overflow = "hidden";
 
+    const backgroundRegions = [
+      document.querySelector(".sidebar"),
+      document.querySelector(".main"),
+      document.querySelector(".mobile-nav"),
+      document.querySelector(".mobile-experience"),
+    ].filter(
+      (node): node is HTMLElement =>
+        node instanceof HTMLElement,
+    );
+
+    for (const region of backgroundRegions) {
+      region.setAttribute("inert", "");
+    }
+
     return () => {
       document.body.style.overflow = previousOverflow;
+      for (const region of backgroundRegions) {
+        region.removeAttribute("inert");
+      }
       window.requestAnimationFrame(() => {
         returnFocus?.focus();
       });
@@ -2086,7 +2103,7 @@ export default function App() {
       <div className={dialogOpen ? "app-shell training-open" : "app-shell"}>
       <aside className="sidebar">
         <div className="brand-mark">♞</div>
-        <nav>
+        <nav aria-label="Primary navigation">
           {navItems.map(([id, label, Icon]) => (
             <button
               key={id}
@@ -2501,7 +2518,7 @@ export default function App() {
         </div>
       )}
 
-      {!dialogOpen && <nav className="mobile-nav">
+      {!dialogOpen && <nav className="mobile-nav" aria-label="Primary navigation">
         {navItems.map(([id, label, Icon]) => (
           <button
             key={id}
