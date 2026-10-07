@@ -46,24 +46,16 @@ export function ModelGamesView({
 
   return (
     <section className="model-games-view">
-      <header className="section-hero compact model-games-hero">
+      <header className="learn-subpage-head">
+        <button className="learn-v2-back" type="button" onClick={onBack}>
+          <span aria-hidden="true">←</span> Course
+        </button>
         <div>
           <p className="eyebrow">MODEL GAMES</p>
-          <h1>Learn plans from complete games.</h1>
+          <h1>Plans in complete games</h1>
           <p>
-            Pause at the important decisions, identify the plan, then
-            guess the move before the historical continuation is revealed.
+            Pause at the critical decisions, name the plan, then find the move.
           </p>
-          <button
-            className="secondary model-games-back"
-            type="button"
-            onClick={onBack}
-          >
-            Back to course
-          </button>
-        </div>
-        <div className="section-hero-icon" aria-hidden="true">
-          <BookOpen size={30} />
         </div>
       </header>
 
