@@ -325,3 +325,37 @@ Mobile layout code must use the shared shell tokens rather than route-specific l
 Focused low-height landscape chess workspaces may suppress global chrome when keeping it would cover the board, notation or teaching context. The route must retain its own local exit/back affordance.
 
 Full-bleed sticky regions must negate the actual safe inline gutter, not a hard-coded pixel value.
+
+
+## P51 large-screen composition
+
+Large screens do not justify unbounded layouts.
+
+### Breakpoints
+
+- below 1536px: P37–P50 normal desktop/tablet/mobile rules remain authoritative;
+- 1536px+: large-desktop composition may allocate extra room to board/context tracks;
+- 1920px+: ultrawide composition must center and bound the working area.
+
+### Extra-space allocation
+
+Use additional width in this order:
+
+1. preserve comfortable outer margin;
+2. allow the chessboard to grow to the route's large-board cap;
+3. stabilize notation/context/rail widths;
+4. increase separation only modestly;
+5. keep prose at a readable measure.
+
+Never make paragraph text or analytics columns expand simply because viewport width is available.
+
+### Large board caps
+
+- general board-centric workspaces: `--chess-board-max-large`;
+- Review analysis: `--chess-board-max-review-large`.
+
+Boards remain additionally constrained by viewport height so a wide but short display does not push controls below the fold.
+
+### Ultrawide behavior
+
+At 1920px+ the primary chess workspace is centered. Rails and context columns become stable/fixed-quality tracks instead of absorbing arbitrary extra width.
