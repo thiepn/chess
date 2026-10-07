@@ -649,7 +649,28 @@ Delivered:
 
 ### P49 — Motion & Tactile Interaction
 
+**Status:** implemented.
+
 Center motion on chess actions: piece movement, capture, castling, promotion, board flip, solution reveal and analysis transitions.
+
+Delivered:
+
+- added reduced-motion-safe route transitions using the browser View Transition API with a synchronous fallback;
+- extended board state with explicit move-origin and move-destination impact classes;
+- added distinct move, capture, promotion and castling arrival motion;
+- added separate capture / promotion / castling destination impact treatments;
+- kept check, legal-target and rejected-move feedback visually distinct;
+- added dedicated tactile feedback events for castling, promotion and answer/hint reveal;
+- added sound and haptic signatures for those events without making sound mandatory;
+- lesson hints and coached best-move reveal now emit subtle reveal feedback;
+- solution, explanation, analysis-result and review-comparison regions use short semantic reveal motion;
+- Review notation, phase selection and Library move-line selection use compact settle transitions;
+- Progress trajectory, phase bars and weekly allocation animate measured change rather than decorative containers;
+- touch devices receive compact press feedback in addition to optional haptics;
+- optional celebration particles are restyled as restrained chess-colored sparks rather than generic rainbow confetti;
+- reduced-motion disables route, board-impact, reveal, chart and tactile animation while keeping state changes immediate;
+- added `npm run motion:audit` and made it part of the Quality workflow;
+- documented the motion contract in `docs/P49_MOTION_CONTRACT.md`.
 
 ### P50 — Mobile Native Defect Pass
 
