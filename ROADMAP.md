@@ -358,6 +358,8 @@ Expansion must reuse the richer P28–P33 teaching modes.
 
 ### P36 — Premium UX, Mobile & Delight Pass
 
+**Status:** implemented.
+
 **Purpose:** reach the inviting quality bar that motivated the product.
 
 Deliver:
