@@ -68,6 +68,7 @@ The default experience should answer one question: **what should I train now?**
 - P47 Mobile / Tablet Native Layouts with safe-area support, touch-target enforcement, portrait-tablet compositions, low-height landscape chess workspaces, board-first phone flows and route-code-split native CSS
 - P48 Material & Component Cleanup with flat chess-native surfaces, separator-based board-side regions, removal of ~66 KB raw dead legacy CSS, and a CI material-regression audit
 - P49 Motion & Tactile Interaction with chess-state piece/impact motion, route view transitions, dedicated castle/promotion/reveal haptics, restrained solution/analysis reveals, reduced-motion enforcement and a CI motion audit
+- P50 Mobile Native Defect Pass with shared safe-area shell tokens, narrow-phone full-bleed fixes, constrained-landscape nav suppression, a 568–667px Review fallback, and CI mobile-layout auditing
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
@@ -2482,6 +2483,26 @@ A new `npm run motion:audit` Quality gate verifies route-transition fallback/red
 
 The contract is documented in `docs/P49_MOTION_CONTRACT.md`.
 
+## Mobile Native Defect Pass
+
+P50 is a defect-only follow-up to P47 after the material and motion passes.
+
+It fixes concrete responsive inconsistencies rather than introducing another redesign:
+
+- phone topbar, bottom-nav clearance and native gutters now use shared safe-area tokens;
+- left/right display-cutout insets are respected by the mobile shell and constrained-landscape workspaces;
+- Play, Review and Library full-bleed sticky regions no longer rely on a hard-coded 12px gutter that could overflow 10px narrow-phone layouts;
+- Review preview controls retain the 44px touch minimum;
+- compact Learn actions explicitly retain the touch minimum;
+- constrained-landscape Learn, Review and Library hide bottom navigation so it cannot cover board/context content;
+- Review switches from the three-column workstation to a two-column board + notation/insight composition at 720px and below.
+
+A new `npm run mobile:audit` Quality gate checks the safe-area token contract, viewport-fit support, touch-target rules, focused-landscape nav suppression, full-bleed gutter alignment and narrow-landscape Review fallback.
+
+The defect report and qualification boundaries are documented in `docs/P50_MOBILE_QUALIFICATION.md`.
+
+P50 is code/device-class qualification. It does not falsely claim physical-device testing where no physical browser/device runner was available.
+
 ## Next phase
 
-P50 — Mobile Native Defect Pass.
+P51 — Large-Desktop Composition.
