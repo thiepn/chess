@@ -1,0 +1,134 @@
+/* P52 — accessibility requalification */
+
+.skip-link {
+  position: fixed;
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  z-index: 10000;
+  padding: 9px 12px;
+  border: 2px solid var(--chess-color-text-primary);
+  border-radius: var(--chess-radius-control);
+  background: var(--chess-color-bg-app);
+  color: var(--chess-color-text-primary);
+  font: 700 0.8rem/1 var(--chess-font-ui);
+  transform: translateY(calc(-100% - 24px));
+  transition: transform var(--chess-motion-fast) var(--chess-ease-standard);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--focus-ring, #b8c7ff) !important;
+  outline-offset: 3px !important;
+}
+
+.app-main:focus {
+  outline: none;
+}
+
+.chess-board-v2 .board-square:focus-visible {
+  z-index: 9;
+  outline: 3px solid rgba(240, 238, 233, 0.98) !important;
+  outline-offset: -4px !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(53, 123, 216, 0.9),
+    0 0 0 2px rgba(13, 15, 16, 0.95);
+}
+
+/* Selected state must remain visible independently of hue. */
+
+[aria-pressed="true"] {
+  text-decoration-thickness: from-font;
+}
+
+.review-v2-color [aria-pressed="true"],
+.story-preview-controls [aria-pressed="true"],
+.review-phase-strip [aria-pressed="true"],
+.play-v2 [aria-pressed="true"],
+.endgame-recognition-options [aria-pressed="true"] {
+  box-shadow: inset 0 -2px 0 currentColor;
+}
+
+.workspace-move-strip [aria-current="step"],
+.review-notation-list [aria-current="step"] {
+  box-shadow: inset 0 -2px 0 currentColor;
+}
+
+/* More contrast without changing the product palette for everyone. */
+
+@media (prefers-contrast: more) {
+  :root {
+    --chess-color-text-secondary: #c9c6bf;
+    --chess-color-text-muted: #aaa79f;
+    --chess-color-separator: rgba(255, 255, 255, 0.18);
+    --chess-color-separator-strong: rgba(255, 255, 255, 0.28);
+  }
+
+  .chess-board-v2 .move-dot,
+  .chess-board-v2 .capture-ring,
+  .chess-board-v2 .board-square.selected,
+  .chess-board-v2 .board-square.in-check {
+    outline-width: 3px;
+  }
+}
+
+/* Windows High Contrast / forced-colors qualification. */
+
+@media (forced-colors: active) {
+  .skip-link,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible,
+  .chess-board-v2 .board-square:focus-visible {
+    outline-color: Highlight !important;
+  }
+
+  .chess-board-v2 .board-square.selected,
+  .chess-board-v2 .board-square.in-check,
+  .chess-board-v2 .board-square.legal-target {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+
+  .chess-board-v2 .move-dot {
+    background: Highlight;
+  }
+
+  .chess-board-v2 .capture-ring {
+    border-color: Highlight;
+  }
+
+  .sync-dot,
+  .progress-v2-stage-mark i,
+  .review-eval-track > button {
+    border: 1px solid CanvasText;
+  }
+
+  .primary,
+  .secondary,
+  button,
+  input,
+  select,
+  textarea {
+    forced-color-adjust: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
