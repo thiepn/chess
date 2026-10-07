@@ -108,6 +108,7 @@ import {
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
 import { lessonForSkill } from "./learning/lessons";
+import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 
@@ -216,19 +217,9 @@ export default function App() {
     useState<AssessmentSession | null>(null);
   const { route, navigate, navigatePage } = useAppRouter();
   const page = route.page;
-  const learnRouteParts = route.path.split("/").filter(Boolean);
-  const learnSection =
-    route.path === "/learn/openings"
-      ? "openings"
-      : route.path === "/learn/model-games"
-        ? "model-games"
-        : "course";
-  const learnSkillId =
-    page === "learn" &&
-    learnSection === "course" &&
-    learnRouteParts.length >= 3
-      ? decodeURIComponent(learnRouteParts.slice(2).join("/"))
-      : undefined;
+  const learnRoute = resolveLearnRoute(route.path);
+  const learnSection = learnRoute.section;
+  const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
   const [lichessSyncing, setLichessSyncing] = useState(false);
   const lichessSyncInFlight = useRef(false);
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
@@ -2755,9 +2746,7 @@ export default function App() {
               onOpenSkill={(skillId) => {
                 const skill = skillById[skillId];
                 if (!skill) return;
-                navigate(
-                  `/learn/${skill.domain}/${encodeURIComponent(skill.id)}`,
-                );
+                navigate(learnSkillPath(skill));
               }}
               onBackToCourse={() => navigate("/learn")}
               onStartLesson={startManualLesson}
