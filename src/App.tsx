@@ -112,6 +112,7 @@ import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 import "./styles/p47-train-native.css";
+import "./styles/p51-train-large.css";
 
 const LearnView = lazy(() =>
   import("./components/LearnView").then((module) => ({
