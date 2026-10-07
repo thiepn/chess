@@ -559,7 +559,7 @@ function MomentDetails({
             type="button"
             onClick={() => onTrainMistake(mistake.id)}
           >
-            <Swords size={16} /> Repair now
+            <Swords size={16} /> Practice position
           </button>
         </div>
       )}
