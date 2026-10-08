@@ -235,10 +235,7 @@ export function GameArena({
 
   function finishMoveClock(mover: Color): boolean {
     const next = completeMoveClock(clockRef.current, mover, timeControl, Date.now());
-    if (!next) {
-      void finalize(mover === playerColor ? "loss" : "win", "timeout");
-      return false;
-    }
+    if (!next) return false;
     clockRef.current = next;
     setClock(next);
     return true;
@@ -367,6 +364,7 @@ export function GameArena({
         const move = uciMove(chess, evaluation.bestMove);
         if (move && !finishMoveClock(mover)) {
           chess.undo();
+          void finalize(mover === playerColor ? "loss" : "win", "timeout");
           return;
         }
         if (!move) {
@@ -478,6 +476,7 @@ export function GameArena({
               if (!move) return false;
               if (!finishMoveClock(mover)) {
                 chess.undo();
+                void finalize(mover === playerColor ? "loss" : "win", "timeout");
                 return false;
               }
 
