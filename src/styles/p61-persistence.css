@@ -1,20 +1,11 @@
-/* P61: preserve the P37 shell; only state and recovery affordances change. */
-.topbar-sync { padding: 0; border: 0; background: transparent; cursor: pointer; font: inherit; }
-.topbar-sync:focus-visible { outline: 2px solid #357bd8; outline-offset: 2px; }
-.topbar-sync[data-phase="pending"] .sync-dot,
-.topbar-sync[data-phase="loading"] .sync-dot { background: #c99c52; }
-.topbar-sync[data-phase="conflict"] .sync-dot { background: #c86464; }
-.topbar-sync[data-phase="guest"] .sync-dot,
-.topbar-sync[data-phase="local"] .sync-dot { background: #92938e; }
-.topbar-sync-word { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.chess-data-settings { margin-block: 1.5rem; padding-block: 1rem; border-block: 1px solid rgba(255,255,255,.08); max-width: 45rem; }
-.chess-data-settings p { line-height: 1.5; }
-.chess-data-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-block: .9rem; }
-.chess-backup-import { display: inline-flex; align-items: center; padding: .7rem .85rem; min-height: 44px; cursor: pointer; border: 1px solid rgba(255,255,255,.22); border-radius: 7px; }
-.chess-backup-import:focus-within { outline: 2px solid #357bd8; outline-offset: 2px; }
-.chess-backup-import input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.chess-sync-conflict { border-left: 2px solid #c86464; padding-left: 1rem; margin-top: 1rem; }
-@media (max-width: 540px) {
-  .chess-data-actions { flex-direction: column; }
-  .chess-data-actions > button, .chess-backup-import { width: 100%; }
-}
+/* P61 save state and backup controls */
+.topbar-sync{padding:0;border:0;background:transparent;cursor:pointer}
+.topbar-sync:focus-visible{outline:2px solid #357bd8}
+.topbar-sync[data-phase="pending"] .sync-dot{background:#c99c52}
+.topbar-sync[data-phase="conflict"] .sync-dot{background:#c86464}
+.topbar-sync-word,.chess-backup-import input{position:absolute;width:1px;height:1px;opacity:0}
+.chess-data-settings{max-width:45rem;padding:1rem 0}
+.chess-data-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.chess-backup-import{display:inline-flex;align-items:center;min-height:44px;padding:.5rem;border:1px solid #555;border-radius:6px;cursor:pointer}
+.chess-backup-import:focus-within{outline:2px solid #357bd8}
+.chess-sync-conflict{border-left:2px solid #c86464;padding-left:1rem}
