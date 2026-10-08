@@ -165,6 +165,12 @@ export function PlayView({
 
   useEffect(() => {
     if (!externalScenario || route.mode === "game") return;
+    const previous = readPlaySnapshot(storageOwner);
+    if (previous?.checkpoint?.moves.length && !previous.checkpoint.finished &&
+        !window.confirm("Starting another game will replace your unfinished game. Continue?")) {
+      onNavigate(previous.path, { replace: true });
+      return;
+    }
 
     const setup: PlaySetup = {
       mode: externalScenario.mode,
@@ -186,6 +192,9 @@ export function PlayView({
   }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode, storageOwner]);
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
+    const previous = readPlaySnapshot(storageOwner);
+    if (previous?.checkpoint?.moves.length && !previous.checkpoint.finished &&
+        !window.confirm("Replace your unfinished game?")) return;
     const path = playGamePath(setup);
     const nextSnapshot: PlaySessionSnapshot = {
       path,
