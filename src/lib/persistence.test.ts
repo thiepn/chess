@@ -85,12 +85,12 @@ describe("P61 user-scoped persistence", () => {
     expect(repo.legacyRecovery()).toBeNull();
   });
 
-  it("preserves and migrates legacy browser progress only for guests", async () => {
+  it("quarantines unscoped legacy progress in account mode until guest explicitly recovers it", async () => {
     account = null;
     localStorage.setItem(legacyKey, JSON.stringify(modifiedState));
     const repo = repository();
-    expect(await repo.load(initialUserState)).toEqual(modifiedState);
-    expect(JSON.parse(localStorage.getItem(guestKey) ?? "null")).toEqual(modifiedState);
+    expect(await repo.load(initialUserState)).toEqual(initialUserState);
+    expect(localStorage.getItem(guestKey)).toBeNull();
     expect(localStorage.getItem(legacyKey)).not.toBeNull();
     expect(repo.legacyRecovery()).toEqual(modifiedState);
     await repo.save(thirdState);
