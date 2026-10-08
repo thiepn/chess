@@ -78,6 +78,7 @@ export interface ChessStateRepository {
   getStatus(): SyncStatus;
   getProfileId(): string;
   legacyRecovery(): UserState | null;
+  archivedRecovery(): UserState | null;
   resolveConflict(choice: "keep-local" | "use-cloud"): Promise<UserState | null>;
   mode: "local" | "supabase";
 }
@@ -97,6 +98,7 @@ abstract class ChessRepositoryBase {
     this.statusListeners.forEach((listener) => listener(this.status));
   }
   legacyRecovery() { return parseState(read(LEGACY_KEY)); }
+  archivedRecovery() { return null as UserState | null; }
 }
 
 class LocalChessStateRepository extends ChessRepositoryBase implements ChessStateRepository {
@@ -150,6 +152,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   }
   private scope() { return this.owner === GUEST ? GUEST : "user." + this.owner; }
   override getProfileId() { return this.scope(); }
+  override archivedRecovery() { return parseState(read(recoveryKey(this.scope()))); }
   private async ownerForLoad() {
     try { return (await this.authOwner()) ?? GUEST; }
     catch {
