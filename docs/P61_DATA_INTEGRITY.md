@@ -18,7 +18,7 @@ The app needs both migrations, in order:
 1. supabase/migrations/001_chess_learning_state.sql
 2. supabase/migrations/002_revisioned_chess_state.sql
 
-The connected THIEPN database projects were checked during this phase and neither currently contains the chess_user_state table. The intended chess data project must be selected before applying migrations. Do not enable cloud variables until that schema is applied and verified.
+Backend selection: **THIEPN Account** (project ref hycegznamzjhwinegaai). Both migrations were applied to that project on 2026-10-08. Table, save RPC, three RLS policies, and authenticated SELECT/INSERT/UPDATE/RPC grants were verified. It contained zero chess state rows at verification. Live two-user authentication, browser SSO, and conflict-handling acceptance are still unverified. Do not enable cloud variables until the deployed client authenticates against that same project and passes cross-account checks.
 
 Without VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY the product operates in browser-local mode. Do not describe this as account sync.
 
