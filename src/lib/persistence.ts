@@ -2,6 +2,28 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { UserState } from "../domain/types";
 
 const LOCAL_KEY = "thiepn.chess.user-state.v1";
+const PENDING_KEY = "thiepn.chess.user-state.pending-sync.v1";
+
+function readLocalState(): UserState | null {
+  try {
+    const raw = localStorage.getItem(LOCAL_KEY);
+    if (!raw) return null;
+    const value: unknown = JSON.parse(raw);
+    if (!value || typeof value !== "object" || !("mastery" in value)) return null;
+    return value as UserState;
+  } catch {
+    return null;
+  }
+}
+
+function mirrorLocalState(snapshot: string, pending: boolean) {
+  try {
+    localStorage.setItem(LOCAL_KEY, snapshot);
+    if (pending) localStorage.setItem(PENDING_KEY, "1");
+  } catch {
+    // Storage can be disabled or full. Remote persistence remains available.
+  }
+}
 
 export interface ChessStateRepository {
   load(fallback: UserState): Promise<UserState>;
@@ -13,12 +35,7 @@ class LocalChessStateRepository implements ChessStateRepository {
   mode = "local" as const;
 
   async load(fallback: UserState) {
-    try {
-      const value = localStorage.getItem(LOCAL_KEY);
-      return value ? (JSON.parse(value) as UserState) : fallback;
-    } catch {
-      return fallback;
-    }
+    return readLocalState() ?? fallback;
   }
 
   async save(state: UserState) {
@@ -26,9 +43,10 @@ class LocalChessStateRepository implements ChessStateRepository {
   }
 }
 
-class SupabaseChessStateRepository implements ChessStateRepository {
+export class SupabaseChessStateRepository implements ChessStateRepository {
   mode = "supabase" as const;
   private client: SupabaseClient;
+  private saveQueue: Promise<void> = Promise.resolve();
 
   constructor(url: string, key: string) {
     this.client = createClient(url, key);
@@ -40,18 +58,17 @@ class SupabaseChessStateRepository implements ChessStateRepository {
   }
 
   async load(fallback: UserState) {
-    const loadLocal = () => {
-      try {
-        const local = localStorage.getItem(LOCAL_KEY);
-        return local ? (JSON.parse(local) as UserState) : fallback;
-      } catch {
-        return fallback;
-      }
-    };
+    const local = readLocalState();
+    // Failed/offline writes must never be replaced with older server data.
+    try {
+      if (local && localStorage.getItem(PENDING_KEY) === "1") return local;
+    } catch {
+      // The remote read below still works without browser storage.
+    }
 
     try {
       const userId = await this.userId();
-      if (!userId) return loadLocal();
+      if (!userId) return local ?? fallback;
 
       const { data, error } = await this.client
         .from("chess_user_state")
@@ -59,39 +76,49 @@ class SupabaseChessStateRepository implements ChessStateRepository {
         .eq("user_id", userId)
         .maybeSingle();
 
-      if (error || !data?.state) return loadLocal();
-      return data.state as UserState;
+      if (error || !data?.state) return local ?? fallback;
+      const state = data.state as UserState;
+      mirrorLocalState(JSON.stringify(state), false);
+      return state;
     } catch {
-      return loadLocal();
+      return local ?? fallback;
     }
   }
 
   async save(state: UserState) {
-    const saveLocal = () => {
+    const snapshot = JSON.stringify(state);
+    // The fallback must reflect the *latest* edit immediately, even when the
+    // authenticated remote write is delayed, offline, or ultimately succeeds.
+    mirrorLocalState(snapshot, true);
+
+    // Serialize remote writes: an older slow response must never overwrite a
+    // newer edit. This also means only the final synced snapshot clears dirty.
+    const write = async () => {
       try {
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
+        const userId = await this.userId();
+        if (!userId) return;
+
+        const { error } = await this.client.from("chess_user_state").upsert({
+          user_id: userId,
+          state,
+          updated_at: new Date().toISOString(),
+        });
+        if (error) return;
+
+        try {
+          if (localStorage.getItem(LOCAL_KEY) === snapshot) {
+            localStorage.removeItem(PENDING_KEY);
+          }
+        } catch {
+          // Storage may become unavailable while the request is in flight.
+        }
       } catch {
-        // Persistence fallback is best-effort.
+        // The locally mirrored state remains marked for later synchronization.
       }
     };
 
-    try {
-      const userId = await this.userId();
-      if (!userId) {
-        saveLocal();
-        return;
-      }
-
-      const { error } = await this.client.from("chess_user_state").upsert({
-        user_id: userId,
-        state,
-        updated_at: new Date().toISOString(),
-      });
-
-      if (error) saveLocal();
-    } catch {
-      saveLocal();
-    }
+    this.saveQueue = this.saveQueue.then(write, write);
+    await this.saveQueue;
   }
 }
 

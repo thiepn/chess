@@ -2,12 +2,13 @@ name: Deploy Pages
 
 on:
   workflow_run:
-    workflows: ["Quality"]
+    workflows: ["Device UX Prequalification"]
     types: [completed]
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -18,13 +19,17 @@ concurrency:
 jobs:
   build:
     if: >
-      (github.event_name == 'workflow_dispatch') ||
+      github.event_name == 'workflow_dispatch' ||
       (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main')
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    outputs:
+      eligible: ${{ steps.gate.outputs.eligible }}
+      release_sha: ${{ steps.release.outputs.sha }}
     steps:
-      - name: Resolve release SHA
+      - name: Resolve exact candidate SHA
         id: release
         shell: bash
         run: |
@@ -34,48 +39,101 @@ jobs:
             echo "sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Checkout candidate (not moving main)
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.release.outputs.sha }}
 
+      - name: Require three successful push checks for same commit
+        id: gate
+        uses: actions/github-script@v7
+        env:
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        with:
+          script: |
+            const { classifyReleaseEvidence } = await import(`${process.env.GITHUB_WORKSPACE}/scripts/release-evidence.mjs`);
+            const sha = process.env.RELEASE_SHA;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            for (let attempt = 0; attempt < 36; attempt++) {
+              const branch = await github.rest.repos.getBranch({owner, repo, branch: "main"});
+              if (branch.data.commit.sha !== sha) {
+                core.notice(`Superseded release ${sha}: current main is ${branch.data.commit.sha}`);
+                core.setOutput("eligible", "false");
+                return;
+              }
+              const {data} = await github.rest.actions.listWorkflowRunsForRepo({
+                owner, repo, branch: "main", per_page: 100,
+              });
+              const result = classifyReleaseEvidence(data.workflow_runs, sha);
+              core.info(`Release evidence attempt ${attempt+1}: ${JSON.stringify(result)}`);
+              if (result.verdict === "blocked") {
+                core.setFailed(`Refusing Pages deployment: failed checks: ${result.reasons.join(", ")}`);
+                return;
+              }
+              if (result.verdict === "ready") {
+                core.setOutput("eligible", "true");
+                return;
+              }
+              await new Promise((resolve) => setTimeout(resolve, 15000));
+            }
+            core.setFailed("Release evidence was incomplete after 9 minutes");
+
       - name: Setup Node
+        if: steps.gate.outputs.eligible == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install
+        if: steps.gate.outputs.eligible == 'true'
         run: npm install --no-audit --no-fund
 
       - name: Verify Stockfish production assets
-        shell: bash
+        if: steps.gate.outputs.eligible == 'true'
         run: |
           test -f public/engine/manifest.json
           test -f public/engine/stockfish-19-lite-single.js
           test -f public/engine/stockfish-19-lite-single.wasm
 
       - name: Build production site
+        if: steps.gate.outputs.eligible == 'true'
         run: npm run build
 
       - name: Verify deploy artifact
-        run: test -f dist/index.html
+        if: steps.gate.outputs.eligible == 'true'
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/.vite/manifest.json
 
       - name: Upload Pages artifact
+        if: steps.gate.outputs.eligible == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
   deploy:
+    if: needs.build.outputs.eligible == 'true'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Refuse stale candidate before publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ needs.build.outputs.release_sha }}
+        run: |
+          current=$(gh api repos/${{ github.repository }}/branches/main --jq .commit.sha)
+          if [ "$current" != "$RELEASE_SHA" ]; then
+            echo "::error::Release SHA was superseded before deployment"
+            exit 1
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
-
       - name: Deploy Chess
         id: deployment
         uses: actions/deploy-pages@v4
