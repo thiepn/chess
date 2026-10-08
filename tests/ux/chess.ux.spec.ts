@@ -31,12 +31,25 @@ async function open(page: Page, path: string, selector: string) {
 }
 
 async function assertNoHorizontalOverflow(page: Page, path: string) {
-  const dims = await page.evaluate(() => ({
-    scroll: document.documentElement.scrollWidth,
-    viewport: window.innerWidth,
-  }));
-  expect(dims.scroll, `${path} should not overflow the viewport ${JSON.stringify(dims)}`)
-    .toBeLessThanOrEqual(dims.viewport + 2);
+  const configuredWidth = page.viewportSize()?.width ?? 1440;
+  const dims = await page.evaluate((expectedWidth) => {
+    const offenders = [...document.querySelectorAll<HTMLElement>("body *")]
+      .map((node) => {
+        const b = node.getBoundingClientRect();
+        return { tag: node.tagName, cls: String(node.className).slice(0, 75),
+          right: Math.round(b.right), left: Math.round(b.left), width: Math.round(b.width) };
+      })
+      .filter((n) => n.right > expectedWidth + 2 && n.width > 0)
+      .sort((a, b) => b.right - a.right).slice(0, 8);
+    return { scroll: document.documentElement.scrollWidth, viewport: innerWidth,
+      client: document.documentElement.clientWidth,
+      visual: window.visualViewport?.width, offenders };
+  }, configuredWidth);
+  if (dims.scroll > configuredWidth + 2) {
+    console.log("P58_OVERFLOW " + JSON.stringify({ path, configuredWidth, ...dims }));
+  }
+  expect(dims.scroll, `${path} should fit ${configuredWidth}px: ${JSON.stringify(dims)}`)
+    .toBeLessThanOrEqual(configuredWidth + 2);
 }
 
 function primaryNav(page: Page) {
