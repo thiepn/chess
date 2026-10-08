@@ -161,7 +161,12 @@ export function GameArena({
   const blackMs = clock.blackMs;
   const { feedback, celebrate, settings } = useExperience();
 
-
+  // Untimed white-side sessions need no WASM worker until the user moves.
+  // Deferring startup prevents repeated idle worker allocations on reload,
+  // particularly expensive for mobile WebKit. Timed games and black-side
+  // openings initialize immediately so the opponent/clock remains ready.
+  const shouldStartEngine = timeControl !== "untimed" ||
+    playerColor === "b" || moves.length > 0;
 
   useEffect(() => {
     const chess = gameRef.current;
@@ -177,7 +182,10 @@ export function GameArena({
       chess.setHeader("FEN", initialFen);
     }
 
-    if (recovered.finished) return;
+    if (recovered.finished || !shouldStartEngine) {
+      setEngineStatus("Opponent starts after your first move");
+      return;
+    }
     let cancelled = false;
     setError(null);
     setEngineStatus("Loading opponent…");
@@ -208,7 +216,7 @@ export function GameArena({
       engineRef.current = null;
       setEngineReady(false);
     };
-  }, [initialFen, playerColor, profile.name, scenario, engineNonce]);
+  }, [initialFen, playerColor, profile.name, scenario, engineNonce, shouldStartEngine]);
 
   const playerToMove =
     !finishedRef.current && gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
