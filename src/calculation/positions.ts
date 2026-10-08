@@ -15,6 +15,7 @@ const authoredPositions: CalculationPosition[] = [
       "calculation.candidates",
       "calculation.forcing-lines",
       "calculation.visualization",
+      "tactics.combinations",
     ],
     title: "Checks before comfort",
     prompt:
@@ -28,7 +29,7 @@ const authoredPositions: CalculationPosition[] = [
       "d6c8",
     ],
     explanation:
-      "Nd6+ forces the king to respond while the knight also attacks the queen on c8. The calculation stays concrete because every ply has a forcing purpose.",
+      "Nd6+ forks the king and queen. After ...Kd8 Nxc8, Black may recapture the knight with the king, reaching bare kings and a draw. The lesson is a tactical saving resource, not a winning material advantage.",
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 4,
@@ -81,30 +82,9 @@ const authoredPositions: CalculationPosition[] = [
     sourceLabel: "Calculation course",
     difficulty: 3,
   },
-  {
-    id: "calc:advanced-combination",
-    skillIds: [
-      "tactics.combinations",
-      "calculation.branching",
-      "calculation.evaluation",
-    ],
-    title: "Calculate through the tactical transformation",
-    prompt:
-      "Generate more than one forcing candidate, then calculate the branch until the back-rank idea transforms into a second threat.",
-    fen: "3q2k1/5ppp/8/8/8/3B4/5PPP/4R1K1 w - - 0 1",
-    playerColor: "w",
-    bestMove: "e1e8",
-    principalVariation: [
-      "e1e8",
-      "d8e8",
-      "d3h7",
-    ],
-    explanation:
-      "Re8+ forces the queen to take on e8. Bxh7+ then carries the initiative into a new tactical geometry. The point is not the first motif; it is tracking how one forcing idea creates the next.",
-    source: "authored",
-    sourceLabel: "Advanced calculation course",
-    difficulty: 5,
-  },
+  // P63: The former advanced-combination reference was unsound:
+  // 1.Re8+ Qxe8 2.Bxh7+? Kxh7 loses the rook and bishop without compensation.
+  // Keep it out of scored instruction until a vetted replacement is authored.
   {
     id: "calc:defensive-countercheck",
     skillIds: [
