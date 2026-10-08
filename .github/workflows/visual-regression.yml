@@ -1,0 +1,60 @@
+name: Visual Regression
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "public/**"
+      - "tests/visual/**"
+      - "playwright.config.ts"
+      - "package.json"
+      - "index.html"
+      - "vite.config.ts"
+      - ".github/workflows/visual-regression.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "tests/visual/**"
+      - "playwright.config.ts"
+      - "package.json"
+      - "index.html"
+      - "vite.config.ts"
+      - ".github/workflows/visual-regression.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Install pinned Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build app
+        run: npm run build
+      - name: Compare approved screenshots
+        run: npm run visual:verify
+      - name: Preserve diff, actual images and traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-visual-regression-${{ github.run_id }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn

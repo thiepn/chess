@@ -832,7 +832,16 @@ Full real-device perceived-load measurements and visual behavior remain P58 rele
 
 ### P57 — Visual Regression Suite
 
-Capture deterministic desktop/mobile states for Train, Learn, Play, Review, Library and Progress to prevent design drift.
+**Status: complete.** Deterministic Playwright browser capture and approved PNG snapshots for desktop and mobile. The Visual Regression CI workflow compares images on every pull request and main-branch push; screenshots, diffs and traces are retained as build artifacts on failures.
+
+- Locked primary screen matrix: Train, Learn, Play, Review, Library, Progress at 1440×900 desktop and 393×852 phone.
+- Deeper representative workspaces: lesson detail, reviewed game analysis, and saved study workspace at both sizes.
+- Pinned Chromium/Playwright on Ubuntu 24.04, reduced motion, fixed clock and fixture state, fixed device scale and locale.
+- Unapproved visual changes fail the separate CI check; updating baselines is a conscious reviewed change.
+- Coverage is intentionally visual and structural, not a substitute for P58 physical-device qualification.
+- P57's first screenshots exposed and drove repair of an actual mobile Play grid blowout; the browser test now checks board visibility and horizontal overflow.
+
+Baseline status is verified by the screenshot comparison workflow and committed snapshot files.
 
 ### P58 — Real-Device UX Qualification
 

@@ -6,3 +6,7 @@ dist/
 # force-add a reviewed full-database corpus.
 public/data/puzzles/*.json
 !public/data/puzzles/.gitkeep
+
+# Playwright generates reports and diff artifacts; only approved golden snapshots are tracked.
+playwright-report/
+test-results/
