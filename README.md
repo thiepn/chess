@@ -79,7 +79,7 @@ The default experience should answer one question: **what should I train now?**
 - P58 automated cross-device UX prequalification using Chromium/WebKit interaction journeys and measured route diagnostics, with physical-device acceptance still pending
 - P59 visual design QA against the frozen P37 contract, repairing mobile Library hierarchy, lesson reading/navigation occlusion and undersized route text; visual release gate tracked separately from automated test success
 - P59B Review-first analysis desk, optional PGN import drawer, board material refinement and higher contrast native chess typography, with visual and real-device acceptance still separately gated
-- P60 defect-only candidate hardening: same-SHA triple-checked production deploy gate, offline-safe Supabase local mirror and serialized saves, unit/browser evidence and explicit manual release blockers
+- P60 defect-only candidate hardening: same-SHA triple-checked production deploy gate, offline-safe Supabase local mirror, serialized saves and reconnect retry, unit/browser evidence and explicit manual release blockers
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell

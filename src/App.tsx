@@ -294,6 +294,22 @@ export default function App() {
   }, [state, loaded]);
 
   useEffect(() => {
+    if (!loaded || repo.mode !== "supabase") return;
+    const retry = () => { void repo.retryPending(); };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") retry();
+    };
+    window.addEventListener("online", retry);
+    window.addEventListener("focus", retry);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      window.removeEventListener("online", retry);
+      window.removeEventListener("focus", retry);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [loaded]);
+
+  useEffect(() => {
     const routeLabel =
       page === "progress"
         ? "Progress"

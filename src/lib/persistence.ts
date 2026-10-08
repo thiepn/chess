@@ -28,6 +28,7 @@ function mirrorLocalState(snapshot: string, pending: boolean) {
 export interface ChessStateRepository {
   load(fallback: UserState): Promise<UserState>;
   save(state: UserState): Promise<void>;
+  retryPending(): Promise<void>;
   mode: "local" | "supabase";
 }
 
@@ -40,6 +41,10 @@ class LocalChessStateRepository implements ChessStateRepository {
 
   async save(state: UserState) {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
+  }
+
+  async retryPending() {
+    // A local-only repository has no remote queue.
   }
 }
 
@@ -119,6 +124,19 @@ export class SupabaseChessStateRepository implements ChessStateRepository {
 
     this.saveQueue = this.saveQueue.then(write, write);
     await this.saveQueue;
+  }
+
+  async retryPending() {
+    // A retry must come after all previously queued writes. Re-read the
+    // mirror only then, so a reconnection cannot re-upload a stale snapshot.
+    await this.saveQueue;
+    try {
+      if (localStorage.getItem(PENDING_KEY) !== "1") return;
+      const pending = readLocalState();
+      if (pending) await this.save(pending);
+    } catch {
+      // No browser storage (private mode / blocked storage): nothing to retry.
+    }
   }
 }
 

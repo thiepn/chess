@@ -32,6 +32,13 @@ marker until a successful remote response, preserves pending offline edits
 against stale remote data on reload, and serializes remote writes so older
 responses cannot overwrite newer saves. Remote loads refresh the local cache.
 
+**Recovery follow-up (P60-RC-03):** A dirty local mirror was only retried
+on another edit or full reload. Pending writes now retry on browser reconnection,
+window focus, or return from a background tab. The retry waits behind all
+outstanding saves and reads the most recent local snapshot. Repeated retries
+are harmless once the pending marker is cleared. This is client lifecycle
+recovery, not a promise of background synchronization after the page is closed.
+
 The dirty marker is a single-device recovery safeguard, **not** a conflict-
 free cross-device merge algorithm. When two devices make different edits
 offline, the product does not claim to merge them. That limitation remains a

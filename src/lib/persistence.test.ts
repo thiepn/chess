@@ -97,6 +97,40 @@ describe("P60 cloud/local state recovery", () => {
     expect(localStorage.getItem(pendingKey)).toBeNull();
   });
 
+  it("retries failed remote writes after connectivity returns without requiring a new edit", async () => {
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "anon");
+    mocks.upsert.mockResolvedValueOnce({ error: { message: "offline" } });
+    await repo.save(laterState);
+    expect(localStorage.getItem(pendingKey)).toBe("1");
+
+    await repo.retryPending();
+    expect(mocks.upsert).toHaveBeenCalledTimes(2);
+    expect(mocks.upsert.mock.calls[1][0].state).toEqual(laterState);
+    expect(localStorage.getItem(pendingKey)).toBeNull();
+
+    await repo.retryPending();
+    expect(mocks.upsert).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not retry an older snapshot while a newer save is in flight", async () => {
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "anon");
+    let finishOld!: (result: { error: null }) => void;
+    const slow = new Promise<{ error: null }>((resolve) => { finishOld = resolve; });
+    mocks.upsert.mockImplementationOnce(() => slow);
+    mocks.upsert.mockResolvedValue({ error: null });
+
+    const first = repo.save(initialUserState);
+    const second = repo.save(laterState);
+    const recovery = repo.retryPending();
+    for (let i = 0; i < 10 && mocks.upsert.mock.calls.length === 0; i++) await Promise.resolve();
+    expect(mocks.upsert).toHaveBeenCalledTimes(1);
+    finishOld({ error: null });
+    await Promise.all([first, second, recovery]);
+    const last = mocks.upsert.mock.calls.at(-1)?.[0].state;
+    expect(last).toEqual(laterState);
+    expect(localStorage.getItem(pendingKey)).toBeNull();
+  });
+
   it("retains local edits when authentication is unavailable", async () => {
     const repo = new SupabaseChessStateRepository("https://example.supabase.co", "anon");
     mocks.getUser.mockResolvedValue({ data: { user: null } });
