@@ -39,6 +39,7 @@ const GameArena = lazy(() =>
 );
 import { LichessSyncCard } from "./LichessSyncCard";
 import { reviewGamePath } from "../review/reviewRoutes";
+import { restoreCheckpoint, type GameCheckpoint } from "../play/gameRecovery";
 import "../styles/p47-play-native.css";
 import "../styles/p51-play-large.css";
 
@@ -50,6 +51,7 @@ interface PlayViewProps {
   lichessSyncError?: string | null;
   practicalPlan?: TrainingPrescription;
   routePath: string;
+  storageOwner: string;
   onNavigate: (path: string, options?: { replace?: boolean }) => void;
   onLinkLichess: (username: string) => Promise<void> | void;
   onUnlinkLichess: () => void;
@@ -65,9 +67,11 @@ interface PlaySessionSnapshot {
   setup: PlaySetup;
   scenario?: TrainingScenario;
   returnPath?: string;
+  checkpoint?: GameCheckpoint;
 }
 
-const playSessionStorageKey = "chess:play-session-v1";
+const playStoragePrefix = "chess:play-session-v2:";
+function storageKey(owner: string) { return playStoragePrefix + encodeURIComponent(owner); }
 
 const profileOrder: AiProfileId[] = [
   "gentle",
@@ -87,16 +91,26 @@ const timeControls: Array<{
   { id: "15+10", label: "15+10", description: "Training" },
 ];
 
-function readPlaySnapshot(path: string) {
+function readPlaySnapshot(owner: string): PlaySessionSnapshot | undefined {
   try {
-    const raw = window.sessionStorage.getItem(playSessionStorageKey);
+    const raw = window.localStorage.getItem(storageKey(owner));
     if (!raw) return undefined;
     const parsed = JSON.parse(raw) as PlaySessionSnapshot;
-    return parsed.path === path ? parsed : undefined;
+    if (!parsed || typeof parsed.path !== "string" || !parsed.setup) return undefined;
+    return parsed;
   } catch {
-    window.sessionStorage.removeItem(playSessionStorageKey);
+    // Preserve an unreadable snapshot for manual recovery; never delete it.
     return undefined;
   }
+}
+function writePlaySnapshot(owner: string, snapshot: PlaySessionSnapshot): boolean {
+  try {
+    window.localStorage.setItem(storageKey(owner), JSON.stringify(snapshot));
+    return true;
+  } catch { return false; }
+}
+function clearPlaySnapshot(owner: string) {
+  try { window.localStorage.removeItem(storageKey(owner)); } catch { /* Storage blocked */ }
 }
 
 export function PlayView({
@@ -107,6 +121,7 @@ export function PlayView({
   lichessSyncError,
   practicalPlan,
   routePath,
+  storageOwner,
   onNavigate,
   onLinkLichess,
   onUnlinkLichess,
@@ -120,6 +135,7 @@ export function PlayView({
   const [profileId, setProfileId] = useState<AiProfileId>("adaptive");
   const [timeControl, setTimeControl] = useState<TimeControlId>("15+10");
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
+  const [saveFailed, setSaveFailed] = useState(false);
 
   const route = resolvePlayRoute(routePath);
   const resolvedProfile = useMemo(
@@ -127,8 +143,9 @@ export function PlayView({
     [mastery, profileId],
   );
 
-  const snapshot = route.mode === "game"
-    ? readPlaySnapshot(routePath)
+  const latestSnapshot = readPlaySnapshot(storageOwner);
+  const snapshot = route.mode === "game" && latestSnapshot?.path === routePath
+    ? latestSnapshot
     : undefined;
 
   const routeSetup = route.gameKey
@@ -163,13 +180,10 @@ export function PlayView({
       scenario: externalScenario,
       returnPath: externalScenarioReturnPath,
     };
-    window.sessionStorage.setItem(
-      playSessionStorageKey,
-      JSON.stringify(nextSnapshot),
-    );
+    if (!writePlaySnapshot(storageOwner, nextSnapshot)) setSaveFailed(true);
     // Replay is one routed action: do not leave a temporary Play setup in history.
     onNavigate(path, { replace: true });
-  }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode]);
+  }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode, storageOwner]);
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
     const path = playGamePath(setup);
@@ -178,16 +192,15 @@ export function PlayView({
       setup,
       scenario,
     };
-    window.sessionStorage.setItem(
-      playSessionStorageKey,
-      JSON.stringify(nextSnapshot),
-    );
+    if (!writePlaySnapshot(storageOwner, nextSnapshot)) setSaveFailed(true);
     onNavigate(path);
   }
 
   function exitGame() {
+    if (!snapshot?.checkpoint?.finished && (snapshot?.checkpoint?.moves.length ?? 0) > 0 &&
+        !window.confirm("Discard this unfinished game?")) return;
     const destination = playReturnPath(snapshot?.returnPath);
-    window.sessionStorage.removeItem(playSessionStorageKey);
+    clearPlaySnapshot(storageOwner);
     if (externalScenario || activeScenario?.mode === "replay") {
       onExternalScenarioExit?.();
     }
@@ -195,7 +208,7 @@ export function PlayView({
   }
 
   function openFinishedGameReview(gameId: string) {
-    window.sessionStorage.removeItem(playSessionStorageKey);
+    clearPlaySnapshot(storageOwner);
     onExternalScenarioExit?.();
     // Browser Back must never restart a completed game.
     onNavigate(reviewGamePath(gameId), { replace: true });
@@ -207,7 +220,7 @@ export function PlayView({
       !activeScenario &&
       !scenarioById[activeSetup!.scenarioId!];
 
-    if (!activeSetup || missingDynamicScenario) {
+    if (!snapshot || !activeSetup || missingDynamicScenario) {
       return (
         <section className="play-game-recovery">
           <strong>Game session unavailable</strong>
@@ -227,11 +240,43 @@ export function PlayView({
         : undefined);
     const profile = resolveAiProfile(activeSetup.aiProfileId, mastery);
     const playerColor = scenario?.playerColor ?? activeSetup.playerColor;
+    const initialFen = scenario?.fen ?? DEFAULT_POSITION;
+    let recoveryError: string | null = null;
+    try {
+      restoreCheckpoint(initialFen, snapshot.checkpoint,
+        scenario ? "untimed" : activeSetup.timeControl ?? "untimed", Date.now());
+    } catch (error) {
+      recoveryError = error instanceof Error ? error.message : "The saved game cannot be restored.";
+    }
+    if (recoveryError) return (
+      <section className="play-game-recovery" role="alert">
+        <strong>Saved game needs recovery</strong>
+        <p>{recoveryError}</p>
+        <button className="secondary" type="button" onClick={() => {
+          const raw = localStorage.getItem(storageKey(storageOwner));
+          if (!raw) return;
+          const url = URL.createObjectURL(new Blob([raw], { type: "application/json" }));
+          const anchor = document.createElement("a");
+          anchor.href = url;
+          anchor.download = "chess-unfinished-game.json";
+          anchor.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }}>Export recovery file</button>
+        <button className="secondary" type="button" onClick={() => onNavigate("/play", { replace: true })}>Back to Play</button>
+      </section>
+    );
 
     return (
       <section className="play-game-page">
+        {saveFailed && <p role="alert">Game cannot be saved on this browser. Do not close this tab.</p>}
         <GameArena
-          initialFen={scenario?.fen ?? DEFAULT_POSITION}
+          initialFen={initialFen}
+          checkpoint={snapshot.checkpoint}
+          onCheckpoint={(checkpoint) => {
+            const current = readPlaySnapshot(storageOwner);
+            if (current?.path !== routePath) return;
+            if (!writePlaySnapshot(storageOwner, { ...current, checkpoint })) setSaveFailed(true);
+          }}
           playerColor={playerColor}
           profile={profile}
           scenario={scenario}
@@ -247,6 +292,15 @@ export function PlayView({
 
   return (
     <section className="play-v2" aria-labelledby="play-setup-title">
+      {saveFailed && <p role="alert">Game storage is unavailable. Check browser storage settings before playing.</p>}
+      {latestSnapshot?.checkpoint && !latestSnapshot.checkpoint.finished && (
+        <div className="play-resume-notice">
+          <strong>Unfinished game</strong>
+          <button type="button" className="secondary" onClick={() => onNavigate(latestSnapshot.path)}>
+            Resume saved game
+          </button>
+        </div>
+      )}
       <div className="play-v2-board-column">
         <div className="play-v2-board-label">
           <span>{selectedScenario ? selectedScenario.sourceLabel : "STANDARD GAME"}</span>
