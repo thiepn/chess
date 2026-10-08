@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { useExperience } from "../interaction/ExperienceProvider";
 import { importPgn } from "../games/import";
-import { advanceClock, completeMoveClock, makeCheckpoint, restoreCheckpoint, type GameCheckpoint, type RunningClock } from "../play/gameRecovery";
+import { advanceClock, completeMoveClock, makeCheckpoint, restoreCheckpoint, type GameCheckpoint, type RunningClock, type CompletedGame } from "../play/gameRecovery";
 import type {
   AiProfile,
   PlayResult,
@@ -124,8 +124,11 @@ export function GameArena({
   const [engineStatus, setEngineStatus] = useState("Loading opponent…");
   const [engineReady, setEngineReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emptyResult, setEmptyResult] = useState<CompletedGame | null>(
+    recovered.finished && recovered.chess.history().length === 0 ? recovered.finished : null,
+  );
   const [result, setResult] = useState<PlayResult | null>(() => {
-    if (!recovered.finished) return null;
+    if (!recovered.finished || recovered.chess.history().length === 0) return null;
     const chess = recovered.chess;
     // Reconstruct the exact header order used by finalize(); otherwise the
     // PGN hash / saved game ID changes after a reload.
@@ -207,7 +210,7 @@ export function GameArena({
   }, [initialFen, playerColor, profile.name, scenario, engineNonce]);
 
   const playerToMove =
-    gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
+    !finishedRef.current && gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
 
   // Real elapsed wall time, not a setInterval counter, is authoritative.
   // This continues correctly after background throttling, sleep or reload.
@@ -243,13 +246,13 @@ export function GameArena({
 
   useEffect(() => {
     onCheckpoint?.(makeCheckpoint(gameRef.current, initialFen, clock,
-      result ? {
+      emptyResult ?? (result ? {
         outcome: result.outcome,
         reason: result.reason,
         completedAt: result.completedAt,
         reviewSent,
-      } : undefined));
-  }, [fen, clock, result, reviewSent, initialFen, onCheckpoint]);
+      } : undefined)));
+  }, [fen, clock, result, emptyResult, reviewSent, initialFen, onCheckpoint]);
 
   const lastMove = useMemo(() => moves.at(-1), [moves]);
   const moveRows = useMemo(() => {
@@ -274,9 +277,17 @@ export function GameArena({
     finishedRef.current = true;
 
     const chess = gameRef.current;
+    const completedAt = new Date().toISOString();
+    if (chess.history().length === 0) {
+      // An expired game without moves has no importable PGN, but its terminal
+      // state still needs to survive a refresh without inventing a game.
+      const terminal: CompletedGame = { outcome, reason, completedAt, reviewSent: false };
+      onCheckpoint?.(makeCheckpoint(chess, initialFen, clockRef.current, terminal));
+      setEmptyResult(terminal);
+      return;
+    }
     chess.setHeader("Result", resultHeader(outcome, playerColor));
     const pgn = chess.pgn({ maxWidth: 80, newline: "\n" });
-    const completedAt = new Date().toISOString();
     const importedGame = importPgn(pgn, playerColor, completedAt, {
       source: "training",
     });
@@ -521,8 +532,8 @@ export function GameArena({
 
           <div className="game-turn-line" aria-live="polite">
             <span>
-              {result
-                ? outcomeLabel(result.outcome)
+              {result || emptyResult
+                ? outcomeLabel((result ?? emptyResult)!.outcome)
                 : thinking
                   ? "Opponent thinking"
                   : playerToMove
@@ -595,7 +606,7 @@ export function GameArena({
             </div>
           )}
 
-          {!result && (
+          {!result && !emptyResult && (
             <button
               className="resign-button"
               type="button"
@@ -604,6 +615,15 @@ export function GameArena({
             >
               <Flag size={15} /> Resign
             </button>
+          )}
+
+          {emptyResult && (
+            <div className="game-result-card" role="status">
+              <p className="eyebrow">GAME COMPLETE</p>
+              <h3>{outcomeLabel(emptyResult.outcome)}</h3>
+              <p>The game ended before a legal move was recorded. No PGN was created.</p>
+              <button className="secondary" type="button" onClick={onExit}>{exitLabel}</button>
+            </div>
           )}
 
           {result && (
