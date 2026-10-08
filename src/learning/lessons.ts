@@ -1330,6 +1330,27 @@ function misconceptionOptions(seed: LessonSeed) {
   ];
 }
 
+// Retrieval must not simply repeat the same three options shown during contrast.
+function retrievalOptions(seed: LessonSeed) {
+  return [
+    {
+      id: "principle",
+      text: seed.summary + " Verify legality and the opponent's best reply first.",
+      feedback: "Correct. You must recognize when the principle applies, not copy the model move.",
+    },
+    {
+      id: "automatic",
+      text: "Remember the exact squares from the example, then copy that move whenever the board looks similar.",
+      feedback: "A recalled coordinate is not an explanation. The pieces and opponent's threats can change.",
+    },
+    {
+      id: "hope",
+      text: "Once you remember a useful principle, the opponent's strongest response no longer matters.",
+      feedback: "A principle guides candidate generation, but a concrete reply can refute the move.",
+    },
+  ];
+}
+
 function makeScript(
   skillId: string,
   seed: LessonSeed,
@@ -1431,7 +1452,7 @@ function makeScript(
         prompt:
           "Before moving again, which statement should guide your search?",
         fen: seed.fen,
-        options: misconceptionOptions(seed),
+        options: retrievalOptions(seed),
         correctOptionId: "principle",
         successTitle: "You retrieved the principle",
         successBody:
