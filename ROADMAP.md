@@ -851,6 +851,7 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 - Route visibility, horizontal overflow and safe scrolling on Train, Learn, Play, Review, Library, Progress and representative deep workspaces.
 - Keyboard navigation, browser Back/Forward, Play → game → exit, Train → activity → exit and saved Review/Library reopening.
 - Phone touch-target and sticky-start-action checks, plus per-route elapsed-time evidence emitted as CI artifacts.
+- P58 uncovered and corrected portrait-tablet root horizontal overflow missed by a naive window.innerWidth check.
 - Fixed local data and time; browser-matrix results cannot be presented as actual physical-device qualification.
 - Hardware acceptance checklist and explicit sign-off gate in `docs/P58_DEVICE_QUALIFICATION.md`. No green release claim until real Android, iOS/iPadOS and desktop hardware is observed.
 

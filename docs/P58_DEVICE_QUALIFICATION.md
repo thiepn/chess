@@ -22,6 +22,11 @@ Run `npm run build && npm run ux:verify` after `npm install` and
   game enter/exit, persisted Review/Library deep links and touch targets
 - Console-recorded route durations and per-project JSON artifacts; these timings
   are CI diagnostics and do not establish physical-device INP, LCP or FPS.
+- The test compares document scrollWidth against the *configured* viewport, not
+  window.innerWidth (which can expand when mobile layout overflows). This
+  exposed a 4-6px iPad portrait root overflow in Train and Play. The mobile
+  app shell now clips document-level X overflow while keeping nested training
+  and scenario carousels individually horizontally scrollable.
 
 ## Hands-on acceptance matrix (unverified until performed)
 
