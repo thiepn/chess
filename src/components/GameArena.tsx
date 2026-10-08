@@ -127,14 +127,18 @@ export function GameArena({
   const [result, setResult] = useState<PlayResult | null>(() => {
     if (!recovered.finished) return null;
     const chess = recovered.chess;
-    chess.setHeader("Result", resultHeader(recovered.finished.outcome, playerColor));
+    // Reconstruct the exact header order used by finalize(); otherwise the
+    // PGN hash / saved game ID changes after a reload.
+    chess.setHeader("Event", scenario ? "THIEPN Chess — " + scenario.title : "THIEPN Chess — Training Game");
     chess.setHeader("White", playerColor === "w" ? "You" : profile.name);
     chess.setHeader("Black", playerColor === "b" ? "You" : profile.name);
+    chess.setHeader("Site", "chess.thiepn.dev");
     if (initialFen !== new Chess().fen()) {
       chess.setHeader("SetUp", "1");
       chess.setHeader("FEN", initialFen);
     }
-    const pgn = chess.pgn();
+    chess.setHeader("Result", resultHeader(recovered.finished.outcome, playerColor));
+    const pgn = chess.pgn({ maxWidth: 80, newline: "\n" });
     return {
       ...recovered.finished,
       pgn,
