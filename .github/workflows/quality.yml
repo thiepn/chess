@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+      - run: npm ci --no-audit --no-fund
       - run: test -f public/engine/manifest.json
       - run: test -f public/engine/stockfish-19-lite-single.js
       - run: test -f public/engine/stockfish-19-lite-single.wasm
