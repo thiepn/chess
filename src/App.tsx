@@ -2934,6 +2934,7 @@ export default function App() {
           <PlayView
             mastery={state.mastery}
             routePath={route.path}
+            storageOwner={repo.getProfileId()}
             onNavigate={navigate}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
