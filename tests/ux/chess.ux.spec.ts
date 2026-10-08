@@ -336,3 +336,21 @@ test("P64 chessboard and core navigation retain legible controls", async ({ page
   if (metrics?.coordinateSize !== null) expect(metrics?.coordinateSize).toBeGreaterThanOrEqual(8);
   await assertNoHorizontalOverflow(page, "/play");
 });
+
+
+test("P65 idle untimed White game does not load a WASM worker on repeated reload", async ({ page }) => {
+  let manifestRequests = 0;
+  await page.route("**/engine/manifest.json", async (route) => {
+    manifestRequests += 1;
+    await route.continue();
+  });
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /Untimed/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".game-arena")).toBeVisible();
+  expect(manifestRequests).toBe(0);
+});
