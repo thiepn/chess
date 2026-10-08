@@ -19,6 +19,10 @@
   /* In the Library, put the archive and its create action on one compact rail
      row. The collection scroller and external study links stay in their own rows. */
   .app-shell-v2 .library-v2-rail {
+    /* P45's relative rail kept the desktop sticky top offset (80px).
+       Static positioning restores the rail to the true top of mobile Library. */
+    position: static;
+    top: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-rows: auto auto auto;
@@ -98,6 +102,19 @@
    Repeating the same heading and action in the content wastes prime space. */
 @media (max-width: 820px) {
   .app-shell-v2 .library-v2-index-head {
+    /* Keep the real H1 readable to assistive technology. The visible rail
+       supplies the title; there must be no duplicate hidden-focus action. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app-shell-v2 .library-v2-index-head > button {
     display: none;
   }
 

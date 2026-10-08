@@ -29,7 +29,11 @@ justify a release-grade rating.
 ## P59 repairs
 
 1. Mobile Library archive rail gets a single clear title/action row, followed
-   by the collection scroller and study links; remove excess spacing.
+   by the collection scroller and study links. A browser geometry probe
+   identified the actual 80px gap: `position: relative` retained a legacy
+   `top: 80px` from the former sticky rail. Override to static positioning
+   and keep the archive's H1 available to screen readers while visually
+   de-duplicating it.
 2. Mobile lesson Previous/Next controls follow the reading content instead of
    covering it when the user reaches the board and explanation.
 3. Increase supporting metadata on Learn, Review, Library and Progress to
