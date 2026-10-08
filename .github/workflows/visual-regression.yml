@@ -2,26 +2,8 @@ name: Visual Regression
 
 on:
   pull_request:
-    paths:
-      - "src/**"
-      - "public/**"
-      - "tests/visual/**"
-      - "playwright.config.ts"
-      - "package.json"
-      - "index.html"
-      - "vite.config.ts"
-      - ".github/workflows/visual-regression.yml"
   push:
     branches: [main]
-    paths:
-      - "src/**"
-      - "public/**"
-      - "tests/visual/**"
-      - "playwright.config.ts"
-      - "package.json"
-      - "index.html"
-      - "vite.config.ts"
-      - ".github/workflows/visual-regression.yml"
   workflow_dispatch:
 
 permissions:

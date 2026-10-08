@@ -876,7 +876,13 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 
 ### P60 — Defect-Only Release Candidate
 
-Freeze features. Only defects, accessibility, responsive, performance, copy and persistence/routing fixes are allowed before V1.0.
+**Status:** code-level release-candidate hardening. **V1.0 production sign-off BLOCKED** until physical-device, assistive-technology and P37 visual acceptance are evidenced.
+
+- Feature freeze: only defects, accessibility, responsive, performance, copy and persistence/routing fixes.
+- Require Quality, Visual Regression and Device UX checks to pass for **the same exact main-branch SHA** before Pages can deploy; manually dispatched deployments have the same gate.
+- Keep a local fallback mirror after authenticated state saves, preserve offline edits with a dirty marker, and serialize server writes.
+- Add regression tests for release evidence selection, local/remote data retention, and state reloads.
+- Collect explicit evidence and open manual gates in `docs/P60_RELEASE_CANDIDATE.md`, without inventing physical-device results or a V1.0 release tag.
 
 ## Product-priority order from now on
 
