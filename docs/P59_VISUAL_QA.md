@@ -41,6 +41,19 @@ justify a release-grade rating.
 4. Add geometry regression checks and update the approved screenshot
    baselines after reviewing the changes; do not auto-update ordinary PRs.
 
+## Post-repair visual recheck
+
+The refreshed mobile Library image now starts directly below the topbar; the
+misapplied 80px relative offset is gone. The archive rail combines the title
+and Analysis board action without repeating the primary page heading. The
+lesson detail capture no longer shows Previous/Next controls obscuring the
+teaching paragraph, and Library metadata is more legible on desktop and phone.
+
+Qualitative recheck: **mobile approximately 8/10, Library approximately 8/10,
+visual identity approximately 8/10**. These are improvements, not the P37
+release-level 9/10 target. Other initial grades remain provisional until
+deliberately re-reviewed at all required workspaces and device sizes.
+
 ## Explicit remaining work for the release gate
 
 - Board/piece artwork and presentation should be reviewed against premium
