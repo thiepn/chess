@@ -1,19 +1,8 @@
+import { sameUciMove } from "../learning/uci";
 import type {
   CalculationCandidateMove,
   CalculationEvidence,
 } from "./types";
-
-function sameMove(
-  left: string | undefined,
-  right: string | undefined,
-) {
-  if (!left || !right) return false;
-  return (
-    left === right ||
-    left.slice(0, 4) ===
-      right.slice(0, 4)
-  );
-}
 
 export interface CalculationScoreInput {
   positionId: string;
@@ -40,7 +29,7 @@ export function scoreCalculationAttempt(
 ): CalculationScore {
   const generatedBest =
     input.candidates.some((candidate) =>
-      sameMove(
+      sameUciMove(
         candidate.uci,
         input.bestMove,
       ),
@@ -50,19 +39,19 @@ export function scoreCalculationAttempt(
     : input.candidates.length >= 2
       ? .35
       : .15;
-  const selectedMoveScore = sameMove(
+  const selectedMoveScore = sameUciMove(
     input.selectedMove,
     input.bestMove,
   )
     ? 1
     : 0;
-  const replyScore = sameMove(
+  const replyScore = sameUciMove(
     input.predictedReply,
     input.bestReply,
   )
     ? 1
     : 0;
-  const continuationScore = sameMove(
+  const continuationScore = sameUciMove(
     input.predictedContinuation,
     input.bestContinuation,
   )
