@@ -62,6 +62,32 @@ describe("P63 instructional truth and answer integrity", () => {
     }
   });
 
+  it("does not mark a repeated demonstration as transfer to an unfamiliar position", () => {
+    const lessons = Object.values(lessonScripts);
+    const newPosition = lessons.filter((lesson) => {
+      const model = lesson.steps.find((step) => step.id === "model");
+      const lastPractice = lesson.steps.find((step) => step.id === "transfer");
+      return model?.fen !== lastPractice?.fen;
+    });
+    const samePosition = lessons.filter((lesson) => {
+      const model = lesson.steps.find((step) => step.id === "model");
+      const lastPractice = lesson.steps.find((step) => step.id === "transfer");
+      return model?.fen === lastPractice?.fen;
+    });
+    expect(newPosition.length).toBeGreaterThan(0);
+    expect(samePosition.length).toBeGreaterThan(0);
+    for (const lesson of newPosition) {
+      const lastPractice = lesson.steps.find((step) => step.id === "transfer");
+      expect(lastPractice?.type).toBe("move");
+      if (lastPractice?.type === "move") expect(lastPractice.support).toBe("transfer");
+    }
+    for (const lesson of samePosition) {
+      const lastPractice = lesson.steps.find((step) => step.id === "transfer");
+      expect(lastPractice?.type).toBe("move");
+      if (lastPractice?.type === "move") expect(lastPractice.support).toBe("retrieval");
+    }
+  });
+
   it("validates critical rule demonstrations against the actual position", () => {
     const exercise = (skill: string) => {
       const step = lessonScripts[skill].steps.find((item) =>
