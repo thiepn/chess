@@ -1,3 +1,4 @@
+import { sameUciMove } from "../learning/uci";
 import { Chess } from "chess.js";
 import {
   Bookmark,
@@ -66,18 +67,6 @@ const thoughtChoices: {
   { id: "execution", label: "I knew better but played it anyway" },
   { id: "unsure", label: "I am not sure" },
 ];
-
-function sameMove(
-  left?: string,
-  right?: string,
-) {
-  if (!left || !right) return false;
-  return (
-    left === right ||
-    left.slice(0, 4) ===
-      right.slice(0, 4)
-  );
-}
 
 function sanFor(
   fen: string,
@@ -154,7 +143,7 @@ function candidateSans(
   ]) {
     if (!uci) continue;
     candidates.set(
-      uci.slice(0, 4),
+      uci,
       sanFor(moment.positionFen, uci),
     );
   }
@@ -168,7 +157,7 @@ function candidateSans(
     }
     const uci = `${move.from}${move.to}${move.promotion ?? ""}`;
     candidates.set(
-      uci.slice(0, 4),
+      uci,
       move.san,
     );
   }
@@ -486,7 +475,7 @@ export function GameReviewCoach({
                 onMove={(move) => {
                   const uci =
                     `${move.from}${move.to}${move.promotion ?? ""}`;
-                  const success = sameMove(
+                  const success = sameUciMove(
                     uci,
                     moment.bestMove,
                   );
@@ -640,12 +629,12 @@ export function GameReviewCoach({
                   {candidates.map(
                     (candidate) => {
                       const isBest =
-                        sameMove(
+                        sameUciMove(
                           candidate.uci,
                           moment.bestMove,
                         );
                       const wasYours =
-                        sameMove(
+                        sameUciMove(
                           candidate.uci,
                           moment.actualMove,
                         );
@@ -670,7 +659,7 @@ export function GameReviewCoach({
                               ? "best candidate"
                               : wasYours
                                 ? "your game move"
-                                : "forcing candidate"}
+                                : "other legal candidate"}
                           </small>
                         </div>
                       );

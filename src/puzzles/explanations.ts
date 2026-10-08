@@ -88,7 +88,7 @@ export function puzzleExplanation(
   const alternatives = puzzle.source === "lichess"
     ? puzzle.themes.includes("mateIn1")
       ? "Mate-in-one positions can contain more than one winning mating move. The stored line is one verified solution."
-      : "Lichess puzzle solution moves are curated as the moves that preserve the tactical result; alternatives materially worsen the position."
+      : "The saved Lichess line is this puzzle’s graded reference. Other legal moves are not assessed here; compare alternatives with Stockfish after the solve."
     : "The stored line is the reference solution for this practice position.";
 
   return {

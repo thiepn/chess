@@ -82,7 +82,9 @@ export function summarizeLessonMastery(
       Math.round(masteryQuality * 1000) / 1000,
     masteryPassed:
       independent.length >= 2 &&
-      transfer.length >= 1 &&
+      // A same-position second attempt proves retrieval, never transfer.
+      // With no true transfer task, require another independent check.
+      (transfer.length > 0 || independent.length >= 3) &&
       masteryQuality >= .62,
   };
 }
