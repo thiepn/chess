@@ -76,6 +76,7 @@ The default experience should answer one question: **what should I train now?**
 - P55 Cross-Page Workflow Integration with completed-game direct Review navigation, preserved Review/Progress origins for replay scenarios, safe route restoration and regression-tested handoffs
 - P56 Performance & Route Optimization with on-demand training, active-game and review workspaces, likely-route prefetching, memoized SVG chess pieces, progressive archive rendering, and build-manifest split regression checks
 - P57 Visual Regression Suite with Chromium screenshots for six primary workspaces and three deeper study screens on both desktop and phone, plus baseline-aware PR checks
+- P58 automated cross-device UX prequalification using Chromium/WebKit interaction journeys and measured route diagnostics, with physical-device acceptance still pending
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell

@@ -166,6 +166,29 @@
 }
 
 @media (max-width: 820px) {
+  /* P58: iPad portrait exposed 4-6px root overflow from nested horizontal
+     training and scenario carousels. Clip the *outer* app only: the inner
+     carousels still scroll normally on touch, without changing the body width. */
+  .app-shell-v2 {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .app-shell-v2 .train-room {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 100%;
+  }
+
+  .app-shell-v2 .train-room > * {
+    min-width: 0;
+  }
+
+  .app-shell-v2 .train-queue {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   .app-topbar {
     min-height: var(--chess-mobile-topbar-safe-height);
     padding-left: var(--chess-native-inline-start);
