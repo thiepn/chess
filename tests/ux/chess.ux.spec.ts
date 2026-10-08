@@ -246,3 +246,55 @@ test("P59B first-time users see the import form without a dummy chessboard", asy
     await context.close();
   }
 });
+
+
+test("P62 game survives route reload with exact legal move history", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /Untimed/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  const gameUrl = page.url();
+  const storageKey = "chess:play-session-v2:guest";
+  const saved = await page.evaluate((key) => localStorage.getItem(key), storageKey);
+  expect(saved).toBeTruthy();
+  await page.evaluate((key) => {
+    const record = JSON.parse(localStorage.getItem(key) ?? "{}");
+    record.checkpoint = {
+      version: 1,
+      initialFen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      moves: ["e2e4", "e7e5", "g1f3", "b8c6"],
+      clock: { whiteMs: 0, blackMs: 0, active: "w", updatedAt: Date.now() },
+    };
+    localStorage.setItem(key, JSON.stringify(record));
+  }, storageKey);
+  await page.reload();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await expect(page).toHaveURL(gameUrl);
+  await expect(page.locator('.game-arena [data-square="e4"] [data-piece="wp"]')).toBeVisible();
+  await expect(page.locator('.game-arena [data-square="e5"] [data-piece="bp"]')).toBeVisible();
+  await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
+  await expect(page.locator(".game-moves")).toContainText("Nf3");
+  await page.reload();
+  await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
+});
+
+test("P62 invalid recovered PGN remains exportable instead of silently restarting", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  const key = "chess:play-session-v2:guest";
+  await page.evaluate((storageKey) => {
+    const record = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
+    record.checkpoint = {
+      version: 1,
+      initialFen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      moves: ["e2e5"],
+      clock: { whiteMs: 900000, blackMs: 900000, active: "w", updatedAt: Date.now() },
+    };
+    localStorage.setItem(storageKey, JSON.stringify(record));
+  }, key);
+  await page.reload();
+  await expect(page.getByText("Saved game needs recovery")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Export recovery file" })).toBeVisible();
+  expect(await page.evaluate((storageKey) => localStorage.getItem(storageKey), key)).toContain("e2e5");
+});
