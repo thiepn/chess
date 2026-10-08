@@ -167,6 +167,7 @@ describe("P61 user-scoped persistence", () => {
     expect(repo.getStatus().phase).toBe("conflict");
     expect(localStorage.getItem(dirtyKey("user-1"))).toBe("1");
     expect(JSON.parse(localStorage.getItem(accountKey("user-1")) ?? "null")).toEqual(modifiedState);
+    mocks.maybeSingle.mockResolvedValueOnce(remote(thirdState, 4));
     expect(await repo.resolveConflict("use-cloud")).toEqual(thirdState);
     expect(JSON.parse(localStorage.getItem(recoveryKey("user-1")) ?? "null")).toEqual(modifiedState);
     expect(repo.archivedRecovery()).toEqual(modifiedState);
