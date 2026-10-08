@@ -3060,6 +3060,12 @@ export default function App() {
                     });
                   }} />
                 </label>
+                {repo.archivedRecovery() && <button type="button" className="secondary" onClick={() => {
+                  const archived = repo.archivedRecovery();
+                  if (archived && window.confirm("Replace this profile with the previously archived local copy? Export your current state first.")) {
+                    setState(ensureAnalyticsState(archived));
+                  }
+                }}>Recover archived conflict copy</button>}
                 {repo.legacyRecovery() && <button type="button" className="secondary" onClick={() => {
                   const recovered = repo.legacyRecovery();
                   if (recovered && window.confirm("Restore the previous browser-local chess profile? This does not delete its archive.")) {
