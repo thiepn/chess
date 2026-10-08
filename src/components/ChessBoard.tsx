@@ -563,7 +563,7 @@ export function ChessBoard({
             }}>Cancel</button>
           </div>
         </div>
-      )
+      )}
     </div>
   );
 }
