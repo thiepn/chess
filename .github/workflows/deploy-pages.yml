@@ -87,7 +87,7 @@ jobs:
 
       - name: Install
         if: steps.gate.outputs.eligible == 'true'
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Verify Stockfish production assets
         if: steps.gate.outputs.eligible == 'true'
