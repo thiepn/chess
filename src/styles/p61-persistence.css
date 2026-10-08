@@ -1,7 +1,0 @@
-.topbar-sync{border:0;background:transparent;padding:0;cursor:pointer}
-.topbar-sync[data-phase="pending"] .sync-dot{background:#c99c52}
-.topbar-sync[data-phase="conflict"] .sync-dot{background:#c86464}
-.topbar-sync-word,.chess-backup-import input{position:absolute;width:1px;height:1px;opacity:0}
-.chess-backup-import{cursor:pointer;text-decoration:underline}
-.chess-data-actions{display:flex;flex-wrap:wrap;gap:.7rem}
-.chess-sync-conflict{border-left:2px solid #c86464;padding-left:1rem}
