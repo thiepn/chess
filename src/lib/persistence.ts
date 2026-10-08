@@ -18,10 +18,13 @@ function revisionKey(owner: string) { return PREFIX + "." + owner + ".revision";
 function recoveryKey(owner: string) { return PREFIX + "." + owner + ".recovery"; }
 
 export function isChessState(value: unknown): value is UserState {
-  return Boolean(value && typeof value === "object" &&
-    !Array.isArray(value) && "mastery" in value &&
-    typeof (value as { mastery: unknown }).mastery === "object" &&
-    (value as { mastery: unknown }).mastery !== null);
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const candidate = value as Partial<UserState>;
+  return Boolean(candidate.mastery && typeof candidate.mastery === "object" &&
+    !Array.isArray(candidate.mastery) && Array.isArray(candidate.weaknesses) &&
+    candidate.recentDomainMinutes &&
+    typeof candidate.recentDomainMinutes === "object" &&
+    !Array.isArray(candidate.recentDomainMinutes));
 }
 
 function parseState(raw: string | null): UserState | null {
@@ -245,6 +248,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
 
   async save(state: UserState) {
     const owner = this.owner;
+    const epoch = this.identityEpoch;
     const scope = this.scope();
     // Loading an unchanged, already-synced snapshot is not a new edit.
     if (read(stateKey(scope)) === JSON.stringify(state) && !pending(scope)) return;
@@ -268,21 +272,22 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     const snapshot = JSON.stringify(state);
     const writeRemote = async () => {
       // Do not ever write a previous account's queued snapshot as another user.
-      if (this.owner !== owner) return;
+      if (this.owner !== owner || this.identityEpoch !== epoch) return;
       try {
-        if (await this.authOwner() !== owner || this.owner !== owner) return;
+        if (await this.authOwner() !== owner ||
+            this.owner !== owner || this.identityEpoch !== epoch) return;
         const expected = this.knownRevisions.get(scope) ?? revision(scope);
         const { data, error } = await this.client.rpc("chess_save_state", {
           p_state: state,
           p_expected_revision: expected,
         }).single();
         if (error || !data) {
-          if (this.owner === owner) this.report("pending", "Cloud save failed; will retry");
+          if (this.owner === owner && this.identityEpoch === epoch) this.report("pending", "Cloud save failed; will retry");
           return;
         }
         const response = data as WriteResponse;
         if (!response.accepted) {
-          if (this.owner !== owner) return;
+          if (this.owner !== owner || this.identityEpoch !== epoch) return;
           this.conflict = {
             owner: scope,
             remote: { revision: Number(response.current_revision), state: response.current_state },
@@ -295,14 +300,15 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
         // The revision belongs to the last acknowledged snapshot, not a
         // newer local edit that is still in the queue.
         storeRevision(scope, nextRevision);
-        if (this.owner === owner && (read(stateKey(scope)) === snapshot || !mirrored)) {
+        if (this.owner === owner && this.identityEpoch === epoch &&
+            (read(stateKey(scope)) === snapshot || !mirrored)) {
           if (mirrored) remove(dirtyKey(scope));
           this.report("synced", mirrored
             ? "Progress synced to your account"
             : "Saved in cloud; browser cache unavailable");
         }
       } catch {
-        if (this.owner === owner) this.report("pending", "Cloud unavailable; will retry");
+        if (this.owner === owner && this.identityEpoch === epoch) this.report("pending", "Cloud unavailable; will retry");
       }
     };
     this.saveQueue = this.saveQueue.then(writeRemote, writeRemote);
