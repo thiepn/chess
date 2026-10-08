@@ -31,7 +31,8 @@ been verified on physical hardware.
 
 ## Acceptance boundaries
 
-- Review with/without a previously analyzed game: browser and manual smoke.
+- Review with/without a previously analyzed game: browser regression (saved-game
+  fixture and isolated new-user context) plus later manual hardware smoke.
 - All 18 reference snapshots, standard Quality checks and the P58 simulated
   device UX matrix must pass before merge.
 - Screen readers, 200% text zoom, physical-device interaction, and the

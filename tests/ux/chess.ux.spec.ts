@@ -220,8 +220,29 @@ test("P59B Review prioritizes a saved position and offers import as secondary", 
   await importDrawer.locator("summary").click();
   await expect(importDrawer).toHaveAttribute("open", "");
   await expect(page.locator("#review-pgn")).toBeVisible();
+  // React input updates must not silently collapse a user-opened disclosure.
+  await page.locator("#review-pgn").fill('[Event "Study"]');
+  await expect(importDrawer).toHaveAttribute("open", "");
   await importDrawer.locator("summary").click();
   await feature.getByRole("button", { name: "Open game review" }).click();
   await expect(page).toHaveURL(/\/review\/[^/]+$/);
   await expect(page.locator(".review-workstation")).toBeVisible();
+});
+
+test("P59B first-time users see the import form without a dummy chessboard", async ({ browser }) => {
+  // Use an isolated context, not the preloaded P57 game fixture.
+  const context = await browser.newContext({
+    baseURL: "http://127.0.0.1:4173",
+  });
+  const fresh = await context.newPage();
+  try {
+    await fresh.goto("/review", { waitUntil: "domcontentloaded" });
+    await expect(fresh.locator(".review-v2")).toBeVisible();
+    await expect(fresh.locator(".review-v2-feature")).toHaveCount(0);
+    await expect(fresh.locator(".review-v2-import-drawer")).toHaveAttribute("open", "");
+    await expect(fresh.locator("#review-pgn")).toBeVisible();
+    await expect(fresh.locator("#review-lichess-url")).toBeVisible();
+  } finally {
+    await context.close();
+  }
 });

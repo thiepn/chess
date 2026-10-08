@@ -866,7 +866,7 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 
 ### P59B — Board, Review & Readability Refinement
 
-**Status:** implemented as a separate visual corrective phase, pending CI and device verification.
+**Status:** candidate reviewed; automated release checks and physical-device sign-off remain separate. Screenshots must remain version-controlled, not automatically overwritten by permanent CI.
 
 - Reviewed game takes precedence on the Review landing page with a read-only position board and direct deep link.
 - PGN/Lichess/file import stays available in an accessible native disclosure; first-time/no-analyzed-game users see it expanded.
