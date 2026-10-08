@@ -273,7 +273,7 @@ test("P62 game survives route reload with exact legal move history", async ({ pa
   await expect(page.locator('.game-arena [data-square="e4"] [data-piece="wp"]')).toBeVisible();
   await expect(page.locator('.game-arena [data-square="e5"] [data-piece="bp"]')).toBeVisible();
   await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
-  await expect(page.locator(".game-moves")).toContainText("Nf3");
+  await expect(page.locator(".move-list")).toContainText("Nf3");
   await page.reload();
   await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
 });
