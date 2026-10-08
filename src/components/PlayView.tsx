@@ -197,9 +197,10 @@ export function PlayView({
   }
 
   function exitGame() {
-    if (!snapshot?.checkpoint?.finished && (snapshot?.checkpoint?.moves.length ?? 0) > 0 &&
+    const current = readPlaySnapshot(storageOwner);
+    if (!current?.checkpoint?.finished && (current?.checkpoint?.moves.length ?? 0) > 0 &&
         !window.confirm("Discard this unfinished game?")) return;
-    const destination = playReturnPath(snapshot?.returnPath);
+    const destination = playReturnPath(current?.returnPath);
     clearPlaySnapshot(storageOwner);
     if (externalScenario || activeScenario?.mode === "replay") {
       onExternalScenarioExit?.();
