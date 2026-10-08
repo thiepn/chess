@@ -354,14 +354,17 @@ export function GameArena({
       })
       .then((evaluation) => {
         if (cancelled || finishedRef.current || chess.fen() !== requestedFen) return;
-        if (!finishMoveClock(chess.turn())) return;
-
         if (!evaluation.bestMove || evaluation.bestMove === "(none)") {
           finishIfNeeded();
           return;
         }
 
+        const mover = chess.turn();
         const move = uciMove(chess, evaluation.bestMove);
+        if (move && !finishMoveClock(mover)) {
+          chess.undo();
+          return;
+        }
         if (!move) {
           setError("The AI returned an illegal move.");
           return;
@@ -455,7 +458,7 @@ export function GameArena({
             onMove={(boardMove) => {
               if (!playerToMove || thinking || result || finishedRef.current) return false;
               const chess = gameRef.current;
-              if (!finishMoveClock(chess.turn())) return false;
+              const mover = chess.turn();
 
               let move;
               try {
@@ -469,6 +472,10 @@ export function GameArena({
               }
 
               if (!move) return false;
+              if (!finishMoveClock(mover)) {
+                chess.undo();
+                return false;
+              }
 
               setMoves((previous) => [...previous, move.san]);
               setPresentationMove(undefined);
