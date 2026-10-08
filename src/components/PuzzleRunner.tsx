@@ -246,7 +246,7 @@ export function PuzzleRunner({
 
               if (!accepted) {
                 setWrongAttempts((value) => value + 1);
-                setFeedback("Legal move, but not the best move in this position.");
+                setFeedback("That move differs from the stored puzzle solution. Other legal moves are not evaluated automatically.");
                 return false;
               }
 
