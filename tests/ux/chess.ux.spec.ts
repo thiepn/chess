@@ -165,7 +165,7 @@ test("phone and tablet controls remain reachable with touch and scrolling", asyn
   // carousels must still move under touch/drag rather than being clipped.
   const scenarioList = page.locator(".play-v2-scenario-list");
   if (await scenarioList.evaluate((node) => node.scrollWidth > node.clientWidth + 20)) {
-    await scenarioList.evaluate((node) => { node.scrollLeft = 120; });
+    await scenarioList.evaluate((node) => { node.scrollLeft = node.scrollWidth - node.clientWidth; });
     expect(await scenarioList.evaluate((node) => node.scrollLeft)).toBeGreaterThan(0);
   }
   await assertNoHorizontalOverflow(page, "/play");
@@ -173,7 +173,7 @@ test("phone and tablet controls remain reachable with touch and scrolling", asyn
   await open(page, "/train", ".train-room");
   const trainingQueue = page.locator(".train-queue");
   if (await trainingQueue.evaluate((node) => node.scrollWidth > node.clientWidth + 20)) {
-    await trainingQueue.evaluate((node) => { node.scrollLeft = 120; });
+    await trainingQueue.evaluate((node) => { node.scrollLeft = node.scrollWidth - node.clientWidth; });
     expect(await trainingQueue.evaluate((node) => node.scrollLeft)).toBeGreaterThan(0);
   }
   await assertNoHorizontalOverflow(page, "/train");
