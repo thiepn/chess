@@ -306,10 +306,15 @@ export default function App() {
   const playSessionOpen =
     page === "play" && route.path.startsWith("/play/game/");
 
+  const previousReplayPage = useRef(page);
   useEffect(() => {
-    // Global navigation must not relaunch a stale replay on returning to Play.
-    if (page !== "play" && replayScenario) setReplayScenario(undefined);
-  }, [page, replayScenario]);
+    // Clear only after actually leaving Play. External scenario selection may
+    // be scheduled before View Transitions commit the move into Play.
+    if (previousReplayPage.current === "play" && page !== "play") {
+      setReplayScenario(undefined);
+    }
+    previousReplayPage.current = page;
+  }, [page]);
   const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
@@ -1742,7 +1747,7 @@ export default function App() {
     });
     setActiveModelGameId(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(trainingReturnPath || "/learn/model-games");
+    navigate(trainingReturnPath || "/learn/model-games", { replace: true });
   }
 
   function updateGameReviewReflection(
