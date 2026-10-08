@@ -193,6 +193,7 @@ export function GameArena({
         setEngineStatus(`${profile.name} ready`);
       })
       .catch((cause) => {
+        if (cancelled) return;
         setError(
           cause instanceof Error
             ? cause.message
@@ -216,6 +217,13 @@ export function GameArena({
   // This continues correctly after background throttling, sleep or reload.
   useEffect(() => {
     if (timeControl === "untimed" || result || finishedRef.current) return;
+    if (!engineReady || error) {
+      // Neither player loses time because a local Stockfish worker is
+      // loading, crashed, or awaiting an explicit retry.
+      clockRef.current = { ...clockRef.current, updatedAt: Date.now() };
+      setClock(clockRef.current);
+      return;
+    }
     const tick = () => {
       const next = advanceClock(clockRef.current, Date.now(), true);
       clockRef.current = next;
@@ -234,7 +242,7 @@ export function GameArena({
       document.removeEventListener("visibilitychange", tick);
       window.removeEventListener("focus", tick);
     };
-  }, [fen, result, timeControl, playerColor]);
+  }, [fen, result, timeControl, playerColor, engineReady, error]);
 
   function finishMoveClock(mover: Color): boolean {
     const next = completeMoveClock(clockRef.current, mover, timeControl, Date.now());
