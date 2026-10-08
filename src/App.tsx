@@ -30,7 +30,7 @@ import type {
   TrainingOutcome,
   UserState,
 } from "./domain/types";
-import { initialUserState } from "./data/demo";
+import { emptyChessState } from "./data/initial";
 import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
 import "./styles/p61-persistence.css";
 
@@ -259,7 +259,7 @@ function reasonLabel(activity: TrainingActivity) {
 }
 
 export default function App() {
-  const [state, setState] = useState<UserState>(initialUserState);
+  const [state, setState] = useState<UserState>(emptyChessState);
   const [loaded, setLoaded] = useState(false);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => repo.getStatus());
   const [mode, setMode] = useState<SessionMode>("standard");
@@ -292,7 +292,7 @@ export default function App() {
     const refresh = () => {
       const current = ++generation;
       setLoaded(false);
-      void repo.load(initialUserState).then((value) => {
+      void repo.load(emptyChessState).then((value) => {
         if (cancelled || current !== generation) return;
         setState(ensureAnalyticsState(value));
         setLoaded(true);
