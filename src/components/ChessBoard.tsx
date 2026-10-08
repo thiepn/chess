@@ -537,7 +537,14 @@ export function ChessBoard({
       </div>
       {pendingPromotion && (
         <div className="board-promotion-picker" role="group"
-          aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}>
+          aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}
+          onKeyDown={(event) => {
+            if (event.key !== "Escape") return;
+            event.preventDefault();
+            const from = pendingPromotion.from;
+            setPendingPromotion(null);
+            focusSquare(from);
+          }}>
           <div className="board-promotion-caption">
             <strong>Choose promotion</strong>
             <small>{pendingPromotion.from} → {pendingPromotion.to}</small>
