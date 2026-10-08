@@ -40,6 +40,8 @@ Read-only inspection of THIEPN Account's Chess state table confirmed:
 - Authenticated role can execute `chess_save_state(jsonb,bigint)`;
 - Anonymous role cannot execute the save function.
 
+- Supabase performance advisor initially flagged all three Chess policies for repeated per-row auth.uid() evaluation. Migration `003_chess_rls_initplan.sql` was applied to THIEPN Account on 2026-10-09. It changes each policy to `(select auth.uid())` while preserving owner-only read/insert/update. Read-back verified three policies retain their owner clauses; the Chess-specific advisor warnings are now **zero**.
+
 These checks confirm configuration, **not** two-account/browser API isolation. Live authenticated integration and conflict drills remain mandatory.
 
 ## Mandatory final acceptance, still open
