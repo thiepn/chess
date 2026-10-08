@@ -4,6 +4,7 @@ import "../styles/review-v2.css";
 import "../styles/p47-review-native.css";
 import "../styles/p51-review-large.css";
 import {
+  ChevronRight,
   FileUp,
   Link2,
   LoaderCircle,
@@ -28,6 +29,7 @@ import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
 );
+import { ChessBoard } from "./ChessBoard";
 import { LichessSyncCard } from "./LichessSyncCard";
 
 interface ReviewViewProps {
@@ -118,6 +120,13 @@ export function ReviewView({
     () => [...games].sort((a, b) => b.importedAt.localeCompare(a.importedAt)),
     [games],
   );
+  const latestAnalyzedGame = sortedGames.find((game) => game.reviewStory);
+  const featuredMoment = latestAnalyzedGame?.reviewStory?.moments[0];
+  const featuredFen = latestAnalyzedGame
+    ? featuredMoment?.positionFen ??
+      latestAnalyzedGame.moves[latestAnalyzedGame.moves.length - 1]?.afterFen ??
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    : null;
 
   async function analyze() {
     if (!pgn.trim() || analyzing || batchAnalyzing) return;
@@ -378,9 +387,11 @@ export function ReviewView({
         <header className="review-v2-main-head">
           <div>
             <p className="eyebrow">ANALYSIS DESK</p>
-            <h1>Import a game</h1>
+            <h1>{latestAnalyzedGame ? "Game review" : "Import a game"}</h1>
             <p>
-              Analyze the game, inspect critical moments, and save positions you want to practice.
+              {latestAnalyzedGame
+                ? "Return to your last analyzed game, study its turning points, or import another."
+                : "Analyze the game, inspect critical moments, and save positions you want to practice."}
             </p>
           </div>
           <div className="review-v2-summary">
@@ -395,6 +406,54 @@ export function ReviewView({
           </div>
         </header>
 
+        {latestAnalyzedGame?.reviewStory && featuredFen && (
+          <section className="review-v2-feature" aria-labelledby="review-feature-title">
+            <div className="review-v2-feature-board" aria-label="Position from last analyzed game">
+              <ChessBoard fen={featuredFen} disabled />
+              <span>
+                {featuredMoment
+                  ? `Critical position · move ${featuredMoment.moveNumber}`
+                  : "Analyzed game · final position"}
+              </span>
+            </div>
+            <div className="review-v2-feature-detail">
+              <p className="eyebrow">CONTINUE REVIEWING</p>
+              <h2 id="review-feature-title">
+                {latestAnalyzedGame.white} — {latestAnalyzedGame.black}
+              </h2>
+              <p className="review-v2-feature-opening">
+                {latestAnalyzedGame.openingName ?? latestAnalyzedGame.event ?? "Chess game"}
+              </p>
+              <div className="review-v2-feature-insight">
+                <span>{latestAnalyzedGame.reviewStory.moments.length} key moments</span>
+                <strong>{featuredMoment?.title ?? latestAnalyzedGame.reviewStory.headline}</strong>
+                <p>{featuredMoment?.summary ?? latestAnalyzedGame.reviewStory.summary}</p>
+              </div>
+              <button
+                className="primary review-v2-feature-action"
+                type="button"
+                onPointerEnter={() => { void import("./GameStoryView"); }}
+                onFocus={() => { void import("./GameStoryView"); }}
+                onClick={() => onNavigate(reviewGamePath(latestAnalyzedGame.id))}
+              >
+                Open game review
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </section>
+        )}
+
+        <details
+          key={latestAnalyzedGame ? "review-with-games" : "review-empty"}
+          className="review-v2-import-drawer"
+          // Keep the import form immediately usable for first-time users.
+          // A saved analyzed game makes this secondary, not unavailable.
+          defaultOpen={!latestAnalyzedGame}
+        >
+          <summary>
+            <span>{latestAnalyzedGame ? "Import another game" : "Import a game"}</span>
+            <span>{latestAnalyzedGame ? "PGN · Lichess · File" : "Start an analysis"}</span>
+          </summary>
         <section className="review-v2-import">
           <div className="review-v2-import-source">
             <label htmlFor="review-lichess-url">Lichess game</label>
@@ -542,6 +601,7 @@ export function ReviewView({
             </div>
           )}
         </section>
+        </details>
 
         <section className="review-v2-sync">
           <LichessSyncCard

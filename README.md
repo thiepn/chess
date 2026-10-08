@@ -78,6 +78,7 @@ The default experience should answer one question: **what should I train now?**
 - P57 Visual Regression Suite with Chromium screenshots for six primary workspaces and three deeper study screens on both desktop and phone, plus baseline-aware PR checks
 - P58 automated cross-device UX prequalification using Chromium/WebKit interaction journeys and measured route diagnostics, with physical-device acceptance still pending
 - P59 visual design QA against the frozen P37 contract, repairing mobile Library hierarchy, lesson reading/navigation occlusion and undersized route text; visual release gate tracked separately from automated test success
+- P59B Review-first analysis desk, optional PGN import drawer, board material refinement and higher contrast native chess typography, with visual and real-device acceptance still separately gated
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell

@@ -1,0 +1,209 @@
+/* P59B — chess-native finish. Deliberately no decorative gradients or UI cards. */
+
+/* Tactile chess material: one raised object, the board; labels and rails stay flat. */
+.app-shell-v2 .chess-board-wrap {
+  border-color: rgba(242, 232, 213, .17);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .33), inset 0 1px rgba(255, 255, 255, .055);
+}
+.app-shell-v2 .chess-board-v2 {
+  box-shadow: inset 0 0 0 1px rgba(15, 19, 18, .45);
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-svg {
+  shape-rendering: geometricPrecision;
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-w {
+  --piece-fill: #f4efe3;
+  --piece-stroke: #4b4d49;
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-b {
+  --piece-fill: #272d2a;
+  --piece-stroke: #e2d8c7;
+}
+
+/* Review must be a game-analysis workspace, not a PGN-import dashboard. */
+.review-v2-feature {
+  display: grid;
+  grid-template-columns: minmax(210px, .94fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(16px, 2vw, 27px);
+  padding: 22px 0 20px;
+  border-bottom: 1px solid var(--chess-color-separator);
+}
+.review-v2-feature-board {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+.review-v2-feature-board .chess-board-wrap {
+  width: min(100%, 360px);
+}
+.review-v2-feature-board > span {
+  justify-self: stretch;
+  color: var(--chess-color-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.review-v2-feature-detail {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+}
+.review-v2-feature-detail h2 {
+  margin: 0;
+  color: var(--chess-color-text-primary);
+  font-family: var(--chess-font-editorial);
+  font-size: clamp(19px, 2vw, 25px);
+  font-weight: 650;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.review-v2-feature-opening {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chess-color-text-secondary);
+  line-height: 1.45;
+}
+.review-v2-feature-insight {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+  padding-top: 13px;
+  border-top: 1px solid var(--chess-color-separator);
+}
+.review-v2-feature-insight > span {
+  color: var(--chess-color-accent);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.review-v2-feature-insight > strong {
+  color: var(--chess-color-text-primary);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.review-v2-feature-insight > p {
+  color: var(--chess-color-text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+}
+.review-v2-feature-action {
+  min-height: 46px;
+  margin-top: 14px;
+  padding: 0 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.review-v2-import-drawer {
+  border-bottom: 1px solid var(--chess-color-separator);
+}
+.review-v2-import-drawer > summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: space-between;
+  cursor: pointer;
+  min-height: 50px;
+  padding: 13px 0;
+  color: var(--chess-color-text-primary);
+  font-size: 13px;
+  font-weight: 650;
+  list-style: none;
+}
+.review-v2-import-drawer > summary::-webkit-details-marker {
+  display: none;
+}
+.review-v2-import-drawer > summary::before {
+  content: "+";
+  font-family: var(--chess-font-mono);
+  color: var(--chess-color-accent);
+  font-size: 18px;
+  font-weight: 400;
+}
+.review-v2-import-drawer[open] > summary::before {
+  content: "−";
+}
+.review-v2-import-drawer > summary span:first-child {
+  flex: 1;
+}
+.review-v2-import-drawer > summary span:last-child {
+  color: var(--chess-color-text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.review-v2-import-drawer > .review-v2-import {
+  padding-top: 4px;
+  border-bottom: none;
+}
+.review-v2-import-drawer > summary:focus-visible {
+  outline: 2px solid var(--chess-color-accent);
+  outline-offset: 3px;
+}
+.app-shell-v2 .review-v2-main-head p:not(.eyebrow),
+.app-shell-v2 .review-v2-import-source > label,
+.app-shell-v2 .review-v2-repair-row p,
+.app-shell-v2 .review-v2-game-state,
+.app-shell-v2 .review-v2-repair-empty span {
+  color: var(--chess-color-text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.app-shell-v2 .review-v2-game-copy strong {
+  font-size: 12px;
+}
+.app-shell-v2 .review-v2-game-copy small,
+.app-shell-v2 .review-v2-import-source input,
+.app-shell-v2 .review-v2-import-source textarea,
+.app-shell-v2 .review-v2-color button {
+  font-size: 12px;
+}
+.app-shell-v2 .review-v2-history-head span,
+.app-shell-v2 .review-v2-repair .eyebrow {
+  font-size: 11px;
+}
+@media (max-width: 1280px) {
+  .review-v2-feature {
+    grid-template-columns: minmax(185px, .94fr) minmax(0, 1fr);
+  }
+}
+@media (max-width: 1050px) {
+  .review-v2-feature {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .review-v2-feature-board .chess-board-wrap {
+    width: min(100%, 560px);
+  }
+}
+@media (max-width: 820px) {
+  .review-v2-feature {
+    padding-top: 12px;
+    gap: 13px;
+  }
+  .review-v2-feature-detail h2 {
+    font-size: 21px;
+  }
+  .review-v2-feature-action {
+    width: 100%;
+  }
+  .review-v2-import-drawer > summary span:last-child {
+    font-size: 11px;
+  }
+  .app-shell-v2 .mobile-nav button span {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+  .app-shell-v2 .review-v2-import-source input,
+  .app-shell-v2 .review-v2-import-source textarea {
+    font-size: 16px;
+  }
+}

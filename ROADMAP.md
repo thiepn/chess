@@ -864,6 +864,16 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 - Add DOM geometry checks for mobile Library top spacing and lesson navigation flow, plus maintain established performance/quality and pixel-regression budgets.
 - Record remaining sub-target visual and accessibility issues candidly in `docs/P59_VISUAL_QA.md` rather than falsely approving release.
 
+### P59B — Board, Review & Readability Refinement
+
+**Status:** implemented as a separate visual corrective phase, pending CI and device verification.
+
+- Reviewed game takes precedence on the Review landing page with a read-only position board and direct deep link.
+- PGN/Lichess/file import stays available in an accessible native disclosure; first-time/no-analyzed-game users see it expanded.
+- Board material and piece legibility have restrained, chess-specific finishing changes, with reduced motion and existing functional highlight semantics preserved.
+- Restore readable typography and contrast to primary and supporting control labels.
+- Review visual screenshot baselines and cross-device interaction tests must pass; no automatic 9/10 scores or real hardware PASS.
+
 ### P60 — Defect-Only Release Candidate
 
 Freeze features. Only defects, accessibility, responsive, performance, copy and persistence/routing fixes are allowed before V1.0.

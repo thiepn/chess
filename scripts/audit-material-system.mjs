@@ -18,6 +18,7 @@ const flatCssFiles = [
   "src/styles/p52-accessibility.css",
   "src/styles/p53-customization.css",
   "src/styles/p59-visual-qa.css",
+  "src/styles/p59b-refinement.css",
   "src/styles/p51-train-large.css",
   "src/styles/p51-learn-large.css",
   "src/styles/p51-play-large.css",

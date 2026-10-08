@@ -209,3 +209,19 @@ test("P59 mobile Library navigation and lesson controls avoid occlusion", async 
   expect(lesson.navPosition).toBe("static");
   expect(lesson.navTop ?? 0).toBeGreaterThanOrEqual((lesson.readingBottom ?? 0) - 1);
 });
+
+test("P59B Review prioritizes a saved position and offers import as secondary", async ({ page }) => {
+  await open(page, "/review", ".review-v2");
+  const feature = page.locator(".review-v2-feature");
+  await expect(feature.locator(".chess-board-wrap")).toBeVisible();
+  await expect(feature.getByRole("heading", { name: /Student.*Training Opponent/ })).toBeVisible();
+  const importDrawer = page.locator(".review-v2-import-drawer");
+  await expect(importDrawer).not.toHaveAttribute("open", "");
+  await importDrawer.locator("summary").click();
+  await expect(importDrawer).toHaveAttribute("open", "");
+  await expect(page.locator("#review-pgn")).toBeVisible();
+  await importDrawer.locator("summary").click();
+  await feature.getByRole("button", { name: "Open game review" }).click();
+  await expect(page).toHaveURL(/\/review\/[^/]+$/);
+  await expect(page.locator(".review-workstation")).toBeVisible();
+});
