@@ -1,0 +1,58 @@
+# Temporary P57-only baseline initialization. Delete this workflow from the
+# branch after its generated screenshots have been committed and reviewed.
+name: P57 Baseline Bootstrap
+on:
+  push:
+    branches: [p57-visual-regression-suite]
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    if: github.repository == 'thiepn/chess'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Detect existing approved baseline
+        id: baseline
+        run: |
+          if [ -d tests/visual/chess.visual.spec.ts-snapshots ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.baseline.outputs.exists == 'false'
+        run: npm install
+      - if: steps.baseline.outputs.exists == 'false'
+        run: npx playwright install --with-deps chromium
+      - if: steps.baseline.outputs.exists == 'false'
+        run: npm run build
+      - name: Capture first baseline
+        if: steps.baseline.outputs.exists == 'false'
+        run: npm run visual:update
+      - name: Commit snapshots to P57 branch
+        if: steps.baseline.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/visual/chess.visual.spec.ts-snapshots/
+          git diff --cached --quiet && exit 1
+          git commit -m "P57: record deterministic desktop and phone visual baselines"
+          git push origin HEAD:p57-visual-regression-suite
+      - name: Preserve bootstrap screenshots if commit is blocked
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p57-bootstrap-diagnostics
+          path: |
+            tests/visual/chess.visual.spec.ts-snapshots/
+            test-results/
+            playwright-report/
+          retention-days: 14
