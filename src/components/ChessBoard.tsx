@@ -58,6 +58,7 @@ export function ChessBoard({
   const positionRef = useRef(fen);
   const [selected, setSelected] = useState<Square | null>(null);
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
+  const [pendingPromotion, setPendingPromotion] = useState<{ from: Square; to: Square } | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
   const [lastMoveKind, setLastMoveKind] = useState<"move" | "capture" | "promotion" | "castle">("move");
   const [secondaryMove, setSecondaryMove] = useState<{ from: Square; to: Square } | null>(null);
@@ -76,6 +77,7 @@ export function ChessBoard({
     positionRef.current = fen;
     setPosition(fen);
     setSelected(null);
+    setPendingPromotion(null);
     setLastMove(null);
     setSecondaryMove(null);
     setLastMoveKind("move");
@@ -125,14 +127,26 @@ export function ChessBoard({
     return null;
   }, [chess]);
 
-  function tryMove(from: Square, to: Square) {
+  function requestMove(from: Square, to: Square) {
+    if (disabled) return false;
+    const promotions = chess.moves({ square: from, verbose: true })
+      .filter((move) => move.to === to && Boolean(move.promotion));
+    if (promotions.length) {
+      setSelected(null);
+      setPendingPromotion({ from, to });
+      return false;
+    }
+    return tryMove(from, to);
+  }
+
+  function tryMove(from: Square, to: Square, promotion: "q" | "r" | "b" | "n" = "q") {
     if (disabled) return false;
 
     const candidate = new Chess(position);
     let move;
 
     try {
-      move = candidate.move({ from, to, promotion: "q" });
+      move = candidate.move({ from, to, promotion });
     } catch {
       move = null;
     }
@@ -176,6 +190,7 @@ export function ChessBoard({
 
     positionRef.current = candidate.fen();
     setPosition(candidate.fen());
+    setPendingPromotion(null);
     setLastMove({ from, to });
     setLastMoveKind(
       castle
@@ -209,6 +224,11 @@ export function ChessBoard({
     event: KeyboardEvent<HTMLButtonElement>,
     square: Square,
   ) {
+    if (event.key === "Escape" && pendingPromotion) {
+      event.preventDefault();
+      setPendingPromotion(null);
+      return;
+    }
     if (event.key === "Escape" && selected) {
       event.preventDefault();
       event.stopPropagation();
@@ -250,7 +270,7 @@ export function ChessBoard({
         return;
       }
       if (legalTargets.has(square)) {
-        void tryMove(selected, square);
+        void requestMove(selected, square);
         return;
       }
       if (piece?.color === chess.turn()) {
@@ -412,7 +432,7 @@ export function ChessBoard({
               }}
               onDrop={(event) => {
                 event.preventDefault();
-                if (dragFrom) void tryMove(dragFrom, square);
+                if (dragFrom) void requestMove(dragFrom, square);
                 setDragFrom(null);
               }}
               onDragEnd={() => setDragFrom(null)}
@@ -509,6 +529,23 @@ export function ChessBoard({
           </svg>
         )}
       </div>
+      {pendingPromotion && (
+        <div className="board-promotion-picker" role="group"
+          aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}
+          style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "12px 0", alignItems: "center" }}>
+          <strong>Promote to:</strong>
+          {([
+            ["q", "Queen"], ["r", "Rook"], ["b", "Bishop"], ["n", "Knight"],
+          ] as const).map(([piece, label]) => (
+            <button type="button" key={piece}
+              aria-label={"Promote to " + label}
+              onClick={() => tryMove(pendingPromotion.from, pendingPromotion.to, piece)}>
+              {label}
+            </button>
+          ))}
+          <button type="button" onClick={() => setPendingPromotion(null)}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 }
