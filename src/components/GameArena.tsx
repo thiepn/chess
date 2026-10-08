@@ -161,7 +161,18 @@ export function GameArena({
   const blackMs = clock.blackMs;
   const { feedback, celebrate, settings } = useExperience();
 
-
+  // Keep a worker only after it becomes necessary. A recovered untimed
+  // position where the human is to move must not allocate Stockfish merely
+  // because earlier moves exist. Once requested, keep it for the game lifetime.
+  const [engineRequested, setEngineRequested] = useState(() =>
+    timeControl !== "untimed" ||
+    (!recovered.finished && recovered.chess.turn() !== playerColor));
+  useEffect(() => {
+    if (!engineRequested && !finishedRef.current &&
+        gameRef.current.turn() !== playerColor) {
+      setEngineRequested(true);
+    }
+  }, [engineRequested, fen, playerColor]);
 
   useEffect(() => {
     const chess = gameRef.current;
@@ -177,7 +188,10 @@ export function GameArena({
       chess.setHeader("FEN", initialFen);
     }
 
-    if (recovered.finished) return;
+    if (recovered.finished || !engineRequested) {
+      setEngineStatus("Opponent starts after your first move");
+      return;
+    }
     let cancelled = false;
     setError(null);
     setEngineStatus("Loading opponent…");
@@ -208,7 +222,7 @@ export function GameArena({
       engineRef.current = null;
       setEngineReady(false);
     };
-  }, [initialFen, playerColor, profile.name, scenario, engineNonce]);
+  }, [initialFen, playerColor, profile.name, scenario, engineNonce, engineRequested]);
 
   const playerToMove =
     !finishedRef.current && gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
