@@ -7,6 +7,7 @@ import "./styles/p48-material.css";
 import "./styles/p49-motion.css";
 import "./styles/p53-customization.css";
 import "./styles/p52-accessibility.css";
+import "./styles/p59-visual-qa.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
