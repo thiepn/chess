@@ -280,6 +280,7 @@ export function PlayView({
       <section className="play-game-page">
         {saveFailed && <p role="alert">Game cannot be saved on this browser. Do not close this tab.</p>}
         <GameArena
+          key={storageOwner + ":" + routePath}
           initialFen={initialFen}
           checkpoint={snapshot.checkpoint}
           onCheckpoint={(checkpoint) => {
