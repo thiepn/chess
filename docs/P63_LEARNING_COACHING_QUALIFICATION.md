@@ -15,7 +15,7 @@ Branch: `p63-learning-coaching-quality` (stacked after P62 and P61).
 
 - **86 authored skill lessons**.
 - **37 distinct authored transfer exercises**; **49 same-position independent retrieval exercises**, not genuine transfer demonstrations.
-- **5 authored calculation positions** plus personal-game extraction; candidate PV legality is programmatically audited.
+- **4 retained authored calculation positions** plus personal-game extraction; candidate PV legality is programmatically audited. The former advanced-combination example was quarantined because 1.Re8+ Qxe8 2.Bxh7+? Kxh7 loses major material; the affected skill can select the retained forcing-line exercise, which is framed as a drawing resource, not a winning attack.
 - Endgame positions are programmatically checked for valid FEN, answer keys and defensive survival contracts.
 - Existing puzzle CI audits the shard manifest and replays each stored solution move. A stored line is still not proof of engine-optimality at all search depths.
 
