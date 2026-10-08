@@ -1,66 +1,20 @@
-/* P61: compact, explicit chess save-state feedback. No new card shell. */
-.topbar-sync {
-  width: 30px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: var(--chess-text-secondary, #aba9a3);
-  font: inherit;
-  cursor: pointer;
-}
-.topbar-sync:focus-visible {
-  outline: 2px solid var(--chess-interactive, #357bd8);
-  outline-offset: 2px;
-}
-.topbar-sync .sync-dot { flex: none; }
+/* P61: preserve the P37 shell; only state and recovery affordances change. */
+.topbar-sync { padding: 0; border: 0; background: transparent; cursor: pointer; font: inherit; }
+.topbar-sync:focus-visible { outline: 2px solid #357bd8; outline-offset: 2px; }
 .topbar-sync[data-phase="pending"] .sync-dot,
 .topbar-sync[data-phase="loading"] .sync-dot { background: #c99c52; }
 .topbar-sync[data-phase="conflict"] .sync-dot { background: #c86464; }
 .topbar-sync[data-phase="guest"] .sync-dot,
 .topbar-sync[data-phase="local"] .sync-dot { background: #92938e; }
-.topbar-sync-word {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-.topbar-sync[data-phase="conflict"] .topbar-sync-word { color: #e6a4a4; }
-.chess-data-settings {
-  margin-block: 1.5rem;
-  padding-block: 1rem;
-  border-top: 1px solid var(--chess-separator, rgba(255,255,255,.08));
-  border-bottom: 1px solid var(--chess-separator, rgba(255,255,255,.08));
-  max-width: 45rem;
-}
-.chess-data-settings h2 { font-size: 1.2rem; margin: 0 0 .55rem; }
-.chess-data-settings h3 { font-size: 1rem; margin: 0 0 .5rem; }
-.chess-data-settings p { color: var(--chess-text-secondary, #aba9a3); line-height: 1.5; }
-.chess-data-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; margin-block: .9rem; }
-.chess-backup-import {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: .7rem .85rem; min-height: 44px; cursor: pointer;
-  border: 1px solid var(--chess-separator, rgba(255,255,255,.22));
-  border-radius: 7px; color: var(--chess-text, #f0eee9);
-  font-size: .85rem;
-}
-.chess-backup-import:focus-within { outline: 2px solid var(--chess-interactive, #357bd8); outline-offset: 2px; }
-.chess-backup-import input {
-  position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden;
-}
-.chess-sync-conflict {
-  border-top: 1px solid #9e5a5a;
-  padding-top: 1rem;
-  margin-top: 1rem;
-}
-.chess-sync-conflict p { max-width: 62ch; }
-@media(max-width: 540px) {
-  .topbar-sync { display: none; }
-  .chess-data-actions { align-items: stretch; flex-direction: column; }
+.topbar-sync-word { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.chess-data-settings { margin-block: 1.5rem; padding-block: 1rem; border-block: 1px solid rgba(255,255,255,.08); max-width: 45rem; }
+.chess-data-settings p { line-height: 1.5; }
+.chess-data-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-block: .9rem; }
+.chess-backup-import { display: inline-flex; align-items: center; padding: .7rem .85rem; min-height: 44px; cursor: pointer; border: 1px solid rgba(255,255,255,.22); border-radius: 7px; }
+.chess-backup-import:focus-within { outline: 2px solid #357bd8; outline-offset: 2px; }
+.chess-backup-import input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.chess-sync-conflict { border-left: 2px solid #c86464; padding-left: 1rem; margin-top: 1rem; }
+@media (max-width: 540px) {
+  .chess-data-actions { flex-direction: column; }
   .chess-data-actions > button, .chess-backup-import { width: 100%; }
 }
