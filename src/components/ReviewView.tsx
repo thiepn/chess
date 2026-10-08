@@ -448,7 +448,7 @@ export function ReviewView({
           className="review-v2-import-drawer"
           // Keep the import form immediately usable for first-time users.
           // A saved analyzed game makes this secondary, not unavailable.
-          defaultOpen={!latestAnalyzedGame}
+          open={!latestAnalyzedGame}
         >
           <summary>
             <span>{latestAnalyzedGame ? "Import another game" : "Import a game"}</span>
