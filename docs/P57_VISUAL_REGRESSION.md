@@ -60,9 +60,10 @@ that change the app or snapshots. A mismatch fails the check; CI stores actual
 images and diffs in a downloadable artifact for 14 days. A missing baseline
 is an error, not a reason to silently bless new screenshots.
 
-Initial bootstrap on the P57 implementation branch may generate the first
-PNG set using a temporary, branch-restricted workflow. Remove that temporary
-workflow before merging into main. The permanent workflow is read-only.
+The P57 branch bootstrap generated all 18 tracked PNG baselines. They were
+visually inspected; the mobile Play image revealed two real layout defects,
+both fixed before baselines were finalized. The temporary branch bootstrap
+workflow was removed before merge. The permanent workflow is read-only.
 
 ## Regression found and repaired
 

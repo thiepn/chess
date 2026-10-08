@@ -832,7 +832,7 @@ Full real-device perceived-load measurements and visual behavior remain P58 rele
 
 ### P57 — Visual Regression Suite
 
-**Implementation:** deterministic Playwright browser capture and approved PNG snapshots for desktop and mobile. The Visual Regression CI workflow compares images on every pull request and main-branch push; screenshots, diffs and traces are retained as build artifacts on failures.
+**Status: complete.** Deterministic Playwright browser capture and approved PNG snapshots for desktop and mobile. The Visual Regression CI workflow compares images on every pull request and main-branch push; screenshots, diffs and traces are retained as build artifacts on failures.
 
 - Locked primary screen matrix: Train, Learn, Play, Review, Library, Progress at 1440×900 desktop and 393×852 phone.
 - Deeper representative workspaces: lesson detail, reviewed game analysis, and saved study workspace at both sizes.

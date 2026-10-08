@@ -8,6 +8,7 @@ on:
       - "tests/visual/**"
       - "playwright.config.ts"
       - "package.json"
+      - "index.html"
       - "vite.config.ts"
       - ".github/workflows/visual-regression.yml"
   push:
@@ -18,6 +19,7 @@ on:
       - "tests/visual/**"
       - "playwright.config.ts"
       - "package.json"
+      - "index.html"
       - "vite.config.ts"
       - ".github/workflows/visual-regression.yml"
   workflow_dispatch:
