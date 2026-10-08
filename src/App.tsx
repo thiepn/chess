@@ -3037,6 +3037,7 @@ export default function App() {
                   Restore from JSON backup
                   <input type="file" accept="application/json,.json" onChange={(event) => {
                     const input = event.currentTarget;
+                    const uploadProfile = repo.getProfileId();
                     const file = input.files?.[0];
                     if (!file) return;
                     if (file.size > 15_000_000) {
@@ -3049,7 +3050,9 @@ export default function App() {
                       const value = parsed && typeof parsed === "object" && "state" in parsed
                         ? (parsed as { state: unknown }).state : parsed;
                       if (!isChessState(value)) throw new Error("Invalid chess progress file");
-                      if (window.confirm("Replace this profile with the backup? Export your current progress first.")) {
+                      if (repo.getProfileId() !== uploadProfile) throw new Error("Account changed during import");
+                      if (window.confirm("Replace this profile with the backup? Export your current progress first.") &&
+                          repo.getProfileId() === uploadProfile) {
                         setState(ensureAnalyticsState(value));
                       }
                     }).catch(() => window.alert("Could not read this chess backup.")).finally(() => {
