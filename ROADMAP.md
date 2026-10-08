@@ -857,7 +857,12 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 
 ### P59 — Visual QA Against Locked Design
 
-Score the implementation against the P37 design contract and repair any category below the release target.
+**Status:** screenshot audit and priority repairs implemented; quantitative P37 release threshold remains a separate design gate until all categories are evidenced at the locked target.
+
+- Visually inspect all 18 representative desktop/phone reference captures and score against P37 contract, without claiming hands-on device qualification.
+- Repair mobile Library navigation/action hierarchy and blank space, prevent lesson controls from obscuring instructional text, and increase important compact labels to legible sizes.
+- Add DOM geometry checks for mobile Library top spacing and lesson navigation flow, plus maintain established performance/quality and pixel-regression budgets.
+- Record remaining sub-target visual and accessibility issues candidly in `docs/P59_VISUAL_QA.md` rather than falsely approving release.
 
 ### P60 — Defect-Only Release Candidate
 

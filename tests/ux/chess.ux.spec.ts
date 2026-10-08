@@ -178,3 +178,34 @@ test("phone and tablet controls remain reachable with touch and scrolling", asyn
   }
   await assertNoHorizontalOverflow(page, "/train");
 });
+
+
+test("P59 mobile Library navigation and lesson controls avoid occlusion", async ({ page, isMobile }) => {
+  if (!isMobile || page.viewportSize()?.width !== 393) return;
+  await open(page, "/library", ".library-v2");
+  const boxes = await page.evaluate(() => {
+    const get = (selector: string) => {
+      const box = document.querySelector(selector)?.getBoundingClientRect();
+      return box ? { top: box.top, bottom: box.bottom, height: box.height } : null;
+    };
+    return { topbar: get(".app-topbar"), rail: get(".library-v2-rail"),
+      title: get(".library-v2-root"), action: get(".library-v2-new-study"),
+      navigation: get(".library-v2-rail nav"), index: get(".library-v2-index") };
+  });
+  console.log("P59_LIBRARY_LAYOUT " + JSON.stringify(boxes));
+  expect(boxes.title).not.toBeNull();
+  expect(boxes.topbar).not.toBeNull();
+  expect(boxes.title!.top - boxes.topbar!.bottom).toBeLessThanOrEqual(30);
+  expect(Math.abs(boxes.title!.top - boxes.action!.top)).toBeLessThanOrEqual(14);
+  await open(page, "/learn/tactics/tactics.pin", ".lesson-page-v2");
+  const lesson = await page.evaluate(() => {
+    const reading = document.querySelector(".learn-v2-reading-body")?.getBoundingClientRect();
+    const nav = document.querySelector(".learn-v2-reading-nav");
+    const rect = nav?.getBoundingClientRect();
+    return { readingBottom: reading?.bottom, navTop: rect?.top,
+      navPosition: nav ? getComputedStyle(nav).position : null };
+  });
+  console.log("P59_LESSON_LAYOUT " + JSON.stringify(lesson));
+  expect(lesson.navPosition).toBe("static");
+  expect(lesson.navTop ?? 0).toBeGreaterThanOrEqual((lesson.readingBottom ?? 0) - 1);
+});
