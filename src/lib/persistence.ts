@@ -64,9 +64,12 @@ function storeRevision(owner: string, rev: number) {
 
 // Move old browser-local progress into the GUEST profile only. Never
 // automatically claim legacy data on behalf of an authenticated account.
-function guestState(): UserState | null {
+function guestState(allowLegacyMigration: boolean): UserState | null {
   const existing = local(GUEST);
   if (existing) return existing;
+  if (!allowLegacyMigration) return null;
+  // Only a browser-only installation can attribute its old local store to
+  // the guest profile. Account-enabled installations quarantine that key.
   const legacy = parseState(read(LEGACY_KEY));
   if (legacy) storeState(GUEST, legacy, false);
   return legacy;
@@ -108,7 +111,7 @@ class LocalChessStateRepository extends ChessRepositoryBase implements ChessStat
   mode = "local" as const;
   async load(fallback: UserState) {
     this.report("local", "Saved on this browser only");
-    return guestState() ?? fallback;
+    return guestState(true) ?? fallback;
   }
   async save(state: UserState) {
     if (!storeState(GUEST, state, false)) {
@@ -170,9 +173,9 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   }
   subscribeIdentity(listener: IdentityListener) {
     const { data } = this.client.auth.onAuthStateChange((event, session) => {
-      if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED" || !this.initialized) return;
+      if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED") return;
       const next = session?.user?.id ?? GUEST;
-      if (next === this.owner) return;
+      if (this.initialized && next === this.owner) return;
       ++this.identityEpoch;
       this.owner = next;
       this.conflict = null;
@@ -202,7 +205,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     const scope = this.scope();
     if (account === GUEST) {
       this.report("guest", "Guest progress stays on this browser");
-      return guestState() ?? fallback;
+      return guestState(false) ?? fallback;
     }
 
     const cached = local(scope);
