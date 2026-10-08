@@ -52,6 +52,24 @@ for (const scenario of SCENARIOS) {
     });
     // Ensure layout and persisted state have settled after hydration.
     await page.waitForTimeout(250);
+    if (scenario.key === "play" && page.viewportSize()?.width === 393) {
+      const layout = await page.evaluate(() => {
+        const selectors = [".play-v2", ".play-v2-board-column",
+          ".play-v2-board-column .chess-board-wrap",
+          ".play-v2-board-column .chess-board-v2", ".play-v2-setup"];
+        return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
+          nodes: selectors.map((selector) => {
+            const node = document.querySelector<HTMLElement>(selector);
+            const box = node?.getBoundingClientRect();
+            const css = node ? getComputedStyle(node) : undefined;
+            return { selector, x: box?.x, y: box?.y, width: box?.width,
+              height: box?.height, display: css?.display, visibility: css?.visibility,
+              opacity: css?.opacity, transform: css?.transform };
+          }),
+        };
+      });
+      console.log("P57_PLAY_PHONE_LAYOUT " + JSON.stringify(layout));
+    }
     await expect(page).toHaveScreenshot(`${scenario.key}.png`, {
       animations: "disabled",
       caret: "hide",
