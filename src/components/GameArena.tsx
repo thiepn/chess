@@ -13,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { useExperience } from "../interaction/ExperienceProvider";
 import { importPgn } from "../games/import";
+import { advanceClock, completeMoveClock, makeCheckpoint, restoreCheckpoint, type GameCheckpoint, type RunningClock, type CompletedGame } from "../play/gameRecovery";
 import type {
   AiProfile,
   PlayResult,
@@ -24,6 +25,8 @@ import { ChessPiece } from "./ChessPiece";
 
 interface GameArenaProps {
   initialFen: string;
+  checkpoint?: GameCheckpoint;
+  onCheckpoint?: (snapshot: GameCheckpoint) => void;
   playerColor: Color;
   profile: AiProfile;
   scenario?: TrainingScenario;
@@ -94,6 +97,8 @@ function outcomeLabel(outcome: PlayResult["outcome"]) {
 
 export function GameArena({
   initialFen,
+  checkpoint,
+  onCheckpoint,
   playerColor,
   profile,
   scenario,
@@ -103,11 +108,15 @@ export function GameArena({
   exitLabel = "Back to Play",
   timeControl = "untimed",
 }: GameArenaProps) {
-  const gameRef = useRef(new Chess(initialFen));
+  const [recovered] = useState(() => restoreCheckpoint(initialFen, checkpoint, timeControl, Date.now()));
+  const gameRef = useRef(recovered.chess);
   const engineRef = useRef<StockfishBrowserEngine | null>(null);
-  const finishedRef = useRef(false);
-  const [fen, setFen] = useState(initialFen);
-  const [moves, setMoves] = useState<string[]>([]);
+  const finishedRef = useRef(Boolean(recovered.finished));
+  const [fen, setFen] = useState(recovered.chess.fen());
+  const [moves, setMoves] = useState<string[]>(() => recovered.chess.history());
+  const clockRef = useRef<RunningClock>(recovered.clock);
+  const [clock, setClock] = useState<RunningClock>(recovered.clock);
+  const [engineNonce, setEngineNonce] = useState(0);
   const [presentationMove, setPresentationMove] = useState<
     { from: Square; to: Square } | undefined
   >();
@@ -115,18 +124,44 @@ export function GameArena({
   const [engineStatus, setEngineStatus] = useState("Loading opponent…");
   const [engineReady, setEngineReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<PlayResult | null>(null);
+  const [emptyResult, setEmptyResult] = useState<CompletedGame | null>(
+    recovered.finished && recovered.chess.history().length === 0 ? recovered.finished : null,
+  );
+  const [result, setResult] = useState<PlayResult | null>(() => {
+    if (!recovered.finished || recovered.chess.history().length === 0) return null;
+    const chess = recovered.chess;
+    // Reconstruct the exact header order used by finalize(); otherwise the
+    // PGN hash / saved game ID changes after a reload.
+    chess.setHeader("Event", scenario ? "THIEPN Chess — " + scenario.title : "THIEPN Chess — Training Game");
+    chess.setHeader("White", playerColor === "w" ? "You" : profile.name);
+    chess.setHeader("Black", playerColor === "b" ? "You" : profile.name);
+    chess.setHeader("Site", "chess.thiepn.dev");
+    if (initialFen !== new Chess().fen()) {
+      chess.setHeader("SetUp", "1");
+      chess.setHeader("FEN", initialFen);
+    }
+    chess.setHeader("Result", resultHeader(recovered.finished.outcome, playerColor));
+    const pgn = chess.pgn({ maxWidth: 80, newline: "\n" });
+    return {
+      ...recovered.finished,
+      pgn,
+      importedGame: importPgn(pgn, playerColor, recovered.finished.completedAt, { source: "training" }),
+      aiProfileId: profile.id,
+      scenarioId: scenario?.id,
+      scenarioSuccess: scenario ? scenario.successResults.includes(recovered.finished.outcome as "win" | "draw" | "loss") : undefined,
+      trainingSkillId: scenario?.skillId,
+      prescriptionId: scenario?.prescriptionId,
+      prescriptionActionId: scenario?.prescriptionActionId,
+    };
+  });
   const [sendingReview, setSendingReview] = useState(false);
-  const [reviewSent, setReviewSent] = useState(false);
+  const [reviewSent, setReviewSent] = useState(Boolean(recovered.finished?.reviewSent));
   const clockConfig = useMemo(() => timeControlConfig(timeControl), [timeControl]);
-  const [whiteMs, setWhiteMs] = useState(clockConfig.initialMs);
-  const [blackMs, setBlackMs] = useState(clockConfig.initialMs);
+  const whiteMs = clock.whiteMs;
+  const blackMs = clock.blackMs;
   const { feedback, celebrate, settings } = useExperience();
 
-  useEffect(() => {
-    setWhiteMs(clockConfig.initialMs);
-    setBlackMs(clockConfig.initialMs);
-  }, [clockConfig.initialMs, initialFen, playerColor]);
+
 
   useEffect(() => {
     const chess = gameRef.current;
@@ -142,7 +177,10 @@ export function GameArena({
       chess.setHeader("FEN", initialFen);
     }
 
+    if (recovered.finished) return;
     let cancelled = false;
+    setError(null);
+    setEngineStatus("Loading opponent…");
 
     StockfishBrowserEngine.create()
       .then((engine) => {
@@ -155,6 +193,7 @@ export function GameArena({
         setEngineStatus(`${profile.name} ready`);
       })
       .catch((cause) => {
+        if (cancelled) return;
         setError(
           cause instanceof Error
             ? cause.message
@@ -169,43 +208,59 @@ export function GameArena({
       engineRef.current = null;
       setEngineReady(false);
     };
-  }, [initialFen, playerColor, profile.name, scenario]);
+  }, [initialFen, playerColor, profile.name, scenario, engineNonce]);
 
   const playerToMove =
-    gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
+    !finishedRef.current && gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
 
-  useEffect(() => {
-    if (timeControl === "untimed" || result || gameRef.current.isGameOver()) return;
-
-    const interval = window.setInterval(() => {
-      const active = gameRef.current.turn();
-      if (active === "w") {
-        setWhiteMs((current) => Math.max(0, current - 1000));
-      } else {
-        setBlackMs((current) => Math.max(0, current - 1000));
-      }
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, [fen, result, timeControl]);
-
+  // Real elapsed wall time, not a setInterval counter, is authoritative.
+  // This continues correctly after background throttling, sleep or reload.
   useEffect(() => {
     if (timeControl === "untimed" || result || finishedRef.current) return;
-    if (whiteMs <= 0) {
-      void finalize(playerColor === "w" ? "loss" : "win", "timeout");
-    } else if (blackMs <= 0) {
-      void finalize(playerColor === "b" ? "loss" : "win", "timeout");
+    if (!engineReady || error) {
+      // Neither player loses time because a local Stockfish worker is
+      // loading, crashed, or awaiting an explicit retry.
+      clockRef.current = { ...clockRef.current, updatedAt: Date.now() };
+      setClock(clockRef.current);
+      return;
     }
-  }, [blackMs, playerColor, result, timeControl, whiteMs]);
+    const tick = () => {
+      const next = advanceClock(clockRef.current, Date.now(), true);
+      clockRef.current = next;
+      setClock(next);
+      if (next.whiteMs <= 0 || next.blackMs <= 0) {
+        const timedOut = next.whiteMs <= 0 ? "w" : "b";
+        void finalize(playerColor === timedOut ? "loss" : "win", "timeout");
+      }
+    };
+    tick();
+    const interval = window.setInterval(tick, 500);
+    document.addEventListener("visibilitychange", tick);
+    window.addEventListener("focus", tick);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", tick);
+      window.removeEventListener("focus", tick);
+    };
+  }, [fen, result, timeControl, playerColor, engineReady, error]);
 
-  function applyIncrement(color: Color) {
-    if (!clockConfig.incrementMs) return;
-    if (color === "w") {
-      setWhiteMs((current) => current + clockConfig.incrementMs);
-    } else {
-      setBlackMs((current) => current + clockConfig.incrementMs);
-    }
+  function finishMoveClock(mover: Color): boolean {
+    const next = completeMoveClock(clockRef.current, mover, timeControl, Date.now());
+    if (!next) return false;
+    clockRef.current = next;
+    setClock(next);
+    return true;
   }
+
+  useEffect(() => {
+    onCheckpoint?.(makeCheckpoint(gameRef.current, initialFen, clock,
+      emptyResult ?? (result ? {
+        outcome: result.outcome,
+        reason: result.reason,
+        completedAt: result.completedAt,
+        reviewSent,
+      } : undefined)));
+  }, [fen, clock, result, emptyResult, reviewSent, initialFen, onCheckpoint]);
 
   const lastMove = useMemo(() => moves.at(-1), [moves]);
   const moveRows = useMemo(() => {
@@ -230,9 +285,17 @@ export function GameArena({
     finishedRef.current = true;
 
     const chess = gameRef.current;
+    const completedAt = new Date().toISOString();
+    if (chess.history().length === 0) {
+      // An expired game without moves has no importable PGN, but its terminal
+      // state still needs to survive a refresh without inventing a game.
+      const terminal: CompletedGame = { outcome, reason, completedAt, reviewSent: false };
+      onCheckpoint?.(makeCheckpoint(chess, initialFen, clockRef.current, terminal));
+      setEmptyResult(terminal);
+      return;
+    }
     chess.setHeader("Result", resultHeader(outcome, playerColor));
     const pgn = chess.pgn({ maxWidth: 80, newline: "\n" });
-    const completedAt = new Date().toISOString();
     const importedGame = importPgn(pgn, playerColor, completedAt, {
       source: "training",
     });
@@ -255,6 +318,11 @@ export function GameArena({
       completedAt,
     };
 
+    // Durable record precedes review/engine work; a reload must never
+    // replace this completed game with a fresh starting position.
+    onCheckpoint?.(makeCheckpoint(chess, initialFen, clockRef.current, {
+      outcome, reason, completedAt, reviewSent: false,
+    }));
     setResult(finished);
     setSendingReview(true);
 
@@ -283,7 +351,8 @@ export function GameArena({
   }
 
   useEffect(() => {
-    if (result || error || thinking || !engineRef.current) return;
+    if (result || error || thinking || !engineRef.current || finishedRef.current) return;
+    if (timeControl !== "untimed" && (clockRef.current.whiteMs <= 0 || clockRef.current.blackMs <= 0)) return;
 
     const chess = gameRef.current;
     if (chess.isGameOver()) {
@@ -294,6 +363,7 @@ export function GameArena({
     if (chess.turn() === playerColor) return;
 
     let cancelled = false;
+    const requestedFen = chess.fen();
     setThinking(true);
     setEngineStatus(`${profile.name} is thinking…`);
 
@@ -303,21 +373,25 @@ export function GameArena({
         depth: profile.depth,
       })
       .then((evaluation) => {
-        if (cancelled || finishedRef.current) return;
-
+        if (cancelled || finishedRef.current || chess.fen() !== requestedFen) return;
         if (!evaluation.bestMove || evaluation.bestMove === "(none)") {
           finishIfNeeded();
           return;
         }
 
+        const mover = chess.turn();
         const move = uciMove(chess, evaluation.bestMove);
+        if (move && !finishMoveClock(mover)) {
+          chess.undo();
+          void finalize(mover === playerColor ? "loss" : "win", "timeout");
+          return;
+        }
         if (!move) {
           setError("The AI returned an illegal move.");
           return;
         }
 
         setMoves((previous) => [...previous, move.san]);
-        applyIncrement(move.color);
         setPresentationMove({
           from: move.from as Square,
           to: move.to as Square,
@@ -403,8 +477,9 @@ export function GameArena({
             disabled={!playerToMove || thinking || Boolean(result)}
             presentationMove={presentationMove}
             onMove={(boardMove) => {
-              if (!playerToMove || thinking || result) return false;
+              if (!playerToMove || thinking || result || finishedRef.current) return false;
               const chess = gameRef.current;
+              const mover = chess.turn();
 
               let move;
               try {
@@ -418,9 +493,13 @@ export function GameArena({
               }
 
               if (!move) return false;
+              if (!finishMoveClock(mover)) {
+                chess.undo();
+                void finalize(mover === playerColor ? "loss" : "win", "timeout");
+                return false;
+              }
 
               setMoves((previous) => [...previous, move.san]);
-              applyIncrement(move.color);
               setPresentationMove(undefined);
               setFen(chess.fen());
               finishIfNeeded();
@@ -461,8 +540,8 @@ export function GameArena({
 
           <div className="game-turn-line" aria-live="polite">
             <span>
-              {result
-                ? outcomeLabel(result.outcome)
+              {result || emptyResult
+                ? outcomeLabel((result ?? emptyResult)!.outcome)
                 : thinking
                   ? "Opponent thinking"
                   : playerToMove
@@ -528,10 +607,14 @@ export function GameArena({
             <div className="analysis-error">
               <strong>Game engine unavailable</strong>
               <span>{error}</span>
+              {!result && <button type="button" className="secondary" onClick={() => {
+                setError(null);
+                setEngineNonce((count) => count + 1);
+              }}>Retry opponent</button>}
             </div>
           )}
 
-          {!result && (
+          {!result && !emptyResult && (
             <button
               className="resign-button"
               type="button"
@@ -540,6 +623,15 @@ export function GameArena({
             >
               <Flag size={15} /> Resign
             </button>
+          )}
+
+          {emptyResult && (
+            <div className="game-result-card" role="status">
+              <p className="eyebrow">GAME COMPLETE</p>
+              <h3>{outcomeLabel(emptyResult.outcome)}</h3>
+              <p>The game ended before a legal move was recorded. No PGN was created.</p>
+              <button className="secondary" type="button" onClick={onExit}>{exitLabel}</button>
+            </div>
           )}
 
           {result && (
@@ -579,11 +671,19 @@ export function GameArena({
                 ) : (
                   <>
                     <CheckCircle2 size={16} />
-                    <span>Saved to Review · analysis can be retried</span>
+                    <span>Game preserved · Review transfer may need retry</span>
                   </>
                 )}
               </div>
 
+              {!reviewSent && <button type="button" className="secondary" disabled={sendingReview}
+                onClick={() => {
+                  setSendingReview(true);
+                  void Promise.resolve().then(() => onFinished(result))
+                    .then((analyzed) => setReviewSent(analyzed))
+                    .catch(() => setReviewSent(false))
+                    .finally(() => setSendingReview(false));
+                }}>Retry Review transfer</button>}
               {onOpenReview && (
                 <button
                   className="primary"

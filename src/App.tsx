@@ -1398,6 +1398,11 @@ export default function App() {
     const trainingSkillId = scenario?.skillId ?? result.trainingSkillId;
 
     setState((previous) => {
+      // Replaying a recovered finished game must never credit the same
+      // training result or add identical analytics evidence twice.
+      if ((previous.games ?? []).some((item) => item.id === result.importedGame.id)) {
+        return previous;
+      }
       const games = [
         ...(previous.games ?? []).filter((item) => item.id !== result.importedGame.id),
         result.importedGame,
@@ -2934,6 +2939,7 @@ export default function App() {
           <PlayView
             mastery={state.mastery}
             routePath={route.path}
+            storageOwner={repo.getProfileId()}
             onNavigate={navigate}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
