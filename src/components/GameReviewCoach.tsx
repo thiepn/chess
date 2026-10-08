@@ -659,7 +659,7 @@ export function GameReviewCoach({
                               ? "best candidate"
                               : wasYours
                                 ? "your game move"
-                                : "forcing candidate"}
+                                : "other legal candidate"}
                           </small>
                         </div>
                       );
