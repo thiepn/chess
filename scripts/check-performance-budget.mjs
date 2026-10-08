@@ -8,7 +8,9 @@ const budgets = {
   maxJsGzip: 260 * 1024,
   maxCssGzip: 42 * 1024,
   maxInitialAppGzip: 260 * 1024,
-  maxTotalAppGzip: 315 * 1024,
+  // P62 adds durable game recovery. The global deferred-asset allowance
+  // moves by 3 KiB (+0.95%), while initial and per-chunk limits stay locked.
+  maxTotalAppGzip: 318 * 1024,
 };
 
 if (!fs.existsSync(assetsDir)) {
