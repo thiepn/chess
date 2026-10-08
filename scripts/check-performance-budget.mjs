@@ -46,6 +46,32 @@ const initialFiles = files.filter((asset) =>
 );
 const failures = [];
 
+// Vite's production manifest proves that Train-only exercises are dynamically
+// imported instead of adding all activity runners to the initial route.
+const manifestPath = path.join(distDir, ".vite", "manifest.json");
+const manifest = fs.existsSync(manifestPath)
+  ? JSON.parse(fs.readFileSync(manifestPath, "utf8"))
+  : null;
+if (!manifest) failures.push("Vite build manifest missing.");
+const trainOnly = [
+  "LessonRunner",
+  "PuzzleRunner",
+  "PersonalMistakeRunner",
+  "CalculationRunner",
+  "EndgameTechniqueRunner",
+  "OpeningTrainer",
+  "SavedStudyTrainer",
+  "ModelGameRunner",
+  "AssessmentRunner",
+];
+for (const component of trainOnly) {
+  const source = `src/components/${component}.tsx`;
+  if (!manifest?.[source]?.isDynamicEntry) {
+    failures.push(`${component} is not a separate on-demand training entry.`);
+  }
+}
+if (manifest) console.log(`On-demand Train runners: ${trainOnly.length}`);
+
 for (const asset of files) {
   const limit =
     asset.type === "js"

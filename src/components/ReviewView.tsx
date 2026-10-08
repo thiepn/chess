@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { nextVisibleCount, HISTORY_PAGE_SIZE } from "../routing/pageWindow";
 import "../styles/review-v2.css";
 import "../styles/p47-review-native.css";
 import "../styles/p51-review-large.css";
@@ -89,6 +90,8 @@ export function ReviewView({
   const [batchAnalyzing, setBatchAnalyzing] = useState(false);
   const [batchStatus, setBatchStatus] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [visibleGames, setVisibleGames] = useState(HISTORY_PAGE_SIZE);
+  useEffect(() => setVisibleGames(HISTORY_PAGE_SIZE), [games.length]);
 
   const route = resolveReviewRoute(routePath);
   const selectedGame = route.gameId
@@ -317,7 +320,7 @@ export function ReviewView({
 
         <div className="review-v2-game-list">
           {sortedGames.length ? (
-            sortedGames.map((game) => (
+            sortedGames.slice(0, visibleGames).map((game) => (
               <button
                 key={game.id}
                 type="button"
@@ -352,6 +355,15 @@ export function ReviewView({
             </div>
           )}
         </div>
+        {sortedGames.length > visibleGames && (
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => setVisibleGames((count) => nextVisibleCount(sortedGames.length, count))}
+          >
+            Show more games ({sortedGames.length - visibleGames} remaining)
+          </button>
+        )}
       </aside>
 
       <main className="review-v2-main">

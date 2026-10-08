@@ -21,6 +21,7 @@ import {
   Redo2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { nextVisibleCount, HISTORY_PAGE_SIZE } from "../routing/pageWindow";
 import { skills } from "../domain/curriculum";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import type { EngineEvaluation, ImportedGame } from "../games/types";
@@ -163,6 +164,8 @@ export function LibraryView({
     "calculation.candidates",
   );
   const [query, setQuery] = useState("");
+  const [visibleArchiveItems, setVisibleArchiveItems] = useState(HISTORY_PAGE_SIZE);
+  useEffect(() => setVisibleArchiveItems(HISTORY_PAGE_SIZE), [routePath, query]);
 
   const currentFen = fenAtCursor(line, cursor);
   const currentPgn = useMemo(
@@ -176,6 +179,11 @@ export function LibraryView({
 
   const dueStudies = useMemo(() => dueStudyTraining(studies), [studies]);
   const favoriteCount = studies.filter((study) => study.favorite).length;
+
+  const sortedGames = useMemo(
+    () => [...games].sort((a, b) => b.importedAt.localeCompare(a.importedAt)),
+    [games],
+  );
 
   const sortedStudies = useMemo(
     () =>
@@ -1059,11 +1067,10 @@ export function LibraryView({
           </header>
 
           {collection === "games" ? (
+            <>
             <div className="library-v2-game-list">
               {games.length ? (
-                [...games]
-                  .sort((a, b) => b.importedAt.localeCompare(a.importedAt))
-                  .map(renderGameRow)
+                sortedGames.slice(0, visibleArchiveItems).map(renderGameRow)
               ) : (
                 <div className="library-v2-empty">
                   <Swords size={20} />
@@ -1072,11 +1079,17 @@ export function LibraryView({
                 </div>
               )}
             </div>
+            {sortedGames.length > visibleArchiveItems && (
+              <button type="button" className="secondary" onClick={() => setVisibleArchiveItems((count) => nextVisibleCount(sortedGames.length, count))}>
+                Show more games ({sortedGames.length - visibleArchiveItems} remaining)
+              </button>
+            )}
+            </>
           ) : (
             <>
               <div className="library-v2-list">
                 {studiesForCollection.length ? (
-                  studiesForCollection.map(renderStudyRow)
+                  studiesForCollection.slice(0, visibleArchiveItems).map(renderStudyRow)
                 ) : (
                   <div className="library-v2-empty">
                     <Bookmark size={20} />
@@ -1085,6 +1098,11 @@ export function LibraryView({
                   </div>
                 )}
               </div>
+              {studiesForCollection.length > visibleArchiveItems && (
+                <button type="button" className="secondary" onClick={() => setVisibleArchiveItems((count) => nextVisibleCount(studiesForCollection.length, count))}>
+                  Show more studies ({studiesForCollection.length - visibleArchiveItems} remaining)
+                </button>
+              )}
 
               {referencesForCollection.length > 0 && (
                 <section className="library-v2-reference-section">
@@ -1103,9 +1121,7 @@ export function LibraryView({
   }
 
   const recentStudies = sortedStudies.slice(0, 5);
-  const recentGames = [...games]
-    .sort((a, b) => b.importedAt.localeCompare(a.importedAt))
-    .slice(0, 4);
+  const recentGames = sortedGames.slice(0, 4);
 
   return (
     <section className="library-v2">
