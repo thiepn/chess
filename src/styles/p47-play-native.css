@@ -10,8 +10,13 @@
 
 @media (max-width: 1024px) and (orientation: portrait) {
   .play-v2 {
-    grid-template-columns: 1fr;
+    /* Don't let the horizontal scenario scroller enlarge the outer grid track. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 14px;
+  }
+
+  .play-v2 > * {
+    min-width: 0;
   }
 
   .play-v2-board-column {
@@ -57,6 +62,22 @@
 }
 
 @media (max-width: 820px) {
+  /* Override the legacy 1fr rule in styles.css, regardless of CSS import order. */
+  .app-shell-v2 .play-v2 {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 100%;
+  }
+
+  .app-shell-v2 .play-v2 > * {
+    min-width: 0;
+  }
+
+  .app-shell-v2 .play-v2-scenario-list {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
   .play-v2-board-label {
     min-height: 22px;
   }

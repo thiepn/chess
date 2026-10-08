@@ -64,6 +64,15 @@ Initial bootstrap on the P57 implementation branch may generate the first
 PNG set using a temporary, branch-restricted workflow. Remove that temporary
 workflow before merging into main. The permanent workflow is read-only.
 
+## Regression found and repaired
+
+Initial baseline inspection found that the mobile Play setup's scenario scroller
+expanded an intrinsic CSS grid track to 2,650 px at the 393 px phone viewport.
+This centered the chessboard off-screen while leaving a large blank area.
+P57 repairs mobile grid min-sizing and includes a browser-level assertion that
+the board is at least 90% in the viewport, with document width no greater than
+395 CSS px. The approved Play screenshot must visibly contain the board.
+
 ## Limitations
 
 This does **not** replace P58 real-device testing (Safari, iPad, Samsung, installed

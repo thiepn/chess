@@ -839,6 +839,7 @@ Full real-device perceived-load measurements and visual behavior remain P58 rele
 - Pinned Chromium/Playwright on Ubuntu 24.04, reduced motion, fixed clock and fixture state, fixed device scale and locale.
 - Unapproved visual changes fail the separate CI check; updating baselines is a conscious reviewed change.
 - Coverage is intentionally visual and structural, not a substitute for P58 physical-device qualification.
+- P57's first screenshots exposed and drove repair of an actual mobile Play grid blowout; the browser test now checks board visibility and horizontal overflow.
 
 Baseline status is verified by the screenshot comparison workflow and committed snapshot files.
 
