@@ -324,7 +324,20 @@ export function ProgressView({
               {intelligence.activeDays28}/28 active days
             </small>
           </header>
-          <TrendChart points={intelligence.trend} />
+          {intelligence.evidenceCount >= 2 && intelligence.trend.length >= 2 ? (
+            <TrendChart points={intelligence.trend} />
+          ) : (
+            <div className="progress-v2-trend-empty" role="status">
+              <strong>Your development story starts with real games.</strong>
+              <p>
+                An eight-week trend needs at least two recorded results.
+                Until then, a line graph would imply progress that has not been measured.
+              </p>
+              <button type="button" onClick={onBack}>
+                Return to training <ChevronRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

@@ -9,6 +9,7 @@ import "./styles/p53-customization.css";
 import "./styles/p52-accessibility.css";
 import "./styles/p59-visual-qa.css";
 import "./styles/p59b-refinement.css";
+import "./styles/p64-premium-finishing.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

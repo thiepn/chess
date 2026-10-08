@@ -1,0 +1,267 @@
+/* P64 — Chess-first premium finishing. Flat regions; the board is the tactile object.
+   Deliberately uses no decorative gradients, oversized radii or motion loops. */
+html[data-app-theme="graphite"] {
+  --chess-color-text-muted: #979892;
+  --chess-color-separator: rgba(255,255,255,.105);
+}
+html[data-app-theme="obsidian"] {
+  --chess-color-text-muted: #969995;
+  --chess-color-separator: rgba(255,255,255,.10);
+}
+html[data-app-theme="warm-graphite"] {
+  --chess-color-text-muted: #aa9e92;
+  --chess-color-separator: rgba(244,232,215,.12);
+}
+html[data-board-theme="tournament"] {
+  --chess-board-light: #dad3c3;
+  --chess-board-dark: #73776d;
+  --chess-board-frame: #151917;
+  --chess-board-coordinate-light: rgba(24,27,24,.64);
+  --chess-board-coordinate-dark: rgba(255,249,236,.73);
+}
+
+/* A finished board has a consistent edge and readable pieces on both square colors. */
+.app-shell-v2 .chess-board-wrap {
+  padding: clamp(4px, .6vw, 7px);
+  border: 1px solid rgba(233,226,210,.24);
+  box-shadow: 0 16px 34px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.045);
+}
+.app-shell-v2 .chess-board-v2 {
+  box-shadow: inset 0 0 0 1px rgba(17,20,18,.42);
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-b {
+  --piece-fill: #242b28;
+  --piece-stroke: #e4ddcf;
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-w {
+  --piece-fill: #f7f2e8;
+  --piece-stroke: #4c504b;
+}
+.app-shell-v2 .chess-board-v2 .chess-piece-svg .piece-outline {
+  stroke-width: 2.55;
+}
+.app-shell-v2 .chess-board-v2 .piece-v2 {
+  filter: drop-shadow(0 1.5px .9px rgba(10,13,11,.3));
+}
+.app-shell-v2 .chess-board-v2 .file-label,
+.app-shell-v2 .chess-board-v2 .rank-label {
+  font-size: clamp(8px, .82vw, 10px);
+  opacity: .9;
+}
+.app-shell-v2 .chess-board-v2 .board-square.selected {
+  box-shadow: inset 0 0 0 3px rgba(53,123,216,.95),
+    inset 0 0 0 999px rgba(53,123,216,.16);
+}
+.app-shell-v2 .chess-board-v2 .board-square.last-move:not(.selected) {
+  box-shadow: inset 0 0 0 999px rgba(53,123,216,.135);
+}
+.app-shell-v2 .chess-board-v2 .board-square:focus-visible {
+  outline: 3px solid #fff4da;
+  outline-offset: -4px;
+}
+
+/* Toolbars / captions: compact but no longer microscopic. */
+.app-shell-v2 :is(.train-board-context,.train-board-status,.play-v2-board-label,
+  .play-v2-board-note,.learn-v2-board-caption,.review-workstation-head p,
+  .board-caption,.game-turn-line) {
+  font-size: max(11px, .76rem);
+  line-height: 1.45;
+}
+.app-shell-v2 :is(.train-session-facts,.train-placement-action,.train-coach-note,
+  .review-v2-feature-insight > p,.review-v2-main-head p:not(.eyebrow)) {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* Train queue: allow actual titles to be read instead of 'Stop han...'. */
+@media (min-width: 1181px) {
+  .app-shell-v2 .train-room {
+    --chess-rail-width: 13.1rem;
+    gap: clamp(16px, 1.9vw, 28px);
+  }
+}
+.app-shell-v2 .train-queue-item {
+  min-height: 66px;
+  grid-template-columns: 14px 25px minmax(0,1fr) auto;
+  gap: 6px;
+}
+.app-shell-v2 .train-queue-copy small {
+  font-size: 10px;
+  letter-spacing: .035em;
+}
+.app-shell-v2 .train-queue-copy strong {
+  font-size: 12px;
+  line-height: 1.34;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.app-shell-v2 .train-queue-time { font-size: 10px; }
+.app-shell-v2 .train-duration-tabs strong { font-size: 12px; }
+.app-shell-v2 .train-duration-tabs span { font-size: 10px; opacity: .86; }
+
+/* Learn is a book; labels and descriptions are reading content, not texture. */
+.app-shell-v2 .learn-v2-stage-label strong { font-size: 12px; }
+.app-shell-v2 .learn-v2-stage-label small,
+.app-shell-v2 .learn-v2-stage-state { font-size: 10px; }
+.app-shell-v2 .learn-v2-chapter-head > div:first-child > p:last-child,
+.app-shell-v2 .learn-v2-skill-copy p,
+.app-shell-v2 .learn-subpage-head p:not(.eyebrow) {
+  font-size: 12px;
+  line-height: 1.55;
+}
+.app-shell-v2 .learn-v2-skill-row { min-height: 96px; }
+.app-shell-v2 .learn-v2-skill-copy strong { line-height: 1.35; }
+
+/* Review uses notation-table clarity, not dark-on-dark microtype. */
+.app-shell-v2 .review-v2-feature-board > span,
+.app-shell-v2 .review-v2-feature-opening,
+.app-shell-v2 .review-v2-feature-insight > p,
+.app-shell-v2 .review-v2-game-copy small {
+  font-size: 12px;
+  line-height: 1.55;
+}
+.app-shell-v2 .review-v2-feature-insight > strong {
+  font-size: 16px;
+  line-height: 1.38;
+}
+
+/* Progress: a real reading scale and an honest lack-of-history state. */
+.app-shell-v2 .progress-v2-head > div:nth-child(2) > strong {
+  font-size: 20px;
+}
+.app-shell-v2 .progress-v2 :is(
+  .progress-v2-head > div:nth-child(2) > span,
+  .progress-v2-rating > span,
+  .progress-v2-rating > small,
+  .progress-v2-rating-meta span,
+  .progress-v2-trajectory > header span,
+  .progress-v2-trajectory > header small,
+  .progress-v2-metric-strip span,
+  .progress-v2-metric-strip small,
+  .progress-v2-chart-legend,
+  .progress-v2-evidence
+) {
+  font-size: 11px;
+  line-height: 1.45;
+}
+.app-shell-v2 .progress-v2-rating-meta strong,
+.app-shell-v2 .progress-v2-trajectory > header strong {
+  font-size: 13px;
+}
+.app-shell-v2 .progress-v2-grid-label,
+.app-shell-v2 .progress-v2-axis-label { font-size: 10px; }
+.app-shell-v2 .progress-v2-chart-legend { gap: 16px; }
+.app-shell-v2 .progress-v2-trend-empty {
+  min-height: 162px;
+  padding: 22px 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  border-bottom: 1px solid var(--chess-color-separator);
+}
+.app-shell-v2 .progress-v2-trend-empty strong {
+  font-family: var(--chess-font-editorial);
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 600;
+}
+.app-shell-v2 .progress-v2-trend-empty p {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--chess-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.app-shell-v2 .progress-v2-trend-empty button {
+  padding: 0;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  color: var(--chess-color-accent);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Promotion belongs to the chess table; use actual pieces, not text-only controls. */
+.app-shell-v2 .board-promotion-picker {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 0;
+  border-top: 1px solid var(--chess-color-separator-strong);
+}
+.app-shell-v2 .board-promotion-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.app-shell-v2 .board-promotion-caption small {
+  font-family: var(--chess-font-mono);
+  color: var(--chess-color-text-secondary);
+  font-size: 11px;
+}
+.app-shell-v2 .board-promotion-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+.app-shell-v2 .board-promotion-choice {
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  min-height: 78px;
+  padding: 5px;
+  border: 1px solid var(--chess-color-separator-strong);
+  border-radius: 6px;
+  background: var(--chess-color-bg-workspace);
+  color: var(--chess-color-text-primary);
+  font: 600 12px/1.2 var(--chess-font-ui);
+  cursor: pointer;
+}
+.app-shell-v2 .board-promotion-choice:hover,
+.app-shell-v2 .board-promotion-choice:focus-visible {
+  border-color: var(--chess-color-accent);
+  background: var(--chess-color-bg-raised);
+}
+.app-shell-v2 .board-promotion-choice:focus-visible,
+.app-shell-v2 .board-promotion-cancel:focus-visible {
+  outline: 2px solid var(--chess-color-accent);
+  outline-offset: 2px;
+}
+.app-shell-v2 .board-promotion-piece {
+  width: 41px;
+  height: 41px;
+  display: grid;
+  place-items: center;
+}
+.app-shell-v2 .board-promotion-piece .chess-piece-svg {
+  width: 100%;
+  height: 100%;
+}
+.app-shell-v2 .board-promotion-cancel {
+  grid-column: 1 / -1;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--chess-color-text-secondary);
+  cursor: pointer;
+}
+
+/* Keep every control operable at phone widths and prevent horizontal growth. */
+@media (max-width: 820px) {
+  .app-shell-v2 .train-queue-item { min-height: 50px; }
+  .app-shell-v2 .train-queue-copy strong { -webkit-line-clamp: 1; }
+  .app-shell-v2 .progress-v2-trend-empty { min-height: 138px; }
+  .app-shell-v2 .progress-v2-head { gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell-v2 .chess-board-v2 .piece-v2 { transition: none; }
+}

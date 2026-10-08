@@ -19,6 +19,7 @@ const flatCssFiles = [
   "src/styles/p53-customization.css",
   "src/styles/p59-visual-qa.css",
   "src/styles/p59b-refinement.css",
+  "src/styles/p64-premium-finishing.css",
   "src/styles/p51-train-large.css",
   "src/styles/p51-learn-large.css",
   "src/styles/p51-play-large.css",
@@ -100,6 +101,9 @@ for (const file of sourceFiles) {
 }
 
 const mainSource = fs.readFileSync(path.join(root, "src", "main.tsx"), "utf8");
+if (!mainSource.includes('import "./styles/p64-premium-finishing.css";')) {
+  failures.push("src/main.tsx: P64 finishing layer must be explicitly loaded");
+}
 if (!mainSource.includes('import "./styles/p48-material.css";')) {
   failures.push("src/main.tsx: P48 material layer must load after global styles");
 }
