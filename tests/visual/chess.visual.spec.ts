@@ -68,6 +68,21 @@ for (const scenario of SCENARIOS) {
       );
       expect(startWidth).toBeGreaterThan(300);
     }
+    if (scenario.key === "library" && page.viewportSize()?.width === 393) {
+      const diagnostics = await page.evaluate(() => {
+        const view = (selector: string) => {
+          const node = document.querySelector<HTMLElement>(selector);
+          const r = node?.getBoundingClientRect();
+          const st = node ? getComputedStyle(node) : null;
+          return { selector, x: r?.x, y: r?.y, height: r?.height,
+            marginTop: st?.marginTop, paddingTop: st?.paddingTop,
+            position: st?.position, top: st?.top, alignSelf: st?.alignSelf };
+        };
+        return [".app-topbar", ".app-main", ".library-v2", ".library-v2-rail",
+          ".library-v2-root", ".library-v2-rail nav", ".library-v2-index"].map(view);
+      });
+      console.log("P59_LIBRARY_GEOMETRY " + JSON.stringify(diagnostics));
+    }
     await expect(page).toHaveScreenshot(`${scenario.key}.png`, {
       animations: "disabled",
       caret: "hide",
