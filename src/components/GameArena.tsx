@@ -679,8 +679,10 @@ export function GameArena({
               {!reviewSent && <button type="button" className="secondary" disabled={sendingReview}
                 onClick={() => {
                   setSendingReview(true);
-                  void onFinished(result).then((analyzed) => setReviewSent(analyzed))
-                    .catch(() => setReviewSent(false)).finally(() => setSendingReview(false));
+                  void Promise.resolve().then(() => onFinished(result))
+                    .then((analyzed) => setReviewSent(analyzed))
+                    .catch(() => setReviewSent(false))
+                    .finally(() => setSendingReview(false));
                 }}>Retry Review transfer</button>}
               {onOpenReview && (
                 <button
