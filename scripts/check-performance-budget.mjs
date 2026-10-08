@@ -63,6 +63,8 @@ const trainOnly = [
   "SavedStudyTrainer",
   "ModelGameRunner",
   "AssessmentRunner",
+  "GameArena",
+  "GameStoryView",
 ];
 for (const component of trainOnly) {
   const source = `src/components/${component}.tsx`;
@@ -70,7 +72,7 @@ for (const component of trainOnly) {
     failures.push(`${component} is not a separate on-demand training entry.`);
   }
 }
-if (manifest) console.log(`On-demand Train runners: ${trainOnly.length}`);
+if (manifest) console.log(`On-demand training, play and review workspaces: ${trainOnly.length}`);
 
 for (const asset of files) {
   const limit =

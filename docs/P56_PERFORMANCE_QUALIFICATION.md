@@ -4,7 +4,7 @@
 
 P56 optimizes fetch, execution and UI work without changing the established chess-specific route layout.
 
-- Ten training/runtime components, including GameArena, are imported lazily by Train. The Play route still has its own regular GameArena usage.
+- Ten training/runtime components, including GameArena, are imported lazily by Train. GameArena is also lazy in Play, with hover/focus intent warm-up. Review lazily loads the deep GameStoryView workstation, keeping the history index lighter.
 - Existing Learn, Review, Play, Library, Progress and Learn-subsection routes remain dynamically imported.
 - A single likely next route is preloaded after 2.4 seconds on Train, Play, Review or Library. Prefetch is canceled when the route changes; `saveData`, effective 2G or background tabs suppress it.
 - ChessPiece is React-memoized, retaining the same SVG, geometry, role and accessible labels.

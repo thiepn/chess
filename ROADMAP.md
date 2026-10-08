@@ -819,7 +819,7 @@ Internal model/type names remain unchanged when they are not user-visible. P54 i
 
 **Status:** implemented (automated production gates; device measurements remain P58).
 
-- Split nine training-only React runners into individually lazy-loaded chunks; GameArena also loads on demand from Train, while Play maintains its own game import.
+- Split nine training-only React runners into individually lazy-loaded chunks; GameArena loads on demand for both Train and Play, and GameStoryView loads on demand for Review game details.
 - Keep the default Train queue and board preview immediately accessible without loading every exercise runtime.
 - Opportunistically preload one likely next top-level route after 2.4 seconds on stable connections, while respecting data-saver, slow connections and background tabs.
 - Memoize static SVG chess pieces to avoid re-rendering unmodified geometry during board updates.

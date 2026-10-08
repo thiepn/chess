@@ -74,7 +74,7 @@ The default experience should answer one question: **what should I train now?**
 - P53 Theme & Board Customization with three curated app finishes, three board palettes, three piece treatments, backward-compatible persistence normalization and CI theme auditing
 - P54 Visual Content Pass with player-facing chess language, action-specific iconography, removal of internal/model jargon and CI content-regression auditing
 - P55 Cross-Page Workflow Integration with completed-game direct Review navigation, preserved Review/Progress origins for replay scenarios, safe route restoration and regression-tested handoffs
-- P56 Performance & Route Optimization with on-demand training chunks, likely-route prefetching, memoized SVG chess pieces, progressive archive rendering, and build-manifest split regression checks
+- P56 Performance & Route Optimization with on-demand training, active-game and review workspaces, likely-route prefetching, memoized SVG chess pieces, progressive archive rendering, and build-manifest split regression checks
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell
