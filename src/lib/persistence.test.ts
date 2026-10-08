@@ -169,6 +169,7 @@ describe("P61 user-scoped persistence", () => {
     expect(JSON.parse(localStorage.getItem(accountKey("user-1")) ?? "null")).toEqual(modifiedState);
     expect(await repo.resolveConflict("use-cloud")).toEqual(thirdState);
     expect(JSON.parse(localStorage.getItem(recoveryKey("user-1")) ?? "null")).toEqual(modifiedState);
+    expect(repo.archivedRecovery()).toEqual(modifiedState);
     expect(localStorage.getItem(revKey("user-1"))).toBe("4");
     expect(localStorage.getItem(dirtyKey("user-1"))).toBeNull();
   });
