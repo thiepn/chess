@@ -36,6 +36,9 @@ interface LessonRunnerProps {
 }
 
 function stepLabel(step: LessonStep) {
+  if (step.stage === "transfer" && step.type === "move" && step.support === "retrieval") {
+    return "Independent check";
+  }
   const labels = {
     model: "Concept model",
     example: "Worked example",
