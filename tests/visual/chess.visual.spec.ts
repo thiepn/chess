@@ -61,6 +61,12 @@ for (const scenario of SCENARIOS) {
         () => document.documentElement.scrollWidth,
       );
       expect(documentWidth).toBeLessThanOrEqual(395);
+      const startButton = page.locator(".play-v2-start-block .primary");
+      await expect(startButton).toBeInViewport({ ratio: 0.9 });
+      const startWidth = await startButton.evaluate(
+        (node) => node.getBoundingClientRect().width,
+      );
+      expect(startWidth).toBeGreaterThan(300);
     }
     await expect(page).toHaveScreenshot(`${scenario.key}.png`, {
       animations: "disabled",

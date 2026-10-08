@@ -72,6 +72,9 @@ This centered the chessboard off-screen while leaving a large blank area.
 P57 repairs mobile grid min-sizing and includes a browser-level assertion that
 the board is at least 90% in the viewport, with document width no greater than
 395 CSS px. The approved Play screenshot must visibly contain the board.
+The corrected snapshot also exposed a narrow sticky Start game button caused by
+a residual two-column CTA grid; P57 restores a full-width button on phones
+and asserts its rendered width exceeds 300 CSS px.
 
 ## Limitations
 

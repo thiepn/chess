@@ -146,6 +146,17 @@
 }
 
 @media (max-width: 520px) {
+  /* The desktop 2-column CTA grid must not survive when its summary is hidden. */
+  .play-v2-start-block {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .play-v2-start-block .primary {
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
   .play-v2-time-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
