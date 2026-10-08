@@ -479,7 +479,7 @@ export default function App() {
     setActiveModelGameId(null);
     setAssessmentSession(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(returnPath || "/train");
+    navigate(returnPath || "/train", { replace: true });
   }
 
   function openAdaptiveActivity(index: number) {
@@ -2131,7 +2131,7 @@ export default function App() {
     const returnPath = trainingReturnPath;
     setAssessmentSession(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(returnPath || "/train");
+    navigate(returnPath || "/train", { replace: true });
 
     emitExperienceEvent({
       feedback:
