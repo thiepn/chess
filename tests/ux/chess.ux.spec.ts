@@ -161,5 +161,20 @@ test("phone and tablet controls remain reachable with touch and scrolling", asyn
       expect(size.width).toBeGreaterThanOrEqual(44);
     }
   }
+  // The outer app cannot scroll sideways, but its intentionally horizontal
+  // carousels must still move under touch/drag rather than being clipped.
+  const scenarioList = page.locator(".play-v2-scenario-list");
+  if (await scenarioList.evaluate((node) => node.scrollWidth > node.clientWidth + 20)) {
+    await scenarioList.evaluate((node) => { node.scrollLeft = 120; });
+    expect(await scenarioList.evaluate((node) => node.scrollLeft)).toBeGreaterThan(0);
+  }
   await assertNoHorizontalOverflow(page, "/play");
+
+  await open(page, "/train", ".train-room");
+  const trainingQueue = page.locator(".train-queue");
+  if (await trainingQueue.evaluate((node) => node.scrollWidth > node.clientWidth + 20)) {
+    await trainingQueue.evaluate((node) => { node.scrollLeft = 120; });
+    expect(await trainingQueue.evaluate((node) => node.scrollLeft)).toBeGreaterThan(0);
+  }
+  await assertNoHorizontalOverflow(page, "/train");
 });
