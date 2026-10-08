@@ -5,7 +5,10 @@ export default defineConfig({
   testDir: "./tests/ux",
   testMatch: "**/*.ux.spec.ts",
   fullyParallel: false,
-  workers: process.env.CI ? 2 : 1,
+  // P66: serialize cross-browser mobile prequalification on CI.
+  // Concurrent Chromium/WebKit sessions were exhausting constrained runners
+  // during the second game recovery reload; preserve every test and retry.
+  workers: 1,
   retries: process.env.CI ? 1 : 0,
   timeout: 45_000,
   expect: { timeout: 12_000 },
