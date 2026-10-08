@@ -31,7 +31,8 @@ import type {
   UserState,
 } from "./domain/types";
 import { initialUserState } from "./data/demo";
-import { createChessStateRepository } from "./lib/persistence";
+import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
+import "./styles/p61-persistence.css";
 
 import { ChessBoard } from "./components/ChessBoard";
 
@@ -260,6 +261,7 @@ function reasonLabel(activity: TrainingActivity) {
 export default function App() {
   const [state, setState] = useState<UserState>(initialUserState);
   const [loaded, setLoaded] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => repo.getStatus());
   const [mode, setMode] = useState<SessionMode>("standard");
   const [previewIndex, setPreviewIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -282,12 +284,30 @@ export default function App() {
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
   const [lichessSyncError, setLichessSyncError] = useState<string | null>(null);
 
+  // Auth changes must swap the entire in-memory profile before any more
+  // writes are allowed. Discard stale loads when the account changes twice.
   useEffect(() => {
-    repo.load(initialUserState).then((value) => {
-      setState(ensureAnalyticsState(value));
-      setLoaded(true);
-    });
+    let cancelled = false;
+    let generation = 0;
+    const refresh = () => {
+      const current = ++generation;
+      setLoaded(false);
+      void repo.load(initialUserState).then((value) => {
+        if (cancelled || current !== generation) return;
+        setState(ensureAnalyticsState(value));
+        setLoaded(true);
+      });
+    };
+    const unsubscribe = repo.subscribeIdentity(refresh);
+    refresh();
+    return () => {
+      cancelled = true;
+      ++generation;
+      unsubscribe();
+    };
   }, []);
+
+  useEffect(() => repo.subscribeStatus(setSyncStatus), []);
 
   useEffect(() => {
     if (loaded) void repo.save(state);
@@ -2456,13 +2476,18 @@ export default function App() {
             <div className="topbar-experience">
               <ExperienceControls />
             </div>
-            <span
+            <button
+              type="button"
               className="topbar-sync"
-              title={repo.mode === "supabase" ? "Account sync" : "Local-first"}
-              aria-label={repo.mode === "supabase" ? "Account sync enabled" : "Local-first storage"}
+              data-phase={syncStatus.phase}
+              title={syncStatus.detail + " · Open data settings"}
+              aria-label={"Chess data: " + syncStatus.detail + ". Open data settings"}
+              onClick={() => navigatePage("settings")}
             >
               <span className="sync-dot" />
-            </span>
+              {syncStatus.phase === "conflict" && <span className="topbar-sync-word">Conflict</span>}
+              {syncStatus.phase === "pending" && <span className="topbar-sync-word">Unsynced</span>}
+            </button>
           </div>
         </header>
 
@@ -2988,6 +3013,80 @@ export default function App() {
               <p>Sound, haptics, celebrations and motion remain available from the compact app controls.</p>
             </div>
             <ExperienceControls />
+            <section className="chess-data-settings" aria-labelledby="chess-data-heading">
+              <h2 id="chess-data-heading">Saved chess progress</h2>
+              <p role="status" aria-live="polite">{syncStatus.detail}</p>
+              <p>Account and guest histories are kept separate. Offline edits are retained on this device until acknowledged by the cloud.</p>
+              <div className="chess-data-actions">
+                <button type="button" className="secondary" onClick={() => {
+                  const backup = {
+                    format: "thiepn-chess-backup-v1",
+                    exportedAt: new Date().toISOString(),
+                    state,
+                  };
+                  const url = URL.createObjectURL(new Blob(
+                    [JSON.stringify(backup, null, 2)], { type: "application/json" },
+                  ));
+                  const anchor = document.createElement("a");
+                  anchor.href = url;
+                  anchor.download = "chess-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+                  anchor.click();
+                  window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+                }}>Export JSON backup</button>
+                <label className="chess-backup-import">
+                  Restore from JSON backup
+                  <input type="file" accept="application/json,.json" onChange={(event) => {
+                    const input = event.currentTarget;
+                    const file = input.files?.[0];
+                    if (!file) return;
+                    if (file.size > 15_000_000) {
+                      window.alert("Backup exceeds the 15 MB safety limit.");
+                      input.value = "";
+                      return;
+                    }
+                    void file.text().then((content) => {
+                      const parsed: unknown = JSON.parse(content);
+                      const value = parsed && typeof parsed === "object" && "state" in parsed
+                        ? (parsed as { state: unknown }).state : parsed;
+                      if (!isChessState(value)) throw new Error("Invalid chess progress file");
+                      if (window.confirm("Replace this profile with the backup? Export your current progress first.")) {
+                        setState(ensureAnalyticsState(value));
+                      }
+                    }).catch(() => window.alert("Could not read this chess backup.")).finally(() => {
+                      input.value = "";
+                    });
+                  }} />
+                </label>
+                {repo.legacyRecovery() && <button type="button" className="secondary" onClick={() => {
+                  const recovered = repo.legacyRecovery();
+                  if (recovered && window.confirm("Restore the previous browser-local chess profile? This does not delete its archive.")) {
+                    setState(ensureAnalyticsState(recovered));
+                  }
+                }}>Recover old guest progress</button>}
+              </div>
+              {syncStatus.phase === "conflict" && (
+                <div className="chess-sync-conflict" role="alert">
+                  <h3>Cloud and this device disagree</h3>
+                  <p>Neither copy was silently discarded. Export a backup first, then choose which version to retain. Keeping this device's copy will overwrite the earlier cloud revision only if no other edit arrived.</p>
+                  <div className="chess-data-actions">
+                    <button type="button" onClick={() => { void repo.resolveConflict("keep-local"); }}>
+                      Keep this device's progress
+                    </button>
+                    <button type="button" className="secondary" onClick={() => {
+                      if (!window.confirm("Use the cloud version? Your unsynced local copy will be archived on this device.")) return;
+                      void repo.resolveConflict("use-cloud").then((recovered) => {
+                        if (recovered) setState(ensureAnalyticsState(recovered));
+                      });
+                    }}>Use cloud version</button>
+                  </div>
+                </div>
+              )}
+              {syncStatus.phase === "pending" && repo.mode === "supabase" && (
+                <button type="button" className="secondary" onClick={() => { void repo.retryPending(); }}>
+                  Retry cloud sync
+                </button>
+              )}
+            </section>
             <button className="secondary" type="button" onClick={() => navigatePage("train")}>
               Back to Train
             </button>
