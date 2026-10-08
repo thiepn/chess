@@ -25,6 +25,10 @@ jobs:
        github.event.workflow_run.event == 'push')
     runs-on: ubuntu-24.04
     timeout-minutes: 18
+    env:
+      # Publishable browser configuration only, never service_role/secret keys.
+      VITE_SUPABASE_URL: ${{ vars.CHESS_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.CHESS_SUPABASE_PUBLISHABLE_KEY }}
     outputs:
       eligible: ${{ steps.gate.outputs.eligible }}
       release_sha: ${{ steps.release.outputs.sha }}
@@ -99,6 +103,10 @@ jobs:
       - name: Build production site
         if: steps.gate.outputs.eligible == 'true'
         run: npm run build
+
+      - name: Audit production artifact and THIEPN Account connection
+        if: steps.gate.outputs.eligible == 'true'
+        run: npm run release:audit -- --production
 
       - name: Verify deploy artifact
         if: steps.gate.outputs.eligible == 'true'
