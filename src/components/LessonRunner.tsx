@@ -1,3 +1,4 @@
+import { sameUciMove } from "../learning/uci";
 import {
   CheckCircle2,
   ChevronRight,
@@ -328,13 +329,9 @@ export function LessonRunner({
                 `${move.from}${move.to}${move.promotion ?? ""}`;
               const shortUci =
                 `${move.from}${move.to}`;
-              const accepted =
-                step.acceptedMoves.includes(
-                  uci,
-                ) ||
-                step.acceptedMoves.includes(
-                  shortUci,
-                );
+              const accepted = step.acceptedMoves.some(
+                (expected) => sameUciMove(uci, expected),
+              );
 
               if (accepted) {
                 setSolved(true);
