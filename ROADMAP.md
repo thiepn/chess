@@ -845,7 +845,14 @@ Baseline status is verified by the screenshot comparison workflow and committed 
 
 ### P58 — Real-Device UX Qualification
 
-Use the rebuilt app through real training, play and review sessions on phones, tablets, laptops and desktops.
+**Status: automated cross-device prequalification implemented; physical-device sign-off remains pending.**
+
+- Playwright browser journey testing on compact Android-sized phone, standard Android phone, tablet portrait, tablet landscape, desktop and mobile Safari-like WebKit.
+- Route visibility, horizontal overflow and safe scrolling on Train, Learn, Play, Review, Library, Progress and representative deep workspaces.
+- Keyboard navigation, browser Back/Forward, Play → game → exit, Train → activity → exit and saved Review/Library reopening.
+- Phone touch-target and sticky-start-action checks, plus per-route elapsed-time evidence emitted as CI artifacts.
+- Fixed local data and time; browser-matrix results cannot be presented as actual physical-device qualification.
+- Hardware acceptance checklist and explicit sign-off gate in `docs/P58_DEVICE_QUALIFICATION.md`. No green release claim until real Android, iOS/iPadOS and desktop hardware is observed.
 
 ### P59 — Visual QA Against Locked Design
 
