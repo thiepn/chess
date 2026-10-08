@@ -328,17 +328,27 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     if (!current || current.owner !== this.scope()) return null;
     const scope = current.owner;
     if (choice === "use-cloud") {
-      if (!isChessState(current.remote.state)) return null;
-      // Retain a recoverable local snapshot before replacing it.
+      // The remote version may have changed again since the original
+      // conflict; never restore an obsolete remote snapshot.
+      let latest: RemoteRecord | null;
+      try {
+        if (await this.authOwner() !== this.owner) return null;
+        latest = await this.remoteRecord();
+      } catch {
+        this.report("conflict", "Cloud unavailable; conflict still unresolved");
+        return null;
+      }
+      if (this.conflict !== current || scope !== this.scope() ||
+          !latest || !isChessState(latest.state)) return null;
       const old = read(stateKey(scope));
       if (old && !write(recoveryKey(scope), old)) return null;
-      if (!storeState(scope, current.remote.state, false)) return null;
-      storeRevision(scope, current.remote.revision);
+      if (!storeState(scope, latest.state, false)) return null;
+      storeRevision(scope, latest.revision);
       remove(dirtyKey(scope));
-      this.knownRevisions.set(scope, current.remote.revision);
+      this.knownRevisions.set(scope, latest.revision);
       this.conflict = null;
-      this.report("synced", "Cloud version restored; previous local copy archived");
-      return current.remote.state;
+      this.report("synced", "Latest cloud version restored; local copy archived");
+      return latest.state;
     }
     const cached = local(scope);
     if (!cached) return null;
