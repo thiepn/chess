@@ -110,6 +110,9 @@ describe("P63 instructional truth and answer integrity", () => {
     expect(calculationCatalogIssues()).toEqual([]);
     expect(endgameCatalogIssues()).toEqual([]);
     expect(authoredPositions.length).toBeGreaterThan(0);
+    expect(authoredPositions.some((position) => position.id === "calc:advanced-combination")).toBe(false);
+    expect(authoredPositions.some((position) =>
+      position.skillIds.includes("tactics.combinations"))).toBe(true);
     for (const position of endgamePositions) {
       expect(new Chess(position.fen).turn(), position.id).toBe(position.playerColor);
       expect(position.successOutcomes, position.id).toContain("win");
