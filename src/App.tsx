@@ -32,7 +32,6 @@ import type {
 } from "./domain/types";
 import { emptyChessState } from "./data/initial";
 import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
-import "./styles/p61-persistence.css";
 
 import { ChessBoard } from "./components/ChessBoard";
 
@@ -2480,13 +2479,15 @@ export default function App() {
               type="button"
               className="topbar-sync"
               data-phase={syncStatus.phase}
+              style={{ padding: 0, border: 0, background: "transparent", cursor: "pointer" }}
               title={syncStatus.detail + " · Open data settings"}
               aria-label={"Chess data: " + syncStatus.detail + ". Open data settings"}
               onClick={() => navigatePage("settings")}
             >
-              <span className="sync-dot" />
-              {syncStatus.phase === "conflict" && <span className="topbar-sync-word">Conflict</span>}
-              {syncStatus.phase === "pending" && <span className="topbar-sync-word">Unsynced</span>}
+              <span className="sync-dot" style={
+                syncStatus.phase === "conflict" ? { background: "#c86464" } :
+                syncStatus.phase === "pending" ? { background: "#c99c52" } : undefined
+              } />
             </button>
           </div>
         </header>
