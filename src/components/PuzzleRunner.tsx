@@ -1,3 +1,4 @@
+import { sameUciMove } from "../learning/uci";
 import { Chess, type Color, type Square } from "chess.js";
 import { Check, ChevronRight, ExternalLink, Lightbulb, LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -241,9 +242,7 @@ export function PuzzleRunner({
             onMove={(move) => {
               if (!expectedMove || replying) return false;
               const uci = `${move.from}${move.to}${move.promotion ?? ""}`;
-              const accepted =
-                uci === expectedMove ||
-                `${move.from}${move.to}` === expectedMove.slice(0, 4);
+              const accepted = sameUciMove(uci, expectedMove);
 
               if (!accepted) {
                 setWrongAttempts((value) => value + 1);
