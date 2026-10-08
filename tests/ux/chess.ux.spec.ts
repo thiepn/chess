@@ -298,3 +298,41 @@ test("P62 invalid recovered PGN remains exportable instead of silently restartin
   await expect(page.getByRole("button", { name: "Export recovery file" })).toBeVisible();
   expect(await page.evaluate((storageKey) => localStorage.getItem(storageKey), key)).toContain("e2e5");
 });
+
+
+test("P64 Progress does not draw a misleading trajectory for an empty account", async ({ page }) => {
+  await page.addInitScript(() => {
+    // Scope before startup hydration; intentionally supersedes demo v1 state.
+    localStorage.setItem("thiepn.chess.user-state.v2.guest.state", JSON.stringify({
+      mastery: {}, weaknesses: [], recentDomainMinutes: {},
+    }));
+  });
+  await open(page, "/progress", ".progress-v2");
+  await expect(page.locator(".progress-v2-trend-empty")).toBeVisible();
+  await expect(page.locator(".progress-v2-chart svg")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Return to training/ })).toBeVisible();
+  await assertNoHorizontalOverflow(page, "/progress");
+});
+
+test("P64 chessboard and core navigation retain legible controls", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  const board = page.locator(".play-v2-board-column .chess-board-wrap");
+  await expect(board).toBeVisible();
+  const metrics = await page.evaluate(() => {
+    const board = document.querySelector(".play-v2-board-column .chess-board-wrap");
+    const square = board?.querySelector(".board-square");
+    const label = square?.querySelector(".file-label,.rank-label");
+    if (!board || !square) return null;
+    const r = board.getBoundingClientRect();
+    return {
+      width: r.width,
+      squareCount: board.querySelectorAll(".board-square").length,
+      coordinateSize: label ? parseFloat(getComputedStyle(label).fontSize) : null,
+    };
+  });
+  expect(metrics).not.toBeNull();
+  expect(metrics?.squareCount).toBe(64);
+  expect(metrics?.width).toBeGreaterThan(290);
+  if (metrics?.coordinateSize !== null) expect(metrics?.coordinateSize).toBeGreaterThanOrEqual(8);
+  await assertNoHorizontalOverflow(page, "/play");
+});
