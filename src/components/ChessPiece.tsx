@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import { memo, type ReactElement } from "react";
 import type { Color, PieceSymbol } from "chess.js";
 import type { PieceStyle } from "../interaction/types";
 
@@ -122,7 +122,8 @@ const pieceByType: Record<PieceSymbol, () => ReactElement> = {
   k: King,
 };
 
-export function ChessPiece({
+// The 12 color/type SVG variants keep stable props through most board moves.
+export const ChessPiece = memo(function ChessPiece({
   color,
   type,
   className = "",
@@ -147,4 +148,4 @@ export function ChessPiece({
       <Shape />
     </svg>
   );
-}
+});

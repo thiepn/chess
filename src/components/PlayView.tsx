@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, useEffect, useMemo, useState } from "react";
 import { DEFAULT_POSITION, type Color } from "chess.js";
 import {
   ChevronRight,
@@ -34,7 +34,9 @@ import type {
   TrainingScenario,
 } from "../play/types";
 import { ChessBoard } from "./ChessBoard";
-import { GameArena } from "./GameArena";
+const GameArena = lazy(() =>
+  import("./GameArena").then((module) => ({ default: module.GameArena })),
+);
 import { LichessSyncCard } from "./LichessSyncCard";
 import { reviewGamePath } from "../review/reviewRoutes";
 import "../styles/p47-play-native.css";
@@ -359,6 +361,8 @@ export function PlayView({
           <button
             className="primary"
             type="button"
+            onPointerEnter={() => void import("./GameArena")}
+            onFocus={() => void import("./GameArena")}
             onClick={() => {
               if (selectedScenario) {
                 startGame(

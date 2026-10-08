@@ -32,19 +32,19 @@ import type {
 } from "./domain/types";
 import { initialUserState } from "./data/demo";
 import { createChessStateRepository } from "./lib/persistence";
-import { LessonRunner } from "./components/LessonRunner";
+
 import { ChessBoard } from "./components/ChessBoard";
-import { PuzzleRunner } from "./components/PuzzleRunner";
-import { PersonalMistakeRunner } from "./components/PersonalMistakeRunner";
-import { CalculationRunner } from "./components/CalculationRunner";
-import { EndgameTechniqueRunner } from "./components/EndgameTechniqueRunner";
+
+
+
+
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
-import { OpeningTrainer } from "./components/OpeningTrainer";
+
 import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
-import { GameArena } from "./components/GameArena";
+
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
 import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
@@ -57,9 +57,9 @@ import {
 import { scenarioById } from "./play/scenarios";
 import { aiProfiles, resolveAiProfile } from "./play/profiles";
 import type { PlayResult, TrainingScenario } from "./play/types";
-import { SavedStudyTrainer } from "./components/SavedStudyTrainer";
+
 import type { SavedStudy } from "./library/types";
-import { ModelGameRunner } from "./components/ModelGameRunner";
+
 import { modelGameById, modelGameCheckpointPosition } from "./model-games/games";
 import { recordModelGameCheckpoint, recordModelGameCompletion } from "./model-games/progress";
 import type { ModelGameCheckpointResult } from "./model-games/types";
@@ -68,7 +68,7 @@ import { ExperienceProvider } from "./interaction/ExperienceProvider";
 import { ExperienceControls } from "./components/ExperienceControls";
 import { defaultExperienceSettings } from "./interaction/types";
 import { emitExperienceEvent } from "./interaction/events";
-import { AssessmentRunner } from "./components/AssessmentRunner";
+
 import {
   applyAssessmentToState,
   buildPlacementAssessment,
@@ -147,6 +147,58 @@ const ModelGamesView = lazy(() =>
 const ProgressView = lazy(() =>
   import("./components/ProgressView").then((module) => ({
     default: module.ProgressView,
+  })),
+);
+
+// Train loads the active exercise on demand; its queue and preview stay immediate.
+const LessonRunner = lazy(() =>
+  import("./components/LessonRunner").then((module) => ({
+    default: module.LessonRunner,
+  })),
+);
+const PuzzleRunner = lazy(() =>
+  import("./components/PuzzleRunner").then((module) => ({
+    default: module.PuzzleRunner,
+  })),
+);
+const PersonalMistakeRunner = lazy(() =>
+  import("./components/PersonalMistakeRunner").then((module) => ({
+    default: module.PersonalMistakeRunner,
+  })),
+);
+const CalculationRunner = lazy(() =>
+  import("./components/CalculationRunner").then((module) => ({
+    default: module.CalculationRunner,
+  })),
+);
+const EndgameTechniqueRunner = lazy(() =>
+  import("./components/EndgameTechniqueRunner").then((module) => ({
+    default: module.EndgameTechniqueRunner,
+  })),
+);
+const OpeningTrainer = lazy(() =>
+  import("./components/OpeningTrainer").then((module) => ({
+    default: module.OpeningTrainer,
+  })),
+);
+const GameArena = lazy(() =>
+  import("./components/GameArena").then((module) => ({
+    default: module.GameArena,
+  })),
+);
+const SavedStudyTrainer = lazy(() =>
+  import("./components/SavedStudyTrainer").then((module) => ({
+    default: module.SavedStudyTrainer,
+  })),
+);
+const ModelGameRunner = lazy(() =>
+  import("./components/ModelGameRunner").then((module) => ({
+    default: module.ModelGameRunner,
+  })),
+);
+const AssessmentRunner = lazy(() =>
+  import("./components/AssessmentRunner").then((module) => ({
+    default: module.AssessmentRunner,
   })),
 );
 
@@ -315,6 +367,29 @@ export default function App() {
     }
     previousReplayPage.current = page;
   }, [page]);
+
+  useEffect(() => {
+    // One likely destination is warmed after the current workspace settles.
+    // Save-data and slow connections never fetch it speculatively.
+    if (!loaded || trainingSessionOpen || playSessionOpen) return;
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    if (connection?.saveData || /2g/.test(connection?.effectiveType ?? "")) return;
+    const likelyNext: Partial<Record<typeof page, string>> = {
+      train: "learn",
+      play: "review",
+      review: "library",
+      library: "learn",
+    };
+    const next = likelyNext[page];
+    if (!next) return;
+    const timeout = window.setTimeout(() => {
+      if (document.visibilityState === "visible") preloadNavRoute(next);
+    }, 2400);
+    return () => window.clearTimeout(timeout);
+  }, [loaded, page, trainingSessionOpen, playSessionOpen]);
+
   const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||

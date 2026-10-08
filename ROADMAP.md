@@ -817,7 +817,18 @@ Internal model/type names remain unchanged when they are not user-visible. P54 i
 
 ### P56 — Performance & Route Optimization
 
-Lazy-load real routes, preload likely destinations, cache piece assets, optimize long lists and preserve the P36 production budgets.
+**Status:** implemented (automated production gates; device measurements remain P58).
+
+- Split nine training-only React runners into individually lazy-loaded chunks; GameArena loads on demand for both Train and Play, and GameStoryView loads on demand for Review game details.
+- Keep the default Train queue and board preview immediately accessible without loading every exercise runtime.
+- Opportunistically preload one likely next top-level route after 2.4 seconds on stable connections, while respecting data-saver, slow connections and background tabs.
+- Memoize static SVG chess pieces to avoid re-rendering unmodified geometry during board updates.
+- Bound Review and Library history rendering to 40 visible rows, with accessible Show more controls and collection/search resets.
+- Reuse memoized game ordering in Library rather than sorting game history repeatedly.
+- Add a Vite manifest-based production audit for dynamically loaded training runners; preserve existing JS/CSS compressed-size budgets.
+- Add progression-window regression tests.
+
+Full real-device perceived-load measurements and visual behavior remain P58 release qualification.
 
 ### P57 — Visual Regression Suite
 
