@@ -76,6 +76,7 @@ export interface ChessStateRepository {
   subscribeIdentity(listener: IdentityListener): () => void;
   subscribeStatus(listener: StatusListener): () => void;
   getStatus(): SyncStatus;
+  getProfileId(): string;
   legacyRecovery(): UserState | null;
   resolveConflict(choice: "keep-local" | "use-cloud"): Promise<UserState | null>;
   mode: "local" | "supabase";
@@ -85,6 +86,7 @@ abstract class ChessRepositoryBase {
   protected statusListeners = new Set<StatusListener>();
   protected status: SyncStatus = { phase: "loading", detail: "Loading saved progress" };
   getStatus() { return this.status; }
+  getProfileId() { return GUEST; }
   subscribeStatus(listener: StatusListener) {
     this.statusListeners.add(listener);
     listener(this.status);
@@ -130,6 +132,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   private saveQueue: Promise<void> = Promise.resolve();
   private knownRevisions = new Map<string, number>();
   private conflict: { owner: string; remote: RemoteRecord } | null = null;
+  private identityEpoch = 0;
 
   constructor(url: string, key: string) {
     super();
@@ -146,11 +149,16 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     return data.user?.id ?? null;
   }
   private scope() { return this.owner === GUEST ? GUEST : "user." + this.owner; }
+  override getProfileId() { return this.scope(); }
   private async ownerForLoad() {
     try { return (await this.authOwner()) ?? GUEST; }
     catch {
-      // Temporary auth/network failures must not demote known signed-in data
-      // into the shared guest profile.
+      // Supabase's cached session can select the correct local partition while
+      // getUser() is offline; it is never trusted for a remote write.
+      try {
+        const { data } = await this.client.auth.getSession();
+        if (data.session?.user?.id) return data.session.user.id;
+      } catch { /* No cached session available. */ }
       return this.initialized ? this.owner : GUEST;
     }
   }
@@ -159,6 +167,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
       if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED" || !this.initialized) return;
       const next = session?.user?.id ?? GUEST;
       if (next === this.owner) return;
+      ++this.identityEpoch;
       this.owner = next;
       this.conflict = null;
       this.report("loading", "Account changed; switching chess profile");
@@ -178,7 +187,9 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   }
 
   async load(fallback: UserState) {
+    const epoch = this.identityEpoch;
     const account = await this.ownerForLoad();
+    if (epoch !== this.identityEpoch) return fallback;
     this.owner = account;
     this.initialized = true;
     this.conflict = null;
@@ -194,6 +205,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
       // A remote load is needed even for pending local edits to discover
       // conflicts rather than blindly overwriting another device's changes.
       const remote = await this.remoteRecord();
+      if (epoch !== this.identityEpoch) return fallback;
       const base = revision(scope);
       if (remote) {
         this.knownRevisions.set(scope, remote.revision);
@@ -222,6 +234,7 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
       this.report("synced", "Account ready; no saved chess progress yet");
       return fallback;
     } catch {
+      if (epoch !== this.identityEpoch) return fallback;
       this.report("pending", "Cloud unavailable; local progress retained");
       return cached ?? fallback;
     }
@@ -240,9 +253,9 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
       }
       return;
     }
-    if (!storeState(scope, state, true)) {
-      this.report("pending", "Could not cache progress locally");
-      return;
+    const mirrored = storeState(scope, state, true);
+    if (!mirrored) {
+      this.report("pending", "Browser cache unavailable; attempting cloud save");
     }
     if (this.conflict?.owner === scope) {
       this.report("conflict", "Cloud conflict; local progress preserved");
@@ -279,9 +292,11 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
         // The revision belongs to the last acknowledged snapshot, not a
         // newer local edit that is still in the queue.
         storeRevision(scope, nextRevision);
-        if (this.owner === owner && read(stateKey(scope)) === snapshot) {
-          remove(dirtyKey(scope));
-          this.report("synced", "Progress synced to your account");
+        if (this.owner === owner && (read(stateKey(scope)) === snapshot || !mirrored)) {
+          if (mirrored) remove(dirtyKey(scope));
+          this.report("synced", mirrored
+            ? "Progress synced to your account"
+            : "Saved in cloud; browser cache unavailable");
         }
       } catch {
         if (this.owner === owner) this.report("pending", "Cloud unavailable; will retry");
@@ -304,10 +319,11 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     if (!current || current.owner !== this.scope()) return null;
     const scope = current.owner;
     if (choice === "use-cloud") {
+      if (!isChessState(current.remote.state)) return null;
       // Retain a recoverable local snapshot before replacing it.
       const old = read(stateKey(scope));
       if (old && !write(recoveryKey(scope), old)) return null;
-      storeState(scope, current.remote.state, false);
+      if (!storeState(scope, current.remote.state, false)) return null;
       storeRevision(scope, current.remote.revision);
       remove(dirtyKey(scope));
       this.knownRevisions.set(scope, current.remote.revision);
