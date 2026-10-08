@@ -1481,7 +1481,8 @@ function makeScript(
         id: "transfer",
         type: "move",
         stage: "transfer",
-        support: "transfer",
+        // Repeating the worked position is retrieval, not transfer to new geometry.
+        support: transfer.fen === seed.fen ? "retrieval" : "transfer",
         eyebrow: "TRANSFER",
         title:
           transfer.fen === seed.fen
