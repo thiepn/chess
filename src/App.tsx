@@ -3017,7 +3017,7 @@ export default function App() {
             <section className="chess-data-settings" aria-labelledby="chess-data-heading">
               <h2 id="chess-data-heading">Saved chess progress</h2>
               <p role="status" aria-live="polite">{syncStatus.detail}</p>
-              <p>Account and guest histories are kept separate. Offline edits are retained on this device until acknowledged by the cloud.</p>
+              <p>Account and guest histories are separate. Unsynced edits stay local.</p>
               <div className="chess-data-actions">
                 <button type="button" className="secondary" onClick={() => {
                   const backup = {
@@ -3052,7 +3052,7 @@ export default function App() {
                         ? (parsed as { state: unknown }).state : parsed;
                       if (!isChessState(value)) throw new Error("Invalid chess progress file");
                       if (repo.getProfileId() !== uploadProfile) throw new Error("Account changed during import");
-                      if (window.confirm("Replace this profile with the backup? Export your current progress first.") &&
+                      if (window.confirm("Replace this profile? Export existing progress first.") &&
                           repo.getProfileId() === uploadProfile) {
                         setState(ensureAnalyticsState(value));
                       }
@@ -3063,13 +3063,13 @@ export default function App() {
                 </label>
                 {repo.archivedRecovery() && <button type="button" className="secondary" onClick={() => {
                   const archived = repo.archivedRecovery();
-                  if (archived && window.confirm("Replace this profile with the previously archived local copy? Export your current state first.")) {
+                  if (archived && window.confirm("Restore the archived copy? Export progress first.")) {
                     setState(ensureAnalyticsState(archived));
                   }
                 }}>Recover archived conflict copy</button>}
                 {repo.legacyRecovery() && <button type="button" className="secondary" onClick={() => {
                   const recovered = repo.legacyRecovery();
-                  if (recovered && window.confirm("Restore the previous browser-local chess profile? This does not delete its archive.")) {
+                  if (recovered && window.confirm("Recover the older local profile? Its archive stays intact.")) {
                     setState(ensureAnalyticsState(recovered));
                   }
                 }}>Recover old guest progress</button>}
@@ -3077,7 +3077,7 @@ export default function App() {
               {syncStatus.phase === "conflict" && (
                 <div className="chess-sync-conflict" role="alert">
                   <h3>Cloud and this device disagree</h3>
-                  <p>Neither copy was silently discarded. Export a backup first, then choose which version to retain. Keeping this device's copy will overwrite the earlier cloud revision only if no other edit arrived.</p>
+                  <p>Both versions are preserved. Export a backup, then select which one to keep. A newer cloud edit may still require another decision.</p>
                   <div className="chess-data-actions">
                     <button type="button" onClick={() => { void repo.resolveConflict("keep-local"); }}>
                       Keep this device's progress
