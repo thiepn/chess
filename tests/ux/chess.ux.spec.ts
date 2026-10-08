@@ -249,6 +249,11 @@ test("P59B first-time users see the import form without a dummy chessboard", asy
 
 
 test("P62 game survives route reload with exact legal move history", async ({ page }) => {
+  let workerStarts = 0;
+  await page.route("**/engine/manifest.json", async (route) => {
+    workerStarts += 1;
+    await route.continue();
+  });
   await open(page, "/play", ".play-v2");
   await page.locator(".play-v2-time-list").getByRole("button", { name: /Untimed/ }).click();
   await page.locator(".play-v2-start-block .primary").click();
@@ -274,8 +279,11 @@ test("P62 game survives route reload with exact legal move history", async ({ pa
   await expect(page.locator('.game-arena [data-square="e5"] [data-piece="bp"]')).toBeVisible();
   await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
   await expect(page.locator(".move-list")).toContainText("Nf3");
-  await page.reload();
+  await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.locator('.game-arena [data-square="f3"] [data-piece="wn"]')).toBeVisible();
+  // A recovered position with the human to move must not eagerly start
+  // Stockfish on every reload; this is critical for mobile WebKit stability.
+  expect(workerStarts).toBe(0);
 });
 
 test("P62 invalid recovered PGN remains exportable instead of silently restarting", async ({ page }) => {
