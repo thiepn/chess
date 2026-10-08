@@ -136,6 +136,10 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     this.client = createClient(url, key);
   }
 
+  override legacyRecovery() {
+    return this.owner === GUEST ? super.legacyRecovery() : null;
+  }
+
   private async authOwner(): Promise<string | null> {
     const { data, error } = await this.client.auth.getUser();
     if (error) throw error;
@@ -226,6 +230,8 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   async save(state: UserState) {
     const owner = this.owner;
     const scope = this.scope();
+    // Loading an unchanged, already-synced snapshot is not a new edit.
+    if (read(stateKey(scope)) === JSON.stringify(state) && !pending(scope)) return;
     if (owner === GUEST) {
       if (!storeState(GUEST, state, false)) {
         this.report("pending", "Browser storage unavailable; export a backup");
