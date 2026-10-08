@@ -5,7 +5,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: "es2022",
-    sourcemap: true,
+    // Do not publish source maps in production: they reveal source-level
+    // implementation details and can leak accidental embedded config.
+    sourcemap: false,
     manifest: true,
   },
 });

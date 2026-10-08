@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
   group: quality-${{ github.ref }}
   cancel-in-progress: true
@@ -17,10 +20,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+      - run: npm ci --no-audit --no-fund
       - run: test -f public/engine/manifest.json
       - run: test -f public/engine/stockfish-19-lite-single.js
       - run: test -f public/engine/stockfish-19-lite-single.wasm
+      - run: npm run lock:audit
       - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
       - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm run puzzles:production
@@ -35,3 +39,4 @@ jobs:
       - run: npm run content:audit
       - run: npm run build
       - run: npm run perf:budget
+      - run: npm run release:audit
