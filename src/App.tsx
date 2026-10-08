@@ -490,7 +490,7 @@ export default function App() {
     setActiveModelGameId(null);
     setAssessmentSession(null);
     setActiveIndex(index);
-    navigate(trainingPath(activity.id));
+    navigate(trainingPath(activity.id), { replace: trainingSessionOpen });
   }
 
   function openManualActivity(activity: TrainingActivity) {

@@ -165,7 +165,8 @@ export function PlayView({
       playSessionStorageKey,
       JSON.stringify(nextSnapshot),
     );
-    onNavigate(path);
+    // Replay is one routed action: do not leave a temporary Play setup in history.
+    onNavigate(path, { replace: true });
   }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode]);
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
