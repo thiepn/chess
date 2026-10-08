@@ -108,6 +108,7 @@ import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
 import { lessonForSkill } from "./learning/lessons";
 import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
+import { reviewGamePath } from "./review/reviewRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 import "./styles/p47-train-native.css";
@@ -214,6 +215,7 @@ export default function App() {
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
+  const [replayReturnPath, setReplayReturnPath] = useState("/review");
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
   const { route, navigate, navigatePage } = useAppRouter();
@@ -303,6 +305,16 @@ export default function App() {
     page === "train" && route.path.startsWith("/train/session/");
   const playSessionOpen =
     page === "play" && route.path.startsWith("/play/game/");
+
+  const previousReplayPage = useRef(page);
+  useEffect(() => {
+    // Clear only after actually leaving Play. External scenario selection may
+    // be scheduled before View Transitions commit the move into Play.
+    if (previousReplayPage.current === "play" && page !== "play") {
+      setReplayScenario(undefined);
+    }
+    previousReplayPage.current = page;
+  }, [page]);
   const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
@@ -467,7 +479,7 @@ export default function App() {
     setActiveModelGameId(null);
     setAssessmentSession(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(returnPath || "/train");
+    navigate(returnPath || "/train", { replace: true });
   }
 
   function openAdaptiveActivity(index: number) {
@@ -478,7 +490,7 @@ export default function App() {
     setActiveModelGameId(null);
     setAssessmentSession(null);
     setActiveIndex(index);
-    navigate(trainingPath(activity.id));
+    navigate(trainingPath(activity.id), { replace: trainingSessionOpen });
   }
 
   function openManualActivity(activity: TrainingActivity) {
@@ -1405,6 +1417,7 @@ export default function App() {
     const successResults: TrainingScenario["successResults"] =
       mistake.evaluationBefore >= 180 ? ["win"] : ["win", "draw"];
 
+    setReplayReturnPath(route.path);
     setReplayScenario({
       id: `replay:${mistake.id}`,
       mode: "replay",
@@ -1734,7 +1747,7 @@ export default function App() {
     });
     setActiveModelGameId(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(trainingReturnPath || "/learn/model-games");
+    navigate(trainingReturnPath || "/learn/model-games", { replace: true });
   }
 
   function updateGameReviewReflection(
@@ -2070,6 +2083,7 @@ export default function App() {
     ) {
       const scenario = scenarioById[action.scenarioId];
       if (!scenario) return;
+      setReplayReturnPath(route.path);
       setReplayScenario({
         ...scenario,
         prescriptionId: prescription.id,
@@ -2117,7 +2131,7 @@ export default function App() {
     const returnPath = trainingReturnPath;
     setAssessmentSession(null);
     window.sessionStorage.removeItem("chess:training-runtime-v1");
-    navigate(returnPath || "/train");
+    navigate(returnPath || "/train", { replace: true });
 
     emitExperienceEvent({
       feedback:
@@ -2514,6 +2528,7 @@ export default function App() {
                           scenario={activeScenario}
                           onExit={() => closeTrainingRuntime()}
                           onFinished={handlePlayFinished}
+                          onOpenReview={(gameId) => closeTrainingRuntime(reviewGamePath(gameId))}
                           exitLabel="Finish activity"
                         />
                       ) : active.activityType === "savedStudy" && activeStudy ? (
@@ -2813,6 +2828,7 @@ export default function App() {
             onSyncLichess={() => syncLichessGames(false)}
             onGameFinished={handlePlayFinished}
             externalScenario={replayScenario}
+            externalScenarioReturnPath={replayReturnPath}
             onExternalScenarioExit={() => setReplayScenario(undefined)}
           />
         ) : page === "review" ? (

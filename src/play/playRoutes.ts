@@ -38,6 +38,18 @@ export function playGamePath(setup: PlaySetup) {
   return `/play/game/${encodeURIComponent(playGameKey(setup))}`;
 }
 
+// Reject malformed, stale or external destinations in saved replay sessions.
+export function playReturnPath(origin?: string): string {
+  if (origin === "/review" || origin === "/progress") return origin;
+  if (origin?.startsWith("/review/")) {
+    const identifier = origin.slice("/review/".length);
+    if (identifier && !identifier.includes("/") && !identifier.includes("?") && !identifier.includes("#")) {
+      return origin;
+    }
+  }
+  return "/play";
+}
+
 export function setupFromGameKey(gameKey: string): PlaySetup | undefined {
   const parts = gameKey.split(":");
 
