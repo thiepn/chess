@@ -69,6 +69,12 @@ export function ChessBoard({
     () => squareList(orientation)[0],
   );
   const squareRefs = useRef(new Map<Square, HTMLButtonElement>());
+  const promotionFirstChoiceRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (pendingPromotion) {
+      window.requestAnimationFrame(() => promotionFirstChoiceRef.current?.focus());
+    }
+  }, [pendingPromotion]);
   const instructionsId = useId();
   const { feedback, settings } = useExperience();
 
@@ -531,21 +537,33 @@ export function ChessBoard({
       </div>
       {pendingPromotion && (
         <div className="board-promotion-picker" role="group"
-          aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}
-          style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "12px 0", alignItems: "center" }}>
-          <strong>Promote to:</strong>
-          {([
-            ["q", "Queen"], ["r", "Rook"], ["b", "Bishop"], ["n", "Knight"],
-          ] as const).map(([piece, label]) => (
-            <button type="button" key={piece}
-              aria-label={"Promote to " + label}
-              onClick={() => tryMove(pendingPromotion.from, pendingPromotion.to, piece)}>
-              {label}
-            </button>
-          ))}
-          <button type="button" onClick={() => setPendingPromotion(null)}>Cancel</button>
+          aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}>
+          <div className="board-promotion-caption">
+            <strong>Choose promotion</strong>
+            <small>{pendingPromotion.from} → {pendingPromotion.to}</small>
+          </div>
+          <div className="board-promotion-options">
+            {([
+              ["q", "Queen"], ["r", "Rook"], ["b", "Bishop"], ["n", "Knight"],
+            ] as const).map(([piece, label], index) => (
+              <button type="button" key={piece} className="board-promotion-choice"
+                ref={index === 0 ? promotionFirstChoiceRef : undefined}
+                aria-label={"Promote to " + label}
+                onClick={() => tryMove(pendingPromotion.from, pendingPromotion.to, piece)}>
+                <span className="board-promotion-piece" aria-hidden="true">
+                  <ChessPiece color={chess.turn()} type={piece} styleVariant={settings.pieceStyle} />
+                </span>
+                <span>{label}</span>
+              </button>
+            ))}
+            <button type="button" className="board-promotion-cancel" onClick={() => {
+              const from = pendingPromotion.from;
+              setPendingPromotion(null);
+              focusSquare(from);
+            }}>Cancel</button>
+          </div>
         </div>
-      )}
+      )
     </div>
   );
 }
