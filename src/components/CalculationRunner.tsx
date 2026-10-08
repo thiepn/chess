@@ -1,3 +1,4 @@
+import { sameUciMove } from "../learning/uci";
 import { Chess } from "chess.js";
 import {
   ChevronRight,
@@ -40,18 +41,6 @@ type Phase =
   | "reply"
   | "continuation"
   | "result";
-
-function sameMove(
-  left: string | undefined,
-  right: string | undefined,
-) {
-  if (!left || !right) return false;
-  return (
-    left === right ||
-    left.slice(0, 4) ===
-      right.slice(0, 4)
-  );
-}
 
 function applyUci(
   fen: string,
@@ -259,7 +248,7 @@ export function CalculationRunner({
       !visualizationMode,
     );
 
-    const fallback = sameMove(
+    const fallback = sameUciMove(
       candidate.uci,
       position.bestMove,
     )
@@ -293,11 +282,11 @@ export function CalculationRunner({
     );
 
     const fallback =
-      sameMove(
+      sameUciMove(
         selectedMove,
         position.bestMove,
       ) &&
-      sameMove(
+      sameUciMove(
         uci,
         position.principalVariation[1],
       )
@@ -440,7 +429,7 @@ export function CalculationRunner({
                   if (
                     candidates.some(
                       (candidate) =>
-                        sameMove(
+                        sameUciMove(
                           candidate.uci,
                           uci,
                         ),
@@ -667,7 +656,7 @@ export function CalculationRunner({
                     {
                       candidates.find(
                         (item) =>
-                          sameMove(
+                          sameUciMove(
                             item.uci,
                             selectedMove,
                           ),
