@@ -805,7 +805,15 @@ Internal model/type names remain unchanged when they are not user-visible. P54 i
 
 ### P55 — Cross-Page Workflow Integration
 
-Verify Review → Train, Learn → Train, Library → Train and Play → Review as real routed workflows with preserved context.
+**Status:** implemented; browser/device qualification continues in P58.
+
+- Completed games offer a direct action opening the exact saved Review game, with a manual-analysis fallback.
+- Play → Review uses route replacement to prevent Back from restarting finished games.
+- Review → Play replay keeps its exact originating game route in the session snapshot, including after refresh.
+- Progress → Play prescription scenarios return to Progress; stale or external origins fall back to Play.
+- Training games can open their saved game in Review from the completed activity.
+- Existing Learn / Review / Library → Train return-to-origin behavior is preserved.
+- Route tests cover encoded identifiers and safe origin restoration.
 
 ### P56 — Performance & Route Optimization
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   playGameKey,
   playGamePath,
+  playReturnPath,
   resolvePlayRoute,
   setupFromGameKey,
 } from "./playRoutes";
@@ -38,6 +39,22 @@ describe("P43 Play routes", () => {
       scenarioId: "defense-hold-rook",
       aiProfileId: "club",
     });
+  });
+
+  it("preserves the exact Review or Progress origin of a replay", () => {
+    expect(playReturnPath("/review/lichess%3Aabc%2F123")).toBe(
+      "/review/lichess%3Aabc%2F123",
+    );
+    expect(playReturnPath("/review")).toBe("/review");
+    expect(playReturnPath("/progress")).toBe("/progress");
+  });
+
+  it("rejects stale or external replay origins", () => {
+    expect(playReturnPath()).toBe("/play");
+    expect(playReturnPath("https://example.com")).toBe("/play");
+    expect(playReturnPath("//example.com")).toBe("/play");
+    expect(playReturnPath("/train/session/other")).toBe("/play");
+    expect(playReturnPath("/review/bad/route")).toBe("/play");
   });
 
   it("resolves the active game route", () => {

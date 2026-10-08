@@ -22,6 +22,7 @@ import {
 } from "../play/scenarios";
 import {
   playGamePath,
+  playReturnPath,
   resolvePlayRoute,
   setupFromGameKey,
 } from "../play/playRoutes";
@@ -35,6 +36,7 @@ import type {
 import { ChessBoard } from "./ChessBoard";
 import { GameArena } from "./GameArena";
 import { LichessSyncCard } from "./LichessSyncCard";
+import { reviewGamePath } from "../review/reviewRoutes";
 import "../styles/p47-play-native.css";
 import "../styles/p51-play-large.css";
 
@@ -46,12 +48,13 @@ interface PlayViewProps {
   lichessSyncError?: string | null;
   practicalPlan?: TrainingPrescription;
   routePath: string;
-  onNavigate: (path: string) => void;
+  onNavigate: (path: string, options?: { replace?: boolean }) => void;
   onLinkLichess: (username: string) => Promise<void> | void;
   onUnlinkLichess: () => void;
   onSyncLichess: () => Promise<void> | void;
   onGameFinished: (result: PlayResult) => Promise<boolean> | boolean;
   externalScenario?: TrainingScenario;
+  externalScenarioReturnPath?: string;
   onExternalScenarioExit?: () => void;
 }
 
@@ -59,6 +62,7 @@ interface PlaySessionSnapshot {
   path: string;
   setup: PlaySetup;
   scenario?: TrainingScenario;
+  returnPath?: string;
 }
 
 const playSessionStorageKey = "chess:play-session-v1";
@@ -107,6 +111,7 @@ export function PlayView({
   onSyncLichess,
   onGameFinished,
   externalScenario,
+  externalScenarioReturnPath,
   onExternalScenarioExit,
 }: PlayViewProps) {
   const [side, setSide] = useState<Color>("w");
@@ -154,13 +159,14 @@ export function PlayView({
       path,
       setup,
       scenario: externalScenario,
+      returnPath: externalScenarioReturnPath,
     };
     window.sessionStorage.setItem(
       playSessionStorageKey,
       JSON.stringify(nextSnapshot),
     );
     onNavigate(path);
-  }, [externalScenario, onNavigate, profileId, route.mode]);
+  }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode]);
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
     const path = playGamePath(setup);
@@ -177,11 +183,19 @@ export function PlayView({
   }
 
   function exitGame() {
+    const destination = playReturnPath(snapshot?.returnPath);
     window.sessionStorage.removeItem(playSessionStorageKey);
     if (externalScenario || activeScenario?.mode === "replay") {
       onExternalScenarioExit?.();
     }
-    onNavigate("/play");
+    onNavigate(destination, { replace: true });
+  }
+
+  function openFinishedGameReview(gameId: string) {
+    window.sessionStorage.removeItem(playSessionStorageKey);
+    onExternalScenarioExit?.();
+    // Browser Back must never restart a completed game.
+    onNavigate(reviewGamePath(gameId), { replace: true });
   }
 
   if (route.mode === "game") {
@@ -221,7 +235,8 @@ export function PlayView({
           timeControl={scenario ? "untimed" : activeSetup.timeControl}
           onExit={exitGame}
           onFinished={onGameFinished}
-          exitLabel="Back to Play"
+          onOpenReview={openFinishedGameReview}
+          exitLabel={snapshot?.returnPath ? "Return to previous page" : "Back to Play"}
         />
       </section>
     );

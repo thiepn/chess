@@ -29,6 +29,7 @@ interface GameArenaProps {
   scenario?: TrainingScenario;
   onExit: () => void;
   onFinished: (result: PlayResult) => Promise<boolean> | boolean;
+  onOpenReview?: (gameId: string) => void;
   exitLabel?: string;
   timeControl?: TimeControlId;
 }
@@ -98,6 +99,7 @@ export function GameArena({
   scenario,
   onExit,
   onFinished,
+  onOpenReview,
   exitLabel = "Back to Play",
   timeControl = "untimed",
 }: GameArenaProps) {
@@ -265,6 +267,9 @@ export function GameArena({
     try {
       const analyzed = await onFinished(finished);
       setReviewSent(analyzed);
+    } catch {
+      // Review may still open a saved game and retry its analysis.
+      setReviewSent(false);
     } finally {
       setSendingReview(false);
     }
@@ -579,7 +584,17 @@ export function GameArena({
                 )}
               </div>
 
-              <button className="primary" type="button" onClick={onExit}>
+              {onOpenReview && (
+                <button
+                  className="primary"
+                  type="button"
+                  disabled={sendingReview}
+                  onClick={() => onOpenReview(result.importedGame.id)}
+                >
+                  {reviewSent ? "Review game" : "Open game in Review"}
+                </button>
+              )}
+              <button className={onOpenReview ? "secondary" : "primary"} type="button" onClick={onExit}>
                 {exitLabel}
               </button>
             </div>

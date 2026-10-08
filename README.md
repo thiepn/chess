@@ -73,6 +73,7 @@ The default experience should answer one question: **what should I train now?**
 - P52 Accessibility Requalification with skip navigation, route focus restoration, richer board/screen-reader semantics, modal focus management, status/progress/current-state ARIA, forced-colors support and CI accessibility auditing
 - P53 Theme & Board Customization with three curated app finishes, three board palettes, three piece treatments, backward-compatible persistence normalization and CI theme auditing
 - P54 Visual Content Pass with player-facing chess language, action-specific iconography, removal of internal/model jargon and CI content-regression auditing
+- P55 Cross-Page Workflow Integration with completed-game direct Review navigation, preserved Review/Progress origins for replay scenarios, safe route restoration and regression-tested handoffs
 - Local-first durable state
 - Optional Supabase persistence using the shared authenticated user
 - Responsive Home and session runtime shell

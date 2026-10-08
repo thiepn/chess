@@ -108,6 +108,7 @@ import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
 import { lessonForSkill } from "./learning/lessons";
 import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
+import { reviewGamePath } from "./review/reviewRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
 import "./styles/p47-train-native.css";
@@ -214,6 +215,7 @@ export default function App() {
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
   const [replayScenario, setReplayScenario] = useState<TrainingScenario | undefined>();
+  const [replayReturnPath, setReplayReturnPath] = useState("/review");
   const [assessmentSession, setAssessmentSession] =
     useState<AssessmentSession | null>(null);
   const { route, navigate, navigatePage } = useAppRouter();
@@ -303,6 +305,11 @@ export default function App() {
     page === "train" && route.path.startsWith("/train/session/");
   const playSessionOpen =
     page === "play" && route.path.startsWith("/play/game/");
+
+  useEffect(() => {
+    // Global navigation must not relaunch a stale replay on returning to Play.
+    if (page !== "play" && replayScenario) setReplayScenario(undefined);
+  }, [page, replayScenario]);
   const runtimeReady = Boolean(
     assessmentSession ||
     activeModelGame ||
@@ -1405,6 +1412,7 @@ export default function App() {
     const successResults: TrainingScenario["successResults"] =
       mistake.evaluationBefore >= 180 ? ["win"] : ["win", "draw"];
 
+    setReplayReturnPath(route.path);
     setReplayScenario({
       id: `replay:${mistake.id}`,
       mode: "replay",
@@ -2070,6 +2078,7 @@ export default function App() {
     ) {
       const scenario = scenarioById[action.scenarioId];
       if (!scenario) return;
+      setReplayReturnPath(route.path);
       setReplayScenario({
         ...scenario,
         prescriptionId: prescription.id,
@@ -2514,6 +2523,7 @@ export default function App() {
                           scenario={activeScenario}
                           onExit={() => closeTrainingRuntime()}
                           onFinished={handlePlayFinished}
+                          onOpenReview={(gameId) => closeTrainingRuntime(reviewGamePath(gameId))}
                           exitLabel="Finish activity"
                         />
                       ) : active.activityType === "savedStudy" && activeStudy ? (
@@ -2813,6 +2823,7 @@ export default function App() {
             onSyncLichess={() => syncLichessGames(false)}
             onGameFinished={handlePlayFinished}
             externalScenario={replayScenario}
+            externalScenarioReturnPath={replayReturnPath}
             onExternalScenarioExit={() => setReplayScenario(undefined)}
           />
         ) : page === "review" ? (
