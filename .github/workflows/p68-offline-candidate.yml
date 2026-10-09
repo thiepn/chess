@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   package:
-    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation'))
+    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation' || github.ref_name == 'p75-human-approval-intake'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -52,6 +52,7 @@ jobs:
           npm run p72:visual:test
           npm run p73:integrity:test
           npm run p74:release:test
+          npm run p75:human:test
           npm test
       - name: Build artifact and enforce performance limits
         run: |
