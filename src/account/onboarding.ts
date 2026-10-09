@@ -1,6 +1,6 @@
 /** Reviewed first-party Chess OAuth registration contract.
- * This is NOT a login implementation. An OAuth client must first exist in
- * THIEPN Account's operator-controlled registry.
+ * The runtime uses the pinned upstream Account SDK, but it must never
+ * initialize a client until one exists in THIEPN Account's OAuth registry.
  */
 export const CHESS_ACCOUNT_ORIGIN = "https://account.thiepn.dev";
 export const CHESS_APP_ORIGIN = "https://chess.thiepn.dev/";
