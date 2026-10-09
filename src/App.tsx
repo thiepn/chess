@@ -3042,12 +3042,14 @@ export default function App() {
                   <div className="chess-data-actions">
                     {repo.getProfileId() === "guest" ? (
                       <button type="button" className="secondary" onClick={() => {
+                        if (!chessAccountSso) return;
                         void chessAccountSso.connect().catch(() => {
                           window.alert("Could not open THIEPN Account sign-in. Guest progress remains on this browser.");
                         });
                       }}>Connect with THIEPN Account</button>
                     ) : (
                       <button type="button" className="secondary" onClick={() => {
+                        if (!chessAccountSso) return;
                         chessAccountSso.signOutLocal();
                       }}>Sign out of Chess on this device</button>
                     )}
