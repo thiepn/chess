@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { initialUserState } from "../data/demo";
 import { SupabaseChessStateRepository } from "./persistence";
+import type { ThiepnBrowserSso } from "../account/sdk/index";
 
 const mocks = vi.hoisted(() => ({
   createClient: vi.fn(),
@@ -229,5 +230,92 @@ describe("P61 user-scoped persistence", () => {
     await save;
     expect(mocks.rpc).not.toHaveBeenCalled();
     expect(localStorage.getItem(dirtyKey("user-1"))).toBe("1");
+  });
+});
+
+
+describe("P69B app-scoped Chess OAuth identity separation", () => {
+  it("injects a short-lived app token into RLS queries without populating Supabase Auth", async () => {
+    const identity = { status: "signed-in" as const, id: "user-1", email: null };
+    const getAccessToken = vi.fn(async () => "app-only-access-token");
+    const verify = vi.fn(async () => identity);
+    const sso = {
+      verify, getAccessToken,
+      subscribe: (listener: (value: typeof identity) => void) => {
+        listener(identity);
+        return () => {};
+      },
+    } as unknown as ThiepnBrowserSso;
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "public-key", sso);
+    repo.subscribeIdentity(() => {});
+    await repo.load(initialUserState);
+    expect(repo.getProfileId()).toBe("user.user-1");
+    expect(mocks.createClient).toHaveBeenCalledWith(
+      "https://example.supabase.co", "public-key",
+      { accessToken: expect.any(Function) },
+    );
+    const options = mocks.createClient.mock.calls.at(-1)?.[2] as { accessToken: () => Promise<string> };
+    expect(await options.accessToken()).toBe("app-only-access-token");
+    expect(mocks.getUser).not.toHaveBeenCalled();
+    expect(getAccessToken).toHaveBeenCalledTimes(1);
+  });
+
+  it("switches user A to user B to guest without loading another account's state", async () => {
+    type Identity = { status: "signed-in"; id: string; email: null } | { status: "signed-out" };
+    let current: Identity = { status: "signed-in", id: "user-1", email: null };
+    let send!: (identity: Identity) => void;
+    const sso = {
+      verify: vi.fn(async () => current),
+      getAccessToken: vi.fn(async () => "account-oauth-token"),
+      subscribe: (listener: (identity: Identity) => void) => {
+        send = listener;
+        listener(current);
+        return () => {};
+      },
+    } as unknown as ThiepnBrowserSso;
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "public-key", sso);
+    const refresh = vi.fn();
+    repo.subscribeIdentity(refresh);
+    await repo.load(initialUserState);
+    await repo.save(modifiedState);
+    expect(repo.getProfileId()).toBe("user.user-1");
+
+    current = { status: "signed-in", id: "user-2", email: null };
+    send(current);
+    expect(refresh).toHaveBeenCalledTimes(1);
+    mocks.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+    expect(await repo.load(initialUserState)).toEqual(initialUserState);
+    expect(repo.getProfileId()).toBe("user.user-2");
+    expect(localStorage.getItem(accountKey("user-2"))).toBeNull();
+    expect(JSON.parse(localStorage.getItem(accountKey("user-1")) ?? "null")).toEqual(modifiedState);
+
+    current = { status: "signed-out" };
+    send(current);
+    expect(refresh).toHaveBeenCalledTimes(2);
+    expect(await repo.load(initialUserState)).toEqual(initialUserState);
+    expect(repo.getProfileId()).toBe("guest");
+    expect(mocks.getUser).not.toHaveBeenCalled();
+  });
+
+  it("does not adopt a legacy Supabase user from getSession when Chess OAuth verification is unavailable", async () => {
+    const sso = {
+      verify: vi.fn(async () => ({ status: "unavailable" as const, code: "ACCOUNT_REFRESH_UNAVAILABLE" })),
+      getAccessToken: vi.fn(async () => null),
+      subscribe: () => () => {},
+    } as unknown as ThiepnBrowserSso;
+    const fakeGetSession = vi.fn(async () => ({
+      data: { session: { user: { id: "another-user" } } },
+    }));
+    mocks.createClient.mockReturnValueOnce({
+      auth: { getUser: mocks.getUser, getSession: fakeGetSession, onAuthStateChange: mocks.onAuthStateChange },
+      from: () => ({ select: () => ({ eq: () => ({ maybeSingle: mocks.maybeSingle }) }) }),
+      rpc: mocks.rpc,
+    });
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "public-key", sso);
+    await repo.load(initialUserState);
+    expect(repo.getProfileId()).toBe("guest");
+    expect(fakeGetSession).not.toHaveBeenCalled();
+    expect(mocks.getUser).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalled();
   });
 });
