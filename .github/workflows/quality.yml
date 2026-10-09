@@ -25,6 +25,7 @@ jobs:
       - run: test -f public/engine/stockfish-19-lite-single.js
       - run: test -f public/engine/stockfish-19-lite-single.wasm
       - run: npm run lock:audit
+      - run: npm run release:gate:test
       - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
       - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm run puzzles:production

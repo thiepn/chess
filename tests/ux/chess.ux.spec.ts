@@ -291,8 +291,14 @@ test("P62 invalid recovered PGN remains exportable instead of silently restartin
   await page.locator(".play-v2-start-block .primary").click();
   await expect(page.locator(".game-arena")).toBeVisible();
   const key = "chess:play-session-v2:guest";
-  await page.evaluate((storageKey) => {
-    const record = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
+  // Inject at the next navigation's document start. Mutating storage in
+  // the live tab races GameArena's 500ms autosave and can be overwritten
+  // before WebKit begins the reload; this is a test-fixture race, not a
+  // faithful corrupted-on-disk recovery scenario.
+  await page.addInitScript((storageKey) => {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return;
+    const record = JSON.parse(raw);
     record.checkpoint = {
       version: 1,
       initialFen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
@@ -301,7 +307,7 @@ test("P62 invalid recovered PGN remains exportable instead of silently restartin
     };
     localStorage.setItem(storageKey, JSON.stringify(record));
   }, key);
-  await page.reload();
+  await page.reload({ waitUntil: "domcontentloaded" });
   await expect(page.getByText("Saved game needs recovery")).toBeVisible();
   await expect(page.getByRole("button", { name: "Export recovery file" })).toBeVisible();
   expect(await page.evaluate((storageKey) => localStorage.getItem(storageKey), key)).toContain("e2e5");

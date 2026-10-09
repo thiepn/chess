@@ -37,12 +37,6 @@ html[data-board-theme="tournament"] {
   --piece-fill: #f7f2e8;
   --piece-stroke: #4c504b;
 }
-.app-shell-v2 .chess-board-v2 .chess-piece-svg .piece-outline {
-  stroke-width: 2.55;
-}
-.app-shell-v2 .chess-board-v2 .piece-v2 {
-  filter: drop-shadow(0 1.5px .9px rgba(10,13,11,.3));
-}
 .app-shell-v2 .chess-board-v2 .file-label,
 .app-shell-v2 .chess-board-v2 .rank-label {
   font-size: clamp(8px, .82vw, 10px);
@@ -153,7 +147,6 @@ html[data-board-theme="tournament"] {
 }
 .app-shell-v2 .progress-v2-grid-label,
 .app-shell-v2 .progress-v2-axis-label { font-size: 10px; }
-.app-shell-v2 .progress-v2-chart-legend { gap: 16px; }
 .app-shell-v2 .progress-v2-trend-empty {
   min-height: 162px;
   padding: 22px 4px;
