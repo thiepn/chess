@@ -11,6 +11,10 @@ on:
       - 'scripts/build-visual-review.test.mjs'
       - 'scripts/p71-acceptance.mjs'
       - 'scripts/p71-acceptance.test.mjs'
+      - 'scripts/p72-device-acceptance.mjs'
+      - 'scripts/p72-device-acceptance.test.mjs'
+      - 'scripts/p72-visual-reconcile.mjs'
+      - 'scripts/p72-visual-reconcile.test.mjs'
 
 permissions:
   contents: read
@@ -21,7 +25,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -53,11 +57,14 @@ jobs:
         shell: bash
         env:
           REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+          REVIEW_EXPECTED_PAIRS: '18'
         run: |
           cp tests/visual/chess.visual.spec.ts-snapshots/*-linux.png p69c-visual-review/candidate/
           node scripts/build-visual-review.mjs p69c-visual-review
       - name: Prepare independent human review worksheet (never approval)
         run: node scripts/p71-acceptance.mjs prepare p69c-visual-review/manifest.json p69c-visual-review
+      - name: Reconcile image decisions against immutable hashes (PENDING only)
+        run: node scripts/p72-visual-reconcile.mjs p69c-visual-review/manifest.json p69c-visual-review/p72-decision-inventory.md
       - name: Record candidate hashes
         shell: bash
         env:

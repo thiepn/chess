@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   package:
-    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release'))
+    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -45,6 +45,10 @@ jobs:
         run: |
           npm run lock:audit
           npm run release:gate:test
+          npm run visual:review:test
+          npm run p71:review:test
+          npm run p72:device:test
+          npm run p72:visual:test
           npm test
       - name: Build artifact and enforce performance limits
         run: |
