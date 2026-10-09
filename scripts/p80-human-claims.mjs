@@ -117,7 +117,7 @@ export function writeHumanClaimsRecord(options,outFile) {
   const targetParent=fs.realpathSync(path.dirname(dest));
   // Operator evidence intake must not publish private claim metadata into the
   // generated visual artifact. Only the empty generated HOLD goes in CI.
-  const hasPrivateClaims=options.visualDecisions!==null||options.devicePlan!==null;
+  const hasPrivateClaims=options.visualDecisions!=null||options.devicePlan!=null;
   if(hasPrivateClaims)assert(!childOf(targetParent,source),
     "private claim summary must not be written inside uploadable visual artifacts");
   fs.writeFileSync(dest,JSON.stringify(record,null,2)+"\n",{flag:"wx",mode:0o600});
