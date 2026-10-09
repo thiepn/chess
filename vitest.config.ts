@@ -16,6 +16,7 @@ export default defineConfig({
       "scripts/p76-release-rehearsal.test.mjs",
       "scripts/p77-recovery-verifier.test.mjs",
       "scripts/p78-human-decision.test.mjs",
-      "scripts/p79-independent-review.test.mjs"],
+      "scripts/p79-independent-review.test.mjs",
+      "scripts/p80-human-claims.test.mjs"],
   },
 });
