@@ -319,3 +319,69 @@ describe("P69B app-scoped Chess OAuth identity separation", () => {
     expect(mocks.rpc).not.toHaveBeenCalled();
   });
 });
+
+
+describe("P69C Account revoke/offline write safety", () => {
+  it("blocks an in-flight app-scoped cloud save when the user disconnects before verification resolves", async () => {
+    type Identity = { status: "signed-in"; id: string; email: null } | { status: "signed-out" };
+    let current: Identity = { status: "signed-in", id: "user-1", email: null };
+    let listener!: (value: Identity) => void;
+    let finishVerify!: (value: Identity) => void;
+    let blockNext = false;
+    const verify = vi.fn(async (): Promise<Identity> => {
+      if (blockNext) {
+        blockNext = false;
+        return new Promise((resolve) => { finishVerify = resolve; });
+      }
+      return current;
+    });
+    const sso = {
+      verify,
+      getAccessToken: vi.fn(async () => "app-oauth-token"),
+      subscribe: (cb: (value: Identity) => void) => {
+        listener = cb;
+        cb(current);
+        return () => {};
+      },
+    } as unknown as ThiepnBrowserSso;
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "public-key", sso);
+    repo.subscribeIdentity(() => {});
+    await repo.load(initialUserState);
+    blockNext = true;
+    const save = repo.save(modifiedState);
+    for (let i = 0; i < 25 && !finishVerify; i++) await Promise.resolve();
+    expect(finishVerify).toBeDefined();
+    current = { status: "signed-out" };
+    listener(current);
+    finishVerify({ status: "signed-in", id: "user-1", email: null });
+    await save;
+    expect(mocks.rpc).not.toHaveBeenCalled();
+    expect(localStorage.getItem(dirtyKey("user-1"))).toBe("1");
+    expect(await repo.load(initialUserState)).toEqual(initialUserState);
+    expect(repo.getProfileId()).toBe("guest");
+  });
+
+  it("retains an offline account-scoped edit but refuses a backend call when app token validation is unavailable", async () => {
+    type Identity = { status: "signed-in"; id: string; email: null }
+      | { status: "unavailable"; code: string };
+    let current: Identity = { status: "signed-in", id: "user-1", email: null };
+    let listener!: (value: Identity) => void;
+    const sso = {
+      verify: vi.fn(async () => current),
+      getAccessToken: vi.fn(async () => null),
+      subscribe: (cb: (value: Identity) => void) => {
+        listener = cb; cb(current); return () => {};
+      },
+    } as unknown as ThiepnBrowserSso;
+    const repo = new SupabaseChessStateRepository("https://example.supabase.co", "public-key", sso);
+    repo.subscribeIdentity(() => {});
+    await repo.load(initialUserState);
+    current = { status: "unavailable", code: "ACCOUNT_REFRESH_UNAVAILABLE" };
+    listener(current);
+    await repo.save(modifiedState);
+    expect(mocks.rpc).not.toHaveBeenCalled();
+    expect(localStorage.getItem(dirtyKey("user-1"))).toBe("1");
+    expect(JSON.parse(localStorage.getItem(accountKey("user-1")) ?? "null")).toEqual(modifiedState);
+    expect(repo.getStatus().phase).toBe("pending");
+  });
+});
