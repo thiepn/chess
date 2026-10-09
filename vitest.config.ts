@@ -13,6 +13,7 @@ export default defineConfig({
       "scripts/p73-verify-visual-artifact.test.mjs",
       "scripts/p74-release-reconcile.test.mjs",
       "scripts/p75-human-approval-intake.test.mjs",
-      "scripts/p76-release-rehearsal.test.mjs"],
+      "scripts/p76-release-rehearsal.test.mjs",
+      "scripts/p77-recovery-verifier.test.mjs"],
   },
 });
