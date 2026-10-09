@@ -32,6 +32,7 @@ import type {
 } from "./domain/types";
 import { emptyChessState } from "./data/initial";
 import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
+import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./account/onboarding";
 
 import { ChessBoard } from "./components/ChessBoard";
 
@@ -227,6 +228,7 @@ function preloadNavRoute(id: string) {
 }
 
 const repo = createChessStateRepository();
+const chessAccountReadiness = currentChessAccountClientReadiness();
 
 const modeLabels: Record<SessionMode, string> = {
   quick: "Quick",
@@ -3024,6 +3026,17 @@ export default function App() {
               <h2 id="chess-data-heading">Saved chess progress</h2>
               <p role="status" aria-live="polite">{syncStatus.detail}</p>
               <p>Account and guest histories are separate. Unsynced edits stay local.</p>
+              <div className="chess-account-onboarding" role="group" aria-label="THIEPN Account connection">
+                <h3>THIEPN Account</h3>
+                <p>{chessAccountReadiness.reason}</p>
+                <p>
+                  Chess uses a separate, owner-scoped account session. Signing in on the
+                  Account website alone does not yet establish a Chess session.
+                </p>
+                <a href={CHESS_ACCOUNT_ORIGIN + "/"} target="_blank" rel="noopener noreferrer">
+                  Open THIEPN Account
+                </a>
+              </div>
               <div className="chess-data-actions">
                 <button type="button" className="secondary" onClick={() => {
                   const backup = {
