@@ -3033,7 +3033,9 @@ export default function App() {
                 <p>
                   {chessAccountSso
                     ? "Chess uses its own secure session. Your Account identity is verified before private Chess progress loads."
-                    : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
+                    : chessAccountReadiness.status === "configured"
+                      ? "Chess sign-in is unavailable because its publishable OAuth configuration is incomplete or invalid. Guest progress stays on this device."
+                      : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
                 </p>
                 {chessAccountLoginError() && (
                   <p role="alert">{chessAccountLoginError()}</p>
