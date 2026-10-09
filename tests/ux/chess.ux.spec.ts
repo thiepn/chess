@@ -13,14 +13,10 @@ const routes = [
   { path: "/library/studies/p57-study", selector: ".library-workspace-v2" },
 ] as const;
 
-test.beforeEach(async ({ page }, testInfo) => {
-  // Playwright's synthetic wall clock is needed for deterministic historical
-  // analytics fixtures, but is inappropriate for repeated *real-time* game
-  // reload qualification. Avoid injecting clock shims into those two tests,
-  // retaining all their recovery, idle-worker and second-reload assertions.
-  if (!/P62 game survives route reload|P65 idle untimed White game/.test(testInfo.title)) {
-    await page.clock.setFixedTime(new Date(FIXED_TIME));
-  }
+test.beforeEach(async ({ page }) => {
+  // The repeated reload tests retain the same fixed-time fixture as the
+  // original release gate; Playwright 1.57 fixes the 1.56 WebKit crash.
+  await page.clock.setFixedTime(new Date(FIXED_TIME));
   await page.addInitScript((state) => {
     try {
       localStorage.setItem("thiepn.chess.user-state.v1", JSON.stringify(state));
