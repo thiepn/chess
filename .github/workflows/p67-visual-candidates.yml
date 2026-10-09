@@ -11,6 +11,8 @@ on:
       - 'scripts/build-visual-review.test.mjs'
       - 'scripts/p71-acceptance.mjs'
       - 'scripts/p71-acceptance.test.mjs'
+      - 'scripts/p72-device-acceptance.mjs'
+      - 'scripts/p72-device-acceptance.test.mjs'
 
 permissions:
   contents: read
@@ -21,7 +23,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
