@@ -36,6 +36,7 @@ jobs:
       - run: npm run lock:audit
       - run: npm run release:gate:test
       - run: npm run visual:review:test
+      - run: npm run p71:review:test
       - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
       - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm run puzzles:production

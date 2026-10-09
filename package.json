@@ -13,6 +13,7 @@
     "ux:verify": "playwright test --config=playwright.ux.config.ts",
     "visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
     "visual:review:test": "node --test scripts/build-visual-review.test.mjs",
+    "p71:review:test": "node --test scripts/p71-acceptance.test.mjs",
     "puzzles:build": "node scripts/build-puzzle-corpus.mjs",
     "predev": "npm run puzzles:ensure",
     "prebuild": "npm run puzzles:ensure && npm run puzzles:audit",
