@@ -59,8 +59,8 @@ jobs:
             // Three machine checks alone cannot certify P61–P67 manual gates.
             // A maintainer must set the exact approved main commit SHA after
             // reviewing visuals, SSO, device evidence and release checklist.
-            if (!process.env.APPROVED_RELEASE_SHA ||
-                process.env.APPROVED_RELEASE_SHA !== process.env.RELEASE_SHA) {
+            const { matchesReleaseApproval } = await import(`${process.env.GITHUB_WORKSPACE}/scripts/release-approval.mjs`);
+            if (!matchesReleaseApproval(process.env.APPROVED_RELEASE_SHA, process.env.RELEASE_SHA)) {
               core.notice("No explicit approval for this exact Chess release SHA; Pages remains unchanged.");
               core.setOutput("eligible", "false");
               return;
