@@ -14,6 +14,8 @@
     "visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
     "visual:review:test": "node --test scripts/build-visual-review.test.mjs",
     "p71:review:test": "node --test scripts/p71-acceptance.test.mjs",
+    "p72:device:test": "node --test scripts/p72-device-acceptance.test.mjs",
+    "p72:visual:test": "node --test scripts/p72-visual-reconcile.test.mjs",
     "puzzles:build": "node scripts/build-puzzle-corpus.mjs",
     "predev": "npm run puzzles:ensure",
     "prebuild": "npm run puzzles:ensure && npm run puzzles:audit",
