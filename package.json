@@ -21,6 +21,7 @@
     "p75:human:test": "node --test scripts/p75-human-approval-intake.test.mjs",
     "p76:rehearsal:test": "node --test scripts/p76-release-rehearsal.test.mjs",
     "p77:recovery:test": "node --test scripts/p77-recovery-verifier.test.mjs",
+    "p78:decision:test": "node --test scripts/p78-human-decision.test.mjs",
     "puzzles:build": "node scripts/build-puzzle-corpus.mjs",
     "predev": "npm run puzzles:ensure",
     "prebuild": "npm run puzzles:ensure && npm run puzzles:audit",
