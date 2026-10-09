@@ -1,0 +1,56 @@
+name: P67 Visual Candidates
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/visual/**'
+      - 'playwright.config.ts'
+      - '.github/workflows/p67-visual-candidates.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p67-candidate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  candidates:
+    if: github.head_ref == 'p67-release-candidate-acceptance'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Reproduce dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install pinned Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build exact PR candidate
+        run: npm run build
+      - name: Render revised screenshots (not approved)
+        run: npm run visual:update
+      - name: Record candidate hashes
+        shell: bash
+        run: |
+          {
+            echo "Candidate commit: $GITHUB_SHA"
+            echo "Generated reference images (UNAPPROVED):"
+            sha256sum tests/visual/chess.visual.spec.ts-snapshots/*-linux.png
+            echo "Changed images:"
+            git diff --name-only -- tests/visual/chess.visual.spec.ts-snapshots
+          } > p67-visual-review.txt
+      - name: Save candidate images for independent visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: p67-unapproved-visual-candidates-${{ github.run_id }}
+          path: |
+            tests/visual/chess.visual.spec.ts-snapshots/*-linux.png
+            p67-visual-review.txt
+          retention-days: 21
+          if-no-files-found: error
+
+# This workflow NEVER commits a baseline or changes visual comparison thresholds.
