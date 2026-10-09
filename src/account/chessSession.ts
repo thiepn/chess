@@ -41,7 +41,10 @@ if (chessAccountSso && typeof window !== "undefined") {
   window.addEventListener("storage", (event) => {
     if (event.storageArea !== window.localStorage ||
         !isChessAccountTokenStorageChange(event.key)) return;
-    void chessAccountSso?.verify();
+    void chessAccountSso?.verify().catch(() => {
+      // A blocked storage/API read must not crash the open Chess tab.
+      // Identity is not silently changed to a guessed account.
+    });
   });
 }
 
