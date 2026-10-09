@@ -48,6 +48,7 @@ jobs:
           npm run visual:review:test
           npm run p71:review:test
           npm run p72:device:test
+          npm run p72:visual:test
           npm test
       - name: Build artifact and enforce performance limits
         run: |
