@@ -11,16 +11,23 @@ const setup = currentChessAccountClientReadiness();
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const chessAccountSso = (() => {
-  if (setup.status !== "configured" || !key) return null;
-  const session = createThiepnAccountSession({
-    issuer: CHESS_ACCOUNT_ISSUER,
-    publishableKey: key,
-    clientId: setup.clientId,
-    redirectUri: CHESS_ACCOUNT_CALLBACK,
-    storageKey: "thiepn:chess:account-session:v1",
-    authPolicy: "guest-first",
-  });
-  return createThiepnBrowserSso(session, { accountOrigin: CHESS_ACCOUNT_ORIGIN });
+  // A malformed public key or incomplete OAuth registration must never crash
+  // app startup or accidentally fall back to a different app's cached login.
+  if (setup.status !== "configured" || !key || key.length < 20 ||
+      key.startsWith("sb_secret_")) return null;
+  try {
+    const session = createThiepnAccountSession({
+      issuer: CHESS_ACCOUNT_ISSUER,
+      publishableKey: key,
+      clientId: setup.clientId,
+      redirectUri: CHESS_ACCOUNT_CALLBACK,
+      storageKey: "thiepn:chess:account-session:v1",
+      authPolicy: "guest-first",
+    });
+    return createThiepnBrowserSso(session, { accountOrigin: CHESS_ACCOUNT_ORIGIN });
+  } catch {
+    return null; // guest-first, no authenticated cloud writes
+  }
 })();
 
 // Cross-tab sign-out and app-specific token rotation are never inferred from
