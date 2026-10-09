@@ -9,6 +9,8 @@ on:
       - '.github/workflows/p67-visual-candidates.yml'
       - 'scripts/build-visual-review.mjs'
       - 'scripts/build-visual-review.test.mjs'
+      - 'scripts/p71-acceptance.mjs'
+      - 'scripts/p71-acceptance.test.mjs'
 
 permissions:
   contents: read
@@ -19,7 +21,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -54,6 +56,8 @@ jobs:
         run: |
           cp tests/visual/chess.visual.spec.ts-snapshots/*-linux.png p69c-visual-review/candidate/
           node scripts/build-visual-review.mjs p69c-visual-review
+      - name: Prepare independent human review worksheet (never approval)
+        run: node scripts/p71-acceptance.mjs prepare p69c-visual-review/manifest.json p69c-visual-review
       - name: Record candidate hashes
         shell: bash
         env:
