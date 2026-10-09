@@ -374,3 +374,17 @@ test("P65 idle untimed White game does not load a WASM worker on repeated reload
   await expect(page.locator(".game-arena")).toBeVisible();
   expect(manifestRequests).toBe(0);
 });
+
+
+test("P68 control: Play setup survives two same-tab document reloads", async ({ page }) => {
+  // Control for the GameArena-specific repeated reload crashes. This test
+  // intentionally does not mount the game/Stockfish workspace at all.
+  // It distinguishes an application game lifecycle regression from a
+  // generic Playwright-WebKit reload failure on the same route.
+  await open(page, "/play", ".play-v2");
+  for (let i = 0; i < 2; i += 1) {
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator(".play-v2")).toBeVisible();
+    await expect(page.locator(".game-arena")).toHaveCount(0);
+  }
+});
