@@ -1,0 +1,75 @@
+name: P68 Offline Release Candidate
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'package*.json'
+      - 'vite.config.ts'
+      - '.github/workflows/p68-offline-candidate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p68-offline-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    if: github.head_ref == 'p68-production-release-readiness' || (github.event_name == 'workflow_dispatch' && github.ref_name == 'p68-production-release-readiness')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      # This is explicitly NOT an authenticated production build.
+      VITE_SUPABASE_URL: ''
+      VITE_SUPABASE_ANON_KEY: ''
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout immutable candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Pin Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Unit and release-gate tests
+        run: |
+          npm run lock:audit
+          npm run release:gate:test
+          npm test
+      - name: Build artifact and enforce performance limits
+        run: |
+          npm run build
+          npm run perf:budget
+          npm run release:audit
+      - name: Write immutable candidate provenance
+        shell: bash
+        run: |
+          mkdir -p candidate-evidence
+          {
+            echo "candidate_sha=$CANDIDATE_SHA"
+            echo "candidate_type=OFFLINE_PREVIEW_ONLY"
+            echo "authenticated_sync=NOT_QUALIFIED"
+            echo "production_deploy=NO"
+            echo "node=$(node --version)"
+            echo "npm=$(npm --version)"
+          } > candidate-evidence/RELEASE-CANDIDATE.txt
+          find dist -type f -print0 | sort -z | xargs -0 sha256sum > candidate-evidence/SHA256SUMS.txt
+      - name: Upload static candidate and checksum manifest (no publish)
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-p68-offline-candidate-${{ github.run_id }}
+          path: |
+            dist/
+            candidate-evidence/
+          retention-days: 21
+          if-no-files-found: error
+
+# This workflow does not merge, tag, release, set repository variables or deploy Pages.
