@@ -21,6 +21,8 @@ on:
       - 'scripts/p74-release-reconcile.test.mjs'
       - 'scripts/p75-human-approval-intake.mjs'
       - 'scripts/p75-human-approval-intake.test.mjs'
+      - 'scripts/p76-release-rehearsal.mjs'
+      - 'scripts/p76-release-rehearsal.test.mjs'
 
 permissions:
   contents: read
@@ -31,7 +33,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
