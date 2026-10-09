@@ -8,6 +8,7 @@ on:
       - 'playwright.config.ts'
       - '.github/workflows/p67-visual-candidates.yml'
       - 'scripts/build-visual-review.mjs'
+      - 'scripts/build-visual-review.test.mjs'
 
 permissions:
   contents: read
@@ -18,11 +19,18 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Verify exact visual candidate source commit
+        env:
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+          REVIEW_EXPECTED_PAIRS: '18'
+        run: test "$(git rev-parse HEAD)" = "$REVIEW_SHA"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -48,9 +56,11 @@ jobs:
           node scripts/build-visual-review.mjs p69c-visual-review
       - name: Record candidate hashes
         shell: bash
+        env:
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           {
-            echo "Candidate commit: $GITHUB_SHA"
+            echo "Candidate commit: $REVIEW_SHA"
             echo "Generated reference images (UNAPPROVED):"
             sha256sum tests/visual/chess.visual.spec.ts-snapshots/*-linux.png
             echo "Changed images:"

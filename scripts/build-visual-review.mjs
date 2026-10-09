@@ -2,23 +2,51 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 
+// A PR merge-ref build is not the same source as the PR head. Refuse
+// screenshot artifacts without immutable provenance and comparable images.
+const sha = process.env.REVIEW_SHA;
+if (!/^[0-9a-f]{40}$/.test(sha ?? "")) {
+  throw new Error("REVIEW_SHA must be the exact 40-character lowercase PR head SHA");
+}
 const out = path.resolve(process.argv[2] ?? "p69c-visual-review");
 const before = path.join(out, "baseline");
 const after = path.join(out, "candidate");
 const images = (folder) => fs.readdirSync(folder).filter(name => /^[a-z0-9-]+\.png$/.test(name)).sort();
 const originals = images(before);
 const candidates = images(after);
+const expectedPairs = process.env.REVIEW_EXPECTED_PAIRS;
 if (!originals.length || originals.join("|") !== candidates.join("|")) {
   throw new Error("Baseline and candidate screenshot names/counts must match exactly");
+}
+if (expectedPairs !== undefined && (!/^[1-9][0-9]*$/.test(expectedPairs) || Number(expectedPairs) !== originals.length)) {
+  throw new Error("Visual candidate count differs from approved scenario inventory");
+}
+const signature = Buffer.from([137,80,78,71,13,10,26,10]);
+function pngGeometry(file) {
+  const bytes = fs.readFileSync(file);
+  if (bytes.length < 24 || !bytes.subarray(0, 8).equals(signature) ||
+      bytes.toString("ascii", 12, 16) !== "IHDR") {
+    throw new Error("Invalid PNG header: " + path.basename(file));
+  }
+  const width = bytes.readUInt32BE(16);
+  const height = bytes.readUInt32BE(20);
+  if (!width || !height || width > 8192 || height > 8192) {
+    throw new Error("Invalid screenshot dimensions: " + path.basename(file));
+  }
+  return { width, height };
 }
 const hash = file => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
 const records = originals.map(name => {
   const a=path.join(before,name), b=path.join(after,name);
-  return { name, baselineSha256:hash(a), candidateSha256:hash(b), changed:hash(a)!==hash(b),
+  const baseline = pngGeometry(a), candidate = pngGeometry(b);
+  if (baseline.width !== candidate.width || baseline.height !== candidate.height) {
+    throw new Error("Screenshot viewport mismatch for " + name);
+  }
+  return { name, width: baseline.width, height: baseline.height,
+    baselineSha256:hash(a), candidateSha256:hash(b), changed:hash(a)!==hash(b),
     baselineBytes:fs.statSync(a).size, candidateBytes:fs.statSync(b).size };
 });
-const sha=process.env.REVIEW_SHA??"UNKNOWN";
-const manifest={schema:"thiepn-chess-visual-review-v1",commit:sha,
+const manifest={schema:"thiepn-chess-visual-review-v2",commit:sha,
   status:"UNAPPROVED", createdAt:new Date().toISOString(),images:records};
 fs.writeFileSync(path.join(out,"manifest.json"),JSON.stringify(manifest,null,2)+"\n");
 const esc=str=>str.replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]));
