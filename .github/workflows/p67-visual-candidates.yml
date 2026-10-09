@@ -27,6 +27,8 @@ on:
       - 'scripts/p77-recovery-verifier.test.mjs'
       - 'scripts/p78-human-decision.mjs'
       - 'scripts/p78-human-decision.test.mjs'
+      - 'scripts/p79-independent-review.mjs'
+      - 'scripts/p79-independent-review.test.mjs'
 
 permissions:
   contents: read
@@ -37,7 +39,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal' || github.head_ref == 'p77-artifact-recovery-human-readiness' || github.head_ref == 'p78-cross-artifact-human-decision'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal' || github.head_ref == 'p77-artifact-recovery-human-readiness' || github.head_ref == 'p78-cross-artifact-human-decision' || github.head_ref == 'p79-independent-reviewer-packet'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -89,6 +91,10 @@ jobs:
         env:
           REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
         run: node scripts/p75-human-approval-intake.mjs p69c-visual-review "$REVIEW_SHA"
+      - name: Prepare P79 source-bound independent review queue (PENDING only)
+        env:
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/p79-independent-review.mjs p69c-visual-review "$REVIEW_SHA"
       - name: Record candidate hashes
         shell: bash
         env:
