@@ -11,8 +11,22 @@ import "./styles/p59-visual-qa.css";
 import "./styles/p59b-refinement.css";
 import "./styles/p64-premium-finishing.css";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+import { initializeChessAccount } from "./account/chessSession";
+
+async function startChess() {
+  const root = document.getElementById("root")!;
+  // The Auth code and app-specific identity must be verified before any
+  // authenticated Chess state can be read or rendered.
+  root.textContent = "Preparing Chess…";
+  const disposition = await initializeChessAccount();
+  if (disposition === "redirecting") {
+    root.textContent = "Opening THIEPN Account…";
+    return;
+  }
+  createRoot(root).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}
+void startChess();
