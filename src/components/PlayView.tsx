@@ -1,4 +1,4 @@
-import { lazy, useEffect, useMemo, useState } from "react";
+import { lazy, useCallback, useEffect, useMemo, useState } from "react";
 import { DEFAULT_POSITION, type Color } from "chess.js";
 import {
   ChevronRight,
@@ -136,6 +136,19 @@ export function PlayView({
   const [timeControl, setTimeControl] = useState<TimeControlId>("15+10");
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
+
+  // This callback must retain its identity across parent renders. Otherwise
+  // GameArena's checkpoint effect performs a disk write whenever unrelated
+  // app state changes, even when there has been no move or clock tick.
+  const persistCheckpoint = useCallback((checkpoint: GameCheckpoint) => {
+    const current = readPlaySnapshot(storageOwner);
+    if (current?.path !== routePath) return;
+    // Avoid unnecessary synchronous localStorage writes on mobile Safari.
+    // Never erase the existing record when storage throws.
+    if (!writePlaySnapshot(storageOwner, { ...current, checkpoint })) {
+      setSaveFailed(true);
+    }
+  }, [storageOwner, routePath]);
 
   const route = resolvePlayRoute(routePath);
   const resolvedProfile = useMemo(
@@ -283,11 +296,7 @@ export function PlayView({
           key={storageOwner + ":" + routePath}
           initialFen={initialFen}
           checkpoint={snapshot.checkpoint}
-          onCheckpoint={(checkpoint) => {
-            const current = readPlaySnapshot(storageOwner);
-            if (current?.path !== routePath) return;
-            if (!writePlaySnapshot(storageOwner, { ...current, checkpoint })) setSaveFailed(true);
-          }}
+          onCheckpoint={persistCheckpoint}
           playerColor={playerColor}
           profile={profile}
           scenario={scenario}
