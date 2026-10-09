@@ -75,6 +75,12 @@ jobs:
           find dist -type f -print0 | sort -z | xargs -0 sha256sum > candidate-evidence/SHA256SUMS.txt
       - name: Rehearse immutable offline package verification (no rollback claim or publication)
         run: node scripts/p76-release-rehearsal.mjs inspect-offline . "$CANDIDATE_SHA"
+      - name: Audit hidden output before allowing complete artifact upload
+        shell: bash
+        run: |
+          test -f dist/.vite/manifest.json
+          hidden_files=$(find dist -type f -path '*/.*' | LC_ALL=C sort)
+          test "$hidden_files" = 'dist/.vite/manifest.json'
       - name: Upload static candidate and checksum manifest (no publish)
         uses: actions/upload-artifact@v4
         with:
@@ -83,6 +89,9 @@ jobs:
             dist/
             candidate-evidence/
           retention-days: 21
+          # .vite/manifest.json is required for immutable checksum verification.
+          # The previous audit rejects any unexpected hidden output before upload.
+          include-hidden-files: true
           if-no-files-found: error
 
 # This workflow does not merge, tag, release, set repository variables or deploy Pages.
