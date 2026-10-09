@@ -30,6 +30,7 @@ function fixture(){
   });
   const manifest={schema:"thiepn-chess-visual-review-v2",
     commit:SHA,status:"UNAPPROVED",createdAt:"2026-10-09T10:00:00Z",images};
+  fs.writeFileSync(path.join(dir,"manifest.json"),JSON.stringify(manifest,null,2)+"\n");
   return {dir,manifest};
 }
 test("P73 independently re-hashes all 36 PNGs and never approves them",()=>{

@@ -17,6 +17,8 @@ on:
       - 'scripts/p72-visual-reconcile.test.mjs'
       - 'scripts/p73-verify-visual-artifact.mjs'
       - 'scripts/p73-verify-visual-artifact.test.mjs'
+      - 'scripts/p74-release-reconcile.mjs'
+      - 'scripts/p74-release-reconcile.test.mjs'
 
 permissions:
   contents: read
@@ -27,7 +29,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification' || github.head_ref == 'p70-release-blocker-closure' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -71,6 +73,10 @@ jobs:
         run: node scripts/p71-acceptance.mjs prepare p69c-visual-review/manifest.json p69c-visual-review
       - name: Reconcile image decisions against immutable hashes (PENDING only)
         run: node scripts/p72-visual-reconcile.mjs p69c-visual-review/manifest.json p69c-visual-review/p72-decision-inventory.md
+      - name: Prepare read-only P74 release evidence receipt (always HOLD)
+        env:
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/p74-release-reconcile.mjs p69c-visual-review "$REVIEW_SHA"
       - name: Record candidate hashes
         shell: bash
         env:
