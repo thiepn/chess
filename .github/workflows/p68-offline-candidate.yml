@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   package:
-    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation' || github.ref_name == 'p75-human-approval-intake' || github.ref_name == 'p76-exact-head-release-rehearsal'))
+    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal' || github.head_ref == 'p77-artifact-recovery-human-readiness' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation' || github.ref_name == 'p75-human-approval-intake' || github.ref_name == 'p76-exact-head-release-rehearsal' || github.ref_name == 'p77-artifact-recovery-human-readiness'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -54,6 +54,7 @@ jobs:
           npm run p74:release:test
           npm run p75:human:test
           npm run p76:rehearsal:test
+          npm run p77:recovery:test
           npm test
       - name: Build artifact and enforce performance limits
         run: |
@@ -93,5 +94,40 @@ jobs:
           # The previous audit rejects any unexpected hidden output before upload.
           include-hidden-files: true
           if-no-files-found: error
+
+  recovery:
+    name: Independently verify downloaded guest-only artifact
+    needs: package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source of verifier
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Ensure verifier source matches offline artifact SHA
+        run: test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+      - name: Pin Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download exact workflow artifact from GitHub storage
+        uses: actions/download-artifact@v4
+        with:
+          name: chess-p68-offline-candidate-${{ github.run_id }}
+          path: recovered/
+      - name: Independently hash-check downloaded artifact and prior P76 receipt
+        run: |
+          mkdir -p recovery-evidence
+          node scripts/p77-recovery-verifier.mjs recovered "$CANDIDATE_SHA" recovery-evidence/P77-RECOVERY.json
+      - name: Preserve read-only recovered evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-p77-independent-recovery-${{ github.run_id }}
+          path: recovery-evidence/P77-RECOVERY.json
+          if-no-files-found: error
+          retention-days: 21
 
 # This workflow does not merge, tag, release, set repository variables or deploy Pages.
