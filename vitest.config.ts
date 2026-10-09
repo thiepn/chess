@@ -8,6 +8,7 @@ export default defineConfig({
       "scripts/release-approval.test.mjs",
       "scripts/build-visual-review.test.mjs",
       "scripts/p71-acceptance.test.mjs",
-      "scripts/p72-device-acceptance.test.mjs"],
+      "scripts/p72-device-acceptance.test.mjs",
+      "scripts/p72-visual-reconcile.test.mjs"],
   },
 });
