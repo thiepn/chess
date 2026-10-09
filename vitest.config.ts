@@ -12,6 +12,7 @@ export default defineConfig({
       "scripts/p72-visual-reconcile.test.mjs",
       "scripts/p73-verify-visual-artifact.test.mjs",
       "scripts/p74-release-reconcile.test.mjs",
-      "scripts/p75-human-approval-intake.test.mjs"],
+      "scripts/p75-human-approval-intake.test.mjs",
+      "scripts/p76-release-rehearsal.test.mjs"],
   },
 });
