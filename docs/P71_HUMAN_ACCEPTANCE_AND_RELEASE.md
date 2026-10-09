@@ -34,7 +34,7 @@
 
 ## Procedure B — Human Account OAuth and data safety (BLOCKED)
 
-P69C backend readback recorded `account_apps.slug=chess` as **inactive**, with **zero first-party Chess OAuth clients**. Three owner-RLS policies and connection/grant checks are installed. This is infrastructure, **not successful browser login**.
+P71 read-only THIEPN Account SQL inspection on 2026-10-09 independently confirms **Chess app inactive**, **0 registered Chess first-party OAuth clients**, **0 connected Chess accounts**, **RLS enabled** for `chess_user_state` and **3 owner policies**. No user rows or credentials were inspected. This is infrastructure, **not successful browser login**.
 
 **Operator-only prerequisites** (follow `thiepn/account/docs/FIRST_PARTY_CLIENT_ONBOARDING.md`, inspect Account PR #67):
 - Review `auth.oauth_clients` and `account_first_party_oauth_clients` to avoid duplicates. Register exactly one native public Chess OAuth 2.1 Authorization Code + PKCE S256 client; do **not** use automatic DCR or another app's UUID.
