@@ -33,6 +33,7 @@ import type {
 import { emptyChessState } from "./data/initial";
 import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
 import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./account/onboarding";
+import { chessAccountSso, chessAccountLoginError } from "./account/chessSession";
 
 import { ChessBoard } from "./components/ChessBoard";
 
@@ -3033,8 +3034,26 @@ export default function App() {
                   Chess uses a separate, owner-scoped account session. Signing in on the
                   Account website alone does not yet establish a Chess session.
                 </p>
+                {chessAccountLoginError() && (
+                  <p role="alert">{chessAccountLoginError()}</p>
+                )}
+                {chessAccountSso && (
+                  <div className="chess-data-actions">
+                    {repo.getProfileId() === "guest" ? (
+                      <button type="button" className="secondary" onClick={() => {
+                        void chessAccountSso.connect().catch(() => {
+                          window.alert("Could not open THIEPN Account sign-in. Guest progress remains on this browser.");
+                        });
+                      }}>Connect with THIEPN Account</button>
+                    ) : (
+                      <button type="button" className="secondary" onClick={() => {
+                        chessAccountSso.signOutLocal();
+                      }}>Sign out of Chess on this device</button>
+                    )}
+                  </div>
+                )}
                 <a href={CHESS_ACCOUNT_ORIGIN + "/"} target="_blank" rel="noopener noreferrer">
-                  Open THIEPN Account
+                  Manage THIEPN Account
                 </a>
               </div>
               <div className="chess-data-actions">
