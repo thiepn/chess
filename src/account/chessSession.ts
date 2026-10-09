@@ -23,6 +23,21 @@ export const chessAccountSso = (() => {
   return createThiepnBrowserSso(session, { accountOrigin: CHESS_ACCOUNT_ORIGIN });
 })();
 
+// Cross-tab sign-out and app-specific token rotation are never inferred from
+// another app's browser session. Revalidate only changes to Chess's own tokens.
+// SDK verification publishes identity changes to the persistence repository.
+export const CHESS_ACCOUNT_TOKEN_STORAGE_KEY = "thiepn:chess:account-session:v1:tokens";
+export function isChessAccountTokenStorageChange(key: string | null): boolean {
+  return key === CHESS_ACCOUNT_TOKEN_STORAGE_KEY || key === null;
+}
+if (chessAccountSso && typeof window !== "undefined") {
+  window.addEventListener("storage", (event) => {
+    if (event.storageArea !== window.localStorage ||
+        !isChessAccountTokenStorageChange(event.key)) return;
+    void chessAccountSso?.verify();
+  });
+}
+
 let lastLoginError: string | null = null;
 export function chessAccountLoginError() { return lastLoginError; }
 
