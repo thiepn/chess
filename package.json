@@ -23,6 +23,7 @@
     "p77:recovery:test": "node --test scripts/p77-recovery-verifier.test.mjs",
     "p78:decision:test": "node --test scripts/p78-human-decision.test.mjs",
     "p79:review:test": "node --test scripts/p79-independent-review.test.mjs",
+    "p80:claims:test": "node --test scripts/p80-human-claims.test.mjs",
     "puzzles:build": "node scripts/build-puzzle-corpus.mjs",
     "predev": "npm run puzzles:ensure",
     "prebuild": "npm run puzzles:ensure && npm run puzzles:audit",
