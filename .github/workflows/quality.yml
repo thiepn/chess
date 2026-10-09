@@ -42,6 +42,7 @@ jobs:
       - run: npm run p73:integrity:test
       - run: npm run p74:release:test
       - run: npm run p75:human:test
+      - run: npm run p76:rehearsal:test
       - run: npm run puzzles:build -- scripts/fixtures/lichess-sample.csv --out /tmp/chess-puzzles --max-per-skill 20
       - run: test -f /tmp/chess-puzzles/manifest.json
       - run: npm run puzzles:production
