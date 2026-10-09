@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     exclude: [...configDefaults.exclude, "tests/visual/**", "tests/ux/**",
       // This is a Node.js built-in test suite, executed separately in Quality.
-      "scripts/release-approval.test.mjs"],
+      "scripts/release-approval.test.mjs",
+      "scripts/build-visual-review.test.mjs"],
   },
 });

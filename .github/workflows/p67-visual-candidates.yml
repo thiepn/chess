@@ -7,6 +7,7 @@ on:
       - 'tests/visual/**'
       - 'playwright.config.ts'
       - '.github/workflows/p67-visual-candidates.yml'
+      - 'scripts/build-visual-review.mjs'
 
 permissions:
   contents: read
@@ -17,7 +18,7 @@ concurrency:
 
 jobs:
   candidates:
-    if: github.head_ref == 'p67-release-candidate-acceptance'
+    if: github.head_ref == 'p67-release-candidate-acceptance' || github.head_ref == 'p69c-account-visual-qualification'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -31,8 +32,20 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Build exact PR candidate
         run: npm run build
+      - name: Preserve existing approved references
+        shell: bash
+        run: |
+          mkdir -p p69c-visual-review/baseline p69c-visual-review/candidate
+          cp tests/visual/chess.visual.spec.ts-snapshots/*-linux.png p69c-visual-review/baseline/
       - name: Render revised screenshots (not approved)
         run: npm run visual:update
+      - name: Pair and label candidate screenshots
+        shell: bash
+        env:
+          REVIEW_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          cp tests/visual/chess.visual.spec.ts-snapshots/*-linux.png p69c-visual-review/candidate/
+          node scripts/build-visual-review.mjs p69c-visual-review
       - name: Record candidate hashes
         shell: bash
         run: |
@@ -50,6 +63,7 @@ jobs:
           path: |
             tests/visual/chess.visual.spec.ts-snapshots/*-linux.png
             p67-visual-review.txt
+            p69c-visual-review/
           retention-days: 21
           if-no-files-found: error
 
