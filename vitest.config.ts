@@ -9,6 +9,7 @@ export default defineConfig({
       "scripts/build-visual-review.test.mjs",
       "scripts/p71-acceptance.test.mjs",
       "scripts/p72-device-acceptance.test.mjs",
-      "scripts/p72-visual-reconcile.test.mjs"],
+      "scripts/p72-visual-reconcile.test.mjs",
+      "scripts/p73-verify-visual-artifact.test.mjs"],
   },
 });
