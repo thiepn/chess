@@ -15,6 +15,18 @@ concurrency:
 
 jobs:
   cross-device-browser:
+    # Isolate iOS WebKit from Chromium. Every existing test still runs.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: ios-webkit
+            browser: webkit
+            projects: "--project=mobile-webkit"
+          - label: chromium-devices
+            browser: chromium
+            projects: "--project=android-compact --project=android-phone --project=tablet-portrait --project=tablet-landscape --project=desktop"
+    name: cross-device-browser (${{ matrix.label }})
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -25,16 +37,16 @@ jobs:
       - name: Install project dependencies
         run: npm ci --no-audit --no-fund
       - name: Install Chromium and WebKit engines
-        run: npx playwright install --with-deps chromium webkit
+        run: npx playwright install --with-deps ${{ matrix.browser }}
       - name: Build production app
         run: npm run build
       - name: Run responsive UX journeys
-        run: npm run ux:verify
+        run: npm run ux:verify -- ${{ matrix.projects }}
       - name: Preserve traces and device timings
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: p58-device-ux-${{ github.run_id }}
+          name: p67-device-ux-${{ matrix.label }}-${{ github.run_id }}
           path: |
             test-results/
             playwright-report/
