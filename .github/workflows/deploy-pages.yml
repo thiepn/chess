@@ -29,6 +29,8 @@ jobs:
       # Publishable browser configuration only, never service_role/secret keys.
       VITE_SUPABASE_URL: ${{ vars.CHESS_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ vars.CHESS_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_THIEPN_ACCOUNT_CLIENT_ID: ${{ vars.CHESS_OAUTH_CLIENT_ID }}
+      VITE_THIEPN_ACCOUNT_REDIRECT_URI: https://chess.thiepn.dev/auth/callback/
     outputs:
       eligible: ${{ steps.gate.outputs.eligible }}
       release_sha: ${{ steps.release.outputs.sha }}

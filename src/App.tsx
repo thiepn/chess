@@ -32,6 +32,8 @@ import type {
 } from "./domain/types";
 import { emptyChessState } from "./data/initial";
 import { createChessStateRepository, isChessState, type SyncStatus } from "./lib/persistence";
+import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./account/onboarding";
+import { chessAccountSso, chessAccountLoginError } from "./account/chessSession";
 
 import { ChessBoard } from "./components/ChessBoard";
 
@@ -227,6 +229,7 @@ function preloadNavRoute(id: string) {
 }
 
 const repo = createChessStateRepository();
+const chessAccountReadiness = currentChessAccountClientReadiness();
 
 const modeLabels: Record<SessionMode, string> = {
   quick: "Quick",
@@ -3024,6 +3027,36 @@ export default function App() {
               <h2 id="chess-data-heading">Saved chess progress</h2>
               <p role="status" aria-live="polite">{syncStatus.detail}</p>
               <p>Account and guest histories are separate. Unsynced edits stay local.</p>
+              <div className="chess-account-onboarding" role="group" aria-label="THIEPN Account connection">
+                <h3>THIEPN Account</h3>
+                <p>{chessAccountReadiness.reason}</p>
+                <p>
+                  {chessAccountSso
+                    ? "Chess uses its own secure session. Your Account identity is verified before private Chess progress loads."
+                    : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
+                </p>
+                {chessAccountLoginError() && (
+                  <p role="alert">{chessAccountLoginError()}</p>
+                )}
+                {chessAccountSso && (
+                  <div className="chess-data-actions">
+                    {repo.getProfileId() === "guest" ? (
+                      <button type="button" className="secondary" onClick={() => {
+                        void chessAccountSso.connect().catch(() => {
+                          window.alert("Could not open THIEPN Account sign-in. Guest progress remains on this browser.");
+                        });
+                      }}>Connect with THIEPN Account</button>
+                    ) : (
+                      <button type="button" className="secondary" onClick={() => {
+                        chessAccountSso.signOutLocal();
+                      }}>Sign out of Chess on this device</button>
+                    )}
+                  </div>
+                )}
+                <a href={CHESS_ACCOUNT_ORIGIN + "/"} target="_blank" rel="noopener noreferrer">
+                  Manage THIEPN Account
+                </a>
+              </div>
               <div className="chess-data-actions">
                 <button type="button" className="secondary" onClick={() => {
                   const backup = {

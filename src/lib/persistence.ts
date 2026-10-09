@@ -1,4 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import type { ThiepnBrowserSso } from "../account/sdk/index";
+import { chessAccountSso } from "../account/chessSession";
 import type { UserState } from "../domain/types";
 
 // The P60 keys are deliberately not deleted. Their ownership is unknown and
@@ -141,10 +143,17 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   private knownRevisions = new Map<string, number>();
   private conflict: { owner: string; remote: RemoteRecord } | null = null;
   private identityEpoch = 0;
+  private accountSso: ThiepnBrowserSso | null;
 
-  constructor(url: string, key: string) {
+  constructor(url: string, key: string, accountSso: ThiepnBrowserSso | null = null) {
     super();
-    this.client = createClient(url, key);
+    this.accountSso = accountSso;
+    // The app-scoped OAuth access token is provided by THIEPN Account's SDK,
+    // never copied into Supabase Auth's local browser session or an auth cookie.
+    // PostgREST/RPC still enforces auth.uid() and Chess-specific RLS.
+    this.client = createClient(url, key, accountSso
+      ? { accessToken: () => accountSso.getAccessToken() }
+      : undefined);
   }
 
   override legacyRecovery() {
@@ -152,6 +161,11 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   }
 
   private async authOwner(): Promise<string | null> {
+    if (this.accountSso) {
+      const identity = await this.accountSso.verify();
+      if (identity.status === "unavailable") throw new Error(identity.code);
+      return identity.status === "signed-in" ? identity.id : null;
+    }
     const { data, error } = await this.client.auth.getUser();
     if (error) throw error;
     return data.user?.id ?? null;
@@ -172,6 +186,21 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
     }
   }
   subscribeIdentity(listener: IdentityListener) {
+    if (this.accountSso) {
+      return this.accountSso.subscribe((identity) => {
+        if (identity.status === "unavailable") {
+          this.report("pending", "Account verification unavailable; existing progress preserved");
+          return;
+        }
+        const next = identity.status === "signed-in" ? identity.id : GUEST;
+        if (!this.initialized || next === this.owner) return;
+        ++this.identityEpoch;
+        this.owner = next;
+        this.conflict = null;
+        this.report("loading", "Account changed; switching chess profile");
+        listener();
+      });
+    }
     const { data } = this.client.auth.onAuthStateChange((event, session) => {
       if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED") return;
       const next = session?.user?.id ?? GUEST;
@@ -368,6 +397,10 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
 export function createChessStateRepository(): ChessStateRepository {
   const url = import.meta.env.VITE_SUPABASE_URL;
   const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  if (url && key) return new SupabaseChessStateRepository(url, key);
+  // Never silently reuse a legacy Supabase session as a Chess first-party
+  // login. An explicitly registered app-scoped OAuth client is mandatory.
+  if (url && key && chessAccountSso) {
+    return new SupabaseChessStateRepository(url, key, chessAccountSso);
+  }
   return new LocalChessStateRepository();
 }

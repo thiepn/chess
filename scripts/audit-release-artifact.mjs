@@ -64,6 +64,20 @@ try {
 if (production) {
   const url = process.env.VITE_SUPABASE_URL?.trim();
   const key = process.env.VITE_SUPABASE_ANON_KEY?.trim();
+  // Only one registered, public first-party OAuth client is allowed to
+  // enable owner-scoped Chess cloud mode. A valid-looking UUID alone is NOT
+  // evidence of registration; human approval and Account probe stay gated.
+  const clientId = process.env.VITE_THIEPN_ACCOUNT_CLIENT_ID?.trim();
+  const redirect = process.env.VITE_THIEPN_ACCOUNT_REDIRECT_URI?.trim();
+  check(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(clientId ?? ""),
+    "Chess production requires a registered first-party OAuth client UUID");
+  check(redirect === "https://chess.thiepn.dev/auth/callback/",
+    "Chess OAuth redirect must match the exact registered HTTPS callback");
+  if (clientId && redirect) {
+    const clientInBundle = assets.some((entry) =>
+      fs.readFileSync(entry, "utf8").includes(clientId));
+    check(clientInBundle, "Production artifact omitted its configured Chess OAuth client");
+  }
   check(url === expectedUrl, "Release must target THIEPN Account Supabase; check CHESS_SUPABASE_URL");
   check(Boolean(key) && !key?.startsWith("sb_secret_"),
     "Set a public anon/publishable key in CHESS_SUPABASE_PUBLISHABLE_KEY");
