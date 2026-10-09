@@ -3031,8 +3031,9 @@ export default function App() {
                 <h3>THIEPN Account</h3>
                 <p>{chessAccountReadiness.reason}</p>
                 <p>
-                  Chess uses a separate, owner-scoped account session. Signing in on the
-                  Account website alone does not yet establish a Chess session.
+                  {chessAccountSso
+                    ? "Chess uses its own secure session. Your Account identity is verified before private Chess progress loads."
+                    : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
                 </p>
                 {chessAccountLoginError() && (
                   <p role="alert">{chessAccountLoginError()}</p>
