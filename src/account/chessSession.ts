@@ -2,7 +2,7 @@ import {
   createThiepnAccountSession,
   createThiepnBrowserSso,
 } from "./sdk/index";
-import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./onboarding";
+import { CHESS_ACCOUNT_CALLBACK, CHESS_ACCOUNT_ISSUER, CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./onboarding";
 
 // This is the audited SDK from thiepn/account@be0adad0, not an independent
 // Google sign-in system. A Chess OAuth client MUST have been registered and
@@ -13,10 +13,10 @@ const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const chessAccountSso = (() => {
   if (setup.status !== "configured" || !key) return null;
   const session = createThiepnAccountSession({
-    issuer: import.meta.env.VITE_SUPABASE_URL,
+    issuer: CHESS_ACCOUNT_ISSUER,
     publishableKey: key,
     clientId: setup.clientId,
-    redirectUri: import.meta.env.VITE_THIEPN_ACCOUNT_REDIRECT_URI,
+    redirectUri: CHESS_ACCOUNT_CALLBACK,
     storageKey: "thiepn:chess:account-session:v1",
     authPolicy: "guest-first",
   });
