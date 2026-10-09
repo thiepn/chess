@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   package:
-    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation' || github.ref_name == 'p75-human-approval-intake'))
+    if: github.head_ref == 'p68-production-release-readiness' || github.head_ref == 'p71-acceptance-evidence-controlled-release' || github.head_ref == 'p72-visual-device-acceptance-closure' || github.head_ref == 'p73-release-evidence-integrity' || github.head_ref == 'p74-independent-evidence-reconciliation' || github.head_ref == 'p75-human-approval-intake' || github.head_ref == 'p76-exact-head-release-rehearsal' || (github.event_name == 'workflow_dispatch' && (github.ref_name == 'p68-production-release-readiness' || github.ref_name == 'p71-acceptance-evidence-controlled-release' || github.ref_name == 'p72-visual-device-acceptance-closure' || github.ref_name == 'p73-release-evidence-integrity' || github.ref_name == 'p74-independent-evidence-reconciliation' || github.ref_name == 'p75-human-approval-intake' || github.ref_name == 'p76-exact-head-release-rehearsal'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -53,6 +53,7 @@ jobs:
           npm run p73:integrity:test
           npm run p74:release:test
           npm run p75:human:test
+          npm run p76:rehearsal:test
           npm test
       - name: Build artifact and enforce performance limits
         run: |
@@ -72,6 +73,8 @@ jobs:
             echo "npm=$(npm --version)"
           } > candidate-evidence/RELEASE-CANDIDATE.txt
           find dist -type f -print0 | sort -z | xargs -0 sha256sum > candidate-evidence/SHA256SUMS.txt
+      - name: Rehearse immutable offline package verification (no rollback claim or publication)
+        run: node scripts/p76-release-rehearsal.mjs inspect-offline . "$CANDIDATE_SHA"
       - name: Upload static candidate and checksum manifest (no publish)
         uses: actions/upload-artifact@v4
         with:
