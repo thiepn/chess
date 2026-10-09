@@ -83,6 +83,16 @@ test("P73 enforces real screenshot scenario names, not just count 18",()=>{
   const {dir,manifest}=fixture();
   try{
     manifest.images[0].name="fabricated-desktop-linux.png";
+    // Keep the on-disk artifact consistent so the stricter scenario guard is reached.
+    fs.writeFileSync(path.join(dir,"manifest.json"),JSON.stringify(manifest,null,2)+"\n");
     assert.throws(()=>verifyVisualFiles(manifest,dir,SHA),/substituted/);
+  }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});
+
+test("P76 refuses an in-memory visual manifest that differs from disk",()=>{
+  const {dir,manifest}=fixture();
+  try{
+    manifest.images[0].name="fabricated-desktop-linux.png";
+    assert.throws(()=>verifyVisualFiles(manifest,dir,SHA),/differs from actual artifact file/);
   }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });

@@ -19,6 +19,7 @@
     "p73:integrity:test": "node --test scripts/p73-verify-visual-artifact.test.mjs",
     "p74:release:test": "node --test scripts/p74-release-reconcile.test.mjs",
     "p75:human:test": "node --test scripts/p75-human-approval-intake.test.mjs",
+    "p76:rehearsal:test": "node --test scripts/p76-release-rehearsal.test.mjs",
     "puzzles:build": "node scripts/build-puzzle-corpus.mjs",
     "predev": "npm run puzzles:ensure",
     "prebuild": "npm run puzzles:ensure && npm run puzzles:audit",
