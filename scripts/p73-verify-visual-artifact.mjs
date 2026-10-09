@@ -41,6 +41,11 @@ export function verifyVisualFiles(manifest,root,expectedSha) {
   verifyCandidateManifest(manifest);
   if (!SHA.test(expectedSha??"") || manifest.commit!==expectedSha)
     throw new Error("Visual evidence is not bound to the exact PR head SHA");
+  // The receipt must fingerprint the exact manifest bytes uploaded to the artifact,
+  // not a freshly serialized object whose whitespace/order differs from the file.
+  const manifestBytes=fs.readFileSync(path.join(root,"manifest.json"));
+  if(JSON.stringify(JSON.parse(manifestBytes.toString("utf8")))!==JSON.stringify(manifest))
+    throw new Error("Supplied review manifest differs from actual artifact file");
   const actualNames=manifest.images.map(x=>x.name).sort();
   if(JSON.stringify(actualNames)!==JSON.stringify(REQUIRED_NAMES))
     throw new Error("Missing or substituted screenshot scenario");
@@ -66,7 +71,7 @@ export function verifyVisualFiles(manifest,root,expectedSha) {
   return {
     schema:"thiepn-chess-p73-visual-integrity-v1",
     sourceSha:expectedSha,
-    manifestSha256:sha256(Buffer.from(JSON.stringify(manifest))),
+    manifestSha256:sha256(manifestBytes),
     total:records.length,changed:records.filter(x=>x.changed).length,
     status:"UNAPPROVED", releaseAuthorization:false, records,
   };
