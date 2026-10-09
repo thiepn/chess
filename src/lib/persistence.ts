@@ -176,8 +176,11 @@ export class SupabaseChessStateRepository extends ChessRepositoryBase implements
   private async ownerForLoad() {
     try { return (await this.authOwner()) ?? GUEST; }
     catch {
-      // Supabase's cached session can select the correct local partition while
-      // getUser() is offline; it is never trusted for a remote write.
+      // App-scoped OAuth does not share the legacy Supabase Auth session.
+      // In particular, getSession() must never select a *different* user's
+      // local partition while verification of the Chess OAuth token is down.
+      if (this.accountSso) return this.initialized ? this.owner : GUEST;
+      // Only the legacy repository mode may inspect its own cached session.
       try {
         const { data } = await this.client.auth.getSession();
         if (data.session?.user?.id) return data.session.user.id;

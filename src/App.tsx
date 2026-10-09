@@ -3033,7 +3033,9 @@ export default function App() {
                 <p>
                   {chessAccountSso
                     ? "Chess uses its own secure session. Your Account identity is verified before private Chess progress loads."
-                    : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
+                    : chessAccountReadiness.status === "configured"
+                      ? "Chess sign-in is unavailable because its publishable OAuth configuration is incomplete or invalid. Guest progress stays on this device."
+                      : "Signing in on the Account website alone will not connect Chess until its first-party OAuth client is registered."}
                 </p>
                 {chessAccountLoginError() && (
                   <p role="alert">{chessAccountLoginError()}</p>
@@ -3042,12 +3044,14 @@ export default function App() {
                   <div className="chess-data-actions">
                     {repo.getProfileId() === "guest" ? (
                       <button type="button" className="secondary" onClick={() => {
+                        if (!chessAccountSso) return;
                         void chessAccountSso.connect().catch(() => {
                           window.alert("Could not open THIEPN Account sign-in. Guest progress remains on this browser.");
                         });
                       }}>Connect with THIEPN Account</button>
                     ) : (
                       <button type="button" className="secondary" onClick={() => {
+                        if (!chessAccountSso) return;
                         chessAccountSso.signOutLocal();
                       }}>Sign out of Chess on this device</button>
                     )}

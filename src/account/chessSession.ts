@@ -2,7 +2,7 @@ import {
   createThiepnAccountSession,
   createThiepnBrowserSso,
 } from "./sdk/index";
-import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./onboarding";
+import { CHESS_ACCOUNT_CALLBACK, CHESS_ACCOUNT_ISSUER, CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./onboarding";
 
 // This is the audited SDK from thiepn/account@be0adad0, not an independent
 // Google sign-in system. A Chess OAuth client MUST have been registered and
@@ -11,17 +11,42 @@ const setup = currentChessAccountClientReadiness();
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const chessAccountSso = (() => {
-  if (setup.status !== "configured" || !key) return null;
-  const session = createThiepnAccountSession({
-    issuer: import.meta.env.VITE_SUPABASE_URL,
-    publishableKey: key,
-    clientId: setup.clientId,
-    redirectUri: import.meta.env.VITE_THIEPN_ACCOUNT_REDIRECT_URI,
-    storageKey: "thiepn:chess:account-session:v1",
-    authPolicy: "guest-first",
-  });
-  return createThiepnBrowserSso(session, { accountOrigin: CHESS_ACCOUNT_ORIGIN });
+  // A malformed public key or incomplete OAuth registration must never crash
+  // app startup or accidentally fall back to a different app's cached login.
+  if (setup.status !== "configured" || !key || key.length < 20 ||
+      key.startsWith("sb_secret_")) return null;
+  try {
+    const session = createThiepnAccountSession({
+      issuer: CHESS_ACCOUNT_ISSUER,
+      publishableKey: key,
+      clientId: setup.clientId,
+      redirectUri: CHESS_ACCOUNT_CALLBACK,
+      storageKey: "thiepn:chess:account-session:v1",
+      authPolicy: "guest-first",
+    });
+    return createThiepnBrowserSso(session, { accountOrigin: CHESS_ACCOUNT_ORIGIN });
+  } catch {
+    return null; // guest-first, no authenticated cloud writes
+  }
 })();
+
+// Cross-tab sign-out and app-specific token rotation are never inferred from
+// another app's browser session. Revalidate only changes to Chess's own tokens.
+// SDK verification publishes identity changes to the persistence repository.
+export const CHESS_ACCOUNT_TOKEN_STORAGE_KEY = "thiepn:chess:account-session:v1:tokens";
+export function isChessAccountTokenStorageChange(key: string | null): boolean {
+  return key === CHESS_ACCOUNT_TOKEN_STORAGE_KEY || key === null;
+}
+if (chessAccountSso && typeof window !== "undefined") {
+  window.addEventListener("storage", (event) => {
+    if (event.storageArea !== window.localStorage ||
+        !isChessAccountTokenStorageChange(event.key)) return;
+    void chessAccountSso?.verify().catch(() => {
+      // A blocked storage/API read must not crash the open Chess tab.
+      // Identity is not silently changed to a guessed account.
+    });
+  });
+}
 
 let lastLoginError: string | null = null;
 export function chessAccountLoginError() { return lastLoginError; }
