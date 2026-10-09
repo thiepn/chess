@@ -384,3 +384,14 @@ test("P68 control: Play setup survives two same-tab document reloads", async ({ 
     await expect(page.locator(".game-arena")).toHaveCount(0);
   }
 });
+
+
+test("P69B unregistered Account remains guest-first with no broken sign-in button", async ({ page }) => {
+  // Normal CI intentionally has no issued Chess client ID and no OAuth tokens.
+  await open(page, "/settings", ".chess-data-settings");
+  await expect(page.getByRole("group", { name: "THIEPN Account connection" })).toBeVisible();
+  await expect(page.getByText(/pending Account OAuth client registration/i)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Connect with THIEPN Account" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Export JSON backup" })).toBeVisible();
+  await assertNoHorizontalOverflow(page, "/settings");
+});
