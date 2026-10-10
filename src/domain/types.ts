@@ -1,4 +1,5 @@
 import type { PuzzleAttemptSummary } from "../puzzles/types";
+import type { RecordedReviewAttempt } from "../review/practiceLoop";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "../games/types";
 import type { OpeningDeviation, OpeningProgress, OpeningTrainingMode } from "../openings/types";
 import type { SavedStudy } from "../library/types";
@@ -270,6 +271,7 @@ export interface TrainingOutcome {
   puzzleRating?: number;
   puzzleSkillIds?: string[];
   mistakeId?: string;
+  mistakePractice?: { playedMove: string | null; triedMoves: string[] };
   studyId?: string;
   lessonEvidence?: LessonMasterySummary;
   calculationPositionId?: string;
@@ -300,6 +302,7 @@ export interface UserState {
   puzzleHistory?: Record<string, PuzzleAttemptSummary>;
   games?: ImportedGame[];
   mistakes?: PersonalMistake[];
+  reviewPracticeHistory?: RecordedReviewAttempt[];
   openingProgress?: Record<string, OpeningProgress>;
   openingDeviations?: OpeningDeviation[];
   savedStudies?: SavedStudy[];
