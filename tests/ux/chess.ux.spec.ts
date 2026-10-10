@@ -519,3 +519,77 @@ test("P82 static chess previews cannot be dragged or played", async ({ page }) =
   await expect(preview.locator(".legal-target")).toHaveCount(0);
   await expect(preview.locator('[aria-selected="true"]')).toHaveCount(0);
 });
+
+
+test("P83 timed complete game against synthetic legal UCI opponent reaches checkmate and Review handoff", async ({ page }) => {
+  // This is a real GameArena/ChessBoard/clock/PGN browser test, using a
+  // deterministic stand-in Worker. It is NOT independent Stockfish strength
+  // validation, physical hardware testing or human opponent acceptance.
+  await page.addInitScript(() => {
+    class DeterministicWorker extends EventTarget {
+      private turn = 0;
+      postMessage(command: string) {
+        if (command === "uci") queueMicrotask(() => this.send("uciok"));
+        else if (command === "isready") queueMicrotask(() => this.send("readyok"));
+        else if (command.startsWith("go ")) {
+          const move = this.turn++ === 0 ? "f2f3" : "g2g4";
+          queueMicrotask(() => this.send("info depth 2 score cp 0 pv " + move + "\\nbestmove " + move));
+        }
+      }
+      private send(data: string) { this.dispatchEvent(new MessageEvent("message", { data })); }
+      terminate() {}
+    }
+    Object.defineProperty(window, "Worker", { configurable: true, value: DeterministicWorker });
+  });
+  await open(page, "/play", ".play-v2");
+  await page.getByRole("button", { name: "Black", exact: true }).click();
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\\+0/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await expect(page.locator(".move-list")).toContainText("f3");
+  await page.locator('.game-arena .board-square[data-square="e7"]').click();
+  await page.locator('.game-arena .board-square[data-square="e5"]').click();
+  await expect(page.locator(".move-list")).toContainText("g4");
+  await page.locator('.game-arena .board-square[data-square="d8"]').click();
+  await page.locator('.game-arena .board-square[data-square="h4"]').click();
+  await expect(page.locator(".game-result-card")).toBeVisible();
+  await expect(page.locator(".game-result-card")).toContainText(/win|checkmate/i);
+  await expect(page.locator(".move-list")).toContainText("Qh4#");
+  await expect(page.locator(".game-arena [role=timer]")).toHaveCount(2);
+  await expect(page.getByRole("button", { name: /Open game in Review|Review game/ })).toBeEnabled();
+  await page.getByRole("button", { name: /Open game in Review|Review game/ }).click();
+  await expect(page).toHaveURL(/\\/review\\//);
+});
+
+test("P83 transient opponent worker crash restarts once without losing the player's timed move", async ({ page }) => {
+  await page.addInitScript(() => {
+    let construction = 0;
+    class RestartingWorker extends EventTarget {
+      private generation = ++construction;
+      postMessage(command: string) {
+        if (command === "uci") queueMicrotask(() => this.send("uciok"));
+        else if (command === "isready") queueMicrotask(() => this.send("readyok"));
+        else if (command.startsWith("go ")) {
+          if (this.generation === 1) {
+            queueMicrotask(() => this.dispatchEvent(new Event("error")));
+          } else {
+            queueMicrotask(() => this.send("info depth 2 score cp 4 pv e7e5\\nbestmove e7e5"));
+          }
+        }
+      }
+      private send(data: string) { this.dispatchEvent(new MessageEvent("message", { data })); }
+      terminate() {}
+    }
+    Object.defineProperty(window, "Worker", { configurable: true, value: RestartingWorker });
+  });
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\\+0/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await page.locator('.game-arena .board-square[data-square="e2"]').click();
+  await page.locator('.game-arena .board-square[data-square="e4"]').click();
+  await expect(page.locator(".move-list")).toContainText("e5");
+  await expect(page.locator(".move-list")).toContainText("e4");
+  await expect(page.locator(".analysis-error")).toHaveCount(0);
+  await expect(page.locator(".game-arena .game-clock")).toHaveCount(2);
+});
