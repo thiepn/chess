@@ -179,7 +179,7 @@ export function PlayView({
   useEffect(() => {
     if (!externalScenario || route.mode === "game") return;
     const previous = readPlaySnapshot(storageOwner);
-    if (previous?.checkpoint?.moves.length && !previous.checkpoint.finished &&
+    if (previous?.checkpoint && !previous.checkpoint.finished &&
         !window.confirm("Starting another game will replace your unfinished game. Continue?")) {
       onNavigate(previous.path, { replace: true });
       return;
@@ -206,7 +206,7 @@ export function PlayView({
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
     const previous = readPlaySnapshot(storageOwner);
-    if (previous?.checkpoint?.moves.length && !previous.checkpoint.finished &&
+    if (previous?.checkpoint && !previous.checkpoint.finished &&
         !window.confirm("Replace your unfinished game?")) return;
     const path = playGamePath(setup);
     const nextSnapshot: PlaySessionSnapshot = {
@@ -218,10 +218,24 @@ export function PlayView({
     onNavigate(path);
   }
 
+  function saveAndExitGame(checkpoint: GameCheckpoint) {
+    const current = readPlaySnapshot(storageOwner);
+    if (!current || current.path !== routePath || current.checkpoint?.finished) {
+      setSaveFailed(true);
+      return;
+    }
+    if (!writePlaySnapshot(storageOwner, { ...current, checkpoint })) {
+      setSaveFailed(true);
+      return;
+    }
+    onExternalScenarioExit?.();
+    onNavigate(playReturnPath(current.returnPath), { replace: true });
+  }
+
   function exitGame() {
     const current = readPlaySnapshot(storageOwner);
-    if (!current?.checkpoint?.finished && (current?.checkpoint?.moves.length ?? 0) > 0 &&
-        !window.confirm("Discard this unfinished game?")) return;
+    if (current?.checkpoint && !current.checkpoint.finished &&
+        !window.confirm("Discard this unfinished game and its saved moves?")) return;
     const destination = playReturnPath(current?.returnPath);
     clearPlaySnapshot(storageOwner);
     if (externalScenario || activeScenario?.mode === "replay") {
@@ -302,6 +316,7 @@ export function PlayView({
           scenario={scenario}
           timeControl={scenario ? "untimed" : activeSetup.timeControl}
           onExit={exitGame}
+          onSaveExit={saveAndExitGame}
           onFinished={onGameFinished}
           onOpenReview={openFinishedGameReview}
           exitLabel={snapshot?.returnPath ? "Return to previous page" : "Back to Play"}
@@ -315,7 +330,7 @@ export function PlayView({
       {saveFailed && <p role="alert">Game storage is unavailable. Check browser storage settings before playing.</p>}
       {latestSnapshot?.checkpoint && !latestSnapshot.checkpoint.finished && (
         <div className="play-resume-notice">
-          <strong>Unfinished game</strong>
+          <strong>Unfinished game{latestSnapshot.checkpoint.suspended ? " · paused" : ""}</strong>
           <button type="button" className="secondary" onClick={() => onNavigate(latestSnapshot.path)}>
             Resume saved game
           </button>

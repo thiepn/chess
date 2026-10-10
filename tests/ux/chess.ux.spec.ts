@@ -115,9 +115,10 @@ test("Play setup starts and exits an actual game on this viewport", async ({ pag
   await expect(page.locator(".game-arena")).toBeVisible();
   await expect(page.locator(".game-arena [role='grid']")).toBeVisible();
   await expect(page).toHaveURL(/\/play\/game\//);
-  await page.getByRole("button", { name: "Exit game" }).click();
+  await page.getByRole("button", { name: "Save & exit" }).click();
   await expect(page).toHaveURL(/\/play$/);
   await expect(page.locator(".play-v2")).toBeVisible();
+  await expect(page.locator(".play-resume-notice")).toContainText("Unfinished game");
   await assertNoHorizontalOverflow(page, "/play");
 });
 
@@ -592,4 +593,56 @@ test("P83 transient opponent worker crash restarts once without losing the playe
   await expect(page.locator(".move-list")).toContainText("e4");
   await expect(page.locator(".analysis-error")).toHaveCount(0);
   await expect(page.locator(".game-arena .game-clock")).toHaveCount(2);
+});
+
+
+test("P84 timed save-and-exit freezes clocks, preserves owner-scoped moves and resumes for review", async ({ page }) => {
+  await page.addInitScript(() => {
+    class SavingWorker extends EventTarget {
+      postMessage(command: string) {
+        if (command === "uci") queueMicrotask(() => this.dispatchEvent(new MessageEvent("message", { data: "uciok" })));
+        if (command === "isready") queueMicrotask(() => this.dispatchEvent(new MessageEvent("message", { data: "readyok" })));
+        if (command.startsWith("go ")) queueMicrotask(() =>
+          this.dispatchEvent(new MessageEvent("message", { data: "bestmove e7e5" })));
+      }
+      terminate() {}
+    }
+    Object.defineProperty(window, "Worker", { configurable: true, value: SavingWorker });
+  });
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\+0/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  await page.locator('.game-arena .board-square[data-square="e2"]').click();
+  await page.locator('.game-arena .board-square[data-square="e4"]').click();
+  await expect(page.locator(".move-list")).toContainText("e5");
+  await page.getByRole("button", { name: "Save & exit" }).click();
+  await expect(page.locator(".play-resume-notice")).toContainText("paused");
+
+  const saved = await page.evaluate(() => {
+    const key = Object.keys(localStorage).find((key) => key.startsWith("chess:play-session-v2:"));
+    if (!key) throw new Error("Missing owner-scoped chess game");
+    const value = JSON.parse(localStorage.getItem(key)!);
+    if (!value.checkpoint.suspended || value.checkpoint.moves.length !== 2) {
+      throw new Error("Incomplete paused checkpoint");
+    }
+    value.checkpoint.clock.updatedAt -= 3_600_000;
+    localStorage.setItem(key, JSON.stringify(value));
+    return { key, whiteMs: value.checkpoint.clock.whiteMs, blackMs: value.checkpoint.clock.blackMs };
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".play-resume-notice")).toContainText("paused");
+  await page.getByRole("button", { name: "Resume saved game" }).click();
+  await expect(page.locator(".move-list")).toContainText("e4");
+  await expect(page.locator(".move-list")).toContainText("e5");
+  const resumed = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)!).checkpoint, saved.key);
+  expect(resumed.clock.whiteMs).toBeGreaterThan(saved.whiteMs - 10_000);
+  expect(resumed.clock.blackMs).toBeGreaterThan(saved.blackMs - 10_000);
+
+  // The destructive path is separate and requires an explicit user decision.
+  await page.getByRole("button", { name: "Discard game" }).click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  page.once("dialog", async (dialog) => { await dialog.accept(); });
+  await page.getByRole("button", { name: "Discard game" }).click();
+  await expect(page.locator(".play-resume-notice")).toHaveCount(0);
 });

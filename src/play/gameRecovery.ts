@@ -21,6 +21,8 @@ export interface GameCheckpoint {
   moves: string[]; // Exact legal UCI moves; replay reconstructs repetition history.
   clock: RunningClock;
   finished?: CompletedGame;
+  /** Intentional save-and-exit freezes the clock until the next resume. */
+  suspended?: true;
 }
 
 export function initialClock(timeControl: TimeControlId, active: Color, now: number): RunningClock {
@@ -56,6 +58,7 @@ export function completeMoveClock(
 
 export function makeCheckpoint(
   chess: Chess, initialFen: string, clock: RunningClock, finished?: CompletedGame,
+  suspended = false,
 ): GameCheckpoint {
   return {
     version: 1,
@@ -63,6 +66,7 @@ export function makeCheckpoint(
     moves: chess.history({ verbose: true }).map((move) => move.from + move.to + (move.promotion ?? "")),
     clock,
     ...(finished ? { finished } : {}),
+    ...(suspended && !finished ? { suspended: true as const } : {}),
   };
 }
 
@@ -74,6 +78,8 @@ export function restoreCheckpoint(
   if (!checkpoint) return { chess, clock: initialClock(timeControl, chess.turn(), now) };
   if (checkpoint.version !== 1 || checkpoint.initialFen !== initialFen ||
       !Array.isArray(checkpoint.moves) || checkpoint.moves.length > 700 ||
+      (checkpoint.suspended !== undefined && checkpoint.suspended !== true) ||
+      (checkpoint.suspended && checkpoint.finished) ||
       !checkpoint.clock || !Number.isFinite(checkpoint.clock.updatedAt) ||
       !Number.isFinite(checkpoint.clock.whiteMs) ||
       !Number.isFinite(checkpoint.clock.blackMs) ||
@@ -95,6 +101,8 @@ export function restoreCheckpoint(
   }
   const clock = checkpoint.finished
     ? checkpoint.clock
-    : advanceClock(checkpoint.clock, now, timeControl !== "untimed");
+    : checkpoint.suspended
+      ? { ...checkpoint.clock, updatedAt: now }
+      : advanceClock(checkpoint.clock, now, timeControl !== "untimed");
   return { chess, clock, finished: checkpoint.finished };
 }

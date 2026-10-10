@@ -86,3 +86,41 @@ describe("P62 deterministic game restoration", () => {
     expect(restoreCheckpoint(new Chess().fen(), snap, "untimed", 100_000).finished?.reason).toBe("resignation");
   });
 });
+
+
+describe("P84 explicit saved-session suspension", () => {
+  it("freezes a deliberately saved 10+0 clock through hours offline, then resumes ticking", () => {
+    const chess = new Chess();
+    chess.move("e4");
+    const starting = initialClock("10+0", "w", 1_000);
+    const atSave = completeMoveClock(starting, "w", "10+0", 3_500)!;
+    const saved = makeCheckpoint(chess, new Chess().fen(), atSave, undefined, true);
+    expect(saved.suspended).toBe(true);
+    const later = restoreCheckpoint(new Chess().fen(), saved, "10+0", 3_600_000);
+    expect(later.chess.history()).toEqual(["e4"]);
+    expect(later.clock).toMatchObject({ whiteMs: 597_500, blackMs: 600_000, active: "b", updatedAt: 3_600_000 });
+    const running = makeCheckpoint(later.chess, new Chess().fen(), later.clock);
+    expect(running.suspended).toBeUndefined();
+    expect(restoreCheckpoint(new Chess().fen(), running, "10+0", 3_602_000).clock.blackMs).toBe(598_000);
+  });
+
+  it("never grants free clock time to unexpected tab closure or ordinary backgrounding", () => {
+    const fen = new Chess().fen();
+    const running = makeCheckpoint(new Chess(), fen, initialClock("15+10", "w", 100));
+    expect(restoreCheckpoint(fen, running, "15+10", 60_100).clock.whiteMs).toBe(840_000);
+  });
+
+  it("rejects forged suspended flags and impossible finished-plus-paused state", () => {
+    const fen = new Chess().fen();
+    const base = makeCheckpoint(new Chess(), fen, initialClock("10+0", "w", 50));
+    expect(() => restoreCheckpoint(fen, { ...base, suspended: "yes" as never }, "10+0", 500))
+      .toThrow(/incompatible|damaged/);
+    const finished = {
+      outcome: "draw" as const, reason: "stalemate" as const,
+      completedAt: "2026-10-10T12:00:00.000Z", reviewSent: false,
+    };
+    expect(() => restoreCheckpoint(fen, { ...base, suspended: true, finished }, "10+0", 500))
+      .toThrow(/incompatible|damaged/);
+    expect(base.suspended).toBeUndefined();
+  });
+});
