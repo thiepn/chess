@@ -41,7 +41,8 @@ export function legalReviewMistake(mistake: PersonalMistake, game: ImportedGame)
       from: best.slice(0, 2), to: best.slice(2, 4),
       promotion: best.slice(4, 5) || "q",
     });
-    return Boolean(played) && game.moves.filter((m) => m.ply === mistake.ply).length === 1;
+    return Boolean(played) && (!played.promotion || best.endsWith(played.promotion)) &&
+      game.moves.filter((m) => m.ply === mistake.ply).length === 1;
   } catch { return false; }
 }
 
