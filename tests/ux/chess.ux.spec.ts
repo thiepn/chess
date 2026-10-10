@@ -533,7 +533,7 @@ test("P83 timed complete game against synthetic legal UCI opponent reaches check
         else if (command === "isready") queueMicrotask(() => this.send("readyok"));
         else if (command.startsWith("go ")) {
           const move = this.turn++ === 0 ? "f2f3" : "g2g4";
-          queueMicrotask(() => this.send("info depth 2 score cp 0 pv " + move + "\\nbestmove " + move));
+          queueMicrotask(() => this.send("info depth 2 score cp 0 pv " + move + "\nbestmove " + move));
         }
       }
       private send(data: string) { this.dispatchEvent(new MessageEvent("message", { data })); }
@@ -543,7 +543,7 @@ test("P83 timed complete game against synthetic legal UCI opponent reaches check
   });
   await open(page, "/play", ".play-v2");
   await page.getByRole("button", { name: "Black", exact: true }).click();
-  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\\+0/ }).click();
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\+0/ }).click();
   await page.locator(".play-v2-start-block .primary").click();
   await expect(page.locator(".game-arena")).toBeVisible();
   await expect(page.locator(".move-list")).toContainText("f3");
@@ -558,7 +558,7 @@ test("P83 timed complete game against synthetic legal UCI opponent reaches check
   await expect(page.locator(".game-arena [role=timer]")).toHaveCount(2);
   await expect(page.getByRole("button", { name: /Open game in Review|Review game/ })).toBeEnabled();
   await page.getByRole("button", { name: /Open game in Review|Review game/ }).click();
-  await expect(page).toHaveURL(/\\/review\\//);
+  await expect(page).toHaveURL(/\/review\//);
 });
 
 test("P83 transient opponent worker crash restarts once without losing the player's timed move", async ({ page }) => {
@@ -573,7 +573,7 @@ test("P83 transient opponent worker crash restarts once without losing the playe
           if (this.generation === 1) {
             queueMicrotask(() => this.dispatchEvent(new Event("error")));
           } else {
-            queueMicrotask(() => this.send("info depth 2 score cp 4 pv e7e5\\nbestmove e7e5"));
+            queueMicrotask(() => this.send("info depth 2 score cp 4 pv e7e5\nbestmove e7e5"));
           }
         }
       }
@@ -583,7 +583,7 @@ test("P83 transient opponent worker crash restarts once without losing the playe
     Object.defineProperty(window, "Worker", { configurable: true, value: RestartingWorker });
   });
   await open(page, "/play", ".play-v2");
-  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\\+0/ }).click();
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /10\+0/ }).click();
   await page.locator(".play-v2-start-block .primary").click();
   await expect(page.locator(".game-arena")).toBeVisible();
   await page.locator('.game-arena .board-square[data-square="e2"]').click();
