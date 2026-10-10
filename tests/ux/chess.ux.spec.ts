@@ -512,7 +512,10 @@ test("P82 static chess previews cannot be dragged or played", async ({ page }) =
   await expect(preview).toBeVisible();
   await expect(preview.locator(".board-movable")).toHaveCount(0);
   const pawn = preview.locator('[data-square="e2"]');
-  await pawn.click();
   await expect(pawn).toHaveAttribute("aria-disabled", "true");
+  // Playwright correctly refuses a user click on aria-disabled controls.
+  // Dispatch an attempted click to assert defense-in-depth at the component boundary.
+  await pawn.dispatchEvent("click");
   await expect(preview.locator(".legal-target")).toHaveCount(0);
+  await expect(preview.locator('[aria-selected="true"]')).toHaveCount(0);
 });
