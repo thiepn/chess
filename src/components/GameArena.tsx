@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
+import { opponentThinkBudgetMs } from "../play/opponentSearch";
 import { useExperience } from "../interaction/ExperienceProvider";
 import { importPgn } from "../games/import";
 import { advanceClock, completeMoveClock, makeCheckpoint, restoreCheckpoint, type GameCheckpoint, type RunningClock, type CompletedGame } from "../play/gameRecovery";
@@ -117,6 +118,7 @@ export function GameArena({
   const clockRef = useRef<RunningClock>(recovered.clock);
   const [clock, setClock] = useState<RunningClock>(recovered.clock);
   const [engineNonce, setEngineNonce] = useState(0);
+  const recoveryAttemptsRef = useRef(0);
   const [presentationMove, setPresentationMove] = useState<
     { from: Square; to: Square } | undefined
   >();
@@ -194,7 +196,7 @@ export function GameArena({
     }
     let cancelled = false;
     setError(null);
-    setEngineStatus("Loading opponent…");
+    setEngineStatus(recoveryAttemptsRef.current ? "Reconnecting opponent…" : "Loading opponent…");
 
     StockfishBrowserEngine.create()
       .then((engine) => {
@@ -208,12 +210,16 @@ export function GameArena({
       })
       .catch((cause) => {
         if (cancelled) return;
-        setError(
-          cause instanceof Error
-            ? cause.message
-            : "The AI opponent could not be loaded.",
-        );
-        setEngineStatus("Opponent unavailable");
+        const message = cause instanceof Error ? cause.message : "The AI opponent could not be loaded.";
+        if (/worker|timed out/i.test(message) && recoveryAttemptsRef.current < 1) {
+          recoveryAttemptsRef.current += 1;
+          setEngineReady(false);
+          setEngineStatus("Opponent interrupted · reconnecting…");
+          setEngineNonce((count) => count + 1);
+        } else {
+          setError(message);
+          setEngineStatus("Opponent paused · retry available");
+        }
       });
 
     return () => {
@@ -223,6 +229,20 @@ export function GameArena({
       setEngineReady(false);
     };
   }, [initialFen, playerColor, profile.name, scenario, engineNonce, engineRequested]);
+
+  const opponentColor: Color = playerColor === "w" ? "b" : "w";
+
+  function recoverOpponent(message: string) {
+    if (recoveryAttemptsRef.current < 1 && !finishedRef.current) {
+      recoveryAttemptsRef.current += 1;
+      setEngineReady(false);
+      setEngineStatus("Opponent interrupted · reconnecting…");
+      setEngineNonce((count) => count + 1);
+    } else {
+      setError(message);
+      setEngineStatus("Opponent paused · retry available");
+    }
+  }
 
   const playerToMove =
     !finishedRef.current && gameRef.current.turn() === playerColor && !gameRef.current.isGameOver();
@@ -297,6 +317,10 @@ export function GameArena({
   ) {
     if (finishedRef.current) return;
     finishedRef.current = true;
+    // Abort pending opponent search on resignation, timeout or checkmate.
+    engineRef.current?.quit();
+    engineRef.current = null;
+    setEngineReady(false);
 
     const chess = gameRef.current;
     const completedAt = new Date().toISOString();
@@ -379,17 +403,19 @@ export function GameArena({
     let cancelled = false;
     const requestedFen = chess.fen();
     setThinking(true);
-    setEngineStatus(`${profile.name} is thinking…`);
+    setEngineStatus(`${profile.name} · choosing a legal move…`);
 
     engineRef.current
       .chooseMove(chess.fen(), {
         skillLevel: profile.skillLevel,
         depth: profile.depth,
+        moveTimeMs: opponentThinkBudgetMs(profile, timeControl, clockRef.current, opponentColor),
       })
       .then((evaluation) => {
         if (cancelled || finishedRef.current || chess.fen() !== requestedFen) return;
         if (!evaluation.bestMove || evaluation.bestMove === "(none)") {
-          finishIfNeeded();
+          if (chess.isGameOver()) finishIfNeeded();
+          else recoverOpponent("The opponent did not return a legal move. Retry opponent.");
           return;
         }
 
@@ -401,7 +427,7 @@ export function GameArena({
           return;
         }
         if (!move) {
-          setError("The AI returned an illegal move.");
+          recoverOpponent("The opponent returned an illegal move. Retry opponent.");
           return;
         }
 
@@ -414,15 +440,14 @@ export function GameArena({
         else if (move.captured) feedback("capture");
         else feedback("move");
         setFen(chess.fen());
+        recoveryAttemptsRef.current = 0;
         setEngineStatus(`${profile.name} · ${profile.accent}`);
         finishIfNeeded();
       })
       .catch((cause) => {
         if (cancelled) return;
-        setError(
-          cause instanceof Error
-            ? cause.message
-            : "The AI move could not be calculated.",
+        recoverOpponent(
+          cause instanceof Error ? cause.message : "The AI move could not be calculated.",
         );
       })
       .finally(() => {
@@ -623,6 +648,9 @@ export function GameArena({
               <span>{error}</span>
               {!result && <button type="button" className="secondary" onClick={() => {
                 setError(null);
+                recoveryAttemptsRef.current = 0;
+                setEngineReady(false);
+                setEngineStatus("Restarting opponent…");
                 setEngineNonce((count) => count + 1);
               }}>Retry opponent</button>}
             </div>
