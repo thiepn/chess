@@ -32,6 +32,7 @@ interface GameArenaProps {
   profile: AiProfile;
   scenario?: TrainingScenario;
   onExit: () => void;
+  onSaveExit?: (checkpoint: GameCheckpoint) => void;
   onFinished: (result: PlayResult) => Promise<boolean> | boolean;
   onOpenReview?: (gameId: string) => void;
   exitLabel?: string;
@@ -89,6 +90,19 @@ function clockLabel(ms: number) {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+function reasonLabel(reason: PlayResult["reason"]) {
+  switch (reason) {
+    case "checkmate": return "Checkmate";
+    case "stalemate": return "Stalemate";
+    case "insufficient": return "Insufficient mating material";
+    case "threefold": return "Threefold repetition";
+    case "fifty-move": return "Fifty-move rule";
+    case "timeout": return "Time ran out";
+    case "resignation": return "Resignation";
+    default: return "Draw";
+  }
+}
+
 function outcomeLabel(outcome: PlayResult["outcome"]) {
   if (outcome === "win") return "You won";
   if (outcome === "draw") return "Draw";
@@ -104,6 +118,7 @@ export function GameArena({
   profile,
   scenario,
   onExit,
+  onSaveExit,
   onFinished,
   onOpenReview,
   exitLabel = "Back to Play",
@@ -269,6 +284,26 @@ export function GameArena({
       window.removeEventListener("focus", tick);
     };
   }, [fen, result, timeControl, playerColor, engineReady, error]);
+
+  function saveAndExit() {
+    if (finishedRef.current || result || emptyResult) {
+      onExit();
+      return;
+    }
+    // Apply genuine elapsed time before the user intentionally pauses.
+    const now = Date.now();
+    const current = engineReady && !error
+      ? advanceClock(clockRef.current, now, timeControl !== "untimed")
+      : { ...clockRef.current, updatedAt: now };
+    if (timeControl !== "untimed" && (current.whiteMs === 0 || current.blackMs === 0)) {
+      clockRef.current = current;
+      setClock(current);
+      const loser = current.whiteMs === 0 ? "w" : "b";
+      void finalize(playerColor === loser ? "loss" : "win", "timeout");
+      return;
+    }
+    onSaveExit?.(makeCheckpoint(gameRef.current, initialFen, current, undefined, true));
+  }
 
   function finishMoveClock(mover: Color): boolean {
     const next = completeMoveClock(clockRef.current, mover, timeControl, Date.now());
@@ -464,8 +499,8 @@ export function GameArena({
   return (
     <section className="game-arena">
       <div className="game-topbar">
-        <button className="back-link" type="button" onClick={onExit}>
-          <RotateCcw size={15} /> Exit game
+        <button className="back-link" type="button" onClick={result || emptyResult ? onExit : saveAndExit}>
+          <RotateCcw size={15} /> {result || emptyResult ? exitLabel : "Save & exit"}
         </button>
         <div className="game-opponent" aria-live="polite">
           <Swords size={15} />
@@ -649,6 +684,12 @@ export function GameArena({
           )}
 
           {!result && !emptyResult && (
+            <button className="secondary" type="button" onClick={onExit}>
+              Discard game
+            </button>
+          )}
+
+          {!result && !emptyResult && (
             <button
               className="resign-button"
               type="button"
@@ -663,6 +704,7 @@ export function GameArena({
             <div className="game-result-card" role="status">
               <p className="eyebrow">GAME COMPLETE</p>
               <h3>{outcomeLabel(emptyResult.outcome)}</h3>
+              <p>{reasonLabel(emptyResult.reason)}</p>
               <p>The game ended before a legal move was recorded. No PGN was created.</p>
               <button className="secondary" type="button" onClick={onExit}>{exitLabel}</button>
             </div>
@@ -682,6 +724,7 @@ export function GameArena({
               <div>
                 <p className="eyebrow">GAME COMPLETE</p>
                 <h3>{outcomeLabel(result.outcome)}</h3>
+                <p>{reasonLabel(result.reason)}</p>
                 {scenario && (
                   <span>
                     {result.scenarioSuccess
