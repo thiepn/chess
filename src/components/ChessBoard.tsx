@@ -500,18 +500,39 @@ export function ChessBoard({
               aria-disabled={disabled}
               onFocus={() => setFocusedSquare(square)}
               onKeyDown={(event) => handleSquareKeyDown(event, square)}
-              onClick={() => selectSquare(square)}
+              onClick={() => {
+                if (suppressNextClickRef.current) {
+                  suppressNextClickRef.current = false;
+                  return;
+                }
+                selectSquare(square);
+              }}
+              onPointerDown={(event) => handlePointerDown(event, square)}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
               draggable={!disabled && !!piece && piece.color === chess.turn()}
-              onDragStart={() => setDragFrom(square)}
+              onDragStart={(event) => {
+                if (disabled || piece?.color !== chess.turn() || pendingPromotion) {
+                  event.preventDefault();
+                  return;
+                }
+                setSelected(null);
+                setDragFrom(square);
+              }}
               onDragOver={(event) => {
-                if (dragFrom) event.preventDefault();
+                if (dragFrom) {
+                  event.preventDefault();
+                  setDragHover(square);
+                }
               }}
               onDrop={(event) => {
                 event.preventDefault();
-                if (dragFrom) void requestMove(dragFrom, square);
+                if (dragFrom && dragFrom !== square) void requestMove(dragFrom, square);
                 setDragFrom(null);
+                setDragHover(null);
               }}
-              onDragEnd={() => setDragFrom(null)}
+              onDragEnd={() => { setDragFrom(null); setDragHover(null); }}
             >
               {piece && (() => {
                 const landingMove =
@@ -606,11 +627,22 @@ export function ChessBoard({
         )}
       </div>
       {pendingPromotion && (
-        <div className="board-promotion-picker" role="group"
+        <div className="board-promotion-picker" role="dialog" aria-modal="true"
           aria-label={"Choose promotion piece for " + pendingPromotion.from + " to " + pendingPromotion.to}
           onKeyDown={(event) => {
+            if (event.key === "Tab") {
+              const first = promotionFirstChoiceRef.current;
+              const last = promotionCancelRef.current;
+              if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault(); last?.focus();
+              } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault(); first?.focus();
+              }
+              return;
+            }
             if (event.key !== "Escape") return;
             event.preventDefault();
+            event.stopPropagation();
             const from = pendingPromotion.from;
             setPendingPromotion(null);
             focusSquare(from);
@@ -626,14 +658,17 @@ export function ChessBoard({
               <button type="button" key={piece} className="board-promotion-choice"
                 ref={index === 0 ? promotionFirstChoiceRef : undefined}
                 aria-label={"Promote to " + label}
-                onClick={() => tryMove(pendingPromotion.from, pendingPromotion.to, piece)}>
+                onClick={() => {
+                  const to = pendingPromotion.to;
+                  if (tryMove(pendingPromotion.from, to, piece)) focusSquare(to);
+                }}>
                 <span className="board-promotion-piece" aria-hidden="true">
                   <ChessPiece color={chess.turn()} type={piece} styleVariant={settings.pieceStyle} />
                 </span>
                 <span>{label}</span>
               </button>
             ))}
-            <button type="button" className="board-promotion-cancel" onClick={() => {
+            <button type="button" className="board-promotion-cancel" ref={promotionCancelRef} onClick={() => {
               const from = pendingPromotion.from;
               setPendingPromotion(null);
               focusSquare(from);
