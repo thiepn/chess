@@ -387,7 +387,32 @@ export default function App() {
 
   const session = useMemo(() => composeSession(state, mode), [state, mode]);
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
-  const active = manualActivity ?? sessionActivity;
+  // A Review-triggered exercise must resolve from the current owner's saved
+  // game even if a deferred view transition or reload clears manualActivity.
+  // The URL is only a selector; it never authorizes unverified exercise data.
+  const routeActivityId = (() => {
+    if (!loaded || page !== "train" || !route.path.startsWith("/train/session/")) return "";
+    try { return decodeURIComponent(route.path.slice("/train/session/".length)); }
+    catch { return ""; }
+  })();
+  const routePracticeActivity: TrainingActivity | null = (() => {
+    if (!routeActivityId.startsWith("mistake:")) return null;
+    const mistakeId = routeActivityId.slice("mistake:".length);
+    const mistake = state.mistakes?.find(item => item.id === mistakeId);
+    const game = state.games?.find(item => item.id === mistake?.gameId);
+    if (!mistake || !game || !legalReviewMistake(mistake, game)) return null;
+    const skill = mistake.skillIds.map(id => skillById[id]).find(Boolean);
+    if (!skill) return null;
+    return {
+      id: routeActivityId, source: "game", skillIds: [skill.id],
+      activityType: "personalMistake", estimatedMinutes: 5,
+      priority: 1, difficulty: skill.difficulty, novelty: 0, urgency: 1,
+      reason: `From move ${mistake.moveNumber}: your own game`,
+      title: skill.title, subtitle: "Review your mistake",
+      mistakeId: mistake.id,
+    };
+  })();
+  const active = routePracticeActivity ?? manualActivity ?? sessionActivity;
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
   const activeMistake = active?.mistakeId
     ? state.mistakes?.find((mistake) => {
@@ -1282,8 +1307,9 @@ export default function App() {
       };
     });
 
-    if (manualActivity) {
-      closeTrainingRuntime();
+    if (manualActivity || routePracticeActivity) {
+      closeTrainingRuntime(routePracticeActivity && trainingReturnPath === "/train"
+        ? "/review" : trainingReturnPath);
       return;
     }
 
