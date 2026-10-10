@@ -36,6 +36,9 @@ interface GameStoryViewProps {
   onPracticeOpening: (repertoireId: string, nodeId: string) => void;
   onContinueTraining: (skillId?: string) => void;
   onPlayAgain: () => void;
+  onRefreshAnalysis?: () => void;
+  refreshingAnalysis?: boolean;
+  analysisError?: string | null;
 }
 
 type PreviewMode = "position" | "actual" | "better" | "line";
@@ -120,6 +123,9 @@ export function GameStoryView({
   onPracticeOpening,
   onContinueTraining,
   onPlayAgain,
+  onRefreshAnalysis,
+  refreshingAnalysis = false,
+  analysisError,
 }: GameStoryViewProps) {
   const story = game.reviewStory;
   const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 1;
@@ -284,6 +290,16 @@ export function GameStoryView({
           </span>
         </div>
       </header>
+
+      {onRefreshAnalysis && (
+        <div className="review-v2-refresh">
+          <button className="secondary" type="button" disabled={refreshingAnalysis}
+            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
+            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
+          </button>
+          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
+        </div>
+      )}
 
       <div className="review-phase-strip" aria-label="Game phases">
         {story.phases.map((phase) => (
