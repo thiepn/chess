@@ -425,16 +425,14 @@ export function PlayView({
               );
             })}
           </div>
-          <p className="play-v2-opponent-explanation" aria-live="polite">
-            {resolvedProfile.description} Approximate strength, not an Elo rating.
-            The opponent limits its thinking time to protect timed games.
-          </p>
+
         </fieldset>
 
         <div className="play-v2-start-block">
           <div>
             <span>Opponent</span>
             <strong>{resolvedProfile.name}</strong>
+            <small>{resolvedProfile.description} Difficulty is approximate, not Elo.</small>
           </div>
           <button
             className="primary"
