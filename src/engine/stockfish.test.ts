@@ -51,8 +51,7 @@ describe("P83 real browser UCI engine wrapper", () => {
   it("does not claim the worker is ready until UCI and readyok both complete", async () => {
     ControlledWorker.automaticHandshake = false;
     const resolving = StockfishBrowserEngine.create();
-    await Promise.resolve();
-    await Promise.resolve();
+    await vi.waitFor(() => expect(ControlledWorker.instances[0]?.messages).toContain("uci"));
     const worker = ControlledWorker.instances[0];
     expect(worker).toBeDefined();
     let ready = false;
