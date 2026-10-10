@@ -34,7 +34,6 @@ on:
       - 'docs/P81_CORE_CHESS_EXPERIENCE.md'
       - 'src/interaction/board-pointer.ts'
       - 'src/interaction/board-pointer.test.ts'
-      - 'src/styles/p82-board-interaction.css'
 
 permissions:
   contents: read
