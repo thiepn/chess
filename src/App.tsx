@@ -41,7 +41,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
-import { recordReviewAttempt } from "./review/practiceLoop";
+import { legalReviewMistake, recordReviewAttempt } from "./review/practiceLoop";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -377,10 +377,13 @@ export default function App() {
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
   const active = manualActivity ?? sessionActivity;
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
-  const activeMistake =
-    active?.mistakeId
-      ? state.mistakes?.find((mistake) => mistake.id === active.mistakeId)
-      : undefined;
+  const activeMistake = active?.mistakeId
+    ? state.mistakes?.find((mistake) => {
+        const game = state.games?.find(g => g.id === mistake.gameId);
+        return mistake.id === active.mistakeId &&
+          Boolean(game && legalReviewMistake(mistake, game));
+      })
+    : undefined;
   const activeOpeningNode =
     active?.openingNodeId ? openingNodes[active.openingNodeId] : undefined;
   const activeRepertoire =
@@ -1584,7 +1587,8 @@ export default function App() {
 
   function startMistakePractice(mistakeId: string) {
     const mistake = state.mistakes?.find((item) => item.id === mistakeId);
-    if (!mistake) return;
+    const game = state.games?.find(g => g.id === mistake?.gameId);
+    if (!mistake || !game || !legalReviewMistake(mistake, game)) return;
 
     const skill = mistake.skillIds
       .map((skillId) => skillById[skillId])
