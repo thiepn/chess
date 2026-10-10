@@ -432,7 +432,7 @@ export function PlayView({
           <div>
             <span>Opponent</span>
             <strong>{resolvedProfile.name}</strong>
-            <small>{resolvedProfile.description} Difficulty is approximate, not Elo.</small>
+            <small>{resolvedProfile.description} No Elo rating.</small>
           </div>
           <button
             className="primary"
