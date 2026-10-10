@@ -93,8 +93,6 @@ export class StockfishBrowserEngine {
       globalThis.clearTimeout(current.timeout);
       current.reject(reason);
     }
-    this.worker.removeEventListener("error", this.onWorkerError);
-    this.worker.removeEventListener("message", this.handleMessage);
     this.worker.terminate();
   }
 
@@ -103,23 +101,20 @@ export class StockfishBrowserEngine {
       this.startupReject = reject;
       let stage: "uci" | "ready" = "uci";
       const onMessage = (event: MessageEvent) => {
-        for (const raw of String(event.data ?? "").split("\n")) {
-          const line = raw.trim();
-          if (stage === "uci" && line === "uciok") {
-            stage = "ready";
-            this.worker.postMessage("setoption name Hash value 16");
-            this.worker.postMessage("isready");
-          } else if (stage === "ready" && line === "readyok") {
-            cleanup();
-            this.startupReject = null;
-            this.worker.addEventListener("message", this.handleMessage);
-            resolve();
-            return;
-          }
+        const line = String(event.data ?? "");
+        if (stage === "uci" && line.includes("uciok")) {
+          stage = "ready";
+          this.worker.postMessage("setoption name Hash value 16");
+          this.worker.postMessage("isready");
+        } else if (stage === "ready" && line.includes("readyok")) {
+          cleanup();
+          this.startupReject = null;
+          this.worker.addEventListener("message", this.handleMessage);
+          resolve();
         }
       };
       const timeout = globalThis.setTimeout(
-        () => this.invalidate(new Error("Stockfish initialization timed out.")),
+        () => this.invalidate(new Error("Stockfish startup timed out.")),
         12_000,
       );
       const cleanup = () => {
@@ -130,7 +125,7 @@ export class StockfishBrowserEngine {
       this.cleanupStartup = cleanup;
       this.worker.addEventListener("message", onMessage);
       try { this.worker.postMessage("uci"); }
-      catch { this.invalidate(new Error("Stockfish worker failed to start.")); }
+      catch { this.invalidate(new Error("Stockfish failed to start.")); }
     });
   }
 
@@ -165,7 +160,7 @@ export class StockfishBrowserEngine {
   ): Promise<EngineEvaluation> {
     await this.readyPromise;
     if (this.unavailable) throw this.unavailable;
-    if (this.search) throw new Error("Stockfish is already analyzing another position.");
+    if (this.search) throw new Error("Stockfish is busy.");
     const safeDepth = Math.min(18, Math.max(1, Math.round(depth) || 8));
     const safeSkill = Math.min(20, Math.max(0, Math.round(skillLevel) || 0));
     const safeTime = moveTimeMs === undefined ? null
