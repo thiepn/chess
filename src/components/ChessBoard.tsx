@@ -282,10 +282,10 @@ export function ChessBoard({
   }
 
   function focusSquare(square: Square) {
+    // Square buttons already exist: focus synchronously so a second rapid
+    // arrow key starts from the new square, not the previous frame's square.
     setFocusedSquare(square);
-    window.requestAnimationFrame(() => {
-      squareRefs.current.get(square)?.focus();
-    });
+    squareRefs.current.get(square)?.focus();
   }
 
   function handleSquareKeyDown(
