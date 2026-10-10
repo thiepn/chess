@@ -78,7 +78,7 @@ export class StockfishBrowserEngine {
   }
 
   private onWorkerError = () => {
-    this.invalidate(new Error("Stockfish worker stopped unexpectedly."));
+    this.invalidate(new Error("Stockfish worker crashed."));
   };
 
   private invalidate(reason: Error) {
@@ -160,7 +160,7 @@ export class StockfishBrowserEngine {
   ): Promise<EngineEvaluation> {
     await this.readyPromise;
     if (this.unavailable) throw this.unavailable;
-    if (this.search) throw new Error("Stockfish is busy.");
+    if (this.search) throw new Error("Engine busy.");
     const safeDepth = Math.min(18, Math.max(1, Math.round(depth) || 8));
     const safeSkill = Math.min(20, Math.max(0, Math.round(skillLevel) || 0));
     const safeTime = moveTimeMs === undefined ? null
@@ -168,7 +168,7 @@ export class StockfishBrowserEngine {
 
     return new Promise<EngineEvaluation>((resolve, reject) => {
       const timeout = globalThis.setTimeout(
-        () => this.invalidate(new Error("Stockfish search timed out.")),
+        () => this.invalidate(new Error("Engine timed out.")),
         safeTime === null ? 15_000 : Math.max(4000, safeTime + 3000),
       );
       this.search = { resolve, reject, timeout };
@@ -179,7 +179,7 @@ export class StockfishBrowserEngine {
           `go depth ${safeDepth}${safeTime === null ? "" : ` movetime ${safeTime}`}`,
         );
       } catch {
-        this.invalidate(new Error("Stockfish worker unavailable."));
+        this.invalidate(new Error("Worker unavailable."));
       }
     });
   }
