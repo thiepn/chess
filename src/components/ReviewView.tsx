@@ -26,6 +26,7 @@ import type {
 import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
+import { reviewPracticeQueue, type RecordedReviewAttempt } from "../review/practiceLoop";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
 );
@@ -35,6 +36,7 @@ import { LichessSyncCard } from "./LichessSyncCard";
 interface ReviewViewProps {
   games: ImportedGame[];
   mistakes: PersonalMistake[];
+  practiceHistory: RecordedReviewAttempt[];
   routePath: string;
   onNavigate: (path: string) => void;
   lichess?: LichessConnection;
@@ -66,6 +68,7 @@ function severityLabel(value: PersonalMistake["severity"]) {
 export function ReviewView({
   games,
   mistakes,
+  practiceHistory,
   routePath,
   onNavigate,
   lichess,
@@ -106,6 +109,15 @@ export function ReviewView({
     ? games.find((game) => game.id === route.gameId)
     : undefined;
 
+  const practiceQueue = useMemo(
+    () => reviewPracticeQueue(games, mistakes, practiceHistory),
+    [games, mistakes, practiceHistory],
+  );
+  const pendingPractice = practiceQueue.filter(item => !item.mistake.resolved);
+  const duePracticeCount = practiceQueue.filter(item => item.due).length;
+  const verifiedHistoryCount = practiceHistory.filter(a =>
+    practiceQueue.some(entry => entry.mistake.id === a.mistakeId &&
+      entry.mistake.gameId === a.gameId && entry.mistake.ply === a.ply)).length;
   const unresolved = useMemo(
     () =>
       mistakes
@@ -411,8 +423,8 @@ export function ReviewView({
               analyzed
             </span>
             <span>
-              <strong>{unresolved.length}</strong>
-              to revisit
+              <strong>{pendingPractice.length}</strong>
+              validated to revisit
             </span>
           </div>
         </header>
@@ -688,19 +700,30 @@ export function ReviewView({
         <header>
           <div>
             <p className="eyebrow">PRACTICE AGAIN</p>
-            <h2 id="repair-title">{unresolved.length} positions</h2>
+            <h2 id="repair-title">{pendingPractice.length} positions</h2>
           </div>
           <Target size={17} />
         </header>
 
+        <p className="review-practice-summary" role="status">
+          {duePracticeCount} due · {verifiedHistoryCount} recorded attempts.
+          Prioritized by source-verified positions, severity, review date and unsuccessful tries.
+        </p>
+        {practiceQueue.length > 0 && (
+          <button type="button" className="primary review-practice-next"
+            onClick={() => onTrainMistake(practiceQueue[0].mistake.id)}>
+            <Target size={15} /> Practice next priority
+          </button>
+        )}
         <div className="review-v2-repair-list">
-          {unresolved.length ? (
-            unresolved.slice(0, 12).map((mistake) => (
+          {practiceQueue.length ? (
+            practiceQueue.slice(0, 12).map(({mistake, due, recentAttempts, recentSuccesses, lastQuality}) => (
               <div key={mistake.id} className={`review-v2-repair-row ${mistake.severity}`}>
                 <div>
                   <span>{severityLabel(mistake.severity)} · move {mistake.moveNumber}</span>
                   <strong>{mistake.actualSan}</strong>
                   <p>{mistake.explanation}</p>
+                  <small>{due ? "Due for practice" : "Review scheduled later"} · {recentSuccesses}/{recentAttempts} recent successes{lastQuality === null ? "" : ` · latest quality ${Math.round(lastQuality * 100)}%`}</small>
                 </div>
                 <div>
                   <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
@@ -723,7 +746,7 @@ export function ReviewView({
         {mistakes.some((mistake) => mistake.resolved) && (
           <div className="review-v2-repaired">
             <RotateCcw size={14} />
-            {mistakes.filter((mistake) => mistake.resolved).length} practiced positions
+            {practiceQueue.filter(entry => entry.mistake.resolved).length} practiced positions
           </div>
         )}
       </aside>
