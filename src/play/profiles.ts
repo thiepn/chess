@@ -5,34 +5,34 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   gentle: {
     id: "gentle",
     name: "Gentle",
-    description: "Leaves tactical chances and plays shallowly enough for newer learners.",
+    description: "Forgiving practice.",
     skillLevel: 0,
     depth: 5,
-    accent: "Learning pace",
+    accent: "Gentle pace",
   },
   developing: {
     id: "developing",
     name: "Developing",
-    description: "Punishes obvious mistakes but still allows recoverable positions.",
+    description: "Sees basic mistakes.",
     skillLevel: 3,
     depth: 7,
-    accent: "Forgiving pressure",
+    accent: "Moderate pressure",
   },
   club: {
     id: "club",
     name: "Club",
-    description: "A steady practical opponent for normal training games.",
+    description: "Balanced practice.",
     skillLevel: 7,
     depth: 9,
-    accent: "Balanced challenge",
+    accent: "Balanced play",
   },
   strong: {
     id: "strong",
     name: "Strong",
-    description: "Accurate enough to expose strategic and calculation weaknesses.",
+    description: "Tactical challenge.",
     skillLevel: 13,
     depth: 11,
-    accent: "Serious resistance",
+    accent: "Strong play",
   },
 };
 
@@ -56,47 +56,17 @@ function averageRelevantMastery(mastery: Record<string, SkillMastery>) {
   return relevant.reduce((sum, value) => sum + value, 0) / relevant.length;
 }
 
-export function adaptiveAiProfile(
-  mastery: Record<string, SkillMastery>,
-): AiProfile {
+export function adaptiveAiProfile(mastery: Record<string, SkillMastery>): AiProfile {
   const score = averageRelevantMastery(mastery);
-
-  if (score < 35) {
-    return {
-      ...aiProfiles.gentle,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Currently matched to a gentle training level.",
-      accent: "Matched to your player model",
-    };
-  }
-
-  if (score < 55) {
-    return {
-      ...aiProfiles.developing,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Currently matched to a developing training level.",
-      accent: "Matched to your player model",
-    };
-  }
-
-  if (score < 72) {
-    return {
-      ...aiProfiles.club,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Currently matched to a club-style training level.",
-      accent: "Matched to your player model",
-    };
-  }
-
+  const base = score < 35 ? aiProfiles.gentle
+    : score < 55 ? aiProfiles.developing
+      : score < 72 ? aiProfiles.club : aiProfiles.strong;
   return {
-    ...aiProfiles.strong,
+    ...base,
     id: "adaptive",
     name: "Adaptive",
-    description: "Currently matched to strong practical resistance.",
-    accent: "Matched to your player model",
+    description: `Based on ${base.name.toLowerCase()} level.`,
+    accent: "Adaptive training",
   };
 }
 

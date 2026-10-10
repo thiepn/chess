@@ -418,19 +418,21 @@ export function PlayView({
                   <Shield size={14} />
                   <span>
                     <strong>{profile.name}</strong>
-                    <small>{profile.accent}</small>
+                    <small>{profile.description}</small>
                   </span>
                   {id === "adaptive" && <em>Your level</em>}
                 </button>
               );
             })}
           </div>
+
         </fieldset>
 
         <div className="play-v2-start-block">
           <div>
             <span>Opponent</span>
             <strong>{resolvedProfile.name}</strong>
+
           </div>
           <button
             className="primary"
