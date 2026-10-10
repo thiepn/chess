@@ -53,6 +53,8 @@ interface ReviewViewProps {
   onRetainLesson: (gameId: string, momentId: string) => void;
   onPracticeSkill: (skillId: string) => void;
   onPracticeOpening: (repertoireId: string, nodeId: string) => void;
+  onContinueTraining: (skillId?: string) => void;
+  onPlayAgain: () => void;
 }
 
 function severityLabel(value: PersonalMistake["severity"]) {
@@ -82,6 +84,8 @@ export function ReviewView({
   onRetainLesson,
   onPracticeSkill,
   onPracticeOpening,
+  onContinueTraining,
+  onPlayAgain,
 }: ReviewViewProps) {
   const [pgn, setPgn] = useState("");
   const [lichessUrl, setLichessUrl] = useState("");
@@ -121,6 +125,7 @@ export function ReviewView({
     [games],
   );
   const latestAnalyzedGame = sortedGames.find((game) => game.reviewStory);
+  const nextUnanalyzedGame = sortedGames.find((game) => !game.reviewStory);
   const featuredMoment = latestAnalyzedGame?.reviewStory?.moments[0];
   const featuredFen = latestAnalyzedGame
     ? featuredMoment?.positionFen ??
@@ -294,6 +299,7 @@ export function ReviewView({
               )}
               Analyze game
             </button>
+            {error && <p className="review-v2-analysis-error" role="alert">{error} Your game is still saved. Retry analysis when the engine is available.</p>}
           </div>
         </section>
       );
@@ -314,6 +320,8 @@ export function ReviewView({
         onRetainLesson={onRetainLesson}
         onPracticeSkill={onPracticeSkill}
         onPracticeOpening={onPracticeOpening}
+        onContinueTraining={onContinueTraining}
+        onPlayAgain={onPlayAgain}
       />
     );
   }
@@ -405,6 +413,42 @@ export function ReviewView({
             </span>
           </div>
         </header>
+
+        {!latestAnalyzedGame && (
+          <section className="review-v2-first-step" aria-label="Start learning from a game">
+            {nextUnanalyzedGame ? (
+              <>
+                <p className="eyebrow">CONTINUE YOUR GAME</p>
+                <h2>Your saved game is ready to study</h2>
+                <p>
+                  {nextUnanalyzedGame.white} — {nextUnanalyzedGame.black}. Your moves are preserved.
+                  Analyze them to find a useful position to practice.
+                </p>
+                <button type="button" className="primary"
+                  disabled={analyzing || batchAnalyzing}
+                  onClick={() => onNavigate(reviewGamePath(nextUnanalyzedGame.id))}>
+                  <Target size={16} /> Review saved game
+                </button>
+                <button type="button" className="secondary" onClick={onPlayAgain}>
+                  <Swords size={16} /> Play another game
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="eyebrow">YOUR FIRST REVIEW</p>
+                <h2>Learn from your own moves</h2>
+                <p>Play a game against the computer, then come back to review key decisions.
+                   Or start with a short lesson. You can also import a game below.</p>
+                <button type="button" className="primary" onClick={onPlayAgain}>
+                  <Swords size={16} /> Play a game
+                </button>
+                <button type="button" className="secondary" onClick={() => onContinueTraining()}>
+                  <Target size={16} /> Start training
+                </button>
+              </>
+            )}
+          </section>
+        )}
 
         {latestAnalyzedGame?.reviewStory && featuredFen && (
           <section className="review-v2-feature" aria-labelledby="review-feature-title">
