@@ -5,7 +5,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   gentle: {
     id: "gentle",
     name: "Gentle",
-    description: "Shallow searches offer chances to practice basics.",
+    description: "Forgiving play for beginners.",
     skillLevel: 0,
     depth: 5,
     accent: "Learning pace",
@@ -13,7 +13,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   developing: {
     id: "developing",
     name: "Developing",
-    description: "Punishes missed pieces but leaves chances.",
+    description: "Notices simple mistakes.",
     skillLevel: 3,
     depth: 7,
     accent: "Forgiving pressure",
@@ -21,7 +21,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   club: {
     id: "club",
     name: "Club",
-    description: "Balanced resistance for complete training games.",
+    description: "Balanced training games.",
     skillLevel: 7,
     depth: 9,
     accent: "Balanced challenge",
@@ -29,7 +29,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   strong: {
     id: "strong",
     name: "Strong",
-    description: "Stronger search exposes tactical and positional mistakes.",
+    description: "Challenges tactics and strategy.",
     skillLevel: 13,
     depth: 11,
     accent: "Serious resistance",
@@ -65,8 +65,8 @@ export function adaptiveAiProfile(mastery: Record<string, SkillMastery>): AiProf
     ...base,
     id: "adaptive",
     name: "Adaptive",
-    description: `Matched to ${base.name.toLowerCase()} practice.`,
-    accent: "Matched to your player model",
+    description: `Based on ${base.name.toLowerCase()} practice.`,
+    accent: "Based on your practice progress",
   };
 }
 
