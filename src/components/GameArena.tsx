@@ -209,17 +209,8 @@ export function GameArena({
         setEngineStatus(`${profile.name} ready`);
       })
       .catch((cause) => {
-        if (cancelled) return;
-        const message = cause instanceof Error ? cause.message : "The AI opponent could not be loaded.";
-        if (/worker|timed out/i.test(message) && recoveryAttemptsRef.current < 1) {
-          recoveryAttemptsRef.current += 1;
-          setEngineReady(false);
-          setEngineStatus("Opponent interrupted · reconnecting…");
-          setEngineNonce((count) => count + 1);
-        } else {
-          setError(message);
-          setEngineStatus("Opponent paused · retry available");
-        }
+        if (!cancelled) recoverOpponent(cause instanceof Error
+          ? cause.message : "The opponent could not be loaded.");
       });
 
     return () => {
@@ -233,7 +224,8 @@ export function GameArena({
   const opponentColor: Color = playerColor === "w" ? "b" : "w";
 
   function recoverOpponent(message: string) {
-    if (recoveryAttemptsRef.current < 1 && !finishedRef.current) {
+    if (recoveryAttemptsRef.current < 1 && !finishedRef.current &&
+      /worker|timed out|illegal move|did not return/i.test(message)) {
       recoveryAttemptsRef.current += 1;
       setEngineReady(false);
       setEngineStatus("Opponent interrupted · reconnecting…");
