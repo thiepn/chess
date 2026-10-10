@@ -433,7 +433,7 @@ export function GameArena({
         else feedback("move");
         setFen(chess.fen());
         recoveryAttemptsRef.current = 0;
-        setEngineStatus(`${profile.name} · ${profile.accent}`);
+        setEngineStatus(`${profile.name} ready`);
         finishIfNeeded();
       })
       .catch((cause) => {
