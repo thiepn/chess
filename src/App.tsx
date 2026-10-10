@@ -2701,6 +2701,7 @@ export default function App() {
                         />
                       ) : active.activityType === "personalMistake" && activeMistake ? (
                         <PersonalMistakeRunner
+                          key={`${repo.getProfileId()}:${activeMistake.id}:${activeMistake.positionFen}`}
                           mistake={activeMistake}
                           storageOwner={repo.getProfileId()}
                           onComplete={completeActivity}
