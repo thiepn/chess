@@ -293,8 +293,20 @@ export default function App() {
     let cancelled = false;
     let generation = 0;
     const refresh = () => {
+      const identityChanged = generation > 0;
       const current = ++generation;
       setLoaded(false);
+      if (identityChanged) {
+        // Abort the prior owner's unsent runtime before the new identity
+        // can write, render or rehydrate any former-owner session details.
+        setActiveIndex(null);
+        setManualActivity(null);
+        setActiveModelGameId(null);
+        setAssessmentSession(null);
+        setTrainingReturnPath("/train");
+        try { window.sessionStorage.removeItem("chess:training-runtime-v1"); }
+        catch { /* Access may be disabled by browser policy. */ }
+      }
       void repo.load(emptyChessState).then((value) => {
         if (cancelled || current !== generation) return;
         setState(ensureAnalyticsState(value));
@@ -671,7 +683,7 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    if (!trainingSessionOpen || !runtimeReady) return;
+    if (!loaded || !trainingSessionOpen || !runtimeReady) return;
     window.sessionStorage.setItem(
       "chess:training-runtime-v1",
       JSON.stringify({
@@ -691,6 +703,7 @@ export default function App() {
     assessmentSession,
     manualActivity,
     mode,
+    loaded,
     route.path,
     runtimeReady,
     trainingReturnPath,
