@@ -56,46 +56,16 @@ function averageRelevantMastery(mastery: Record<string, SkillMastery>) {
   return relevant.reduce((sum, value) => sum + value, 0) / relevant.length;
 }
 
-export function adaptiveAiProfile(
-  mastery: Record<string, SkillMastery>,
-): AiProfile {
+export function adaptiveAiProfile(mastery: Record<string, SkillMastery>): AiProfile {
   const score = averageRelevantMastery(mastery);
-
-  if (score < 35) {
-    return {
-      ...aiProfiles.gentle,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Matched to gentle practice.",
-      accent: "Matched to your player model",
-    };
-  }
-
-  if (score < 55) {
-    return {
-      ...aiProfiles.developing,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Matched to developing practice.",
-      accent: "Matched to your player model",
-    };
-  }
-
-  if (score < 72) {
-    return {
-      ...aiProfiles.club,
-      id: "adaptive",
-      name: "Adaptive",
-      description: "Matched to club-level practice.",
-      accent: "Matched to your player model",
-    };
-  }
-
+  const base = score < 35 ? aiProfiles.gentle
+    : score < 55 ? aiProfiles.developing
+      : score < 72 ? aiProfiles.club : aiProfiles.strong;
   return {
-    ...aiProfiles.strong,
+    ...base,
     id: "adaptive",
     name: "Adaptive",
-    description: "Matched to stronger practice.",
+    description: `Matched to ${base.name.toLowerCase()} practice.`,
     accent: "Matched to your player model",
   };
 }
