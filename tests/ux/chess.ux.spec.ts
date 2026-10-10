@@ -115,9 +115,10 @@ test("Play setup starts and exits an actual game on this viewport", async ({ pag
   await expect(page.locator(".game-arena")).toBeVisible();
   await expect(page.locator(".game-arena [role='grid']")).toBeVisible();
   await expect(page).toHaveURL(/\/play\/game\//);
-  await page.getByRole("button", { name: "Exit game" }).click();
+  await page.getByRole("button", { name: "Save & exit" }).click();
   await expect(page).toHaveURL(/\/play$/);
   await expect(page.locator(".play-v2")).toBeVisible();
+  await expect(page.locator(".play-resume-notice")).toContainText("Unfinished game");
   await assertNoHorizontalOverflow(page, "/play");
 });
 
