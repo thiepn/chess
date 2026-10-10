@@ -93,10 +93,10 @@ describe("P83 real browser UCI engine wrapper", () => {
     const active = engine.chooseMove(standardFen, { skillLevel: 7, depth: 8 });
     await Promise.resolve();
     worker.crash();
-    await expect(active).rejects.toThrow(/unexpectedly/);
+    await expect(active).rejects.toThrow(/worker crashed/);
     expect(worker.terminated).toBe(true);
     await expect(engine.chooseMove(standardFen, { skillLevel: 7, depth: 8 }))
-      .rejects.toThrow(/unexpectedly/);
+      .rejects.toThrow(/worker crashed/);
   });
 
   it("cancels a pending search promptly with no late bestmove or duplicate completion", async () => {
