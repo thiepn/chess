@@ -51,11 +51,9 @@ export class StockfishBrowserEngine {
   private startupReject: ((reason: Error) => void) | null = null;
   private cleanupStartup: (() => void) | null = null;
   private unavailable: Error | null = null;
-  readonly name: string;
 
-  private constructor(worker: Worker, name: string) {
+  private constructor(worker: Worker) {
     this.worker = worker;
-    this.name = name;
     this.worker.addEventListener("error", this.onWorkerError);
     this.readyPromise = this.initialize();
   }
@@ -69,7 +67,6 @@ export class StockfishBrowserEngine {
     }
     const instance = new StockfishBrowserEngine(
       new Worker(`/engine/${manifest.script}`),
-      manifest.engine || "Stockfish",
     );
     // "Ready" must mean UCI and readiness handshake completed, not merely a
     // constructed Worker. Timed games must not count local engine startup.
