@@ -210,7 +210,7 @@ export function GameArena({
       })
       .catch((cause) => {
         if (!cancelled) recoverOpponent(cause instanceof Error
-          ? cause.message : "The opponent could not be loaded.");
+          ? cause.message : "Opponent failed to load.");
       });
 
     return () => {
@@ -228,11 +228,11 @@ export function GameArena({
       /worker|timed out|illegal move|did not return/i.test(message)) {
       recoveryAttemptsRef.current += 1;
       setEngineReady(false);
-      setEngineStatus("Reconnecting opponent…");
+      setEngineStatus("Reconnecting…");
       setEngineNonce((count) => count + 1);
     } else {
       setError(message);
-      setEngineStatus("Opponent unavailable · retry");
+      setEngineStatus("Opponent unavailable");
     }
   }
 
@@ -407,7 +407,7 @@ export function GameArena({
         if (cancelled || finishedRef.current || chess.fen() !== requestedFen) return;
         if (!evaluation.bestMove || evaluation.bestMove === "(none)") {
           if (chess.isGameOver()) finishIfNeeded();
-          else recoverOpponent("The opponent did not return a legal move. Retry opponent.");
+          else recoverOpponent("Opponent returned no legal move.");
           return;
         }
 
@@ -419,7 +419,7 @@ export function GameArena({
           return;
         }
         if (!move) {
-          recoverOpponent("The opponent returned an illegal move. Retry opponent.");
+          recoverOpponent("Opponent returned an illegal move.");
           return;
         }
 
@@ -439,7 +439,7 @@ export function GameArena({
       .catch((cause) => {
         if (cancelled) return;
         recoverOpponent(
-          cause instanceof Error ? cause.message : "The AI move could not be calculated.",
+          cause instanceof Error ? cause.message : "Opponent calculation failed.",
         );
       })
       .finally(() => {
