@@ -34,7 +34,7 @@ function legalChoice(fen: string, uci: string): boolean {
   } catch { return false; }
 }
 function matchesBest(choice: string, best: string) {
-  return choice === best || (best.length === 4 && choice === best + "q");
+  return choice === best;
 }
 function restoreDraft(owner: string, mistake: PersonalMistake): PracticeDraft {
   const initial: PracticeDraft = {
