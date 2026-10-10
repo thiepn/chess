@@ -148,17 +148,12 @@ export class StockfishBrowserEngine {
       if (!line.startsWith("bestmove ")) continue;
       if (this.search !== active) return;
       const bestMove = line.split(/\s+/)[1] || "(none)";
-      const last = active.last;
-      const result: EngineEvaluation = {
-        scoreCp: last?.scoreCp ?? 0,
-        mate: last?.mate,
-        depth: last?.depth ?? 0,
-        pv: last?.pv ?? (bestMove === "(none)" ? [] : [bestMove]),
-        bestMove: bestMove === "(none)" ? "(none)" : bestMove,
-      };
       globalThis.clearTimeout(active.timeout);
       this.search = null;
-      active.resolve(result);
+      active.resolve({
+        ...(active.last ?? { scoreCp: 0, depth: 0, pv: bestMove === "(none)" ? [] : [bestMove] }),
+        bestMove,
+      });
     }
   };
 
@@ -171,14 +166,14 @@ export class StockfishBrowserEngine {
     await this.readyPromise;
     if (this.unavailable) throw this.unavailable;
     if (this.search) throw new Error("Stockfish is already analyzing another position.");
-    const safeDepth = Number.isFinite(depth) ? Math.min(18, Math.max(1, Math.round(depth))) : 8;
-    const safeSkill = Number.isFinite(skillLevel) ? Math.min(20, Math.max(0, Math.round(skillLevel))) : 7;
+    const safeDepth = Math.min(18, Math.max(1, Math.round(depth) || 8));
+    const safeSkill = Math.min(20, Math.max(0, Math.round(skillLevel) || 0));
     const safeTime = moveTimeMs === undefined ? null
-      : Number.isFinite(moveTimeMs) ? Math.min(4000, Math.max(150, Math.round(moveTimeMs))) : 900;
+      : Math.min(4000, Math.max(150, Math.round(moveTimeMs) || 900));
 
     return new Promise<EngineEvaluation>((resolve, reject) => {
       const timeout = globalThis.setTimeout(
-        () => this.invalidate(new Error("Stockfish search timed out. The opponent can be restarted.")),
+        () => this.invalidate(new Error("Stockfish search timed out.")),
         safeTime === null ? 15_000 : Math.max(4000, safeTime + 3000),
       );
       this.search = { resolve, reject, timeout };
@@ -189,7 +184,7 @@ export class StockfishBrowserEngine {
           `go depth ${safeDepth}${safeTime === null ? "" : ` movetime ${safeTime}`}`,
         );
       } catch {
-        this.invalidate(new Error("Stockfish worker could not accept a move request."));
+        this.invalidate(new Error("Stockfish worker unavailable."));
       }
     });
   }
