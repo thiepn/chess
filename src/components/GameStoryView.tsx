@@ -77,27 +77,6 @@ function applyUci(fen: string, uci: string) {
   }
 }
 
-function pvToSan(fen: string, pv: string[]) {
-  const chess = new Chess(fen);
-  const sans: string[] = [];
-
-  for (const uci of pv.slice(0, 4)) {
-    try {
-      const move = chess.move({
-        from: uci.slice(0, 2),
-        to: uci.slice(2, 4),
-        promotion: uci.slice(4, 5) || "q",
-      });
-      if (!move) break;
-      sans.push(move.san);
-    } catch {
-      break;
-    }
-  }
-
-  return sans;
-}
-
 function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
   if (!uci || uci === "(none)") return [];
   return [
@@ -481,7 +460,7 @@ export function GameStoryView({
               </p>
               <h2>{selectedMove.san}</h2>
               <p>
-                This move was not promoted into the critical-moment set. Use the notation to continue through the game.
+                No separate engine evaluation was stored for this move. Use the notation to inspect the legal game position.
               </p>
             </div>
           ) : null}
@@ -574,6 +553,7 @@ function MomentDetails({
   reflection?: GameReviewReflection;
   onCoach: () => void;
 }) {
+  const verifiedLine = momentVariation(moment);
   return (
     <>
       <div className="moment-heading">
@@ -600,7 +580,7 @@ function MomentDetails({
           <span>Better</span>
           <strong>
             {!mistake || reflection?.bestRevealed
-              ? moment.bestSan
+              ? verifiedLine[0]?.san ?? "Not verified"
               : "Hidden until retry"}
           </strong>
         </div>
@@ -608,18 +588,20 @@ function MomentDetails({
 
       <div className="moment-eval">
         <div>
-          <span>Before</span>
+          <span>Before · your side</span>
           <strong>{evaluationLabel(moment.evaluationBefore)}</strong>
         </div>
         <div>
-          <span>After</span>
+          <span>After · your side</span>
           <strong>{evaluationLabel(moment.evaluationAfter)}</strong>
         </div>
         <div>
-          <span>Cost</span>
+          <span>Cost · pawns</span>
           <strong>{(moment.centipawnLoss / 100).toFixed(1)}</strong>
         </div>
       </div>
+
+      <p className="review-v2-eval-note">Approximate engine scores, not winning probabilities. Positive values favor your side.</p>
 
       {moment.skillIds.length > 0 && (
         <div className="moment-skills">
@@ -629,11 +611,11 @@ function MomentDetails({
         </div>
       )}
 
-      {moment.principalVariation.length > 1 &&
+      {verifiedLine.length > 1 &&
         (!mistake || reflection?.continuationRevealed) && (
           <div className="moment-line">
-            <span>Engine continuation</span>
-            <strong>{pvToSan(moment.positionFen, moment.principalVariation).join(" ")}</strong>
+            <span>Verified engine continuation</span>
+            <strong>{verifiedLine.slice(0, 4).map((step) => step.san).join(" ")}</strong>
           </div>
         )}
 
