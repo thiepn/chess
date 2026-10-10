@@ -1192,3 +1192,6 @@ html[data-motion="reduced"] .review-v2-repair-row button {
 .review-v2-refresh p { margin: 0; max-width: 62ch; line-height: 1.5; color: var(--chess-color-danger, #9e3131); }
 
 .review-v2-eval-note { margin: 6px 0 12px; font-size: 0.83rem; line-height: 1.45; color: var(--chess-color-text-secondary); }
+
+.review-moment-navigation { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.review-moment-navigation button { min-height: 44px; flex: 1 1 180px; }
