@@ -427,3 +427,26 @@ test("P81 reviewed games offer working focused practice and another game", async
   await expect(page).toHaveURL(/\/play$/);
   await expect(page.locator(".play-v2")).toBeVisible();
 });
+
+
+test("P81 a failed stored-game analysis shows a recoverable error and never loses the game", async ({ page }) => {
+  await page.addInitScript((fixture) => {
+    localStorage.setItem("thiepn.chess.user-state.v1", JSON.stringify({
+      ...fixture,
+      games: fixture.games.map((game) => ({
+        ...game, reviewStory: undefined, analyzedAt: undefined,
+      })),
+    }));
+  }, visualUserState);
+  await page.route("**/engine/manifest.json", (route) =>
+    route.fulfill({ status: 503, body: "Engine temporarily offline" }));
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-v2-upgrade");
+  await page.getByRole("button", { name: "Analyze game" }).click();
+  await expect(page.locator(".review-v2-analysis-error[role=alert]")).toContainText(
+    "Your game is still saved",
+  );
+  await expect(page.getByRole("button", { name: "Analyze game" })).toBeEnabled();
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".review-v2-upgrade")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Analyze game" })).toBeVisible();
+});
