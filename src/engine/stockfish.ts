@@ -46,14 +46,17 @@ function parseInfo(line: string): EngineEvaluation | null {
 
 export class StockfishBrowserEngine {
   private readonly worker: Worker;
+  /** Engine identity from the bundled manifest, persisted with game analyses. */
+  readonly name: string;
   private readonly readyPromise: Promise<void>;
   private search: PendingSearch | null = null;
   private startupReject: ((reason: Error) => void) | null = null;
   private cleanupStartup: (() => void) | null = null;
   private unavailable: Error | null = null;
 
-  private constructor(worker: Worker) {
+  private constructor(worker: Worker, name: string) {
     this.worker = worker;
+    this.name = name;
     this.worker.addEventListener("error", this.onWorkerError);
     this.readyPromise = this.initialize();
   }
@@ -67,6 +70,7 @@ export class StockfishBrowserEngine {
     }
     const instance = new StockfishBrowserEngine(
       new Worker(`/engine/${manifest.script}`),
+      typeof manifest.engine === "string" && manifest.engine.trim() ? manifest.engine : "Stockfish",
     );
     // "Ready" must mean UCI and readiness handshake completed, not merely a
     // constructed Worker. Timed games must not count local engine startup.
