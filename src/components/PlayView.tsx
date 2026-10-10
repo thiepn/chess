@@ -418,7 +418,7 @@ export function PlayView({
                   <Shield size={14} />
                   <span>
                     <strong>{profile.name}</strong>
-                    <small>{profile.accent}</small>
+                    <small>{profile.description}</small>
                   </span>
                   {id === "adaptive" && <em>Your level</em>}
                 </button>
@@ -432,7 +432,7 @@ export function PlayView({
           <div>
             <span>Opponent</span>
             <strong>{resolvedProfile.name}</strong>
-            <small>{resolvedProfile.description} No Elo rating.</small>
+
           </div>
           <button
             className="primary"
