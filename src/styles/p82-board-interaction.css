@@ -1,5 +1,0 @@
-/* P82: legal touch/pen drag states; no extra motion or idle visual changes. */
-.chess-board-v2 .board-movable{touch-action:none;cursor:grab}
-.chess-board-v2 .board-drag-source{outline:3px solid #357bd8;outline-offset:-3px}
-.chess-board-v2 .board-drag-hover.board-drag-legal{outline:4px solid #328554;outline-offset:-4px}
-.chess-board-v2 .board-drag-hover:not(.board-drag-legal){outline:3px solid #c86464;outline-offset:-3px}
