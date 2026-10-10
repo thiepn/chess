@@ -440,6 +440,10 @@ export function GameArena({
       })
       .then((evaluation) => {
         if (cancelled || finishedRef.current || chess.fen() !== requestedFen) return;
+        // Clear the search lock before setFen triggers the next React effect.
+        // Effect cleanup may run before promise.finally, which otherwise leaves
+        // thinking stuck true and permanently disables legal board interaction.
+        setThinking(false);
         if (!evaluation.bestMove || evaluation.bestMove === "(none)") {
           if (chess.isGameOver()) finishIfNeeded();
           else recoverOpponent("Opponent returned no legal move.");
@@ -473,12 +477,12 @@ export function GameArena({
       })
       .catch((cause) => {
         if (cancelled) return;
+        // Unlock before scheduling the replacement worker so a transient
+        // crash cannot strand the player waiting through the new UCI handshake.
+        setThinking(false);
         recoverOpponent(
           cause instanceof Error ? cause.message : "Opponent calculation failed.",
         );
-      })
-      .finally(() => {
-        if (!cancelled) setThinking(false);
       });
 
     return () => {
