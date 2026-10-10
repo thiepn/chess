@@ -15,5 +15,5 @@ export function opponentThinkBudgetMs(
   const remaining = opponentColor === "w" ? clock.whiteMs : clock.blackMs;
   if (!Number.isFinite(remaining)) return 150;
   // Do not consume large chunks of a low clock simply thinking.
-  return Math.max(150, Math.min(baseMs, Math.floor(Math.max(0, remaining) / 30)));
+  return Math.max(150, Math.min(baseMs, Math.floor(remaining / 30)));
 }
