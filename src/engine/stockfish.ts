@@ -90,7 +90,7 @@ export class StockfishBrowserEngine {
     if (this.search) {
       const current = this.search;
       this.search = null;
-      window.clearTimeout(current.timeout);
+      globalThis.clearTimeout(current.timeout);
       current.reject(reason);
     }
     this.worker.removeEventListener("error", this.onWorkerError);
@@ -118,12 +118,12 @@ export class StockfishBrowserEngine {
           }
         }
       };
-      const timeout = window.setTimeout(
+      const timeout = globalThis.setTimeout(
         () => this.invalidate(new Error("Stockfish initialization timed out.")),
         12_000,
       );
       const cleanup = () => {
-        window.clearTimeout(timeout);
+        globalThis.clearTimeout(timeout);
         this.worker.removeEventListener("message", onMessage);
         this.cleanupStartup = null;
       };
@@ -156,7 +156,7 @@ export class StockfishBrowserEngine {
         pv: last?.pv ?? (bestMove === "(none)" ? [] : [bestMove]),
         bestMove: bestMove === "(none)" ? "(none)" : bestMove,
       };
-      window.clearTimeout(active.timeout);
+      globalThis.clearTimeout(active.timeout);
       this.search = null;
       active.resolve(result);
     }
@@ -177,7 +177,7 @@ export class StockfishBrowserEngine {
       : Number.isFinite(moveTimeMs) ? Math.min(4000, Math.max(150, Math.round(moveTimeMs))) : 900;
 
     return new Promise<EngineEvaluation>((resolve, reject) => {
-      const timeout = window.setTimeout(
+      const timeout = globalThis.setTimeout(
         () => this.invalidate(new Error("Stockfish search timed out. The opponent can be restarted.")),
         safeTime === null ? 15_000 : Math.max(4000, safeTime + 3000),
       );
