@@ -646,3 +646,39 @@ test("P84 timed save-and-exit freezes clocks, preserves owner-scoped moves and r
   await page.getByRole("button", { name: "Discard game" }).click();
   await expect(page.locator(".play-resume-notice")).toHaveCount(0);
 });
+
+
+test("P85 legal Stockfish continuation can be explored on real saved Review and keeps board coordinates", async ({ page }) => {
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  await expect(page.getByRole("button", { name: "Engine line" })).toBeVisible();
+  await page.getByRole("button", { name: "Engine line" }).click();
+  await expect(page.locator(".review-line-navigator")).toContainText("0/2 moves");
+  await page.getByRole("button", { name: "Next variation move" }).click();
+  await expect(page.locator(".review-line-navigator")).toContainText("1/2 moves");
+  await expect(page.locator('.review-board-v2 .board-square[data-square="c4"] [data-piece="wb"]')).toBeVisible();
+  await page.getByRole("button", { name: "Next variation move" }).click();
+  await expect(page.locator('.review-board-v2 .board-square[data-square="f6"] [data-piece="bn"]')).toBeVisible();
+  await page.getByRole("button", { name: "Previous variation move" }).click();
+  await expect(page.locator('.review-board-v2 .board-square[data-square="c4"] [data-piece="wb"]')).toBeVisible();
+  await expect(page.getByRole("button", { name: "Practice this weakness" })).toBeVisible();
+  await assertNoHorizontalOverflow(page, "P85 line");
+});
+
+test("P85 move-sheet arrows navigate saved legal moves and safely preserve review on engine outage", async ({ page }) => {
+  await page.route("**/engine/manifest.json", (route) =>
+    route.fulfill({ status: 503, body: "Synthetic engine offline" }));
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  const moves = page.locator(".review-notation-list");
+  await moves.locator('[data-review-ply="3"]').focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(moves.locator('[data-review-ply="4"]')).toHaveAttribute("aria-current", "step");
+  await page.keyboard.press("Home");
+  await expect(moves.locator('[data-review-ply="1"]')).toHaveAttribute("aria-current", "step");
+  await page.keyboard.press("End");
+  await expect(moves.locator('[data-review-ply="8"]')).toHaveAttribute("aria-current", "step");
+  await page.getByRole("button", { name: "Refresh engine review" }).click();
+  await expect(page.locator(".review-v2-refresh [role=alert]")).toContainText("previous game and review remain saved");
+  await expect(page.locator("#review-game-title")).toContainText("Student");
+  await expect(page.locator(".review-notation-list")).toContainText("Nf6");
+  await expect(page.getByRole("button", { name: "Refresh engine review" })).toBeEnabled();
+});

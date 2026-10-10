@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { skillById } from "../domain/curriculum";
+import { momentVariation } from "../review/variation";
 import type {
   GamePhase,
   GameReviewReflection,
@@ -35,9 +36,12 @@ interface GameStoryViewProps {
   onPracticeOpening: (repertoireId: string, nodeId: string) => void;
   onContinueTraining: (skillId?: string) => void;
   onPlayAgain: () => void;
+  onRefreshAnalysis?: () => void;
+  refreshingAnalysis?: boolean;
+  analysisError?: string | null;
 }
 
-type PreviewMode = "position" | "actual" | "better";
+type PreviewMode = "position" | "actual" | "better" | "line";
 
 function phaseLabel(phase: GamePhase) {
   if (phase === "opening") return "Opening";
@@ -73,27 +77,6 @@ function applyUci(fen: string, uci: string) {
   }
 }
 
-function pvToSan(fen: string, pv: string[]) {
-  const chess = new Chess(fen);
-  const sans: string[] = [];
-
-  for (const uci of pv.slice(0, 4)) {
-    try {
-      const move = chess.move({
-        from: uci.slice(0, 2),
-        to: uci.slice(2, 4),
-        promotion: uci.slice(4, 5) || "q",
-      });
-      if (!move) break;
-      sans.push(move.san);
-    } catch {
-      break;
-    }
-  }
-
-  return sans;
-}
-
 function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
   if (!uci || uci === "(none)") return [];
   return [
@@ -119,11 +102,15 @@ export function GameStoryView({
   onPracticeOpening,
   onContinueTraining,
   onPlayAgain,
+  onRefreshAnalysis,
+  refreshingAnalysis = false,
+  analysisError,
 }: GameStoryViewProps) {
   const story = game.reviewStory;
   const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 1;
   const [selectedPly, setSelectedPly] = useState(firstMomentPly);
   const [preview, setPreview] = useState<PreviewMode>("position");
+  const [lineStep, setLineStep] = useState(0);
   const [boardFen, setBoardFen] = useState(
     story?.moments[0]?.positionFen ?? game.moves[0]?.beforeFen ?? new Chess().fen(),
   );
@@ -150,6 +137,13 @@ export function GameStoryView({
   const selectedReflection = selectedMoment
     ? reflections[selectedMoment.id]
     : undefined;
+  // Saved UCI moves are displayed only after validating legality from exact FEN.
+  const variation = useMemo(
+    () => selectedMoment ? momentVariation(selectedMoment) : [],
+    [selectedMoment],
+  );
+  const lineAvailable = Boolean(variation.length &&
+    (!selectedMistake || selectedReflection?.continuationRevealed));
   const coachMoment = coachMomentId
     ? story?.moments.find((moment) => moment.id === coachMomentId)
     : undefined;
@@ -186,7 +180,17 @@ export function GameStoryView({
     setBoardFen(base);
 
     if (!selectedMoment || preview === "position") return;
-
+    if (preview === "line") {
+      const step = variation[lineStep - 1];
+      if (step && lineAvailable) {
+        setBoardFen(step.fen);
+        setPresentationMove({
+          from: step.uci.slice(0, 2) as Square,
+          to: step.uci.slice(2, 4) as Square,
+        });
+      }
+      return;
+    }
     const uci =
       preview === "actual" ? selectedMoment.actualMove : selectedMoment.bestMove;
     const timer = window.setTimeout(() => {
@@ -198,10 +202,11 @@ export function GameStoryView({
     }, 180);
 
     return () => window.clearTimeout(timer);
-  }, [game.moves, preview, selectedMoment, selectedMove]);
+  }, [game.moves, preview, selectedMoment, selectedMove, lineStep, lineAvailable, variation]);
 
   useEffect(() => {
     setPreview("position");
+    setLineStep(0);
   }, [selectedPly]);
 
   if (!story) {
@@ -224,7 +229,9 @@ export function GameStoryView({
       ? moveArrow(selectedMoment.actualMove, "danger")
       : selectedMoment && preview === "better"
         ? moveArrow(selectedMoment.bestMove, "good")
-        : [];
+        : selectedMoment && preview === "line" && lineAvailable && lineStep > 0
+          ? moveArrow(variation[lineStep - 1]?.uci ?? "", "good")
+          : [];
 
   const selectedPhase =
     story.phases.find(
@@ -262,6 +269,16 @@ export function GameStoryView({
           </span>
         </div>
       </header>
+
+      {onRefreshAnalysis && (
+        <div className="review-v2-refresh">
+          <button className="secondary" type="button" disabled={refreshingAnalysis}
+            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
+            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
+          </button>
+          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
+        </div>
+      )}
 
       <div className="review-phase-strip" aria-label="Game phases">
         {story.phases.map((phase) => (
@@ -318,7 +335,7 @@ export function GameStoryView({
                 >
                   Your move
                 </button>
-                {(!selectedMistake || selectedReflection?.bestRevealed) && (
+                {variation.length > 0 && (!selectedMistake || selectedReflection?.bestRevealed) && (
                   <button
                     type="button"
                     className={preview === "better" ? "active better" : ""}
@@ -328,9 +345,44 @@ export function GameStoryView({
                     Better move
                   </button>
                 )}
+                {lineAvailable && (
+                  <button type="button" className={preview === "line" ? "active better" : ""}
+                    aria-pressed={preview === "line"}
+                    onClick={() => { setLineStep(0); setPreview("line"); }}>
+                    Engine line
+                  </button>
+                )}
               </>
             )}
           </div>
+
+          {selectedMoment && preview === "line" && lineAvailable && (
+            <div className="review-line-navigator" aria-label="Legal engine continuation">
+              <strong aria-live="polite">Engine suggestion · {lineStep}/{variation.length} moves</strong>
+              <div className="review-line-actions">
+                <button type="button" className="secondary" disabled={lineStep === 0}
+                  onClick={() => setLineStep((step) => Math.max(0, step - 1))}>
+                  Previous variation move
+                </button>
+                <button type="button" className="secondary" disabled={lineStep === variation.length}
+                  onClick={() => setLineStep((step) => Math.min(variation.length, step + 1))}>
+                  Next variation move
+                </button>
+              </div>
+              <div className="review-line-steps" role="group" aria-label="Variation moves">
+                <button type="button" aria-current={lineStep === 0 ? "step" : undefined}
+                  onClick={() => setLineStep(0)}>Start</button>
+                {variation.map((step) => (
+                  <button key={step.ply} type="button"
+                    aria-current={lineStep === step.ply ? "step" : undefined}
+                    onClick={() => setLineStep(step.ply)}>
+                    {step.ply}. {step.san}
+                  </button>
+                ))}
+              </div>
+              <p>Legal moves reconstructed from the saved engine line, not a guaranteed continuation.</p>
+            </div>
+          )}
 
           <div className="review-board-story">
             <strong>{story.headline}</strong>
@@ -344,7 +396,19 @@ export function GameStoryView({
             <strong>{game.moves.length} plies</strong>
           </header>
 
-          <div className="review-notation-list">
+          <div className="review-notation-list" onKeyDown={(event) => {
+            if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+            if (!(event.target instanceof HTMLButtonElement)) return;
+            const index = game.moves.findIndex((move) => move.ply === selectedPly);
+            const next = event.key === "Home" ? 0
+              : event.key === "End" ? game.moves.length - 1
+                : Math.max(0, Math.min(game.moves.length - 1, index + (event.key === "ArrowRight" ? 1 : -1)));
+            const ply = game.moves[next]?.ply;
+            if (ply === undefined) return;
+            event.preventDefault();
+            setSelectedPly(ply);
+            event.currentTarget.querySelector<HTMLButtonElement>(`[data-review-ply="${ply}"]`)?.focus();
+          }}>
             {moveRows.map((row) => (
               <div className="review-notation-row" key={row.number}>
                 <span>{row.number}.</span>
@@ -357,6 +421,7 @@ export function GameStoryView({
                     <button
                       key={move.ply}
                       type="button"
+                      data-review-ply={move.ply}
                       className={[
                         selectedPly === move.ply ? "active" : "",
                         moment ? "moment" : "",
@@ -395,7 +460,7 @@ export function GameStoryView({
               </p>
               <h2>{selectedMove.san}</h2>
               <p>
-                This move was not promoted into the critical-moment set. Use the notation to continue through the game.
+                No separate engine evaluation was stored for this move. Use the notation to inspect the legal game position.
               </p>
             </div>
           ) : null}
@@ -455,6 +520,25 @@ export function GameStoryView({
         </div>
       </section>
 
+      <div className="review-moment-navigation" role="group" aria-label="Key moment navigation">
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply < selectedPly)}
+          onClick={() => {
+            const previous = [...story.moments].reverse().find((moment) => moment.ply < selectedPly);
+            if (previous) setSelectedPly(previous.ply);
+          }}>
+          Previous key moment
+        </button>
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply > selectedPly)}
+          onClick={() => {
+            const next = story.moments.find((moment) => moment.ply > selectedPly);
+            if (next) setSelectedPly(next.ply);
+          }}>
+          Next key moment
+        </button>
+      </div>
+
       {coachMoment && (
         <GameReviewCoach
           game={game}
@@ -488,6 +572,7 @@ function MomentDetails({
   reflection?: GameReviewReflection;
   onCoach: () => void;
 }) {
+  const verifiedLine = momentVariation(moment);
   return (
     <>
       <div className="moment-heading">
@@ -514,7 +599,7 @@ function MomentDetails({
           <span>Better</span>
           <strong>
             {!mistake || reflection?.bestRevealed
-              ? moment.bestSan
+              ? verifiedLine[0]?.san ?? "Not verified"
               : "Hidden until retry"}
           </strong>
         </div>
@@ -522,18 +607,20 @@ function MomentDetails({
 
       <div className="moment-eval">
         <div>
-          <span>Before</span>
+          <span>Before · your side</span>
           <strong>{evaluationLabel(moment.evaluationBefore)}</strong>
         </div>
         <div>
-          <span>After</span>
+          <span>After · your side</span>
           <strong>{evaluationLabel(moment.evaluationAfter)}</strong>
         </div>
         <div>
-          <span>Cost</span>
+          <span>Cost · pawns</span>
           <strong>{(moment.centipawnLoss / 100).toFixed(1)}</strong>
         </div>
       </div>
+
+      <p className="review-v2-eval-note">Approximate engine scores, not winning probabilities. Positive values favor your side.</p>
 
       {moment.skillIds.length > 0 && (
         <div className="moment-skills">
@@ -543,11 +630,11 @@ function MomentDetails({
         </div>
       )}
 
-      {moment.principalVariation.length > 1 &&
+      {verifiedLine.length > 1 &&
         (!mistake || reflection?.continuationRevealed) && (
           <div className="moment-line">
-            <span>Engine continuation</span>
-            <strong>{pvToSan(moment.positionFen, moment.principalVariation).join(" ")}</strong>
+            <span>Verified engine continuation</span>
+            <strong>{verifiedLine.slice(0, 4).map((step) => step.san).join(" ")}</strong>
           </div>
         )}
 

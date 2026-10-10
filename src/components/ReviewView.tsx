@@ -322,6 +322,9 @@ export function ReviewView({
         onPracticeOpening={onPracticeOpening}
         onContinueTraining={onContinueTraining}
         onPlayAgain={onPlayAgain}
+        onRefreshAnalysis={() => { if (!analyzing && !batchAnalyzing) void reanalyzeStoredGame(selectedGame); }}
+        refreshingAnalysis={reanalyzingGameId === selectedGame.id}
+        analysisError={error}
       />
     );
   }
