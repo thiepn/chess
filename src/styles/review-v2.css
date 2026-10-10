@@ -1113,3 +1113,62 @@ html[data-motion="reduced"] .review-v2-game-list > button,
 html[data-motion="reduced"] .review-v2-repair-row button {
   transition: none !important;
 }
+
+/* P81: chess-specific continuation instead of an analysis dead end. */
+.review-v2-first-step,
+.review-v2-next-actions {
+  min-width: 0;
+  padding: 18px 0;
+  border-top: 1px solid var(--chess-color-separator);
+  border-bottom: 1px solid var(--chess-color-separator);
+}
+
+.review-v2-first-step h2 {
+  margin: 6px 0 8px;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.25;
+}
+
+.review-v2-first-step p,
+.review-v2-next-actions p:not(.eyebrow) {
+  max-width: 52ch;
+  margin: 0 0 15px;
+  line-height: 1.55;
+  color: var(--chess-color-text-secondary);
+}
+
+.review-v2-first-step > button,
+.review-v2-next-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  max-width: 100%;
+  margin: 0 8px 8px 0;
+}
+
+.review-v2-next-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.review-v2-next-actions > button {
+  display: flex;
+  width: 100%;
+  margin-right: 0;
+}
+
+.review-v2-analysis-error {
+  max-width: 52ch;
+  margin-top: 12px;
+  line-height: 1.5;
+  color: var(--chess-color-danger, #9e3131);
+}
+
+@media (max-width: 520px) {
+  .review-v2-first-step > button {
+    width: 100%;
+    margin-right: 0;
+  }
+}

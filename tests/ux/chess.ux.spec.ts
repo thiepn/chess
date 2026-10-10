@@ -395,3 +395,58 @@ test("P69B unregistered Account remains guest-first with no broken sign-in butto
   await expect(page.getByRole("button", { name: "Export JSON backup" })).toBeVisible();
   await assertNoHorizontalOverflow(page, "/settings");
 });
+
+
+test("P81 first-time Review gives a direct Play or Train path", async ({ browser }) => {
+  const context = await browser.newContext({ baseURL: "http://127.0.0.1:4173" });
+  const fresh = await context.newPage();
+  try {
+    await fresh.goto("/review", { waitUntil: "domcontentloaded" });
+    await expect(fresh.locator(".review-v2-first-step")).toBeVisible();
+    await fresh.getByRole("button", { name: "Play a game" }).click();
+    await expect(fresh).toHaveURL(/\/play$/);
+    await expect(fresh.locator(".play-v2-start-block .primary")).toBeVisible();
+    await fresh.goto("/review", { waitUntil: "domcontentloaded" });
+    await fresh.getByRole("button", { name: "Start training" }).click();
+    await expect(fresh).toHaveURL(/\/train$/);
+    await expect(fresh.locator(".train-room-start")).toBeVisible();
+  } finally {
+    await context.close();
+  }
+});
+
+test("P81 reviewed games offer working focused practice and another game", async ({ page }) => {
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  const next = page.locator(".review-v2-next-actions");
+  await expect(next).toBeVisible();
+  await expect(next).toContainText("YOUR NEXT MOVE");
+  await next.getByRole("button", { name: /Practice this weakness|Continue training/ }).click();
+  await expect(page).toHaveURL(/\/train(?:\/session\/.*)?$/);
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  await page.locator(".review-v2-next-actions").getByRole("button", { name: "Play another game" }).click();
+  await expect(page).toHaveURL(/\/play$/);
+  await expect(page.locator(".play-v2")).toBeVisible();
+});
+
+
+test("P81 a failed stored-game analysis shows a recoverable error and never loses the game", async ({ page }) => {
+  await page.addInitScript((fixture) => {
+    localStorage.setItem("thiepn.chess.user-state.v1", JSON.stringify({
+      ...fixture,
+      games: fixture.games.map((game) => ({
+        ...game, reviewStory: undefined, analyzedAt: undefined,
+      })),
+    }));
+  }, visualUserState);
+  await page.route("**/engine/manifest.json", (route) =>
+    route.fulfill({ status: 503, body: "Engine temporarily offline" }));
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-v2-upgrade");
+  await page.getByRole("button", { name: "Analyze game" }).click();
+  await expect(page.locator(".review-v2-analysis-error[role=alert]")).toContainText(
+    "Your game is still saved",
+  );
+  await expect(page.getByRole("button", { name: "Analyze game" })).toBeEnabled();
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator(".review-v2-upgrade")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Analyze game" })).toBeVisible();
+});
