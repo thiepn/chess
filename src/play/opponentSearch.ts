@@ -9,7 +9,7 @@ export function opponentThinkBudgetMs(
   clock: Pick<RunningClock, "whiteMs" | "blackMs">,
   opponentColor: Color,
 ): number {
-  const level = Math.max(0, Math.min(20, profile.skillLevel));
+  const level = profile.skillLevel;
   const baseMs = level <= 0 ? 300 : level <= 3 ? 500 : level <= 7 ? 850 : 1400;
   if (timeControl === "untimed") return baseMs;
   const remaining = opponentColor === "w" ? clock.whiteMs : clock.blackMs;
