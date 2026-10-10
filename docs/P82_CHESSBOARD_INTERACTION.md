@@ -8,7 +8,7 @@
 2. **Chess-specific move feedback:** While dragging, the source and legal destinations are highlighted, and hovered legal/illegal drops are distinguished. The same legality-aware target set works for native desktop HTML drag. Ending/cancelling a drag resets indicators; invalid moves still use existing chess.js validation and player-feedback semantics. Drag-generated synthetic click must not select the original piece.
 3. **Keyboard stability:** Rotating the board preserves the focused chess *coordinate*, rather than jumping keyboard focus to the newly upper-left square. The existing arrow-key, Enter/Space, Escape, screen-reader labeling and preview disabled semantics remain.
 4. **Promotion accessibility:** The four actual underpromotion choices (Q/R/B/N) are an explicitly labeled dialog. Keyboard Tab/Shift+Tab stays within the choice/cancel controls; Escape restores focus to the pawn origin, and successful promotion restores focus to the destination. A failed host decision does not manufacture a move.
-5. **Shared presentation:** A focused P82 CSS module with legal/drop overlays and coarse-pointer grab behavior; untouched initial chessboard materials and approved screenshot references are not replaced. Reduced-motion preference is respected.
+5. **Shared presentation:** Dynamic square-local drag/hover styles and touch-action affordances work across Play, puzzles, lessons, and studies without adding to the size-constrained global CSS bundle. No new drag animations are used, respecting reduced-motion preferences and unchanged approved screenshot references.
 
 ## Test contract
 
