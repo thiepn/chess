@@ -358,7 +358,7 @@ export function GameStoryView({
 
           {selectedMoment && preview === "line" && lineAvailable && (
             <div className="review-line-navigator" aria-label="Legal engine continuation">
-              <strong>Engine suggestion · {lineStep}/{variation.length} moves</strong>
+              <strong aria-live="polite">Engine suggestion · {lineStep}/{variation.length} moves</strong>
               <div className="review-line-actions">
                 <button type="button" className="secondary" disabled={lineStep === 0}
                   onClick={() => setLineStep((step) => Math.max(0, step - 1))}>
@@ -519,6 +519,25 @@ export function GameStoryView({
           })}
         </div>
       </section>
+
+      <div className="review-moment-navigation" role="group" aria-label="Key moment navigation">
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply < selectedPly)}
+          onClick={() => {
+            const previous = [...story.moments].reverse().find((moment) => moment.ply < selectedPly);
+            if (previous) setSelectedPly(previous.ply);
+          }}>
+          Previous key moment
+        </button>
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply > selectedPly)}
+          onClick={() => {
+            const next = story.moments.find((moment) => moment.ply > selectedPly);
+            if (next) setSelectedPly(next.ply);
+          }}>
+          Next key moment
+        </button>
+      </div>
 
       {coachMoment && (
         <GameReviewCoach
