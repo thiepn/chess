@@ -425,6 +425,14 @@ export function PlayView({
               );
             })}
           </div>
+          <p className="play-v2-opponent-explanation" aria-live="polite" style={{
+            margin: "12px 0 0", color: "var(--chess-color-text-secondary)",
+            fontSize: "0.84rem", lineHeight: 1.5,
+          }}>
+            {resolvedProfile.description} Computer strength is approximate, not an Elo rating.
+            Search is time-limited; in a timed game the opponent adjusts its thinking
+            time to its remaining clock.
+          </p>
         </fieldset>
 
         <div className="play-v2-start-block">
