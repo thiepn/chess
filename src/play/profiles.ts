@@ -5,7 +5,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   gentle: {
     id: "gentle",
     name: "Gentle",
-    description: "Leaves tactical chances and plays shallowly enough for newer learners.",
+    description: "Shallow searches offer chances to practice basics.",
     skillLevel: 0,
     depth: 5,
     accent: "Learning pace",
@@ -13,7 +13,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   developing: {
     id: "developing",
     name: "Developing",
-    description: "Punishes obvious mistakes but still allows recoverable positions.",
+    description: "Punishes missed pieces but leaves chances.",
     skillLevel: 3,
     depth: 7,
     accent: "Forgiving pressure",
@@ -21,7 +21,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   club: {
     id: "club",
     name: "Club",
-    description: "A steady practical opponent for normal training games.",
+    description: "Balanced resistance for complete training games.",
     skillLevel: 7,
     depth: 9,
     accent: "Balanced challenge",
@@ -29,7 +29,7 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   strong: {
     id: "strong",
     name: "Strong",
-    description: "Accurate enough to expose strategic and calculation weaknesses.",
+    description: "Stronger search exposes tactical and positional mistakes.",
     skillLevel: 13,
     depth: 11,
     accent: "Serious resistance",
@@ -66,7 +66,7 @@ export function adaptiveAiProfile(
       ...aiProfiles.gentle,
       id: "adaptive",
       name: "Adaptive",
-      description: "Currently matched to a gentle training level.",
+      description: "Matched to gentle practice.",
       accent: "Matched to your player model",
     };
   }
@@ -76,7 +76,7 @@ export function adaptiveAiProfile(
       ...aiProfiles.developing,
       id: "adaptive",
       name: "Adaptive",
-      description: "Currently matched to a developing training level.",
+      description: "Matched to developing practice.",
       accent: "Matched to your player model",
     };
   }
@@ -86,7 +86,7 @@ export function adaptiveAiProfile(
       ...aiProfiles.club,
       id: "adaptive",
       name: "Adaptive",
-      description: "Currently matched to a club-style training level.",
+      description: "Matched to club-level practice.",
       accent: "Matched to your player model",
     };
   }
@@ -95,7 +95,7 @@ export function adaptiveAiProfile(
     ...aiProfiles.strong,
     id: "adaptive",
     name: "Adaptive",
-    description: "Currently matched to strong practical resistance.",
+    description: "Matched to stronger practice.",
     accent: "Matched to your player model",
   };
 }
