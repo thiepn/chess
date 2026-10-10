@@ -41,6 +41,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
+import { legalReviewMistake, recordReviewAttempt } from "./review/practiceLoop";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -292,8 +293,20 @@ export default function App() {
     let cancelled = false;
     let generation = 0;
     const refresh = () => {
+      const identityChanged = generation > 0;
       const current = ++generation;
       setLoaded(false);
+      if (identityChanged) {
+        // Abort the prior owner's unsent runtime before the new identity
+        // can write, render or rehydrate any former-owner session details.
+        setActiveIndex(null);
+        setManualActivity(null);
+        setActiveModelGameId(null);
+        setAssessmentSession(null);
+        setTrainingReturnPath("/train");
+        try { window.sessionStorage.removeItem("chess:training-runtime-v1"); }
+        catch { /* Access may be disabled by browser policy. */ }
+      }
       void repo.load(emptyChessState).then((value) => {
         if (cancelled || current !== generation) return;
         setState(ensureAnalyticsState(value));
@@ -374,12 +387,40 @@ export default function App() {
 
   const session = useMemo(() => composeSession(state, mode), [state, mode]);
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
-  const active = manualActivity ?? sessionActivity;
+  // A Review-triggered exercise must resolve from the current owner's saved
+  // game even if a deferred view transition or reload clears manualActivity.
+  // The URL is only a selector; it never authorizes unverified exercise data.
+  const routeActivityId = (() => {
+    if (!loaded || page !== "train" || !route.path.startsWith("/train/session/")) return "";
+    try { return decodeURIComponent(route.path.slice("/train/session/".length)); }
+    catch { return ""; }
+  })();
+  const routePracticeActivity: TrainingActivity | null = (() => {
+    if (!routeActivityId.startsWith("mistake:")) return null;
+    const mistakeId = routeActivityId.slice("mistake:".length);
+    const mistake = state.mistakes?.find(item => item.id === mistakeId);
+    const game = state.games?.find(item => item.id === mistake?.gameId);
+    if (!mistake || !game || !legalReviewMistake(mistake, game)) return null;
+    const skill = mistake.skillIds.map(id => skillById[id]).find(Boolean);
+    if (!skill) return null;
+    return {
+      id: routeActivityId, source: "game", skillIds: [skill.id],
+      activityType: "personalMistake", estimatedMinutes: 5,
+      priority: 1, difficulty: skill.difficulty, novelty: 0, urgency: 1,
+      reason: `From move ${mistake.moveNumber}: your own game`,
+      title: skill.title, subtitle: "Review your mistake",
+      mistakeId: mistake.id,
+    };
+  })();
+  const active = routePracticeActivity ?? manualActivity ?? sessionActivity;
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
-  const activeMistake =
-    active?.mistakeId
-      ? state.mistakes?.find((mistake) => mistake.id === active.mistakeId)
-      : undefined;
+  const activeMistake = active?.mistakeId
+    ? state.mistakes?.find((mistake) => {
+        const game = state.games?.find(g => g.id === mistake.gameId);
+        return mistake.id === active.mistakeId &&
+          Boolean(game && legalReviewMistake(mistake, game));
+      })
+    : undefined;
   const activeOpeningNode =
     active?.openingNodeId ? openingNodes[active.openingNodeId] : undefined;
   const activeRepertoire =
@@ -629,8 +670,9 @@ export default function App() {
           activeModelGameId?: string | null;
           assessmentSession?: AssessmentSession | null;
           trainingReturnPath?: string;
+          owner?: string;
         };
-        if (snapshot.path === route.path) {
+        if (snapshot.owner === repo.getProfileId() && snapshot.path === route.path) {
           if (snapshot.mode) setMode(snapshot.mode);
           setActiveIndex(snapshot.activeIndex ?? null);
           setManualActivity(snapshot.manualActivity ?? null);
@@ -666,7 +708,7 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    if (!trainingSessionOpen || !runtimeReady) return;
+    if (!loaded || !trainingSessionOpen || !runtimeReady) return;
     window.sessionStorage.setItem(
       "chess:training-runtime-v1",
       JSON.stringify({
@@ -677,6 +719,7 @@ export default function App() {
         activeModelGameId,
         assessmentSession,
         trainingReturnPath,
+        owner: repo.getProfileId(),
       }),
     );
   }, [
@@ -685,6 +728,7 @@ export default function App() {
     assessmentSession,
     manualActivity,
     mode,
+    loaded,
     route.path,
     runtimeReady,
     trainingReturnPath,
@@ -1047,14 +1091,34 @@ export default function App() {
         });
       }
 
+      let reviewPracticeHistory = previous.reviewPracticeHistory ?? [];
+      if (outcome.mistakeId && outcome.mistakePractice) {
+        const verifiedMistake = mistakes.find(m => m.id === outcome.mistakeId);
+        const verifiedGame = (previous.games ?? []).find(g => g.id === verifiedMistake?.gameId);
+        if (verifiedMistake && verifiedGame) {
+          reviewPracticeHistory = recordReviewAttempt(
+            reviewPracticeHistory, verifiedMistake, verifiedGame,
+            {
+              playedMove: outcome.mistakePractice.playedMove,
+              triedMoves: outcome.mistakePractice.triedMoves,
+              succeeded: outcome.success,
+              quality: outcome.quality,
+              hintsUsed: outcome.hintsUsed,
+              wrongAttempts: outcome.wrongAttempts,
+            },
+            new Date(occurredAt),
+          );
+        }
+      }
+
       if (outcome.mistakeId) {
         mistakes = mistakes.map((mistake) => {
           if (mistake.id !== outcome.mistakeId) return mistake;
 
           const successes = mistake.successes + (outcome.success ? 1 : 0);
           const attempts = mistake.attempts + 1;
-          const intervalDays =
-            successes >= 3 ? 30 : successes >= 2 ? 7 : successes >= 1 ? 1 : .25;
+          const intervalDays = !outcome.success
+            ? .25 : successes >= 3 ? 30 : successes >= 2 ? 7 : 1;
 
           return {
             ...mistake,
@@ -1227,6 +1291,7 @@ export default function App() {
         ),
         puzzleHistory,
         mistakes,
+        reviewPracticeHistory,
         openingProgress,
         openingDeviations,
         savedStudies,
@@ -1242,8 +1307,9 @@ export default function App() {
       };
     });
 
-    if (manualActivity) {
-      closeTrainingRuntime();
+    if (manualActivity || routePracticeActivity) {
+      closeTrainingRuntime(routePracticeActivity && trainingReturnPath === "/train"
+        ? "/review" : trainingReturnPath);
       return;
     }
 
@@ -1560,7 +1626,8 @@ export default function App() {
 
   function startMistakePractice(mistakeId: string) {
     const mistake = state.mistakes?.find((item) => item.id === mistakeId);
-    if (!mistake) return;
+    const game = state.games?.find(g => g.id === mistake?.gameId);
+    if (!mistake || !game || !legalReviewMistake(mistake, game)) return;
 
     const skill = mistake.skillIds
       .map((skillId) => skillById[skillId])
@@ -2673,7 +2740,9 @@ export default function App() {
                         />
                       ) : active.activityType === "personalMistake" && activeMistake ? (
                         <PersonalMistakeRunner
+                          key={`${repo.getProfileId()}:${activeMistake.id}:${activeMistake.positionFen}`}
                           mistake={activeMistake}
+                          storageOwner={repo.getProfileId()}
                           onComplete={completeActivity}
                         />
                       ) : active.activityType === "calculation" &&
@@ -2963,6 +3032,7 @@ export default function App() {
             routePath={route.path}
             onNavigate={navigate}
             mistakes={state.mistakes ?? []}
+            practiceHistory={state.reviewPracticeHistory ?? []}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}

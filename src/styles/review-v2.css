@@ -1195,3 +1195,17 @@ html[data-motion="reduced"] .review-v2-repair-row button {
 
 .review-moment-navigation { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .review-moment-navigation button { min-height: 44px; flex: 1 1 180px; }
+
+/* P86: priority practice sits within the existing Review sidebar. */
+.review-practice-summary { margin: 12px 0; font-size: .82rem; line-height: 1.55; color: var(--chess-color-text-secondary); }
+.review-practice-next { display: inline-flex; gap: 8px; width: 100%; min-height: 44px; align-items: center; justify-content: center; margin-bottom: 12px; }
+.review-v2-repair-row small { display: block; font-size: .76rem; line-height: 1.45; overflow-wrap: anywhere; margin: 8px 0; }
+.review-practice-line { padding: 12px 0; max-width: 100%; }
+.review-practice-line-steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.review-practice-line-steps button { min-height: 44px; min-width: 44px; padding: 8px 10px; border: 1px solid var(--chess-color-separator); color: inherit; background: transparent; }
+.review-practice-line-steps button[aria-current="step"] { font-weight: 700; border-color: currentColor; }
+.review-practice-line p, .review-practice-footnote { font-size: .82rem; line-height: 1.5; color: var(--chess-color-text-secondary); }
+.review-practice-context { font-size: .85rem; line-height: 1.45; margin: 12px 0; }
+.lesson-runner.mistake-runner .lesson-button-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.lesson-runner.mistake-runner .lesson-button-row button { min-height: 44px; }
+@media (max-width: 520px) { .lesson-runner.mistake-runner .lesson-button-row button { flex: 1 1 100%; } }

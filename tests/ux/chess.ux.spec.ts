@@ -682,3 +682,77 @@ test("P85 move-sheet arrows navigate saved legal moves and safely preserve revie
   await expect(page.locator(".review-notation-list")).toContainText("Nf6");
   await expect(page.getByRole("button", { name: "Refresh engine review" })).toBeEnabled();
 });
+
+test("P86 source-verified Review practice survives a same-owner reload and records only actual legal attempts", async ({ page }) => {
+  const original = visualUserState.games![0];
+  const source = original.moves[2]; // Nf3 was played; Bc4 is a legal alternative after 1.e4 e5.
+  const mistake = {
+    id: original.id + ":3", gameId: original.id, ply: 3,
+    moveNumber: source.moveNumber, playerColor: "w" as const,
+    positionFen: source.beforeFen, actualMove: source.uci, actualSan: source.san,
+    bestMove: "f1c4", principalVariation: ["f1c4", "g8f6"],
+    evaluationBefore: 30, evaluationAfter: -120, centipawnLoss: 150,
+    severity: "mistake" as const, skillIds: ["openings.principles"],
+    explanation: "Develop the bishop before allowing the center to drift.",
+    createdAt: FIXED_TIME, nextReviewAt: FIXED_TIME,
+    attempts: 0, successes: 0, resolved: false,
+  };
+  await open(page, "/review", ".review-v2");
+  await page.evaluate((state) => {
+    localStorage.setItem("thiepn.chess.user-state.v2.guest.state", JSON.stringify(state));
+  }, { ...visualUserState, mistakes: [mistake], reviewPracticeHistory: [] });
+  await page.reload();
+  await expect(page.getByRole("button", {name:"Practice next priority"})).toBeVisible();
+  await page.getByRole("button", {name:"Practice next priority"}).click();
+  await expect(page).toHaveURL(/\/train\/session\//);
+  await expect(page.locator(".mistake-runner")).toBeVisible();
+  await page.locator('.mistake-runner .board-square[data-square="g1"]').click();
+  await page.locator('.mistake-runner .board-square[data-square="f3"]').click();
+  await expect(page.locator(".review-practice-context")).toContainText("1 incorrect");
+  await page.reload();
+  await expect(page.locator(".review-practice-context")).toContainText("1 incorrect");
+  await page.locator('.mistake-runner .board-square[data-square="f1"]').click();
+  await page.locator('.mistake-runner .board-square[data-square="c4"]').click();
+  await expect(page.getByRole("button", {name:"Record practice"})).toBeVisible();
+  await page.locator(".review-practice-line-steps").getByRole("button", {name:"2. Nf6"}).click();
+  await expect(page.locator(".review-practice-line")).toContainText("2/2");
+  await page.getByRole("button", {name:"Record practice"}).click();
+  await expect(page).toHaveURL(/\/review$/);
+  await expect(page.locator(".review-practice-summary")).toContainText("1 recorded attempts");
+  await expect(page.locator(".review-v2-repair-list")).toContainText("1/1 recent successes");
+  const history = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state") || "{}").reviewPracticeHistory
+  );
+  expect(history).toHaveLength(1);
+  expect(history[0]).toMatchObject({
+    mistakeId: mistake.id, gameId: original.id, ply: 3,
+    triedMoves: ["g1f3", "f1c4"], succeeded: true, wrongAttempts: 1,
+  });
+  await assertNoHorizontalOverflow(page,"P86 review");
+});
+
+test("P86 revealed answer is counted as a missed attempt, never as mastery", async ({page}) => {
+  const original = visualUserState.games![0];
+  const source = original.moves[2];
+  const mistake = {
+    id: original.id + ":3", gameId: original.id, ply: 3,
+    moveNumber:source.moveNumber, playerColor:"w" as const,
+    positionFen:source.beforeFen, actualMove:source.uci, actualSan:source.san,
+    bestMove:"f1c4", principalVariation:["f1c4", "g8f6"],
+    evaluationBefore:30,evaluationAfter:-120,centipawnLoss:150,severity:"mistake" as const,
+    skillIds:["openings.principles"],explanation:"Develop the bishop",
+    createdAt:FIXED_TIME,nextReviewAt:FIXED_TIME,attempts:0,successes:0,resolved:false,
+  };
+  await open(page,"/review",".review-v2");
+  await page.evaluate((state)=>localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(state)),
+    {...visualUserState,mistakes:[mistake],reviewPracticeHistory:[]});
+  await page.reload();
+  await page.getByRole("button",{name:"Practice next priority"}).click();
+  await page.getByRole("button",{name:"Reveal and record missed attempt"}).click();
+  await page.getByRole("button",{name:"Record missed attempt"}).click();
+  await expect(page).toHaveURL(/\/review$/);
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state") || "{}"));
+  expect(saved.reviewPracticeHistory).toHaveLength(1);
+  expect(saved.reviewPracticeHistory[0].succeeded).toBe(false);
+  expect(saved.mistakes[0]).toMatchObject({attempts:1,successes:0,resolved:false});
+});
