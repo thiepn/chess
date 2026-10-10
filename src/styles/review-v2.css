@@ -1186,3 +1186,7 @@ html[data-motion="reduced"] .review-v2-repair-row button {
   .review-line-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .review-line-actions button { min-width: 0; overflow-wrap: anywhere; }
 }
+
+.review-v2-refresh { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 8px 0 12px; }
+.review-v2-refresh > button { min-height: 44px; }
+.review-v2-refresh p { margin: 0; max-width: 62ch; line-height: 1.5; color: var(--chess-color-danger, #9e3131); }
