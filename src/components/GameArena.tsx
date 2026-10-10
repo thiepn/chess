@@ -228,11 +228,11 @@ export function GameArena({
       /worker|timed out|illegal move|did not return/i.test(message)) {
       recoveryAttemptsRef.current += 1;
       setEngineReady(false);
-      setEngineStatus("Opponent interrupted · reconnecting…");
+      setEngineStatus("Reconnecting opponent…");
       setEngineNonce((count) => count + 1);
     } else {
       setError(message);
-      setEngineStatus("Opponent paused · retry available");
+      setEngineStatus("Opponent unavailable · retry");
     }
   }
 
@@ -395,7 +395,7 @@ export function GameArena({
     let cancelled = false;
     const requestedFen = chess.fen();
     setThinking(true);
-    setEngineStatus(`${profile.name} · choosing a legal move…`);
+    setEngineStatus(`${profile.name} is thinking…`);
 
     engineRef.current
       .chooseMove(chess.fen(), {
@@ -642,7 +642,7 @@ export function GameArena({
                 setError(null);
                 recoveryAttemptsRef.current = 0;
                 setEngineReady(false);
-                setEngineStatus("Restarting opponent…");
+                setEngineStatus("Restarting…");
                 setEngineNonce((count) => count + 1);
               }}>Retry opponent</button>}
             </div>
