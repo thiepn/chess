@@ -33,6 +33,8 @@ interface GameStoryViewProps {
   onRetainLesson: (gameId: string, momentId: string) => void;
   onPracticeSkill: (skillId: string) => void;
   onPracticeOpening: (repertoireId: string, nodeId: string) => void;
+  onContinueTraining: (skillId?: string) => void;
+  onPlayAgain: () => void;
 }
 
 type PreviewMode = "position" | "actual" | "better";
@@ -115,6 +117,8 @@ export function GameStoryView({
   onRetainLesson,
   onPracticeSkill,
   onPracticeOpening,
+  onContinueTraining,
+  onPlayAgain,
 }: GameStoryViewProps) {
   const story = game.reviewStory;
   const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 1;
@@ -395,6 +399,23 @@ export function GameStoryView({
               </p>
             </div>
           ) : null}
+          <div className="review-v2-next-actions" aria-label="After reviewing this game">
+            <p className="eyebrow">YOUR NEXT MOVE</p>
+            <p>
+              {story.prioritySkillId && skillById[story.prioritySkillId]
+                ? `Practice ${skillById[story.prioritySkillId].title.toLowerCase()} while this game is fresh.`
+                : "Keep your improvement going with a short training session."}
+            </p>
+            <button type="button" className="primary"
+              onClick={() => onContinueTraining(story.prioritySkillId && skillById[story.prioritySkillId]
+                ? story.prioritySkillId : undefined)}>
+              <Target size={16} /> {story.prioritySkillId && skillById[story.prioritySkillId]
+                ? "Practice this weakness" : "Continue training"}
+            </button>
+            <button type="button" className="secondary" onClick={onPlayAgain}>
+              <Swords size={16} /> Play another game
+            </button>
+          </div>
         </aside>
       </section>
 
