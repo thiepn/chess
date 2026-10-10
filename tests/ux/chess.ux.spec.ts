@@ -450,3 +450,69 @@ test("P81 a failed stored-game analysis shows a recoverable error and never lose
   await expect(page.locator(".review-v2-upgrade")).toBeVisible();
   await expect(page.getByRole("button", { name: "Analyze game" })).toBeVisible();
 });
+
+
+test("P82 touch/pen drag shows legal destinations and makes a legal opening move", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /Untimed/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  await expect(page.locator(".game-arena")).toBeVisible();
+  const source = page.locator('.game-arena .board-square[data-square="e2"]');
+  const target = page.locator('.game-arena .board-square[data-square="e4"]');
+  await source.scrollIntoViewIfNeeded();
+  const drag = async (type: "pointerdown" | "pointermove" | "pointerup", x: number, y: number) =>
+    page.evaluate(({ type, x, y }) => {
+      const origin = document.querySelector('.game-arena .board-square[data-square="e2"]');
+      if (!origin) throw new Error("Missing starting square");
+      origin.dispatchEvent(new PointerEvent(type, {
+        bubbles: true, pointerType: "touch", pointerId: 27,
+        isPrimary: true, clientX: x, clientY: y,
+      }));
+    }, { type, x, y });
+  const a = await source.boundingBox();
+  const z = await target.boundingBox();
+  expect(a).not.toBeNull();
+  expect(z).not.toBeNull();
+  const from = { x: a!.x + a!.width / 2, y: a!.y + a!.height / 2 };
+  const to = { x: z!.x + z!.width / 2, y: z!.y + z!.height / 2 };
+  await drag("pointerdown", from.x, from.y);
+  await drag("pointermove", to.x, to.y);
+  await expect(source).toHaveClass(/board-drag-source/);
+  await expect(target).toHaveClass(/board-drag-hover/);
+  await expect(target).toHaveClass(/board-drag-legal/);
+  await drag("pointerup", to.x, to.y);
+  await expect(target.locator('[data-piece="wp"]')).toBeVisible();
+  await expect(source.locator('[data-piece="wp"]')).toHaveCount(0);
+  await expect(page.locator(".board-drag-source")).toHaveCount(0);
+  await expect(page.locator(".board-drag-hover")).toHaveCount(0);
+});
+
+test("P82 keyboard selection, legal feedback and arrow-key chess move remain usable", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  await page.locator(".play-v2-time-list").getByRole("button", { name: /Untimed/ }).click();
+  await page.locator(".play-v2-start-block .primary").click();
+  const e2 = page.locator('.game-arena .board-square[data-square="e2"]');
+  const e4 = page.locator('.game-arena .board-square[data-square="e4"]');
+  await e2.focus();
+  await page.keyboard.press("Enter");
+  await expect(e2).toHaveAttribute("aria-selected", "true");
+  await expect(e4).toHaveClass(/legal-target/);
+  await expect(e4).toHaveAttribute("aria-label", /legal move target/);
+  await page.keyboard.press("ArrowUp");
+  await page.keyboard.press("ArrowUp");
+  await expect(e4).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(e4.locator('[data-piece="wp"]')).toBeVisible();
+  await expect(page.locator(".game-arena .board-square[aria-selected=true]")).toHaveCount(0);
+});
+
+test("P82 static chess previews cannot be dragged or played", async ({ page }) => {
+  await open(page, "/play", ".play-v2");
+  const preview = page.locator(".play-v2-board-column .chess-board-v2");
+  await expect(preview).toBeVisible();
+  await expect(preview.locator(".board-movable")).toHaveCount(0);
+  const pawn = preview.locator('[data-square="e2"]');
+  await pawn.click();
+  await expect(pawn).toHaveAttribute("aria-disabled", "true");
+  await expect(preview.locator(".legal-target")).toHaveCount(0);
+});
