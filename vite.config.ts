@@ -9,5 +9,13 @@ export default defineConfig({
     // implementation details and can leak accidental embedded config.
     sourcemap: false,
     manifest: true,
+    // Consolidate tree-shaken Lucide icon modules; reduce per-icon JS chunk overhead.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("/node_modules/lucide-react/dist/esm/icons/")) return "chess-icons";
+        },
+      },
+    },
   },
 });
