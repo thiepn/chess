@@ -630,8 +630,9 @@ export default function App() {
           activeModelGameId?: string | null;
           assessmentSession?: AssessmentSession | null;
           trainingReturnPath?: string;
+          owner?: string;
         };
-        if (snapshot.path === route.path) {
+        if (snapshot.owner === repo.getProfileId() && snapshot.path === route.path) {
           if (snapshot.mode) setMode(snapshot.mode);
           setActiveIndex(snapshot.activeIndex ?? null);
           setManualActivity(snapshot.manualActivity ?? null);
@@ -678,6 +679,7 @@ export default function App() {
         activeModelGameId,
         assessmentSession,
         trainingReturnPath,
+        owner: repo.getProfileId(),
       }),
     );
   }, [
@@ -1048,14 +1050,34 @@ export default function App() {
         });
       }
 
+      let reviewPracticeHistory = previous.reviewPracticeHistory ?? [];
+      if (outcome.mistakeId && outcome.mistakePractice) {
+        const verifiedMistake = mistakes.find(m => m.id === outcome.mistakeId);
+        const verifiedGame = (previous.games ?? []).find(g => g.id === verifiedMistake?.gameId);
+        if (verifiedMistake && verifiedGame) {
+          reviewPracticeHistory = recordReviewAttempt(
+            reviewPracticeHistory, verifiedMistake, verifiedGame,
+            {
+              playedMove: outcome.mistakePractice.playedMove,
+              triedMoves: outcome.mistakePractice.triedMoves,
+              succeeded: outcome.success,
+              quality: outcome.quality,
+              hintsUsed: outcome.hintsUsed,
+              wrongAttempts: outcome.wrongAttempts,
+            },
+            new Date(occurredAt),
+          );
+        }
+      }
+
       if (outcome.mistakeId) {
         mistakes = mistakes.map((mistake) => {
           if (mistake.id !== outcome.mistakeId) return mistake;
 
           const successes = mistake.successes + (outcome.success ? 1 : 0);
           const attempts = mistake.attempts + 1;
-          const intervalDays =
-            successes >= 3 ? 30 : successes >= 2 ? 7 : successes >= 1 ? 1 : .25;
+          const intervalDays = !outcome.success
+            ? .25 : successes >= 3 ? 30 : successes >= 2 ? 7 : 1;
 
           return {
             ...mistake,
@@ -1228,6 +1250,7 @@ export default function App() {
         ),
         puzzleHistory,
         mistakes,
+        reviewPracticeHistory,
         openingProgress,
         openingDeviations,
         savedStudies,
@@ -2675,6 +2698,7 @@ export default function App() {
                       ) : active.activityType === "personalMistake" && activeMistake ? (
                         <PersonalMistakeRunner
                           mistake={activeMistake}
+                          storageOwner={repo.getProfileId()}
                           onComplete={completeActivity}
                         />
                       ) : active.activityType === "calculation" &&
@@ -2964,6 +2988,7 @@ export default function App() {
             routePath={route.path}
             onNavigate={navigate}
             mistakes={state.mistakes ?? []}
+            practiceHistory={state.reviewPracticeHistory ?? []}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}
