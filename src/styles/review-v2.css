@@ -1172,3 +1172,17 @@ html[data-motion="reduced"] .review-v2-repair-row button {
     margin-right: 0;
   }
 }
+
+/* P85: on-demand source-verified engine continuation, never shown as a fake outcome. */
+.review-line-navigator { padding: 12px 0; border-bottom: 1px solid var(--chess-color-separator); }
+.review-line-navigator > strong { display: block; font-size: 0.9rem; margin-bottom: 10px; }
+.review-line-actions, .review-line-steps { display: flex; flex-wrap: wrap; gap: 8px; }
+.review-line-actions button { min-height: 44px; flex: 1 1 140px; }
+.review-line-steps { margin-top: 10px; max-width: 100%; }
+.review-line-steps button { min-width: 44px; min-height: 44px; padding: 7px 10px; border: 1px solid var(--chess-color-separator); background: transparent; color: inherit; }
+.review-line-steps button[aria-current="step"] { font-weight: 700; border-color: currentColor; }
+.review-line-navigator p { margin: 8px 0 0; font-size: 0.85rem; line-height: 1.4; }
+@media (max-width: 520px) {
+  .review-line-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .review-line-actions button { min-width: 0; overflow-wrap: anywhere; }
+}
