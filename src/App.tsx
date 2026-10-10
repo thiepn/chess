@@ -2979,6 +2979,11 @@ export default function App() {
             onRetainLesson={retainGameReviewLesson}
             onPracticeSkill={startManualPractice}
             onPracticeOpening={startOpeningPractice}
+            onContinueTraining={(skillId) => {
+              if (skillId && skillById[skillId]) startManualPractice(skillId);
+              else navigate("/train");
+            }}
+            onPlayAgain={() => navigate("/play")}
           />
         ) : page === "library" ? (
           <LibraryView
