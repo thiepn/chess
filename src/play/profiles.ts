@@ -5,34 +5,34 @@ export const aiProfiles: Record<Exclude<AiProfileId, "adaptive">, AiProfile> = {
   gentle: {
     id: "gentle",
     name: "Gentle",
-    description: "Forgiving play for beginners.",
+    description: "Forgiving practice.",
     skillLevel: 0,
     depth: 5,
-    accent: "Learning pace",
+    accent: "Gentle pace",
   },
   developing: {
     id: "developing",
     name: "Developing",
-    description: "Notices simple mistakes.",
+    description: "Sees basic mistakes.",
     skillLevel: 3,
     depth: 7,
-    accent: "Forgiving pressure",
+    accent: "Moderate pressure",
   },
   club: {
     id: "club",
     name: "Club",
-    description: "Balanced training games.",
+    description: "Balanced practice.",
     skillLevel: 7,
     depth: 9,
-    accent: "Balanced challenge",
+    accent: "Balanced play",
   },
   strong: {
     id: "strong",
     name: "Strong",
-    description: "Challenges tactics and strategy.",
+    description: "Tactical challenge.",
     skillLevel: 13,
     depth: 11,
-    accent: "Serious resistance",
+    accent: "Strong play",
   },
 };
 
@@ -65,8 +65,8 @@ export function adaptiveAiProfile(mastery: Record<string, SkillMastery>): AiProf
     ...base,
     id: "adaptive",
     name: "Adaptive",
-    description: `Based on ${base.name.toLowerCase()} practice.`,
-    accent: "Based on your practice progress",
+    description: `Based on ${base.name.toLowerCase()} level.`,
+    accent: "Adaptive training",
   };
 }
 
