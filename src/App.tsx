@@ -41,6 +41,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
+import { recordReviewAttempt } from "./review/practiceLoop";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
