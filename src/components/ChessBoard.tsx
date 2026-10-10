@@ -5,7 +5,7 @@ import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
 import { ChessPiece, chessPieceNames } from "./ChessPiece";
 import { isBoardDrag, isBoardSquare } from "../interaction/board-pointer";
-import "../styles/p82-board-interaction.css";
+
 
 interface BoardMove {
   from: Square;
@@ -489,6 +489,16 @@ export function ChessBoard({
               role="gridcell"
               key={square}
               className={classes}
+              style={{
+                touchAction: !disabled && piece?.color === chess.turn() ? "none" : "manipulation",
+                cursor: dragFrom === square ? "grabbing" : !disabled && piece?.color === chess.turn() ? "grab" : undefined,
+                outline: dragFrom === square
+                  ? "3px solid #357bd8"
+                  : dragFrom && dragHover === square
+                    ? (isLegal ? "4px solid #328554" : "3px solid #c86464")
+                    : undefined,
+                outlineOffset: dragFrom === square || (dragFrom && dragHover === square) ? "-3px" : undefined,
+              }}
               ref={(node) => {
                 if (node) squareRefs.current.set(square, node);
                 else squareRefs.current.delete(square);
