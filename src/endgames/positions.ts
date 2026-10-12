@@ -683,7 +683,9 @@ function dueScore(
 ) {
   const history =
     state.endgameHistory?.[position.id];
-  if (!history) return 3 + position.difficulty * .05;
+  // New technique: begin with the more approachable authentic position before
+  // progressing to the hardest local engine resistance.
+  if (!history) return 3 + (6 - position.difficulty) * .05;
   const due =
     new Date(history.nextReviewAt).getTime() <= now.getTime();
   const successRate =
