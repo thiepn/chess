@@ -28,16 +28,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: 220px 1fr; }
 
-.sync-chip {
-  margin-top: auto;
-  color: var(--muted);
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-}
-
 .sync-dot {
   width: 7px;
   height: 7px;
@@ -86,37 +76,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   line-height: 1.55;
 }
 
-.activity-list { margin: 24px 0; display: grid; gap: 4px; }
-
-.activity-row {
-  display: grid;
-  grid-template-columns: 28px 36px 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 8px;
-  border-radius: 14px;
-  transition: 160ms ease;
-}
-
-.activity-row:hover { background: rgba(255,255,255,.03); }
-.activity-index { color: #58637a; font-size: 11px; text-align: center; }
-
-.activity-icon {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: rgba(118,151,255,.09);
-  color: #aebcff;
-}
-
-.activity-copy { min-width: 0; display: grid; gap: 2px; }
-.activity-copy small { color: #687897; letter-spacing: .09em; font-size: 9px; font-weight: 800; }
-.activity-copy strong { font-size: 14px; }
-.activity-copy span { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.activity-time { color: var(--muted); font-size: 12px; }
-
 .primary, .secondary {
   min-height: 44px;
   border-radius: 13px;
@@ -147,13 +106,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   background: rgba(255,255,255,.04);
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1.25fr .75fr;
-  gap: 16px;
-  margin-top: 16px;
-}
-
 .panel { padding: 22px; }
 
 .panel-title {
@@ -164,18 +116,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 
 .panel-title svg { color: #8699c9; }
 .panel-title h3 { margin-top: 0; }
-
-.skill-bars { display: grid; gap: 15px; margin-top: 22px; }
-
-.skill-bar > div:first-child {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 7px;
-}
-
-.skill-bar span { color: #c4cada; }
-.skill-bar strong { color: #e7ebf6; }
 
 .track {
   height: 5px;
@@ -202,30 +142,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   right: -80px;
   bottom: -100px;
   background: radial-gradient(circle, rgba(255,124,145,.12), transparent 68%);
-}
-
-.metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.metric-row strong { color: #fff; font-size: 20px; }
-
-.priority-tag {
-  display: inline-block;
-  margin-top: 14px;
-  color: #ff9eae;
-  background: rgba(255,124,145,.09);
-  border-radius: 999px;
-  padding: 7px 10px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .08em;
 }
 
 .placeholder {
@@ -3704,11 +3620,7 @@ button {
   margin-top: auto;
 }
 
-.sidebar-experience + .sync-chip {
-  margin-top: 5px;
-}
-
-.experience-controls {
+.sidebar-experience + .experience-controls {
   position: relative;
 }
 
