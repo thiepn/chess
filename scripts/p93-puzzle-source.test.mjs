@@ -1,8 +1,8 @@
 import fs from "node:fs";
-import { test } from "node:test";
+import { it } from "vitest";
 import assert from "node:assert/strict";
 
-test("P93 retains 11000 distinct genuine source IDs without altering original baseline",()=>{
+it("P93 retains 11000 distinct genuine source IDs without altering original baseline",()=>{
   const baseline=fs.readFileSync("scripts/data/lichess-production-baseline.csv","utf8").trim().split(/\r?\n/);
   const added=fs.readFileSync("scripts/data/lichess-p93-expansion.csv","utf8").trim().split(/\r?\n/);
   const heading="PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,OpeningTags";
