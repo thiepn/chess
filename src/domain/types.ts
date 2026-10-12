@@ -279,6 +279,7 @@ export interface TrainingOutcome {
   calculationEvidence?: CalculationEvidence;
   endgamePositionId?: string;
   endgameEvidence?: EndgameEvidence;
+  endgamePractice?: {startFen:string;movesSan:string[]};
   openingNodeIds?: string[];
   openingConceptCorrect?: boolean;
   openingLineCompleted?: boolean;
