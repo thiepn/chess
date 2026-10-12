@@ -16,7 +16,8 @@ import type {
   TrainingActivity,
   TrainingOutcome,
 } from "../domain/types";
-import { lessonForSkill } from "../learning/lessons";
+import { deepTransferSkillIds, lessonForSkill } from "../learning/lessons";
+import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../learning/transferCompletion";
 import { summarizeLessonMastery } from "../learning/mastery";
 import type {
   BoardArrow,
@@ -57,21 +58,31 @@ export function LessonRunner({
   skill,
   onComplete,
 }: LessonRunnerProps) {
-  const lesson = useMemo(
-    () =>
-      lessonForSkill(
-        skill.id,
-        skill.title,
-        skill.description,
-        activity.activityType,
-      ),
-    [
-      activity.activityType,
-      skill.description,
-      skill.id,
-      skill.title,
-    ],
+  const baseLesson = useMemo(
+    () => lessonForSkill(skill.id,skill.title,skill.description,activity.activityType),
+    [activity.activityType,skill.description,skill.id,skill.title],
   );
+  const missingTransfer = !deepTransferSkillIds.includes(skill.id);
+  const [transferEntry,setTransferEntry] = useState<{skillId:string;entry:TransferExercise}|null>(null);
+  const [transferError,setTransferError] = useState<string|null>(null);
+  const [transferRetry,setTransferRetry] = useState(0);
+  useEffect(()=>{
+    if (!missingTransfer) return;
+    let cancelled=false;
+    setTransferError(null);
+    void loadTransferCatalog().then(catalog=>{
+      if (cancelled) return;
+      const entry=catalog.get(skill.id);
+      if(!entry){setTransferError("No independently authored transfer position is available for this skill.");return;}
+      setTransferEntry({skillId:skill.id,entry});
+    }).catch(()=>{
+      if(!cancelled)setTransferError("Transfer exercises are unavailable. Lesson progress has not changed.");
+    });
+    return ()=>{cancelled=true;};
+  },[skill.id,missingTransfer,transferRetry]);
+  const lesson = useMemo(()=>missingTransfer && transferEntry?.skillId === skill.id
+    ? checkedTransfer(baseLesson,transferEntry.entry) : baseLesson,
+    [baseLesson,missingTransfer,skill.id,transferEntry]);
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -271,6 +282,14 @@ export function LessonRunner({
   const masteryPreview =
     summarizeLessonMastery(results);
 
+  // Never fall through to the same-position fallback: that is retrieval, not transfer.
+  if (missingTransfer && transferEntry?.skillId !== skill.id) {
+    return <div className="lesson-runner lesson-runner-v2" role="status">
+      <h2>{transferError ? "Transfer position unavailable" : "Preparing independent practice"}</h2>
+      <p>{transferError ?? "Loading the authored position needed to assess this concept."}</p>
+      {transferError && <button type="button" onClick={()=>setTransferRetry(x=>x+1)}>Retry transfer data</button>}
+    </div>;
+  }
   return (
     <div className="lesson-runner lesson-runner-v2">
       <div className="lesson-progress-rail">
@@ -369,9 +388,9 @@ export function LessonRunner({
                   step.wrongMoveFeedback?.[
                     shortUci
                   ] ??
-                  (step.support ===
-                  "transfer"
-                    ? "That move is legal, but it does not apply the idea correctly. Re-identify the condition that made the concept work before choosing a move."
+                  (step.support === "transfer"
+                    ? step.misconceptionFeedback ??
+                      "Recheck the condition that makes the concept work, then calculate the strongest reply."
                     : "That move is legal, but it does not express the lesson yet. Recheck the position, the opponent's strongest reply, and the purpose of your move."),
               );
               return false;
@@ -598,8 +617,9 @@ export function LessonRunner({
                 }
               </strong>
               <small>
-                first try · hints are counted
-                separately
+                {masteryPreview.transferSteps > 0
+                  ? `Independent transfer: ${masteryPreview.transferFirstTryCorrect}/${masteryPreview.transferSteps} · delayed recall will be scheduled`
+                  : "First try · hints are counted separately"}
               </small>
             </div>
 
