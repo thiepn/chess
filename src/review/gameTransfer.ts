@@ -1,13 +1,13 @@
 import {Chess} from "chess.js";
-import type {ImportedGame,PersonalMistake,GamePhase,ReviewErrorType} from "../games/types";
+import type {ImportedGame,PersonalMistake} from "../games/types";
 import {legalReviewMistake,verifiedReviewAttempts,type RecordedReviewAttempt} from "./practiceLoop";
 
 export type TransferLane="strategy"|"calculation"|"tactics"|"endgame";
 export interface TransferMission {
   mistakeId:string;gameId:string;gameLabel:string;skillId:string;
-  lane:TransferLane;errorType?:ReviewErrorType;phase:GamePhase|undefined;
-  moveNumber:number;positionFen:string;actualSan:string;referenceSan:string;
-  nextReplySan:string|null;lineSan:string[];due:boolean;severity:string;
+  lane:TransferLane;
+  moveNumber:number;actualSan:string;
+  lineLength:number;due:boolean;
   question:string;priority:number;
   cleanReturns:number;spacedCleanPairs:number;assistedReturns:number;missedReturns:number;
   nextReviewAt:string;
@@ -80,10 +80,10 @@ export function gameTransferMissions(
      (due?2:0)+Math.min(2,missed.length*.5)-(independent.length>=2?1:0);
    return [{mistakeId:m.id,gameId:m.gameId,
      gameLabel:`${game.white} — ${game.black}`,skillId:m.skillIds[0]||"fundamentals.attacked",
-     lane,phase:game.reviewStory?.phases.find(p=>m.ply>=p.startPly&&m.ply<=p.endPly)?.phase,errorType:m.errorType,
-     moveNumber:m.moveNumber,positionFen:m.positionFen,actualSan:m.actualSan,
-     referenceSan:line[0],nextReplySan:line[1]??null,lineSan:line,
-     due,severity:m.severity,
+     lane,
+     moveNumber:m.moveNumber,actualSan:m.actualSan,
+     lineLength:line.length,
+     due,
      question:lane==="strategy"?"What was your plan, and which opponent reply makes it unsafe?"
        :lane==="endgame"?"Which king, rook or pawn resource makes the technique work?"
        :lane==="calculation"?"Find the move, the best recorded reply, and your continuation."
