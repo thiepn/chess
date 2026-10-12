@@ -82,9 +82,12 @@ export function summarizeLessonMastery(
       Math.round(masteryQuality * 1000) / 1000,
     masteryPassed:
       independent.length >= 2 &&
-      // A same-position second attempt proves retrieval, never transfer.
-      // With no true transfer task, require another independent check.
-      (transfer.length > 0 || independent.length >= 3) &&
+      // Completing a novel-position task with hints is practice, not
+      // demonstrated independent transfer. No retention is claimed until a
+      // later scheduled attempt supplies separate delayed evidence.
+      (transfer.length > 0
+        ? transferFirstTry > 0
+        : independent.length >= 3) &&
       masteryQuality >= .62,
   };
 }
