@@ -33,9 +33,7 @@ function catalogIndex(raw: unknown): ReadonlyMap<string,TransferExercise> {
     throw Error("Unexpected transfer catalog");
   const rows = new Map<string,TransferExercise>();
   for (const item of source.items) {
-    if (!item || ["skillId","fen","acceptedMove","prompt","success","misconception"]
-      .some(k => typeof item[k as keyof TransferExercise] !== "string" ||
-        !(item[k as keyof TransferExercise] as string).trim()) ||
+    if (!item || fields.some(k => typeof item[k] !== "string" || !item[k].trim()) ||
       rows.has(item.skillId)) throw Error("Invalid authored transfer record");
     rows.set(item.skillId,item);
   }
