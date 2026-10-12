@@ -737,8 +737,17 @@ export default function App() {
     trainingSessionOpen,
   ]);
 
+  const hadTrainingSession = useRef(false);
   useEffect(() => {
-    if (trainingSessionOpen) return;
+    if (trainingSessionOpen) {
+      hadTrainingSession.current = true;
+      return;
+    }
+    // A manual course/puzzle activity is set before the navigation commits.
+    // Never clear it while still on Learn. Clear only on an actual exit from
+    // an open training route; owner change has its separate stricter reset.
+    if (!hadTrainingSession.current) return;
+    hadTrainingSession.current = false;
     if (!runtimeReady) return;
     setActiveIndex(null);
     setManualActivity(null);
