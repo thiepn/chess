@@ -716,14 +716,14 @@ export function ReviewView({
         )}
         <div className="review-v2-repair-list">
           {practiceQueue.length ? (
-            practiceQueue.slice(0, 12).map(({mistake, due, recentAttempts, recentSuccesses, lastQuality, nextReviewAt, reviewReason}) => (
+            practiceQueue.slice(0, 12).map(({mistake, due, recentAttempts, recentSuccesses, lastQuality, reviewReason}) => (
               <div key={mistake.id} className={`review-v2-repair-row ${mistake.severity}`}>
                 <div>
                   <span>{severityLabel(mistake.severity)} · move {mistake.moveNumber}</span>
                   <strong>{mistake.actualSan}</strong>
                   <p>{mistake.explanation}</p>
                   <small>{due ? "Due for practice" : "Review scheduled later"} · {recentSuccesses}/{recentAttempts} recent successes{lastQuality === null ? "" : ` · latest quality ${Math.round(lastQuality * 100)}%`}</small>
-                  <small>{reviewReason}{due ? "" : ` · Next: ${Number.isFinite(Date.parse(nextReviewAt)) ? new Date(nextReviewAt).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"}) : "not scheduled"}`}</small>
+                  <small>{reviewReason}{due ? "" : ` · Next: ${Number.isFinite(Date.parse(mistake.nextReviewAt)) ? new Date(mistake.nextReviewAt).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"}) : "not scheduled"}`}</small>
                 </div>
                 <div>
                   <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
