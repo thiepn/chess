@@ -85,4 +85,16 @@ describe("lesson mastery evidence", () => {
     );
     expect(cleanTransfer.masteryPassed).toBe(true);
   });
+  it("counts assisted novel-position completion without granting independent mastery", () => {
+    const assisted=summarizeLessonMastery([
+      result("recognition","retrieval"),
+      result("retrieval","retrieval"),
+      result("new-position","transfer",{firstTry:false,hintsUsed:1,wrongAttempts:0}),
+    ]);
+    expect(assisted.completed).toBe(true);
+    expect(assisted.transferSteps).toBe(1);
+    expect(assisted.transferFirstTryCorrect).toBe(0);
+    expect(assisted.masteryPassed).toBe(false);
+  });
+
 });
