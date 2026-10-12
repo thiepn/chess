@@ -42,6 +42,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import { legalReviewMistake, recordReviewAttempt, scheduleVerifiedReview } from "./review/practiceLoop";
+import { legalPuzzleLine, recordPuzzleResult } from "./puzzles/practiceQuality";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -938,6 +939,17 @@ export default function App() {
     const skillId = activeSkill.id;
     const occurredAt = new Date().toISOString();
     let outcome = incoming;
+    if (active.activityType === "themedPuzzle" || active.activityType === "mixedPuzzle") {
+      const p=incoming.puzzlePractice;
+      if (!incoming.puzzleId || !p || p.completed!==incoming.success ||
+          !Array.isArray(p.wrongMoves) || p.wrongMoves.length>40 ||
+          !Number.isInteger(incoming.hintsUsed) || incoming.hintsUsed<0 ||
+          incoming.hintsUsed>1 || incoming.wrongAttempts!==p.wrongMoves.length ||
+          !legalPuzzleLine(p)) return;
+      const canonical=incoming.success
+        ? Math.max(.2,Math.round(100-incoming.hintsUsed*20-p.wrongMoves.length*12)/100):0;
+      outcome={...incoming,quality:canonical};
+    }
     // Source-verification must precede ALL progress, feedback and analytics.
     if (active.activityType === "personalMistake") {
       if (!active.mistakeId || incoming.mistakeId !== active.mistakeId ||
@@ -1036,16 +1048,10 @@ export default function App() {
 
       if (outcome.puzzleId) {
         const prior = puzzleHistory[outcome.puzzleId];
-        puzzleHistory[outcome.puzzleId] = {
-          puzzleId: outcome.puzzleId,
-          attempts: (prior?.attempts ?? 0) + 1,
-          successes: (prior?.successes ?? 0) + (outcome.success ? 1 : 0),
-          lastAttemptAt: occurredAt,
-          lastSuccessAt: outcome.success ? occurredAt : prior?.lastSuccessAt,
-          lastQuality: outcome.quality,
-          hintsUsed: outcome.hintsUsed,
-          wrongAttempts: outcome.wrongAttempts,
-        };
+        puzzleHistory[outcome.puzzleId] = recordPuzzleResult(
+          prior,outcome.puzzleId,outcome.success,outcome.hintsUsed,
+          outcome.puzzlePractice?.wrongMoves ?? [],outcome.quality,new Date(occurredAt),
+        );
       }
 
       if (active.openingNodeId) {
@@ -2798,6 +2804,13 @@ export default function App() {
                           skill={activeSkill}
                           mastery={state.mastery[activeSkill.id]}
                           history={state.puzzleHistory}
+                          relatedGame={state.mistakes?.flatMap(m => {
+                            const game=state.games?.find(g=>g.id===m.gameId);
+                            return game && m.skillIds.includes(activeSkill.id) &&
+                              legalReviewMistake(m,game)
+                              ? [{gameId:game.id,moveNumber:m.moveNumber}] : [];
+                          })[0]}
+                          onOpenReviewGame={gameId=>navigate(`/review/${encodeURIComponent(gameId)}`)}
                           onComplete={completeActivity}
                         />
                       ) : (

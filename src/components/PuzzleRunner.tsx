@@ -1,7 +1,7 @@
 import { sameUciMove } from "../learning/uci";
 import { Chess, type Color, type Square } from "chess.js";
 import { Check, ChevronRight, ExternalLink, Lightbulb, LoaderCircle, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   ChessSkill,
   SkillMastery,
@@ -12,9 +12,10 @@ import { loadPuzzlesForSkill } from "../puzzles/repository";
 import {
   humanPuzzleTheme,
   puzzleExplanation,
-  puzzleSolutionSan,
+  loadPuzzleCoaching,
 } from "../puzzles/explanations";
 import { selectPuzzle } from "../puzzles/selector";
+import { legalPuzzleLine, puzzleRetryAt } from "../puzzles/practiceQuality";
 import type { PuzzleAttemptSummary, PuzzleRecord } from "../puzzles/types";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import type { EngineEvaluation } from "../games/types";
@@ -27,6 +28,8 @@ interface PuzzleRunnerProps {
   skill: ChessSkill;
   mastery?: SkillMastery;
   history?: Record<string, PuzzleAttemptSummary>;
+  relatedGame?: {gameId:string;moveNumber:number};
+  onOpenReviewGame?: (gameId:string)=>void;
   onComplete: (outcome: TrainingOutcome) => void;
 }
 
@@ -56,6 +59,8 @@ export function PuzzleRunner({
   skill,
   mastery,
   history,
+  relatedGame,
+  onOpenReviewGame,
   onComplete,
 }: PuzzleRunnerProps) {
   const [puzzle, setPuzzle] = useState<PuzzleRecord | null | undefined>(undefined);
@@ -65,6 +70,12 @@ export function PuzzleRunner({
   const [showHint, setShowHint] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [wrongAttempts, setWrongAttempts] = useState(0);
+  const [wrongMoves,setWrongMoves] = useState<string[]>([]);
+  const [revealed,setRevealed] = useState(false);
+  const [lastReply,setLastReply] = useState<string|null>(null);
+  const [replyChecks,setReplyChecks] = useState<string[]>([]);
+  const [motifAdvice,setMotifAdvice] = useState<Record<string,string>>();
+  const completing=useRef(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [boardVersion, setBoardVersion] = useState(0);
   const [replying, setReplying] = useState(false);
@@ -74,8 +85,16 @@ export function PuzzleRunner({
   const [verificationError, setVerificationError] =
     useState<string | null>(null);
 
+  useEffect(()=>{
+    let cancelled=false;
+    void loadPuzzleCoaching().then(advice=>{if(!cancelled)setMotifAdvice(advice);})
+      .catch(()=>{if(!cancelled)setMotifAdvice(undefined);});
+    return ()=>{cancelled=true;};
+  },[]);
+
   useEffect(() => {
     let cancelled = false;
+    completing.current=false;
 
     setPuzzle(undefined);
     setPosition(null);
@@ -84,6 +103,10 @@ export function PuzzleRunner({
     setShowHint(false);
     setHintsUsed(0);
     setWrongAttempts(0);
+    setWrongMoves([]);
+    setRevealed(false);
+    setLastReply(null);
+    setReplyChecks([]);
     setFeedback(null);
     setVerifying(false);
     setVerification(null);
@@ -120,14 +143,11 @@ export function PuzzleRunner({
   }, [position]);
 
   const explanation = useMemo(
-    () => (puzzle ? puzzleExplanation(puzzle) : null),
-    [puzzle],
-  );
-  const solutionSan = useMemo(
-    () => (puzzle ? puzzleSolutionSan(puzzle) : []),
-    [puzzle],
+    () => (puzzle ? puzzleExplanation(puzzle,motifAdvice) : null),
+    [puzzle,motifAdvice],
   );
 
+  const verifiedLine=useMemo(()=>puzzle?legalPuzzleLine(puzzle):null,[puzzle]);
   const expectedMove = puzzle?.solutionMoves[solutionIndex];
   const hintArrow: BoardArrow[] = useMemo(() => {
     if (!showHint || !expectedMove) return [];
@@ -158,6 +178,13 @@ export function PuzzleRunner({
     );
   }
 
+  if (puzzle && !verifiedLine) {
+    return <div className="puzzle-loading" role="alert">
+      <strong>Invalid stored puzzle continuation</strong>
+      <span>Practice has stopped; no result can be awarded from this source.</span>
+    </div>;
+  }
+
   if (!puzzle || !position) {
     return (
       <LessonRunner
@@ -174,8 +201,9 @@ export function PuzzleRunner({
     : "Mixed position";
 
   function showPuzzleHint() {
-    if (!showHint) setHintsUsed((value) => value + 1);
-    setShowHint(true);
+    if (hintsUsed>=2)return;
+    setHintsUsed(value=>value+1);
+    if(hintsUsed>=1)setShowHint(true);
     setFeedback(null);
   }
 
@@ -190,6 +218,13 @@ export function PuzzleRunner({
     setBoardVersion((value) => value + 1);
   }
 
+  function revealStoredLine() {
+    if(!puzzle || !verifiedLine || solved)return;
+    setRevealed(true);
+    setSolved(true);
+    setReplying(false);
+  }
+
   async function verifyWithEngine() {
     if (!puzzle || !solved || verifying) return;
 
@@ -199,9 +234,19 @@ export function PuzzleRunner({
 
     try {
       engine = await StockfishBrowserEngine.create();
-      setVerification(
-        await engine.evaluate(puzzle.initialFen, 12),
-      );
+      setVerification(await engine.evaluate(puzzle.initialFen, 12));
+      const checks:string[]=[];
+      const board=new Chess(puzzle.initialFen);
+      for(let i=0;i<puzzle.solutionMoves.length && checks.length<2;i++){
+        if(i%2===1){
+          const result=await engine.evaluate(board.fen(),10);
+          checks.push(result.bestMove===puzzle.solutionMoves[i]
+            ? `Reply ${checks.length+1}: matches engine at depth 10`
+            : `Reply ${checks.length+1}: reference line differs from depth-10 engine choice`);
+        }
+        applyUci(board,puzzle.solutionMoves[i]);
+      }
+      setReplyChecks(checks);
     } catch (cause) {
       setVerificationError(
         cause instanceof Error
@@ -215,16 +260,17 @@ export function PuzzleRunner({
   }
 
   function finish() {
-    if (!puzzle) return;
-    const penalty = hintsUsed * .12 + wrongAttempts * .1;
+    if (!puzzle || !verifiedLine || completing.current || !solved)return;
+    completing.current=true;
+    const success=!revealed;
     onComplete({
-      success: true,
-      quality: Math.max(.3, 1 - penalty),
+      success,
+      quality:success?Math.max(.2,Math.round(100-hintsUsed*20-wrongMoves.length*12)/100):0,
       hintsUsed,
-      wrongAttempts,
-      puzzleId: puzzle.id,
-      puzzleRating: puzzle.rating,
-      puzzleSkillIds: puzzle.skillIds,
+      wrongAttempts:wrongMoves.length,
+      puzzleId:puzzle.id,puzzleRating:puzzle.rating,puzzleSkillIds:puzzle.skillIds,
+      puzzlePractice:{sourceFen:puzzle.initialFen,solutionMoves:[...puzzle.solutionMoves],
+        wrongMoves:[...wrongMoves],completed:success},
     });
   }
 
@@ -240,13 +286,14 @@ export function PuzzleRunner({
             highlights={hintHighlights}
             arrows={hintArrow}
             onMove={(move) => {
-              if (!expectedMove || replying) return false;
+              if (!expectedMove || replying || revealed || wrongMoves.length>=40)return false;
               const uci = `${move.from}${move.to}${move.promotion ?? ""}`;
               const accepted = sameUciMove(uci, expectedMove);
 
               if (!accepted) {
                 setWrongAttempts((value) => value + 1);
-                setFeedback("That move differs from the stored puzzle solution. Other legal moves are not evaluated automatically.");
+                setWrongMoves(old=>[...old,uci].slice(-40));
+                setFeedback(`${sanForUci(position,uci)} is legal, but is not this puzzle's reference move. ${explanation?.point ?? "Compare checks, captures, and threats before trying again."} Other legal alternatives are not scored as engine errors.`);
                 return false;
               }
 
@@ -264,14 +311,15 @@ export function PuzzleRunner({
               const replyMove = applyUci(afterPlayer, reply);
 
               if (!replyMove) {
-                setSolved(true);
-                return true;
+                setFeedback("The stored reply is illegal. This position cannot award a result.");
+                return false;
               }
 
               setReplying(true);
               window.setTimeout(() => {
                 const followingIndex = nextIndex + 1;
                 setPosition(afterPlayer.fen());
+                setLastReply(replyMove.san);
                 setSolutionIndex(followingIndex);
                 setBoardVersion((value) => value + 1);
                 setReplying(false);
@@ -294,10 +342,12 @@ export function PuzzleRunner({
         <div className="lesson-instruction">
           <div>
             <p className="eyebrow">{label.toUpperCase()}</p>
-            <h2>{solved ? "Position solved." : "Find the best move."}</h2>
+            <h2>{revealed?"Study the reference line.":solved ? "Position solved." : "Find the reference move."}</h2>
             <p className="lesson-prompt">
               {solved
-                ? "You found the full tactical sequence, including the opponent's best replies."
+                ? revealed
+                  ? "The answer was revealed. This is a missed attempt, not independent mastery."
+                  : "You followed the stored tactical continuation, including legally checked opponent replies."
                 : replying
                   ? "Good. Now watch the opponent's forced reply."
                   : themed
@@ -313,6 +363,9 @@ export function PuzzleRunner({
               )}
             </div>
 
+            {lastReply && !revealed && <p className="puzzle-reply-status" role="status">
+              Recorded opponent reply: {lastReply} · checked legal against the puzzle position.
+            </p>}
             {feedback && !solved && (
               <div className="lesson-feedback error" role="alert" aria-atomic="true">
                 <span>{feedback}</span>
@@ -322,12 +375,12 @@ export function PuzzleRunner({
               </div>
             )}
 
-            {showHint && !solved && (
+            {hintsUsed>0 && !solved && (
               <div className="hint-card" role="status" aria-live="polite">
                 <Lightbulb size={18} />
                 <div>
-                  <strong>Directional hint</strong>
-                  <span>The board now shows the move's origin and destination. Try to explain why it works before playing it.</span>
+                  <strong>{showHint?"Move hint":"Concept hint"}</strong>
+                  <span>{showHint?"The reference move is marked. This counts as assisted practice.":explanation?.point ?? "Calculate checks and captures, then check the opponent's strongest reply."}</span>
                 </div>
               </div>
             )}
@@ -339,9 +392,10 @@ export function PuzzleRunner({
                   <div>
                     <strong>Correct sequence</strong>
                     <span>
-                      {wrongAttempts === 0 && hintsUsed === 0
-                        ? "Clean solve. You recognized the sequence immediately."
-                        : "Solved. Hints and retries are recorded separately."}
+                      {revealed?"Revealed. No puzzle success or mastery credit."
+                        : wrongAttempts === 0 && hintsUsed === 0
+                          ? "Independent clean solve. Retention is checked later."
+                          : "Assisted solve. Repeat later without hints for independent recall."}
                     </span>
                   </div>
                 </div>
@@ -365,8 +419,8 @@ export function PuzzleRunner({
                     <div className="puzzle-solution-line">
                       <span>Solution</span>
                       <strong>
-                        {solutionSan.length
-                          ? solutionSan.join("  ")
+                        {verifiedLine?.length
+                          ? verifiedLine.join("  ")
                           : puzzle.solutionMoves.join("  ")}
                       </strong>
                     </div>
@@ -376,6 +430,14 @@ export function PuzzleRunner({
                       <p>{explanation.alternatives}</p>
                     </div>
 
+                    <p className="puzzle-retry-note">
+                      Next spaced practice: {new Date(revealed
+                        ? Date.now()+6*3_600_000
+                        : puzzleRetryAt(history?.[puzzle.id],
+                            hintsUsed===0&&wrongMoves.length===0,new Date()).next).toLocaleString()}.
+                      {revealed?" Missed attempt (6-hour return).":
+                        hintsUsed||wrongMoves.length?" Assisted return in 12 hours.":" Independent recall interval."}
+                    </p>
                     {wrongAttempts > 0 && (
                       <div className="puzzle-retry-note">
                         <RotateCcw size={14} />
@@ -435,6 +497,9 @@ export function PuzzleRunner({
                     </div>
                   )}
 
+                  {replyChecks.length>0 && <p className="puzzle-reply-status" role="status">
+                    {replyChecks.join(" · ")}. Depth-10 analysis is not proof of a unique best reply.
+                  </p>}
                   {verificationError && (
                     <small className="puzzle-engine-error" role="alert">
                       {verificationError}
@@ -468,13 +533,21 @@ export function PuzzleRunner({
               {!solved && !replying && (
                 <button className="hint-button" type="button" onClick={showPuzzleHint}>
                   <Lightbulb size={16} />
-                  {showHint ? "Hint shown" : "Show hint"}
+                  {hintsUsed===0?"Concept hint":hintsUsed===1?"Show move hint":"Hints shown"}
                 </button>
               )}
 
+              {!solved && <button className="secondary" type="button"
+                onClick={revealStoredLine}>Reveal and schedule retry</button>}
               {solved && (
                 <button className="primary" type="button" onClick={finish}>
-                  Continue <ChevronRight size={18} />
+                  {revealed?"Record missed puzzle":"Record solve"} <ChevronRight size={18} />
+                </button>
+              )}
+              {solved && relatedGame && onOpenReviewGame && (
+                <button className="secondary" type="button"
+                  onClick={()=>onOpenReviewGame(relatedGame.gameId)}>
+                  Study related saved-game mistake · move {relatedGame.moveNumber}
                 </button>
               )}
             </div>

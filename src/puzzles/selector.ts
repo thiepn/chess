@@ -1,3 +1,4 @@
+import { calibratedPuzzleRating } from "./practiceQuality";
 import type {
   PuzzleAttemptSummary,
   PuzzleRecord,
@@ -50,6 +51,8 @@ function coolingDown(
   const attempt = history[puzzle.id];
   if (!attempt) return false;
 
+  const scheduled=attempt.nextReviewAt?Date.parse(attempt.nextReviewAt):NaN;
+  if(Number.isFinite(scheduled))return now.getTime()<scheduled;
   const ageDays = attemptAgeDays(attempt, now);
   return ageDays <
     (attemptWasWeak(attempt) ? 2 : 14);
@@ -65,6 +68,8 @@ function historyPenalty(
 
   const ageDays = attemptAgeDays(attempt, now);
   const weak = attemptWasWeak(attempt);
+  if(attempt.nextReviewAt && Number.isFinite(Date.parse(attempt.nextReviewAt)) &&
+    now.getTime()>=Date.parse(attempt.nextReviewAt))return weak?-.3:.04;
 
   if (weak) {
     if (ageDays < 2) return .92;
@@ -163,19 +168,10 @@ export function selectPuzzle(
     ? rested
     : pool;
 
-  return (
-    [...candidates].sort(
-      (a, b) =>
-        puzzleSelectionScore(
-          b,
-          criteria,
-          now,
-        ) -
-        puzzleSelectionScore(
-          a,
-          criteria,
-          now,
-        ),
-    )[0] ?? null
-  );
+  const target=calibratedPuzzleRating(
+    criteria.targetRating ?? targetPuzzleRating(criteria.mastery,criteria.activityDifficulty),
+    history,pool);
+  const adjusted={...criteria,targetRating:target};
+  return ([...candidates].sort((a,b)=>
+    puzzleSelectionScore(b,adjusted,now)-puzzleSelectionScore(a,adjusted,now))[0]??null);
 }

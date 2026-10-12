@@ -835,3 +835,27 @@ test("P88 unavailable transfer corpus never reverts to same-position mastery", a
   await expect(page.locator(".lesson-stage .board-square")).toHaveCount(0);
   await expect(page.getByRole("button",{name:"Retry transfer data"})).toBeVisible();
 });
+
+test("P89 missed puzzle records a bounded six-hour tactical return without mastery",async ({page})=>{
+  await open(page,"/learn/tactics/tactics.knight-fork",".lesson-page-v2");
+  await page.getByRole("button",{name:"Practice positions"}).click();
+  await expect(page.locator(".puzzle-runner")).toBeVisible();
+  await page.getByRole("button",{name:"Concept hint"}).click();
+  await expect(page.getByText("Concept hint",{exact:true})).toBeVisible();
+  await page.getByRole("button",{name:"Reveal and schedule retry"}).click();
+  await expect(page.getByText("This is a missed attempt, not independent mastery.",{exact:false})).toBeVisible();
+  await page.getByRole("button",{name:"Record missed puzzle"}).click();
+  await page.waitForFunction(()=>{
+    const value=JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state")||"{}");
+    return Object.values(value.puzzleHistory||{}).some((x:any)=>x.lastIndependent===false &&
+      x.cleanStreak===0 && x.lastQuality===0);
+  });
+  const evidence=await page.evaluate(()=>{
+    const value=JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state")||"{}");
+    return Object.values(value.puzzleHistory||{}).find((x:any)=>x.lastIndependent===false &&
+      x.cleanStreak===0 && x.lastQuality===0) as any;
+  });
+  expect(evidence).toMatchObject({attempts:1,successes:0,hintsUsed:1});
+  expect(Date.parse(evidence.nextReviewAt)-Date.parse(evidence.lastAttemptAt)).toBe(21_600_000);
+  await assertNoHorizontalOverflow(page,"P89 tactic retry");
+});

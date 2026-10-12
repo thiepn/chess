@@ -22,6 +22,11 @@ export interface PuzzleAttemptSummary {
   lastQuality: number;
   hintsUsed: number;
   wrongAttempts: number;
+  /** P89: spaced local practice. These are not external rating claims. */
+  nextReviewAt?: string;
+  cleanStreak?: number;
+  lastIndependent?: boolean;
+  lastWrongMove?: string;
 }
 
 export interface PuzzleManifestShard {

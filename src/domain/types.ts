@@ -270,6 +270,7 @@ export interface TrainingOutcome {
   puzzleId?: string;
   puzzleRating?: number;
   puzzleSkillIds?: string[];
+  puzzlePractice?: { sourceFen:string; solutionMoves:string[]; wrongMoves:string[]; completed:boolean };
   mistakeId?: string;
   mistakePractice?: { playedMove: string | null; triedMoves: string[] };
   studyId?: string;
