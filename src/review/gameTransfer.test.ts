@@ -41,7 +41,7 @@ describe("P91 owner-authoritative saved-game learning missions",()=>{
      referenceSan:"e4",nextReplySan:"e5",cleanReturns:0,spacedCleanPairs:0,
      assistedReturns:0,missedReturns:0,due:true});
    expect(mission.lineSan).toEqual(["e4","e5","Nf3"]);
-   expect(mission.misconception).toContain("center access");
+   expect(mistake.errorReason).toContain("center access");
    expect(gameTransferReadiness([mission]).readiness).toBe("needs-practice");
  });
  it("separates assisted results from two genuine independent 24-hour recalls",()=>{
