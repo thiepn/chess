@@ -859,3 +859,20 @@ test("P89 missed puzzle records a bounded six-hour tactical return without maste
   expect(Date.parse(evidence.nextReviewAt)-Date.parse(evidence.lastAttemptAt)).toBe(21_600_000);
   await assertNoHorizontalOverflow(page,"P89 tactic retry");
 });
+
+test("P90 calculation and rook technique are genuine directly launchable mobile course practice",async ({page})=>{
+  await open(page,"/learn/calculation/calculation.reply",".lesson-page-v2");
+  const launch=page.getByRole("button",{name:"Practice positions"});
+  await expect(launch).toBeVisible();
+  await launch.click();
+  await expect(page.locator(".calculation-runner")).toBeVisible();
+  await expect(page.getByText("Calculation source could not be verified")).toHaveCount(0);
+  await assertNoHorizontalOverflow(page,"P90 calculation");
+
+  await open(page,"/learn/endgames/endgames.rook-checks",".lesson-page-v2");
+  await expect(page.getByRole("button",{name:"Practice positions"})).toBeVisible();
+  await page.getByRole("button",{name:"Practice positions"}).click();
+  await expect(page.locator(".endgame-runner")).toBeVisible();
+  await expect(page.getByText("Keep checking distance with a passer")).toBeVisible();
+  await assertNoHorizontalOverflow(page,"P90 rook checks");
+});
