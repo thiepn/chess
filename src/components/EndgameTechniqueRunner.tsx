@@ -17,6 +17,7 @@ import {
 } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { scoreEndgameAttempt } from "../endgames/scoring";
+import {endgameRepairPlan} from "../endgames/diagnostics";
 import type {
   EndgameEvidence,
   EndgamePosition,
@@ -762,6 +763,14 @@ export function EndgameTechniqueRunner({
                 </div>
               </div>
 
+              <div className="endgame-repair-plan">
+                <strong>Technique review</strong>
+                {endgameRepairPlan(position,recognitionChoice,score.evidence).map(message=>
+                  <p key={message}>{message}</p>)}
+                {delayedRetention && <p>{score.success && recognitionCorrect && hintsUsed===0
+                  ? "Time-separated unaided technique: eligible for retention evidence."
+                  : "This return was due, but assisted or incorrect work cannot certify delayed retention."}</p>}
+              </div>
               {!score.success && (
                 <button
                   className="secondary"
@@ -793,6 +802,7 @@ export function EndgameTechniqueRunner({
                       position.id,
                     endgameEvidence:
                       score.evidence,
+                    endgamePractice:{startFen:position.fen,movesSan:[...moves]},
                   })
                 }
               >
