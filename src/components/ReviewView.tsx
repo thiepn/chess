@@ -508,7 +508,7 @@ export function ReviewView({
         <section className="review-v2-first-step" aria-labelledby="transfer-missions-title">
           <p className="eyebrow">FROM GAMES TO TRAINING · VERIFIED POSITIONS</p>
           <h2 id="transfer-missions-title">Your game-to-training missions</h2>
-          <p>Only moves linked to an original saved game and a legally replayable engine suggestion appear here. Repeat without hints after the scheduled return to build real recall evidence.</p>
+          <p>Only verified saved-game moves appear here. Repeat without hints after the scheduled return to establish recall evidence.</p>
           <div className="review-practice-summary" role="status">
             {transferReadiness.qualifiedPositions} qualified positions across {transferReadiness.uniqueGames} saved games ·
             {" "}{transferReadiness.independentRecalls} independent solves ·
