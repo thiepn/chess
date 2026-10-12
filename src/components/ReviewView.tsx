@@ -505,18 +505,18 @@ export function ReviewView({
           </section>
         )}
 
-        <section className="review-v2-first-step" aria-labelledby="transfer-missions-title">
+        <section className="review-v2-transfer-missions" aria-labelledby="transfer-missions-title">
           <p className="eyebrow">FROM GAMES TO TRAINING · VERIFIED POSITIONS</p>
           <h2 id="transfer-missions-title">Your game-to-training missions</h2>
           <p>Only verified saved-game moves appear here. Repeat without hints after the scheduled return to establish recall evidence.</p>
-          <div className="review-practice-summary" role="status">
+          <div className="review-transfer-summary" role="status">
             {transferReadiness.qualifiedPositions} qualified positions across {transferReadiness.uniqueGames} saved games ·
             {" "}{transferReadiness.independentRecalls} independent solves ·
             {" "}{transferReadiness.assistedSolves} assisted ·
             {" "}{transferReadiness.missedAttempts} missed ·
             {" "}{transferReadiness.spacedIndependentPairs} time-separated repeat positions.
           </div>
-          <p className="review-practice-summary">Evidence status: {transferReadiness.readiness.replaceAll("-"," ")}.
+          <p className="review-transfer-summary">Evidence status: {transferReadiness.readiness.replaceAll("-"," ")}.
             {" "}{transferReadiness.limitation}</p>
           {transferMissions.length ? (
             <div className="review-v2-repair-list" aria-label="Prioritized strategic game transfer">
