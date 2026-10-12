@@ -7,6 +7,9 @@ export default defineConfig({
   esbuild: { pure: ["console.log", "console.info", "console.debug"] },
   build: {
     target: "es2022",
+    // Combine existing page CSS into one compressed sheet; evaluate against
+    // BOTH unchanged initial and all-app limits without removing any styles.
+    cssCodeSplit: false,
     // Do not publish source maps in production: they reveal source-level
     // implementation details and can leak accidental embedded config.
     sourcemap: false,
