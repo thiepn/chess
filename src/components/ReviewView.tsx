@@ -519,7 +519,7 @@ export function ReviewView({
           <p className="review-transfer-summary">Evidence status: {transferReadiness.readiness.replaceAll("-"," ")}.
             {" "}{transferReadiness.limitation}</p>
           {transferMissions.length ? (
-            <div className="review-v2-repair-list" aria-label="Prioritized strategic game transfer">
+            <div className="review-v2-transfer-list" aria-label="Prioritized strategic game transfer">
               {transferMissions.slice(0,5).map(m=>(
                 <article key={m.mistakeId} className="review-v2-repair-row">
                   <div>
