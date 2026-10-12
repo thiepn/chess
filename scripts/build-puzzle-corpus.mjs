@@ -21,7 +21,8 @@ const positional = args.filter((value, index) => {
   return true;
 });
 
-const inputPath = positional[0] ?? "-";
+const inputPaths = positional.length ? positional : ["-"];
+const inputPath = inputPaths[0];
 const outputDir = path.resolve(option("--out", "public/data/puzzles"));
 const maxPerSkill = Number(option("--max-per-skill", "5000"));
 const minPopularity = Number(option("--min-popularity", "75"));
@@ -262,27 +263,34 @@ function normalize(fields) {
   };
 }
 
-const source =
-  inputPath === "-"
-    ? process.stdin
-    : fs.createReadStream(path.resolve(inputPath), { encoding: "utf8" });
-
-const rl = readline.createInterface({
-  input: source,
-  crlfDelay: Infinity,
-});
-
 const buckets = new Map();
 let scanned = 0;
 let accepted = 0;
 let rejected = 0;
-
+let duplicates = 0;
+// Only spend memory deduplicating IDs when combining separate trusted input files.
+// The 6-million-row official single stream stays bounded by the original buckets.
+const seenSourceIds = inputPaths.length > 1 ? new Set() : null;
+for (const filePath of inputPaths) {
+const rl = readline.createInterface({
+  input: filePath === "-" ? process.stdin :
+    fs.createReadStream(path.resolve(filePath), { encoding: "utf8" }),
+  crlfDelay: Infinity,
+});
 for await (const line of rl) {
+  const sourceId = line.split(",", 1)[0];
+  if (seenSourceIds && seenSourceIds.has(sourceId)) {
+    duplicates++;
+    continue;
+  }
+  seenSourceIds?.add(sourceId);
   if (!line.trim()) continue;
   if (line.startsWith("PuzzleId,")) continue;
 
   scanned += 1;
-  const normalized = normalize(parseCsvLine(line));
+  let normalized;
+  try { normalized = normalize(parseCsvLine(line)); }
+  catch { normalized = null; }
   if (!normalized) {
     rejected += 1;
     continue;
@@ -309,6 +317,7 @@ for await (const line of rl) {
       `Scanned ${scanned.toLocaleString()} puzzles; ${accepted.toLocaleString()} passed filters.\n`,
     );
   }
+}
 }
 
 fs.rmSync(outputDir, { recursive: true, force: true });
@@ -343,6 +352,8 @@ const manifest = {
   scanned,
   accepted,
   rejected,
+  duplicates,
+  sourceFiles: inputPaths.filter(input => input !== "-").map(input => path.basename(input)),
   shards: {},
 };
 

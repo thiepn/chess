@@ -14,7 +14,7 @@ function usableManifest() {
     );
     return (
       manifest.license === "CC0" &&
-      Number(manifest.uniqueTotal ?? 0) >= 600 &&
+      Number(manifest.uniqueTotal ?? 0) >= 3000 &&
       Object.keys(manifest.shards ?? {}).length >= 30
     );
   } catch {
@@ -36,6 +36,7 @@ const result = spawnSync(
   [
     "scripts/build-puzzle-corpus.mjs",
     "scripts/data/lichess-production-baseline.csv",
+    "scripts/data/lichess-p93-expansion.csv",
     "--out",
     "public/data/puzzles",
     "--max-per-skill",
@@ -51,7 +52,7 @@ const result = spawnSync(
     "--max-rd",
     "220",
     "--source-label",
-    "Lichess CC0 production baseline",
+    "Lichess CC0 validated composite source (2000 original + 9000 additional)",
   ],
   { stdio: "inherit" },
 );

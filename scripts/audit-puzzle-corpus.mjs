@@ -3,7 +3,7 @@ import path from "node:path";
 import { Chess } from "chess.js";
 
 const corpusDir = path.resolve(process.argv[2] ?? "public/data/puzzles");
-const minUnique = Number(process.env.PUZZLE_MIN_UNIQUE ?? 600);
+const minUnique = Number(process.env.PUZZLE_MIN_UNIQUE ?? 3000);
 const minPerSkill = Number(process.env.PUZZLE_MIN_PER_SKILL ?? 3);
 const minRatingBands = Number(process.env.PUZZLE_MIN_RATING_BANDS ?? 5);
 
@@ -18,6 +18,11 @@ const themeMap = JSON.parse(
 );
 const requiredSkills = [...new Set(Object.values(themeMap).flat())].sort();
 
+if (manifest.sourceFiles?.includes("lichess-p93-expansion.csv") &&
+  manifest.sourceFiles?.includes("lichess-production-baseline.csv") &&
+  manifest.duplicates !== 0) {
+  throw new Error("P93 input source IDs were not strictly deduplicated");
+}
 if (manifest.license !== "CC0") {
   throw new Error(`Puzzle corpus must be CC0; got ${manifest.license ?? "unknown"}`);
 }
