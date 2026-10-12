@@ -894,14 +894,12 @@ test("P91 source-qualified personal game mission navigates to blind, owner-scope
    createdAt:FIXED_TIME,nextReviewAt:"2026-10-07T08:00:00Z",
    attempts:0,successes:0,resolved:false,
  };
+ // Install the synthetic current-owner fixture before app boot instead of
+ // racing an already mounted owner's asynchronous repository save on reload.
+ await page.addInitScript(state=>{
+   localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(state));
+ },{...visualUserState,mistakes:[mistake],reviewPracticeHistory:[]});
  await open(page,"/review",".review-v2");
- await page.evaluate(({state,mistake})=>{
-   const qualified={...state,mistakes:[mistake],reviewPracticeHistory:[]};
-   localStorage.setItem("thiepn.chess.user-state.v1",JSON.stringify(qualified));
-   // Current owner-scoped repository state takes precedence over legacy import.
-   localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(qualified));
- },{state:visualUserState,mistake});
- await page.reload();
  const missions=page.getByRole("region",{name:"Your game-to-training missions"});
  await expect(missions).toBeVisible();
  await expect(missions.getByText("STRATEGY",{exact:false})).toBeVisible();
