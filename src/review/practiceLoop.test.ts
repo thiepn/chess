@@ -107,7 +107,7 @@ describe("P87 calibrated evidence from actual Review practice",()=>{
    expect(Date.parse(state.nextReviewAt)-date.getTime()).toBe(21_600_000);
    expect(state.resolved).toBe(false);
    expect(reviewPracticeQueue([game],[state],history,later(.3))[0].reviewReason)
-      .toContain("Last attempt missed");
+      .toContain("Missed · retry soon");
  });
  it("orders old and fresh attempts chronologically, ignoring future and foreign records",()=>{
    const first=recordReviewAttempt([],sample,game,good,date)[0];
