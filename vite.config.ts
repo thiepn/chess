@@ -19,14 +19,15 @@ export default defineConfig({
         manualChunks(id) {
           // Share existing deferred page styles without including them in
           // the initial critical stylesheet. All original declarations remain.
-          const style = id.split("?")[0].split("/").at(-1) ?? "";
-          if (id.includes("/src/styles/") && [
+          const names = id.split("?")[0].split("/");
+          const style = names[names.length - 1] || "";
+          if (id.indexOf("/src/styles/") >= 0 && [
             "review-v2.css", "p47-review-native.css", "p51-review-large.css",
             "progress-v2.css", "p47-progress-native.css", "p51-progress-large.css",
             "library-v2.css", "p47-library-native.css", "p51-library-large.css",
             "p47-learn-native.css", "p51-learn-large.css",
             "p47-play-native.css", "p51-play-large.css",
-          ].includes(style)) return "secondary-page-styles";
+          ].indexOf(style) >= 0) return "secondary-page-styles";
           if (id.indexOf("/node_modules/lucide-react/dist/esm/icons/") !== -1) return "chess-icons";
         },
       },
