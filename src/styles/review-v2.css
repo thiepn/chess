@@ -345,7 +345,7 @@
   color: var(--chess-color-accent);
 }
 
-.review-v2-repair-list {
+:is(.review-v2-repair-list,.review-v2-transfer-list) {
   display: grid;
 }
 
@@ -897,7 +897,7 @@
     overflow: visible;
   }
 
-  .review-v2-repair-list {
+  :is(.review-v2-repair-list,.review-v2-transfer-list) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -999,7 +999,7 @@
     grid-column: auto;
   }
 
-  .review-v2-repair-list {
+  :is(.review-v2-repair-list,.review-v2-transfer-list) {
     display: flex;
     gap: 5px;
     overflow-x: auto;
