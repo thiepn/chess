@@ -26,7 +26,7 @@ import type {
 import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
-import { reviewPracticeQueue, type RecordedReviewAttempt } from "../review/practiceLoop";
+import { reviewPracticeQueue, verifiedReviewAttempts, type RecordedReviewAttempt } from "../review/practiceLoop";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
 );
@@ -115,9 +115,8 @@ export function ReviewView({
   );
   const pendingPractice = practiceQueue.filter(item => !item.mistake.resolved);
   const duePracticeCount = practiceQueue.filter(item => item.due).length;
-  const verifiedHistoryCount = practiceHistory.filter(a =>
-    practiceQueue.some(entry => entry.mistake.id === a.mistakeId &&
-      entry.mistake.gameId === a.gameId && entry.mistake.ply === a.ply)).length;
+  const verifiedHistoryCount = practiceQueue.reduce((count,entry) =>
+    count + verifiedReviewAttempts(entry.mistake,practiceHistory,new Date()).length,0);
   const unresolved = useMemo(
     () =>
       mistakes
@@ -717,13 +716,14 @@ export function ReviewView({
         )}
         <div className="review-v2-repair-list">
           {practiceQueue.length ? (
-            practiceQueue.slice(0, 12).map(({mistake, due, recentAttempts, recentSuccesses, lastQuality}) => (
+            practiceQueue.slice(0, 12).map(({mistake, due, recentAttempts, recentSuccesses, lastQuality, nextReviewAt, reviewReason}) => (
               <div key={mistake.id} className={`review-v2-repair-row ${mistake.severity}`}>
                 <div>
                   <span>{severityLabel(mistake.severity)} · move {mistake.moveNumber}</span>
                   <strong>{mistake.actualSan}</strong>
                   <p>{mistake.explanation}</p>
                   <small>{due ? "Due for practice" : "Review scheduled later"} · {recentSuccesses}/{recentAttempts} recent successes{lastQuality === null ? "" : ` · latest quality ${Math.round(lastQuality * 100)}%`}</small>
+                  <small>{reviewReason}{due ? "" : ` · Next: ${Number.isFinite(Date.parse(nextReviewAt)) ? new Date(nextReviewAt).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"}) : "not scheduled"}`}</small>
                 </div>
                 <div>
                   <span>−{(mistake.centipawnLoss / 100).toFixed(1)}</span>
