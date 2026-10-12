@@ -1,3 +1,4 @@
+import {visualUserState} from "../../tests/visual/fixtures";
 import {describe,it,expect} from "vitest";
 import {Chess} from "chess.js";
 import type {ImportedGame,PersonalMistake} from "../games/types";
@@ -78,6 +79,17 @@ describe("P91 owner-authoritative saved-game learning missions",()=>{
    ];
    const mission=gameTransferMissions([game],[mistake],attempts,now)[0];
    expect(mission).toMatchObject({cleanReturns:2,assistedReturns:1,spacedCleanPairs:0});
+ });
+ it("qualifies the actual synthetic browser review fixture and its opponent response",()=>{
+   const game=visualUserState.games![0],move=game.moves[2];
+   const sample:PersonalMistake={...records(game.id).mistake,id:"p91-browser-fixture",
+     ply:move.ply,moveNumber:move.moveNumber,playerColor:move.color,
+     positionFen:move.beforeFen,actualMove:move.uci,actualSan:move.san,
+     bestMove:"f1c4",principalVariation:["f1c4","g8f6"],
+     skillIds:["openings.development"],errorType:"strategic-plan"};
+   const missions=gameTransferMissions([game],[sample],[],now);
+   expect(missions).toHaveLength(1);
+   expect(missions[0]).toMatchObject({lane:"strategy",lineLength:2,gameId:game.id});
  });
  it("does not turn absent personal games into claims of chess strength",()=>{
    expect(gameTransferReadiness([])).toMatchObject({readiness:"no-game-evidence",
