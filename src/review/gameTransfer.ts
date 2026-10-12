@@ -1,0 +1,115 @@
+import {Chess} from "chess.js";
+import type {ImportedGame,PersonalMistake,GamePhase,ReviewErrorType} from "../games/types";
+import {legalReviewMistake,verifiedReviewAttempts,type RecordedReviewAttempt} from "./practiceLoop";
+
+export type TransferLane="strategy"|"calculation"|"tactics"|"endgame";
+export interface TransferMission {
+  mistakeId:string;gameId:string;gameLabel:string;skillId:string;
+  lane:TransferLane;errorType?:ReviewErrorType;phase:GamePhase|undefined;
+  moveNumber:number;positionFen:string;actualSan:string;referenceSan:string;
+  nextReplySan:string|null;lineSan:string[];due:boolean;severity:string;
+  misconception:string;question:string;priority:number;
+  cleanReturns:number;assistedReturns:number;missedReturns:number;
+  nextReviewAt:string;
+}
+export interface TransferReadiness {
+  qualifiedPositions:number;verifiedAttempts:number;
+  uniqueGames:number;independentRecalls:number;assistedSolves:number;
+  missedAttempts:number;spacedIndependentPairs:number;duePositions:number;
+  readiness:"no-game-evidence"|"needs-practice"|"emerging"|"reviewed";
+  limitation:string;
+}
+function laneFor(m:PersonalMistake):TransferLane {
+  if(m.errorType==="strategic-plan")return "strategy";
+  if(m.skillIds.some(x=>x.startsWith("endgames.")) ||
+     m.skillIds.some(x=>x.startsWith("pawns.")))return "endgame";
+  if(m.errorType==="calculation-failure" ||
+     m.skillIds.some(x=>x.startsWith("calculation.")))return "calculation";
+  return "tactics";
+}
+function misconception(m:PersonalMistake,lane:TransferLane):string{
+  if(m.errorReason?.trim())return m.errorReason;
+  switch(lane){
+    case "strategy":return "Before choosing a plan, compare the activity of your least useful piece, king safety, pawn weaknesses and the opponent's counterplay.";
+    case "calculation":return "A plausible first move is not enough: examine forcing replies, then rebuild the position and calculate at least one more ply.";
+    case "endgame":return "Rook activity, king entry squares and opposition depend on the actual position. Recheck them before advancing a pawn.";
+    default:return "Check whether the tactic survives captures, checks and the opponent's strongest legal reply.";
+  }
+}
+function verifiedLine(m:PersonalMistake) {
+  if(m.principalVariation[0]!==m.bestMove ||
+     m.principalVariation.length>16)return null;
+  try {
+    const board=new Chess(m.positionFen);
+    const san:string[]=[];
+    for(const uci of m.principalVariation){
+      if(!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(uci))return null;
+      const move=board.move({from:uci.slice(0,2),to:uci.slice(2,4),
+        promotion:uci[4]||"q"});
+      if(!move || (move.promotion && move.promotion!==uci[4]))return null;
+      san.push(move.san);
+    }
+    return san.length>=1?san:null;
+  }catch{return null;}
+}
+/** Read-only projections of the authoritative, owner-scoped game and review stores. */
+export function gameTransferMissions(
+ games:readonly ImportedGame[],mistakes:readonly PersonalMistake[],
+ history:readonly RecordedReviewAttempt[],now=new Date(),
+):TransferMission[]{
+ const byGame=new Map(games.map(g=>[g.id,g]));
+ if(!Number.isFinite(now.getTime()))return [];
+ const seen=new Set<string>();
+ return mistakes.flatMap(m=>{
+   const game=byGame.get(m.gameId);
+   if(!game||seen.has(m.id)||!legalReviewMistake(m,game))return [];
+   const line=verifiedLine(m);if(!line)return [];
+   seen.add(m.id);
+   const attempts=verifiedReviewAttempts(m,history,now);
+   const independent=attempts.filter(a=>a.succeeded&&!a.hintsUsed&&!a.wrongAttempts);
+   const assisted=attempts.filter(a=>a.succeeded&&(a.hintsUsed>0||a.wrongAttempts>0));
+   const missed=attempts.filter(a=>!a.succeeded);
+   const lane=laneFor(m);
+   const due=!(Number.isFinite(Date.parse(m.nextReviewAt))) ||
+     Date.parse(m.nextReviewAt)<=now.getTime();
+   const priority=(m.severity==="blunder"?3:m.severity==="mistake"?2:1)+
+     (due?2:0)+Math.min(2,missed.length*.5)-(independent.length>=2?1:0);
+   return [{mistakeId:m.id,gameId:m.gameId,
+     gameLabel:`${game.white} — ${game.black}`,skillId:m.skillIds[0]||"fundamentals.attacked",
+     lane,phase:game.moves.find(x=>x.ply===m.ply)?.phase,errorType:m.errorType,
+     moveNumber:m.moveNumber,positionFen:m.positionFen,actualSan:m.actualSan,
+     referenceSan:line[0],nextReplySan:line[1]??null,lineSan:line,
+     due,severity:m.severity,misconception:misconception(m,lane),
+     question:lane==="strategy"?"What was your plan, and which opponent reply makes it unsafe?"
+       :lane==="endgame"?"Which king, rook or pawn resource makes the technique work?"
+       :lane==="calculation"?"Find the move, the best recorded reply, and your continuation."
+       :"Find the tactical resource and verify the opponent's reply.",
+     priority,cleanReturns:independent.length,assistedReturns:assisted.length,
+     missedReturns:missed.length,nextReviewAt:m.nextReviewAt}];
+ }).sort((a,b)=>b.priority-a.priority||a.mistakeId.localeCompare(b.mistakeId));
+}
+export function gameTransferReadiness(
+ missions:readonly TransferMission[],history:readonly RecordedReviewAttempt[],
+ now=new Date(),
+):TransferReadiness {
+ const ids=new Set(missions.map(m=>m.mistakeId));
+ const all=missions.flatMap(m=>verifiedReviewAttempts({
+   id:m.mistakeId,gameId:m.gameId,ply:0,
+ } as never,history,now));
+ // Deliberately derive all summary counts from the source-qualified mission
+ // aggregates rather than inventing grade/proficiency from self-report.
+ void all;
+ const clean=missions.reduce((n,m)=>n+m.cleanReturns,0);
+ const assisted=missions.reduce((n,m)=>n+m.assistedReturns,0);
+ const missed=missions.reduce((n,m)=>n+m.missedReturns,0);
+ const pairs=missions.filter(m=>m.cleanReturns>=2).length;
+ const due=missions.filter(m=>m.due).length;
+ const readiness=!missions.length?"no-game-evidence":!clean?"needs-practice":
+   pairs>=2&&new Set(missions.filter(m=>m.cleanReturns>=2).map(m=>m.gameId)).size>=2
+   ?"reviewed":"emerging";
+ return {qualifiedPositions:ids.size,verifiedAttempts:clean+assisted+missed,
+   uniqueGames:new Set(missions.map(m=>m.gameId)).size,
+   independentRecalls:clean,assistedSolves:assisted,missedAttempts:missed,
+   spacedIndependentPairs:pairs,duePositions:due,readiness,
+   limitation:"A review-practice summary is not a measured chess strength rating. Independent attempts are not counted as delayed unless separated by a scheduled return; use original review records for certification."};
+}
