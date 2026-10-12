@@ -43,6 +43,8 @@ import { ChessBoard } from "./components/ChessBoard";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import { legalReviewMistake, recordReviewAttempt, scheduleVerifiedReview } from "./review/practiceLoop";
 import { legalPuzzleLine, recordPuzzleResult } from "./puzzles/practiceQuality";
+import {legalCalculationBranch} from "./calculation/branchFeedback";
+import {verifyEndgameHistory} from "./endgames/diagnostics";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -959,6 +961,20 @@ export default function App() {
         ? Math.max(.2,Math.round(100-incoming.hintsUsed*20-p.wrongMoves.length*12)/100):0;
       outcome={...incoming,quality:canonical};
     }
+    // Native calculation and endgame exercises must come from the selected
+    // current-owner source. Caller-supplied "success" cannot invent a position.
+    if(active.activityType==="calculation") {
+      if(!activeCalculationPosition || incoming.calculationPositionId!==activeCalculationPosition.id ||
+        incoming.calculationEvidence?.positionId!==activeCalculationPosition.id ||
+        !legalCalculationBranch(activeCalculationPosition))return;
+    }
+    if(active.activityType==="endgameDrill" || active.activityType==="conversionChallenge") {
+      const p=incoming.endgamePractice,e=incoming.endgameEvidence;
+      if(!activeEndgamePosition || incoming.endgamePositionId!==activeEndgamePosition.id ||
+        !e || !p || p.startFen!==activeEndgamePosition.fen ||
+        !Array.isArray(p.movesSan) || !verifyEndgameHistory(activeEndgamePosition,p.movesSan,e) ||
+        incoming.hintsUsed!==e.hintsUsed || incoming.success!==e.executionSuccess)return;
+    }
     // Source-verification must precede ALL progress, feedback and analytics.
     if (active.activityType === "personalMistake") {
       if (!active.mistakeId || incoming.mistakeId !== active.mistakeId ||
@@ -1005,8 +1021,11 @@ export default function App() {
       quality: outcome.quality,
       difficulty: Math.min(1, activeSkill.difficulty / 5),
       hintsUsed: outcome.hintsUsed,
-      retentionEvidence:
-        outcome.endgameEvidence?.delayedRetention,
+      retentionEvidence: Boolean(
+        outcome.endgameEvidence?.delayedRetention &&
+        outcome.success && outcome.hintsUsed===0 &&
+        outcome.endgameEvidence.recognitionCorrect
+      ),
       occurredAt,
     };
 
