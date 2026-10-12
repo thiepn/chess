@@ -77,6 +77,7 @@ export type LessonStep =
       successBody: string;
       hints: LessonHint[];
       wrongMoveFeedback?: Record<string, string>;
+      misconceptionFeedback?: string;
     };
 
 export interface LessonScript {
