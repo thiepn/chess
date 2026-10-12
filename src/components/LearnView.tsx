@@ -139,7 +139,9 @@ function LessonPage({
   const copy = lessonStepCopy(step);
   const orientation = new Chess(step.fen).turn() === "b" ? "b" : "w";
   const value = skillMastery(mastery, skill.id);
-  const practiceAvailable = supportsPuzzlePractice(skill.id);
+  const practiceAvailable = supportsPuzzlePractice(skill.id) ||
+    skill.trainingModes.some(mode=>mode==="calculation" ||
+      mode==="endgameDrill" || mode==="conversionChallenge");
 
   return (
     <section className="learn-v2 lesson-page-v2" aria-labelledby="lesson-page-title">
@@ -427,7 +429,9 @@ export function LearnView({
           {stageSkills.map((skill, index) => {
             const value = skillMastery(mastery, skill.id);
             const unlocked = isSkillUnlocked(skill, mastery);
-            const practiceAvailable = supportsPuzzlePractice(skill.id);
+            const practiceAvailable = supportsPuzzlePractice(skill.id) ||
+    skill.trainingModes.some(mode=>mode==="calculation" ||
+      mode==="endgameDrill" || mode==="conversionChallenge");
             const prerequisites = skill.prerequisites
               .map((relation) => skillById[relation.skillId])
               .filter(Boolean);

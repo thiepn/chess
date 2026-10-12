@@ -21,6 +21,7 @@ import type {
 } from "../domain/types";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { scoreCalculationAttempt } from "../calculation/scoring";
+import {legalCalculationBranch, calculationMisconceptions} from "../calculation/branchFeedback";
 import type {
   CalculationCandidateMove,
   CalculationPosition,
@@ -64,29 +65,6 @@ function applyUci(
   };
 }
 
-function sanLine(
-  fen: string,
-  moves: string[],
-) {
-  const chess = new Chess(fen);
-  const result: string[] = [];
-  for (const encoded of moves) {
-    try {
-      const move = chess.move({
-        from: encoded.slice(0, 2),
-        to: encoded.slice(2, 4),
-        promotion:
-          encoded.slice(4, 5) ||
-          "q",
-      });
-      if (!move) break;
-      result.push(move.san);
-    } catch {
-      break;
-    }
-  }
-  return result;
-}
 
 export function CalculationRunner({
   activity,
@@ -157,17 +135,8 @@ export function CalculationRunner({
       Promise<StockfishBrowserEngine> | null
     >(null);
 
-  const referenceLine = useMemo(
-    () =>
-      sanLine(
-        position.fen,
-        position.principalVariation,
-      ),
-    [
-      position.fen,
-      position.principalVariation,
-    ],
-  );
+  const verifiedBranch=useMemo(()=>legalCalculationBranch(position),[position]);
+  const referenceLine=verifiedBranch?.map(p=>p.san)??[];
 
   useEffect(() => {
     let cancelled = false;
@@ -349,11 +318,17 @@ export function CalculationRunner({
     !boardRevealed;
 
   const canFinish =
+    Boolean(verifiedBranch) &&
     phase === "result" &&
     score &&
     (bestReply || engineStatus === "error") &&
     (bestContinuation ||
       engineStatus === "error");
+
+  if(!verifiedBranch)return <div className="calculation-runner" role="alert">
+    <h2>Calculation source could not be verified</h2>
+    <p>This position's recorded continuation is invalid or unavailable. No scored attempt will be written.</p>
+  </div>;
 
   return (
     <div className="calculation-runner">
@@ -801,7 +776,7 @@ export function CalculationRunner({
 
                   <div className="calculation-reference-line">
                     <span>
-                      Reference line
+                      Legally replayed reference line
                     </span>
                     <strong>
                       {referenceLine.join(
@@ -809,12 +784,20 @@ export function CalculationRunner({
                       )}
                     </strong>
                     <small>
-                      Engine replies for
-                      off-reference candidates
-                      are evaluated locally
-                      and never shown before
-                      you commit.
+                      Each move in the recorded branch is legal. This does not prove a unique best response; off-reference replies use local Stockfish when available.
                     </small>
+                    <ol className="calculation-branch-steps">
+                      {verifiedBranch.slice(0,5).map(row=><li key={row.ply}>
+                        <strong>{row.actor==="opponent"?"Opponent":"You"} · {row.san}</strong>
+                        <small>{row.ply===2?(position.replyReason??"Verify the strongest legal reply.")
+                          :row.ply===3?(position.continuationReason??"Reassess the resulting position.")
+                          :"Replay the legal move before continuing."}</small>
+                      </li>)}
+                    </ol>
+                    <div className="calculation-repair-plan" role="status">
+                      <strong>What to review next</strong>
+                      {calculationMisconceptions(position,score.evidence).map(text=><p key={text}>{text}</p>)}
+                    </div>
                   </div>
 
                   {!score.success && (
@@ -870,7 +853,7 @@ export function CalculationRunner({
                   className="primary"
                   disabled={!canFinish}
                   onClick={() => {
-                    if (!score) return;
+                    if (!score || !verifiedBranch || phase!=="result")return;
                     onComplete({
                       success:
                         score.success,

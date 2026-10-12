@@ -11,7 +11,7 @@ export default defineConfig({
     // implementation details and can leak accidental embedded config.
     sourcemap: false,
     manifest: true,
-    // Consolidate tree-shaken Lucide icon modules; reduce per-icon JS chunk overhead.
+    // Keep tree-shaken icons consolidated to avoid duplicate per-icon chunks.
     rollupOptions: {
       output: {
         manualChunks(id) {
