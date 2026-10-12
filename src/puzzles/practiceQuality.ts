@@ -2,10 +2,10 @@ import { Chess } from "chess.js";
 import type { PuzzleAttemptSummary, PuzzleRecord } from "./types";
 
 const DAY=86_400_000;
-export function legalPuzzleLine(puzzle: PuzzleRecord): string[] | null {
+export function legalPuzzleLine(puzzle: Pick<PuzzleRecord,"initialFen"|"solutionMoves"> | {sourceFen:string;solutionMoves:string[]}): string[] | null {
   if (!puzzle.solutionMoves.length || puzzle.solutionMoves.length > 24) return null;
   try {
-    const board=new Chess(puzzle.initialFen);
+    const board=new Chess("sourceFen" in puzzle?puzzle.sourceFen:puzzle.initialFen);
     const san:string[]=[];
     for(const uci of puzzle.solutionMoves) {
       if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(uci))return null;
