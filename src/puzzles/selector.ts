@@ -154,7 +154,7 @@ export function selectPuzzle(
   if (!puzzles.length) return null;
 
   const relevant = puzzles.filter((puzzle) =>
-    puzzle.skillIds.includes(criteria.skillId),
+    criteria.mixed || puzzle.skillIds.includes(criteria.skillId),
   );
   const pool = relevant.length
     ? relevant
@@ -167,11 +167,27 @@ export function selectPuzzle(
   const candidates = rested.length
     ? rested
     : pool;
+  // Mixed recognition prioritizes unseen positions over mere replay; missed
+  // source-bound puzzles remain eligible for their scheduled spaced reviews.
+  const newCandidates = criteria.mixed ? candidates.filter(p => !history[p.id]) : [];
+  const selectionPool = newCandidates.length ? newCandidates : candidates;
 
   const target=calibratedPuzzleRating(
     criteria.targetRating ?? targetPuzzleRating(criteria.mastery,criteria.activityDifficulty),
     history,pool);
   const adjusted={...criteria,targetRating:target};
-  return ([...candidates].sort((a,b)=>
-    puzzleSelectionScore(b,adjusted,now)-puzzleSelectionScore(a,adjusted,now))[0]??null);
+  const themes=["defensiveMove","quietMove","fork","pin","skewer","mate",
+    "discoveredAttack","deflection","clearance","intermezzo","backRankMate"];
+  const exposure=new Map<string,number>();
+  if(criteria.mixed)for(const p of pool)if(history[p.id])
+    for(const motif of p.themes)if(themes.includes(motif))
+      exposure.set(motif,(exposure.get(motif)??0)+1);
+  const score=(p:PuzzleRecord)=>{
+    const base=puzzleSelectionScore(p,adjusted,now);
+    if(!criteria.mixed)return base;
+    const motif=p.themes.find(x=>themes.includes(x));
+    return base+(motif?.length ? .14/(1+(exposure.get(motif)??0)) : 0);
+  };
+  return [...selectionPool].sort((a,b)=>score(b)-score(a) ||
+    a.id.localeCompare(b.id))[0]??null;
 }

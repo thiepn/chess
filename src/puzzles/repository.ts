@@ -50,3 +50,17 @@ export function resetPuzzleRepositoryForTests() {
   manifestPromise = null;
   shardCache.clear();
 }
+
+/** P93 mixed recognition uses actual source shards, one ID per puzzle. */
+const MIXED_SKILLS=["tactics.double-attack","tactics.pin","tactics.skewer",
+  "tactics.back-rank","tactics.deflection","tactics.decoy",
+  "tactics.discovered","tactics.removing-defender","tactics.combinations",
+  "tactics.clearance","tactics.overload"];
+export async function loadMixedPuzzlesForSkill(skillId:string,now=new Date()) {
+  const day=Math.floor(now.getTime()/86_400_000);
+  const rotated=MIXED_SKILLS.map((_,i)=>MIXED_SKILLS[(i+day)%MIXED_SKILLS.length]);
+  const skills=[...new Set([skillId,"tactics.defensive-resources",
+    "calculation.quiet","defense.threats",...rotated.slice(0,5)])];
+  const groups=await Promise.all(skills.map(loadPuzzlesForSkill));
+  return [...new Map(groups.flat().map(p=>[p.id,p])).values()];
+}

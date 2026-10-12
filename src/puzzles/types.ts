@@ -57,4 +57,6 @@ export interface PuzzleSelectionCriteria {
   activityDifficulty: number;
   targetRating?: number;
   history?: Record<string, PuzzleAttemptSummary>;
+  /** P93: choose genuine unseen cross-motif source positions. */
+  mixed?: boolean;
 }

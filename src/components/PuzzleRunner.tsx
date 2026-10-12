@@ -8,7 +8,7 @@ import type {
   TrainingActivity,
   TrainingOutcome,
 } from "../domain/types";
-import { loadPuzzlesForSkill } from "../puzzles/repository";
+import { loadPuzzlesForSkill, loadMixedPuzzlesForSkill } from "../puzzles/repository";
 import {
   humanPuzzleTheme,
   puzzleExplanation,
@@ -112,7 +112,9 @@ export function PuzzleRunner({
     setVerification(null);
     setVerificationError(null);
 
-    loadPuzzlesForSkill(skill.id).then((corpus) => {
+    (activity.activityType === "mixedPuzzle"
+      ? loadMixedPuzzlesForSkill(skill.id)
+      : loadPuzzlesForSkill(skill.id)).then((corpus) => {
       if (cancelled) return;
       const selected = selectPuzzle(corpus, {
         skillId: skill.id,
@@ -120,6 +122,7 @@ export function PuzzleRunner({
         activityDifficulty: activity.difficulty,
         targetRating: activity.adaptivePolicy?.targetPuzzleRating,
         history,
+        mixed:activity.activityType==="mixedPuzzle",
       });
       setPuzzle(selected);
       setPosition(selected?.initialFen ?? null);
@@ -132,6 +135,7 @@ export function PuzzleRunner({
   }, [
     activity.adaptivePolicy?.targetPuzzleRating,
     activity.difficulty,
+    activity.activityType,
     history,
     mastery?.effectiveMastery,
     skill.id,
@@ -293,7 +297,7 @@ export function PuzzleRunner({
               if (!accepted) {
                 setWrongAttempts((value) => value + 1);
                 setWrongMoves(old=>[...old,uci].slice(-40));
-                setFeedback(`${sanForUci(position,uci)} is legal, but is not this puzzle's reference move. ${explanation?.point ?? "Compare checks, captures, and threats before trying again."} Other legal alternatives are not scored as engine errors.`);
+                setFeedback(`${sanForUci(position,uci)} is legal, but is not the stored reference. ${themed ? explanation?.point ?? "Calculate the best reply." : "Recheck forcing replies and quiet defensive resources."} Other legal alternatives are not scored as engine errors.`);
                 return false;
               }
 
@@ -352,13 +356,13 @@ export function PuzzleRunner({
                   ? "Good. Now watch the opponent's forced reply."
                   : themed
                     ? `Use the ${label.toLowerCase()} pattern, but calculate the move before playing it.`
-                    : "No motif is revealed. Read the position exactly as you would in a real game."}
+                    : "No motif is given. Calculate checks, captures, quiet threats and defensive resources. Predict the strongest reply."}
             </p>
 
             <div className="puzzle-meta">
               <span>Rated {puzzle.rating}</span>
               {puzzle.source === "lichess" && <span>Lichess · CC0</span>}
-              {puzzle.openingTags?.[0] && (
+              {(solved || themed) && puzzle.openingTags?.[0] && (
                 <span>{humanPuzzleTheme(puzzle.openingTags[0].replaceAll("_", " "))}</span>
               )}
             </div>
@@ -380,7 +384,7 @@ export function PuzzleRunner({
                 <Lightbulb size={18} />
                 <div>
                   <strong>{showHint?"Move hint":"Concept hint"}</strong>
-                  <span>{showHint?"The reference move is marked. This counts as assisted practice.":explanation?.point ?? "Calculate checks and captures, then check the opponent's strongest reply."}</span>
+                  <span>{showHint?"The reference move is marked. This counts as assisted practice.":themed ? explanation?.point ?? "Calculate the reply." : "Look for checks, captures and quieter defensive resources, then forecast the opponent's reply."}</span>
                 </div>
               </div>
             )}
@@ -415,6 +419,12 @@ export function PuzzleRunner({
                     </div>
 
                     <p>{explanation.point}</p>
+                    <p className="puzzle-retry-note">
+                      Before engine analysis, compare two candidate moves and the
+                      strongest legal reply to each. Why is the stored continuation
+                      better against a resourceful defender? Legal replay alone
+                      does not establish a unique best move.
+                    </p>
 
                     <div className="puzzle-solution-line">
                       <span>Solution</span>
