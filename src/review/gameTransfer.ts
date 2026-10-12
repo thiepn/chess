@@ -9,7 +9,7 @@ export interface TransferMission {
   moveNumber:number;positionFen:string;actualSan:string;referenceSan:string;
   nextReplySan:string|null;lineSan:string[];due:boolean;severity:string;
   misconception:string;question:string;priority:number;
-  cleanReturns:number;assistedReturns:number;missedReturns:number;
+  cleanReturns:number;spacedCleanPairs:number;assistedReturns:number;missedReturns:number;
   nextReviewAt:string;
 }
 export interface TransferReadiness {
@@ -67,6 +67,13 @@ export function gameTransferMissions(
    seen.add(m.id);
    const attempts=verifiedReviewAttempts(m,history,now);
    const independent=attempts.filter(a=>a.succeeded&&!a.hintsUsed&&!a.wrongAttempts);
+   // A repeat within the same practice sitting is NOT time-separated recall.
+   let spacedCleanPairs=0,lastCleanAt=Number.NEGATIVE_INFINITY;
+   for(const event of independent){
+     const at=Date.parse(event.occurredAt);
+     if(at-lastCleanAt>=86_400_000 && Number.isFinite(lastCleanAt))spacedCleanPairs++;
+     if(at-lastCleanAt>=86_400_000 || !Number.isFinite(lastCleanAt))lastCleanAt=at;
+   }
    const assisted=attempts.filter(a=>a.succeeded&&(a.hintsUsed>0||a.wrongAttempts>0));
    const missed=attempts.filter(a=>!a.succeeded);
    const lane=laneFor(m);
@@ -76,7 +83,7 @@ export function gameTransferMissions(
      (due?2:0)+Math.min(2,missed.length*.5)-(independent.length>=2?1:0);
    return [{mistakeId:m.id,gameId:m.gameId,
      gameLabel:`${game.white} — ${game.black}`,skillId:m.skillIds[0]||"fundamentals.attacked",
-     lane,phase:game.moves.find(x=>x.ply===m.ply)?.phase,errorType:m.errorType,
+     lane,phase:game.reviewStory?.phases.find(p=>m.ply>=p.startPly&&m.ply<=p.endPly)?.phase,errorType:m.errorType,
      moveNumber:m.moveNumber,positionFen:m.positionFen,actualSan:m.actualSan,
      referenceSan:line[0],nextReplySan:line[1]??null,lineSan:line,
      due,severity:m.severity,misconception:misconception(m,lane),
@@ -84,32 +91,23 @@ export function gameTransferMissions(
        :lane==="endgame"?"Which king, rook or pawn resource makes the technique work?"
        :lane==="calculation"?"Find the move, the best recorded reply, and your continuation."
        :"Find the tactical resource and verify the opponent's reply.",
-     priority,cleanReturns:independent.length,assistedReturns:assisted.length,
+     priority,cleanReturns:independent.length,spacedCleanPairs,assistedReturns:assisted.length,
      missedReturns:missed.length,nextReviewAt:m.nextReviewAt}];
  }).sort((a,b)=>b.priority-a.priority||a.mistakeId.localeCompare(b.mistakeId));
 }
-export function gameTransferReadiness(
- missions:readonly TransferMission[],history:readonly RecordedReviewAttempt[],
- now=new Date(),
-):TransferReadiness {
- const ids=new Set(missions.map(m=>m.mistakeId));
- const all=missions.flatMap(m=>verifiedReviewAttempts({
-   id:m.mistakeId,gameId:m.gameId,ply:0,
- } as never,history,now));
- // Deliberately derive all summary counts from the source-qualified mission
- // aggregates rather than inventing grade/proficiency from self-report.
- void all;
+export function gameTransferReadiness(missions:readonly TransferMission[]):TransferReadiness {
+ const unique=new Set(missions.map(m=>m.mistakeId));
  const clean=missions.reduce((n,m)=>n+m.cleanReturns,0);
  const assisted=missions.reduce((n,m)=>n+m.assistedReturns,0);
  const missed=missions.reduce((n,m)=>n+m.missedReturns,0);
- const pairs=missions.filter(m=>m.cleanReturns>=2).length;
+ const pairs=missions.filter(m=>m.spacedCleanPairs>0).length;
  const due=missions.filter(m=>m.due).length;
+ const gamesWithDelayed=new Set(missions.filter(m=>m.spacedCleanPairs>0).map(m=>m.gameId)).size;
  const readiness=!missions.length?"no-game-evidence":!clean?"needs-practice":
-   pairs>=2&&new Set(missions.filter(m=>m.cleanReturns>=2).map(m=>m.gameId)).size>=2
-   ?"reviewed":"emerging";
- return {qualifiedPositions:ids.size,verifiedAttempts:clean+assisted+missed,
+   pairs>=2&&gamesWithDelayed>=2?"reviewed":"emerging";
+ return {qualifiedPositions:unique.size,verifiedAttempts:clean+assisted+missed,
    uniqueGames:new Set(missions.map(m=>m.gameId)).size,
    independentRecalls:clean,assistedSolves:assisted,missedAttempts:missed,
    spacedIndependentPairs:pairs,duePositions:due,readiness,
-   limitation:"A review-practice summary is not a measured chess strength rating. Independent attempts are not counted as delayed unless separated by a scheduled return; use original review records for certification."};
+   limitation:"This reflects source-verified game review, not a chess rating or proof of mastery. A delayed pair requires at least 24 hours between clean unassisted attempts at the same recorded position."};
 }
