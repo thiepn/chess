@@ -815,7 +815,7 @@ test("P88 rules lesson reaches genuinely different assessed position with miscon
   await page.locator('.lesson-runner .board-square[data-square="e4"]').click();
   await next.click(); // Independent same-position check
   await expect(page.locator(".lesson-step-meta")).toContainText("INDEPENDENT TRANSFER");
-  await expect(page.locator(".lesson-board-column .board-square[data-square='e4'] .chess-piece")).toHaveCount(1);
+  await expect(page.locator(".lesson-board-column .board-square[data-square='e4'] .piece-v2")).toHaveCount(1);
   await page.locator('.lesson-runner .board-square[data-square="h2"]').click();
   await page.locator('.lesson-runner .board-square[data-square="h4"]').click();
   await expect(page.getByRole("alert")).toContainText("Do not count files from Black");
