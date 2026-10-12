@@ -11,7 +11,13 @@ export default defineConfig({
     // implementation details and can leak accidental embedded config.
     sourcemap: false,
     manifest: true,
-    // Let Rollup co-locate tree-shaken icon implementations with their actual
-    // lazy page consumers; retain all icons and native route split points.
+    // Keep tree-shaken icons consolidated to avoid duplicate per-icon chunks.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.indexOf("/node_modules/lucide-react/dist/esm/icons/") !== -1) return "chess-icons";
+        },
+      },
+    },
   },
 });
