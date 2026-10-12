@@ -896,8 +896,10 @@ test("P91 source-qualified personal game mission navigates to blind, owner-scope
  };
  await open(page,"/review",".review-v2");
  await page.evaluate(({state,mistake})=>{
-   localStorage.setItem("thiepn.chess.user-state.v1",
-     JSON.stringify({...state,mistakes:[mistake],reviewPracticeHistory:[]}));
+   const qualified={...state,mistakes:[mistake],reviewPracticeHistory:[]};
+   localStorage.setItem("thiepn.chess.user-state.v1",JSON.stringify(qualified));
+   // Current owner-scoped repository state takes precedence over legacy import.
+   localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(qualified));
  },{state:visualUserState,mistake});
  await page.reload();
  const missions=page.getByRole("region",{name:"Your game-to-training missions"});
