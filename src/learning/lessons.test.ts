@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import transferContent from "../../public/data/learning/transfer-v1.json";
 import { checkedTransfer, validateTransferCatalog } from "./transferCompletion";
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
@@ -127,7 +127,7 @@ describe("lesson scripts", () => {
 });
 
 describe("P88 original independent transfer curriculum", () => {
-  const raw=JSON.parse(readFileSync("public/data/learning/transfer-v1.json","utf8"));
+  const raw=transferContent;
   const catalog=validateTransferCatalog(raw);
   const uncovered=Object.keys(lessonScripts).filter(id=>!deepTransferSkillIds.includes(id));
   it("covers exactly the 49 previously same-position retrieval lessons",()=>{
