@@ -1,0 +1,398 @@
+{
+  "schema": "thiepn.chess.transfer.v1",
+  "provenance": "Original authored instructional positions; not historical game records or engine-certified unique best moves.",
+  "items": [
+    {
+      "skillId": "rules.board",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "g1f3",
+      "prompt": "Find g1 and f3, then move the knight by its coordinates.",
+      "success": "A file and rank uniquely identify the origin and destination.",
+      "misconception": "Do not count files from Black’s perspective."
+    },
+    {
+      "skillId": "rules.pieces",
+      "fen": "4k3/8/8/8/8/8/8/4K1N1 w - - 0 1",
+      "acceptedMove": "g1f3",
+      "prompt": "Move the knight from g1 to f3 even though the board is nearly empty.",
+      "success": "A knight changes two files and one rank and does not need a clear path.",
+      "misconception": "A knight cannot move straight like a rook."
+    },
+    {
+      "skillId": "rules.capture",
+      "fen": "4k3/8/8/8/3p4/2B5/8/4K3 w - - 0 1",
+      "acceptedMove": "c3d4",
+      "prompt": "Use the bishop to capture the unprotected pawn on d4.",
+      "success": "The bishop moves diagonally and replaces the pawn on its square.",
+      "misconception": "Moving beside a target does not capture it."
+    },
+    {
+      "skillId": "rules.check",
+      "fen": "4k3/8/8/8/8/8/3r4/3K4 w - - 0 1",
+      "acceptedMove": "d1c1",
+      "prompt": "Your king is checked on the d-file. Move it to safety.",
+      "success": "Leaving the rook’s checking file is compulsory before pursuing a plan.",
+      "misconception": "A move that leaves the king on the d-file does not answer check."
+    },
+    {
+      "skillId": "rules.check-responses",
+      "fen": "3rk3/8/8/8/8/8/4B3/3K4 w - - 0 1",
+      "acceptedMove": "e2d3",
+      "prompt": "Block the long rook check with the bishop.",
+      "success": "A sliding check can be stopped by occupying the line between attacker and king.",
+      "misconception": "Blocking on a square outside the d-file does not stop the check."
+    },
+    {
+      "skillId": "rules.mate",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "acceptedMove": "a1a8",
+      "prompt": "Find the rook move that leaves Black’s boxed king no flight square.",
+      "success": "A distant rank check works because Black’s own pawns close the escape squares.",
+      "misconception": "Checkmate requires checking every capture, block and flight square."
+    },
+    {
+      "skillId": "rules.castling",
+      "fen": "r3k2r/ppp2ppp/2npbn2/4p3/4P3/2NPBN2/PPP2PPP/R3K2R w KQkq - 0 1",
+      "acceptedMove": "e1g1",
+      "prompt": "Castle kingside after both bishops and knights have developed.",
+      "success": "The king travels two squares and the rook is repositioned only when the corridor is legal.",
+      "misconception": "Do not castle through an attacked square or occupied corridor."
+    },
+    {
+      "skillId": "rules.promotion",
+      "fen": "4k3/1P6/8/8/8/8/8/4K3 w - - 0 1",
+      "acceptedMove": "b7b8q",
+      "prompt": "Choose a queen when the b-pawn reaches the last rank.",
+      "success": "Promotion is specified by the new piece, not just the pawn’s destination.",
+      "misconception": "Ending the move on b8 without specifying the promotion piece is incomplete."
+    },
+    {
+      "skillId": "rules.draws",
+      "fen": "8/8/8/8/8/8/4k3/7K w - - 0 1",
+      "acceptedMove": "h1h2",
+      "prompt": "Make a legal king move in a bare-kings position.",
+      "success": "Bare kings cannot force mate; the outcome is insufficient material regardless of the move.",
+      "misconception": "A draw is a game outcome, not a license to make an illegal king move."
+    },
+    {
+      "skillId": "fundamentals.values",
+      "fen": "4k3/8/8/8/8/3p4/8/3QK3 w - - 0 1",
+      "acceptedMove": "d1d3",
+      "prompt": "Capture the free pawn without sacrificing the queen.",
+      "success": "Collect material only after confirming the capturing piece remains safe.",
+      "misconception": "A pawn is worth far less than the queen; do not trade the queen for a pawn."
+    },
+    {
+      "skillId": "fundamentals.defended",
+      "fen": "4k3/8/8/4p3/3n4/5N2/8/4K3 w - - 0 1",
+      "acceptedMove": "f3e5",
+      "prompt": "Capture the pawn that supports Black’s centralized knight.",
+      "success": "The pawn on e5 helps maintain the knight’s square; removing support changes the exchange.",
+      "misconception": "Count the defender and the squares it controls before exchanging."
+    },
+    {
+      "skillId": "fundamentals.trades",
+      "fen": "4k3/8/8/8/2r5/8/2R5/4K3 w - - 0 1",
+      "acceptedMove": "c2c4",
+      "prompt": "Trade the rooks on c4 and evaluate the king-and-pawn ending.",
+      "success": "An equal exchange removes activity from both sides; compare the resulting position.",
+      "misconception": "Trading automatically is not enough; inspect what remains afterward."
+    },
+    {
+      "skillId": "openings.principles",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "d2d4",
+      "prompt": "Develop the position by challenging Black’s central pawn with d4.",
+      "success": "A central pawn advance claims space while creating concrete contact with e5.",
+      "misconception": "Do not copy the model’s e-pawn move when the e-pawn has already advanced."
+    },
+    {
+      "skillId": "openings.development",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "b1c3",
+      "prompt": "Develop a new minor piece toward the center.",
+      "success": "Nc3 increases central control without making unnecessary queen moves.",
+      "misconception": "Re-moving the already developed pawn does not develop a new piece."
+    },
+    {
+      "skillId": "openings.center",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "d2d4",
+      "prompt": "Use the d-pawn to challenge the center rather than moving a wing pawn.",
+      "success": "Central contact matters more than memorizing the model position.",
+      "misconception": "A wing-pawn advance does not contest the e5 pawn immediately."
+    },
+    {
+      "skillId": "openings.king-safety",
+      "fen": "r3k2r/ppp2ppp/2npbn2/4p3/4P3/2NPBN2/PPP2PPP/R3K2R w KQkq - 0 1",
+      "acceptedMove": "e1g1",
+      "prompt": "Use the now-clear kingside path to castle.",
+      "success": "Castling secures the king and connects the rook to play.",
+      "misconception": "The king is not safe simply because several pieces were developed."
+    },
+    {
+      "skillId": "openings.queen-timing",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "acceptedMove": "b1c3",
+      "prompt": "Develop the remaining queenside knight instead of moving the queen repeatedly.",
+      "success": "Completing piece development avoids donating free tempi to the opponent.",
+      "misconception": "Early queen wandering creates targets for developing moves."
+    },
+    {
+      "skillId": "openings.tempo",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "g1f3",
+      "prompt": "Develop the knight with a move that also influences e5.",
+      "success": "A useful tempo improves your own piece while applying pressure.",
+      "misconception": "Repeated moves with the same piece often waste opening time."
+    },
+    {
+      "skillId": "strategy.piece-activity",
+      "fen": "4k3/8/8/8/8/8/8/2N1K3 w - - 0 1",
+      "acceptedMove": "c1d3",
+      "prompt": "Activate the undeveloped knight toward central squares.",
+      "success": "Nd3 improves reach compared with leaving the knight on the edge of activity.",
+      "misconception": "A piece can be safe but ineffective if it controls no useful squares."
+    },
+    {
+      "skillId": "strategy.worst-piece",
+      "fen": "4k3/8/8/8/8/8/1P6/2N1K3 w - - 0 1",
+      "acceptedMove": "c1e2",
+      "prompt": "Improve the least active knight while preserving the pawn.",
+      "success": "Moving the idle knight is more productive than moving the active king without purpose.",
+      "misconception": "Fix the worst piece rather than making the best piece even better."
+    },
+    {
+      "skillId": "tactics.skewer",
+      "fen": "7q/6k1/8/8/8/2B5/8/4K3 w - - 0 1",
+      "acceptedMove": "c3f6",
+      "prompt": "Create a bishop check with the queen behind the king on the same diagonal.",
+      "success": "Bf6+ attacks the king first; after it moves the queen on h8 becomes vulnerable.",
+      "misconception": "In a skewer the more valuable piece is attacked first, not the piece behind it."
+    },
+    {
+      "skillId": "tactics.removing-defender",
+      "fen": "6k1/5p1p/5n2/6B1/8/8/8/6K1 w - - 0 1",
+      "acceptedMove": "g5f6",
+      "prompt": "Remove the knight defending key squares near the black king.",
+      "success": "Bxf6 eliminates a defender before trying a direct king attack.",
+      "misconception": "Attacking the king while leaving its key defender is often premature."
+    },
+    {
+      "skillId": "tactics.deflection",
+      "fen": "3qr1k1/5ppp/8/8/8/2B5/8/4R1K1 w - - 0 1",
+      "acceptedMove": "e1e8",
+      "prompt": "Use the rook on the e-file to force Black’s defenders to react.",
+      "success": "Rxe8+ demands a response and can draw the queen away from its original defensive job.",
+      "misconception": "A quiet move fails to challenge the overloaded back-rank defender."
+    },
+    {
+      "skillId": "tactics.decoy",
+      "fen": "3qr1k1/5p1p/8/8/8/3B4/6PP/4R1K1 w - - 0 1",
+      "acceptedMove": "e1e8",
+      "prompt": "Force a recapture that pulls the queen onto a less useful square.",
+      "success": "Rxe8+ changes the queen’s task and square through a forcing exchange.",
+      "misconception": "A decoy is not any capture: identify where the defender must go."
+    },
+    {
+      "skillId": "tactics.overload",
+      "fen": "3qr1k1/5pp1/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+      "acceptedMove": "e1e8",
+      "prompt": "Put direct pressure on the rook that the queen must also defend.",
+      "success": "The forcing rook capture makes Black commit its multipurpose defender.",
+      "misconception": "An overloaded piece cannot satisfy all defensive duties at once."
+    },
+    {
+      "skillId": "tactics.clearance",
+      "fen": "4k3/8/8/8/8/6P1/4B3/4R1K1 w - - 0 1",
+      "acceptedMove": "e2f3",
+      "prompt": "Move the bishop aside to uncover the rook’s e-file.",
+      "success": "Bf3 removes the friendly obstruction from the line to the black king.",
+      "misconception": "A discovered line cannot function while your own piece blocks it."
+    },
+    {
+      "skillId": "calculation.move-order",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "d2d4",
+      "prompt": "Choose the central pawn break before another routine developing move.",
+      "success": "Opening the center now changes the sequence of forcing responses.",
+      "misconception": "Check forcing moves and captures before deciding an opening move order."
+    },
+    {
+      "skillId": "strategy.open-files",
+      "fen": "4k3/8/8/8/8/8/8/1R2K3 w - - 0 1",
+      "acceptedMove": "b1b8",
+      "prompt": "Penetrate with the rook on the open b-file.",
+      "success": "Rb8+ uses an uncontested file and the eighth rank to create a threat.",
+      "misconception": "A rook cannot penetrate through its own pawn chain."
+    },
+    {
+      "skillId": "strategy.outposts",
+      "fen": "4k3/p7/8/3N4/8/8/8/4K3 w - - 0 1",
+      "acceptedMove": "d5c7",
+      "prompt": "Use the stable knight post to jump toward Black’s king.",
+      "success": "Nc7+ exploits the knight’s central placement and creates a concrete threat.",
+      "misconception": "An outpost matters only if it supports useful future operations."
+    },
+    {
+      "skillId": "pawns.breaks",
+      "fen": "4k3/3p4/8/3p4/4P3/8/8/4K3 w - - 0 1",
+      "acceptedMove": "e4e5",
+      "prompt": "Advance the e-pawn to confront Black’s locked center.",
+      "success": "e5 changes the pawn contact and challenges the fixed d5 structure.",
+      "misconception": "A pawn break must change contact with the opponent’s pawns."
+    },
+    {
+      "skillId": "pawns.weaknesses",
+      "fen": "4k3/3p4/8/8/8/8/8/4K3 w - - 0 1",
+      "acceptedMove": "e1d2",
+      "prompt": "Bring the king toward the fixed isolated pawn on d7.",
+      "success": "King activation targets a pawn that cannot retreat.",
+      "misconception": "Do not chase a target with only one piece while abandoning king activity."
+    },
+    {
+      "skillId": "attack.king-safety",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "acceptedMove": "a1a8",
+      "prompt": "Exploit the trapped king immediately with a long rook check.",
+      "success": "Ra8# works because the king has no safe escape across the back rank.",
+      "misconception": "An attack is justified by concrete king geometry, not optimism."
+    },
+    {
+      "skillId": "attack.open-lines",
+      "fen": "5k2/8/8/8/8/8/8/R5K1 w - - 0 1",
+      "acceptedMove": "a1a8",
+      "prompt": "Use the fully open a-file to invade with check.",
+      "success": "An uncontested file is a route to the enemy eighth rank.",
+      "misconception": "Do not divert the rook from an open line without a concrete gain."
+    },
+    {
+      "skillId": "attack.defenders",
+      "fen": "6k1/5ppp/5n2/6B1/8/8/8/6K1 w - - 0 1",
+      "acceptedMove": "g5f6",
+      "prompt": "Remove the knight shielding the king-side squares.",
+      "success": "Bxf6 changes the number of useful defenders around Black’s king.",
+      "misconception": "Count real defenders before starting a speculative assault."
+    },
+    {
+      "skillId": "attack.mating-net",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "acceptedMove": "a1a8",
+      "prompt": "Seal the back rank with a rook check against the boxed king.",
+      "success": "Ra8# works because the black pawns cover their own king’s exits.",
+      "misconception": "A checking move is only mate after every flight is excluded."
+    },
+    {
+      "skillId": "attack.sacrifice",
+      "fen": "7q/6k1/8/8/8/2B5/8/4K3 w - - 0 1",
+      "acceptedMove": "c3f6",
+      "prompt": "Choose the forcing bishop check that wins a queen, not a speculative sacrifice.",
+      "success": "Bf6+ skewers the exposed king and queen; the concrete line matters.",
+      "misconception": "If a sacrifice lacks a calculated return, reject it in favor of forcing value."
+    },
+    {
+      "skillId": "defense.prophylaxis",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "acceptedMove": "h2h3",
+      "prompt": "Consider h3 as preventive space against a future bishop pin.",
+      "success": "A prophylactic pawn move can ask a developing bishop to declare its intentions.",
+      "misconception": "Prophylaxis only helps if the opponent really has a relevant idea."
+    },
+    {
+      "skillId": "defense.exchange-attackers",
+      "fen": "4k3/8/8/8/2r5/8/2R5/4K3 w - - 0 1",
+      "acceptedMove": "c2c4",
+      "prompt": "Eliminate the active rook on c4 through a direct exchange.",
+      "success": "Rxc4 removes the piece exerting the immediate pressure.",
+      "misconception": "Trading a passive defender does not remove the attacker."
+    },
+    {
+      "skillId": "defense.counterplay",
+      "fen": "6k1/8/8/8/8/8/5Q2/6K1 w - - 0 1",
+      "acceptedMove": "f2f7",
+      "prompt": "Find a forcing queen check instead of waiting.",
+      "success": "Qf7+ makes the opponent answer a concrete threat.",
+      "misconception": "Passive defense may be worse when an immediate forcing move is available."
+    },
+    {
+      "skillId": "endgames.queen-mate",
+      "fen": "7k/8/8/8/8/8/8/4KQ2 w - - 0 1",
+      "acceptedMove": "f1f6",
+      "prompt": "Use the queen to cut the king’s available squares from a safe distance.",
+      "success": "Qf6+ reduces the box without putting the queen beside the king.",
+      "misconception": "Rushing close to the king can invite stalemate or lose coordination."
+    },
+    {
+      "skillId": "endgames.rook-mate",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "acceptedMove": "a1a8",
+      "prompt": "Deliver the rank check against the boxed king.",
+      "success": "Ra8# demonstrates the rook’s horizontal cut-off.",
+      "misconception": "A rook alone cannot mate without the king or board-edge confinement."
+    },
+    {
+      "skillId": "endgames.opposition",
+      "fen": "4k3/8/8/8/4K3/4P3/8/8 w - - 0 1",
+      "acceptedMove": "e4e5",
+      "prompt": "Advance the king toward the opponent while preserving pawn support.",
+      "success": "Ke5 approaches the critical central squares without abandoning the pawn.",
+      "misconception": "Opposition is about king geometry, not copying a pawn move."
+    },
+    {
+      "skillId": "endgames.key-squares",
+      "fen": "4k3/8/8/8/3P4/2K5/8/8 w - - 0 1",
+      "acceptedMove": "c3d3",
+      "prompt": "Move your king toward the pawn’s important entry squares.",
+      "success": "Kd3 helps the king approach the key squares in front of the d-pawn.",
+      "misconception": "The pawn needs king support; advancing it without the king can lose tempi."
+    },
+    {
+      "skillId": "conversion.simplify",
+      "fen": "4k3/8/8/8/2r5/8/2R5/4K3 w - - 0 1",
+      "acceptedMove": "c2c4",
+      "prompt": "Exchange active rooks before entering the remaining endgame.",
+      "success": "Rxc4 removes the tactical counterplay and simplifies material.",
+      "misconception": "Simplification works only if the resulting ending remains favorable."
+    },
+    {
+      "skillId": "practical.time",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "g1f3",
+      "prompt": "Make the routine improving move without overthinking.",
+      "success": "Nf3 develops and adds immediate central control.",
+      "misconception": "Use more time on irreversible tactical decisions than on standard development."
+    },
+    {
+      "skillId": "practical.plan",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "acceptedMove": "b1c3",
+      "prompt": "Select a workable plan: develop a new piece to influence the center.",
+      "success": "Nc3 is a concrete improvement rather than a vague aspiration.",
+      "misconception": "A plan should identify an actual improving move."
+    },
+    {
+      "skillId": "practical.transition",
+      "fen": "r3k2r/ppp2ppp/2npbn2/4p3/4P3/2NPBN2/PPP2PPP/R3K2R w KQkq - 0 1",
+      "acceptedMove": "e1g1",
+      "prompt": "Complete king safety before planning the middlegame.",
+      "success": "Castling marks the transition from opening priorities to piece coordination.",
+      "misconception": "Do not start a flank plan while your king remains unnecessarily exposed."
+    },
+    {
+      "skillId": "practical.post-move-check",
+      "fen": "4k3/8/8/8/8/8/3r4/3K4 w - - 0 1",
+      "acceptedMove": "d1c1",
+      "prompt": "The last move gave check on the d-file. Re-scan and reply legally.",
+      "success": "Kc1 is safe and reflects the changed threat after the opponent’s move.",
+      "misconception": "An old plan can become illegal after a check."
+    },
+    {
+      "skillId": "practical.resilience",
+      "fen": "4k3/8/2n5/8/3Q4/8/8/4K3 w - - 0 1",
+      "acceptedMove": "d4e3",
+      "prompt": "Recover from a mistake by first saving the attacked queen.",
+      "success": "Qe3 stops the immediate material loss; stabilize before counterattacking.",
+      "misconception": "Do not chase compensation while leaving a queen en prise."
+    }
+  ]
+}
