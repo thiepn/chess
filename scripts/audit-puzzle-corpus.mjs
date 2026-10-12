@@ -3,7 +3,7 @@ import path from "node:path";
 import { Chess } from "chess.js";
 
 const corpusDir = path.resolve(process.argv[2] ?? "public/data/puzzles");
-const minUnique = Number(process.env.PUZZLE_MIN_UNIQUE ?? 3000);
+const minUnique = Number(process.env.PUZZLE_MIN_UNIQUE ?? 5000);
 const minPerSkill = Number(process.env.PUZZLE_MIN_PER_SKILL ?? 3);
 const minRatingBands = Number(process.env.PUZZLE_MIN_RATING_BANDS ?? 5);
 

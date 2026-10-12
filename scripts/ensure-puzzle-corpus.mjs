@@ -14,7 +14,7 @@ function usableManifest() {
     );
     return (
       manifest.license === "CC0" &&
-      Number(manifest.uniqueTotal ?? 0) >= 3000 &&
+      Number(manifest.uniqueTotal ?? 0) >= 5000 &&
       Object.keys(manifest.shards ?? {}).length >= 30
     );
   } catch {
@@ -40,7 +40,7 @@ const result = spawnSync(
     "--out",
     "public/data/puzzles",
     "--max-per-skill",
-    "250",
+    "750",
     "--min-popularity",
     "55",
     "--min-plays",
