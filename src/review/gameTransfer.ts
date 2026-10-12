@@ -8,7 +8,7 @@ export interface TransferMission {
   lane:TransferLane;errorType?:ReviewErrorType;phase:GamePhase|undefined;
   moveNumber:number;positionFen:string;actualSan:string;referenceSan:string;
   nextReplySan:string|null;lineSan:string[];due:boolean;severity:string;
-  misconception:string;question:string;priority:number;
+  question:string;priority:number;
   cleanReturns:number;spacedCleanPairs:number;assistedReturns:number;missedReturns:number;
   nextReviewAt:string;
 }
@@ -26,15 +26,6 @@ function laneFor(m:PersonalMistake):TransferLane {
   if(m.errorType==="calculation-failure" ||
      m.skillIds.some(x=>x.startsWith("calculation.")))return "calculation";
   return "tactics";
-}
-function misconception(m:PersonalMistake,lane:TransferLane):string{
-  if(m.errorReason?.trim())return m.errorReason;
-  switch(lane){
-    case "strategy":return "Before choosing a plan, compare the activity of your least useful piece, king safety, pawn weaknesses and the opponent's counterplay.";
-    case "calculation":return "A plausible first move is not enough: examine forcing replies, then rebuild the position and calculate at least one more ply.";
-    case "endgame":return "Rook activity, king entry squares and opposition depend on the actual position. Recheck them before advancing a pawn.";
-    default:return "Check whether the tactic survives captures, checks and the opponent's strongest legal reply.";
-  }
 }
 function verifiedLine(m:PersonalMistake) {
   if(m.principalVariation[0]!==m.bestMove ||
@@ -92,7 +83,7 @@ export function gameTransferMissions(
      lane,phase:game.reviewStory?.phases.find(p=>m.ply>=p.startPly&&m.ply<=p.endPly)?.phase,errorType:m.errorType,
      moveNumber:m.moveNumber,positionFen:m.positionFen,actualSan:m.actualSan,
      referenceSan:line[0],nextReplySan:line[1]??null,lineSan:line,
-     due,severity:m.severity,misconception:misconception(m,lane),
+     due,severity:m.severity,
      question:lane==="strategy"?"What was your plan, and which opponent reply makes it unsafe?"
        :lane==="endgame"?"Which king, rook or pawn resource makes the technique work?"
        :lane==="calculation"?"Find the move, the best recorded reply, and your continuation."
