@@ -18,53 +18,45 @@ export interface TransferExercise {
 let cached: Promise<ReadonlyMap<string, TransferExercise>> | undefined;
 const fields = ["skillId","fen","acceptedMove","prompt","success","misconception"] as const;
 
-function legal(entry: Pick<TransferExercise, "fen" | "acceptedMove">): boolean {
-  const move = entry.acceptedMove;
-  if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move)) return false;
+function legal(fen: string, uci: string): boolean {
   try {
-    return new Chess(entry.fen).moves({verbose:true}).some(m =>
-      m.from + m.to + (m.promotion ?? "") === move);
+    return new Chess(fen).moves({verbose:true}).some(m =>
+      m.from + m.to + (m.promotion ?? "") === uci);
   } catch { return false; }
 }
 
-function catalogIndex(raw: unknown): ReadonlyMap<string,TransferExercise> {
+/** Qualify local author data before using it for scored attempts. */
+export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
   const source = raw as {schema?:string;items?:TransferExercise[]} | null;
   if (source?.schema !== "thiepn.chess.transfer.v1" || source.items?.length !== 49)
     throw Error("Unexpected transfer catalog");
   const rows = new Map<string,TransferExercise>();
   for (const item of source.items) {
-    if (!item || fields.some(k => typeof item[k] !== "string" || !item[k].trim()) ||
-      rows.has(item.skillId)) throw Error("Invalid authored transfer record");
+    if (!item || rows.has(item.skillId) ||
+      fields.some(k => typeof item[k] !== "string" || !item[k].trim()) ||
+      !legal(item.fen,item.acceptedMove))
+      throw Error("Invalid transfer record");
+    const c = item.challenge;
+    if (c) {
+      const moves = c.acceptedMoves;
+      if (typeof c.fen !== "string" || c.fen === item.fen ||
+        ![c.fen,c.prompt,c.success,c.misconception].every(x => typeof x === "string" && x.trim()) ||
+        !Array.isArray(c.hints) || c.hints.length !== 3 ||
+        c.hints.some(x => typeof x !== "string" || x.length < 15) ||
+        !Array.isArray(moves) || moves.length < 1 || moves.length > 3 ||
+        new Set(moves).size !== moves.length ||
+        !c.successByMove || Object.keys(c.successByMove).length !== moves.length ||
+        moves.some(m => !legal(c.fen,m) ||
+          typeof c.successByMove[m] !== "string" || c.successByMove[m].length < 35))
+        throw Error("Invalid authored second transfer");
+    }
     rows.set(item.skillId,item);
   }
   return rows;
 }
 
-/** Validate all locally owned instruction before allowing scored retrieval. */
-export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
-  const rows = catalogIndex(raw);
-  for (const item of rows.values()) {
-    if (!legal(item)) throw Error("Illegal transfer response");
-    const c = item.challenge;
-    if (!c) continue;
-    const moves = c.acceptedMoves;
-    const feedback = c.successByMove;
-    if (typeof c.fen !== "string" || !c.fen || c.fen === item.fen ||
-      ![c.prompt,c.success,c.misconception].every(s => typeof s === "string" && s.trim()) ||
-      !Array.isArray(c.hints) || c.hints.length !== 3 ||
-      c.hints.some(h => typeof h !== "string" || h.length < 15) ||
-      !Array.isArray(moves) || moves.length < 1 || moves.length > 3 ||
-      new Set(moves).size !== moves.length ||
-      !feedback || Object.keys(feedback).length !== moves.length ||
-      moves.some(move => !legal({fen:c.fen,acceptedMove:move}) ||
-        typeof feedback[move] !== "string" || feedback[move].length < 35))
-      throw Error("Invalid P92 transfer: " + item.skillId);
-  }
-  return rows;
-}
-
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
-  if (entry.skillId!==lesson.skillId || entry.fen===lesson.steps[0]?.fen || !legal(entry))
+  if (entry.skillId!==lesson.skillId || entry.fen===lesson.steps[0]?.fen || !legal(entry.fen,entry.acceptedMove))
     throw new Error("Transfer position is not independently valid");
   const move=entry.acceptedMove;
   if (entry.challenge && (entry.challenge.fen === lesson.steps[0]?.fen ||
