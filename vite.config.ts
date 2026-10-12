@@ -19,7 +19,7 @@ export default defineConfig({
         manualChunks(id) {
           // Share existing deferred page styles without including them in
           // the initial critical stylesheet. All original declarations remain.
-          const style = id.split("?")[0].split("/").at(-1);
+          const style = id.split("?")[0].split("/").at(-1) ?? "";
           if (id.includes("/src/styles/") && [
             "review-v2.css", "p47-review-native.css", "p51-review-large.css",
             "progress-v2.css", "p47-progress-native.css", "p51-progress-large.css",
