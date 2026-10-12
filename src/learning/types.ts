@@ -73,6 +73,7 @@ export type LessonStep =
       prompt: string;
       fen: string;
       acceptedMoves: string[];
+      successByMove?: Record<string, string>;
       successTitle: string;
       successBody: string;
       hints: LessonHint[];

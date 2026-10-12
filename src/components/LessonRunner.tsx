@@ -357,7 +357,7 @@ export function LessonRunner({
 
               if (accepted) {
                 setSolved(true);
-                setFeedback(null);
+                setFeedback(step.successByMove?.[uci] ?? step.successBody);
                 recordResult({
                   stepId: step.id,
                   support:
@@ -506,7 +506,7 @@ export function LessonRunner({
                       </strong>
                       <span>
                         {
-                          step.successBody
+                          feedback ?? step.successBody
                         }
                       </span>
                     </div>
@@ -592,7 +592,7 @@ export function LessonRunner({
                       </strong>
                       <span>
                         {
-                          step.successBody
+                          feedback ?? step.successBody
                         }
                       </span>
                     </div>

@@ -165,3 +165,40 @@ describe("P88 original independent transfer curriculum", () => {
       acceptedMove:"a1a1"})).toThrow();
   });
 });
+
+describe("P92 authored second-transfer content and corrected alternatives", () => {
+  const catalog = validateTransferCatalog(transferContent);
+  const deep = [...catalog.values()].filter(entry => entry.challenge);
+  it("adds 16 distinct verified positions with meaningful alternative plans", () => {
+    expect(deep).toHaveLength(16);
+    expect(deep.filter(entry => entry.challenge!.acceptedMoves.length > 1)).toHaveLength(8);
+    for (const item of deep) {
+      const challenge = item.challenge!;
+      const original = lessonScripts[item.skillId];
+      expect(challenge.fen, item.skillId).not.toEqual(item.fen);
+      expect(challenge.fen, item.skillId).not.toEqual(original.steps[0].fen);
+      const expanded = checkedTransfer(original,item);
+      const transfer = expanded.steps.filter(step => step.stage === "transfer" && step.type === "move");
+      expect(transfer).toHaveLength(2);
+      expect(transfer[1].id).toBe("transfer-depth");
+      for (const move of challenge.acceptedMoves) {
+        const board = new Chess(challenge.fen);
+        expect(board.move({from:move.slice(0,2),to:move.slice(2,4),
+          promotion:move.slice(4)||"q"}),item.skillId+":"+move).toBeTruthy();
+        expect(challenge.successByMove[move].length).toBeGreaterThan(34);
+      }
+    }
+  });
+  it("rejects illegal, repeated, or unqualified alternative-answer data", () => {
+    const target = deep.find(item => item.challenge!.acceptedMoves.length > 1)!;
+    const rewrite = (change: Record<string,unknown>) => ({
+      ...transferContent,items:transferContent.items.map(item =>
+        item.skillId === target.skillId ? {...item,challenge:{...item.challenge!,...change}} : item),
+    });
+    expect(() => validateTransferCatalog(rewrite({acceptedMoves:["a1a1"]}))).toThrow();
+    expect(() => validateTransferCatalog(rewrite({acceptedMoves:[target.challenge!.acceptedMoves[0],
+      target.challenge!.acceptedMoves[0]]}))).toThrow();
+    expect(() => validateTransferCatalog(rewrite({fen:target.fen}))).toThrow();
+    expect(() => validateTransferCatalog(rewrite({successByMove:{}}))).toThrow();
+  });
+});
