@@ -29,28 +29,19 @@ export interface ReviewPracticeCandidate {
   recentAttempts: number;
   recentSuccesses: number;
   lastQuality: number | null;
-  nextReviewAt: string;
   reviewReason: string;
 }
 
 export function legalReviewMistake(mistake: PersonalMistake, game: ImportedGame): boolean {
   if (mistake.gameId !== game.id || !Number.isInteger(mistake.ply) || mistake.ply < 1) return false;
-  const move = game.moves.find((item) => item.ply === mistake.ply);
+  const move = game.moves.find(item => item.ply === mistake.ply);
   if (!move || move.color !== mistake.playerColor ||
       move.beforeFen !== mistake.positionFen ||
-      move.uci !== mistake.actualMove ||
-      move.san !== mistake.actualSan) return false;
+      move.uci !== mistake.actualMove || move.san !== mistake.actualSan ||
+      game.moves.filter(m => m.ply === mistake.ply).length !== 1) return false;
   try {
-    const chess = new Chess(mistake.positionFen);
-    if (chess.turn() !== mistake.playerColor) return false;
-    const best = mistake.bestMove;
-    if (!UCI.test(best)) return false;
-    const played = chess.move({
-      from: best.slice(0, 2), to: best.slice(2, 4),
-      promotion: best.slice(4, 5) || "q",
-    });
-    return Boolean(played) && (!played.promotion || best.endsWith(played.promotion)) &&
-      game.moves.filter((m) => m.ply === mistake.ply).length === 1;
+    return new Chess(mistake.positionFen).turn() === mistake.playerColor &&
+      legalChoice(mistake.positionFen,mistake.bestMove);
   } catch { return false; }
 }
 
@@ -131,15 +122,14 @@ export function reviewPracticeQueue(
     const base = mistakePriority(mistake, now);
     const score = base * (1 + Math.min(0.65, failures * 0.16)) +
       (due ? 0.2 : 0) + (mistake.resolved ? 0 : 0.1);
-    const reviewReason = last
-      ? !last.succeeded ? "Last attempt missed · revisit soon"
-        : last.hintsUsed || last.wrongAttempts ? "Solved with support · repeat independently"
-          : "Found independently · check retention"
-      : "Not yet practiced from this game";
+    const reviewReason = !last ? "First practice"
+      : !last.succeeded ? "Missed · retry soon"
+      : last.hintsUsed || last.wrongAttempts ? "Retry unaided"
+      : "Check independent recall";
     return [{mistake, score, due, recentAttempts:past.length,
       recentSuccesses:successes,
       lastQuality:last ? reviewAttemptQuality(last.succeeded, last.hintsUsed, last.wrongAttempts) : null,
-      nextReviewAt:mistake.nextReviewAt, reviewReason}];
+      reviewReason}];
   }).sort((a,b) => b.score-a.score || a.mistake.id.localeCompare(b.mistake.id));
 }
 
