@@ -278,6 +278,7 @@ const rl = readline.createInterface({
   crlfDelay: Infinity,
 });
 for await (const line of rl) {
+  if (!line.trim() || line.startsWith("PuzzleId,")) continue;
   const sourceId = line.split(",", 1)[0];
   if (seenSourceIds && seenSourceIds.has(sourceId)) {
     duplicates++;
