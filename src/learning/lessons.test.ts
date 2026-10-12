@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { checkedTransfer, validateTransferCatalog } from "./transferCompletion";
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
 import {
@@ -121,5 +123,45 @@ describe("lesson scripts", () => {
       expect(transfer, skillId).toBeTruthy();
       expect(transfer?.fen, skillId).not.toBe(model?.fen);
     }
+  });
+});
+
+describe("P88 original independent transfer curriculum", () => {
+  const raw=JSON.parse(readFileSync("public/data/learning/transfer-v1.json","utf8"));
+  const catalog=validateTransferCatalog(raw);
+  const uncovered=Object.keys(lessonScripts).filter(id=>!deepTransferSkillIds.includes(id));
+  it("covers exactly the 49 previously same-position retrieval lessons",()=>{
+    expect(uncovered).toHaveLength(49);
+    expect([...catalog.keys()].sort()).toEqual([...uncovered].sort());
+  });
+  it("loads legal distinct authored positions and leaves originals intact",()=>{
+    for(const skillId of uncovered){
+      const lesson=lessonScripts[skillId];
+      const entry=catalog.get(skillId)!;
+      const improved=checkedTransfer(lesson,entry);
+      const model=lesson.steps.find(x=>x.id==="model")!;
+      const replacement=improved.steps.find(x=>x.id==="transfer");
+      expect(replacement?.type,skillId).toBe("move");
+      if(replacement?.type!=="move")throw new Error(skillId);
+      expect(replacement.support).toBe("transfer");
+      expect(replacement.fen,skillId).not.toBe(model.fen);
+      expect(replacement.hints).toHaveLength(3);
+      expect(replacement.misconceptionFeedback?.length,skillId).toBeGreaterThan(25);
+      const chess=new Chess(replacement.fen);
+      const encoded=replacement.acceptedMoves[0];
+      expect(chess.move({from:encoded.slice(0,2),to:encoded.slice(2,4),
+        promotion:encoded.slice(4,5)||"q"}),skillId).toBeTruthy();
+      expect(lesson.steps.find(x=>x.id==="transfer")?.fen,skillId).toBe(model.fen);
+    }
+  });
+  it("fails closed on tampered, incomplete, stale or repeated transfer data",()=>{
+    expect(()=>validateTransferCatalog({...raw,schema:"wrong"})).toThrow();
+    expect(()=>validateTransferCatalog({...raw,items:raw.items.slice(1)})).toThrow();
+    expect(()=>validateTransferCatalog({...raw,items:[...raw.items.slice(0,-1),raw.items[0]]})).toThrow();
+    const first=catalog.get(uncovered[0])!;
+    expect(()=>checkedTransfer(lessonScripts[uncovered[0]],{...first,
+      fen:lessonScripts[uncovered[0]].steps[0].fen})).toThrow();
+    expect(()=>checkedTransfer(lessonScripts[uncovered[0]],{...first,
+      acceptedMove:"a1a1"})).toThrow();
   });
 });
