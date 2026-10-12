@@ -106,5 +106,5 @@ export function gameTransferReadiness(missions:readonly TransferMission[]):Trans
    uniqueGames:new Set(missions.map(m=>m.gameId)).size,
    independentRecalls:clean,assistedSolves:assisted,missedAttempts:missed,
    spacedIndependentPairs:pairs,duePositions:due,readiness,
-   limitation:"This reflects source-verified game review, not a chess rating or proof of mastery. A delayed pair requires at least 24 hours between clean unassisted attempts at the same recorded position."};
+   limitation:"Verified game review is not a rating or mastery certification. Delayed recall needs clean, unaided attempts at least 24 hours apart."};
 }
