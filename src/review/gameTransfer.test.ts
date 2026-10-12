@@ -38,9 +38,9 @@ describe("P91 owner-authoritative saved-game learning missions",()=>{
    const {game,mistake}=records("g-two");
    const mission=gameTransferMissions([game],[mistake],[],now)[0];
    expect(mission).toMatchObject({gameId:"g-two",moveNumber:1,lane:"strategy",
-     referenceSan:"e4",nextReplySan:"e5",cleanReturns:0,spacedCleanPairs:0,
+     lineLength:3,cleanReturns:0,spacedCleanPairs:0,
      assistedReturns:0,missedReturns:0,due:true});
-   expect(mission.lineSan).toEqual(["e4","e5","Nf3"]);
+   expect(mistake.principalVariation).toEqual(["e2e4","e7e5","g1f3"]);
    expect(mistake.errorReason).toContain("center access");
    expect(gameTransferReadiness([mission]).readiness).toBe("needs-practice");
  });
