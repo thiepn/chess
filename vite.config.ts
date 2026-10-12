@@ -7,9 +7,8 @@ export default defineConfig({
   esbuild: { pure: ["console.log", "console.info", "console.debug"] },
   build: {
     target: "es2022",
-    // Combine existing page CSS into one compressed sheet; evaluate against
-    // BOTH unchanged initial and all-app limits without removing any styles.
-    cssCodeSplit: false,
+    // Keep initial CSS under its independent 42 KiB per-file budget.
+    cssCodeSplit: true,
     // Do not publish source maps in production: they reveal source-level
     // implementation details and can leak accidental embedded config.
     sourcemap: false,
@@ -18,6 +17,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          // Share existing deferred page styles without including them in
+          // the initial critical stylesheet. All original declarations remain.
+          if (/[/\\\\]src[/\\\\]styles[/\\\\](?:(?:review|progress|library)-v2|p(?:47|51)-(?:review|progress|library|learn|play)-(?:native|large))\\.css$/.test(id))
+            return "secondary-page-styles";
           if (id.indexOf("/node_modules/lucide-react/dist/esm/icons/") !== -1) return "chess-icons";
         },
       },
