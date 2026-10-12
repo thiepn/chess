@@ -174,15 +174,7 @@ function LessonPage({
         </div>
 
         <div className="learn-v2-lesson-actions">
-          {practiceAvailable && (
-            <button
-              className="secondary"
-              type="button"
-              onClick={() => onStartPractice(skill.id)}
-            >
-              Practice positions
-            </button>
-          )}
+
         </div>
       </aside>
 
@@ -194,6 +186,8 @@ function LessonPage({
             onClick={() => onStartLesson(skill.id)}>
             Begin lesson <ChevronRight size={16} />
           </button>
+          {practiceAvailable && <button className="secondary" type="button"
+            onClick={() => onStartPractice(skill.id)}>Practice positions</button>}
         </div>
         <ChessBoard
           key={`${skill.id}:${step.id}`}
