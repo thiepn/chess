@@ -16,18 +16,24 @@ function legal(entry: TransferExercise): boolean {
   return Boolean(played && (!played.promotion || move.endsWith(played.promotion)));
 }
 
-export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
+function catalogIndex(raw: unknown): ReadonlyMap<string,TransferExercise> {
   const data=raw as {schema?:string;items?:TransferExercise[]} | null;
   if (data?.schema!=="thiepn.chess.transfer.v1" || data.items?.length!==49)
-    throw new Error("Unexpected transfer catalog");
+    throw Error("Unexpected transfer catalog");
   const result=new Map<string,TransferExercise>();
-  for (const item of data.items) {
+  for(const item of data.items) {
     if (!item || fields.some(field=>typeof item[field]!=="string" || !item[field].trim()) ||
-        result.has(item.skillId) || !legal(item))
-      throw new Error("Invalid authored transfer record");
+        result.has(item.skillId)) throw Error("Invalid authored transfer record");
     result.set(item.skillId,item);
   }
   return result;
+}
+
+/** Full corpus qualification; runtime also checks each exercised move. */
+export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
+  const data=catalogIndex(raw);
+  for(const entry of data.values())if(!legal(entry))throw Error("Illegal transfer response");
+  return data;
 }
 
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
@@ -54,6 +60,6 @@ export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): 
 export function loadTransferCatalog(): Promise<ReadonlyMap<string,TransferExercise>> {
   return cached ??= fetch(`${import.meta.env.BASE_URL}data/learning/transfer-v1.json`)
     .then(response=>{if(!response.ok)throw Error("Missing transfer data");return response.json();})
-    .then(validateTransferCatalog)
+    .then(catalogIndex)
     .catch(error=>{cached=undefined;throw error;});
 }
