@@ -27,6 +27,7 @@ import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
 import { reviewPracticeQueue, verifiedReviewAttempts, type RecordedReviewAttempt } from "../review/practiceLoop";
+import {gameTransferMissions,gameTransferReadiness} from "../review/gameTransfer";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
 );
@@ -113,6 +114,9 @@ export function ReviewView({
     () => reviewPracticeQueue(games, mistakes, practiceHistory),
     [games, mistakes, practiceHistory],
   );
+  const transferMissions=useMemo(()=>gameTransferMissions(games,mistakes,practiceHistory),
+    [games,mistakes,practiceHistory]);
+  const transferReadiness=useMemo(()=>gameTransferReadiness(transferMissions),[transferMissions]);
   const pendingPractice = practiceQueue.filter(item => !item.mistake.resolved);
   const duePracticeCount = practiceQueue.filter(item => item.due).length;
   const verifiedHistoryCount = practiceQueue.reduce((count,entry) =>
@@ -500,6 +504,48 @@ export function ReviewView({
             </div>
           </section>
         )}
+
+        <section className="review-v2-first-step" aria-labelledby="transfer-missions-title">
+          <p className="eyebrow">FROM GAMES TO TRAINING · VERIFIED POSITIONS</p>
+          <h2 id="transfer-missions-title">Your game-to-training missions</h2>
+          <p>Only moves linked to an original saved game and a legally replayable engine suggestion appear here. Repeat without hints after the scheduled return to build real recall evidence.</p>
+          <div className="review-practice-summary" role="status">
+            {transferReadiness.qualifiedPositions} qualified positions across {transferReadiness.uniqueGames} saved games ·
+            {" "}{transferReadiness.independentRecalls} independent solves ·
+            {" "}{transferReadiness.assistedSolves} assisted ·
+            {" "}{transferReadiness.missedAttempts} missed ·
+            {" "}{transferReadiness.spacedIndependentPairs} time-separated repeat positions.
+          </div>
+          <p className="review-practice-summary">Evidence status: {transferReadiness.readiness.replaceAll("-"," ")}.
+            {" "}{transferReadiness.limitation}</p>
+          {transferMissions.length ? (
+            <div className="review-v2-repair-list" aria-label="Prioritized strategic game transfer">
+              {transferMissions.slice(0,5).map(m=>(
+                <article key={m.mistakeId} className="review-v2-repair-row">
+                  <div>
+                    <strong>{m.lane.toUpperCase()} · {m.gameLabel} · move {m.moveNumber}</strong>
+                    <p>{m.question}</p>
+                    <p>{m.misconception}</p>
+                    <small>Played {m.actualSan} · reference {m.referenceSan}
+                      {m.nextReplySan ? ` · recorded reply ${m.nextReplySan}` : " · no qualified opponent reply"}</small>
+                    <small>{m.due?"Due":"Scheduled"} · {m.cleanReturns} independent,
+                      {" "}{m.assistedReturns} assisted, {m.missedReturns} missed
+                      {" "}· {m.spacedCleanPairs} delayed pairs</small>
+                  </div>
+                  <div>
+                    <button type="button" onClick={()=>onTrainMistake(m.mistakeId)}>Train this position</button>
+                    <button type="button" onClick={()=>onNavigate(reviewGamePath(m.gameId))}>
+                      Original game
+                    </button>
+                    <button type="button" onClick={()=>onPracticeSkill(m.skillId)}>
+                      Related skill
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ):<p>No legally qualified game-derived missions yet. Analyze a saved game to create evidence-backed practice.</p>}
+        </section>
 
         <details
           key={latestAnalyzedGame ? "review-with-games" : "review-empty"}
