@@ -174,7 +174,8 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
                     onClick={() => setLineStep(step.ply)}>{step.ply}. {step.san}</button>
                 ))}
               </div>
-              <p>Moves are replayed legally from this position, not claimed as forced.</p>
+              <p>Moves are replayed legally from the saved source. The reply is a recorded engine line, not proof that other legal responses lose.</p>
+              {line[1] && <p><strong>Opponent's recorded response: {line[1].san}.</strong> Rebuild the board after that reply before judging your plan.</p>}
             </section>
           )}
         </div>
@@ -184,7 +185,17 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
             <h2>{solved ? "You found the engine's choice." : draft.revealed
               ? "Review the stronger choice." : "What should you play instead?"}</h2>
             <p className="lesson-prompt">{finished ? mistake.explanation
-              : "Play a legal candidate without seeing the saved engine move first. Only actual attempts change your training progress."}</p>
+              : mistake.errorType==="strategic-plan"
+                ? "Identify the worst-placed piece, your plan and Black or White's strongest counterplay before moving. Only actual attempts change progress."
+                : mistake.errorType==="calculation-failure"
+                ? "Calculate candidate, opponent's strongest reply and your continuation before moving."
+                : "Play a legal candidate before seeing the engine suggestion. Only actual attempts change your training progress."}</p>
+            {finished && (mistake.errorReason || mistake.errorType) && (
+              <div className="lesson-feedback" role="status">
+                <strong>{mistake.errorType?.replaceAll("-"," ") ?? "Game decision"}</strong>
+                <span>{mistake.errorReason ?? "Reconstruct the original tactical or strategic choice, then verify the opponent's reply."}</span>
+              </div>
+            )}
             <p className="review-practice-context" aria-live="polite">
               {triedMoves.length} attempted move{triedMoves.length === 1 ? "" : "s"} ·
               {wrongAttempts} incorrect · {hintsUsed} hint{hintsUsed === 1 ? "" : "s"}
