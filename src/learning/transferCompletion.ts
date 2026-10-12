@@ -18,62 +18,51 @@ export interface TransferExercise {
 let cached: Promise<ReadonlyMap<string, TransferExercise>> | undefined;
 const fields = ["skillId","fen","acceptedMove","prompt","success","misconception"] as const;
 
-function legal(entry: TransferExercise): boolean {
-  if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(entry.acceptedMove)) return false;
-  const game = new Chess(entry.fen);
-  const {acceptedMove:move}=entry;
-  const played=game.move({from:move.slice(0,2),to:move.slice(2,4),promotion:move[4]||"q"});
-  return Boolean(played && (!played.promotion || move.endsWith(played.promotion)));
+function legal(entry: Pick<TransferExercise, "fen" | "acceptedMove">): boolean {
+  const move = entry.acceptedMove;
+  if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move)) return false;
+  try {
+    return new Chess(entry.fen).moves({verbose:true}).some(m =>
+      m.from + m.to + (m.promotion ?? "") === move);
+  } catch { return false; }
 }
 
 function catalogIndex(raw: unknown): ReadonlyMap<string,TransferExercise> {
-  const data=raw as {schema?:string;items?:TransferExercise[]} | null;
-  if (data?.schema!=="thiepn.chess.transfer.v1" || data.items?.length!==49)
+  const source = raw as {schema?:string;items?:TransferExercise[]} | null;
+  if (source?.schema !== "thiepn.chess.transfer.v1" || source.items?.length !== 49)
     throw Error("Unexpected transfer catalog");
-  const result=new Map<string,TransferExercise>();
-  for(const item of data.items) {
-    if (!item || fields.some(field=>typeof item[field]!=="string" || !item[field].trim()) ||
-        result.has(item.skillId)) throw Error("Invalid authored transfer record");
-    result.set(item.skillId,item);
+  const rows = new Map<string,TransferExercise>();
+  for (const item of source.items) {
+    if (!item || ["skillId","fen","acceptedMove","prompt","success","misconception"]
+      .some(k => typeof item[k as keyof TransferExercise] !== "string" ||
+        !(item[k as keyof TransferExercise] as string).trim()) ||
+      rows.has(item.skillId)) throw Error("Invalid authored transfer record");
+    rows.set(item.skillId,item);
   }
-  return result;
+  return rows;
 }
 
-/** Full corpus qualification; runtime also checks each exercised move. */
+/** Validate all locally owned instruction before allowing scored retrieval. */
 export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
-  const data=catalogIndex(raw);
-  for (const entry of data.values()) {
-    if (!legal(entry)) throw Error("Illegal transfer response");
-    const challenge = entry.challenge;
-    if (!challenge) continue;
-    if (!challenge.fen || challenge.fen === entry.fen ||
-      !challenge.prompt?.trim() || !challenge.success?.trim() ||
-      !challenge.misconception?.trim() ||
-      !Array.isArray(challenge.hints) || challenge.hints.length !== 3 ||
-      challenge.hints.some(h => typeof h !== "string" || h.trim().length < 15) ||
-      !Array.isArray(challenge.acceptedMoves) ||
-      challenge.acceptedMoves.length < 1 || challenge.acceptedMoves.length > 3 ||
-      new Set(challenge.acceptedMoves).size !== challenge.acceptedMoves.length)
-      throw Error("Invalid P92 transfer: " + entry.skillId);
-    try {
-      const board = new Chess(challenge.fen);
-      for (const move of challenge.acceptedMoves) {
-        if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move) ||
-            !challenge.successByMove || typeof challenge.successByMove[move] !== "string" ||
-            challenge.successByMove[move].length < 35)
-          throw Error("Missing move-specific correction");
-        if (!board.moves({verbose:true}).some(candidate =>
-            candidate.from + candidate.to + (candidate.promotion ?? "") === move))
-          throw Error("Illegal accepted move");
-      }
-      if (Object.keys(challenge.successByMove).sort().join(",") !==
-          [...challenge.acceptedMoves].sort().join(","))
-        throw Error("Unqualified alternative feedback");
-    } catch {
-      throw Error("Illegal or incomplete P92 transfer: " + entry.skillId);
-    }
+  const rows = catalogIndex(raw);
+  for (const item of rows.values()) {
+    if (!legal(item)) throw Error("Illegal transfer response");
+    const c = item.challenge;
+    if (!c) continue;
+    const moves = c.acceptedMoves;
+    const feedback = c.successByMove;
+    if (typeof c.fen !== "string" || !c.fen || c.fen === item.fen ||
+      ![c.prompt,c.success,c.misconception].every(s => typeof s === "string" && s.trim()) ||
+      !Array.isArray(c.hints) || c.hints.length !== 3 ||
+      c.hints.some(h => typeof h !== "string" || h.length < 15) ||
+      !Array.isArray(moves) || moves.length < 1 || moves.length > 3 ||
+      new Set(moves).size !== moves.length ||
+      !feedback || Object.keys(feedback).length !== moves.length ||
+      moves.some(move => !legal({fen:c.fen,acceptedMove:move}) ||
+        typeof feedback[move] !== "string" || feedback[move].length < 35))
+      throw Error("Invalid P92 transfer: " + item.skillId);
   }
-  return data;
+  return rows;
 }
 
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
