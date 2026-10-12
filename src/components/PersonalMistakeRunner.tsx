@@ -1,6 +1,7 @@
 import { Chess, type Color, type Square } from "chess.js";
 import { CheckCircle2, ChevronRight, Lightbulb, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { reviewAttemptQuality } from "../review/practiceLoop";
 import type { TrainingOutcome } from "../domain/types";
 import type { PersonalMistake } from "../games/types";
 import type { BoardArrow, BoardHighlight } from "../learning/types";
@@ -52,7 +53,9 @@ function restoreDraft(owner: string, mistake: PersonalMistake): PracticeDraft {
     const last = entry.moves.at(-1);
     if (typeof entry.hint !== "boolean" || typeof entry.solved !== "boolean" ||
         typeof entry.revealed !== "boolean" ||
-        (entry.solved && (!last || !matchesBest(last,mistake.bestMove))) ||
+        (entry.solved && (!last || !matchesBest(last,mistake.bestMove) ||
+          entry.moves.filter(m => matchesBest(m,mistake.bestMove)).length !== 1)) ||
+        (!entry.solved && entry.moves.includes(mistake.bestMove)) ||
         (entry.revealed && entry.solved)) return initial;
     return entry;
   } catch { return initial; }
@@ -69,6 +72,7 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
   const [feedback, setFeedback] = useState<string | null>(null);
   const [boardVersion, setBoardVersion] = useState(0);
   const [lineStep, setLineStep] = useState(0);
+  const completing = useRef(false);
   const orientation = mistake.playerColor as Color;
   const triedMoves = draft.moves;
   const solved = draft.solved;
@@ -86,14 +90,16 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
     : mistake.positionFen;
 
   useEffect(() => {
+    if (draft.owner !== storageOwner || draft.mistakeId !== mistake.id ||
+        draft.fen !== mistake.positionFen || draft.bestMove !== mistake.bestMove) return;
     try {
       sessionStorage.setItem(draftKey(storageOwner,mistake.id),JSON.stringify(draft));
     } catch { /* Private/session storage disabled: never claim durable recovery. */ }
   }, [storageOwner, mistake.id, draft]);
 
   function appendMove(move: string, accepted: boolean) {
-    setDraft(d => ({
-      ...d, moves:[...d.moves,move].slice(-40), solved:accepted,
+    setDraft(d => d.moves.length >= 40 || d.solved || d.revealed ? d : ({
+      ...d, moves:[...d.moves,move], solved:accepted,
     }));
   }
   const hintArrows: BoardArrow[] = draft.hint && !finished
@@ -103,17 +109,19 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
        {square:mistake.bestMove.slice(2,4) as Square,tone:"good"}] : [];
 
   function finish() {
-    const penalty = hintsUsed * .15 + wrongAttempts * .12;
-    try { sessionStorage.removeItem(draftKey(storageOwner,mistake.id)); }
-    catch { /* session storage may be unavailable */ }
+    if (completing.current || !finished || draft.owner !== storageOwner ||
+        draft.fen !== mistake.positionFen || draft.bestMove !== mistake.bestMove) return;
+    completing.current = true;
     onComplete({
-      success:solved,quality:solved ? Math.max(.25,1 - penalty) : 0,
+      success:solved,quality:reviewAttemptQuality(solved,hintsUsed,wrongAttempts),
       hintsUsed,wrongAttempts,mistakeId:mistake.id,
       mistakePractice:{
         playedMove:triedMoves.at(-1) ?? null,
         triedMoves:[...triedMoves],
       },
     });
+    // Preserve the draft on rejected/aborted submissions; a verified parent
+    // transition will replace this training component after recording.
   }
 
   return (
@@ -128,6 +136,10 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
             highlights={hintHighlights}
             arrows={hintArrows}
             onMove={(move) => {
+              if (draft.moves.length >= 40) {
+                setFeedback("Attempt limit reached. Reveal the engine choice to record a missed attempt.");
+                return false;
+              }
               const uci=`${move.from}${move.to}${move.promotion ?? ""}`;
               const accepted=matchesBest(uci,mistake.bestMove);
               appendMove(uci,accepted);
@@ -187,6 +199,14 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
             )}
             {finished && (
               <>
+                <p className="review-practice-context" role="status">
+                  {solved && !hintsUsed && !wrongAttempts
+                    ? "Independent recall · a clean answer extends your next review."
+                    : solved
+                      ? "Supported solution · repeat soon without hints or wrong moves."
+                      : "Missed attempt · this position returns for practice in about six hours."}
+                  {" "}Verified practice quality: {Math.round(reviewAttemptQuality(solved,hintsUsed,wrongAttempts) * 100)}%.
+                </p>
                 <div className={`lesson-feedback ${solved ? "success" : "error"}`}>
                   <CheckCircle2 size={19} />
                   <div>
@@ -222,7 +242,7 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
                 </button>
               )}
             </div>
-            <p className="review-practice-footnote">This practice position is session-resumable for the active Chess owner only. Leaving without recording does not award success.</p>
+            <p className="review-practice-footnote">Recovery is local to this tab and Chess owner. Unsubmitted work cannot increase mastery. Clean unaided answers, not assisted reveals, extend review intervals.</p>
           </div>
         </div>
       </div>
