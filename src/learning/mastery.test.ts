@@ -97,4 +97,31 @@ describe("lesson mastery evidence", () => {
     expect(assisted.masteryPassed).toBe(false);
   });
 
+  it("P92 requires both distinct transfer positions clean on the first attempt", () => {
+    const base = [
+      result("guided","guided"),
+      result("recognition","retrieval"),
+      result("independent","retrieval"),
+      result("transfer","transfer"),
+    ];
+    const clean = summarizeLessonMastery([
+      ...base,result("transfer-depth","transfer"),
+    ]);
+    const assisted = summarizeLessonMastery([
+      ...base,result("transfer-depth","transfer",{firstTry:false,hintsUsed:1}),
+    ]);
+    const corrected = summarizeLessonMastery([
+      ...base,result("transfer-depth","transfer",{firstTry:false,wrongAttempts:1}),
+    ]);
+    expect(clean.transferSteps).toBe(2);
+    expect(clean.transferFirstTryCorrect).toBe(2);
+    expect(clean.masteryPassed).toBe(true);
+    for (const score of [assisted, corrected]) {
+      expect(score.completed).toBe(true);
+      expect(score.transferSteps).toBe(2);
+      expect(score.transferFirstTryCorrect).toBe(1);
+      expect(score.masteryPassed).toBe(false);
+    }
+  });
+
 });
