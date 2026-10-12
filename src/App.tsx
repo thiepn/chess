@@ -1334,7 +1334,7 @@ export default function App() {
     if (manualActivity || routePracticeActivity) {
       closeTrainingRuntime(routePracticeActivity && trainingReturnPath === "/train"
         ? "/review" : trainingReturnPath);
-      return;
+      return true;
     }
 
     if (activeIndex !== null && activeIndex < session.activities.length - 1) {
@@ -1342,6 +1342,7 @@ export default function App() {
     } else {
       closeTrainingRuntime("/train");
     }
+    return true;
   }
 
   function handleAnalyzedGame(game: ImportedGame, newMistakes: PersonalMistake[]) {
@@ -2768,8 +2769,8 @@ export default function App() {
                           mistake={activeMistake}
                           storageOwner={activeOwner}
                           onComplete={result => {
-                            if (repo.getProfileId() !== activeOwner) return;
-                            completeActivity(result);
+                            if (repo.getProfileId() !== activeOwner) return false;
+                            return completeActivity(result) === true;
                           }}
                         />
                       ) : active.activityType === "calculation" &&
