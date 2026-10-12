@@ -84,7 +84,7 @@
     },
     {
       "skillId": "fundamentals.defended",
-      "fen": "4k3/8/8/4p3/3n4/5N2/8/4K3 w - - 0 1",
+      "fen": "4k3/8/8/4p3/3n4/5N2/7P/4K3 w - - 0 1",
       "acceptedMove": "f3e5",
       "prompt": "Capture the pawn that supports Black’s centralized knight.",
       "success": "The pawn on e5 helps maintain the knight’s square; removing support changes the exchange.",
@@ -308,11 +308,11 @@
     },
     {
       "skillId": "defense.counterplay",
-      "fen": "6k1/8/8/8/8/8/5Q2/6K1 w - - 0 1",
-      "acceptedMove": "f2f7",
-      "prompt": "Find a forcing queen check instead of waiting.",
-      "success": "Qf7+ makes the opponent answer a concrete threat.",
-      "misconception": "Passive defense may be worse when an immediate forcing move is available."
+      "fen": "7k/8/8/8/8/8/5Q2/6K1 w - - 0 1",
+      "acceptedMove": "f2f8",
+      "prompt": "Find a forcing check that makes the exposed king answer you immediately.",
+      "success": "Qf8+ checks along the eighth rank and makes Black respond rather than continue a plan.",
+      "misconception": "Counterplay must create an actual threat, not just move a piece toward the king."
     },
     {
       "skillId": "endgames.queen-mate",
