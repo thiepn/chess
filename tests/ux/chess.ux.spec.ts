@@ -795,3 +795,43 @@ test("P87 rejects an inconsistent solved tab draft after reload without creating
     JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state") || "{}"));
   expect(saved.reviewPracticeHistory ?? []).toHaveLength(0);
 });
+
+test("P88 rules lesson reaches genuinely different assessed position with misconception feedback", async ({page})=>{
+  await open(page,"/learn/rules/rules.board",".lesson-page-v2");
+  await page.getByRole("button",{name:"Begin lesson"}).click();
+  await expect(page.locator(".lesson-runner-v2")).toBeVisible();
+  await expect(page.getByText("Preparing independent practice")).toHaveCount(0);
+  const next=page.getByRole("button",{name:"Continue"});
+  await next.click(); // Model
+  await next.click(); // Worked example
+  await page.locator(".lesson-choice").first().click();
+  await next.click(); // Misconception
+  await page.locator('.lesson-runner .board-square[data-square="e2"]').click();
+  await page.locator('.lesson-runner .board-square[data-square="e4"]').click();
+  await next.click(); // Guided
+  await page.locator(".lesson-choice").first().click();
+  await next.click(); // Retrieval
+  await page.locator('.lesson-runner .board-square[data-square="e2"]').click();
+  await page.locator('.lesson-runner .board-square[data-square="e4"]').click();
+  await next.click(); // Independent same-position check
+  await expect(page.locator(".lesson-step-meta")).toContainText("INDEPENDENT TRANSFER");
+  await expect(page.locator(".lesson-board-column .board-square[data-square='e4'] .chess-piece")).toHaveCount(1);
+  await page.locator('.lesson-runner .board-square[data-square="h2"]').click();
+  await page.locator('.lesson-runner .board-square[data-square="h4"]').click();
+  await expect(page.getByRole("alert")).toContainText("Do not count files from Black");
+  await page.locator('.lesson-runner .board-square[data-square="g1"]').click();
+  await page.locator('.lesson-runner .board-square[data-square="f3"]').click();
+  await expect(page.locator(".lesson-feedback.success")).toContainText("A file and rank");
+  await next.click();
+  await expect(page.locator(".lesson-mastery-preview")).toContainText("Independent transfer: 0/1");
+  await assertNoHorizontalOverflow(page,"P88 authored transfer");
+});
+
+test("P88 unavailable transfer corpus never reverts to same-position mastery", async ({page})=>{
+  await page.route("**/data/learning/transfer-v1.json",route=>route.abort());
+  await open(page,"/learn/rules/rules.board",".lesson-page-v2");
+  await page.getByRole("button",{name:"Begin lesson"}).click();
+  await expect(page.getByRole("heading",{name:"Transfer position unavailable"})).toBeVisible();
+  await expect(page.locator(".lesson-stage .board-square")).toHaveCount(0);
+  await expect(page.getByRole("button",{name:"Retry transfer data"})).toBeVisible();
+});
