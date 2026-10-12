@@ -955,7 +955,7 @@ export default function App() {
       if (!incoming.puzzleId || !p || p.completed!==incoming.success ||
           !Array.isArray(p.wrongMoves) || p.wrongMoves.length>40 ||
           !Number.isInteger(incoming.hintsUsed) || incoming.hintsUsed<0 ||
-          incoming.hintsUsed>1 || incoming.wrongAttempts!==p.wrongMoves.length ||
+          incoming.hintsUsed>2 || incoming.wrongAttempts!==p.wrongMoves.length ||
           !legalPuzzleLine(p)) return;
       const canonical=incoming.success
         ? Math.max(.2,Math.round(100-incoming.hintsUsed*20-p.wrongMoves.length*12)/100):0;
@@ -1029,10 +1029,15 @@ export default function App() {
       occurredAt,
     };
 
+    // An off-skill mixed puzzle may contribute to owner-scoped puzzle history
+    // but must not raise the scheduled, unrelated skill's mastery.
+    const matchedSkill=active.activityType!=="mixedPuzzle" ||
+      Boolean(outcome.puzzleSkillIds?.includes(skillId));
     const currentMastery =
       state.mastery[skillId] ??
       emptyMastery(skillId, Math.min(1, activeSkill.difficulty / 5));
-    const projectedMastery = applyEvidence(currentMastery, evidence);
+    const projectedMastery=matchedSkill
+      ? applyEvidence(currentMastery,evidence) : currentMastery;
     const crossed90 =
       currentMastery.effectiveMastery < 90 &&
       projectedMastery.effectiveMastery >= 90;
@@ -1321,7 +1326,8 @@ export default function App() {
         };
       }
 
-      const nextMastery = applyEvidence(previousMastery, evidence);
+      const nextMastery=matchedSkill
+        ? applyEvidence(previousMastery,evidence) : previousMastery;
       const prescriptionHistory =
         active.prescriptionId
           ? markPrescriptionCompleted(
@@ -1340,13 +1346,13 @@ export default function App() {
           ...previous.mastery,
           [skillId]: nextMastery,
         },
-        analytics: appendEvidenceAnalytics(
+        analytics: matchedSkill ? appendEvidenceAnalytics(
           previous.analytics,
           previousMastery,
           nextMastery,
           evidence,
           active.id.startsWith("manual:") ? "manual" : active.source,
-        ),
+        ) : previous.analytics,
         puzzleHistory,
         mistakes,
         reviewPracticeHistory,

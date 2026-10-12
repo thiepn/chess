@@ -150,3 +150,26 @@ describe("puzzle corpus", () => {
     expect(selected).toBeTruthy();
   });
 });
+
+describe("P93 unlabelled cross-skill tactical recognition", () => {
+  it("permits an unseen source puzzle from a different motif and preserves its ID", () => {
+    const candidates=seedPuzzles.filter(p=>p.skillIds.includes("tactics.skewer"));
+    expect(candidates.length).toBeGreaterThan(0);
+    const selected=selectPuzzle(candidates,{skillId:"tactics.knight-fork",
+      mastery:40,activityDifficulty:2,mixed:true},new Date("2026-10-12T12:00:00Z"));
+    expect(selected?.id).toBe(candidates[0].id);
+    expect(selected?.skillIds).not.toContain("tactics.knight-fork");
+  });
+  it("prefers an unfamiliar tactic over an immediate replay", () => {
+    const now=new Date("2026-10-12T12:00:00Z");
+    const old=seedPuzzles[0], fresh=seedPuzzles[5];
+    const selected=selectPuzzle([old,fresh],{
+      skillId:"tactics.knight-fork",mastery:30,activityDifficulty:2,mixed:true,
+      history:{[old.id]:{puzzleId:old.id,attempts:1,successes:1,
+        lastAttemptAt:now.toISOString(),lastQuality:1,hintsUsed:0,
+        wrongAttempts:0,lastIndependent:true,
+        nextReviewAt:new Date(now.getTime()+86_400_000).toISOString()}},
+    },now);
+    expect(selected?.id).toBe(fresh.id);
+  });
+});
