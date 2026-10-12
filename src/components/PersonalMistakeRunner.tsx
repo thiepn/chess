@@ -12,7 +12,7 @@ interface PersonalMistakeRunnerProps {
   mistake: PersonalMistake;
   /** Account-scoped key; never use the previous account's unsent attempt. */
   storageOwner: string;
-  onComplete: (outcome: TrainingOutcome) => void;
+  onComplete: (outcome: TrainingOutcome) => boolean | void;
 }
 interface PracticeDraft {
   owner: string;
@@ -112,7 +112,7 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
     if (completing.current || !finished || draft.owner !== storageOwner ||
         draft.fen !== mistake.positionFen || draft.bestMove !== mistake.bestMove) return;
     completing.current = true;
-    onComplete({
+    const accepted = onComplete({
       success:solved,quality:reviewAttemptQuality(solved,hintsUsed,wrongAttempts),
       hintsUsed,wrongAttempts,mistakeId:mistake.id,
       mistakePractice:{
@@ -120,8 +120,15 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
         triedMoves:[...triedMoves],
       },
     });
-    // Preserve the draft on rejected/aborted submissions; a verified parent
-    // transition will replace this training component after recording.
+    if (accepted === false) {
+      completing.current = false;
+      setFeedback("This game or Chess account changed. Your practice was not recorded.");
+      return;
+    }
+    // Remove only after the parent accepted the verified event; replaying an
+    // old finished tab draft must never count the same action again.
+    try { sessionStorage.removeItem(draftKey(storageOwner,mistake.id)); }
+    catch { /* A blocked storage backend cannot be claimed as durable. */ }
   }
 
   return (
