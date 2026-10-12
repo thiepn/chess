@@ -193,7 +193,7 @@ describe("P92 authored second-transfer content and corrected alternatives", () =
     const target = deep.find(item => item.challenge!.acceptedMoves.length > 1)!;
     const rewrite = (change: Record<string,unknown>) => ({
       ...transferContent,items:transferContent.items.map(item =>
-        item.skillId === target.skillId ? {...item,challenge:{...item.challenge!,...change}} : item),
+        item.skillId === target.skillId ? {...item,challenge:{...target.challenge!,...change}} : item),
     });
     expect(() => validateTransferCatalog(rewrite({acceptedMoves:["a1a1"]}))).toThrow();
     expect(() => validateTransferCatalog(rewrite({acceptedMoves:[target.challenge!.acceptedMoves[0],
