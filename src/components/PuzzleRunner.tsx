@@ -12,7 +12,6 @@ import { loadPuzzlesForSkill } from "../puzzles/repository";
 import {
   humanPuzzleTheme,
   puzzleExplanation,
-  puzzleSolutionSan,
   loadPuzzleCoaching,
 } from "../puzzles/explanations";
 import { selectPuzzle } from "../puzzles/selector";
@@ -146,10 +145,6 @@ export function PuzzleRunner({
   const explanation = useMemo(
     () => (puzzle ? puzzleExplanation(puzzle,motifAdvice) : null),
     [puzzle,motifAdvice],
-  );
-  const solutionSan = useMemo(
-    () => (puzzle ? puzzleSolutionSan(puzzle) : []),
-    [puzzle],
   );
 
   const verifiedLine=useMemo(()=>puzzle?legalPuzzleLine(puzzle):null,[puzzle]);
@@ -424,8 +419,8 @@ export function PuzzleRunner({
                     <div className="puzzle-solution-line">
                       <span>Solution</span>
                       <strong>
-                        {solutionSan.length
-                          ? solutionSan.join("  ")
+                        {verifiedLine?.length
+                          ? verifiedLine.join("  ")
                           : puzzle.solutionMoves.join("  ")}
                       </strong>
                     </div>
