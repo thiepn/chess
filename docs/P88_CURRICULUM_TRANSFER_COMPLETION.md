@@ -5,7 +5,7 @@
 ## Source-first product work
 - Existing authored lessons: 86. Existing curated distinct transfer seeds: 37. **P88 adds 49 original authored positions** with a question, a chess.js legal UCI move, an instructional explanation and skill-specific misconception feedback in `public/data/learning/transfer-v1.json`.
 - No historical/GM game or engine-certified unique-best-move claims. Authored candidate moves are curricular answers, **not proof every other legal move is objectively wrong**.
-- `src/learning/transferCompletion.ts` validates schema, complete/unique identities, valid FEN and legal move; refuses same model FEN and corrupt inputs; memoizes the successful load and retries failed loads.
+- `src/learning/transferCompletion.ts` validates schema and complete/unique identities on load, checks legal FEN/move and distinct model geometry before each learner-facing exercise, and retries failed loads. The dedicated curriculum unit audit independently validates legal moves across all 49 positions.
 - The existing `LessonRunner` injects a **separate real position** at the transfer step. It never presents the old repeated-position fallback as transfer if the file is missing. Escalating hints, actual board attempts, move-specific feedback and error handling reuse the existing native runner.
 - Mastery completion is separated from independent mastery. First-try, unaided novel-position transfer is required when transfer is present; assisted answers still receive practice/feedback, but never qualify as independently mastered.
 - Existing `applyEvidence` review scheduling and course mastery model remain authoritative. A lesson does **not** falsely credit delayed retention until a later practice supplies time-separated evidence.
