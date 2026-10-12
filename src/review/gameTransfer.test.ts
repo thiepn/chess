@@ -66,6 +66,19 @@ describe("P91 owner-authoritative saved-game learning missions",()=>{
      readiness:"emerging"});
    expect(read.readiness).not.toBe("reviewed"); // only one original game
  });
+ it("an intervening hinted return breaks the independently spaced chain",()=>{
+   const {game,mistake}=records("g-assisted");
+   const sample=(t:string,hintsUsed:number)=>
+     recordReviewAttempt([],mistake,game,{playedMove:"e2e4",triedMoves:["e2e4"],
+       succeeded:true,quality:1,hintsUsed,wrongAttempts:0},new Date(t))[0];
+   const attempts=[
+     sample("2026-10-09T12:00:00Z",0),
+     sample("2026-10-10T12:00:00Z",1),
+     sample("2026-10-12T12:00:00Z",0),
+   ];
+   const mission=gameTransferMissions([game],[mistake],attempts,now)[0];
+   expect(mission).toMatchObject({cleanReturns:2,assistedReturns:1,spacedCleanPairs:0});
+ });
  it("does not turn absent personal games into claims of chess strength",()=>{
    expect(gameTransferReadiness([])).toMatchObject({readiness:"no-game-evidence",
      qualifiedPositions:0,independentRecalls:0,spacedIndependentPairs:0});
