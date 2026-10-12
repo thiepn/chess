@@ -68,11 +68,17 @@ export function gameTransferMissions(
    const attempts=verifiedReviewAttempts(m,history,now);
    const independent=attempts.filter(a=>a.succeeded&&!a.hintsUsed&&!a.wrongAttempts);
    // A repeat within the same practice sitting is NOT time-separated recall.
-   let spacedCleanPairs=0,lastCleanAt=Number.NEGATIVE_INFINITY;
-   for(const event of independent){
+   let spacedCleanPairs=0,lastCleanAt:number|null=null;
+   for(const event of attempts){
+     // A hint, incorrect move or reveal resets the independence chain.
+     if(!event.succeeded||event.hintsUsed||event.wrongAttempts) {
+       lastCleanAt=null;continue;
+     }
      const at=Date.parse(event.occurredAt);
-     if(at-lastCleanAt>=86_400_000 && Number.isFinite(lastCleanAt))spacedCleanPairs++;
-     if(at-lastCleanAt>=86_400_000 || !Number.isFinite(lastCleanAt))lastCleanAt=at;
+     if(lastCleanAt!==null&&at-lastCleanAt>=86_400_000){
+       spacedCleanPairs++;lastCleanAt=at;
+     }else if(lastCleanAt===null)lastCleanAt=at;
+     // Short repeats are mere practice; they cannot reset the 24h clock.
    }
    const assisted=attempts.filter(a=>a.succeeded&&(a.hintsUsed>0||a.wrongAttempts>0));
    const missed=attempts.filter(a=>!a.succeeded);
