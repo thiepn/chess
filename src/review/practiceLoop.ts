@@ -74,7 +74,8 @@ type AttemptInput = Pick<RecordedReviewAttempt,
   "playedMove" | "triedMoves" | "succeeded" | "quality" | "hintsUsed" | "wrongAttempts">;
 
 function validateAttempt(mistake: PersonalMistake, input: AttemptInput): boolean {
-  if (!Array.isArray(input.triedMoves) || input.triedMoves.length > 40 ||
+  if (typeof input.succeeded !== "boolean" ||
+      !Array.isArray(input.triedMoves) || input.triedMoves.length > 40 ||
       input.triedMoves.some(m => !legalChoice(mistake.positionFen, m))) return false;
   if (input.playedMove !== null && !legalChoice(mistake.positionFen, input.playedMove)) return false;
   if (input.playedMove !== (input.triedMoves.at(-1) ?? null)) return false;
