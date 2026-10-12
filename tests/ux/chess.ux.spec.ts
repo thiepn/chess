@@ -876,3 +876,47 @@ test("P90 calculation and rook technique are genuine directly launchable mobile 
   await expect(page.getByText("Keep checking distance with a passer")).toBeVisible();
   await assertNoHorizontalOverflow(page,"P90 rook checks");
 });
+
+test("P91 source-qualified personal game mission navigates to blind, owner-scoped transfer",async ({page})=>{
+ const game=visualUserState.games?.[0];
+ if(!game)throw Error("Missing public synthetic visual fixture game");
+ const original=game.moves[2];
+ const mistake={
+   id:"p91-synthetic-strategic",gameId:game.id,ply:original.ply,
+   moveNumber:original.moveNumber,playerColor:"w" as const,
+   positionFen:original.beforeFen,actualMove:original.uci,actualSan:original.san,
+   bestMove:"f1c4",principalVariation:["f1c4","g8f6"],
+   evaluationBefore:25,evaluationAfter:-80,centipawnLoss:105,
+   severity:"mistake" as const,skillIds:["openings.development"],
+   explanation:"Bishop development could create a different kind of pressure.",
+   errorType:"strategic-plan" as const,
+   errorReason:"Compare knight pressure against the bishop's open diagonal.",
+   createdAt:FIXED_TIME,nextReviewAt:"2026-10-07T08:00:00Z",
+   attempts:0,successes:0,resolved:false,
+ };
+ // Install the synthetic current-owner fixture before app boot instead of
+ // racing an already mounted owner's asynchronous repository save on reload.
+ await page.addInitScript(state=>{
+   localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(state));
+ },{...visualUserState,mistakes:[mistake],reviewPracticeHistory:[]});
+ await open(page,"/review",".review-v2");
+ const missions=page.getByRole("region",{name:"Your game-to-training missions"});
+ await expect(missions).toBeVisible();
+ await expect(missions.getByText("STRATEGY",{exact:false})).toBeVisible();
+ await expect(missions.getByText("f1c4")).toHaveCount(0);
+ await expect(missions.getByText("Bc4")).toHaveCount(0);
+ await missions.getByRole("button",{name:"Train this position"}).click();
+ await expect(page.locator(".mistake-runner")).toBeVisible();
+ await expect(page.getByText("What was your plan",{exact:false})).toHaveCount(0);
+ await assertNoHorizontalOverflow(page,"P91 strategic transfer");
+});
+
+test("P91 endgame instructional content remains original, available on demand, and accessible",async ({page})=>{
+ await open(page,"/learn/endgames/endgames.rook-checks",".lesson-page-v2");
+ await page.getByRole("button",{name:"Practice positions"}).click();
+ await expect(page.locator(".endgame-runner")).toBeVisible();
+ await expect(page.getByRole("heading",{name:"Keep checking distance with a passer"})).toBeVisible();
+ await expect(page.getByText("What is the main danger when using the rook")).toBeVisible();
+ await expect(page.getByRole("button",{name:"Keep the rook safely out of the enemy king"})).toBeVisible();
+ await assertNoHorizontalOverflow(page,"P91 retained endgame instruction");
+});

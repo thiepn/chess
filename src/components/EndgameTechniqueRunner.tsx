@@ -18,6 +18,7 @@ import {
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { scoreEndgameAttempt } from "../endgames/scoring";
 import {endgameRepairPlan} from "../endgames/diagnostics";
+import {loadEndgameGuidance} from "../endgames/guidance";
 import type {
   EndgameEvidence,
   EndgamePosition,
@@ -61,7 +62,37 @@ function outcomeFor(
   return "draw";
 }
 
-export function EndgameTechniqueRunner({
+export function EndgameTechniqueRunner(props:EndgameTechniqueRunnerProps) {
+  const [loaded,setLoaded]=useState<{id:string;guidance:Pick<EndgamePosition,
+    "recognitionOptions"|"processCues"|"successNote"|"failureNote">}|null>(null);
+  const [loadError,setLoadError]=useState(false);
+  const [retry,setRetry]=useState(0);
+  useEffect(()=>{
+    let cancelled=false;
+    setLoadError(false);
+    void loadEndgameGuidance().then(map=>{
+      if(cancelled)return;
+      const guidance=map.get(props.position.id);
+      if(!guidance || !guidance.recognitionOptions.some(o=>o.id===props.position.recognitionAnswer) ||
+        guidance.recognitionOptions.map(o=>o.id).join(",")!==
+          props.position.recognitionOptions.map(o=>o.id).join(",")) {
+        setLoadError(true);return;
+      }
+      setLoaded({id:props.position.id,guidance});
+    }).catch(()=>{if(!cancelled)setLoadError(true);});
+    return ()=>{cancelled=true;};
+  },[props.position.id,props.position.recognitionAnswer,retry]);
+  if(loaded?.id!==props.position.id)return <section className="endgame-runner" role="status">
+    <h2>{loadError?"Endgame instruction unavailable":"Preparing endgame technique"}</h2>
+    <p>{loadError?"Original instruction data could not be verified; no attempt has been recorded.":
+      "Loading the authored methods, explanations and process cues."}</p>
+    {loadError && <button type="button" onClick={()=>setRetry(n=>n+1)}>Retry endgame content</button>}
+  </section>;
+  return <EndgameTechniqueSession {...props} key={props.position.id}
+    position={{...props.position,...loaded.guidance}}/>;
+}
+
+function EndgameTechniqueSession({
   activity,
   skill,
   position,

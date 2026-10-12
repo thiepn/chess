@@ -345,7 +345,7 @@
   color: var(--chess-color-accent);
 }
 
-.review-v2-repair-list {
+:is(.review-v2-repair-list,.review-v2-transfer-list) {
   display: grid;
 }
 
@@ -897,7 +897,7 @@
     overflow: visible;
   }
 
-  .review-v2-repair-list {
+  :is(.review-v2-repair-list,.review-v2-transfer-list) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -999,7 +999,7 @@
     grid-column: auto;
   }
 
-  .review-v2-repair-list {
+  :is(.review-v2-repair-list,.review-v2-transfer-list) {
     display: flex;
     gap: 5px;
     overflow-x: auto;
@@ -1115,7 +1115,7 @@ html[data-motion="reduced"] .review-v2-repair-row button {
 }
 
 /* P81: chess-specific continuation instead of an analysis dead end. */
-.review-v2-first-step,
+:is(.review-v2-first-step,.review-v2-transfer-missions),
 .review-v2-next-actions {
   min-width: 0;
   padding: 18px 0;
@@ -1123,13 +1123,13 @@ html[data-motion="reduced"] .review-v2-repair-row button {
   border-bottom: 1px solid var(--chess-color-separator);
 }
 
-.review-v2-first-step h2 {
+:is(.review-v2-first-step,.review-v2-transfer-missions) h2 {
   margin: 6px 0 8px;
   font-size: clamp(1.15rem, 2vw, 1.45rem);
   line-height: 1.25;
 }
 
-.review-v2-first-step p,
+:is(.review-v2-first-step,.review-v2-transfer-missions) p,
 .review-v2-next-actions p:not(.eyebrow) {
   max-width: 52ch;
   margin: 0 0 15px;
