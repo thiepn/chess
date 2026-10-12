@@ -525,7 +525,7 @@ export function ReviewView({
                   <div>
                     <strong>{m.lane.toUpperCase()} · {m.gameLabel} · move {m.moveNumber}</strong>
                     <p>{m.question}</p>
-                    <small>Original move {m.actualSan} · {m.lineSan.length}-ply legally reconstructed continuation.
+                    <small>Original move {m.actualSan} · {m.lineLength}-ply legally reconstructed continuation.
                       The better move and opponent reply stay hidden until the attempt is complete.</small>
                     <small>{m.due?"Due":"Scheduled"} · {m.cleanReturns} independent,
                       {" "}{m.assistedReturns} assisted, {m.missedReturns} missed
