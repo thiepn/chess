@@ -86,7 +86,7 @@ export function summarizeLessonMastery(
       // demonstrated independent transfer. No retention is claimed until a
       // later scheduled attempt supplies separate delayed evidence.
       (transfer.length > 0
-        ? transferFirstTry > 0
+        ? transferFirstTry === transfer.length
         : independent.length >= 3) &&
       masteryQuality >= .62,
   };

@@ -1,45 +1,67 @@
 import { Chess } from "chess.js";
 import type { LessonScript, LessonStep } from "./types";
 
+export interface TransferChallenge {
+  fen: string;
+  acceptedMoves: string[];
+  prompt: string;
+  success: string;
+  misconception: string;
+  successByMove: Record<string, string>;
+  hints: string[];
+}
 export interface TransferExercise {
   skillId: string; fen: string; acceptedMove: string;
   prompt: string; success: string; misconception: string;
+  challenge?: TransferChallenge;
 }
 let cached: Promise<ReadonlyMap<string, TransferExercise>> | undefined;
 const fields = ["skillId","fen","acceptedMove","prompt","success","misconception"] as const;
 
-function legal(entry: TransferExercise): boolean {
-  if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(entry.acceptedMove)) return false;
-  const game = new Chess(entry.fen);
-  const {acceptedMove:move}=entry;
-  const played=game.move({from:move.slice(0,2),to:move.slice(2,4),promotion:move[4]||"q"});
-  return Boolean(played && (!played.promotion || move.endsWith(played.promotion)));
+function legal(fen: string, uci: string): boolean {
+  try {
+    return new Chess(fen).moves({verbose:true}).some(m =>
+      m.from + m.to + (m.promotion ?? "") === uci);
+  } catch { return false; }
 }
 
-function catalogIndex(raw: unknown): ReadonlyMap<string,TransferExercise> {
-  const data=raw as {schema?:string;items?:TransferExercise[]} | null;
-  if (data?.schema!=="thiepn.chess.transfer.v1" || data.items?.length!==49)
-    throw Error("Unexpected transfer catalog");
-  const result=new Map<string,TransferExercise>();
-  for(const item of data.items) {
-    if (!item || fields.some(field=>typeof item[field]!=="string" || !item[field].trim()) ||
-        result.has(item.skillId)) throw Error("Invalid authored transfer record");
-    result.set(item.skillId,item);
-  }
-  return result;
-}
-
-/** Full corpus qualification; runtime also checks each exercised move. */
+/** Qualify local author data before using it for scored attempts. */
 export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,TransferExercise> {
-  const data=catalogIndex(raw);
-  for(const entry of data.values())if(!legal(entry))throw Error("Illegal transfer response");
-  return data;
+  const source = raw as {schema?:string;items?:TransferExercise[]} | null;
+  if (source?.schema !== "thiepn.chess.transfer.v1" || source.items?.length !== 49)
+    throw Error("Unexpected transfer catalog");
+  const rows = new Map<string,TransferExercise>();
+  for (const item of source.items) {
+    if (!item || rows.has(item.skillId) ||
+      fields.some(k => typeof item[k] !== "string" || !item[k].trim()) ||
+      !legal(item.fen,item.acceptedMove))
+      throw Error("Invalid transfer record");
+    const c = item.challenge;
+    if (c) {
+      const moves = c.acceptedMoves;
+      if (typeof c.fen !== "string" || c.fen === item.fen ||
+        ![c.fen,c.prompt,c.success,c.misconception].every(x => typeof x === "string" && x.trim()) ||
+        !Array.isArray(c.hints) || c.hints.length !== 3 ||
+        c.hints.some(x => typeof x !== "string" || x.length < 15) ||
+        !Array.isArray(moves) || moves.length < 1 || moves.length > 3 ||
+        new Set(moves).size !== moves.length ||
+        !c.successByMove || Object.keys(c.successByMove).length !== moves.length ||
+        moves.some(m => !legal(c.fen,m) ||
+          typeof c.successByMove[m] !== "string" || c.successByMove[m].length < 35))
+        throw Error("Invalid authored second transfer");
+    }
+    rows.set(item.skillId,item);
+  }
+  return rows;
 }
 
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
-  if (entry.skillId!==lesson.skillId || entry.fen===lesson.steps[0]?.fen || !legal(entry))
+  if (entry.skillId!==lesson.skillId || entry.fen===lesson.steps[0]?.fen || !legal(entry.fen,entry.acceptedMove))
     throw new Error("Transfer position is not independently valid");
   const move=entry.acceptedMove;
+  if (entry.challenge && (entry.challenge.fen === lesson.steps[0]?.fen ||
+      entry.challenge.fen === entry.fen))
+    throw Error("Non-independent P92 position");
   const task:LessonStep={
     id:"transfer",type:"move",stage:"transfer",support:"transfer",
     eyebrow:"INDEPENDENT TRANSFER",title:"Solve a different position",
@@ -52,14 +74,27 @@ export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): 
       {text:`Examine the move from ${move.slice(0,2)} to ${move.slice(2,4)}.`},
     ],
   };
-  return {...lesson,steps:lesson.steps.map(step=>step.id==="transfer"?task:
-    step.id==="takeaway" && step.type==="explain" ?
-      {...step,fen:entry.fen,body:`${lesson.summary} ${entry.success} Revisit later without hints to demonstrate retention.`} : step)};
+  const extra: LessonStep | null = entry.challenge ? {
+    ...task,
+    id: "transfer-depth", eyebrow: "NEW POSITION", title: "Choose and justify a plan",
+    prompt: entry.challenge.prompt, fen: entry.challenge.fen,
+    acceptedMoves: entry.challenge.acceptedMoves,
+    successTitle: "Reasoned transfer completed",
+    successBody: entry.challenge.success,
+    successByMove: entry.challenge.successByMove,
+    misconceptionFeedback: entry.challenge.misconception,
+    hints: entry.challenge.hints.map(text => ({text})),
+  } : null;
+  return {...lesson, steps:lesson.steps.flatMap(step =>
+    step.id === "transfer" ? [task, ...(extra ? [extra] : [])] :
+    step.id === "takeaway" && step.type === "explain" ?
+      [{...step,fen:entry.challenge?.fen ?? entry.fen,
+        body:`${lesson.summary} ${entry.challenge?.success ?? entry.success} Revisit later without hints to demonstrate retention.`}] : [step])};
 }
 
 export function loadTransferCatalog(): Promise<ReadonlyMap<string,TransferExercise>> {
   return cached ??= fetch(`${import.meta.env.BASE_URL}data/learning/transfer-v1.json`)
     .then(response=>{if(!response.ok)throw Error("Missing transfer data");return response.json();})
-    .then(catalogIndex)
+    .then(validateTransferCatalog)
     .catch(error=>{cached=undefined;throw error;});
 }

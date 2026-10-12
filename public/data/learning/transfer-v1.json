@@ -96,7 +96,24 @@
       "acceptedMove": "c2c4",
       "prompt": "Trade the rooks on c4 and evaluate the king-and-pawn ending.",
       "success": "An equal exchange removes activity from both sides; compare the resulting position.",
-      "misconception": "Trading automatically is not enough; inspect what remains afterward."
+      "misconception": "Trading automatically is not enough; inspect what remains afterward.",
+      "challenge": {
+        "fen": "3r2k1/pp3ppp/8/7Q/8/8/PP3PPP/3R2K1 w - - 0 1",
+        "acceptedMoves": [
+          "d1d8"
+        ],
+        "prompt": "You have an extra queen. Trade the enemy's active rook before pursuing a speculative attack.",
+        "success": "A rook exchange removes counterplay and keeps the extra queen. Calculate the material remaining after the trade.",
+        "misconception": "Not every trade is good; compare material remaining on the board. Here a rook-for-rook exchange preserves a decisive queen advantage.",
+        "successByMove": {
+          "d1d8": "Rxd8+ removes Black's rook while you retain the extra queen. Simplifying is a practical way to convert a clear advantage."
+        },
+        "hints": [
+          "Count what each side owns after the exchange.",
+          "Both rooks face one another along the open d-file.",
+          "Exchanging the rooks leaves the extra queen on your side."
+        ]
+      }
     },
     {
       "skillId": "openings.principles",
@@ -104,7 +121,26 @@
       "acceptedMove": "d2d4",
       "prompt": "Develop the position by challenging Black’s central pawn with d4.",
       "success": "A central pawn advance claims space while creating concrete contact with e5.",
-      "misconception": "Do not copy the model’s e-pawn move when the e-pawn has already advanced."
+      "misconception": "Do not copy the model’s e-pawn move when the e-pawn has already advanced.",
+      "challenge": {
+        "fen": "rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+        "acceptedMoves": [
+          "b1c3",
+          "g1f3"
+        ],
+        "prompt": "In a Queen's Gambit Declined structure, improve a knight to influence the center; justify the plan.",
+        "success": "Both Nc3 and Nf3 develop and increase central influence; they differ in which knight is committed first.",
+        "misconception": "Principles are not unique-move rules. Multiple developing moves are playable, but they lead to different move orders and potential structures.",
+        "successByMove": {
+          "b1c3": "Nc3 increases central pressure on d5 and develops the queenside knight. Consider how this affects the later e4 break.",
+          "g1f3": "Nf3 develops toward the center, protects d4 and supports future kingside castling while keeping the b1-knight flexible."
+        },
+        "hints": [
+          "Evaluate development and control of d4/e4.",
+          "Both knights are still on their home squares.",
+          "Choose a knight move and explain the square it newly influences."
+        ]
+      }
     },
     {
       "skillId": "openings.development",
@@ -112,7 +148,26 @@
       "acceptedMove": "b1c3",
       "prompt": "Develop a new minor piece toward the center.",
       "success": "Nc3 increases central control without making unnecessary queen moves.",
-      "misconception": "Re-moving the already developed pawn does not develop a new piece."
+      "misconception": "Re-moving the already developed pawn does not develop a new piece.",
+      "challenge": {
+        "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "acceptedMoves": [
+          "f1c4",
+          "f1b5"
+        ],
+        "prompt": "After 1.e4 e5 2.Nf3 Nc6, develop the bishop from f1 without a queen sortie.",
+        "success": "Bc4 develops toward f7; Bb5 pressures the c6 knight that supports e5. Both prepare castling.",
+        "misconception": "Do not confuse bishop development with a forced attack. Different sound bishop squares lead to different strategic plans.",
+        "successByMove": {
+          "f1c4": "Bc4 enters Italian-game structures and eyes f7; prepare central development, not an imaginary immediate mate.",
+          "f1b5": "Bb5 develops in Ruy Lopez fashion and adds positional pressure on the c6 knight; this is not a free capture."
+        },
+        "hints": [
+          "Which undeveloped bishop can leave its home square?",
+          "Moving the e-pawn cleared a diagonal for your kingside bishop.",
+          "Think of the Italian and Ruy Lopez as different sound plans."
+        ]
+      }
     },
     {
       "skillId": "openings.center",
@@ -120,7 +175,26 @@
       "acceptedMove": "d2d4",
       "prompt": "Use the d-pawn to challenge the center rather than moving a wing pawn.",
       "success": "Central contact matters more than memorizing the model position.",
-      "misconception": "A wing-pawn advance does not contest the e5 pawn immediately."
+      "misconception": "A wing-pawn advance does not contest the e5 pawn immediately.",
+      "challenge": {
+        "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+        "acceptedMoves": [
+          "e7e5",
+          "c7c5"
+        ],
+        "prompt": "White opened with e4. Challenge the center using direct occupation or pressure on d4.",
+        "success": "...e5 mirrors central occupation; ...c5 creates Sicilian asymmetry and targets d4. Neither is a tactical refutation.",
+        "misconception": "Central play is not restricted to occupying e5; flank pressure on d4 can serve a central purpose.",
+        "successByMove": {
+          "e7e5": "...e5 directly occupies the center and frees Black's king bishop, usually leading to open-game development.",
+          "c7c5": "...c5 attacks the d4-square and creates asymmetry; expect a different pawn structure and concrete theory."
+        },
+        "hints": [
+          "Consider both direct occupation and indirect pressure.",
+          "Which pawn can step onto e5 or influence d4?",
+          "Both e- and c-pawn moves have established central aims."
+        ]
+      }
     },
     {
       "skillId": "openings.king-safety",
@@ -128,7 +202,24 @@
       "acceptedMove": "e1g1",
       "prompt": "Use the now-clear kingside path to castle.",
       "success": "Castling secures the king and connects the rook to play.",
-      "misconception": "The king is not safe simply because several pieces were developed."
+      "misconception": "The king is not safe simply because several pieces were developed.",
+      "challenge": {
+        "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+        "acceptedMoves": [
+          "e1g1"
+        ],
+        "prompt": "Complete king safety in this Italian structure before starting a speculative attack.",
+        "success": "O-O removes the king from the center and brings the h1-rook closer to action; verify the castling path first.",
+        "misconception": "Castling is not always legal or safe: here both transit squares are clear and unattacked.",
+        "successByMove": {
+          "e1g1": "O-O places the king on g1 and rook on f1; neither bishop nor knight blocks the route in this position."
+        },
+        "hints": [
+          "Check the king's starting, transit and arrival squares.",
+          "The white bishop and knight have already left f1 and g1.",
+          "Move the king two squares toward the rook."
+        ]
+      }
     },
     {
       "skillId": "openings.queen-timing",
@@ -136,7 +227,26 @@
       "acceptedMove": "b1c3",
       "prompt": "Develop the remaining queenside knight instead of moving the queen repeatedly.",
       "success": "Completing piece development avoids donating free tempi to the opponent.",
-      "misconception": "Early queen wandering creates targets for developing moves."
+      "misconception": "Early queen wandering creates targets for developing moves.",
+      "challenge": {
+        "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 3",
+        "acceptedMoves": [
+          "g1f3",
+          "f1c4"
+        ],
+        "prompt": "Continue activating minor pieces instead of repeatedly moving the queen in the opening.",
+        "success": "Nf3 fights for e5 and helps castling; Bc4 occupies an active diagonal. Both conserve tempi.",
+        "misconception": "Early queen moves may be playable, but premature queen trips can give the opponent free developing attacks.",
+        "successByMove": {
+          "g1f3": "Nf3 develops a knight, increases central control and prepares king safety without exposing the queen.",
+          "f1c4": "Bc4 develops along the f7 diagonal; it is positional pressure, not an automatic mating attack."
+        },
+        "hints": [
+          "Which pieces are still on their starting squares?",
+          "The king's knight or bishop can join central play.",
+          "Choose a minor-piece development that does not require moving the queen."
+        ]
+      }
     },
     {
       "skillId": "openings.tempo",
@@ -144,7 +254,26 @@
       "acceptedMove": "g1f3",
       "prompt": "Develop the knight with a move that also influences e5.",
       "success": "A useful tempo improves your own piece while applying pressure.",
-      "misconception": "Repeated moves with the same piece often waste opening time."
+      "misconception": "Repeated moves with the same piece often waste opening time.",
+      "challenge": {
+        "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+        "acceptedMoves": [
+          "g1f3",
+          "b1c3"
+        ],
+        "prompt": "After 1.e4 c5, develop with a coherent Sicilian plan instead of losing time with your queen.",
+        "success": "Nf3 often prepares the Open Sicilian d4 break; Nc3 can support a Closed Sicilian setup.",
+        "misconception": "A good developing move is not necessarily unique. Its value depends on the central break and pawn structure it serves.",
+        "successByMove": {
+          "g1f3": "Nf3 develops and usually supports d4 for Open Sicilian play; determine the timing of that break.",
+          "b1c3": "Nc3 develops while keeping d4 flexible, enabling Closed Sicilian setups. The subsequent piece placement changes."
+        },
+        "hints": [
+          "Identify your intended pawn break.",
+          "Both knights can develop without abandoning e4.",
+          "Compare an Open Sicilian Nf3 plan with a Closed Sicilian Nc3 plan."
+        ]
+      }
     },
     {
       "skillId": "strategy.piece-activity",
@@ -152,7 +281,24 @@
       "acceptedMove": "c1d3",
       "prompt": "Activate the undeveloped knight toward central squares.",
       "success": "Nd3 improves reach compared with leaving the knight on the edge of activity.",
-      "misconception": "A piece can be safe but ineffective if it controls no useful squares."
+      "misconception": "A piece can be safe but ineffective if it controls no useful squares.",
+      "challenge": {
+        "fen": "r5kr/pp3ppp/8/8/8/8/PP3PPP/R5K1 w - - 0 1",
+        "acceptedMoves": [
+          "a1d1"
+        ],
+        "prompt": "Use the empty central file to improve your rook instead of advancing a random flank pawn.",
+        "success": "Rd1 gives the rook a useful open-file role. Activity means access to squares and potential targets, not movement for its own sake.",
+        "misconception": "An open file is an opportunity rather than an automatic win; check which entry squares or targets can be reached.",
+        "successByMove": {
+          "a1d1": "Rd1 moves the rook from a1 to the open d-file, preparing useful central access without claiming immediate material."
+        },
+        "hints": [
+          "Find the file without any pawn.",
+          "No piece blocks the first-rank path from a1 to d1.",
+          "Bring the a1-rook to d1."
+        ]
+      }
     },
     {
       "skillId": "strategy.worst-piece",
@@ -160,7 +306,26 @@
       "acceptedMove": "c1e2",
       "prompt": "Improve the least active knight while preserving the pawn.",
       "success": "Moving the idle knight is more productive than moving the active king without purpose.",
-      "misconception": "Fix the worst piece rather than making the best piece even better."
+      "misconception": "Fix the worst piece rather than making the best piece even better.",
+      "challenge": {
+        "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2",
+        "acceptedMoves": [
+          "g1f3",
+          "b1c3"
+        ],
+        "prompt": "Improve an undeveloped knight after 1.e4 c5; choose between Open and Closed Sicilian plans.",
+        "success": "Both knights are undeveloped. Nf3 and Nc3 both improve your position, but their follow-up plans differ.",
+        "misconception": "The worst piece is not a fixed square. Focus on mobility, threats and the intended pawn structure before selecting a route.",
+        "successByMove": {
+          "g1f3": "Nf3 develops actively and often prepares the d4 break in an Open Sicilian.",
+          "b1c3": "Nc3 develops and keeps the d-pawn flexible, commonly favoring a Closed Sicilian structure."
+        },
+        "hints": [
+          "Look for pieces still at home.",
+          "Two knights have sensible centralizing squares.",
+          "Choose a route that matches the structure you intend to play."
+        ]
+      }
     },
     {
       "skillId": "tactics.skewer",
@@ -216,7 +381,24 @@
       "acceptedMove": "d2d4",
       "prompt": "Choose the central pawn break before another routine developing move.",
       "success": "Opening the center now changes the sequence of forcing responses.",
-      "misconception": "Check forcing moves and captures before deciding an opening move order."
+      "misconception": "Check forcing moves and captures before deciding an opening move order.",
+      "challenge": {
+        "fen": "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "f5d6"
+        ],
+        "prompt": "Down a queen, calculate checks first. Find the drawing resource and verify the recapture after ...Kd8.",
+        "success": "Nd6+ forks king and queen; after ...Kd8 Nxc8 Kxc8, the board has bare kings and is a draw. Never stop calculation at 'wins queen'.",
+        "misconception": "Tactical success depends on the entire forced sequence. A queen capture does not win if the opponent's king recaptures your final knight.",
+        "successByMove": {
+          "f5d6": "Nd6+ is a drawing fork, not a material win: ...Kd8 Nxc8 Kxc8 leaves bare kings."
+        },
+        "hints": [
+          "Calculate every check and reply.",
+          "The knight can fork the king on e8 and queen on c8.",
+          "After ...Kd8 Nxc8, see whether Black's king recaptures."
+        ]
+      }
     },
     {
       "skillId": "strategy.open-files",
@@ -224,7 +406,24 @@
       "acceptedMove": "b1b8",
       "prompt": "Penetrate with the rook on the open b-file.",
       "success": "Rb8+ uses an uncontested file and the eighth rank to create a threat.",
-      "misconception": "A rook cannot penetrate through its own pawn chain."
+      "misconception": "A rook cannot penetrate through its own pawn chain.",
+      "challenge": {
+        "fen": "6kr/pp3ppp/8/8/8/8/PP3PPP/R5K1 w - - 0 1",
+        "acceptedMoves": [
+          "a1d1"
+        ],
+        "prompt": "Both d-pawns are absent. Claim the open file for future rook activity.",
+        "success": "Rd1 centralizes the rook on an unblocked file and improves its access to Black's camp.",
+        "misconception": "Occupying an open file is not proof of a forced gain. The advantage depends on entry squares and future piece coordination.",
+        "successByMove": {
+          "a1d1": "Rd1 puts the rook on the open d-file. Next evaluate where it may penetrate and what Black can contest."
+        },
+        "hints": [
+          "Find a file without pawns.",
+          "The d-file is clear from d1 to d8.",
+          "The a1 rook can cross b1 and c1 to d1."
+        ]
+      }
     },
     {
       "skillId": "strategy.outposts",
@@ -232,7 +431,24 @@
       "acceptedMove": "d5c7",
       "prompt": "Use the stable knight post to jump toward Black’s king.",
       "success": "Nc7+ exploits the knight’s central placement and creates a concrete threat.",
-      "misconception": "An outpost matters only if it supports useful future operations."
+      "misconception": "An outpost matters only if it supports useful future operations.",
+      "challenge": {
+        "fen": "6k1/pp3ppp/8/8/4P3/2N5/PP3PPP/6K1 w - - 0 1",
+        "acceptedMoves": [
+          "c3d5"
+        ],
+        "prompt": "Improve the knight onto a protected central outpost Black cannot readily chase with a pawn.",
+        "success": "Nd5 is protected by the e4 pawn; Black has no c- or e-pawn to drive it away from that square.",
+        "misconception": "An advanced knight is not necessarily an outpost. Check whether an enemy pawn can challenge its destination.",
+        "successByMove": {
+          "c3d5": "Nd5 takes the central outpost supported by e4; Black may seek an exchange of pieces but lacks a pawn challenge."
+        },
+        "hints": [
+          "Look for a square defended by your e-pawn.",
+          "There is no black c- or e-pawn to attack d5.",
+          "Jump from c3 to d5."
+        ]
+      }
     },
     {
       "skillId": "pawns.breaks",
@@ -240,7 +456,24 @@
       "acceptedMove": "e4e5",
       "prompt": "Advance the e-pawn to confront Black’s locked center.",
       "success": "e5 changes the pawn contact and challenges the fixed d5 structure.",
-      "misconception": "A pawn break must change contact with the opponent’s pawns."
+      "misconception": "A pawn break must change contact with the opponent’s pawns.",
+      "challenge": {
+        "fen": "6k1/pp3ppp/4p3/3p4/2PP4/8/PP3PPP/6K1 w - - 0 1",
+        "acceptedMoves": [
+          "c4d5"
+        ],
+        "prompt": "Open the center by exchanging the c-pawn for Black's d-pawn; calculate the recapture.",
+        "success": "cxd5 opens the c-file, but ...exd5 can restore a black pawn on d5. Evaluate the structure, not an imaginary material win.",
+        "misconception": "A central capture is a structural decision. A pawn break often changes open files and weak squares without gaining material.",
+        "successByMove": {
+          "c4d5": "cxd5 clears the c-file and forces Black to consider ...exd5. Study the resulting pawn chain before judging the trade."
+        },
+        "hints": [
+          "Find central pawn contact.",
+          "White's c4 pawn attacks d5.",
+          "Check Black's e6-pawn recapture after cxd5."
+        ]
+      }
     },
     {
       "skillId": "pawns.weaknesses",
@@ -248,7 +481,24 @@
       "acceptedMove": "e1d2",
       "prompt": "Bring the king toward the fixed isolated pawn on d7.",
       "success": "King activation targets a pawn that cannot retreat.",
-      "misconception": "Do not chase a target with only one piece while abandoning king activity."
+      "misconception": "Do not chase a target with only one piece while abandoning king activity.",
+      "challenge": {
+        "fen": "6k1/p4ppp/8/3p4/8/8/P4PPP/R5K1 w - - 0 1",
+        "acceptedMoves": [
+          "a1d1"
+        ],
+        "prompt": "Black's d5-pawn has no c- or e-pawn partner. Apply long-range pressure with your rook.",
+        "success": "Rd1 puts pressure on the isolated pawn. It is a starting plan, not an immediately forced pawn win.",
+        "misconception": "A weakness can be defended. Do not claim that attacking an isolated pawn automatically wins it; build pressure and calculate defenses.",
+        "successByMove": {
+          "a1d1": "Rd1 attacks the isolated d5-pawn down an open file and gives White a clear strategic target."
+        },
+        "hints": [
+          "Identify the isolated pawn.",
+          "The d-file has no blocking pawn in front of your rook.",
+          "Place the rook on d1 to pressure the target."
+        ]
+      }
     },
     {
       "skillId": "attack.king-safety",
@@ -296,7 +546,26 @@
       "acceptedMove": "h2h3",
       "prompt": "Consider h3 as preventive space against a future bishop pin.",
       "success": "A prophylactic pawn move can ask a developing bishop to declare its intentions.",
-      "misconception": "Prophylaxis only helps if the opponent really has a relevant idea."
+      "misconception": "Prophylaxis only helps if the opponent really has a relevant idea.",
+      "challenge": {
+        "fen": "6k1/pp3ppp/2n5/8/8/8/PPP2PPP/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "a2a3",
+          "c2c3"
+        ],
+        "prompt": "The knight on c6 could jump to b4, hitting c2. Use a pawn move to discourage ...Nb4.",
+        "success": "a3 guards b4 without moving the c-pawn; c3 also controls b4 and moves the pawn from c2. Both have structural costs.",
+        "misconception": "Prophylaxis requires a concrete threat. Here the point is ...Nb4; choose which pawn commitment suits the rest of your position.",
+        "successByMove": {
+          "a2a3": "a3 controls b4 with the a-pawn while retaining c2, at the cost of a move.",
+          "c2c3": "c3 controls b4 and removes the pawn target from c2, but restricts the c3-square for your own pieces."
+        },
+        "hints": [
+          "Visualize the knight after ...Nb4.",
+          "From b4 it would attack the c2-pawn.",
+          "Either a- or c-pawn can guard b4."
+        ]
+      }
     },
     {
       "skillId": "defense.exchange-attackers",
@@ -368,7 +637,26 @@
       "acceptedMove": "b1c3",
       "prompt": "Select a workable plan: develop a new piece to influence the center.",
       "success": "Nc3 is a concrete improvement rather than a vague aspiration.",
-      "misconception": "A plan should identify an actual improving move."
+      "misconception": "A plan should identify an actual improving move.",
+      "challenge": {
+        "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+        "acceptedMoves": [
+          "d2d3",
+          "c2c3"
+        ],
+        "prompt": "In this Italian position, prepare a sensible central plan with one quiet pawn move.",
+        "success": "d3 reinforces e4 and favors a restrained setup; c3 supports the later d4 break. Both need further development and king safety.",
+        "misconception": "A single quiet pawn push is not an entire plan. Explain the follow-up and calculate Black's response before starting a central break.",
+        "successByMove": {
+          "d2d3": "d3 supports e4 and creates a measured Italian structure. Prepare castling and later central play.",
+          "c2c3": "c3 prepares the later d4 pawn advance. Complete development and calculate whether Black can strike centrally."
+        },
+        "hints": [
+          "Ask what central pawn advance you want next.",
+          "Supporting e4 and preparing d4 are both legitimate aims.",
+          "Consider either d3 or c3, with distinct follow-up plans."
+        ]
+      }
     },
     {
       "skillId": "practical.transition",
