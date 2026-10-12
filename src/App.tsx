@@ -41,7 +41,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
-import { legalReviewMistake, recordReviewAttempt } from "./review/practiceLoop";
+import { legalReviewMistake, recordReviewAttempt, scheduleVerifiedReview } from "./review/practiceLoop";
 import type { GameReviewReflection, ImportedGame, PersonalMistake } from "./games/types";
 
 import { openingNodes, repertoireById } from "./openings/repertoire";
@@ -413,6 +413,7 @@ export default function App() {
     };
   })();
   const active = routePracticeActivity ?? manualActivity ?? sessionActivity;
+  const activeOwner = repo.getProfileId();
   const activeSkill = active ? skillById[active.skillIds[0]] : null;
   const activeMistake = active?.mistakeId
     ? state.mistakes?.find((mistake) => {
@@ -931,10 +932,29 @@ export default function App() {
     }
   }
 
-  function completeActivity(outcome: TrainingOutcome) {
-    if (!active || !activeSkill) return;
+  function completeActivity(incoming: TrainingOutcome) {
+    if (!active || !activeSkill || !loaded) return;
+    const completionOwner = repo.getProfileId();
     const skillId = activeSkill.id;
     const occurredAt = new Date().toISOString();
+    let outcome = incoming;
+    // Source-verification must precede ALL progress, feedback and analytics.
+    if (active.activityType === "personalMistake") {
+      if (!active.mistakeId || incoming.mistakeId !== active.mistakeId ||
+          !incoming.mistakePractice) return;
+      const mistake = state.mistakes?.find(m => m.id === active.mistakeId);
+      const game = state.games?.find(g => g.id === mistake?.gameId);
+      if (!mistake || !game) return;
+      const recorded = recordReviewAttempt([], mistake, game, {
+        playedMove:incoming.mistakePractice.playedMove,
+        triedMoves:incoming.mistakePractice.triedMoves,
+        succeeded:incoming.success,quality:incoming.quality,
+        hintsUsed:incoming.hintsUsed,wrongAttempts:incoming.wrongAttempts,
+      },new Date(occurredAt))[0];
+      if (!recorded) return;
+      outcome = {...incoming,success:recorded.succeeded,quality:recorded.quality,
+        hintsUsed:recorded.hintsUsed,wrongAttempts:recorded.wrongAttempts};
+    }
     const source: LearningEvidence["source"] =
       active.activityType === "calculation"
         ? "calculation"
@@ -1003,6 +1023,7 @@ export default function App() {
     });
 
     setState((previous) => {
+      if (repo.getProfileId() !== completionOwner) return previous;
       const previousMastery =
         previous.mastery[skillId] ??
         emptyMastery(skillId, Math.min(1, activeSkill.difficulty / 5));
@@ -1095,31 +1116,34 @@ export default function App() {
       if (outcome.mistakeId && outcome.mistakePractice) {
         const verifiedMistake = mistakes.find(m => m.id === outcome.mistakeId);
         const verifiedGame = (previous.games ?? []).find(g => g.id === verifiedMistake?.gameId);
-        if (verifiedMistake && verifiedGame) {
-          reviewPracticeHistory = recordReviewAttempt(
-            reviewPracticeHistory, verifiedMistake, verifiedGame,
-            {
-              playedMove: outcome.mistakePractice.playedMove,
-              triedMoves: outcome.mistakePractice.triedMoves,
-              succeeded: outcome.success,
-              quality: outcome.quality,
-              hintsUsed: outcome.hintsUsed,
-              wrongAttempts: outcome.wrongAttempts,
-            },
-            new Date(occurredAt),
-          );
-        }
+        if (!verifiedMistake || !verifiedGame) return previous;
+        const appended = recordReviewAttempt(
+          reviewPracticeHistory, verifiedMistake, verifiedGame,
+          {
+            playedMove: outcome.mistakePractice.playedMove,
+            triedMoves: outcome.mistakePractice.triedMoves,
+            succeeded: outcome.success,
+            quality: outcome.quality,
+            hintsUsed: outcome.hintsUsed,
+            wrongAttempts: outcome.wrongAttempts,
+          },
+          new Date(occurredAt),
+        );
+        // Bounded 200-entry histories keep their length when appending.
+        if (appended.at(-1) === reviewPracticeHistory.at(-1)) return previous;
+        reviewPracticeHistory = appended;
       }
 
       if (outcome.mistakeId) {
         mistakes = mistakes.map((mistake) => {
           if (mistake.id !== outcome.mistakeId) return mistake;
-
+          if (outcome.mistakePractice) {
+            return scheduleVerifiedReview(mistake,reviewPracticeHistory,new Date(occurredAt));
+          }
           const successes = mistake.successes + (outcome.success ? 1 : 0);
           const attempts = mistake.attempts + 1;
           const intervalDays = !outcome.success
             ? .25 : successes >= 3 ? 30 : successes >= 2 ? 7 : 1;
-
           return {
             ...mistake,
             attempts,
@@ -1310,7 +1334,7 @@ export default function App() {
     if (manualActivity || routePracticeActivity) {
       closeTrainingRuntime(routePracticeActivity && trainingReturnPath === "/train"
         ? "/review" : trainingReturnPath);
-      return;
+      return true;
     }
 
     if (activeIndex !== null && activeIndex < session.activities.length - 1) {
@@ -1318,6 +1342,7 @@ export default function App() {
     } else {
       closeTrainingRuntime("/train");
     }
+    return true;
   }
 
   function handleAnalyzedGame(game: ImportedGame, newMistakes: PersonalMistake[]) {
@@ -2740,10 +2765,13 @@ export default function App() {
                         />
                       ) : active.activityType === "personalMistake" && activeMistake ? (
                         <PersonalMistakeRunner
-                          key={`${repo.getProfileId()}:${activeMistake.id}:${activeMistake.positionFen}`}
+                          key={`${activeOwner}:${activeMistake.id}:${activeMistake.positionFen}:${activeMistake.bestMove}`}
                           mistake={activeMistake}
-                          storageOwner={repo.getProfileId()}
-                          onComplete={completeActivity}
+                          storageOwner={activeOwner}
+                          onComplete={result => {
+                            if (repo.getProfileId() !== activeOwner) return false;
+                            return completeActivity(result) === true;
+                          }}
                         />
                       ) : active.activityType === "calculation" &&
                       activeCalculationPosition ? (
