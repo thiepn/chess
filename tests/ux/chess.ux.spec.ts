@@ -727,7 +727,14 @@ test("P86 source-verified Review practice survives a same-owner reload and recor
   expect(history[0]).toMatchObject({
     mistakeId: mistake.id, gameId: original.id, ply: 3,
     triedMoves: ["g1f3", "f1c4"], succeeded: true, wrongAttempts: 1,
+    quality: .88, positionFen: source.beforeFen, bestMove: "f1c4",
   });
+  const calibrated = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state") || "{}").mistakes?.[0]
+  );
+  expect(calibrated).toMatchObject({attempts:1,successes:1,resolved:false});
+  expect(Date.parse(calibrated.nextReviewAt)-Date.parse(calibrated.lastAttemptAt))
+    .toBe(43_200_000); // A solved move after a wrong try is NOT clean recall.
   await assertNoHorizontalOverflow(page,"P86 review");
 });
 
@@ -755,4 +762,36 @@ test("P86 revealed answer is counted as a missed attempt, never as mastery", asy
   expect(saved.reviewPracticeHistory).toHaveLength(1);
   expect(saved.reviewPracticeHistory[0].succeeded).toBe(false);
   expect(saved.mistakes[0]).toMatchObject({attempts:1,successes:0,resolved:false});
+});
+
+test("P87 rejects an inconsistent solved tab draft after reload without creating progress", async ({page}) => {
+  const original=visualUserState.games![0];
+  const source=original.moves[2];
+  const mistake={
+    id:original.id+":3",gameId:original.id,ply:3,moveNumber:source.moveNumber,
+    playerColor:"w" as const,positionFen:source.beforeFen,
+    actualMove:source.uci,actualSan:source.san,bestMove:"f1c4",
+    principalVariation:["f1c4","g8f6"],evaluationBefore:30,
+    evaluationAfter:-120,centipawnLoss:150,severity:"mistake" as const,
+    skillIds:["openings.principles"],explanation:"Develop the bishop",
+    createdAt:FIXED_TIME,nextReviewAt:FIXED_TIME,attempts:0,successes:0,resolved:false,
+  };
+  await open(page,"/review",".review-v2");
+  await page.evaluate((state)=>
+    localStorage.setItem("thiepn.chess.user-state.v2.guest.state",JSON.stringify(state)),
+    {...visualUserState,mistakes:[mistake],reviewPracticeHistory:[]});
+  await page.reload();
+  await page.getByRole("button",{name:"Practice next priority"}).click();
+  await expect(page.locator(".mistake-runner")).toBeVisible();
+  await page.evaluate(({id,fen})=>{
+    sessionStorage.setItem("chess:review-practice-p86:guest:"+encodeURIComponent(id),
+      JSON.stringify({owner:"guest",mistakeId:id,fen,bestMove:"f1c4",
+        moves:["g1f3"],hint:false,solved:true,revealed:false}));
+  },{id:mistake.id,fen:mistake.positionFen});
+  await page.reload();
+  await expect(page.locator(".review-practice-context").first()).toContainText("0 attempted");
+  await expect(page.getByRole("button",{name:"Record practice"})).toHaveCount(0);
+  const saved=await page.evaluate(()=>
+    JSON.parse(localStorage.getItem("thiepn.chess.user-state.v2.guest.state") || "{}"));
+  expect(saved.reviewPracticeHistory ?? []).toHaveLength(0);
 });
