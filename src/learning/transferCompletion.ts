@@ -83,8 +83,8 @@ export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): 
     ],
   };
   const extra: LessonStep | null = entry.challenge ? {
-    id: "transfer-depth", type: "move", stage: "transfer", support: "transfer",
-    eyebrow: "SECOND INDEPENDENT POSITION", title: "Choose and justify a plan",
+    ...task,
+    id: "transfer-depth", eyebrow: "NEW POSITION", title: "Choose and justify a plan",
     prompt: entry.challenge.prompt, fen: entry.challenge.fen,
     acceptedMoves: entry.challenge.acceptedMoves,
     successTitle: "Reasoned transfer completed",
