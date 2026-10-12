@@ -10,6 +10,9 @@ export interface CalculationPosition {
   bestMove: string;
   principalVariation: string[];
   explanation: string;
+  /** Explanations of the legal authored reply and the next move; never engine-unique claims. */
+  replyReason?: string;
+  continuationReason?: string;
   source: "authored" | "personal-game";
   sourceLabel: string;
   difficulty: number;
