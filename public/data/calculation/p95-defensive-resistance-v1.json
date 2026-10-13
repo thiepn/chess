@@ -511,9 +511,9 @@
       "sourceLabel": "P95 · Blocks",
       "difficulty": 5,
       "prompt": "Qc8+ reaches the eighth rank from c2 while a rook can defend from e7. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
-      "replyReason": "...Re8 blocks the queen's line toward g8.",
+      "replyReason": "...Re8 blocks the queen's line toward g8. This blocks a direct queen attack on g8.",
       "continuationReason": "Qxe8+ trades the check for material and retains the initiative in this simple example.",
-      "explanation": "A block from the seventh rank: Qc8+ reaches the eighth rank from c2 while a rook can defend from e7. In the recorded continuation, ...Re8 blocks the queen's line toward g8. Your follow-up is important because Qxe8+ trades the check for material and retains the initiative in this simple example. Common mistaken calculation: If you inspect only king moves, you cannot understand why the rook from e7 matters. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "explanation": "A block from the seventh rank: Qc8+ reaches the eighth rank from c2 while a rook can defend from e7. In the recorded continuation, ...Re8 blocks the queen's line toward g8. This blocks a direct queen attack on g8. Your follow-up is important because Qxe8+ trades the check for material and retains the initiative in this simple example. Common mistaken calculation: If you inspect only king moves, you cannot understand why the rook from e7 matters. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
       "defensiveStudy": {
         "keyQuestion": "Qc8+ reaches the eighth rank from c2 while a rook can defend from e7.",
         "defenderIdea": "...Re8 blocks the queen's line toward g8.",
@@ -1409,7 +1409,7 @@
       "difficulty": 3,
       "prompt": "The queen on c1 can take the black rook invading c2. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
       "replyReason": "...Kf7 centralizes the defending king after the capture.",
-      "continuationReason": "Qc7+ checks along the seventh rank toward f7.",
+      "continuationReason": "Qc7+ checks along the seventh rank toward f7. This requires another king response.",
       "explanation": "Capture the rook on the c-file: The queen on c1 can take the black rook invading c2. In the recorded continuation, ...Kf7 centralizes the defending king after the capture. Your follow-up is important because Qc7+ checks along the seventh rank toward f7. Common mistaken calculation: Calling the second-rank rook permanently dangerous ignores the direct queen capture. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
       "defensiveStudy": {
         "keyQuestion": "The queen on c1 can take the black rook invading c2.",
