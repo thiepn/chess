@@ -42,10 +42,10 @@
               "a1a8",
               "g8h7",
               "a8a7",
-              "e7e8",
+              "h7g6",
               "a7e7"
             ],
-            "explanation": "After Ra8+ Black can play ...Re8, blocking a rook attack through the eighth rank. Rxe8+ removes the blocker but requires another rank check to continue activity. White's f-pawn survives the exchanges and changes the material tally."
+            "explanation": "Instead of an impossible ...Re8 exposing its king to a seventh-rank rook check, Black retreats ...Kg6. White can then play Rxe7, removing the rook that screened the king."
           },
           {
             "label": "Tempting candidate",
@@ -98,10 +98,10 @@
               "a1a8",
               "g8h7",
               "a8a7",
-              "e7e8",
+              "h7g6",
               "a7e7"
             ],
-            "explanation": "After Ra8+ Black can play ...Re8, blocking a rook attack through the eighth rank. Rxe8+ removes the blocker but requires another rank check to continue activity. Black retains an h-pawn; checks alone do not erase the remaining pawn race."
+            "explanation": "Instead of an impossible ...Re8 exposing its king to a seventh-rank rook check, Black retreats ...Kg6. White can then play Rxe7, removing the rook that screened the king."
           },
           {
             "label": "Tempting candidate",
@@ -154,10 +154,10 @@
               "c2c8",
               "g8h7",
               "c8c7",
-              "e7e8",
+              "h7g6",
               "c7e7"
             ],
-            "explanation": "Qc8+ crosses a long file and Black can either block with ...Re8 or let the king step away. Qxe8+ captures the interposing rook, but continuing checks should be evaluated after the king flees. White's f-pawn survives the exchanges and changes the material tally."
+            "explanation": "...Kg6 is a legal flight while the rook on e7 still blocks the queen's seventh-rank attack. Qxe7 then wins that rook; ...Re8 would expose the king and is illegal."
           },
           {
             "label": "Tempting candidate",
@@ -210,10 +210,10 @@
               "c2c8",
               "g8h7",
               "c8c7",
-              "e7e8",
+              "h7g6",
               "c7e7"
             ],
-            "explanation": "Qc8+ crosses a long file and Black can either block with ...Re8 or let the king step away. Qxe8+ captures the interposing rook, but continuing checks should be evaluated after the king flees. Black retains an h-pawn; checks alone do not erase the remaining pawn race."
+            "explanation": "...Kg6 is a legal flight while the rook on e7 still blocks the queen's seventh-rank attack. Qxe7 then wins that rook; ...Re8 would expose the king and is illegal."
           },
           {
             "label": "Tempting candidate",
@@ -376,21 +376,21 @@
             "label": "Alternate defender · 5 plies",
             "moves": [
               "d1d2",
-              "e8d7",
+              "e8f7",
               "d2d3",
-              "d7e6",
+              "f7e6",
               "d3e3"
             ],
-            "explanation": "The black pawn on d2 checks the king on e1. Rxd2 resolves the check and keeps the rook. After the pawn capture White retains a rook and an active checking plan against the king. White's f-pawn survives the exchanges and changes the material tally."
+            "explanation": "Black cannot enter d7 because the white rook on d2 attacks that square. ...Kf7 followed by Rd3, ...Ke6 and Re3+ offers a different checking plan."
           },
           {
             "label": "Tempting candidate",
             "moves": [
-              "e1f2",
+              "e1f1",
               "e8d7",
               "d1d2"
             ],
-            "explanation": "Planning an unrelated rook attack while in check is not legal; the advanced pawn must be handled. White's f-pawn survives the exchanges and changes the material tally."
+            "explanation": "Kf1 escapes the pawn check without capturing it. Black may play ...Kd7 while d2 still blocks the rook's file; Rxd2+ then removes the pawn, but loses a tempo."
           }
         ]
       }
@@ -432,12 +432,12 @@
             "label": "Alternate defender · 5 plies",
             "moves": [
               "d1d2",
-              "e8d7",
+              "e8f7",
               "d2d3",
-              "d7e6",
+              "f7e6",
               "d3e3"
             ],
-            "explanation": "The black pawn on d2 checks the king on e1. Rxd2 resolves the check and keeps the rook. After the pawn capture White retains a rook and an active checking plan against the king. Black retains an h-pawn; checks alone do not erase the remaining pawn race."
+            "explanation": "Black cannot enter d7 because the white rook on d2 attacks that square. ...Kf7 followed by Rd3, ...Ke6 and Re3+ offers a different checking plan."
           },
           {
             "label": "Tempting candidate",
@@ -554,11 +554,11 @@
           {
             "label": "Tempting candidate",
             "moves": [
-              "g1h2",
+              "g1f1",
               "e2e1",
               "d1e1"
             ],
-            "explanation": "A passive king move allows ...Re1; evaluate the king flight and forced rook exchange instead. Black retains an h-pawn; checks alone do not erase the remaining pawn race."
+            "explanation": "Kf1 allows ...Re1+; Rxe1 answers the check. This alternative is slower than the forcing rank-eight capture and can be assessed separately."
           }
         ]
       }
