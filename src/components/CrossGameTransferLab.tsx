@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Eye, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { ChessBoard } from "./ChessBoard";
 import {
   emptyMasterDraft, masterDraftKey, restoreMasterDrafts,
@@ -15,6 +15,9 @@ interface Props {
   owner: string;
   onOpenPosition: (gameId: string, checkpointId: string) => void;
 }
+const CounterfactualLab = lazy(() => import("./CounterfactualLab").then((mod) => ({
+  default: mod.CounterfactualLab,
+})));
 const LENGTH = 1200;
 export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [cases, setCases] = useState<TransferCaseStudy[] | null>(null);
@@ -25,6 +28,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [restoredOwner, setRestoredOwner] = useState("");
   const [showHint, setShowHint] = useState(0);
   const [shownMoves, setShownMoves] = useState<[boolean, boolean]>([false, false]);
+  const [counterfactualOpen, setCounterfactualOpen] = useState(false);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -120,7 +124,15 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
             <h3>{active.source.title}</h3>
             <p>{active.source.comparePrompt}</p>
           </header>
-          <div className="p114-board-pair">
+          <div className="p115-entry">
+            <div><strong>P115 · Independent candidate and defender rehearsal</strong>
+              <p>Play both sides of an original strategic problem, inspect actual legal consequences, and compare with the recorded continuation only after revealing the P114 model.</p></div>
+            <button type="button" className="secondary" aria-expanded={counterfactualOpen}
+              onClick={() => setCounterfactualOpen((open) => !open)}>
+              {counterfactualOpen ? "Return to side-by-side sources" : "Rehearse legal candidates"}
+            </button>
+          </div>
+          {!counterfactualOpen && <div className="p114-board-pair">
             {([active.first, active.second] as const).map((pin, index) => {
               const source = index === 0 ? active.source.first : active.source.second;
               return <article className="p114-source-position" key={source.gameId}>
@@ -147,7 +159,11 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                 </div>}
               </article>;
             })}
-          </div>
+          </div>}
+          {counterfactualOpen && <Suspense fallback={<p role="status">Opening the chess variation workshop…</p>}>
+            <CounterfactualLab studies={cases} active={active} draft={draft}
+              onChange={edit} onOpenPosition={onOpenPosition}/>
+          </Suspense>}
           <div className="p114-writing">
             <h4>1 · Decide independently</h4>
             <label htmlFor="p114-compare">Which details require a different plan?</label>

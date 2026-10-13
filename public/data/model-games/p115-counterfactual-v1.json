@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "source": "p114-transfer-cases-v1.json",
+  "authority": "Original prompts; existing source-pinned PGNs; legal counterfactual branches only; no engine evaluation.",
+  "challenges": [
+    {
+      "id": "two-f5-different-centers",
+      "first": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-2",
+        "ply": 27
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-2",
+        "ply": 23
+      },
+      "firstChallenge": "On Steinitz–Sellman, choose a legal black candidate that addresses White's advanced center without copying a generic French Defence rule. After your move, play White's most inconvenient legal reply.",
+      "secondChallenge": "On Tarrasch–Von Scheve, choose a legal black candidate while checking whether White's bishops can exploit the kingside. Play the opponent's reply before choosing Black's next move.",
+      "revision": "Compare the central pawns, the e5 square and the respective kings after your alternative lines. A pawn move with identical SAN does not imply identical pawn structure or strength.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "castle-or-claim-space",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-1",
+        "ply": 15
+      },
+      "second": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-1",
+        "ply": 13
+      },
+      "firstChallenge": "From Réti–Alekhine, consider king safety before activating a flank pawn. Test a legal black candidate and let White question the center.",
+      "secondChallenge": "From Steinitz–Sellman, examine whether a queenside pawn advance or development better meets White's central pressure. Play White's most active response.",
+      "revision": "Explain why castling changes rook activity while a queenside pawn advance changes squares but not king safety. Do not assume one is universally preferable.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "bishop-retreat-versus-knight-route",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-2",
+        "ply": 22
+      },
+      "second": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-3",
+        "ply": 47
+      },
+      "firstChallenge": "From Capablanca–Golombek, choose how White's bishop should stay useful despite Black's minor-piece pressure. Play a concrete black reply.",
+      "secondChallenge": "From Lasker–Janowski, decide which route can improve Black's knight without conceding White an uncontested pawn advance. Play a concrete White reply.",
+      "revision": "Contrast the bishop's long-range diagonal with the knight's outpost route after at least one genuine opponent response in each branch.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "two-bishop-captures",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-3",
+        "ply": 35
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-3",
+        "ply": 43
+      },
+      "firstChallenge": "In Capablanca–Golombek, consider an exchange on d3 against keeping minor pieces. See whether White has a forcing recapture or more active alternative.",
+      "secondChallenge": "In Euwe–Maroczy, choose Black's response to the f-file tension and play White's most forcing rook move if legal from your resulting board.",
+      "revision": "Compare which material remains and whether a check changes move order. A material exchange does not guarantee a simplified or safe continuation.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "central-break-or-setup",
+      "first": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-1",
+        "ply": 9
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-1",
+        "ply": 13
+      },
+      "firstChallenge": "From Alekhine–Marshall, test a legal black central plan; before completing it, play White's most useful developmental response.",
+      "secondChallenge": "From Euwe–Maroczy, inspect how the pawn on c-file supports or restricts the d5 center. Play White's reply rather than presuming space is free.",
+      "revision": "Judge the moment of pawn contact, not opening name: name the squares opened for bishops and knights, plus the opponent's counter-break.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "a3-versus-c4-space",
+      "first": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-2",
+        "ply": 20
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-2",
+        "ply": 27
+      },
+      "firstChallenge": "In Alekhine–Marshall, try a White move that makes the opposing bishop answer a question. Play Black's reply before claiming queenside space.",
+      "secondChallenge": "In Euwe–Maroczy, test a Black move that fixes or releases central pawn tension. Play White's most troublesome bishop maneuver or pawn response.",
+      "revision": "Describe the actual bishop squares and blocked/open lines after each line. Ask whether the pawn advanced too early or provoked a useful concession.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "queen-threat-versus-king-retreat",
+      "first": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-4",
+        "ply": 56
+      },
+      "second": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-4",
+        "ply": 68
+      },
+      "firstChallenge": "On Euwe–Maroczy, find a legal White queen candidate that creates a specific target. Then play a Black defense instead of assuming the attack wins.",
+      "secondChallenge": "On Réti–Alekhine, prioritize King safety with White to move. Test a legal king or forcing defensive move and allow Black a checking candidate if available.",
+      "revision": "Count checks actually available in each position, not speculative attack strength. Separate king safety facts from a guessed evaluation.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "rooks-on-different-ranks",
+      "first": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-3",
+        "ply": 43
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-3",
+        "ply": 37
+      },
+      "firstChallenge": "From Steinitz–Sellman, find a Black rook destination with a clear file or target, then allow White's knight to choose its best practical square.",
+      "secondChallenge": "From Tarrasch–Von Scheve, choose whether Black's rook belongs on a protective rank or active file and answer White's rook coordination.",
+      "revision": "Name one actual attacked square after each rook move and assess whether the opponent has seized an open line in reply.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "queen-invasion-or-retreat",
+      "first": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-4",
+        "ply": 56
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-4",
+        "ply": 41
+      },
+      "firstChallenge": "In Steinitz–Sellman, test a White queen move aimed at an entry rank. Give Black a queen or rook defense if legal.",
+      "secondChallenge": "In Alekhine–Marshall, try a legal Black queen regrouping move under White's pressure. Play White's most active queen reply.",
+      "revision": "Separate entering the opponent's territory from protecting a weak piece. Compare queens' defended squares after the opponent moves.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "f4-or-queen-preparation",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-2",
+        "ply": 30
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-3",
+        "ply": 32
+      },
+      "firstChallenge": "From Lasker–Janowski, test a White pawn candidate and follow through with a black piece maneuver that questions the newly occupied squares.",
+      "secondChallenge": "From Alekhine–Marshall, test whether White should prioritize queen coordination or a central pawn response; allow Black to challenge the center.",
+      "revision": "State what each player gained in development during your variation and why a preparatory move cannot be automatically evaluated as safe.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "minor-piece-influence",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-1",
+        "ply": 10
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-1",
+        "ply": 9
+      },
+      "firstChallenge": "In Capablanca–Golombek, consider an active White bishop development move. Play a legal central pawn reply for Black if one exists.",
+      "secondChallenge": "In Sämisch–Nimzowitsch, consider a useful Black bishop-development move and let White improve a knight. Check Black's ability to castle afterwards.",
+      "revision": "Compare the bishop diagonals and concrete blockers. An identical development maxim does not guarantee identical squares or plans.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "bishop-sacrifice-and-rook-invasion",
+      "first": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-4",
+        "ply": 48
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-4",
+        "ply": 41
+      },
+      "firstChallenge": "From Tarrasch–Von Scheve, test a legal White candidate that increases forcing threats. Let Black capture or check if legally possible before continuing.",
+      "secondChallenge": "From Sämisch–Nimzowitsch, test a legal Black rook or queen candidate and let White find defensive counterplay before proceeding.",
+      "revision": "Verify each move legally, count actual checks and captures, and explicitly separate a historically recorded sacrifice from a proven combination.",
+      "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
+      "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
+      "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    }
+  ]
+}

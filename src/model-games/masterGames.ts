@@ -36,6 +36,11 @@ export interface MasterDraft {
   transfer: string;
   revealed: boolean;
   mark: "understood" | "retry" | null;
+  /** P115 candidate branches reuse the same owner/session draft; not verified grading. */
+  branchA?: string[];
+  branchB?: string[];
+  branchNoteA?: string;
+  branchNoteB?: string;
 }
 const EMPTY: MasterDraft = { plan: "", defense: "", transfer: "", revealed: false, mark: null };
 export const emptyMasterDraft = (): MasterDraft => ({ ...EMPTY });
@@ -109,6 +114,12 @@ export function restoreMasterDrafts(owner: string, gameId: string): Record<strin
         transfer: typeof draft?.transfer === "string" ? draft.transfer.slice(0, 1200) : "",
         revealed: draft?.revealed === true,
         mark: draft?.mark === "retry" || draft?.mark === "understood" ? draft.mark : null,
+        branchA: Array.isArray(draft?.branchA) ? draft.branchA.slice(0, 6).filter((move) =>
+          typeof move === "string" && move.length <= 12) : [],
+        branchB: Array.isArray(draft?.branchB) ? draft.branchB.slice(0, 6).filter((move) =>
+          typeof move === "string" && move.length <= 12) : [],
+        branchNoteA: typeof draft?.branchNoteA === "string" ? draft.branchNoteA.slice(0, 1200) : "",
+        branchNoteB: typeof draft?.branchNoteB === "string" ? draft.branchNoteB.slice(0, 1200) : "",
       },
     ]));
   } catch { return {}; }
