@@ -1,0 +1,574 @@
+{
+  "version": 1,
+  "phase": "P102",
+  "section": "Pawn races and stalemate avoidance",
+  "positions": [
+    {
+      "id": "calc:p102-31",
+      "title": "Get the queen while the h-pawn advances — Pb2",
+      "fen": "7k/8/P7/7p/8/8/1P6/5K2 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "a6a7",
+      "principalVariation": [
+        "a6a7",
+        "h5h4",
+        "a7a8q",
+        "h4h3",
+        "a8h1"
+      ],
+      "prompt": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Extra-material context: white's b2 pawn is a reserve that remains after a8=Q. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. The present context matters: white's b2 pawn is a reserve that remains after a8=Q",
+      "continuationReason": "At the five-ply endpoint Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+      "explanation": "Get the queen while the h-pawn advances: main a6a7 h5h4 a7a8q h4h3 a8h1; defender variation a6a7 h5h4 a7a8q h4h3 a8a5; third candidate f1f2 h5h4 a6a7. The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Resistance: Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Endpoint: Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate. Misconception: Counting only the first promotion ignores the immediate race to h1 and possible queen checks. This FEN-specific variation has white's b2 pawn is a reserve that remains after a8=Q. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates.",
+        "defenderIdea": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "continuation": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. white's b2 pawn is a reserve that remains after a8=Q",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "a6a7",
+              "h5h4",
+              "a7a8q",
+              "h4h3",
+              "a8a5"
+            ],
+            "explanation": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Under this material variant, white's b2 pawn is a reserve that remains after a8=Q"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "f1f2",
+              "h5h4",
+              "a6a7"
+            ],
+            "explanation": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks. After f1f2 h5h4 a6a7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "white's b2 pawn is a reserve that remains after a8=Q",
+        "endpoint": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "defenderResource": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-32",
+      "title": "Get the queen while the h-pawn advances — pg7",
+      "fen": "7k/6p1/P7/7p/8/8/8/5K2 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "a6a7",
+      "principalVariation": [
+        "a6a7",
+        "h5h4",
+        "a7a8q",
+        "h4h3",
+        "a8h1"
+      ],
+      "prompt": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Extra-material context: black also keeps g7, making the king safety and pawn ending less trivial. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. The present context matters: black also keeps g7, making the king safety and pawn ending less trivial",
+      "continuationReason": "At the five-ply endpoint Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+      "explanation": "Get the queen while the h-pawn advances: main a6a7 h5h4 a7a8q h4h3 a8h1; defender variation a6a7 h5h4 a7a8q h4h3 a8a5; third candidate f1f2 h5h4 a6a7. The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Resistance: Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Endpoint: Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate. Misconception: Counting only the first promotion ignores the immediate race to h1 and possible queen checks. This FEN-specific variation has black also keeps g7, making the king safety and pawn ending less trivial. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates.",
+        "defenderIdea": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "continuation": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. black also keeps g7, making the king safety and pawn ending less trivial",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "a6a7",
+              "h5h4",
+              "a7a8q",
+              "h4h3",
+              "a8a5"
+            ],
+            "explanation": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Under this material variant, black also keeps g7, making the king safety and pawn ending less trivial"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "f1f2",
+              "h5h4",
+              "a6a7"
+            ],
+            "explanation": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks. After f1f2 h5h4 a6a7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "black also keeps g7, making the king safety and pawn ending less trivial",
+        "endpoint": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "defenderResource": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-33",
+      "title": "Get the queen while the h-pawn advances — Pd2",
+      "fen": "7k/8/P7/7p/8/8/3P4/5K2 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "a6a7",
+      "principalVariation": [
+        "a6a7",
+        "h5h4",
+        "a7a8q",
+        "h4h3",
+        "a8h1"
+      ],
+      "prompt": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Extra-material context: white's d-pawn adds an independent conversion resource. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. The present context matters: white's d-pawn adds an independent conversion resource",
+      "continuationReason": "At the five-ply endpoint Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+      "explanation": "Get the queen while the h-pawn advances: main a6a7 h5h4 a7a8q h4h3 a8h1; defender variation a6a7 h5h4 a7a8q h4h3 a8a5; third candidate f1f2 h5h4 a6a7. The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates. Resistance: Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Endpoint: Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate. Misconception: Counting only the first promotion ignores the immediate race to h1 and possible queen checks. This FEN-specific variation has white's d-pawn adds an independent conversion resource. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The a6 pawn can queen in two moves, but Black's h5 pawn can move twice before White consolidates.",
+        "defenderIdea": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "continuation": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. white's d-pawn adds an independent conversion resource",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "a6a7",
+              "h5h4",
+              "a7a8q",
+              "h4h3",
+              "a8a5"
+            ],
+            "explanation": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q. Under this material variant, white's d-pawn adds an independent conversion resource"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "f1f2",
+              "h5h4",
+              "a6a7"
+            ],
+            "explanation": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks. After f1f2 h5h4 a6a7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "white's d-pawn adds an independent conversion resource",
+        "endpoint": "Qh1 aims down the h-file at h3, while Qa5 uses a different checking lane. Neither move alone proves mate.",
+        "defenderResource": "Black advances its h-pawn to h3 instead of standing still. White's queen must eventually stop h2–h1=Q.",
+        "misconception": "Counting only the first promotion ignores the immediate race to h1 and possible queen checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-34",
+      "title": "Both sides promote: now count queen checks — Pb2",
+      "fen": "7k/8/2P5/8/8/7p/1P2K3/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "c6c7",
+      "principalVariation": [
+        "c6c7",
+        "h3h2",
+        "c7c8q",
+        "h2h1q",
+        "c8c5"
+      ],
+      "prompt": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Extra-material context: the white b2 pawn becomes a possible counter-target for Black's queen. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. The present context matters: the white b2 pawn becomes a possible counter-target for Black's queen",
+      "continuationReason": "At the five-ply endpoint Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+      "explanation": "Both sides promote: now count queen checks: main c6c7 h3h2 c7c8q h2h1q c8c5; defender variation c6c7 h3h2 c7c8q h2h1q c8c3; third candidate e2d3 h3h2 c6c7. The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Resistance: After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Endpoint: Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe. Misconception: Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. This FEN-specific variation has the white b2 pawn becomes a possible counter-target for Black's queen. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check.",
+        "defenderIdea": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "continuation": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. the white b2 pawn becomes a possible counter-target for Black's queen",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "c6c7",
+              "h3h2",
+              "c7c8q",
+              "h2h1q",
+              "c8c3"
+            ],
+            "explanation": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Under this material variant, the white b2 pawn becomes a possible counter-target for Black's queen"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "e2d3",
+              "h3h2",
+              "c6c7"
+            ],
+            "explanation": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. After e2d3 h3h2 c6c7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "the white b2 pawn becomes a possible counter-target for Black's queen",
+        "endpoint": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "defenderResource": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-35",
+      "title": "Both sides promote: now count queen checks — pa7",
+      "fen": "7k/p7/2P5/8/8/7p/4K3/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "c6c7",
+      "principalVariation": [
+        "c6c7",
+        "h3h2",
+        "c7c8q",
+        "h2h1q",
+        "c8c5"
+      ],
+      "prompt": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Extra-material context: black's a7 pawn may offer an additional distant passer. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. The present context matters: black's a7 pawn may offer an additional distant passer",
+      "continuationReason": "At the five-ply endpoint Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+      "explanation": "Both sides promote: now count queen checks: main c6c7 h3h2 c7c8q h2h1q c8c5; defender variation c6c7 h3h2 c7c8q h2h1q c8c3; third candidate e2d3 h3h2 c6c7. The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Resistance: After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Endpoint: Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe. Misconception: Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. This FEN-specific variation has black's a7 pawn may offer an additional distant passer. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check.",
+        "defenderIdea": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "continuation": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. black's a7 pawn may offer an additional distant passer",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "c6c7",
+              "h3h2",
+              "c7c8q",
+              "h2h1q",
+              "c8c3"
+            ],
+            "explanation": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Under this material variant, black's a7 pawn may offer an additional distant passer"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "e2d3",
+              "h3h2",
+              "c6c7"
+            ],
+            "explanation": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. After e2d3 h3h2 c6c7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "black's a7 pawn may offer an additional distant passer",
+        "endpoint": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "defenderResource": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-36",
+      "title": "Both sides promote: now count queen checks — Pd2",
+      "fen": "7k/8/2P5/8/8/7p/3PK3/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Pawn-race counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "c6c7",
+      "principalVariation": [
+        "c6c7",
+        "h3h2",
+        "c7c8q",
+        "h2h1q",
+        "c8c5"
+      ],
+      "prompt": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Extra-material context: white retains a d2 reserve that matters if queens are traded. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. The present context matters: white retains a d2 reserve that matters if queens are traded",
+      "continuationReason": "At the five-ply endpoint Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+      "explanation": "Both sides promote: now count queen checks: main c6c7 h3h2 c7c8q h2h1q c8c5; defender variation c6c7 h3h2 c7c8q h2h1q c8c3; third candidate e2d3 h3h2 c6c7. The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check. Resistance: After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Endpoint: Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe. Misconception: Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. This FEN-specific variation has white retains a d2 reserve that matters if queens are traded. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "The c-pawn and h-pawn reach their promotion squares in close succession; the exact king square decides whether the second promotion gives check.",
+        "defenderIdea": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "continuation": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. white retains a d2 reserve that matters if queens are traded",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "c6c7",
+              "h3h2",
+              "c7c8q",
+              "h2h1q",
+              "c8c3"
+            ],
+            "explanation": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves. Under this material variant, white retains a d2 reserve that matters if queens are traded"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "e2d3",
+              "h3h2",
+              "c6c7"
+            ],
+            "explanation": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks. After e2d3 h3h2 c6c7, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Pawn-race counterplay",
+        "context": "white retains a d2 reserve that matters if queens are traded",
+        "endpoint": "Qc5 and Qc3 keep White's newly promoted queen active, but the black queen on h1 makes any blanket winning claim unsafe.",
+        "defenderResource": "After ...h1=Q the white king on e2 is not automatically checked; the new queen's file and diagonals still threaten future moves.",
+        "misconception": "Declaring the pawn race over after c8=Q ignores ...h1=Q and subsequent king checks.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-37",
+      "title": "Do not give the defender zero legal moves — bare defender",
+      "fen": "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Stalemate traps",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.queen-mate"
+      ],
+      "bestMove": "g6h6",
+      "principalVariation": [
+        "g6h6",
+        "h8g8",
+        "h6g6",
+        "g8h8",
+        "g6h6"
+      ],
+      "prompt": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Extra-material context: pure queen and kings: Qf7? may immediately stalemate the black king. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. The present context matters: pure queen and kings: Qf7? may immediately stalemate the black king",
+      "continuationReason": "At the five-ply endpoint Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+      "explanation": "Do not give the defender zero legal moves: main g6h6 h8g8 h6g6 g8h8 g6h6; defender variation g6g5 h8h7 g5g6 h7h8 g6h6; third candidate g6h5 h8g8 h5g5. Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Resistance: The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Endpoint: Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves. Misconception: Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. This FEN-specific variation has pure queen and kings: Qf7? may immediately stalemate the black king. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains.",
+        "defenderIdea": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "continuation": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. pure queen and kings: Qf7? may immediately stalemate the black king",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "g6g5",
+              "h8h7",
+              "g5g6",
+              "h7h8",
+              "g6h6"
+            ],
+            "explanation": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Under this material variant, pure queen and kings: Qf7? may immediately stalemate the black king"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "g6h5",
+              "h8g8",
+              "h5g5"
+            ],
+            "explanation": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. After g6h5 h8g8 h5g5, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Stalemate traps",
+        "context": "pure queen and kings: Qf7? may immediately stalemate the black king",
+        "endpoint": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "defenderResource": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-38",
+      "title": "Do not give the defender zero legal moves — Pa2",
+      "fen": "7k/8/5KQ1/8/8/8/P7/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Stalemate traps",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.queen-mate"
+      ],
+      "bestMove": "g6h6",
+      "principalVariation": [
+        "g6h6",
+        "h8g8",
+        "h6g6",
+        "g8h8",
+        "g6h6"
+      ],
+      "prompt": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Extra-material context: the extra White pawn does not give Black a legal move, so avoid the same stalemate. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. The present context matters: the extra White pawn does not give Black a legal move, so avoid the same stalemate",
+      "continuationReason": "At the five-ply endpoint Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+      "explanation": "Do not give the defender zero legal moves: main g6h6 h8g8 h6g6 g8h8 g6h6; defender variation g6g5 h8h7 g5g6 h7h8 g6h6; third candidate g6h5 h8g8 h5g5. Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Resistance: The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Endpoint: Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves. Misconception: Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. This FEN-specific variation has the extra White pawn does not give Black a legal move, so avoid the same stalemate. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains.",
+        "defenderIdea": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "continuation": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. the extra White pawn does not give Black a legal move, so avoid the same stalemate",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "g6g5",
+              "h8h7",
+              "g5g6",
+              "h7h8",
+              "g6h6"
+            ],
+            "explanation": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Under this material variant, the extra White pawn does not give Black a legal move, so avoid the same stalemate"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "g6h5",
+              "h8g8",
+              "h5g5"
+            ],
+            "explanation": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. After g6h5 h8g8 h5g5, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Stalemate traps",
+        "context": "the extra White pawn does not give Black a legal move, so avoid the same stalemate",
+        "endpoint": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "defenderResource": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    },
+    {
+      "id": "calc:p102-39",
+      "title": "Do not give the defender zero legal moves — pa7",
+      "fen": "7k/p7/5KQ1/8/8/8/8/8 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · Stalemate traps",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.queen-mate"
+      ],
+      "bestMove": "g6h6",
+      "principalVariation": [
+        "g6h6",
+        "h8g8",
+        "h6g6",
+        "g8h8",
+        "g6h6"
+      ],
+      "prompt": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Extra-material context: the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate. Calculate the recorded line and two alternatives before choosing the first move.",
+      "replyReason": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. The present context matters: the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate",
+      "continuationReason": "At the five-ply endpoint Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+      "explanation": "Do not give the defender zero legal moves: main g6h6 h8g8 h6g6 g8h8 g6h6; defender variation g6g5 h8h7 g5g6 h7h8 g6h6; third candidate g6h5 h8g8 h5g5. Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains. Resistance: The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Endpoint: Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves. Misconception: Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. This FEN-specific variation has the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate. Any exact draw assertion is limited to the explicitly identified stalemate trap; the full WDL of other endings is not tablebase-certified.",
+      "defensiveStudy": {
+        "keyQuestion": "Black has only a king near h8. White can keep checking, but 1.Qf7? from g6 may stalemate when no black move remains.",
+        "defenderIdea": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "continuation": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "reflection": "Recount material at the endpoint and ask whether the defender is legally in check, stalemated or able to promote on the next turn. the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate",
+        "variations": [
+          {
+            "label": "King/pawn-resistance alternative",
+            "moves": [
+              "g6g5",
+              "h8h7",
+              "g5g6",
+              "h7h8",
+              "g6h6"
+            ],
+            "explanation": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move. Under this material variant, the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate"
+          },
+          {
+            "label": "Candidate and move-order comparison",
+            "moves": [
+              "g6h5",
+              "h8g8",
+              "h5g5"
+            ],
+            "explanation": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move. After g6h5 h8g8 h5g5, the player should recalculate rather than infer a forced win."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Stalemate traps",
+        "context": "the Black a7 pawn supplies possible legal moves, so the identical Qf7? is no longer automatically stalemate",
+        "endpoint": "Qh6+ keeps Black able to answer checks. In the bare-king version, Qf7? would leave Black not in check but with no legal moves.",
+        "defenderResource": "The defender's king has extremely few legal exits; do not confuse an available check with a harmless quiet move.",
+        "misconception": "Stalemate is a draw regardless of queen material; do not freeze the corner king without checking whether it can move.",
+        "authority": "Practical illustration; only specifically described stalemate fact is exact"
+      }
+    }
+  ]
+}
