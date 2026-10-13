@@ -27,7 +27,7 @@ export function calculationMisconceptions(position:CalculationPosition,evidence:
   if(!evidence.selectedMoveScore)
     details.push("Reconsider your first move.");
   if(!evidence.replyScore)
-    details.push(`Reply: ${position.replyReason ?? "Check defenses."}`);
+    details.push(`Opponent reply: ${position.replyReason ?? "Check defenses."}`);
   if(!evidence.continuationScore)
     details.push(`Next move: ${position.continuationReason ?? "Reassess."}`);
   if(position.defensiveStudy){
