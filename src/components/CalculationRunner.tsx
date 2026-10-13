@@ -549,7 +549,7 @@ export function CalculationRunner({
                 {position.assessmentStatus === "instructional-only" && (
                   <p className="calculation-instructional-note">
                     Authored legal reference lines, not verified best moves. This case
-                    does not submit a score, review record or mastery evidence.
+                    does not change a score, practice history or learning progress.
                   </p>
                 )}
                 <div className="calculation-rule">
