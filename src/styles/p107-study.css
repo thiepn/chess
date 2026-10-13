@@ -30,3 +30,20 @@
 .calculation-study-gate > small { display:block; margin:8px 0 0; color:var(--chess-color-muted,var(--muted)); line-height:1.5; }
 .calculation-source-notice { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:12px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:6px; }
 .calculation-source-notice .secondary { min-height:38px; padding:7px 12px; }
+
+
+
+/* P108: reuse native materials, buttons and board focus styling. */
+.deep-lab{display:grid;gap:12px}
+.deep-lab-heading{display:flex;justify-content:space-between;gap:12px}
+.deep-lab-board{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:12px}
+.deep-lab-board .chess-board-wrap{max-width:330px}
+.deep-lab-branches,.deep-lab-actions,.deep-lab-footer{display:flex;flex-wrap:wrap;gap:8px}
+.deep-lab-branches{border:0;padding:0}
+.deep-lab-branches button,.deep-lab-timeline button{padding:8px;min-height:44px}
+.deep-lab-branches .chosen,.deep-lab-timeline .current{outline:2px solid currentColor}
+.deep-lab-timeline{display:flex;gap:5px;overflow-x:auto}
+.deep-lab-timeline button{flex:0 0 auto}
+.deep-lab-branches small,.deep-lab-timeline small{display:block}
+.deep-lab-footer .primary{margin-left:auto}
+@media(max-width:650px){.deep-lab-board{grid-template-columns:1fr}.deep-lab-heading{flex-direction:column}.deep-lab-footer .primary{margin-left:0;width:100%}}
