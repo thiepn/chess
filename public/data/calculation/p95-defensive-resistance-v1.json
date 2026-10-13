@@ -1238,7 +1238,7 @@
     {
       "id": "calc:p95-31",
       "title": "A defender can become the target",
-      "fen": "rnbqk1nr/pppp1ppp/8/2b1p3/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1",
+      "fen": "rnbqk1nr/pppp1ppp/8/2b1p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
       "playerColor": "b",
       "bestMove": "b8c6",
       "principalVariation": [
