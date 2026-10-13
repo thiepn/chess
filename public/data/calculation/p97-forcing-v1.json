@@ -1,0 +1,567 @@
+{
+  "version": 1,
+  "phase": "P97",
+  "section": "Forcing decisions",
+  "positions": [
+    {
+      "id": "calc:p97-01",
+      "title": "Exchange and conversion — White pawn reserve",
+      "fen": "3k4/8/8/8/8/8/P2r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "d8e7",
+        "d2d7",
+        "e7e6",
+        "d7d6"
+      ],
+      "prompt": "Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. This time: White has an a-pawn that can support a future conversion; count it after exchanges. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: d1d2 d8c7 d2d7 c7b6 d7b7. White has an a-pawn that can support a future conversion; count it after exchanges.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate.",
+      "explanation": "Exchange and conversion. Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. Reference: d1d2 d8e7 d2d7 e7e6 d7d6. Defender branch: d1d2 d8c7 d2d7 c7b6 d7b7. Alternative candidate: g1f2 d2d1 f2e3. Endpoint: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate. White has an a-pawn that can support a future conversion; count it after exchanges. Misconception: 1.Kf2 permits ...Rxd1, abandoning the only active rook.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks.",
+        "defenderIdea": "d1d2 d8c7 d2d7 c7b6 d7b7",
+        "continuation": "White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate.",
+        "misconception": "1.Kf2 permits ...Rxd1, abandoning the only active rook.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. White has an a-pawn that can support a future conversion; count it after exchanges.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "d1d2",
+              "d8c7",
+              "d2d7",
+              "c7b6",
+              "d7b7"
+            ],
+            "explanation": "Defense: Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. Endpoint: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate. White has an a-pawn that can support a future conversion; count it after exchanges."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "g1f2",
+              "d2d1",
+              "f2e3"
+            ],
+            "explanation": "Why the alternative differs: 1.Kf2 permits ...Rxd1, abandoning the only active rook. White has an a-pawn that can support a future conversion; count it after exchanges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-02",
+      "title": "Exchange and conversion — Black pawn reserve",
+      "fen": "3k4/p7/8/8/8/8/3r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "d8e7",
+        "d2d7",
+        "e7e6",
+        "d7d6"
+      ],
+      "prompt": "Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: d1d2 d8c7 d2d7 c7b6 d7b7. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate.",
+      "explanation": "Exchange and conversion. Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. Reference: d1d2 d8e7 d2d7 e7e6 d7d6. Defender branch: d1d2 d8c7 d2d7 c7b6 d7b7. Alternative candidate: g1f2 d2d1 f2e3. Endpoint: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: 1.Kf2 permits ...Rxd1, abandoning the only active rook.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks.",
+        "defenderIdea": "d1d2 d8c7 d2d7 c7b6 d7b7",
+        "continuation": "White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate.",
+        "misconception": "1.Kf2 permits ...Rxd1, abandoning the only active rook.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "d1d2",
+              "d8c7",
+              "d2d7",
+              "c7b6",
+              "d7b7"
+            ],
+            "explanation": "Defense: Rxd2 eliminates the second-rank invader; the attacking king can choose e7 or c7, so the rook must keep recalculating checks. Endpoint: White preserves a rook against a lone king and should prioritize conversion, not a false immediate mate. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "g1f2",
+              "d2d1",
+              "f2e3"
+            ],
+            "explanation": "Why the alternative differs: 1.Kf2 permits ...Rxd1, abandoning the only active rook. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-03",
+      "title": "Protected queen capture — White pawn reserve",
+      "fen": "4k3/3b4/8/8/8/8/P2Q4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d2d7",
+      "principalVariation": [
+        "d2d7",
+        "e8f8",
+        "d7d8",
+        "f8g7",
+        "d8d4"
+      ],
+      "prompt": "Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. This time: White has an a-pawn that can support a future conversion; count it after exchanges. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: d2d7 e8f8 d7d6 f8e8 d6e7. White has an a-pawn that can support a future conversion; count it after exchanges.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The queen remains active while the bishop is gone; material matters more than the sheer number of checks.",
+      "explanation": "Protected queen capture. Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. Reference: d2d7 e8f8 d7d8 f8g7 d8d4. Defender branch: d2d7 e8f8 d7d6 f8e8 d6e7. Alternative candidate: d2e3 e8f8 e3e7. Endpoint: The queen remains active while the bishop is gone; material matters more than the sheer number of checks. White has an a-pawn that can support a future conversion; count it after exchanges. Misconception: Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction.",
+        "defenderIdea": "d2d7 e8f8 d7d6 f8e8 d6e7",
+        "continuation": "The queen remains active while the bishop is gone; material matters more than the sheer number of checks.",
+        "misconception": "Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. White has an a-pawn that can support a future conversion; count it after exchanges.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "d2d7",
+              "e8f8",
+              "d7d6",
+              "f8e8",
+              "d6e7"
+            ],
+            "explanation": "Defense: Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. Endpoint: The queen remains active while the bishop is gone; material matters more than the sheer number of checks. White has an a-pawn that can support a future conversion; count it after exchanges."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "d2e3",
+              "e8f8",
+              "e3e7"
+            ],
+            "explanation": "Why the alternative differs: Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7. White has an a-pawn that can support a future conversion; count it after exchanges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-04",
+      "title": "Protected queen capture — Black pawn reserve",
+      "fen": "4k3/p2b4/8/8/8/8/3Q4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d2d7",
+      "principalVariation": [
+        "d2d7",
+        "e8f8",
+        "d7d8",
+        "f8g7",
+        "d8d4"
+      ],
+      "prompt": "Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: d2d7 e8f8 d7d6 f8e8 d6e7. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The queen remains active while the bishop is gone; material matters more than the sheer number of checks.",
+      "explanation": "Protected queen capture. Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. Reference: d2d7 e8f8 d7d8 f8g7 d8d4. Defender branch: d2d7 e8f8 d7d6 f8e8 d6e7. Alternative candidate: d2e3 e8f8 e3e7. Endpoint: The queen remains active while the bishop is gone; material matters more than the sheer number of checks. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction.",
+        "defenderIdea": "d2d7 e8f8 d7d6 f8e8 d6e7",
+        "continuation": "The queen remains active while the bishop is gone; material matters more than the sheer number of checks.",
+        "misconception": "Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "d2d7",
+              "e8f8",
+              "d7d6",
+              "f8e8",
+              "d6e7"
+            ],
+            "explanation": "Defense: Qxd7+ is safe because Rd1 defends d7. After the king escapes, queen checks must change direction. Endpoint: The queen remains active while the bishop is gone; material matters more than the sheer number of checks. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "d2e3",
+              "e8f8",
+              "e3e7"
+            ],
+            "explanation": "Why the alternative differs: Calling Qxd7 a blunder overlooks the rook that prevents ...Kxd7. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-05",
+      "title": "Knight fork and recapture — White pawn reserve",
+      "fen": "2q1k3/8/8/5N2/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "f5d6",
+      "principalVariation": [
+        "f5d6",
+        "e8d8",
+        "d6c8",
+        "d8c8",
+        "e1d2"
+      ],
+      "prompt": "Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. This time: White has an a-pawn that can support a future conversion; count it after exchanges. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: f5d6 e8f8 d6c8 f8g8 c8d6. White has an a-pawn that can support a future conversion; count it after exchanges.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory.",
+      "explanation": "Knight fork and recapture. Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. Reference: f5d6 e8d8 d6c8 d8c8 e1d2. Defender branch: f5d6 e8f8 d6c8 f8g8 c8d6. Alternative candidate: f5e3 c8c4 e1f2. Endpoint: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory. White has an a-pawn that can support a future conversion; count it after exchanges. Misconception: Stopping at Nxc8 ignores the black king's legal recapture.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture.",
+        "defenderIdea": "f5d6 e8f8 d6c8 f8g8 c8d6",
+        "continuation": "The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory.",
+        "misconception": "Stopping at Nxc8 ignores the black king's legal recapture.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. White has an a-pawn that can support a future conversion; count it after exchanges.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "f5d6",
+              "e8f8",
+              "d6c8",
+              "f8g8",
+              "c8d6"
+            ],
+            "explanation": "Defense: Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. Endpoint: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory. White has an a-pawn that can support a future conversion; count it after exchanges."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "f5e3",
+              "c8c4",
+              "e1f2"
+            ],
+            "explanation": "Why the alternative differs: Stopping at Nxc8 ignores the black king's legal recapture. White has an a-pawn that can support a future conversion; count it after exchanges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-06",
+      "title": "Knight fork and recapture — Black pawn reserve",
+      "fen": "2q1k3/p7/8/5N2/8/8/8/4K3 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "f5d6",
+      "principalVariation": [
+        "f5d6",
+        "e8d8",
+        "d6c8",
+        "d8c8",
+        "e1d2"
+      ],
+      "prompt": "Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: f5d6 e8f8 d6c8 f8g8 c8d6. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory.",
+      "explanation": "Knight fork and recapture. Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. Reference: f5d6 e8d8 d6c8 d8c8 e1d2. Defender branch: f5d6 e8f8 d6c8 f8g8 c8d6. Alternative candidate: f5e3 c8c4 e1f2. Endpoint: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Stopping at Nxc8 ignores the black king's legal recapture.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture.",
+        "defenderIdea": "f5d6 e8f8 d6c8 f8g8 c8d6",
+        "continuation": "The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory.",
+        "misconception": "Stopping at Nxc8 ignores the black king's legal recapture.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "f5d6",
+              "e8f8",
+              "d6c8",
+              "f8g8",
+              "c8d6"
+            ],
+            "explanation": "Defense: Nd6+ forks king and queen, but ...Kxc8 can neutralize the material gain. Calculate beyond the queen capture. Endpoint: The resulting pawn inventory decides the long-term endgame; the fork alone does not certify victory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "f5e3",
+              "c8c4",
+              "e1f2"
+            ],
+            "explanation": "Why the alternative differs: Stopping at Nxc8 ignores the black king's legal recapture. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-07",
+      "title": "Rook-rank chase — White pawn reserve",
+      "fen": "4k3/8/8/8/8/8/P7/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "e8d7",
+        "a8a7",
+        "d7d6",
+        "a7a6"
+      ],
+      "prompt": "Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. This time: White has an a-pawn that can support a future conversion; count it after exchanges. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: a1a8 e8f7 a8a7 f7e6 a7a6. White has an a-pawn that can support a future conversion; count it after exchanges.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
+      "explanation": "Rook-rank chase. Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Reference: a1a8 e8d7 a8a7 d7d6 a7a6. Defender branch: a1a8 e8f7 a8a7 f7e6 a7a6. Alternative candidate: a1a7 e8d8 a7a8. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. White has an a-pawn that can support a future conversion; count it after exchanges. Misconception: Assuming a king must remain on e8 turns a check into an invented mate.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks.",
+        "defenderIdea": "a1a8 e8f7 a8a7 f7e6 a7a6",
+        "continuation": "The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
+        "misconception": "Assuming a king must remain on e8 turns a check into an invented mate.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. White has an a-pawn that can support a future conversion; count it after exchanges.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "a1a8",
+              "e8f7",
+              "a8a7",
+              "f7e6",
+              "a7a6"
+            ],
+            "explanation": "Defense: Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. White has an a-pawn that can support a future conversion; count it after exchanges."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "a1a7",
+              "e8d8",
+              "a7a8"
+            ],
+            "explanation": "Why the alternative differs: Assuming a king must remain on e8 turns a check into an invented mate. White has an a-pawn that can support a future conversion; count it after exchanges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-08",
+      "title": "Rook-rank chase — Black pawn reserve",
+      "fen": "4k3/p7/8/8/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "e8d7",
+        "a8a7",
+        "d7d6",
+        "a7a6"
+      ],
+      "prompt": "Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: a1a8 e8f7 a8a7 f7e6 a7a6. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
+      "explanation": "Rook-rank chase. Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Reference: a1a8 e8d7 a8a7 d7d6 a7a6. Defender branch: a1a8 e8f7 a8a7 f7e6 a7a6. Alternative candidate: a1a7 e8d8 a7a8. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Assuming a king must remain on e8 turns a check into an invented mate.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks.",
+        "defenderIdea": "a1a8 e8f7 a8a7 f7e6 a7a6",
+        "continuation": "The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
+        "misconception": "Assuming a king must remain on e8 turns a check into an invented mate.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "a1a8",
+              "e8f7",
+              "a8a7",
+              "f7e6",
+              "a7a6"
+            ],
+            "explanation": "Defense: Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "a1a7",
+              "e8d8",
+              "a7a8"
+            ],
+            "explanation": "Why the alternative differs: Assuming a king must remain on e8 turns a check into an invented mate. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-09",
+      "title": "Queen diagonal changes — White pawn reserve",
+      "fen": "4k3/8/8/8/8/8/P6Q/6K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "h2h8",
+      "principalVariation": [
+        "h2h8",
+        "e8d7",
+        "h8d4",
+        "d7e6",
+        "d4d5"
+      ],
+      "prompt": "Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. This time: White has an a-pawn that can support a future conversion; count it after exchanges. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: h2h8 e8f7 h8h7 f7e6 h7h6. White has an a-pawn that can support a future conversion; count it after exchanges.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: Queen checks remain a source of initiative, but no branch is certified to force mate.",
+      "explanation": "Queen diagonal changes. Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. Reference: h2h8 e8d7 h8d4 d7e6 d4d5. Defender branch: h2h8 e8f7 h8h7 f7e6 h7h6. Alternative candidate: h2e5 e8f8 e5d6. Endpoint: Queen checks remain a source of initiative, but no branch is certified to force mate. White has an a-pawn that can support a future conversion; count it after exchanges. Misconception: Calling every queen move a check after a king flight ignores the changing diagonal.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Qh8+ wins time only if the next diagonal is calculated from the king's actual destination.",
+        "defenderIdea": "h2h8 e8f7 h8h7 f7e6 h7h6",
+        "continuation": "Queen checks remain a source of initiative, but no branch is certified to force mate.",
+        "misconception": "Calling every queen move a check after a king flight ignores the changing diagonal.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. White has an a-pawn that can support a future conversion; count it after exchanges.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "h2h8",
+              "e8f7",
+              "h8h7",
+              "f7e6",
+              "h7h6"
+            ],
+            "explanation": "Defense: Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. Endpoint: Queen checks remain a source of initiative, but no branch is certified to force mate. White has an a-pawn that can support a future conversion; count it after exchanges."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "h2e5",
+              "e8f8",
+              "e5d6"
+            ],
+            "explanation": "Why the alternative differs: Calling every queen move a check after a king flight ignores the changing diagonal. White has an a-pawn that can support a future conversion; count it after exchanges."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-10",
+      "title": "Queen diagonal changes — Black pawn reserve",
+      "fen": "4k3/p7/8/8/8/8/7Q/6K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "bestMove": "h2h8",
+      "principalVariation": [
+        "h2h8",
+        "e8d7",
+        "h8d4",
+        "d7e6",
+        "d4d5"
+      ],
+      "prompt": "Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
+      "replyReason": "The defender can change the king's flight or attacking reply: h2h8 e8f7 h8h7 f7e6 h7h6. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+      "continuationReason": "Follow the line to the fifth ply and tally material: Queen checks remain a source of initiative, but no branch is certified to force mate.",
+      "explanation": "Queen diagonal changes. Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. Reference: h2h8 e8d7 h8d4 d7e6 d4d5. Defender branch: h2h8 e8f7 h8h7 f7e6 h7h6. Alternative candidate: h2e5 e8f8 e5d6. Endpoint: Queen checks remain a source of initiative, but no branch is certified to force mate. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Calling every queen move a check after a king flight ignores the changing diagonal.. The authored continuations are instructional, not engine-certified unique moves.",
+      "source": "authored",
+      "sourceLabel": "P97 · Forcing decisions",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "Qh8+ wins time only if the next diagonal is calculated from the king's actual destination.",
+        "defenderIdea": "h2h8 e8f7 h8h7 f7e6 h7h6",
+        "continuation": "Queen checks remain a source of initiative, but no branch is certified to force mate.",
+        "misconception": "Calling every queen move a check after a king flight ignores the changing diagonal.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "variations": [
+          {
+            "label": "Resistant reply · 5 plies",
+            "moves": [
+              "h2h8",
+              "e8f7",
+              "h8h7",
+              "f7e6",
+              "h7h6"
+            ],
+            "explanation": "Defense: Qh8+ wins time only if the next diagonal is calculated from the king's actual destination. Endpoint: Queen checks remain a source of initiative, but no branch is certified to force mate. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          },
+          {
+            "label": "Misleading candidate · 3 plies",
+            "moves": [
+              "h2e5",
+              "e8f8",
+              "e5d6"
+            ],
+            "explanation": "Why the alternative differs: Calling every queen move a check after a king flight ignores the changing diagonal. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+          }
+        ]
+      }
+    }
+  ]
+}
