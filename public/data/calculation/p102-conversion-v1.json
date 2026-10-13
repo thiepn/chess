@@ -1,0 +1,958 @@
+{
+  "version": 1,
+  "phase": "P102",
+  "section": "Favorable simplification and material accounting",
+  "positions": [
+    {
+      "id": "calc:p102-01",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Capture the invading rook rather than chase it · white queenside reserve",
+      "fen": "4k3/8/8/8/8/8/P2r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+      "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
+        "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "continuation": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "d1d2",
+              "e8d7",
+              "d2d5",
+              "d7e6",
+              "d5d6"
+            ],
+            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1f1",
+              "d2d1",
+              "f1f2"
+            ],
+            "explanation": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white queenside reserve",
+        "materialInsight": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "defensiveResource": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-02",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Capture the invading rook rather than chase it · black kingside reserve",
+      "fen": "4k3/7p/8/8/8/8/3r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+      "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
+        "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "continuation": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "d1d2",
+              "e8d7",
+              "d2d5",
+              "d7e6",
+              "d5d6"
+            ],
+            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1f1",
+              "d2d1",
+              "f1f2"
+            ],
+            "explanation": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "black kingside reserve",
+        "materialInsight": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "defensiveResource": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-03",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Capture the invading rook rather than chase it · white b-file reserve",
+      "fen": "4k3/8/8/8/8/8/1P1r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+      "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
+        "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "continuation": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "d1d2",
+              "e8d7",
+              "d2d5",
+              "d7e6",
+              "d5d6"
+            ],
+            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1f1",
+              "d2d1",
+              "f1f2"
+            ],
+            "explanation": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white b-file reserve",
+        "materialInsight": "White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
+        "defensiveResource": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
+        "misconception": "Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-04",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Do not capture a king-defended rook with a queen · white queenside reserve",
+      "fen": "6k1/5r2/8/8/8/8/P7/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+      "continuationReason": "Position after five plies: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+      "explanation": "Do not capture a king-defended rook with a queen. Original worked line e1e8 f7f8 e8e6 g8h8 e6f6. Defensive variation e1e8 f7f8 e8d8 g8h7 d8d5. Tempting counterexample e1e8 f7f8 e8f8 g8f8 g1f2. Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Defender's resource: ...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Endpoint: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king. Mistake: A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing.",
+        "defenderIdea": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "continuation": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8",
+              "g8f8",
+              "g1f2"
+            ],
+            "explanation": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white queenside reserve",
+        "materialInsight": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "defensiveResource": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-05",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Do not capture a king-defended rook with a queen · black kingside reserve",
+      "fen": "6k1/5r1p/8/8/8/8/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+      "continuationReason": "Position after five plies: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+      "explanation": "Do not capture a king-defended rook with a queen. Original worked line e1e8 f7f8 e8e6 g8h8 e6f6. Defensive variation e1e8 f7f8 e8d8 g8h7 d8d5. Tempting counterexample e1e8 f7f8 e8f8 g8f8 g1f2. Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Defender's resource: ...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Endpoint: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king. Mistake: A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing.",
+        "defenderIdea": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "continuation": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8",
+              "g8f8",
+              "g1f2"
+            ],
+            "explanation": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "black kingside reserve",
+        "materialInsight": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "defensiveResource": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-06",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Do not capture a king-defended rook with a queen · white b-file reserve",
+      "fen": "6k1/5r2/8/8/8/8/1P6/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+      "continuationReason": "Position after five plies: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+      "explanation": "Do not capture a king-defended rook with a queen. Original worked line e1e8 f7f8 e8e6 g8h8 e6f6. Defensive variation e1e8 f7f8 e8d8 g8h7 d8d5. Tempting counterexample e1e8 f7f8 e8f8 g8f8 g1f2. Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Defender's resource: ...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Endpoint: The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king. Mistake: A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing.",
+        "defenderIdea": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "continuation": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8",
+              "g8f8",
+              "g1f2"
+            ],
+            "explanation": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white b-file reserve",
+        "materialInsight": "The safe branch keeps White's queen on the board; the tempting Qxf8+?? Kxf8 leaves White with just a king.",
+        "defensiveResource": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences.",
+        "misconception": "A rook interposition is not an undefended sacrifice if the king can recapture a queen on the blocking square.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-07",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Take the rook from the second rank before activating your king · white queenside reserve",
+      "fen": "k7/8/8/8/8/8/P1r5/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c2",
+      "principalVariation": [
+        "c1c2",
+        "a8b7",
+        "g1f2",
+        "b7b6",
+        "c2c6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+      "continuationReason": "Position after five plies: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+      "explanation": "Take the rook from the second rank before activating your king. Original worked line c1c2 a8b7 g1f2 b7b6 c2c6. Defensive variation c1c2 a8b7 c2c7 b7c7 g1f2. Tempting counterexample g1h2 c2c1 h2g3. Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Defender's resource: Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Endpoint: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7. Mistake: A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity.",
+        "defenderIdea": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "continuation": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c1c2",
+              "a8b7",
+              "c2c7",
+              "b7c7",
+              "g1f2"
+            ],
+            "explanation": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1h2",
+              "c2c1",
+              "h2g3"
+            ],
+            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white queenside reserve",
+        "materialInsight": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "defensiveResource": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-08",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Take the rook from the second rank before activating your king · black kingside reserve",
+      "fen": "k7/7p/8/8/8/8/2r5/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c2",
+      "principalVariation": [
+        "c1c2",
+        "a8b7",
+        "g1f2",
+        "b7b6",
+        "c2c6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+      "continuationReason": "Position after five plies: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+      "explanation": "Take the rook from the second rank before activating your king. Original worked line c1c2 a8b7 g1f2 b7b6 c2c6. Defensive variation c1c2 a8b7 c2c7 b7c7 g1f2. Tempting counterexample g1h2 c2c1 h2g3. Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Defender's resource: Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Endpoint: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7. Mistake: A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity.",
+        "defenderIdea": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "continuation": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c1c2",
+              "a8b7",
+              "c2c7",
+              "b7c7",
+              "g1f2"
+            ],
+            "explanation": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1h2",
+              "c2c1",
+              "h2g3"
+            ],
+            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "black kingside reserve",
+        "materialInsight": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "defensiveResource": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-09",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Take the rook from the second rank before activating your king · white b-file reserve",
+      "fen": "k7/8/8/8/8/8/1Pr5/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c2",
+      "principalVariation": [
+        "c1c2",
+        "a8b7",
+        "g1f2",
+        "b7b6",
+        "c2c6"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+      "continuationReason": "Position after five plies: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+      "explanation": "Take the rook from the second rank before activating your king. Original worked line c1c2 a8b7 g1f2 b7b6 c2c6. Defensive variation c1c2 a8b7 c2c7 b7c7 g1f2. Tempting counterexample g1h2 c2c1 h2g3. Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Defender's resource: Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Endpoint: The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7. Mistake: A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity.",
+        "defenderIdea": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "continuation": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c1c2",
+              "a8b7",
+              "c2c7",
+              "b7c7",
+              "g1f2"
+            ],
+            "explanation": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "g1h2",
+              "c2c1",
+              "h2g3"
+            ],
+            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white b-file reserve",
+        "materialInsight": "The main line leaves White with a rook against a bare king. The defensive demonstration captures White's overextended rook on c7.",
+        "defensiveResource": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7.",
+        "misconception": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-10",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Bishop trade leads to a king-only comparison · white queenside reserve",
+      "fen": "8/3bk3/8/8/2B5/8/P7/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4d5",
+      "principalVariation": [
+        "c4d5",
+        "d7e6",
+        "d5e6",
+        "e7e6",
+        "g1f2"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+      "continuationReason": "Position after five plies: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+      "explanation": "Bishop trade leads to a king-only comparison. Original worked line c4d5 d7e6 d5e6 e7e6 g1f2. Defensive variation c4d5 d7c6 d5c6 e7d6 g1f2. Tempting counterexample c4b5 d7b5 g1f2. Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Defender's resource: ...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Endpoint: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance. Mistake: The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain.",
+        "defenderIdea": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "continuation": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4d5",
+              "d7c6",
+              "d5c6",
+              "e7d6",
+              "g1f2"
+            ],
+            "explanation": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "c4b5",
+              "d7b5",
+              "g1f2"
+            ],
+            "explanation": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white queenside reserve",
+        "materialInsight": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "defensiveResource": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-11",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Bishop trade leads to a king-only comparison · black kingside reserve",
+      "fen": "8/3bk2p/8/8/2B5/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4d5",
+      "principalVariation": [
+        "c4d5",
+        "d7e6",
+        "d5e6",
+        "e7e6",
+        "g1f2"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+      "continuationReason": "Position after five plies: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+      "explanation": "Bishop trade leads to a king-only comparison. Original worked line c4d5 d7e6 d5e6 e7e6 g1f2. Defensive variation c4d5 d7c6 d5c6 e7d6 g1f2. Tempting counterexample c4b5 d7b5 g1f2. Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Defender's resource: ...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Endpoint: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance. Mistake: The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain.",
+        "defenderIdea": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "continuation": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4d5",
+              "d7c6",
+              "d5c6",
+              "e7d6",
+              "g1f2"
+            ],
+            "explanation": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "c4b5",
+              "d7b5",
+              "g1f2"
+            ],
+            "explanation": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "black kingside reserve",
+        "materialInsight": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "defensiveResource": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-12",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Bishop trade leads to a king-only comparison · white b-file reserve",
+      "fen": "8/3bk3/8/8/2B5/8/1P6/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4d5",
+      "principalVariation": [
+        "c4d5",
+        "d7e6",
+        "d5e6",
+        "e7e6",
+        "g1f2"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+      "continuationReason": "Position after five plies: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+      "explanation": "Bishop trade leads to a king-only comparison. Original worked line c4d5 d7e6 d5e6 e7e6 g1f2. Defensive variation c4d5 d7c6 d5c6 e7d6 g1f2. Tempting counterexample c4b5 d7b5 g1f2. Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Defender's resource: ...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Endpoint: The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance. Mistake: The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain.",
+        "defenderIdea": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "continuation": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4d5",
+              "d7c6",
+              "d5c6",
+              "e7d6",
+              "g1f2"
+            ],
+            "explanation": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "c4b5",
+              "d7b5",
+              "g1f2"
+            ],
+            "explanation": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white b-file reserve",
+        "materialInsight": "The bishop-trading lines show why the next king move and surviving pawns decide conversion, not the exchange's mere appearance.",
+        "defensiveResource": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file.",
+        "misconception": "The tempting Bb5 is captured by ...Bxb5, so an attractive diagonal can simply lose a bishop.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-13",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Count the countercapture in a connected-pawn break · white queenside reserve",
+      "fen": "4k3/8/8/1pp5/2PP4/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4b5",
+      "principalVariation": [
+        "c4b5",
+        "c5d4",
+        "e1d2",
+        "d4d3",
+        "d2d3"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+      "continuationReason": "Position after five plies: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+      "explanation": "Count the countercapture in a connected-pawn break. Original worked line c4b5 c5d4 e1d2 d4d3 d2d3. Defensive variation c4b5 c5d4 e1f2 d4d3 f2e3. Tempting counterexample d4c5 b5c4 e1d2. White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Defender's resource: ...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Endpoint: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo. Mistake: Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges.",
+        "defenderIdea": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "continuation": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4b5",
+              "c5d4",
+              "e1f2",
+              "d4d3",
+              "f2e3"
+            ],
+            "explanation": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "d4c5",
+              "b5c4",
+              "e1d2"
+            ],
+            "explanation": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white queenside reserve",
+        "materialInsight": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "defensiveResource": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-14",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Count the countercapture in a connected-pawn break · black kingside reserve",
+      "fen": "4k3/7p/8/1pp5/2PP4/8/8/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4b5",
+      "principalVariation": [
+        "c4b5",
+        "c5d4",
+        "e1d2",
+        "d4d3",
+        "d2d3"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+      "continuationReason": "Position after five plies: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+      "explanation": "Count the countercapture in a connected-pawn break. Original worked line c4b5 c5d4 e1d2 d4d3 d2d3. Defensive variation c4b5 c5d4 e1f2 d4d3 f2e3. Tempting counterexample d4c5 b5c4 e1d2. White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Defender's resource: ...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Endpoint: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo. Mistake: Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges.",
+        "defenderIdea": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "continuation": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4b5",
+              "c5d4",
+              "e1f2",
+              "d4d3",
+              "f2e3"
+            ],
+            "explanation": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "d4c5",
+              "b5c4",
+              "e1d2"
+            ],
+            "explanation": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "black kingside reserve",
+        "materialInsight": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "defensiveResource": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    },
+    {
+      "id": "calc:p102-15",
+      "source": "authored",
+      "sourceLabel": "P102 · Simplification and material accounting",
+      "title": "Count the countercapture in a connected-pawn break · white b-file reserve",
+      "fen": "4k3/8/8/1pp5/2PP4/8/1P6/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4b5",
+      "principalVariation": [
+        "c4b5",
+        "c5d4",
+        "e1d2",
+        "d4d3",
+        "d2d3"
+      ],
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.simplification"
+      ],
+      "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
+      "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+      "continuationReason": "Position after five plies: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+      "explanation": "Count the countercapture in a connected-pawn break. Original worked line c4b5 c5d4 e1d2 d4d3 d2d3. Defensive variation c4b5 c5d4 e1f2 d4d3 f2e3. Tempting counterexample d4c5 b5c4 e1d2. White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Defender's resource: ...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Endpoint: Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo. Mistake: Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "defensiveStudy": {
+        "keyQuestion": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges.",
+        "defenderIdea": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "continuation": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "reflection": "Rebuild both line endpoints independently. Name the surviving pieces, the next safe king move and the first possible pawn capture. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
+        "variations": [
+          {
+            "label": "Defensive counterplan (5 plies)",
+            "moves": [
+              "c4b5",
+              "c5d4",
+              "e1f2",
+              "d4d3",
+              "f2e3"
+            ],
+            "explanation": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+          },
+          {
+            "label": "Plausible failure (3 plies)",
+            "moves": [
+              "d4c5",
+              "b5c4",
+              "e1d2"
+            ],
+            "explanation": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Simplification and material accounting",
+        "context": "white b-file reserve",
+        "materialInsight": "Kd2 and ...d3 Kxd3 shows king collection of the advanced pawn, while the alternative king route changes the exact tempo.",
+        "defensiveResource": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it.",
+        "misconception": "Claiming two captured black pawns after cxb5 overlooks that Black took the d4 pawn and still has a dangerous d-pawn.",
+        "authoritativeVerdict": "Only line-specific material claims; WDL not certified"
+      }
+    }
+  ]
+}
