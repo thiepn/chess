@@ -1,0 +1,1237 @@
+{
+  "phase": "P105",
+  "version": 1,
+  "section": "Open files, sacrifice initiative and defended blockers",
+  "positions": [
+    {
+      "id": "calc:p105-16",
+      "title": "The d-file invasion must follow the king — a-file pawn reserve",
+      "source": "authored",
+      "sourceLabel": "P105 · Rook checks and flight-square mapping",
+      "difficulty": 5,
+      "fen": "6kr/8/8/8/8/8/P7/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d7",
+        "h7g6",
+        "d7d6"
+      ],
+      "prompt": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Material-specific variant: White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Variance in the position: White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+.",
+      "continuationReason": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Rook checks and flight-square mapping. Attacking principle: Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck. Independent exercise setup: Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Main legal five-ply candidate: d1d8 g8h7 d8d7 h7g6 d7d6. Defender's separate five-ply reply: d1d8 g8f7 d8d7 f7g6 d7d6. Tempting contrasting plan: d1d5 h8h1 g1f2. Specific defensive answer: The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Evaluation after five plies: Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Repair the misconception: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Variant: White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares.",
+        "defenderIdea": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "continuation": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "misconception": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Pawn/material context: White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d7",
+              "f7g6",
+              "d7d6"
+            ],
+            "explanation": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. After d1d8 g8f7 d8d7 f7g6 d7d6, identify which king escape is possible and where the attacking queen or rook must go. White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d5",
+              "h8h1",
+              "g1f2"
+            ],
+            "explanation": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Candidate d1d5 h8h1 g1f2 requires additional calculation and cannot be called a forced win. White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Rook checks and flight-square mapping",
+        "attackingPrinciple": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+        "defenderReply": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "materialAndKingSafety": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "badPlan": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "variant": "a-file pawn reserve",
+        "context": "White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+            "correction": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White's a2 pawn remains a possible future passer, but does not change whether ...Kh7 or ...Kf7 is a legal response to Rd8+. Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-17",
+      "title": "The d-file invasion must follow the king — b-file reserve",
+      "source": "authored",
+      "sourceLabel": "P105 · Rook checks and flight-square mapping",
+      "difficulty": 5,
+      "fen": "6kr/8/8/8/8/8/1P6/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d7",
+        "h7g6",
+        "d7d6"
+      ],
+      "prompt": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Material-specific variant: White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Variance in the position: White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck.",
+      "continuationReason": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Rook checks and flight-square mapping. Attacking principle: Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck. Independent exercise setup: Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Main legal five-ply candidate: d1d8 g8h7 d8d7 h7g6 d7d6. Defender's separate five-ply reply: d1d8 g8f7 d8d7 f7g6 d7d6. Tempting contrasting plan: d1d5 h8h1 g1f2. Specific defensive answer: The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Evaluation after five plies: Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Repair the misconception: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Variant: White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares.",
+        "defenderIdea": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "continuation": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "misconception": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Pawn/material context: White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d7",
+              "f7g6",
+              "d7d6"
+            ],
+            "explanation": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. After d1d8 g8f7 d8d7 f7g6 d7d6, identify which king escape is possible and where the attacking queen or rook must go. White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d5",
+              "h8h1",
+              "g1f2"
+            ],
+            "explanation": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Candidate d1d5 h8h1 g1f2 requires additional calculation and cannot be called a forced win. White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Rook checks and flight-square mapping",
+        "attackingPrinciple": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+        "defenderReply": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "materialAndKingSafety": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "badPlan": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "variant": "b-file reserve",
+        "context": "White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+            "correction": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White also has a b2 pawn that could help a later king-and-rook ending; its existence cannot eliminate Black's ...Rh1+ countercheck. Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-18",
+      "title": "The d-file invasion must follow the king — Black's c-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Rook checks and flight-square mapping",
+      "difficulty": 5,
+      "fen": "6kr/2p5/8/8/8/8/8/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d7",
+        "h7g6",
+        "d7d6"
+      ],
+      "prompt": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Material-specific variant: Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Variance in the position: Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight.",
+      "continuationReason": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Rook checks and flight-square mapping. Attacking principle: Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck. Independent exercise setup: Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares. Main legal five-ply candidate: d1d8 g8h7 d8d7 h7g6 d7d6. Defender's separate five-ply reply: d1d8 g8f7 d8d7 f7g6 d7d6. Tempting contrasting plan: d1d5 h8h1 g1f2. Specific defensive answer: The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. Evaluation after five plies: Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted. Repair the misconception: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Variant: Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rd8+ checks the king on g8 along the back rank. The defender chooses ...Kh7 or ...Kf7; a rook shift to d7 then forces a second reassessment of the king's squares.",
+        "defenderIdea": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "continuation": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "misconception": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Pawn/material context: Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d7",
+              "f7g6",
+              "d7d6"
+            ],
+            "explanation": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation. After d1d8 g8f7 d8d7 f7g6 d7d6, identify which king escape is possible and where the attacking queen or rook must go. Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d5",
+              "h8h1",
+              "g1f2"
+            ],
+            "explanation": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack. Candidate d1d5 h8h1 g1f2 requires additional calculation and cannot be called a forced win. Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Rook checks and flight-square mapping",
+        "attackingPrinciple": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+        "defenderReply": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+        "materialAndKingSafety": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+        "badPlan": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack.",
+        "variant": "Black's c-pawn",
+        "context": "Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "The black rook can also invade h1 with check if White plays a quiet Rd5, giving the defender genuine attacking play instead of passive cooperation.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Rd6 offers a checking rank against a king on g6. The position still requires further calculation before a mate or rook exchange is asserted.",
+            "correction": "Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "Black's c7 pawn offers long-run counterplay should the rook chase stall. White must first calculate the actual check and king flight. Calculate the rook's attack rays after each king escape; decide when an invading rook is actually protected and when the defender can countercheck.",
+            "correction": "A quiet Rd5 permits ...Rh1+; the white king must react rather than continue a one-sided attack."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-19",
+      "title": "The seventh-rank rook and active counterrook — Queenside target",
+      "source": "authored",
+      "sourceLabel": "P105 · Open a-file pressure",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/1P6/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "prompt": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Material-specific variant: White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Variance in the position: White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king.",
+      "continuationReason": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Open a-file pressure. Attacking principle: An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. Independent exercise setup: Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Main legal five-ply candidate: a1a8 g8f7 a8a7 f7f6 a7a6. Defender's separate five-ply reply: a1a8 g8h7 a8a7 h7g6 a7a6. Tempting contrasting plan: a1a5 e7e1 g1f2. Specific defensive answer: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Evaluation after five plies: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Repair the misconception: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Variant: White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever.",
+        "defenderIdea": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "continuation": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "misconception": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Pawn/material context: White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. After a1a8 g8h7 a8a7 h7g6 a7a6, identify which king escape is possible and where the attacking queen or rook must go. White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "a1a5",
+              "e7e1",
+              "g1f2"
+            ],
+            "explanation": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Candidate a1a5 e7e1 g1f2 requires additional calculation and cannot be called a forced win. White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Open a-file pressure",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "variant": "Queenside target",
+        "context": "White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+            "correction": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White has b2, which becomes a potential target when its rook leaves the first rank to chase Black's king. An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-20",
+      "title": "The seventh-rank rook and active counterrook — Central rook-file pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Open a-file pressure",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/2P5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "prompt": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Material-specific variant: White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Variance in the position: White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file.",
+      "continuationReason": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Open a-file pressure. Attacking principle: An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. Independent exercise setup: Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Main legal five-ply candidate: a1a8 g8f7 a8a7 f7f6 a7a6. Defender's separate five-ply reply: a1a8 g8h7 a8a7 h7g6 a7a6. Tempting contrasting plan: a1a5 e7e1 g1f2. Specific defensive answer: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Evaluation after five plies: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Repair the misconception: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Variant: White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever.",
+        "defenderIdea": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "continuation": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "misconception": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Pawn/material context: White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. After a1a8 g8h7 a8a7 h7g6 a7a6, identify which king escape is possible and where the attacking queen or rook must go. White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "a1a5",
+              "e7e1",
+              "g1f2"
+            ],
+            "explanation": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Candidate a1a5 e7e1 g1f2 requires additional calculation and cannot be called a forced win. White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Open a-file pressure",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "variant": "Central rook-file pawn",
+        "context": "White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+            "correction": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White's c2 pawn may later defend the king's queenside approach, but it does not block the attack from a1 up the a-file. An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-21",
+      "title": "The seventh-rank rook and active counterrook — d-pawn reserve",
+      "source": "authored",
+      "sourceLabel": "P105 · Open a-file pressure",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/3P4/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "prompt": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Material-specific variant: White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Variance in the position: White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation.",
+      "continuationReason": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Open a-file pressure. Attacking principle: An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. Independent exercise setup: Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever. Main legal five-ply candidate: a1a8 g8f7 a8a7 f7f6 a7a6. Defender's separate five-ply reply: a1a8 g8h7 a8a7 h7g6 a7a6. Tempting contrasting plan: a1a5 e7e1 g1f2. Specific defensive answer: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. Evaluation after five plies: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence. Repair the misconception: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Variant: White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ checks through an open eighth rank, but Black's e7 rook threatens its own counterchecks. Follow ...Kf7 with Ra7+ rather than assuming the king remains exposed forever.",
+        "defenderIdea": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "continuation": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "misconception": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Pawn/material context: White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. After a1a8 g8h7 a8a7 h7g6 a7a6, identify which king escape is possible and where the attacking queen or rook must go. White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "a1a5",
+              "e7e1",
+              "g1f2"
+            ],
+            "explanation": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files. Candidate a1a5 e7e1 g1f2 requires additional calculation and cannot be called a forced win. White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Open a-file pressure",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+        "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+        "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
+        "variant": "d-pawn reserve",
+        "context": "White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
+            "correction": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White's d2 pawn may support a future center break against the e7 rook; the immediate rook check still needs independent calculation. An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+            "correction": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-22",
+      "title": "Qh5 forces a calculation of d7 and c8 — a-file pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Long diagonal queen-bishop chase",
+      "difficulty": 5,
+      "fen": "4k3/8/8/8/8/1B2P3/P3Q3/6K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e2h5",
+      "principalVariation": [
+        "e2h5",
+        "e8d7",
+        "h5d5",
+        "d7c8",
+        "d5a8"
+      ],
+      "prompt": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Material-specific variant: White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Variance in the position: White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping.",
+      "continuationReason": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Long diagonal queen-bishop chase. Attacking principle: Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square. Independent exercise setup: The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Main legal five-ply candidate: e2h5 e8d7 h5d5 d7c8 d5a8. Defender's separate five-ply reply: e2h5 e8d7 h5d5 d7e7 d5e5. Tempting contrasting plan: e2h5 e8d7 h5h3. Specific defensive answer: Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Evaluation after five plies: Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Repair the misconception: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Variant: White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. The white e3 pawn deliberately blocks the queen's starting e-file, so the black king on e8 is not illegally in check before the intended Qh5+.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7.",
+        "defenderIdea": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "continuation": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "misconception": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Pawn/material context: White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5d5",
+              "d7e7",
+              "d5e5"
+            ],
+            "explanation": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. After e2h5 e8d7 h5d5 d7e7 d5e5, identify which king escape is possible and where the attacking queen or rook must go. White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5h3"
+            ],
+            "explanation": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Candidate e2h5 e8d7 h5h3 requires additional calculation and cannot be called a forced win. White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Long diagonal queen-bishop chase",
+        "attackingPrinciple": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+        "defenderReply": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "materialAndKingSafety": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "badPlan": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "variant": "a-file pawn",
+        "context": "White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+            "correction": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White owns a2, providing a distant pawn advantage only if the attacker retains its queen and can stop King e8 from escaping. Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-23",
+      "title": "Qh5 forces a calculation of d7 and c8 — b-pawn at home",
+      "source": "authored",
+      "sourceLabel": "P105 · Long diagonal queen-bishop chase",
+      "difficulty": 5,
+      "fen": "4k3/8/8/8/8/1B2P3/1P2Q3/6K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e2h5",
+      "principalVariation": [
+        "e2h5",
+        "e8d7",
+        "h5d5",
+        "d7c8",
+        "d5a8"
+      ],
+      "prompt": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Material-specific variant: White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Variance in the position: White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8.",
+      "continuationReason": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Long diagonal queen-bishop chase. Attacking principle: Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square. Independent exercise setup: The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Main legal five-ply candidate: e2h5 e8d7 h5d5 d7c8 d5a8. Defender's separate five-ply reply: e2h5 e8d7 h5d5 d7e7 d5e5. Tempting contrasting plan: e2h5 e8d7 h5h3. Specific defensive answer: Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Evaluation after five plies: Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Repair the misconception: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Variant: White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. The white e3 pawn deliberately blocks the queen's starting e-file, so the black king on e8 is not illegally in check before the intended Qh5+.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7.",
+        "defenderIdea": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "continuation": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "misconception": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Pawn/material context: White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5d5",
+              "d7e7",
+              "d5e5"
+            ],
+            "explanation": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. After e2h5 e8d7 h5d5 d7e7 d5e5, identify which king escape is possible and where the attacking queen or rook must go. White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5h3"
+            ],
+            "explanation": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Candidate e2h5 e8d7 h5h3 requires additional calculation and cannot be called a forced win. White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Long diagonal queen-bishop chase",
+        "attackingPrinciple": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+        "defenderReply": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "materialAndKingSafety": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "badPlan": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "variant": "b-pawn at home",
+        "context": "White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+            "correction": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White's b2 pawn gives a future escort target; it does not change whether Qh5 checks along h5–e8. Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-24",
+      "title": "Qh5 forces a calculation of d7 and c8 — Defensive c-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Long diagonal queen-bishop chase",
+      "difficulty": 5,
+      "fen": "4k3/2p5/8/8/8/1B2P3/4Q3/6K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e2h5",
+      "principalVariation": [
+        "e2h5",
+        "e8d7",
+        "h5d5",
+        "d7c8",
+        "d5a8"
+      ],
+      "prompt": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Material-specific variant: Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Variance in the position: Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed.",
+      "continuationReason": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Long diagonal queen-bishop chase. Attacking principle: Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square. Independent exercise setup: The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7. Main legal five-ply candidate: e2h5 e8d7 h5d5 d7c8 d5a8. Defender's separate five-ply reply: e2h5 e8d7 h5d5 d7e7 d5e5. Tempting contrasting plan: e2h5 e8d7 h5h3. Specific defensive answer: Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. Evaluation after five plies: Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose. Repair the misconception: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Variant: Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. The white e3 pawn deliberately blocks the queen's starting e-file, so the black king on e8 is not illegally in check before the intended Qh5+.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen arrives at h5 with a diagonal check on e8. White's bishop on b3 affects d5 and f7, but the defender can leave the line by choosing ...Kd7.",
+        "defenderIdea": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "continuation": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "misconception": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Pawn/material context: Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5d5",
+              "d7e7",
+              "d5e5"
+            ],
+            "explanation": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check. After e2h5 e8d7 h5d5 d7e7 d5e5, identify which king escape is possible and where the attacking queen or rook must go. Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e2h5",
+              "e8d7",
+              "h5h3"
+            ],
+            "explanation": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+. Candidate e2h5 e8d7 h5h3 requires additional calculation and cannot be called a forced win. Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Long diagonal queen-bishop chase",
+        "attackingPrinciple": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+        "defenderReply": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+        "materialAndKingSafety": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+        "badPlan": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+.",
+        "variant": "Defensive c-pawn",
+        "context": "Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black can flee to c8 or e7 after Qd5+. Each king square demands a different final queen check.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "Qa8+ and Qe5+ are distinct geometries; the displayed five plies establish checks, not proof that all king moves lose.",
+            "correction": "Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "Black's c7 pawn could affect the king's longer-term c-file shelter after ...Kc8. The checks themselves must still be computed. Before choosing a queen retreat, reconstruct both active diagonals and determine whether the bishop blocks or supports a checking square.",
+            "correction": "Moving the queen quietly to h3 after the defender runs to d7 gives up the tempo earned by Qh5+."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-25",
+      "title": "A rook takes g7 to open a queen check — White's outside pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Initiative at material cost",
+      "difficulty": 5,
+      "fen": "6k1/6pp/8/8/8/8/P7/1K1Q2R1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "g1g7",
+      "principalVariation": [
+        "g1g7",
+        "g8g7",
+        "d1g4",
+        "g7h8",
+        "g4h5"
+      ],
+      "prompt": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Material-specific variant: White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Variance in the position: White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position.",
+      "continuationReason": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Initiative at material cost. Attacking principle: Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage. Independent exercise setup: Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Main legal five-ply candidate: g1g7 g8g7 d1g4 g7h8 g4h5. Defender's separate five-ply reply: g1g7 g8g7 d1d4 g7f8 d4h8. Tempting contrasting plan: d1d7 g8f8 g1g7. Specific defensive answer: Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Evaluation after five plies: White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Repair the misconception: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Variant: White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook.",
+        "defenderIdea": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "continuation": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "misconception": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Pawn/material context: White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "g1g7",
+              "g8g7",
+              "d1d4",
+              "g7f8",
+              "d4h8"
+            ],
+            "explanation": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. After g1g7 g8g7 d1d4 g7f8 d4h8, identify which king escape is possible and where the attacking queen or rook must go. White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d7",
+              "g8f8",
+              "g1g7"
+            ],
+            "explanation": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Candidate d1d7 g8f8 g1g7 requires additional calculation and cannot be called a forced win. White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Initiative at material cost",
+        "attackingPrinciple": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+        "defenderReply": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "materialAndKingSafety": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "badPlan": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "variant": "White's outside pawn",
+        "context": "White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+            "correction": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White retains a2 after exchanging the attacking rook, so the final pawn count differs from a bare-king position. Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-26",
+      "title": "A rook takes g7 to open a queen check — Queenside king shelter",
+      "source": "authored",
+      "sourceLabel": "P105 · Initiative at material cost",
+      "difficulty": 5,
+      "fen": "6k1/6pp/8/8/8/8/2P5/1K1Q2R1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "g1g7",
+      "principalVariation": [
+        "g1g7",
+        "g8g7",
+        "d1g4",
+        "g7h8",
+        "g4h5"
+      ],
+      "prompt": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Material-specific variant: A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Variance in the position: A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7.",
+      "continuationReason": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Initiative at material cost. Attacking principle: Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage. Independent exercise setup: Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Main legal five-ply candidate: g1g7 g8g7 d1g4 g7h8 g4h5. Defender's separate five-ply reply: g1g7 g8g7 d1d4 g7f8 d4h8. Tempting contrasting plan: d1d7 g8f8 g1g7. Specific defensive answer: Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Evaluation after five plies: White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Repair the misconception: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Variant: A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook.",
+        "defenderIdea": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "continuation": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "misconception": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Pawn/material context: A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "g1g7",
+              "g8g7",
+              "d1d4",
+              "g7f8",
+              "d4h8"
+            ],
+            "explanation": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. After g1g7 g8g7 d1d4 g7f8 d4h8, identify which king escape is possible and where the attacking queen or rook must go. A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d7",
+              "g8f8",
+              "g1g7"
+            ],
+            "explanation": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Candidate d1d7 g8f8 g1g7 requires additional calculation and cannot be called a forced win. A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Initiative at material cost",
+        "attackingPrinciple": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+        "defenderReply": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "materialAndKingSafety": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "badPlan": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "variant": "Queenside king shelter",
+        "context": "A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+            "correction": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "A c2 pawn near the b1 king may provide future defensive squares, but does not protect the rook on g7 after ...Kxg7. Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-27",
+      "title": "A rook takes g7 to open a queen check — Black's a-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Initiative at material cost",
+      "difficulty": 5,
+      "fen": "6k1/p5pp/8/8/8/8/8/1K1Q2R1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "g1g7",
+      "principalVariation": [
+        "g1g7",
+        "g8g7",
+        "d1g4",
+        "g7h8",
+        "g4h5"
+      ],
+      "prompt": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Material-specific variant: Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Variance in the position: Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king.",
+      "continuationReason": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Initiative at material cost. Attacking principle: Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage. Independent exercise setup: Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook. Main legal five-ply candidate: g1g7 g8g7 d1g4 g7h8 g4h5. Defender's separate five-ply reply: g1g7 g8g7 d1d4 g7f8 d4h8. Tempting contrasting plan: d1d7 g8f8 g1g7. Specific defensive answer: Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. Evaluation after five plies: White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line. Repair the misconception: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Variant: Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxg7+ is a deliberate rook-for-pawn sacrifice. After ...Kxg7, Qg4+ activates the queen but does not magically compensate a whole rook.",
+        "defenderIdea": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "continuation": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "misconception": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Pawn/material context: Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "g1g7",
+              "g8g7",
+              "d1d4",
+              "g7f8",
+              "d4h8"
+            ],
+            "explanation": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit. After g1g7 g8g7 d1d4 g7f8 d4h8, identify which king escape is possible and where the attacking queen or rook must go. Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "d1d7",
+              "g8f8",
+              "g1g7"
+            ],
+            "explanation": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook. Candidate d1d7 g8f8 g1g7 requires additional calculation and cannot be called a forced win. Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Initiative at material cost",
+        "attackingPrinciple": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+        "defenderReply": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+        "materialAndKingSafety": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+        "badPlan": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook.",
+        "variant": "Black's a-pawn",
+        "context": "Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "Black's king can recapture on g7 and later flee toward h8 or f8. White must calculate actual checking distance and whether any remaining attack justifies the material deficit.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "White continues attacking with the queen, but the captured rook is a real loss; no forced perpetual or win is proved by this short line.",
+            "correction": "Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "Black also keeps a7, making the rook sacrifice riskier because the defender has an outside passer as well as its king. Identify the sacrificed material, enumerate the defender's king flights and compare Qg4+ with Qd4+ without awarding unproven attacking advantage.",
+            "correction": "Pretending Rxg7+ wins because it checks ignores ...Kxg7. A queen-only initiative is not automatically adequate compensation for the rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-28",
+      "title": "A king-supported rook on f8 cannot be taken safely — White a-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Poisoned blocking rook",
+      "difficulty": 5,
+      "fen": "6k1/5r2/8/8/8/8/P7/2B1Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook.",
+      "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
+        "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. After e1e8 f7f8 e8d8 g8h7 d8d5, identify which king escape is possible and where the attacking queen or rook must go. The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Candidate e1e8 f7f8 e8f8 requires additional calculation and cannot be called a forced win. The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Poisoned blocking rook",
+        "attackingPrinciple": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+        "defenderReply": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "variant": "White a-pawn",
+        "context": "The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+            "correction": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-29",
+      "title": "A king-supported rook on f8 cannot be taken safely — White b-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Poisoned blocking rook",
+      "difficulty": 5,
+      "fen": "6k1/5r2/8/8/8/8/1P6/2B1Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged.",
+      "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
+        "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. After e1e8 f7f8 e8d8 g8h7 d8d5, identify which king escape is possible and where the attacking queen or rook must go. The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Candidate e1e8 f7f8 e8f8 requires additional calculation and cannot be called a forced win. The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Poisoned blocking rook",
+        "attackingPrinciple": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+        "defenderReply": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "variant": "White b-pawn",
+        "context": "The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+            "correction": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p105-30",
+      "title": "A king-supported rook on f8 cannot be taken safely — White c-pawn",
+      "source": "authored",
+      "sourceLabel": "P105 · Poisoned blocking rook",
+      "difficulty": 5,
+      "fen": "6k1/5r2/8/8/8/8/2P5/2B1Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. Determine where the defender's king can actually go and which check or capture comes next.",
+      "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture.",
+      "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
+        "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
+        "variations": [
+          {
+            "label": "Strong defensive king escape",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. After e1e8 f7f8 e8d8 g8h7 d8d5, identify which king escape is possible and where the attacking queen or rook must go. White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture."
+          },
+          {
+            "label": "Premature attack or material miscount",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Candidate e1e8 f7f8 e8f8 requires additional calculation and cannot be called a forced win. White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture."
+          }
+        ]
+      },
+      "kingAttackStudy": {
+        "theme": "Poisoned blocking rook",
+        "attackingPrinciple": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+        "defenderReply": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+        "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+        "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
+        "variant": "White c-pawn",
+        "context": "White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
+        "independentExercises": [
+          {
+            "question": "Identify the correct forcing move and every plausible king escape or interposition.",
+            "answer": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          },
+          {
+            "question": "Account for the actual rook, queen, or pawn captures after the recorded five plies.",
+            "answer": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
+            "correction": "Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move."
+          },
+          {
+            "question": "Compare the tempting but unsafe plan with the safer route and explain what the extra pawn changes.",
+            "answer": "White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move.",
+            "correction": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook."
+          }
+        ]
+      }
+    }
+  ]
+}
