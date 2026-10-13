@@ -9,9 +9,9 @@ import type {
 } from "./types";
 
 // Original authored calculation content stays in external static assets.
+// Original lazy study assets: no parallel database or synthetic lesson store.
 const externalPositions: CalculationPosition[] = [];
-if (typeof window !== "undefined") {
-  for (const [file, count] of [
+const sourceFiles = [
     ["p94-candidates-v1.json", 40],
     ["p95-defensive-resistance-v1.json", 40],
     ["p96-quiet-positional-v1.json", 35],
@@ -43,20 +43,78 @@ if (typeof window !== "undefined") {
     ["p106-active-defense-v1.json", 15],
     ["p106-queen-counterplay-v1.json", 15],
     ["p106-king-fortress-v1.json", 18],
-  ] as const) {
-    const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
-    fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
-      .then(r => r.json())
-      .then(({positions}: {positions: CalculationPosition[]}) => {
-        if (!Array.isArray(positions) || positions.length !== count) return;
-        if (positions.every(p => p.id.startsWith(prefix) &&
-          legalCalculationBranch(p) && (prefix === "calc:p94-" ||
-          p.defensiveStudy?.variations.every(v => legalCalculationBranch({
-            ...p, bestMove: v.moves[0], principalVariation: v.moves,
-          }))))) externalPositions.push(...positions);
-      }).catch(() => {});
-  }
+  ] as const;
+type SourceStatus = "loading" | "ready" | "failed";
+const sourceStatus = new Map<string, SourceStatus>();
+const sourceListeners = new Set<() => void>();
+let sourceRevision = 0;
+export function subscribeCalculationSources(listener: () => void): () => void {
+  sourceListeners.add(listener);
+  return () => { sourceListeners.delete(listener); };
 }
+export function calculationSourceRevision(): number { return sourceRevision; }
+export function calculationSourceStatus() {
+  const failedFiles = sourceFiles.filter(([file]) => sourceStatus.get(file) === "failed").map(([file]) => file);
+  return {
+    total: sourceFiles.length,
+    ready: sourceFiles.filter(([file]) => sourceStatus.get(file) === "ready").length,
+    pending: sourceFiles.filter(([file]) => sourceStatus.get(file) === "loading").length,
+    failedFiles,
+  };
+}
+function publishSourceUpdate(): void {
+  sourceRevision += 1;
+  sourceListeners.forEach(listener => listener());
+}
+function loadCalculationSource(file: string, count: number): void {
+  if (typeof window === "undefined" ||
+      sourceStatus.get(file) === "ready" || sourceStatus.get(file) === "loading") return;
+  sourceStatus.set(file, "loading");
+  publishSourceUpdate();
+  const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
+  void fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
+    .then(async response => {
+      if (!response.ok) throw new Error("Study file unavailable");
+      const data: unknown = await response.json();
+      if (!data || typeof data !== "object" || !("positions" in data) ||
+          !Array.isArray(data.positions) || data.positions.length !== count) {
+        throw new Error("Study manifest count mismatch");
+      }
+      const positions = data.positions as CalculationPosition[];
+      const ids = new Set<string>(), fens = new Set<string>();
+      if (!positions.every(position => {
+        if (!position || typeof position.id !== "string" ||
+            !position.id.startsWith(prefix) || typeof position.fen !== "string" ||
+            ids.has(position.id) || fens.has(position.fen) ||
+            !legalCalculationBranch(position)) return false;
+        ids.add(position.id);
+        fens.add(position.fen);
+        return prefix === "calc:p94-" ||
+          (Array.isArray(position.defensiveStudy?.variations) &&
+            position.defensiveStudy.variations.every(variation =>
+              !!legalCalculationBranch({
+                ...position, bestMove: variation.moves[0],
+                principalVariation: variation.moves,
+              })));
+      })) throw new Error("Study source failed legal or identity checks");
+      if (positions.some(position =>
+        externalPositions.some(existing => existing.id === position.id ||
+          existing.fen === position.fen))) throw new Error("Duplicate study source");
+      externalPositions.push(...positions);
+      sourceStatus.set(file, "ready");
+      publishSourceUpdate();
+    })
+    .catch(() => {
+      sourceStatus.set(file, "failed");
+      publishSourceUpdate();
+    });
+}
+export function retryFailedCalculationSources(): void {
+  for (const [file, count] of sourceFiles)
+    if (sourceStatus.get(file) === "failed") loadCalculationSource(file, count);
+}
+if (typeof window !== "undefined")
+  for (const [file, count] of sourceFiles) loadCalculationSource(file, count);
 
 const authoredPositions: CalculationPosition[] = [
   {

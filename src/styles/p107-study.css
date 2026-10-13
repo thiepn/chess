@@ -1,0 +1,32 @@
+/* P107 native independent study: square geometry, keyboard and mobile readable. */
+.calculation-study { margin-top:24px; padding:20px; border:1px solid var(--chess-color-separator,var(--line)); background:var(--chess-color-surface,var(--surface)); border-radius:6px; color:inherit; }
+.calculation-study-header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+.calculation-study-header h3 { margin:4px 0 8px; font-size:1.1rem; }
+.calculation-study-header p, .calculation-study small { color:var(--chess-color-muted,var(--muted)); line-height:1.55; }
+.calculation-study-header > span { white-space:nowrap; font-size:.8rem; }
+.calculation-study-tabs { display:flex; gap:6px; overflow-x:auto; padding:12px 0; }
+.calculation-study-tabs button { min-width:38px; min-height:38px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
+.calculation-study-tabs .selected, .calculation-study-assessment .selected { border-color:currentColor; font-weight:800; text-decoration:underline; text-underline-offset:3px; }
+.calculation-study-question { display:grid; gap:10px; }
+.calculation-study-question > p, .calculation-study-branches p { margin:0; line-height:1.6; }
+.calculation-study-question label { font-weight:700; }
+.calculation-study-question textarea { width:100%; padding:11px; font:inherit; line-height:1.5; resize:vertical; min-height:115px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:5px; color:inherit; background:var(--chess-color-background,var(--bg)); }
+.calculation-study-question > .secondary { justify-self:start; padding:9px 16px; }
+.calculation-study-feedback { display:grid; gap:10px; border-top:1px solid var(--chess-color-separator,var(--line)); padding-top:14px; }
+.calculation-study-repair { border-left:3px solid currentColor; padding-left:12px; }
+.calculation-study-assessment, .calculation-study-footer { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.calculation-study-assessment button { min-height:44px; padding:9px 12px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
+.calculation-study-footer { justify-content:space-between; margin-top:18px; }
+.calculation-study-footer > span { font-size:.8rem; }
+.calculation-study-branches { border-top:1px solid var(--chess-color-separator,var(--line)); margin-top:15px; padding-top:12px; }
+.calculation-study-branches summary { cursor:pointer; font-weight:700; padding:8px 0; }
+.calculation-study-branches article { display:grid; gap:7px; padding:10px 0; border-bottom:1px solid var(--chess-color-separator,var(--line)); }
+.calculation-study-branches code { overflow-wrap:anywhere; }
+.calculation-study-clear { display:inline-flex; align-items:center; gap:7px; margin-top:16px; border:0; background:transparent; color:inherit; text-decoration:underline; padding:6px 0; cursor:pointer; }
+.calculation-study button:focus-visible, .calculation-study textarea:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+@media (max-width:600px) { .calculation-study { padding:13px; } .calculation-study-header { flex-direction:column; } .calculation-study-footer > span { order:3; width:100%; } .calculation-study-question > .secondary { justify-self:stretch; } }
+
+.calculation-study-gate > .primary { margin-top:14px; width:100%; min-height:44px; }
+.calculation-study-gate > small { display:block; margin:8px 0 0; color:var(--chess-color-muted,var(--muted)); line-height:1.5; }
+.calculation-source-notice { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:12px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:6px; }
+.calculation-source-notice .secondary { min-height:38px; padding:7px 12px; }

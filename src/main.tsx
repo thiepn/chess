@@ -10,6 +10,7 @@ import "./styles/p52-accessibility.css";
 import "./styles/p59-visual-qa.css";
 import "./styles/p59b-refinement.css";
 import "./styles/p64-premium-finishing.css";
+import "./styles/p107-study.css";
 
 import { initializeChessAccount } from "./account/chessSession";
 
