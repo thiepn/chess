@@ -22,7 +22,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
@@ -85,7 +85,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
@@ -148,7 +148,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
@@ -211,7 +211,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
@@ -276,7 +276,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
@@ -341,7 +341,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Qe8+ draws ...Rf8 from f7. The rook on f8 is defended by the black king on g8; preserve queen material rather than automatically capturing. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
@@ -406,7 +406,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
@@ -469,7 +469,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
@@ -532,7 +532,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Rxc2 converts a dangerous enemy rook into material advantage. Continuing Kf2 then Rc6+ preserves the rook and improves king activity. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king may advance to b7 and b6; attacking it with Rc7?? can simply give the rook to ...Kxc7. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
@@ -595,7 +595,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
@@ -658,7 +658,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
@@ -721,7 +721,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "Bd5 allows a same-color bishop exchange, but the central king recapture is crucial. The endgame after the two bishops disappear is a pure king-and-pawn comparison if pawns remain. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...Be6 and ...Bc6 are distinct ways to contest the attacker: one permits ...Kxe6, while the other leaves the defender king nearer the d-file. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
@@ -784,7 +784,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
@@ -847,7 +847,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
@@ -910,7 +910,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
-        "endgames.simplification"
+        "conversion.simplify"
       ],
       "prompt": "White can capture b5 from c4, but the c5 pawn simultaneously captures d4. A conversion verdict must count both exchanges. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "...cxd4 counterattacks the other central pawn and can advance to d3; White's king must choose how to contain it. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
