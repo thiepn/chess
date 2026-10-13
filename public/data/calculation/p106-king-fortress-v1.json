@@ -23,7 +23,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5.",
@@ -107,7 +107,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: White's b2 pawn can support later conversion but does not protect the rook that moves to h5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: White's b2 pawn can support later conversion but does not protect the rook that moves to h5.",
@@ -191,7 +191,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: Black retains c7; a rook gain still requires checking distance and practical pawn prevention. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: Black retains c7; a rook gain still requires checking distance and practical pawn prevention.",
@@ -275,7 +275,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: White's a2 can become a passed pawn once the c-file danger has been eliminated. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: White's a2 can become a passed pawn once the c-file danger has been eliminated.",
@@ -359,7 +359,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward.",
@@ -443,7 +443,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king.",
@@ -527,7 +527,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: White b2 can support a practical queenside passer after simplifying the rook tension. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: White b2 can support a practical queenside passer after simplifying the rook tension.",
@@ -611,7 +611,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5.",
@@ -695,7 +695,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters.",
@@ -779,7 +779,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn.",
@@ -863,7 +863,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank.",
@@ -947,7 +947,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: Black owns a7, so even a successful king flight leaves an outside pawn to stop. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: Black owns a7, so even a successful king flight leaves an outside pawn to stop.",
@@ -1031,7 +1031,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: The white a-pawn survives the knight trade and can later distract Black's king from d5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: The white a-pawn survives the knight trade and can later distract Black's king from d5.",
@@ -1115,7 +1115,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5.",
@@ -1199,7 +1199,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
       "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory.",
