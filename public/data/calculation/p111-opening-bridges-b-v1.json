@@ -1,0 +1,658 @@
+{
+  "version": 1,
+  "phase": "P111",
+  "part": "B",
+  "provenance": "Original Chess repertoire nodes; legally hydrated by native chess.js. Prefixes authored, extra 5-ply variation steps exploratory, never engine-certified.",
+  "positions": [
+    {
+      "id": "calc:p111-09",
+      "source": "authored",
+      "sourceLabel": "P111 · French: d4 chain base · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "@repertoire:french-e5",
+      "playerColor": "w",
+      "bestMove": "c7c5",
+      "principalVariation": [
+        "c7c5",
+        "c2c3",
+        "b8c6",
+        "g1f3",
+        "d8b6"
+      ],
+      "title": "French: d4 chain base: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node french-e5: White's e5 pawn sits ahead of a d4 base that Black needs to challenge. This repertoire transition illustrates ...c5 and ...Nc6 before forcing a central exchange. The opponent's active resource is White's c3 reinforcement can make direct pressure on d4 harder. Central exchanges can free Black's bishop or open the c-file. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "White's e5 pawn sits ahead of a d4 base that Black needs to challenge. This repertoire transition illustrates ...c5 and ...Nc6 before forcing a central exchange. The opponent's active resource is White's c3 reinforcement can make direct pressure on d4 harder. Central exchanges can free Black's bishop or open the c-file. ...f6 must be justified against exf6 and king-shelter risk. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: c7–c5, c2–c3, b8–c6, g1–f3, d8–b6. Independently explored branch openings: b8–c6 and f7–f6. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is c2–c3. White's c3 reinforcement can make direct pressure on d4 harder Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move b8–c6 has to be assessed against the altered pawn contacts. ...c5 and ...Nc6 before forcing a central exchange Central exchanges can free Black's bishop or open the c-file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist c7–c5 in French: d4 chain base?",
+        "defenderIdea": "White's c3 reinforcement can make direct pressure on d4 harder",
+        "continuation": "...c5 and ...Nc6 before forcing a central exchange",
+        "misconception": "...f6 must be justified against exf6 and king-shelter risk. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the french-e5 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "b8c6"
+            ],
+            "explanation": "White's c3 reinforcement can make direct pressure on d4 harder The documented start b8–c6 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "f7f6"
+            ],
+            "explanation": "...f6 must be justified against exf6 and king-shelter risk Different start f7–f6 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "french-e5",
+        "repertoireId": "white-e4-simple",
+        "theme": "French: d4 chain base",
+        "structure": "White's e5 pawn sits ahead of a d4 base that Black needs to challenge",
+        "breakPlan": "...c5 and ...Nc6 before forcing a central exchange",
+        "counterplan": "White's c3 reinforcement can make direct pressure on d4 harder",
+        "prevention": "...f6 must be justified against exf6 and king-shelter risk",
+        "tradeDecision": "Central exchanges can free Black's bishop or open the c-file",
+        "transferQuestion": "After c7–c5, c2–c3, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the French: d4 chain base decision, what pawn structure exists, where should you place the next piece, and how would white's c3 reinforcement can make direct pressure on d4 harder alter the planned break?",
+            "answer": "White's e5 pawn sits ahead of a d4 base that Black needs to challenge. This repertoire transition illustrates ...c5 and ...Nc6 before forcing a central exchange. The opponent's active resource is White's c3 reinforcement can make direct pressure on d4 harder. Central exchanges can free Black's bishop or open the c-file. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "...f6 must be justified against exf6 and king-shelter risk. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate c7–c5, c2–c3 without a diagram. Why can b8–c6 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is c7–c5, c2–c3, b8–c6, g1–f3, d8–b6. White's e5 pawn sits ahead of a d4 base that Black needs to challenge. This repertoire transition illustrates ...c5 and ...Nc6 before forcing a central exchange. The opponent's active resource is White's c3 reinforcement can make direct pressure on d4 harder. Central exchanges can free Black's bishop or open the c-file. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "...f6 must be justified against exf6 and king-shelter risk. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original c7–c5, c2–c3 with b8–c6 and the separate f7–f6 candidate. What preventative choice still applies?",
+            "answer": "Main plan: c7–c5, c2–c3, b8–c6, g1–f3, d8–b6. Competing branches begin b8–c6 and f7–f6. White's c3 reinforcement can make direct pressure on d4 harder ...f6 must be justified against exf6 and king-shelter risk Central exchanges can free Black's bishop or open the c-file. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "...f6 must be justified against exf6 and king-shelter risk. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-10",
+      "source": "authored",
+      "sourceLabel": "P111 · French: c3 and central tension · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "@repertoire:french-c3",
+      "playerColor": "w",
+      "bestMove": "b8c6",
+      "principalVariation": [
+        "b8c6",
+        "g1f3",
+        "d8b6",
+        "f1d3",
+        "c5d4"
+      ],
+      "title": "French: c3 and central tension: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node french-c3: White's c3 pawn buttresses d4 while Black's c5 pawn supplies counterpressure. This repertoire transition illustrates ...Nc6, ...Qb6 and possible ...cxd4. The opponent's active resource is White can develop Nf3/Bd3 and keep a dangerous pawn center. After ...cxd4 count whose c-pawn can recapture and what file opens. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "White's c3 pawn buttresses d4 while Black's c5 pawn supplies counterpressure. This repertoire transition illustrates ...Nc6, ...Qb6 and possible ...cxd4. The opponent's active resource is White can develop Nf3/Bd3 and keep a dangerous pawn center. After ...cxd4 count whose c-pawn can recapture and what file opens. An automatic pawn break is not good simply because it is thematic. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: b8–c6, g1–f3, d8–b6, f1–d3, c5–d4. Independently explored branch openings: d8–b6, g1–f3, b8–c6 and f7–f6, e5–f6, g8–f6. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is g1–f3. White can develop Nf3/Bd3 and keep a dangerous pawn center Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move d8–b6 has to be assessed against the altered pawn contacts. ...Nc6, ...Qb6 and possible ...cxd4 After ...cxd4 count whose c-pawn can recapture and what file opens",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist b8–c6 in French: c3 and central tension?",
+        "defenderIdea": "White can develop Nf3/Bd3 and keep a dangerous pawn center",
+        "continuation": "...Nc6, ...Qb6 and possible ...cxd4",
+        "misconception": "An automatic pawn break is not good simply because it is thematic. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the french-c3 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "d8b6",
+              "g1f3",
+              "b8c6"
+            ],
+            "explanation": "White can develop Nf3/Bd3 and keep a dangerous pawn center The documented start d8–b6, g1–f3, b8–c6 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "f7f6",
+              "e5f6",
+              "g8f6"
+            ],
+            "explanation": "An automatic pawn break is not good simply because it is thematic Different start f7–f6, e5–f6, g8–f6 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "french-c3",
+        "repertoireId": "white-e4-simple",
+        "theme": "French: c3 and central tension",
+        "structure": "White's c3 pawn buttresses d4 while Black's c5 pawn supplies counterpressure",
+        "breakPlan": "...Nc6, ...Qb6 and possible ...cxd4",
+        "counterplan": "White can develop Nf3/Bd3 and keep a dangerous pawn center",
+        "prevention": "An automatic pawn break is not good simply because it is thematic",
+        "tradeDecision": "After ...cxd4 count whose c-pawn can recapture and what file opens",
+        "transferQuestion": "After b8–c6, g1–f3, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the French: c3 and central tension decision, what pawn structure exists, where should you place the next piece, and how would white can develop nf3/bd3 and keep a dangerous pawn center alter the planned break?",
+            "answer": "White's c3 pawn buttresses d4 while Black's c5 pawn supplies counterpressure. This repertoire transition illustrates ...Nc6, ...Qb6 and possible ...cxd4. The opponent's active resource is White can develop Nf3/Bd3 and keep a dangerous pawn center. After ...cxd4 count whose c-pawn can recapture and what file opens. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "An automatic pawn break is not good simply because it is thematic. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate b8–c6, g1–f3 without a diagram. Why can d8–b6 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is b8–c6, g1–f3, d8–b6, f1–d3, c5–d4. White's c3 pawn buttresses d4 while Black's c5 pawn supplies counterpressure. This repertoire transition illustrates ...Nc6, ...Qb6 and possible ...cxd4. The opponent's active resource is White can develop Nf3/Bd3 and keep a dangerous pawn center. After ...cxd4 count whose c-pawn can recapture and what file opens. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "An automatic pawn break is not good simply because it is thematic. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original b8–c6, g1–f3 with d8–b6, g1–f3, b8–c6 and the separate f7–f6, e5–f6, g8–f6 candidate. What preventative choice still applies?",
+            "answer": "Main plan: b8–c6, g1–f3, d8–b6, f1–d3, c5–d4. Competing branches begin d8–b6, g1–f3, b8–c6 and f7–f6, e5–f6, g8–f6. White can develop Nf3/Bd3 and keep a dangerous pawn center An automatic pawn break is not good simply because it is thematic After ...cxd4 count whose c-pawn can recapture and what file opens. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "An automatic pawn break is not good simply because it is thematic. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-11",
+      "source": "authored",
+      "sourceLabel": "P111 · Black Caro: central exchange · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "@repertoire:black-caro-nc3",
+      "playerColor": "w",
+      "bestMove": "d5e4",
+      "principalVariation": [
+        "d5e4",
+        "c3e4",
+        "c8f5",
+        "g1f3",
+        "b8d7"
+      ],
+      "title": "Black Caro: central exchange: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-caro-nc3: White's c3 knight supports e4, but Black's d5 pawn can exchange there. This repertoire transition illustrates ...dxe4 followed by ...Bf5 before blocking the bishop with ...e6. The opponent's active resource is White's knight recaptures on e4 and threatens useful central moves. After Nxe4 a minor piece exchange changes e4 access. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "White's c3 knight supports e4, but Black's d5 pawn can exchange there. This repertoire transition illustrates ...dxe4 followed by ...Bf5 before blocking the bishop with ...e6. The opponent's active resource is White's knight recaptures on e4 and threatens useful central moves. After Nxe4 a minor piece exchange changes e4 access. Do not trade center pawns without checking the knight recapture. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: d5–e4, c3–e4, c8–f5, g1–f3, b8–d7. Independently explored branch openings: g8–f6 and c8–f5. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is c3–e4. White's knight recaptures on e4 and threatens useful central moves Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move c8–f5 has to be assessed against the altered pawn contacts. ...dxe4 followed by ...Bf5 before blocking the bishop with ...e6 After Nxe4 a minor piece exchange changes e4 access",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist d5–e4 in Black Caro: central exchange?",
+        "defenderIdea": "White's knight recaptures on e4 and threatens useful central moves",
+        "continuation": "...dxe4 followed by ...Bf5 before blocking the bishop with ...e6",
+        "misconception": "Do not trade center pawns without checking the knight recapture. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-caro-nc3 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "g8f6"
+            ],
+            "explanation": "White's knight recaptures on e4 and threatens useful central moves The documented start g8–f6 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "c8f5"
+            ],
+            "explanation": "Do not trade center pawns without checking the knight recapture Different start c8–f5 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-caro-nc3",
+        "repertoireId": "black-caro",
+        "theme": "Black Caro: central exchange",
+        "structure": "White's c3 knight supports e4, but Black's d5 pawn can exchange there",
+        "breakPlan": "...dxe4 followed by ...Bf5 before blocking the bishop with ...e6",
+        "counterplan": "White's knight recaptures on e4 and threatens useful central moves",
+        "prevention": "Do not trade center pawns without checking the knight recapture",
+        "tradeDecision": "After Nxe4 a minor piece exchange changes e4 access",
+        "transferQuestion": "After d5–e4, c3–e4, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the Black Caro: central exchange decision, what pawn structure exists, where should you place the next piece, and how would white's knight recaptures on e4 and threatens useful central moves alter the planned break?",
+            "answer": "White's c3 knight supports e4, but Black's d5 pawn can exchange there. This repertoire transition illustrates ...dxe4 followed by ...Bf5 before blocking the bishop with ...e6. The opponent's active resource is White's knight recaptures on e4 and threatens useful central moves. After Nxe4 a minor piece exchange changes e4 access. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "Do not trade center pawns without checking the knight recapture. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate d5–e4, c3–e4 without a diagram. Why can c8–f5 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is d5–e4, c3–e4, c8–f5, g1–f3, b8–d7. White's c3 knight supports e4, but Black's d5 pawn can exchange there. This repertoire transition illustrates ...dxe4 followed by ...Bf5 before blocking the bishop with ...e6. The opponent's active resource is White's knight recaptures on e4 and threatens useful central moves. After Nxe4 a minor piece exchange changes e4 access. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "Do not trade center pawns without checking the knight recapture. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original d5–e4, c3–e4 with g8–f6 and the separate c8–f5 candidate. What preventative choice still applies?",
+            "answer": "Main plan: d5–e4, c3–e4, c8–f5, g1–f3, b8–d7. Competing branches begin g8–f6 and c8–f5. White's knight recaptures on e4 and threatens useful central moves Do not trade center pawns without checking the knight recapture After Nxe4 a minor piece exchange changes e4 access. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "Do not trade center pawns without checking the knight recapture. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-12",
+      "source": "authored",
+      "sourceLabel": "P111 · Black Caro: knight versus bishop · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "@repertoire:black-caro-nxe4",
+      "playerColor": "w",
+      "bestMove": "c8f5",
+      "principalVariation": [
+        "c8f5",
+        "g1f3",
+        "b8d7",
+        "e4g3",
+        "f5g6"
+      ],
+      "title": "Black Caro: knight versus bishop: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-caro-nxe4: White's knight on e4 stands centrally and Black's bishop can reach f5. This repertoire transition illustrates ...Bf5 and ...Nd7 to coordinate without overcommitting. The opponent's active resource is White can use Nf3, Ng3 or an exchange on f6 to change the bishop route. Trades on f6 can alter Black's e-pawn and open a file. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "White's knight on e4 stands centrally and Black's bishop can reach f5. This repertoire transition illustrates ...Bf5 and ...Nd7 to coordinate without overcommitting. The opponent's active resource is White can use Nf3, Ng3 or an exchange on f6 to change the bishop route. Trades on f6 can alter Black's e-pawn and open a file. Developing the bishop does not make the e4 knight an automatic target. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: c8–f5, g1–f3, b8–d7, e4–g3, f5–g6. Independently explored branch openings: g8–f6 and b8–d7. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is g1–f3. White can use Nf3, Ng3 or an exchange on f6 to change the bishop route Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move b8–d7 has to be assessed against the altered pawn contacts. ...Bf5 and ...Nd7 to coordinate without overcommitting Trades on f6 can alter Black's e-pawn and open a file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist c8–f5 in Black Caro: knight versus bishop?",
+        "defenderIdea": "White can use Nf3, Ng3 or an exchange on f6 to change the bishop route",
+        "continuation": "...Bf5 and ...Nd7 to coordinate without overcommitting",
+        "misconception": "Developing the bishop does not make the e4 knight an automatic target. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-caro-nxe4 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "g8f6"
+            ],
+            "explanation": "White can use Nf3, Ng3 or an exchange on f6 to change the bishop route The documented start g8–f6 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "b8d7"
+            ],
+            "explanation": "Developing the bishop does not make the e4 knight an automatic target Different start b8–d7 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-caro-nxe4",
+        "repertoireId": "black-caro",
+        "theme": "Black Caro: knight versus bishop",
+        "structure": "White's knight on e4 stands centrally and Black's bishop can reach f5",
+        "breakPlan": "...Bf5 and ...Nd7 to coordinate without overcommitting",
+        "counterplan": "White can use Nf3, Ng3 or an exchange on f6 to change the bishop route",
+        "prevention": "Developing the bishop does not make the e4 knight an automatic target",
+        "tradeDecision": "Trades on f6 can alter Black's e-pawn and open a file",
+        "transferQuestion": "After c8–f5, g1–f3, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the Black Caro: knight versus bishop decision, what pawn structure exists, where should you place the next piece, and how would white can use nf3, ng3 or an exchange on f6 to change the bishop route alter the planned break?",
+            "answer": "White's knight on e4 stands centrally and Black's bishop can reach f5. This repertoire transition illustrates ...Bf5 and ...Nd7 to coordinate without overcommitting. The opponent's active resource is White can use Nf3, Ng3 or an exchange on f6 to change the bishop route. Trades on f6 can alter Black's e-pawn and open a file. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "Developing the bishop does not make the e4 knight an automatic target. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate c8–f5, g1–f3 without a diagram. Why can b8–d7 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is c8–f5, g1–f3, b8–d7, e4–g3, f5–g6. White's knight on e4 stands centrally and Black's bishop can reach f5. This repertoire transition illustrates ...Bf5 and ...Nd7 to coordinate without overcommitting. The opponent's active resource is White can use Nf3, Ng3 or an exchange on f6 to change the bishop route. Trades on f6 can alter Black's e-pawn and open a file. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "Developing the bishop does not make the e4 knight an automatic target. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original c8–f5, g1–f3 with g8–f6 and the separate b8–d7 candidate. What preventative choice still applies?",
+            "answer": "Main plan: c8–f5, g1–f3, b8–d7, e4–g3, f5–g6. Competing branches begin g8–f6 and b8–d7. White can use Nf3, Ng3 or an exchange on f6 to change the bishop route Developing the bishop does not make the e4 knight an automatic target Trades on f6 can alter Black's e-pawn and open a file. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "Developing the bishop does not make the e4 knight an automatic target. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-13",
+      "source": "authored",
+      "sourceLabel": "P111 · Black Caro: bishop safety and h4 · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "@repertoire:black-caro-bf5",
+      "playerColor": "w",
+      "bestMove": "g1f3",
+      "principalVariation": [
+        "g1f3",
+        "b8d7",
+        "e4g3",
+        "f5g6",
+        "h2h4"
+      ],
+      "title": "Black Caro: bishop safety and h4: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-caro-bf5: Black's light bishop is on f5 while White can attack its retreat route. This repertoire transition illustrates ...Nd7 with a planned bishop retreat to g6. The opponent's active resource is Nf3 and Ng3 make the f5 bishop a possible tempo target. Trading the bishop early affects the black e4-square blockade. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "Black's light bishop is on f5 while White can attack its retreat route. This repertoire transition illustrates ...Nd7 with a planned bishop retreat to g6. The opponent's active resource is Nf3 and Ng3 make the f5 bishop a possible tempo target. Trading the bishop early affects the black e4-square blockade. Do not ignore the possibility of h4 when retreating to g6. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: g1–f3, b8–d7, e4–g3, f5–g6, h2–h4. Independently explored branch openings: e4–g3 and f2–f3. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is b8–d7. Nf3 and Ng3 make the f5 bishop a possible tempo target Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move e4–g3 has to be assessed against the altered pawn contacts. ...Nd7 with a planned bishop retreat to g6 Trading the bishop early affects the black e4-square blockade",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist g1–f3 in Black Caro: bishop safety and h4?",
+        "defenderIdea": "Nf3 and Ng3 make the f5 bishop a possible tempo target",
+        "continuation": "...Nd7 with a planned bishop retreat to g6",
+        "misconception": "Do not ignore the possibility of h4 when retreating to g6. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-caro-bf5 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "e4g3"
+            ],
+            "explanation": "Nf3 and Ng3 make the f5 bishop a possible tempo target The documented start e4–g3 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "f2f3"
+            ],
+            "explanation": "Do not ignore the possibility of h4 when retreating to g6 Different start f2–f3 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-caro-bf5",
+        "repertoireId": "black-caro",
+        "theme": "Black Caro: bishop safety and h4",
+        "structure": "Black's light bishop is on f5 while White can attack its retreat route",
+        "breakPlan": "...Nd7 with a planned bishop retreat to g6",
+        "counterplan": "Nf3 and Ng3 make the f5 bishop a possible tempo target",
+        "prevention": "Do not ignore the possibility of h4 when retreating to g6",
+        "tradeDecision": "Trading the bishop early affects the black e4-square blockade",
+        "transferQuestion": "After g1–f3, b8–d7, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the Black Caro: bishop safety and h4 decision, what pawn structure exists, where should you place the next piece, and how would nf3 and ng3 make the f5 bishop a possible tempo target alter the planned break?",
+            "answer": "Black's light bishop is on f5 while White can attack its retreat route. This repertoire transition illustrates ...Nd7 with a planned bishop retreat to g6. The opponent's active resource is Nf3 and Ng3 make the f5 bishop a possible tempo target. Trading the bishop early affects the black e4-square blockade. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "Do not ignore the possibility of h4 when retreating to g6. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate g1–f3, b8–d7 without a diagram. Why can e4–g3 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is g1–f3, b8–d7, e4–g3, f5–g6, h2–h4. Black's light bishop is on f5 while White can attack its retreat route. This repertoire transition illustrates ...Nd7 with a planned bishop retreat to g6. The opponent's active resource is Nf3 and Ng3 make the f5 bishop a possible tempo target. Trading the bishop early affects the black e4-square blockade. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "Do not ignore the possibility of h4 when retreating to g6. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original g1–f3, b8–d7 with e4–g3 and the separate f2–f3 candidate. What preventative choice still applies?",
+            "answer": "Main plan: g1–f3, b8–d7, e4–g3, f5–g6, h2–h4. Competing branches begin e4–g3 and f2–f3. Nf3 and Ng3 make the f5 bishop a possible tempo target Do not ignore the possibility of h4 when retreating to g6 Trading the bishop early affects the black e4-square blockade. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "Do not ignore the possibility of h4 when retreating to g6. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-14",
+      "source": "authored",
+      "sourceLabel": "P111 · QGD: central tension · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "@repertoire:black-qgd-e6",
+      "playerColor": "w",
+      "bestMove": "b1c3",
+      "principalVariation": [
+        "b1c3",
+        "g8f6",
+        "g1f3",
+        "f8e7",
+        "e2e3"
+      ],
+      "title": "QGD: central tension: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-qgd-e6: White's c4 pawn challenges Black's e6-supported d5 pawn. This repertoire transition illustrates ...Nf6 and ...Be7, then ...c5 when the center allows. The opponent's active resource is White may take on d5 now or develop Nc3 and keep the tension. After cxd5 exd5, decide which bishop obtains a useful diagonal. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "White's c4 pawn challenges Black's e6-supported d5 pawn. This repertoire transition illustrates ...Nf6 and ...Be7, then ...c5 when the center allows. The opponent's active resource is White may take on d5 now or develop Nc3 and keep the tension. After cxd5 exd5, decide which bishop obtains a useful diagonal. A quick ...c5 can produce a weakness when pieces remain undeveloped. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: b1–c3, g8–f6, g1–f3, f8–e7, e2–e3. Independently explored branch openings: g1–f3, g8–f6 and c4–d5, e6–d5. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is g8–f6. White may take on d5 now or develop Nc3 and keep the tension Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move g1–f3 has to be assessed against the altered pawn contacts. ...Nf6 and ...Be7, then ...c5 when the center allows After cxd5 exd5, decide which bishop obtains a useful diagonal",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist b1–c3 in QGD: central tension?",
+        "defenderIdea": "White may take on d5 now or develop Nc3 and keep the tension",
+        "continuation": "...Nf6 and ...Be7, then ...c5 when the center allows",
+        "misconception": "A quick ...c5 can produce a weakness when pieces remain undeveloped. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-qgd-e6 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "g1f3",
+              "g8f6"
+            ],
+            "explanation": "White may take on d5 now or develop Nc3 and keep the tension The documented start g1–f3, g8–f6 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "c4d5",
+              "e6d5"
+            ],
+            "explanation": "A quick ...c5 can produce a weakness when pieces remain undeveloped Different start c4–d5, e6–d5 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-qgd-e6",
+        "repertoireId": "black-qgd",
+        "theme": "QGD: central tension",
+        "structure": "White's c4 pawn challenges Black's e6-supported d5 pawn",
+        "breakPlan": "...Nf6 and ...Be7, then ...c5 when the center allows",
+        "counterplan": "White may take on d5 now or develop Nc3 and keep the tension",
+        "prevention": "A quick ...c5 can produce a weakness when pieces remain undeveloped",
+        "tradeDecision": "After cxd5 exd5, decide which bishop obtains a useful diagonal",
+        "transferQuestion": "After b1–c3, g8–f6, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the QGD: central tension decision, what pawn structure exists, where should you place the next piece, and how would white may take on d5 now or develop nc3 and keep the tension alter the planned break?",
+            "answer": "White's c4 pawn challenges Black's e6-supported d5 pawn. This repertoire transition illustrates ...Nf6 and ...Be7, then ...c5 when the center allows. The opponent's active resource is White may take on d5 now or develop Nc3 and keep the tension. After cxd5 exd5, decide which bishop obtains a useful diagonal. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "A quick ...c5 can produce a weakness when pieces remain undeveloped. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate b1–c3, g8–f6 without a diagram. Why can g1–f3 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is b1–c3, g8–f6, g1–f3, f8–e7, e2–e3. White's c4 pawn challenges Black's e6-supported d5 pawn. This repertoire transition illustrates ...Nf6 and ...Be7, then ...c5 when the center allows. The opponent's active resource is White may take on d5 now or develop Nc3 and keep the tension. After cxd5 exd5, decide which bishop obtains a useful diagonal. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "A quick ...c5 can produce a weakness when pieces remain undeveloped. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original b1–c3, g8–f6 with g1–f3, g8–f6 and the separate c4–d5, e6–d5 candidate. What preventative choice still applies?",
+            "answer": "Main plan: b1–c3, g8–f6, g1–f3, f8–e7, e2–e3. Competing branches begin g1–f3, g8–f6 and c4–d5, e6–d5. White may take on d5 now or develop Nc3 and keep the tension A quick ...c5 can produce a weakness when pieces remain undeveloped After cxd5 exd5, decide which bishop obtains a useful diagonal. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "A quick ...c5 can produce a weakness when pieces remain undeveloped. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-15",
+      "source": "authored",
+      "sourceLabel": "P111 · QGD: d5 pressure and development · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "@repertoire:black-qgd-nf6",
+      "playerColor": "w",
+      "bestMove": "g1f3",
+      "principalVariation": [
+        "g1f3",
+        "f8e7",
+        "e2e3",
+        "b7b6",
+        "f1d3"
+      ],
+      "title": "QGD: d5 pressure and development: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-qgd-nf6: Black's f6 knight reinforces d5 while White retains c4 pressure. This repertoire transition illustrates ...Be7 and a timed ...c5 central lever. The opponent's active resource is White can meet ...Be7 with e3/Bd3 or trade in the center. Central liquidation can solve the c8 bishop or expose the e-file. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "Black's f6 knight reinforces d5 while White retains c4 pressure. This repertoire transition illustrates ...Be7 and a timed ...c5 central lever. The opponent's active resource is White can meet ...Be7 with e3/Bd3 or trade in the center. Central liquidation can solve the c8 bishop or expose the e-file. Moving a knight twice before completing development can invite a tempo attack. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: g1–f3, f8–e7, e2–e3, b7–b6, f1–d3. Independently explored branch openings: e2–e3, f8–e7, g1–f3 and c4–d5, e6–d5. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is f8–e7. White can meet ...Be7 with e3/Bd3 or trade in the center Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move e2–e3 has to be assessed against the altered pawn contacts. ...Be7 and a timed ...c5 central lever Central liquidation can solve the c8 bishop or expose the e-file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist g1–f3 in QGD: d5 pressure and development?",
+        "defenderIdea": "White can meet ...Be7 with e3/Bd3 or trade in the center",
+        "continuation": "...Be7 and a timed ...c5 central lever",
+        "misconception": "Moving a knight twice before completing development can invite a tempo attack. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-qgd-nf6 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "e2e3",
+              "f8e7",
+              "g1f3"
+            ],
+            "explanation": "White can meet ...Be7 with e3/Bd3 or trade in the center The documented start e2–e3, f8–e7, g1–f3 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "c4d5",
+              "e6d5"
+            ],
+            "explanation": "Moving a knight twice before completing development can invite a tempo attack Different start c4–d5, e6–d5 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-qgd-nf6",
+        "repertoireId": "black-qgd",
+        "theme": "QGD: d5 pressure and development",
+        "structure": "Black's f6 knight reinforces d5 while White retains c4 pressure",
+        "breakPlan": "...Be7 and a timed ...c5 central lever",
+        "counterplan": "White can meet ...Be7 with e3/Bd3 or trade in the center",
+        "prevention": "Moving a knight twice before completing development can invite a tempo attack",
+        "tradeDecision": "Central liquidation can solve the c8 bishop or expose the e-file",
+        "transferQuestion": "After g1–f3, f8–e7, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the QGD: d5 pressure and development decision, what pawn structure exists, where should you place the next piece, and how would white can meet ...be7 with e3/bd3 or trade in the center alter the planned break?",
+            "answer": "Black's f6 knight reinforces d5 while White retains c4 pressure. This repertoire transition illustrates ...Be7 and a timed ...c5 central lever. The opponent's active resource is White can meet ...Be7 with e3/Bd3 or trade in the center. Central liquidation can solve the c8 bishop or expose the e-file. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "Moving a knight twice before completing development can invite a tempo attack. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate g1–f3, f8–e7 without a diagram. Why can e2–e3 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is g1–f3, f8–e7, e2–e3, b7–b6, f1–d3. Black's f6 knight reinforces d5 while White retains c4 pressure. This repertoire transition illustrates ...Be7 and a timed ...c5 central lever. The opponent's active resource is White can meet ...Be7 with e3/Bd3 or trade in the center. Central liquidation can solve the c8 bishop or expose the e-file. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "Moving a knight twice before completing development can invite a tempo attack. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original g1–f3, f8–e7 with e2–e3, f8–e7, g1–f3 and the separate c4–d5, e6–d5 candidate. What preventative choice still applies?",
+            "answer": "Main plan: g1–f3, f8–e7, e2–e3, b7–b6, f1–d3. Competing branches begin e2–e3, f8–e7, g1–f3 and c4–d5, e6–d5. White can meet ...Be7 with e3/Bd3 or trade in the center Moving a knight twice before completing development can invite a tempo attack Central liquidation can solve the c8 bishop or expose the e-file. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "Moving a knight twice before completing development can invite a tempo attack. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p111-16",
+      "source": "authored",
+      "sourceLabel": "P111 · QGD: first middlegame choices · source-anchored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "@repertoire:black-qgd-be7",
+      "playerColor": "w",
+      "bestMove": "e2e3",
+      "principalVariation": [
+        "e2e3",
+        "b7b6",
+        "f1d3",
+        "c7c5",
+        "d1c2"
+      ],
+      "title": "QGD: first middlegame choices: plan beyond memorized moves",
+      "prompt": "From the official in-app repertoire node black-qgd-be7: Black's e7 bishop supports development while White's c4/d4 pawns remain central. This repertoire transition illustrates ...c5 after enough development and king safety. The opponent's active resource is White can use e3/Bd3 or cxd5 to determine the next pawn structure. Judge the exchange by the remaining bishop and central pawn rather than move order alone. Predict Black's and White's playable responses and compare a plan, a resisting variation, and a preventative move. Do not assume a best-move verdict.",
+      "explanation": "Black's e7 bishop supports development while White's c4/d4 pawns remain central. This repertoire transition illustrates ...c5 after enough development and king safety. The opponent's active resource is White can use e3/Bd3 or cxd5 to determine the next pawn structure. Judge the exchange by the remaining bishop and central pawn rather than move order alone. Neither a legal pawn break nor one line proves a favorable result. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure. Main authored example: e2–e3, b7–b6, f1–d3, c7–c5, d1–c2. Independently explored branch openings: g2–g3 and c4–d5, e6–d5. Follow-up moves used to complete a source prefix are *legal exploratory continuations*, never approved theory or Stockfish-verified defense.",
+      "replyReason": "The source line's second move is b7–b6. White can use e3/Bd3 or cxd5 to determine the next pawn structure Do not call this reply objectively strongest from source legality alone.",
+      "continuationReason": "The third move f1–d3 has to be assessed against the altered pawn contacts. ...c5 after enough development and king safety Judge the exchange by the remaining bishop and central pawn rather than move order alone",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "openings.principles"
+      ],
+      "defensiveStudy": {
+        "keyQuestion": "How might the opponent resist e2–e3 in QGD: first middlegame choices?",
+        "defenderIdea": "White can use e3/Bd3 or cxd5 to determine the next pawn structure",
+        "continuation": "...c5 after enough development and king safety",
+        "misconception": "Neither a legal pawn break nor one line proves a favorable result. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure.",
+        "reflection": "Recall the black-qgd-be7 board, explain the pawn break and how a different defender reply affects the next piece move.",
+        "variations": [
+          {
+            "label": "Competing defender response · exploratory legal extension",
+            "moves": [
+              "g2g3"
+            ],
+            "explanation": "White can use e3/Bd3 or cxd5 to determine the next pawn structure The documented start g2–g3 is followed by legal exploration only; no best-move or certified opening theory is implied."
+          },
+          {
+            "label": "Preventative alternative · exploratory legal extension",
+            "moves": [
+              "c4d5",
+              "e6d5"
+            ],
+            "explanation": "Neither a legal pawn break nor one line proves a favorable result Different start c4–d5, e6–d5 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+          }
+        ]
+      },
+      "openingTransitionStudy": {
+        "nodeId": "black-qgd-be7",
+        "repertoireId": "black-qgd",
+        "theme": "QGD: first middlegame choices",
+        "structure": "Black's e7 bishop supports development while White's c4/d4 pawns remain central",
+        "breakPlan": "...c5 after enough development and king safety",
+        "counterplan": "White can use e3/Bd3 or cxd5 to determine the next pawn structure",
+        "prevention": "Neither a legal pawn break nor one line proves a favorable result",
+        "tradeDecision": "Judge the exchange by the remaining bishop and central pawn rather than move order alone",
+        "transferQuestion": "After e2–e3, b7–b6, which pawn break survives the opponent's alternative?",
+        "provenance": "Native original Chess openingNode FEN; new original plan explanation; unscored",
+        "exercises": [
+          {
+            "prompt": "At the QGD: first middlegame choices decision, what pawn structure exists, where should you place the next piece, and how would white can use e3/bd3 or cxd5 to determine the next pawn structure alter the planned break?",
+            "answer": "Black's e7 bishop supports development while White's c4/d4 pawns remain central. This repertoire transition illustrates ...c5 after enough development and king safety. The opponent's active resource is White can use e3/Bd3 or cxd5 to determine the next pawn structure. Judge the exchange by the remaining bishop and central pawn rather than move order alone. First identify the pawn-chain base and which pawn could capture on the break square, then compare which bishop or knight gains mobility after the exchange. A sensible plan must survive a real legal defender reply.",
+            "repair": "Neither a legal pawn break nor one line proves a favorable result. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "Calculate e2–e3, b7–b6 without a diagram. Why can f1–d3 be considered next, and which exchange should you postpone?",
+            "answer": "The authored main illustration is e2–e3, b7–b6, f1–d3, c7–c5, d1–c2. Black's e7 bishop supports development while White's c4/d4 pawns remain central. This repertoire transition illustrates ...c5 after enough development and king safety. The opponent's active resource is White can use e3/Bd3 or cxd5 to determine the next pawn structure. Judge the exchange by the remaining bishop and central pawn rather than move order alone. Rebuild the board after the second ply and locate the new controlled squares before trying the third move. A legal continuation is not a guaranteed advantage.",
+            "repair": "Neither a legal pawn break nor one line proves a favorable result. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          },
+          {
+            "prompt": "The opponent changes the plan. Compare the original e2–e3, b7–b6 with g2–g3 and the separate c4–d5, e6–d5 candidate. What preventative choice still applies?",
+            "answer": "Main plan: e2–e3, b7–b6, f1–d3, c7–c5, d1–c2. Competing branches begin g2–g3 and c4–d5, e6–d5. White can use e3/Bd3 or cxd5 to determine the next pawn structure Neither a legal pawn break nor one line proves a favorable result Judge the exchange by the remaining bishop and central pawn rather than move order alone. Continue the alternative legally, but do not confuse a computer-selected legal extension with an endorsed opening recommendation.",
+            "repair": "Neither a legal pawn break nor one line proves a favorable result. Even when a five-ply move sequence is legal it is not a certified best line; confirm the actual response, captures and pawn structure."
+          }
+        ]
+      }
+    }
+  ]
+}

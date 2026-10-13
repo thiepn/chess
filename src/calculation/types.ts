@@ -13,6 +13,19 @@ export interface CalculationPosition {
   /** Authored study lines are legal examples, not engine-certified scoring references. */
   assessmentStatus?: "instructional-only";
   /** Source-authored, *unscored* position defense — no evaluation authority. */
+  openingTransitionStudy?: {
+    nodeId: string;
+    repertoireId: string;
+    theme: string;
+    structure: string;
+    breakPlan: string;
+    counterplan: string;
+    prevention: string;
+    tradeDecision: string;
+    transferQuestion: string;
+    provenance: string;
+    exercises: { prompt: string; answer: string; repair: string }[];
+  };
   prophylaxisStudy?: {
     theme: string;
     focus: string;

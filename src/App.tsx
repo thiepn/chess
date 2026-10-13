@@ -491,6 +491,9 @@ export default function App() {
   const strategicPositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.strategicImbalanceStudy || item.prophylaxisStudy)), [state, catalogRevision]);
+  const openingBridgePositions = useMemo(() => calculationCatalog(state).filter(
+    item => item.assessmentStatus === "instructional-only" &&
+      Boolean(item.openingTransitionStudy)), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
@@ -684,12 +687,12 @@ export default function App() {
 
   function openStrategicStudy(position: import("./calculation/types").CalculationPosition) {
     if (position.assessmentStatus !== "instructional-only" ||
-        !strategicPositions.some(item => item.id === position.id)) return;
+        ![...strategicPositions, ...openingBridgePositions].some(item => item.id === position.id)) return;
     const skillId = position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
     const skill = skillId ? skillById[skillId] : null;
     if (!skill || !skillId) return;
     openManualActivity({
-      id: `p109:${position.id}`,
+      id: `study:${position.id}`,
       source: "focus",
       skillIds: [skillId],
       activityType: "calculation",
@@ -699,11 +702,14 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: position.prophylaxisStudy
+      reason: position.openingTransitionStudy
+        ? "P111 · Opening-to-middlegame transition (unscored)"
+        : position.prophylaxisStudy
         ? "P110 · Anticipate threats (unscored)"
         : "P109 · Independent positional decision (unscored)",
       title: position.title,
-      subtitle: position.prophylaxisStudy?.theme ??
+      subtitle: position.openingTransitionStudy?.theme ??
+        position.prophylaxisStudy?.theme ??
         position.strategicImbalanceStudy?.theme ?? "Strategic decision",
     });
   }
@@ -3142,6 +3148,8 @@ export default function App() {
               games={state.games ?? []}
               onTrainNode={startOpeningPractice}
               onTrainLine={startOpeningLinePractice}
+              transitionPositions={openingBridgePositions}
+              onStudyTransition={openStrategicStudy}
               onBack={() => navigate("/learn")}
             />
           ) : learnSection === "model-games" ? (
