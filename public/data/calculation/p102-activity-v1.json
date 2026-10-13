@@ -1,0 +1,574 @@
+{
+  "version": 1,
+  "phase": "P102",
+  "section": "Active king, piece and pawn coordination",
+  "positions": [
+    {
+      "id": "calc:p102-16",
+      "title": "Rook behind a5 — Pb2",
+      "fen": "6kr/8/8/P6p/8/8/1P6/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "a1a4",
+      "principalVariation": [
+        "a1a4",
+        "h8h7",
+        "g1f2",
+        "h7h6",
+        "f2e3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. This version: white b2 pawn remains a future passer or target. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. Additional factor: white b2 pawn remains a future passer or target.",
+      "continuationReason": "At ply five: White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+      "explanation": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. Reference: a1a4 h8h7 g1f2 h7h6 f2e3. Defensive line: g1f2 h8h7 a1a4 h7h6 f2e3. Tempting line: a5a6 h8h7 a1a5. Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. White can later support the passer with its king; the rook on a4 must not obstruct a6. Repair: Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Context: white b2 pawn remains a future passer or target. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3.",
+        "defenderIdea": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "continuation": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "misconception": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white b2 pawn remains a future passer or target",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "g1f2",
+              "h8h7",
+              "a1a4",
+              "h7h6",
+              "f2e3"
+            ],
+            "explanation": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. white b2 pawn remains a future passer or target Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "a5a6",
+              "h8h7",
+              "a1a5"
+            ],
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white b2 pawn remains a future passer or target",
+        "endpoint": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "defenderResource": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "failedPlan": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-17",
+      "title": "Rook behind a5 — pg7",
+      "fen": "6kr/6p1/8/P6p/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "a1a4",
+      "principalVariation": [
+        "a1a4",
+        "h8h7",
+        "g1f2",
+        "h7h6",
+        "f2e3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. This version: black g7 pawn adds a second wing race. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. Additional factor: black g7 pawn adds a second wing race.",
+      "continuationReason": "At ply five: White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+      "explanation": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. Reference: a1a4 h8h7 g1f2 h7h6 f2e3. Defensive line: g1f2 h8h7 a1a4 h7h6 f2e3. Tempting line: a5a6 h8h7 a1a5. Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. White can later support the passer with its king; the rook on a4 must not obstruct a6. Repair: Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Context: black g7 pawn adds a second wing race. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3.",
+        "defenderIdea": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "continuation": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "misconception": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. black g7 pawn adds a second wing race",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "g1f2",
+              "h8h7",
+              "a1a4",
+              "h7h6",
+              "f2e3"
+            ],
+            "explanation": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. black g7 pawn adds a second wing race Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "a5a6",
+              "h8h7",
+              "a1a5"
+            ],
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "black g7 pawn adds a second wing race",
+        "endpoint": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "defenderResource": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "failedPlan": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-18",
+      "title": "Rook behind a5 — Pd2",
+      "fen": "6kr/8/8/P6p/8/8/3P4/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "a1a4",
+      "principalVariation": [
+        "a1a4",
+        "h8h7",
+        "g1f2",
+        "h7h6",
+        "f2e3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. This version: white d2 pawn provides a potential waiting move. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. Additional factor: white d2 pawn provides a potential waiting move.",
+      "continuationReason": "At ply five: White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+      "explanation": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3. Reference: a1a4 h8h7 g1f2 h7h6 f2e3. Defensive line: g1f2 h8h7 a1a4 h7h6 f2e3. Tempting line: a5a6 h8h7 a1a5. Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. White can later support the passer with its king; the rook on a4 must not obstruct a6. Repair: Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Context: white d2 pawn provides a potential waiting move. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra4 puts the rook behind its a5 passer while the white king comes toward e3.",
+        "defenderIdea": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "continuation": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "misconception": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white d2 pawn provides a potential waiting move",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "g1f2",
+              "h8h7",
+              "a1a4",
+              "h7h6",
+              "f2e3"
+            ],
+            "explanation": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available. white d2 pawn provides a potential waiting move Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "a5a6",
+              "h8h7",
+              "a1a5"
+            ],
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white d2 pawn provides a potential waiting move",
+        "endpoint": "White can later support the passer with its king; the rook on a4 must not obstruct a6.",
+        "defenderResource": "Black uses ...Rh7 and ...Rh6 to keep lateral counterchecks available.",
+        "failedPlan": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-19",
+      "title": "Bishop and king meet a knight incursion — Pa2",
+      "fen": "6k1/8/5n2/4p3/4P3/8/P7/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "c1g5",
+      "principalVariation": [
+        "c1g5",
+        "f6e4",
+        "g5d8",
+        "e4f2",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. This version: white retains a distant a-pawn after the knight trade. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "The knight on f2 is not supported; the white king can answer with Kxf2. Additional factor: white retains a distant a-pawn after the knight trade.",
+      "continuationReason": "At ply five: The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+      "explanation": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. Reference: c1g5 f6e4 g5d8 e4f2 g1f2. Defensive line: c1f4 f6e4 f4e5 g8f7 e5c7. Tempting line: g1f1 f6e4 c1g5. The knight on f2 is not supported; the white king can answer with Kxf2. The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn. Repair: Assuming a knight hop near the king wins material ignores the possibility of king recapture. Context: white retains a distant a-pawn after the knight trade. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2.",
+        "defenderIdea": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "continuation": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "misconception": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white retains a distant a-pawn after the knight trade",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "c1f4",
+              "f6e4",
+              "f4e5",
+              "g8f7",
+              "e5c7"
+            ],
+            "explanation": "The knight on f2 is not supported; the white king can answer with Kxf2. white retains a distant a-pawn after the knight trade Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "g1f1",
+              "f6e4",
+              "c1g5"
+            ],
+            "explanation": "Assuming a knight hop near the king wins material ignores the possibility of king recapture. Compare this three-ply miscalculation with the correct reference. white retains a distant a-pawn after the knight trade"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white retains a distant a-pawn after the knight trade",
+        "endpoint": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "defenderResource": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "failedPlan": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-20",
+      "title": "Bishop and king meet a knight incursion — pa7",
+      "fen": "6k1/p7/5n2/4p3/4P3/8/8/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "c1g5",
+      "principalVariation": [
+        "c1g5",
+        "f6e4",
+        "g5d8",
+        "e4f2",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. This version: black retains an a-pawn, so conversion needs pawn-count accuracy. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "The knight on f2 is not supported; the white king can answer with Kxf2. Additional factor: black retains an a-pawn, so conversion needs pawn-count accuracy.",
+      "continuationReason": "At ply five: The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+      "explanation": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. Reference: c1g5 f6e4 g5d8 e4f2 g1f2. Defensive line: c1f4 f6e4 f4e5 g8f7 e5c7. Tempting line: g1f1 f6e4 c1g5. The knight on f2 is not supported; the white king can answer with Kxf2. The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn. Repair: Assuming a knight hop near the king wins material ignores the possibility of king recapture. Context: black retains an a-pawn, so conversion needs pawn-count accuracy. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2.",
+        "defenderIdea": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "continuation": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "misconception": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. black retains an a-pawn, so conversion needs pawn-count accuracy",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "c1f4",
+              "f6e4",
+              "f4e5",
+              "g8f7",
+              "e5c7"
+            ],
+            "explanation": "The knight on f2 is not supported; the white king can answer with Kxf2. black retains an a-pawn, so conversion needs pawn-count accuracy Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "g1f1",
+              "f6e4",
+              "c1g5"
+            ],
+            "explanation": "Assuming a knight hop near the king wins material ignores the possibility of king recapture. Compare this three-ply miscalculation with the correct reference. black retains an a-pawn, so conversion needs pawn-count accuracy"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "black retains an a-pawn, so conversion needs pawn-count accuracy",
+        "endpoint": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "defenderResource": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "failedPlan": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-21",
+      "title": "Bishop and king meet a knight incursion — Pb2",
+      "fen": "6k1/8/5n2/4p3/4P3/8/1P6/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "c1g5",
+      "principalVariation": [
+        "c1g5",
+        "f6e4",
+        "g5d8",
+        "e4f2",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. This version: white's b-pawn supplies a separate wing resource. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "The knight on f2 is not supported; the white king can answer with Kxf2. Additional factor: white's b-pawn supplies a separate wing resource.",
+      "continuationReason": "At ply five: The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+      "explanation": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2. Reference: c1g5 f6e4 g5d8 e4f2 g1f2. Defensive line: c1f4 f6e4 f4e5 g8f7 e5c7. Tempting line: g1f1 f6e4 c1g5. The knight on f2 is not supported; the white king can answer with Kxf2. The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn. Repair: Assuming a knight hop near the king wins material ignores the possibility of king recapture. Context: white's b-pawn supplies a separate wing resource. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Bg5 attacks the knight, but ...Nxe4 takes a pawn. The knight then considers ...Nf2.",
+        "defenderIdea": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "continuation": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "misconception": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white's b-pawn supplies a separate wing resource",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "c1f4",
+              "f6e4",
+              "f4e5",
+              "g8f7",
+              "e5c7"
+            ],
+            "explanation": "The knight on f2 is not supported; the white king can answer with Kxf2. white's b-pawn supplies a separate wing resource Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "g1f1",
+              "f6e4",
+              "c1g5"
+            ],
+            "explanation": "Assuming a knight hop near the king wins material ignores the possibility of king recapture. Compare this three-ply miscalculation with the correct reference. white's b-pawn supplies a separate wing resource"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white's b-pawn supplies a separate wing resource",
+        "endpoint": "The main sequence removes the knight, whereas Bxe5 in the other line recaptures a black pawn.",
+        "defenderResource": "The knight on f2 is not supported; the white king can answer with Kxf2.",
+        "failedPlan": "Assuming a knight hop near the king wins material ignores the possibility of king recapture.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-22",
+      "title": "Capture an exposed defensive rook — Pa2",
+      "fen": "4k3/8/3r4/4p3/2P5/8/P7/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "d1d6",
+      "principalVariation": [
+        "d1d6",
+        "e8f7",
+        "d6d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. This version: white a-pawn can eventually support the rook conversion. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. Additional factor: white a-pawn can eventually support the rook conversion.",
+      "continuationReason": "At ply five: The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+      "explanation": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. Reference: d1d6 e8f7 d6d7 f7e6 d7d6. Defensive line: d1d6 e8f7 d6d7 f7f8 d7d8. Tempting line: d1d3 d6d3 g1f1. ...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. The captures leave White a rook ahead while Black's pawn e5 remains for later play. Repair: Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Context: white a-pawn can eventually support the rook conversion. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active.",
+        "defenderIdea": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "continuation": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "misconception": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white a-pawn can eventually support the rook conversion",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "d1d6",
+              "e8f7",
+              "d6d7",
+              "f7f8",
+              "d7d8"
+            ],
+            "explanation": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. white a-pawn can eventually support the rook conversion Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "d1d3",
+              "d6d3",
+              "g1f1"
+            ],
+            "explanation": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Compare this three-ply miscalculation with the correct reference. white a-pawn can eventually support the rook conversion"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white a-pawn can eventually support the rook conversion",
+        "endpoint": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "defenderResource": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "failedPlan": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-23",
+      "title": "Capture an exposed defensive rook — ph7",
+      "fen": "4k3/7p/3r4/4p3/2P5/8/8/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "d1d6",
+      "principalVariation": [
+        "d1d6",
+        "e8f7",
+        "d6d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. This version: black has a h-pawn that must still be stopped. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. Additional factor: black has a h-pawn that must still be stopped.",
+      "continuationReason": "At ply five: The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+      "explanation": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. Reference: d1d6 e8f7 d6d7 f7e6 d7d6. Defensive line: d1d6 e8f7 d6d7 f7f8 d7d8. Tempting line: d1d3 d6d3 g1f1. ...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. The captures leave White a rook ahead while Black's pawn e5 remains for later play. Repair: Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Context: black has a h-pawn that must still be stopped. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active.",
+        "defenderIdea": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "continuation": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "misconception": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. black has a h-pawn that must still be stopped",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "d1d6",
+              "e8f7",
+              "d6d7",
+              "f7f8",
+              "d7d8"
+            ],
+            "explanation": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. black has a h-pawn that must still be stopped Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "d1d3",
+              "d6d3",
+              "g1f1"
+            ],
+            "explanation": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Compare this three-ply miscalculation with the correct reference. black has a h-pawn that must still be stopped"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "black has a h-pawn that must still be stopped",
+        "endpoint": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "defenderResource": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "failedPlan": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    },
+    {
+      "id": "calc:p102-24",
+      "title": "Capture an exposed defensive rook — Pb2",
+      "fen": "4k3/8/3r4/4p3/2P5/8/1P6/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P102 · King/piece coordination",
+      "difficulty": 5,
+      "bestMove": "d1d6",
+      "principalVariation": [
+        "d1d6",
+        "e8f7",
+        "d6d7",
+        "f7e6",
+        "d7d6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. This version: white b2 gives another pawn reserve during the king chase. Calculate all five plies and both alternatives before deciding if the advantage converts.",
+      "replyReason": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. Additional factor: white b2 gives another pawn reserve during the king chase.",
+      "continuationReason": "At ply five: The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+      "explanation": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active. Reference: d1d6 e8f7 d6d7 f7e6 d7d6. Defensive line: d1d6 e8f7 d6d7 f7f8 d7d8. Tempting line: d1d3 d6d3 g1f1. ...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. The captures leave White a rook ahead while Black's pawn e5 remains for later play. Repair: Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Context: white b2 gives another pawn reserve during the king chase. Without full defender analysis or a tablebase, this is a material/king-square assessment, not a guaranteed WDL certificate.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxd6 captures an unprotected black rook and keeps White's c-pawn active.",
+        "defenderIdea": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "continuation": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "misconception": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "reflection": "Trace the original and counterline from memory. Name the defending king's next legal square and count the pieces/pawns. white b2 gives another pawn reserve during the king chase",
+        "variations": [
+          {
+            "label": "Resistance to the plan",
+            "moves": [
+              "d1d6",
+              "e8f7",
+              "d6d7",
+              "f7f8",
+              "d7d8"
+            ],
+            "explanation": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook. white b2 gives another pawn reserve during the king chase Identify how the defender changes the move order."
+          },
+          {
+            "label": "Mistaken candidate",
+            "moves": [
+              "d1d3",
+              "d6d3",
+              "g1f1"
+            ],
+            "explanation": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6. Compare this three-ply miscalculation with the correct reference. white b2 gives another pawn reserve during the king chase"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "King/piece coordination",
+        "context": "white b2 gives another pawn reserve during the king chase",
+        "endpoint": "The captures leave White a rook ahead while Black's pawn e5 remains for later play.",
+        "defenderResource": "...Kf7 then ...Ke6 or ...Kf8 offers different king flights against the surviving rook.",
+        "failedPlan": "Rd3?? permits ...Rxd3 and forfeits the rook that should have captured on d6.",
+        "verdict": "Uncertified; interpret the recorded line only"
+      }
+    }
+  ]
+}
