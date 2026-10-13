@@ -4,11 +4,13 @@ import type { CalculationPosition } from "../calculation/types";
 interface Props {
   positions: CalculationPosition[];
   loading: boolean;
+  failedCount: number;
+  onRetry: () => void;
   onStart: (position: CalculationPosition) => void;
 }
 
 /** Original calculation catalog discovery; no duplicate progress or training engine. */
-export function StrategicStudyLibrary({ positions, loading, onStart }: Props) {
+export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry, onStart }: Props) {
   const groups = useMemo(() => [...new Set(positions.map(p =>
     p.strategicImbalanceStudy?.theme).filter((theme): theme is string => !!theme))], [positions]);
   const [theme, setTheme] = useState("");
@@ -39,9 +41,16 @@ export function StrategicStudyLibrary({ positions, loading, onStart }: Props) {
             ))}
           </div>
         </>
-      ) : <p role="status">{loading
-        ? "Loading strategic positions from original chess-study assets…"
-        : "Strategic source unavailable. Retry missing study files in a calculation session."}</p>}
+      ) : <div role="status">
+        <p>{loading
+          ? "Loading strategic positions from original chess-study assets…"
+          : "No source-qualified strategic position available."}</p>
+        {failedCount > 0 && (
+          <button type="button" className="secondary" onClick={onRetry}>
+            Retry {failedCount} unavailable strategic source {failedCount === 1 ? "file" : "files"}
+          </button>
+        )}
+      </div>}
     </section>
   );
 }
