@@ -427,11 +427,11 @@
       "bestMove": "a1a7",
       "principalVariation": [
         "a1a7",
-        "e8f7",
+        "e8d8",
         "a7a6"
       ],
-      "explanation": "Rxa7 removes the opposing rook, and the surviving rook can remain active. This is an illustrative rook conversion, not a forced-mate claim. Compare 1.Ra8+, an alternative forcing check that does not remove the rook immediately. This is a replayable instructional line, not a claim that every other legal move is inferior.",
-      "replyReason": "...Kf7 improves the defender's king; the new game is rook and king against king.",
+      "explanation": "Rxa7 removes the opposing rook and controls the seventh rank, so ...Kf7 is impossible; ...Kd8 is one legal reply. This is an illustrative rook conversion, not a forced-mate claim. Compare 1.Ra8+, an alternative forcing check that does not remove the rook immediately. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd8 moves to the safer eighth-rank square; ...Kf7 is illegal because the rook on a7 controls the entire seventh rank.",
       "continuationReason": "Ra6 retains the rook at useful checking distance from the defender.",
       "source": "authored",
       "sourceLabel": "P94 · Captures and trades",
