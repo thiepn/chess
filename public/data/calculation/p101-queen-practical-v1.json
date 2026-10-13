@@ -1,0 +1,1267 @@
+{
+  "version": 1,
+  "phase": "P101",
+  "section": "Promotion, unequal material, queen defense and practical counterplay",
+  "positions": [
+    {
+      "id": "calc:p101-16",
+      "title": "a-pawn races against distant h-pawn",
+      "fen": "7k/8/P7/7p/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Promotion races and checks",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "a6a7",
+        "h5h4",
+        "a7a8q"
+      ],
+      "prompt": "Qd8+ buys a check before White pushes the advanced a-pawn. Count both passed pawns' remaining moves. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Kh7 escapes the check and ...h4 creates counterplay; White should not assume the opponent will only wait. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, a8=Q creates a second queen in the reference, while Qa5 chooses another plan to support the passer.",
+      "explanation": "a-pawn races against distant h-pawn. Qd8+ buys a check before White pushes the advanced a-pawn. Count both passed pawns' remaining moves. Main five-ply study: d1d8 h8h7 a6a7 h5h4 a7a8q. Resistant alternative: d1d8 h8h7 a6a7 h5h4 d8a5. A tempting competing candidate: d1a4 h8h7 a6a7. ...Kh7 escapes the check and ...h4 creates counterplay; White should not assume the opponent will only wait. Endpoint evaluation: a8=Q creates a second queen in the reference, while Qa5 chooses another plan to support the passer. Misconception to repair: An extra queen is not checkmate; Black still owns an h-pawn and White must calculate a safe conversion. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ buys a check before White pushes the advanced a-pawn. Count both passed pawns' remaining moves.",
+        "defenderIdea": "...Kh7 escapes the check and ...h4 creates counterplay; White should not assume the opponent will only wait.",
+        "continuation": "a8=Q creates a second queen in the reference, while Qa5 chooses another plan to support the passer.",
+        "misconception": "An extra queen is not checkmate; Black still owns an h-pawn and White must calculate a safe conversion.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: a8=Q creates a second queen in the reference, while Qa5 chooses another plan to support the passer.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "a6a7",
+              "h5h4",
+              "d8a5"
+            ],
+            "explanation": "...Kh7 escapes the check and ...h4 creates counterplay; White should not assume the opponent will only wait. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "h8h7",
+              "a6a7"
+            ],
+            "explanation": "An extra queen is not checkmate; Black still owns an h-pawn and White must calculate a safe conversion. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Promotion races and checks",
+        "defenderCounterplay": "...Kh7 escapes the check and ...h4 creates counterplay; White should not assume the opponent will only wait.",
+        "materialAndKingSafety": "a8=Q creates a second queen in the reference, while Qa5 chooses another plan to support the passer.",
+        "failedPlan": "An extra queen is not checkmate; Black still owns an h-pawn and White must calculate a safe conversion.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-17",
+      "title": "b-pawn promotes with the rival h-pawn approaching",
+      "fen": "7k/8/1P6/8/8/7p/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Promotion races and checks",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "h8h7",
+        "b6b7",
+        "h3h2",
+        "b7b8q"
+      ],
+      "prompt": "White's advanced b-pawn needs two steps; the black h-pawn can advance to h2 while White's queen changes ranks. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Kh7 and ...h2 are natural practical responses. The queen must be prepared to stop ...h1=Q on the next turn. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qb8=Q and Qh3+ represent different strategies: promote immediately or prioritize neutralizing the h-pawn.",
+      "explanation": "b-pawn promotes with the rival h-pawn approaching. White's advanced b-pawn needs two steps; the black h-pawn can advance to h2 while White's queen changes ranks. Main five-ply study: c1c8 h8h7 b6b7 h3h2 b7b8q. Resistant alternative: c1c8 h8h7 b6b7 h3h2 c8h3. A tempting competing candidate: c1c4 h8h7 b6b7. ...Kh7 and ...h2 are natural practical responses. The queen must be prepared to stop ...h1=Q on the next turn. Endpoint evaluation: Qb8=Q and Qh3+ represent different strategies: promote immediately or prioritize neutralizing the h-pawn. Misconception to repair: Counting only White's b-pawn promotion tempi ignores that the h-pawn can queen soon afterward. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "White's advanced b-pawn needs two steps; the black h-pawn can advance to h2 while White's queen changes ranks.",
+        "defenderIdea": "...Kh7 and ...h2 are natural practical responses. The queen must be prepared to stop ...h1=Q on the next turn.",
+        "continuation": "Qb8=Q and Qh3+ represent different strategies: promote immediately or prioritize neutralizing the h-pawn.",
+        "misconception": "Counting only White's b-pawn promotion tempi ignores that the h-pawn can queen soon afterward.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qb8=Q and Qh3+ represent different strategies: promote immediately or prioritize neutralizing the h-pawn.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "c1c8",
+              "h8h7",
+              "b6b7",
+              "h3h2",
+              "c8h3"
+            ],
+            "explanation": "...Kh7 and ...h2 are natural practical responses. The queen must be prepared to stop ...h1=Q on the next turn. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "c1c4",
+              "h8h7",
+              "b6b7"
+            ],
+            "explanation": "Counting only White's b-pawn promotion tempi ignores that the h-pawn can queen soon afterward. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Promotion races and checks",
+        "defenderCounterplay": "...Kh7 and ...h2 are natural practical responses. The queen must be prepared to stop ...h1=Q on the next turn.",
+        "materialAndKingSafety": "Qb8=Q and Qh3+ represent different strategies: promote immediately or prioritize neutralizing the h-pawn.",
+        "failedPlan": "Counting only White's b-pawn promotion tempi ignores that the h-pawn can queen soon afterward.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-18",
+      "title": "c-pawn and a-pawn compete with checking tempo",
+      "fen": "7k/8/2P5/8/8/p7/5K2/3Q4 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Promotion races and checks",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "c6c7",
+        "a3a2",
+        "c7c8q"
+      ],
+      "prompt": "The c6 passer approaches c8 while a3–a2 threatens a far-away promotion. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...a2 must be answered either through direct queen checking or rapid white promotion. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The reference finishes with c8=Q; the defensive alternative moves the original queen to d3 to challenge the a-pawn.",
+      "explanation": "c-pawn and a-pawn compete with checking tempo. The c6 passer approaches c8 while a3–a2 threatens a far-away promotion. Main five-ply study: d1d8 h8h7 c6c7 a3a2 c7c8q. Resistant alternative: d1d8 h8h7 c6c7 a3a2 d8d3. A tempting competing candidate: d1d4 h8h7 c6c7. ...a2 must be answered either through direct queen checking or rapid white promotion. Endpoint evaluation: The reference finishes with c8=Q; the defensive alternative moves the original queen to d3 to challenge the a-pawn. Misconception to repair: A queen plus a newly promoted queen still needs to answer ...a1=Q and any checking resources. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "The c6 passer approaches c8 while a3–a2 threatens a far-away promotion.",
+        "defenderIdea": "...a2 must be answered either through direct queen checking or rapid white promotion.",
+        "continuation": "The reference finishes with c8=Q; the defensive alternative moves the original queen to d3 to challenge the a-pawn.",
+        "misconception": "A queen plus a newly promoted queen still needs to answer ...a1=Q and any checking resources.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The reference finishes with c8=Q; the defensive alternative moves the original queen to d3 to challenge the a-pawn.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "c6c7",
+              "a3a2",
+              "d8d3"
+            ],
+            "explanation": "...a2 must be answered either through direct queen checking or rapid white promotion. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1d4",
+              "h8h7",
+              "c6c7"
+            ],
+            "explanation": "A queen plus a newly promoted queen still needs to answer ...a1=Q and any checking resources. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Promotion races and checks",
+        "defenderCounterplay": "...a2 must be answered either through direct queen checking or rapid white promotion.",
+        "materialAndKingSafety": "The reference finishes with c8=Q; the defensive alternative moves the original queen to d3 to challenge the a-pawn.",
+        "failedPlan": "A queen plus a newly promoted queen still needs to answer ...a1=Q and any checking resources.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-19",
+      "title": "Two promotions lead to a queen ending",
+      "fen": "7k/8/3P4/8/8/8/5K1p/Q7 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Promotion races and checks",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "h8h7",
+        "d6d7",
+        "h2h1q",
+        "d7d8q"
+      ],
+      "prompt": "White's d6 pawn moves toward d8, but Black's pawn on h2 can become a queen first. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...h1=Q is not prevented by Qa8+, so both players may own queens in the resulting position. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, d8=Q creates a material-rich position that is not resolved by the displayed sample; checks and king safety now dominate.",
+      "explanation": "Two promotions lead to a queen ending. White's d6 pawn moves toward d8, but Black's pawn on h2 can become a queen first. Main five-ply study: a1a8 h8h7 d6d7 h2h1q d7d8q. Resistant alternative: a1a8 h8h7 d6d7 h2h1q a8a7. A tempting competing candidate: a1a5 h8h7 d6d7. ...h1=Q is not prevented by Qa8+, so both players may own queens in the resulting position. Endpoint evaluation: d8=Q creates a material-rich position that is not resolved by the displayed sample; checks and king safety now dominate. Misconception to repair: Stopping the calculation when White reaches d7 is a typical promotion-race evaluation error. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "White's d6 pawn moves toward d8, but Black's pawn on h2 can become a queen first.",
+        "defenderIdea": "...h1=Q is not prevented by Qa8+, so both players may own queens in the resulting position.",
+        "continuation": "d8=Q creates a material-rich position that is not resolved by the displayed sample; checks and king safety now dominate.",
+        "misconception": "Stopping the calculation when White reaches d7 is a typical promotion-race evaluation error.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: d8=Q creates a material-rich position that is not resolved by the displayed sample; checks and king safety now dominate.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "a1a8",
+              "h8h7",
+              "d6d7",
+              "h2h1q",
+              "a8a7"
+            ],
+            "explanation": "...h1=Q is not prevented by Qa8+, so both players may own queens in the resulting position. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "a1a5",
+              "h8h7",
+              "d6d7"
+            ],
+            "explanation": "Stopping the calculation when White reaches d7 is a typical promotion-race evaluation error. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Promotion races and checks",
+        "defenderCounterplay": "...h1=Q is not prevented by Qa8+, so both players may own queens in the resulting position.",
+        "materialAndKingSafety": "d8=Q creates a material-rich position that is not resolved by the displayed sample; checks and king safety now dominate.",
+        "failedPlan": "Stopping the calculation when White reaches d7 is a typical promotion-race evaluation error.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-20",
+      "title": "e-pawn queens while Black gains distance",
+      "fen": "7k/8/4P3/8/8/p7/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Promotion races and checks",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.pawn-races"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "e6e7",
+        "a3a2",
+        "e7e8q"
+      ],
+      "prompt": "White's e6 pawn is two steps from a queen but Black's a3 passer can reach a2. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Kh7 and ...a2 give resistance in tempi; White's first queen should control promotion squares after e8=Q. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The principal e8=Q and the alternative Qd4 leave different checking lanes toward the a-pawn.",
+      "explanation": "e-pawn queens while Black gains distance. White's e6 pawn is two steps from a queen but Black's a3 passer can reach a2. Main five-ply study: d1d8 h8h7 e6e7 a3a2 e7e8q. Resistant alternative: d1d8 h8h7 e6e7 a3a2 d8d4. A tempting competing candidate: d1f3 h8h7 e6e7. ...Kh7 and ...a2 give resistance in tempi; White's first queen should control promotion squares after e8=Q. Endpoint evaluation: The principal e8=Q and the alternative Qd4 leave different checking lanes toward the a-pawn. Misconception to repair: A forcing back-rank check does not itself remove Black's passer, especially after ...a2. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "White's e6 pawn is two steps from a queen but Black's a3 passer can reach a2.",
+        "defenderIdea": "...Kh7 and ...a2 give resistance in tempi; White's first queen should control promotion squares after e8=Q.",
+        "continuation": "The principal e8=Q and the alternative Qd4 leave different checking lanes toward the a-pawn.",
+        "misconception": "A forcing back-rank check does not itself remove Black's passer, especially after ...a2.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The principal e8=Q and the alternative Qd4 leave different checking lanes toward the a-pawn.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "e6e7",
+              "a3a2",
+              "d8d4"
+            ],
+            "explanation": "...Kh7 and ...a2 give resistance in tempi; White's first queen should control promotion squares after e8=Q. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1f3",
+              "h8h7",
+              "e6e7"
+            ],
+            "explanation": "A forcing back-rank check does not itself remove Black's passer, especially after ...a2. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Promotion races and checks",
+        "defenderCounterplay": "...Kh7 and ...a2 give resistance in tempi; White's first queen should control promotion squares after e8=Q.",
+        "materialAndKingSafety": "The principal e8=Q and the alternative Qd4 leave different checking lanes toward the a-pawn.",
+        "failedPlan": "A forcing back-rank check does not itself remove Black's passer, especially after ...a2.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-21",
+      "title": "Rook and a-pawn vs queen on the d-file",
+      "fen": "6k1/r7/8/p7/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Unequal-material conversions",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "conversion.simplify"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d5",
+        "a5a4",
+        "d5h5"
+      ],
+      "prompt": "The stronger queen can check repeatedly but an active rook and passed a-pawn may create tactical counterplay. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...a4 advances the rival pawn rather than exchanging, so the queen must preserve the ability to stop it. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qh5+ and Qh4+ both attack the king's file, while Qxa5 in the candidate line loses the queen to ...Rxa5.",
+      "explanation": "Rook and a-pawn vs queen on the d-file. The stronger queen can check repeatedly but an active rook and passed a-pawn may create tactical counterplay. Main five-ply study: d1d8 g8h7 d8d5 a5a4 d5h5. Resistant alternative: d1d8 g8h7 d8d4 a5a4 d4h4. A tempting competing candidate: d1a4 g8h7 a4a5. ...a4 advances the rival pawn rather than exchanging, so the queen must preserve the ability to stop it. Endpoint evaluation: Qh5+ and Qh4+ both attack the king's file, while Qxa5 in the candidate line loses the queen to ...Rxa5. Misconception to repair: A queen capture that walks onto a square defended by an opposing rook is not free material. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "The stronger queen can check repeatedly but an active rook and passed a-pawn may create tactical counterplay.",
+        "defenderIdea": "...a4 advances the rival pawn rather than exchanging, so the queen must preserve the ability to stop it.",
+        "continuation": "Qh5+ and Qh4+ both attack the king's file, while Qxa5 in the candidate line loses the queen to ...Rxa5.",
+        "misconception": "A queen capture that walks onto a square defended by an opposing rook is not free material.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qh5+ and Qh4+ both attack the king's file, while Qxa5 in the candidate line loses the queen to ...Rxa5.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d4",
+              "a5a4",
+              "d4h4"
+            ],
+            "explanation": "...a4 advances the rival pawn rather than exchanging, so the queen must preserve the ability to stop it. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "g8h7",
+              "a4a5"
+            ],
+            "explanation": "A queen capture that walks onto a square defended by an opposing rook is not free material. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Unequal-material conversions",
+        "defenderCounterplay": "...a4 advances the rival pawn rather than exchanging, so the queen must preserve the ability to stop it.",
+        "materialAndKingSafety": "Qh5+ and Qh4+ both attack the king's file, while Qxa5 in the candidate line loses the queen to ...Rxa5.",
+        "failedPlan": "A queen capture that walks onto a square defended by an opposing rook is not free material.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-22",
+      "title": "Lateral rook challenges queen centralization",
+      "fen": "6k1/1r6/8/7p/8/8/8/Q5K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Unequal-material conversions",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "conversion.simplify"
+      ],
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8h7",
+        "a8a5",
+        "h5h4",
+        "a5h5"
+      ],
+      "prompt": "Queen checks need to account for a rook on b7 that can take an invading queen on a7. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...h4 gains pawn distance while the rook remains ready for a seventh-rank exchange. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The main route maintains a queen, but the alternative Qa7?? Rxa7 allows a rook to capture it.",
+      "explanation": "Lateral rook challenges queen centralization. Queen checks need to account for a rook on b7 that can take an invading queen on a7. Main five-ply study: a1a8 g8h7 a8a5 h5h4 a5h5. Resistant alternative: a1a8 g8h7 a8a7 b7a7 g1f2. A tempting competing candidate: a1a4 b7b5 a4h4. ...h4 gains pawn distance while the rook remains ready for a seventh-rank exchange. Endpoint evaluation: The main route maintains a queen, but the alternative Qa7?? Rxa7 allows a rook to capture it. Misconception to repair: Material values do not excuse a queen move into the rook's direct line of attack. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Queen checks need to account for a rook on b7 that can take an invading queen on a7.",
+        "defenderIdea": "...h4 gains pawn distance while the rook remains ready for a seventh-rank exchange.",
+        "continuation": "The main route maintains a queen, but the alternative Qa7?? Rxa7 allows a rook to capture it.",
+        "misconception": "Material values do not excuse a queen move into the rook's direct line of attack.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The main route maintains a queen, but the alternative Qa7?? Rxa7 allows a rook to capture it.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "b7a7",
+              "g1f2"
+            ],
+            "explanation": "...h4 gains pawn distance while the rook remains ready for a seventh-rank exchange. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "a1a4",
+              "b7b5",
+              "a4h4"
+            ],
+            "explanation": "Material values do not excuse a queen move into the rook's direct line of attack. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Unequal-material conversions",
+        "defenderCounterplay": "...h4 gains pawn distance while the rook remains ready for a seventh-rank exchange.",
+        "materialAndKingSafety": "The main route maintains a queen, but the alternative Qa7?? Rxa7 allows a rook to capture it.",
+        "failedPlan": "Material values do not excuse a queen move into the rook's direct line of attack.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-23",
+      "title": "Rook on h6 contests the h-file queen",
+      "fen": "6k1/8/p6r/8/8/8/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Unequal-material conversions",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "conversion.simplify"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8h7",
+        "c8c4",
+        "a6a5",
+        "c4h4"
+      ],
+      "prompt": "A queen can check from c8, but a rook on h6 cuts the h-file and threatens queen captures. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...a5 creates an outside passer. The queen on h4 attacks the rook on h6 from below, but the rook is near its king. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, After Qxh6+ in the defensive comparison, Black's king on h7 may recapture the queen. Recalculate material.",
+      "explanation": "Rook on h6 contests the h-file queen. A queen can check from c8, but a rook on h6 cuts the h-file and threatens queen captures. Main five-ply study: c1c8 g8h7 c8c4 a6a5 c4h4. Resistant alternative: c1c8 g8h7 c8c6 a6a5 c6h6. A tempting competing candidate: c1c5 g8h7 c5c8. ...a5 creates an outside passer. The queen on h4 attacks the rook on h6 from below, but the rook is near its king. Endpoint evaluation: After Qxh6+ in the defensive comparison, Black's king on h7 may recapture the queen. Recalculate material. Misconception to repair: Capturing a rook beside its own king can sacrifice the queen when the rook is king-defended. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "A queen can check from c8, but a rook on h6 cuts the h-file and threatens queen captures.",
+        "defenderIdea": "...a5 creates an outside passer. The queen on h4 attacks the rook on h6 from below, but the rook is near its king.",
+        "continuation": "After Qxh6+ in the defensive comparison, Black's king on h7 may recapture the queen. Recalculate material.",
+        "misconception": "Capturing a rook beside its own king can sacrifice the queen when the rook is king-defended.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: After Qxh6+ in the defensive comparison, Black's king on h7 may recapture the queen. Recalculate material.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c6",
+              "a6a5",
+              "c6h6"
+            ],
+            "explanation": "...a5 creates an outside passer. The queen on h4 attacks the rook on h6 from below, but the rook is near its king. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "c1c5",
+              "g8h7",
+              "c5c8"
+            ],
+            "explanation": "Capturing a rook beside its own king can sacrifice the queen when the rook is king-defended. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Unequal-material conversions",
+        "defenderCounterplay": "...a5 creates an outside passer. The queen on h4 attacks the rook on h6 from below, but the rook is near its king.",
+        "materialAndKingSafety": "After Qxh6+ in the defensive comparison, Black's king on h7 may recapture the queen. Recalculate material.",
+        "failedPlan": "Capturing a rook beside its own king can sacrifice the queen when the rook is king-defended.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-24",
+      "title": "Knight attacks a central queen entry",
+      "fen": "6k1/8/2n5/1p6/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Unequal-material conversions",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "conversion.simplify"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d5",
+        "c6b4",
+        "d5f7"
+      ],
+      "prompt": "The black knight on c6 can attack a queen on d5 from b4, forcing the stronger side to calculate a retreat. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Nb4 challenges the queen, while ...Nd4 can be captured by the queen if it is undefended. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qf7+ exploits the check along the seventh rank after ...Nb4, but this alone does not prove conversion.",
+      "explanation": "Knight attacks a central queen entry. The black knight on c6 can attack a queen on d5 from b4, forcing the stronger side to calculate a retreat. Main five-ply study: d1d8 g8h7 d8d5 c6b4 d5f7. Resistant alternative: d1d8 g8h7 d8d5 c6d4 d5d4. A tempting competing candidate: d1d4 c6d4 g1f2. ...Nb4 challenges the queen, while ...Nd4 can be captured by the queen if it is undefended. Endpoint evaluation: Qf7+ exploits the check along the seventh rank after ...Nb4, but this alone does not prove conversion. Misconception to repair: Moving the queen directly to d4 lets ...Nxd4 capture it: queen versus knight is still tactical. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "The black knight on c6 can attack a queen on d5 from b4, forcing the stronger side to calculate a retreat.",
+        "defenderIdea": "...Nb4 challenges the queen, while ...Nd4 can be captured by the queen if it is undefended.",
+        "continuation": "Qf7+ exploits the check along the seventh rank after ...Nb4, but this alone does not prove conversion.",
+        "misconception": "Moving the queen directly to d4 lets ...Nxd4 capture it: queen versus knight is still tactical.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qf7+ exploits the check along the seventh rank after ...Nb4, but this alone does not prove conversion.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d5",
+              "c6d4",
+              "d5d4"
+            ],
+            "explanation": "...Nb4 challenges the queen, while ...Nd4 can be captured by the queen if it is undefended. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1d4",
+              "c6d4",
+              "g1f2"
+            ],
+            "explanation": "Moving the queen directly to d4 lets ...Nxd4 capture it: queen versus knight is still tactical. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Unequal-material conversions",
+        "defenderCounterplay": "...Nb4 challenges the queen, while ...Nd4 can be captured by the queen if it is undefended.",
+        "materialAndKingSafety": "Qf7+ exploits the check along the seventh rank after ...Nb4, but this alone does not prove conversion.",
+        "failedPlan": "Moving the queen directly to d4 lets ...Nxd4 capture it: queen versus knight is still tactical.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-25",
+      "title": "Bishop and pawn resist queen intrusion",
+      "fen": "5bk1/8/p7/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Unequal-material conversions",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "conversion.simplify"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d5",
+        "a6a5",
+        "d5e4"
+      ],
+      "prompt": "The queen can switch diagonals against a bishop, but the defending side's a6 pawn keeps moving. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...a5 is a practical way to create distractions while Black's bishop stays safe on its color complex. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The queen's checking line and pawn capture opportunities must be recalculated after every bishop move.",
+      "explanation": "Bishop and pawn resist queen intrusion. The queen can switch diagonals against a bishop, but the defending side's a6 pawn keeps moving. Main five-ply study: d1d8 g8h7 d8d5 a6a5 d5e4. Resistant alternative: d1d8 g8h7 d8d3 a6a5 d3h3. A tempting competing candidate: d1a4 f8d6 a4a6. ...a5 is a practical way to create distractions while Black's bishop stays safe on its color complex. Endpoint evaluation: The queen's checking line and pawn capture opportunities must be recalculated after every bishop move. Misconception to repair: Assuming the bishop cannot fight a queen ignores long-range diagonal defense and possible checks. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen can switch diagonals against a bishop, but the defending side's a6 pawn keeps moving.",
+        "defenderIdea": "...a5 is a practical way to create distractions while Black's bishop stays safe on its color complex.",
+        "continuation": "The queen's checking line and pawn capture opportunities must be recalculated after every bishop move.",
+        "misconception": "Assuming the bishop cannot fight a queen ignores long-range diagonal defense and possible checks.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The queen's checking line and pawn capture opportunities must be recalculated after every bishop move.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d3",
+              "a6a5",
+              "d3h3"
+            ],
+            "explanation": "...a5 is a practical way to create distractions while Black's bishop stays safe on its color complex. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "f8d6",
+              "a4a6"
+            ],
+            "explanation": "Assuming the bishop cannot fight a queen ignores long-range diagonal defense and possible checks. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Unequal-material conversions",
+        "defenderCounterplay": "...a5 is a practical way to create distractions while Black's bishop stays safe on its color complex.",
+        "materialAndKingSafety": "The queen's checking line and pawn capture opportunities must be recalculated after every bishop move.",
+        "failedPlan": "Assuming the bishop cannot fight a queen ignores long-range diagonal defense and possible checks.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-26",
+      "title": "Black queen blocks a checking h-file",
+      "fen": "6k1/8/8/q7/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Queen defensive resources",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8h4",
+        "a5h5",
+        "h4h5"
+      ],
+      "prompt": "Qd8+ seeks h-file checks, but the black queen can interpose on h5 from a5. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qh5 blocks the h-file; Qxh5+ may gain a queen yet the next king move still matters. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qd5?? allows ...Qxd5, and Qa4?? allows ...Qxa4: neither queen approach is automatically safe.",
+      "explanation": "Black queen blocks a checking h-file. Qd8+ seeks h-file checks, but the black queen can interpose on h5 from a5. Main five-ply study: d1d8 g8h7 d8h4 a5h5 h4h5. Resistant alternative: d1d8 g8h7 d8d5 a5d5 g1f2. A tempting competing candidate: d1a4 a5a4 g1f2. ...Qh5 blocks the h-file; Qxh5+ may gain a queen yet the next king move still matters. Endpoint evaluation: Qd5?? allows ...Qxd5, and Qa4?? allows ...Qxa4: neither queen approach is automatically safe. Misconception to repair: A queen can act as a checking blocker or capture the attacking queen; always examine direct queen exchanges. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ seeks h-file checks, but the black queen can interpose on h5 from a5.",
+        "defenderIdea": "...Qh5 blocks the h-file; Qxh5+ may gain a queen yet the next king move still matters.",
+        "continuation": "Qd5?? allows ...Qxd5, and Qa4?? allows ...Qxa4: neither queen approach is automatically safe.",
+        "misconception": "A queen can act as a checking blocker or capture the attacking queen; always examine direct queen exchanges.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qd5?? allows ...Qxd5, and Qa4?? allows ...Qxa4: neither queen approach is automatically safe.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d5",
+              "a5d5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 blocks the h-file; Qxh5+ may gain a queen yet the next king move still matters. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "a5a4",
+              "g1f2"
+            ],
+            "explanation": "A queen can act as a checking blocker or capture the attacking queen; always examine direct queen exchanges. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Queen defensive resources",
+        "defenderCounterplay": "...Qh5 blocks the h-file; Qxh5+ may gain a queen yet the next king move still matters.",
+        "materialAndKingSafety": "Qd5?? allows ...Qxd5, and Qa4?? allows ...Qxa4: neither queen approach is automatically safe.",
+        "failedPlan": "A queen can act as a checking blocker or capture the attacking queen; always examine direct queen exchanges.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-27",
+      "title": "Queen on b5 guards the c-file",
+      "fen": "6k1/8/8/1q6/8/8/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Queen defensive resources",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8h7",
+        "c8h3",
+        "b5h5",
+        "h3h5"
+      ],
+      "prompt": "Qh3+ can be met by an enemy queen block on h5; the blocker may become capturable. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qh5 neutralizes the immediate h-file check, while ...Qxc4 punishes White's central queen square. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qxh5+ captures the blocker; Qc4?? instead loses White's queen to ...Qxc4.",
+      "explanation": "Queen on b5 guards the c-file. Qh3+ can be met by an enemy queen block on h5; the blocker may become capturable. Main five-ply study: c1c8 g8h7 c8h3 b5h5 h3h5. Resistant alternative: c1c8 g8h7 c8c4 b5c4 g1f2. A tempting competing candidate: c1c4 b5c4 g1f2. ...Qh5 neutralizes the immediate h-file check, while ...Qxc4 punishes White's central queen square. Endpoint evaluation: Qxh5+ captures the blocker; Qc4?? instead loses White's queen to ...Qxc4. Misconception to repair: Checking across a long diagonal does not immunize the queen against a queen on the neighboring file. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qh3+ can be met by an enemy queen block on h5; the blocker may become capturable.",
+        "defenderIdea": "...Qh5 neutralizes the immediate h-file check, while ...Qxc4 punishes White's central queen square.",
+        "continuation": "Qxh5+ captures the blocker; Qc4?? instead loses White's queen to ...Qxc4.",
+        "misconception": "Checking across a long diagonal does not immunize the queen against a queen on the neighboring file.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qxh5+ captures the blocker; Qc4?? instead loses White's queen to ...Qxc4.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 neutralizes the immediate h-file check, while ...Qxc4 punishes White's central queen square. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "c1c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "Checking across a long diagonal does not immunize the queen against a queen on the neighboring file. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Queen defensive resources",
+        "defenderCounterplay": "...Qh5 neutralizes the immediate h-file check, while ...Qxc4 punishes White's central queen square.",
+        "materialAndKingSafety": "Qxh5+ captures the blocker; Qc4?? instead loses White's queen to ...Qxc4.",
+        "failedPlan": "Checking across a long diagonal does not immunize the queen against a queen on the neighboring file.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-28",
+      "title": "b-file check meets queen interposition",
+      "fen": "6k1/8/8/2q5/8/8/8/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Queen defensive resources",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "g8h7",
+        "b8h2",
+        "c5h5",
+        "h2h5"
+      ],
+      "prompt": "Qb8+ is effective, but Black's queen on c5 can block a h-file check or capture b-file queen advances. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qh5 is a legitimate check-interposition; ...Qxb5 is a direct queen capture when White steps onto b5. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The main queen capture on h5 and the alternate queen loss on b5 show why geometry matters more than raw queen activity.",
+      "explanation": "b-file check meets queen interposition. Qb8+ is effective, but Black's queen on c5 can block a h-file check or capture b-file queen advances. Main five-ply study: b1b8 g8h7 b8h2 c5h5 h2h5. Resistant alternative: b1b8 g8h7 b8b5 c5b5 g1f2. A tempting competing candidate: b1b4 c5b4 g1f2. ...Qh5 is a legitimate check-interposition; ...Qxb5 is a direct queen capture when White steps onto b5. Endpoint evaluation: The main queen capture on h5 and the alternate queen loss on b5 show why geometry matters more than raw queen activity. Misconception to repair: Entering a checking square without considering the opposing queen's capture can lose the whole ending. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qb8+ is effective, but Black's queen on c5 can block a h-file check or capture b-file queen advances.",
+        "defenderIdea": "...Qh5 is a legitimate check-interposition; ...Qxb5 is a direct queen capture when White steps onto b5.",
+        "continuation": "The main queen capture on h5 and the alternate queen loss on b5 show why geometry matters more than raw queen activity.",
+        "misconception": "Entering a checking square without considering the opposing queen's capture can lose the whole ending.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The main queen capture on h5 and the alternate queen loss on b5 show why geometry matters more than raw queen activity.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "b1b8",
+              "g8h7",
+              "b8b5",
+              "c5b5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is a legitimate check-interposition; ...Qxb5 is a direct queen capture when White steps onto b5. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "b1b4",
+              "c5b4",
+              "g1f2"
+            ],
+            "explanation": "Entering a checking square without considering the opposing queen's capture can lose the whole ending. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Queen defensive resources",
+        "defenderCounterplay": "...Qh5 is a legitimate check-interposition; ...Qxb5 is a direct queen capture when White steps onto b5.",
+        "materialAndKingSafety": "The main queen capture on h5 and the alternate queen loss on b5 show why geometry matters more than raw queen activity.",
+        "failedPlan": "Entering a checking square without considering the opposing queen's capture can lose the whole ending.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-29",
+      "title": "Queen on d6 trades at the wrong time",
+      "fen": "6k1/8/3q4/8/8/8/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Queen defensive resources",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "g8h7",
+        "e8h5",
+        "d6h6",
+        "h5h6"
+      ],
+      "prompt": "White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
+      "explanation": "Queen on d6 trades at the wrong time. White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Main five-ply study: e1e8 g8h7 e8h5 d6h6 h5h6. Resistant alternative: e1e8 g8h7 e8e4 d6e5 e4e5. A tempting competing candidate: e1e7 d6e7 g1f2. ...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Endpoint evaluation: Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different. Misconception to repair: Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "White can check from e8 or h5, but Black's queen may interpose or attack the attacker.",
+        "defenderIdea": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6.",
+        "continuation": "Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
+        "misconception": "Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "e1e8",
+              "g8h7",
+              "e8e4",
+              "d6e5",
+              "e4e5"
+            ],
+            "explanation": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "e1e7",
+              "d6e7",
+              "g1f2"
+            ],
+            "explanation": "Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Queen defensive resources",
+        "defenderCounterplay": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6.",
+        "materialAndKingSafety": "Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
+        "failedPlan": "Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-30",
+      "title": "Queen on a6 uses the sixth rank",
+      "fen": "6k1/8/q7/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Queen defensive resources",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8h4",
+        "a6h6",
+        "h4h6"
+      ],
+      "prompt": "Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
+      "explanation": "Queen on a6 uses the sixth rank. Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Main five-ply study: d1d8 g8h7 d8h4 a6h6 h4h6. Resistant alternative: d1d8 g8h7 d8d4 a6d6 d4d6. A tempting competing candidate: d1a4 a6a4 g1f2. ...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Endpoint evaluation: A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it. Misconception to repair: Do not treat all queen-for-queen captures as safe solely because they occur with check. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange.",
+        "defenderIdea": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6.",
+        "continuation": "A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
+        "misconception": "Do not treat all queen-for-queen captures as safe solely because they occur with check.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d4",
+              "a6d6",
+              "d4d6"
+            ],
+            "explanation": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "a6a4",
+              "g1f2"
+            ],
+            "explanation": "Do not treat all queen-for-queen captures as safe solely because they occur with check. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Queen defensive resources",
+        "defenderCounterplay": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6.",
+        "materialAndKingSafety": "A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
+        "failedPlan": "Do not treat all queen-for-queen captures as safe solely because they occur with check.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-31",
+      "title": "Queen and rook threaten a seventh-rank defender",
+      "fen": "6k1/1r6/8/p7/8/8/8/R2Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Initiative and practical counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d5",
+        "b7d7",
+        "d5d7"
+      ],
+      "prompt": "The queen's checks must be combined with rook activity; a move into an enemy rook's file can lose the queen. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Rd7 contests the fifth-rank queen's future moves; Qxd7 can remove that rook in the displayed case. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The tempting Qb3? Rxb3 loses the queen; Rxa5 after the capture does not repair the material loss.",
+      "explanation": "Queen and rook threaten a seventh-rank defender. The queen's checks must be combined with rook activity; a move into an enemy rook's file can lose the queen. Main five-ply study: d1d8 g8h7 d8d5 b7d7 d5d7. Resistant alternative: d1d8 g8h7 d8d4 b7b5 d4d5. A tempting competing candidate: d1b3 b7b3 a1a5. ...Rd7 contests the fifth-rank queen's future moves; Qxd7 can remove that rook in the displayed case. Endpoint evaluation: The tempting Qb3? Rxb3 loses the queen; Rxa5 after the capture does not repair the material loss. Misconception to repair: Sacrificing a queen for a rook and pawn is not justified simply because the rook remains active. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen's checks must be combined with rook activity; a move into an enemy rook's file can lose the queen.",
+        "defenderIdea": "...Rd7 contests the fifth-rank queen's future moves; Qxd7 can remove that rook in the displayed case.",
+        "continuation": "The tempting Qb3? Rxb3 loses the queen; Rxa5 after the capture does not repair the material loss.",
+        "misconception": "Sacrificing a queen for a rook and pawn is not justified simply because the rook remains active.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The tempting Qb3? Rxb3 loses the queen; Rxa5 after the capture does not repair the material loss.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d4",
+              "b7b5",
+              "d4d5"
+            ],
+            "explanation": "...Rd7 contests the fifth-rank queen's future moves; Qxd7 can remove that rook in the displayed case. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1b3",
+              "b7b3",
+              "a1a5"
+            ],
+            "explanation": "Sacrificing a queen for a rook and pawn is not justified simply because the rook remains active. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Initiative and practical counterplay",
+        "defenderCounterplay": "...Rd7 contests the fifth-rank queen's future moves; Qxd7 can remove that rook in the displayed case.",
+        "materialAndKingSafety": "The tempting Qb3? Rxb3 loses the queen; Rxa5 after the capture does not repair the material loss.",
+        "failedPlan": "Sacrificing a queen for a rook and pawn is not justified simply because the rook remains active.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-32",
+      "title": "Rook pressure contests queen squares",
+      "fen": "6k1/r7/8/7p/8/8/8/2Q2RK1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Initiative and practical counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8h7",
+        "c8c4",
+        "a7a4",
+        "c4a4"
+      ],
+      "prompt": "Black's rook on a7 can enter a4 or a5; an active queen needs to calculate rook capture rays. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Ra4 and ...Ra5 offer two tactical targets the queen may take while retaining checking potential. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, An unprepared Qa3?? permits ...Rxa3 and fails to gain sufficient compensation.",
+      "explanation": "Rook pressure contests queen squares. Black's rook on a7 can enter a4 or a5; an active queen needs to calculate rook capture rays. Main five-ply study: c1c8 g8h7 c8c4 a7a4 c4a4. Resistant alternative: c1c8 g8h7 c8c5 a7a5 c5a5. A tempting competing candidate: c1a3 a7a3 f1f7. ...Ra4 and ...Ra5 offer two tactical targets the queen may take while retaining checking potential. Endpoint evaluation: An unprepared Qa3?? permits ...Rxa3 and fails to gain sufficient compensation. Misconception to repair: A queen is too valuable to place on an open rook file without a concrete tactic. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's rook on a7 can enter a4 or a5; an active queen needs to calculate rook capture rays.",
+        "defenderIdea": "...Ra4 and ...Ra5 offer two tactical targets the queen may take while retaining checking potential.",
+        "continuation": "An unprepared Qa3?? permits ...Rxa3 and fails to gain sufficient compensation.",
+        "misconception": "A queen is too valuable to place on an open rook file without a concrete tactic.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: An unprepared Qa3?? permits ...Rxa3 and fails to gain sufficient compensation.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c5",
+              "a7a5",
+              "c5a5"
+            ],
+            "explanation": "...Ra4 and ...Ra5 offer two tactical targets the queen may take while retaining checking potential. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "c1a3",
+              "a7a3",
+              "f1f7"
+            ],
+            "explanation": "A queen is too valuable to place on an open rook file without a concrete tactic. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Initiative and practical counterplay",
+        "defenderCounterplay": "...Ra4 and ...Ra5 offer two tactical targets the queen may take while retaining checking potential.",
+        "materialAndKingSafety": "An unprepared Qa3?? permits ...Rxa3 and fails to gain sufficient compensation.",
+        "failedPlan": "A queen is too valuable to place on an open rook file without a concrete tactic.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-33",
+      "title": "Rook invasion on the b-file",
+      "fen": "6k1/1r6/8/4p3/8/8/8/3Q1BK1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Initiative and practical counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d4",
+        "b7b4",
+        "d4b4"
+      ],
+      "prompt": "Qd4 and Qd3 prepare separate captures of a rook that invades b4 or b5. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Rb4 or ...Rb5 creates practical counterplay but may expose the rook to a queen capture. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, The queen's reply must be recalculated from the rook's final square, not guessed before its move.",
+      "explanation": "Rook invasion on the b-file. Qd4 and Qd3 prepare separate captures of a rook that invades b4 or b5. Main five-ply study: d1d8 g8h7 d8d4 b7b4 d4b4. Resistant alternative: d1d8 g8h7 d8d3 b7b5 d3b5. A tempting competing candidate: d1a4 b7b4 a4b4. ...Rb4 or ...Rb5 creates practical counterplay but may expose the rook to a queen capture. Endpoint evaluation: The queen's reply must be recalculated from the rook's final square, not guessed before its move. Misconception to repair: An active rook can become vulnerable if it runs onto a square the opposing queen already controls. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd4 and Qd3 prepare separate captures of a rook that invades b4 or b5.",
+        "defenderIdea": "...Rb4 or ...Rb5 creates practical counterplay but may expose the rook to a queen capture.",
+        "continuation": "The queen's reply must be recalculated from the rook's final square, not guessed before its move.",
+        "misconception": "An active rook can become vulnerable if it runs onto a square the opposing queen already controls.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: The queen's reply must be recalculated from the rook's final square, not guessed before its move.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d3",
+              "b7b5",
+              "d3b5"
+            ],
+            "explanation": "...Rb4 or ...Rb5 creates practical counterplay but may expose the rook to a queen capture. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "b7b4",
+              "a4b4"
+            ],
+            "explanation": "An active rook can become vulnerable if it runs onto a square the opposing queen already controls. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Initiative and practical counterplay",
+        "defenderCounterplay": "...Rb4 or ...Rb5 creates practical counterplay but may expose the rook to a queen capture.",
+        "materialAndKingSafety": "The queen's reply must be recalculated from the rook's final square, not guessed before its move.",
+        "failedPlan": "An active rook can become vulnerable if it runs onto a square the opposing queen already controls.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-34",
+      "title": "Queen and knight fight a rook",
+      "fen": "6k1/2r5/8/p7/8/8/3N4/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Initiative and practical counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "g8h7",
+        "e8e4",
+        "c7c4",
+        "e4c4"
+      ],
+      "prompt": "Qe8+ buys a king move, after which the rook can counterattack from c4 or c5. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "The queen's route to e4/e5 determines whether she can take the rook without crossing an attacked square. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, Capturing the rook on c4 or c5 wins material in the sample, but pawn a5 and king safety still need evaluation.",
+      "explanation": "Queen and knight fight a rook. Qe8+ buys a king move, after which the rook can counterattack from c4 or c5. Main five-ply study: e1e8 g8h7 e8e4 c7c4 e4c4. Resistant alternative: e1e8 g8h7 e8e5 c7c5 e5c5. A tempting competing candidate: e1h4 c7c4 h4c4. The queen's route to e4/e5 determines whether she can take the rook without crossing an attacked square. Endpoint evaluation: Capturing the rook on c4 or c5 wins material in the sample, but pawn a5 and king safety still need evaluation. Misconception to repair: A queen's long-range attack on a rook is only reliable after calculating the rook's exact counter-move. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Qe8+ buys a king move, after which the rook can counterattack from c4 or c5.",
+        "defenderIdea": "The queen's route to e4/e5 determines whether she can take the rook without crossing an attacked square.",
+        "continuation": "Capturing the rook on c4 or c5 wins material in the sample, but pawn a5 and king safety still need evaluation.",
+        "misconception": "A queen's long-range attack on a rook is only reliable after calculating the rook's exact counter-move.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Capturing the rook on c4 or c5 wins material in the sample, but pawn a5 and king safety still need evaluation.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "e1e8",
+              "g8h7",
+              "e8e5",
+              "c7c5",
+              "e5c5"
+            ],
+            "explanation": "The queen's route to e4/e5 determines whether she can take the rook without crossing an attacked square. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "e1h4",
+              "c7c4",
+              "h4c4"
+            ],
+            "explanation": "A queen's long-range attack on a rook is only reliable after calculating the rook's exact counter-move. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Initiative and practical counterplay",
+        "defenderCounterplay": "The queen's route to e4/e5 determines whether she can take the rook without crossing an attacked square.",
+        "materialAndKingSafety": "Capturing the rook on c4 or c5 wins material in the sample, but pawn a5 and king safety still need evaluation.",
+        "failedPlan": "A queen's long-range attack on a rook is only reliable after calculating the rook's exact counter-move.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    },
+    {
+      "id": "calc:p101-35",
+      "title": "Black queen can punish a centralization",
+      "fen": "6k1/8/1p6/q7/8/8/8/1R1Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "source": "authored",
+      "sourceLabel": "P101 · Initiative and practical counterplay",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.branching"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8d5",
+        "a5d5",
+        "b1b6"
+      ],
+      "prompt": "Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "replyReason": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Re-evaluate both material and king safety, including checks made possible by the previous move.",
+      "continuationReason": "After the recorded line, This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
+      "explanation": "Black queen can punish a centralization. Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Main five-ply study: d1d8 g8h7 d8d5 a5d5 b1b6. Resistant alternative: d1d8 g8h7 d8d4 a5e5 d4e5. A tempting competing candidate: d1a4 a5a4 b1b6. ...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Endpoint evaluation: This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique. Misconception to repair: Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "defensiveStudy": {
+        "keyQuestion": "Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6.",
+        "defenderIdea": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4.",
+        "continuation": "This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
+        "misconception": "Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
+        "variations": [
+          {
+            "label": "Defender's other line",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d4",
+              "a5e5",
+              "d4e5"
+            ],
+            "explanation": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Follow the different material exchange through ply 5, not just the first check."
+          },
+          {
+            "label": "Candidate or tactical refutation",
+            "moves": [
+              "d1a4",
+              "a5a4",
+              "b1b6"
+            ],
+            "explanation": "Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake. This alternative explores a different decision, not a guaranteed equal evaluation."
+          }
+        ]
+      },
+      "queenEndgameStudy": {
+        "theme": "Initiative and practical counterplay",
+        "defenderCounterplay": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4.",
+        "materialAndKingSafety": "This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
+        "failedPlan": "Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake.",
+        "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
+      }
+    }
+  ]
+}
