@@ -64,7 +64,7 @@
     {
       "id": "calc:p97-32",
       "title": "b-pawn promotion with a rival passer · opposing immediate passer",
-      "fen": "7k/1P6/8/8/8/8/7p/4K3 w - - 0 1",
+      "fen": "7k/1P6/8/8/8/8/1P5p/4K3 w - - 0 1",
       "playerColor": "w",
       "bestMove": "b7b8q",
       "principalVariation": [
@@ -92,7 +92,7 @@
         "defenderIdea": "b7b8q h8h7 b8d6 h7g8 d6d8",
         "continuation": "The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion.",
         "misconception": "Treating b8=Q as immediate mate omits legal king flights.",
-        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. White's b2 pawn also survives, changing the practical promotion race.",
         "variations": [
           {
             "label": "Different defender flight",
@@ -180,7 +180,7 @@
     {
       "id": "calc:p97-34",
       "title": "a-pawn reaches the back rank · opposing immediate passer",
-      "fen": "7k/P7/8/8/8/8/7p/4K3 w - - 0 1",
+      "fen": "7k/P7/8/8/8/8/1P5p/4K3 w - - 0 1",
       "playerColor": "w",
       "bestMove": "a7a8q",
       "principalVariation": [
@@ -208,7 +208,7 @@
         "defenderIdea": "a7a8q h8h7 a8e4 h7h6 e4e6",
         "continuation": "Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay.",
         "misconception": "The queen's first check does not imply the king lacks h7.",
-        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. White's b2 pawn also survives, changing the practical promotion race.",
         "variations": [
           {
             "label": "Different defender flight",
