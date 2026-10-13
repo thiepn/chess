@@ -22,7 +22,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Ne5 centralizes the knight behind the d4 pawn and eyes f7, but Black can make the bishop active on f5. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bf5 develops on the light complex, so retreating Nd3 must be evaluated as a new route rather than an automatic concession. The resulting material, king access and pawn color complex must be reassessed.",
@@ -73,7 +73,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nd5 and Nb5 are candidate knight routes, but ...Be7 defends central approach squares and can capture a knight placed on f6 or d6. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Be7 deliberately keeps the bishop available to capture either Nf6+ or Nd6 rather than passively conceding a checking square. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -124,7 +124,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Ne4 controls d6 and f6; Black's bishop can use the newly open long diagonal. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bb2 threatens along its diagonal and changes the value of a central knight jump. The resulting material, king access and pawn color complex must be reassessed.",
@@ -175,7 +175,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nd4 improves center coverage while Black develops a bishop to d7. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 coordinates with e6 and can later challenge White's king entry. The resulting material, king access and pawn color complex must be reassessed.",
@@ -226,7 +226,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nc5 seeks d3 or e4 while Black's bishop can centralize on e5. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Be5 points along a useful diagonal and denies the knight an uncontested outpost. The resulting material, king access and pawn color complex must be reassessed.",
@@ -277,7 +277,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "White's e3 pawn blocks c1–f4; Bd2 aims to find a workable diagonal around the pawn chain. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd6 is an active reply that aims at kingside squares instead of conceding activity. The resulting material, king access and pawn color complex must be reassessed.",
@@ -328,7 +328,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bd3 is available because e2 and d3 are empty, and its diagonal points toward h7. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 gets Black's bishop into play without offering a material gift. The resulting material, king access and pawn color complex must be reassessed.",
@@ -379,7 +379,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bd3 improves king-side influence without surrendering the c4 pawn's central role. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Be6 offers the defender a central diagonal and possible pressure on c4. The resulting material, king access and pawn color complex must be reassessed.",
@@ -430,7 +430,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bb5 connects a piece to the central d7 square while Black has ...Bd6. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd6 develops the opposing bishop and makes central pawn tension more important. The resulting material, king access and pawn color complex must be reassessed.",
@@ -481,7 +481,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "The f3 pawn blocks the g2 bishop's long diagonal; Bh3 searches for useful scope. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 develops Black while the bishop on h3 has no forcing capture. The resulting material, king access and pawn color complex must be reassessed.",
@@ -532,7 +532,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.opposite-bishops"
       ],
       "prompt": "White's light-square bishop and Black's dark-square bishop cannot trade directly; the a5 pawn needs king support. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Bf6 challenges White from the opposite-colored long diagonal without putting its king on the checking square. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -583,7 +583,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.opposite-bishops"
       ],
       "prompt": "White's dark-square bishop and Black's light-square bishop cover nonoverlapping color complexes around h5. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Bd7 improves Black's light bishop while the black h6 pawn still contests h5. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -634,7 +634,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.opposite-bishops"
       ],
       "prompt": "White's light bishop on c4 cannot directly exchange Black's dark bishop on d6; the outside a5 pawn remains critical. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Be5 centralizes the dark-square defender and may challenge queenside king entries. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -685,7 +685,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.opposite-bishops"
       ],
       "prompt": "Bb5 aims at the queenside while Black's dark bishop settles on g7. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bg7 keeps a separate diagonal that White's light bishop cannot directly trade off. The resulting material, king access and pawn color complex must be reassessed.",
@@ -736,7 +736,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.opposite-bishops"
       ],
       "prompt": "White's king blocks the bishop's usual f1–b5 diagonal at e2, so the light bishop must reroute via g2 or h3. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Bf6 centralizes Black's dark bishop while White's h5 pawn remains stopped by h6. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -787,7 +787,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Both bishops operate on dark squares, so the fight centers on access to the same diagonals. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Be5 centralizes Black's bishop and challenges White's piece coordination. The resulting material, king access and pawn color complex must be reassessed.",
@@ -838,7 +838,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bd3 develops the light-squared bishop without prematurely checking g8, allowing Black ...Bg4 as a reply. Afterward Bh7+ is a forcing test of king mobility; calculate Black's legal king responses before claiming an advantage.",
       "replyReason": "...Bg4 puts the black bishop on its active diagonal, but White's bishop from d3 can give check on h7. The defender must respond to the check on the next move.",
@@ -889,7 +889,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bf4 opens a clear dark-square diagonal while the d4 pawn remains fixed. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bf6 meets White with a bishop on the same color complex, contesting central squares. The resulting material, king access and pawn color complex must be reassessed.",
@@ -940,7 +940,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "White's bishop is on dark squares, as is Black's bishop on d6. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bc7 preserves Black's diagonal and makes White decide which squares to reinforce. The resulting material, king access and pawn color complex must be reassessed.",
@@ -991,7 +991,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bg2 aims down a long light-square diagonal after Black shifts its light bishop. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bc4 contests White's center and asks how White will coordinate king access. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1042,7 +1042,8 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.passed-pawn"
+        "endgames.minor-piece",
+        "pawns.passed"
       ],
       "prompt": "The h8 promotion square is dark; White's bishop on f1 is light-squared and cannot control it. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Kg7 is one legal king move in this instructional branch, but Black may also sit in the corner. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1093,7 +1094,8 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.passed-pawn"
+        "endgames.minor-piece",
+        "pawns.passed"
       ],
       "prompt": "White holds a light bishop and h-pawn; h8 remains the wrong-colored corner. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Kh7 is a temporary king flight, not a compelled move from the corner. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1144,7 +1146,8 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.passed-pawn"
+        "endgames.minor-piece",
+        "pawns.passed"
       ],
       "prompt": "The attacking king is on e5; the critical h8 square is dark and White has a light bishop. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Kg7 is playable, but a competent defender need not leave the corner voluntarily. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1195,7 +1198,8 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.passed-pawn"
+        "endgames.minor-piece",
+        "pawns.passed"
       ],
       "prompt": "A bishop on d1 controls light squares and cannot challenge Black's dark promotion corner. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Kh7 is a legal waiting flight while the attacker reroutes. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1246,7 +1250,8 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.passed-pawn"
+        "endgames.minor-piece",
+        "pawns.passed"
       ],
       "prompt": "White's king on d5 is remote from the h-pawn's promotion square. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Kg7 is a legal flight and may return to h8 if the rook pawn advances. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1297,7 +1302,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nf5 occupies a useful square against e5 while Black's bishop can retreat. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bf8 preserves bishop potential and may prepare a counterbreak. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1348,7 +1353,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nb5 targets d6 and c7 while Black's bishop attacks on a different diagonal. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bf6 aims at the d4 pawn through e5 and forces a defensive calculation. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1399,7 +1404,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Ne5 uses the d-pawn-less center as a knight maneuvering square against the c5 chain. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bb7 gives Black a long-diagonal bishop, making d3 a safer knight route. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1450,7 +1455,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nd4 puts a knight where it can later capture b5 if Black cannot defend it. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 develops the bishop, so Nxb5 can be met by a future bishop attack. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1501,7 +1506,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "The knight's Nf6+ looks attractive but Black's bishop can answer from e7. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Be7 keeps Black's bishop available for ...Bxf6 or ...Bxd6 after a checking knight jump. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -1552,7 +1557,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Ke4 improves White's king but allows a black knight to attack it from f6. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Nf6+ checks the king on e4, so Ke5 must be found rather than a pawn push. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1603,7 +1608,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Kd4 clears e3 so the bishop may reach it from c1 after a knight jump. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Ne4 contests central squares and may threaten the c4 pawn. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1654,7 +1659,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Ke3 centralizes the king while White's bishop may press the b5 diagonal. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Ne5 improves Black's knight and requires White to decide on targets. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1705,7 +1710,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Kf2 begins a king escort and avoids immediate pawn advances. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 develops a defender that can monitor White's central break. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1756,7 +1761,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Kc4 approaches the pawn wing while Black's bishop centralizes. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Be5 controls both wings; White's knight has to choose a useful outpost. The resulting material, king access and pawn color complex must be reassessed.",
@@ -1807,7 +1812,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "With a light bishop and h-pawn, White cannot control h8, while Black's dark bishop can move on a different complex. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Bf6 centralizes the defender without abandoning the theoretical importance of h8. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -1858,7 +1863,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Bg2 aims at a8, but Black's king is on b8 and the black bishop can respond ...Bd6. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Bd6 is a legal defensive move because the white bishop's long diagonal does not attack b8. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -1909,7 +1914,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "The active white king changes route while the black knight seeks to occupy d5 before the pawn can advance. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
       "replyReason": "...Nd5 restricts the white king's central choices and contests d4. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
@@ -1960,7 +1965,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Nd4 prepares king access and a5–a6 may be impossible because a6 is occupied by an enemy pawn. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Bd7 improves the defender rather than immediately exchanging the queenside pawns. The resulting material, king access and pawn color complex must be reassessed.",
@@ -2011,7 +2016,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "endgames.minor-piece-activity"
+        "endgames.minor-piece"
       ],
       "prompt": "Kd2 keeps White's king off a knight fork square while defending the pawn chain. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
       "replyReason": "...Nb4 attacks d3 and c2, compelling White to protect or move its bishop. The resulting material, king access and pawn color complex must be reassessed.",
