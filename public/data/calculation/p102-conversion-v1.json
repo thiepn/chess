@@ -27,7 +27,7 @@
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count.",
       "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
-      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss. The originally tempting ...Kd7 is illegal after Rxd2 because White's rook attacks d7 down the open file.",
       "defensiveStudy": {
         "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
         "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
@@ -39,12 +39,12 @@
             "label": "Defensive counterplan (5 plies)",
             "moves": [
               "d1d2",
-              "e8d7",
+              "e8f7",
               "d2d5",
-              "d7e6",
+              "f7e6",
               "d5d6"
             ],
-            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count. Compare with the reference before pronouncing a win."
+            "explanation": "The black king cannot step to d7 because Rd2 controls that file. ...Kf7 is legal; Rd5 and ...Ke6 then test the rook's next checking rank."
           },
           {
             "label": "Plausible failure (3 plies)",
@@ -90,7 +90,7 @@
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending.",
       "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
-      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss. The originally tempting ...Kd7 is illegal after Rxd2 because White's rook attacks d7 down the open file.",
       "defensiveStudy": {
         "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
         "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
@@ -102,12 +102,12 @@
             "label": "Defensive counterplan (5 plies)",
             "moves": [
               "d1d2",
-              "e8d7",
+              "e8f7",
               "d2d5",
-              "d7e6",
+              "f7e6",
               "d5d6"
             ],
-            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+            "explanation": "The black king cannot step to d7 because Rd2 controls that file. ...Kf7 is legal; Rd5 and ...Ke6 then test the rook's next checking rank."
           },
           {
             "label": "Plausible failure (3 plies)",
@@ -153,7 +153,7 @@
       "prompt": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Calculate the five-ply reference, the defender's best real alternative and a tempting counterexample without moving the pieces.",
       "replyReason": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Context: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn.",
       "continuationReason": "Position after five plies: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook.",
-      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss.",
+      "explanation": "Capture the invading rook rather than chase it. Original worked line d1d2 e8f7 d2d7 f7e6 d7d6. Defensive variation d1d2 e8d7 d2d5 d7e6 d5d6. Tempting counterexample g1f1 d2d1 f1f2. Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check. Defender's resource: Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. Endpoint: White retains a rook after Rxd2, whereas the king-first plan permits Black to capture White's last rook. Mistake: Counting rook activity while ignoring ...Rxd1 in the king-first line can reverse the material evaluation. White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. The pawn inventory differs with the extra reserve: do not conflate a legal line with a fully tablebase-proven win/draw/loss. The originally tempting ...Kd7 is illegal after Rxd2 because White's rook attacks d7 down the open file.",
       "defensiveStudy": {
         "keyQuestion": "Rxd2 removes the opposing rook on the second rank. The king's centralization and checking geometry then matter more than the attacker's first check.",
         "defenderIdea": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material.",
@@ -165,12 +165,12 @@
             "label": "Defensive counterplan (5 plies)",
             "moves": [
               "d1d2",
-              "e8d7",
+              "e8f7",
               "d2d5",
-              "d7e6",
+              "f7e6",
               "d5d6"
             ],
-            "explanation": "Black's king chooses e8–f7 or e8–d7; the rook that survives must still avoid handing back material. After this branch, count all remaining pawns: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn. Compare with the reference before pronouncing a win."
+            "explanation": "The black king cannot step to d7 because Rd2 controls that file. ...Kf7 is legal; Rd5 and ...Ke6 then test the rook's next checking rank."
           },
           {
             "label": "Plausible failure (3 plies)",
@@ -295,10 +295,10 @@
               "e1e8",
               "f7f8",
               "e8d8",
-              "g8h7",
+              "g8h8",
               "d8d5"
             ],
-            "explanation": "...Rf8 blocks the queen check while giving White the decision whether to keep checking or exchange with disastrous material consequences. After this branch, count all remaining pawns: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending. Compare with the reference before pronouncing a win."
+            "explanation": "Black retreats ...Kh8, not ...Kh7 because h7 is occupied by Black's pawn. The rook on f8 screens the king from Qd8 along the back rank."
           },
           {
             "label": "Plausible failure (3 plies)",
