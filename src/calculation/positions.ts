@@ -1,5 +1,6 @@
 import { legalCalculationBranch } from "./branchFeedback";
 import { hydrateOpeningTransition } from "../openings/transitionStudy";
+import { hydrateEndgameDecision } from "../endgames/decisionStudy";
 import type {
   ChessSkill,
   TrainingActivity,
@@ -50,6 +51,8 @@ const sourceFiles = [
     ["p110-prophylaxis-b-v1.json", 20],
     ["p111-opening-bridges-a-v1.json", 8],
     ["p111-opening-bridges-b-v1.json", 8],
+    ["p112-endgame-decisions-a-v1.json", 15],
+    ["p112-endgame-decisions-b-v1.json", 15],
   ] as const;
 type SourceStatus = "loading" | "ready" | "failed";
 const sourceStatus = new Map<string, SourceStatus>();
@@ -87,7 +90,7 @@ function loadCalculationSource(file: string, count: number): void {
           !Array.isArray(data.positions) || data.positions.length !== count) {
         throw new Error("Study manifest count mismatch");
       }
-      const maybePositions = (data.positions as CalculationPosition[]).map(hydrateOpeningTransition);
+      const maybePositions = (data.positions as CalculationPosition[]).map(hydrateOpeningTransition).map(p => p ? hydrateEndgameDecision(p) : null);
       if (maybePositions.some(p => !p)) throw new Error("Missing legal opening transition source");
       const positions = maybePositions as CalculationPosition[];
       const ids = new Set<string>(), fens = new Set<string>();

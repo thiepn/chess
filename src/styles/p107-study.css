@@ -61,10 +61,7 @@
 .strategic-library-categories .selected{font-weight:700;outline:2px solid currentColor;outline-offset:-3px}
 
 /* P111 native opening-bridge discovery: responsive and keyboard first. */
-.opening-bridge-library{margin-top:24px;display:grid;gap:16px}
-.opening-bridge-library header p{line-height:1.55}
+.opening-bridge-library{margin-top:24px;display:grid;gap:10px}
 .opening-bridge-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:12px}
-.opening-bridge-list article{display:grid;gap:10px;align-content:space-between;padding:14px;border:1px solid var(--chess-color-separator,var(--line))}
-.opening-bridge-list small{display:block;opacity:.8;margin:4px 0}
-.opening-bridge-list p{line-height:1.5;margin:6px 0}
-.opening-bridge-list button{min-height:44px}
+.opening-bridge-list button{display:grid;gap:6px;text-align:left;min-height:44px;padding:12px}
+

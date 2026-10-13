@@ -29,12 +29,15 @@ import type {
   TrainingOutcome,
 } from "../domain/types";
 import { ChessBoard } from "./ChessBoard";
+import type { CalculationPosition } from "../calculation/types";
 
 interface EndgameTechniqueRunnerProps {
   activity: TrainingActivity;
   skill: ChessSkill;
   position: EndgamePosition;
   delayedRetention: boolean;
+  decisionStudies?: CalculationPosition[];
+  onOpenDecision?: (study: CalculationPosition) => void;
   onComplete: (
     outcome: TrainingOutcome,
   ) => void;
@@ -97,6 +100,8 @@ function EndgameTechniqueSession({
   skill,
   position,
   delayedRetention,
+  decisionStudies,
+  onOpenDecision,
   onComplete,
 }: EndgameTechniqueRunnerProps) {
   const gameRef = useRef(
@@ -414,6 +419,13 @@ function EndgameTechniqueSession({
             {skill.title}
           </span>
         </div>
+
+        {onOpenDecision && decisionStudies?.[0] && (
+          <button type="button" className="secondary"
+            onClick={() => onOpenDecision(decisionStudies[0])}>
+            Study a related endgame decision · unscored
+          </button>
+        )}
 
         <div className="endgame-recognition-layout">
           <div className="endgame-preview-board">

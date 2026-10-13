@@ -405,34 +405,22 @@ export function OpeningsView({
         </div>
       </section>
 
-      <section className="opening-bridge-library" aria-label="Opening-to-middlegame structure studies">
-        <header>
-          <p className="eyebrow">P111 · UNGRADED REPERTOIRE TRANSITIONS</p>
-          <h2>From opening memory to a concrete plan</h2>
-          <p>These studies start from the original repertoire board. Predict the
-            opponent's response, examine a legal alternative, then independently
-            explain the pawn break and resulting piece placements. No opening grade
-            or automatic repertoire mastery is awarded.</p>
-        </header>
-        {bridgeStudies.length ? (
-          <div className="opening-bridge-list">
-            {bridgeStudies.map(item => (
-              <article key={item.id}>
-                <div>
-                  <strong>{item.openingTransitionStudy?.theme}</strong>
-                  <small>Source node: {item.openingTransitionStudy?.nodeId}</small>
-                  <p>{item.openingTransitionStudy?.breakPlan}</p>
-                  <p><em>Opponent resource:</em> {item.openingTransitionStudy?.counterplan}</p>
-                </div>
-                <button type="button" className="secondary"
-                  onClick={() => onStudyTransition(item)}>
-                  Open unscored board study
-                </button>
-              </article>
-            ))}
-          </div>
-        ) : <p role="status">Opening transition studies are loading or unavailable;
-          repertoire recall remains usable independently.</p>}
+      <section className="opening-bridge-library" aria-label="Opening-to-middlegame studies">
+        <h2>Opening-to-middlegame decisions</h2>
+        <p>Original repertoire positions · unscored</p>
+        <div className="opening-bridge-list">
+          {bridgeStudies.map(item => (
+            <button type="button" className="secondary" key={item.id}
+              onClick={() => onStudyTransition(item)}>
+              <strong>{item.openingTransitionStudy?.theme}</strong>
+              <small>{item.openingTransitionStudy?.nodeId}</small>
+              <span>{item.openingTransitionStudy?.breakPlan}</span>
+              <small>Defensive reply: {item.openingTransitionStudy?.counterplan}</small>
+            </button>
+          ))}
+        </div>
+        {!bridgeStudies.length && <p role="status">Transition studies unavailable;
+          opening recall remains usable.</p>}
       </section>
     </section>
   );

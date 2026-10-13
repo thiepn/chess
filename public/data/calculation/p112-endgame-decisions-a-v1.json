@@ -1,0 +1,1312 @@
+{
+  "version": 1,
+  "phase": "P112",
+  "provenance": "New instructional texts; exact 180-degree color inversions of this repository's owned P101/P102 calculated source FEN and UCI moves. No tablebase outcome or best-move claim; last alternative carries only 3 authored plies.",
+  "positions": [
+    {
+      "id": "calc:p112-01",
+      "source": "authored",
+      "sourceLabel": "P112 · Exchange or preserve the rook · calc:p102-01",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Exchange or preserve the rook — Identify the decision",
+      "prompt": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2r3/4R2p/8/8/8/8/8/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e7",
+      "principalVariation": [
+        "e8e7",
+        "d1c2",
+        "e7e2",
+        "c2d3",
+        "e2e3"
+      ],
+      "explanation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. Principal legal reference: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Alternate defense: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Alternative start: b8→c8 · e7→e8 · c8→c7. Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. The board is a 180° color-reversed educational transformation of original calc:p102-01, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e7, the recorded response d1→c2 forces a new decision. A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+      "continuationReason": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "defenderIdea": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "continuation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "reflection": "Recall d1 and b8, the pawn on Black h7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e7",
+              "d1c2",
+              "e7e4",
+              "c2d3",
+              "e4e3"
+            ],
+            "explanation": "A defender may activate the king or pursue checks instead of accepting your preferred simplification. Legally derived from original calc:p102-01; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "e7e8",
+              "c8c7"
+            ],
+            "explanation": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-01",
+        "family": "Exchange or preserve the rook",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "defenderResource": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "decisionQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black h7.",
+        "transferQuestion": "Stage 1: after d1→c2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: After the proposed rook exchange, which side has a concrete passed-pawn or checking resource? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→c2.",
+            "answer": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. The authored five-ply example is e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. The second move d1→c2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3 on the board, then substitute the resisting defender route e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Resisting authored line: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. A defender may activate the king or pursue checks instead of accepting your preferred simplification. After capturing or offering a rook trade, inspect which rook and pawn targets remain. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · e7→e8 · c8→c7 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · e7→e8 · c8→c7. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-02",
+      "source": "authored",
+      "sourceLabel": "P112 · Exchange or preserve the rook · calc:p102-02",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Exchange or preserve the rook — Test active resistance",
+      "prompt": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. A defender may activate the king or pursue checks instead of accepting your preferred simplification. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2r3/4R3/8/8/8/8/P7/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e7",
+      "principalVariation": [
+        "e8e7",
+        "d1c2",
+        "e7e2",
+        "c2d3",
+        "e2e3"
+      ],
+      "explanation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. A defender may activate the king or pursue checks instead of accepting your preferred simplification. Principal legal reference: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Alternate defense: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Alternative start: b8→c8 · e7→e8 · c8→c7. Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. The board is a 180° color-reversed educational transformation of original calc:p102-02, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e7, the recorded response d1→c2 forces a new decision. A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+      "continuationReason": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "defenderIdea": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "continuation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "reflection": "Recall d1 and b8, the pawn on White a2, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e7",
+              "d1c2",
+              "e7e4",
+              "c2d3",
+              "e4e3"
+            ],
+            "explanation": "A defender may activate the king or pursue checks instead of accepting your preferred simplification. Legally derived from original calc:p102-02; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "e7e8",
+              "c8c7"
+            ],
+            "explanation": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-02",
+        "family": "Exchange or preserve the rook",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "defenderResource": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "decisionQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2.",
+        "transferQuestion": "Stage 2: after d1→c2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: After the proposed rook exchange, which side has a concrete passed-pawn or checking resource? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→c2.",
+            "answer": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. A defender may activate the king or pursue checks instead of accepting your preferred simplification. The authored five-ply example is e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. The second move d1→c2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3 on the board, then substitute the resisting defender route e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Resisting authored line: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. A defender may activate the king or pursue checks instead of accepting your preferred simplification. After capturing or offering a rook trade, inspect which rook and pawn targets remain. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · e7→e8 · c8→c7 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · e7→e8 · c8→c7. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. A defender may activate the king or pursue checks instead of accepting your preferred simplification. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-03",
+      "source": "authored",
+      "sourceLabel": "P112 · Exchange or preserve the rook · calc:p102-03",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Exchange or preserve the rook — Revise and transfer",
+      "prompt": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2r3/4R1p1/8/8/8/8/8/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e7",
+      "principalVariation": [
+        "e8e7",
+        "d1c2",
+        "e7e2",
+        "c2d3",
+        "e2e3"
+      ],
+      "explanation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. Principal legal reference: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Alternate defense: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Alternative start: b8→c8 · e7→e8 · c8→c7. Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. The board is a 180° color-reversed educational transformation of original calc:p102-03, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e7, the recorded response d1→c2 forces a new decision. A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+      "continuationReason": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "defenderIdea": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "continuation": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "reflection": "Recall d1 and b8, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e7",
+              "d1c2",
+              "e7e4",
+              "c2d3",
+              "e4e3"
+            ],
+            "explanation": "A defender may activate the king or pursue checks instead of accepting your preferred simplification. Legally derived from original calc:p102-03; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "e7e8",
+              "c8c7"
+            ],
+            "explanation": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-03",
+        "family": "Exchange or preserve the rook",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "After capturing or offering a rook trade, inspect which rook and pawn targets remain.",
+        "defenderResource": "A defender may activate the king or pursue checks instead of accepting your preferred simplification.",
+        "misconception": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture.",
+        "decisionQuestion": "After the proposed rook exchange, which side has a concrete passed-pawn or checking resource?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black g7.",
+        "transferQuestion": "Stage 3: after d1→c2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: After the proposed rook exchange, which side has a concrete passed-pawn or checking resource? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→c2.",
+            "answer": "After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. The authored five-ply example is e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. The second move d1→c2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3 on the board, then substitute the resisting defender route e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e7 · d1→c2 · e7→e2 · c2→d3 · e2→e3. Resisting authored line: e8→e7 · d1→c2 · e7→e4 · c2→d3 · e4→e3. A defender may activate the king or pursue checks instead of accepting your preferred simplification. After capturing or offering a rook trade, inspect which rook and pawn targets remain. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · e7→e8 · c8→c7 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · e7→e8 · c8→c7. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. After capturing or offering a rook trade, inspect which rook and pawn targets remain. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. A defender may activate the king or pursue checks instead of accepting your preferred simplification. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Trading rooks is not proof of a converted advantage; name the pawn and king route after the recapture. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-04",
+      "source": "authored",
+      "sourceLabel": "P112 · Rook behind the passer · calc:p102-16",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Rook behind the passer — Identify the decision",
+      "prompt": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k5r/6p1/8/8/P6p/8/8/RK6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h8h5",
+      "principalVariation": [
+        "h8h5",
+        "a1a2",
+        "b8c7",
+        "a2a3",
+        "c7d6"
+      ],
+      "explanation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Principal legal reference: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Alternate defense: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Alternative start: h4→h3 · a1→a2 · h8→h4. Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. The board is a 180° color-reversed educational transformation of original calc:p102-16, not the original exact game's win/draw claim.",
+      "replyReason": "After h8h5, the recorded response a1→a2 forces a new decision. The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+      "continuationReason": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "defenderIdea": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "continuation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "reflection": "Recall b1 and b8, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "b8c7",
+              "a1a2",
+              "h8h5",
+              "a2a3",
+              "c7d6"
+            ],
+            "explanation": "The defending rook can check laterally or move behind the pawn while the opposing king approaches. Legally derived from original calc:p102-16; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "h4h3",
+              "a1a2",
+              "h8h4"
+            ],
+            "explanation": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-16",
+        "family": "Rook behind the passer",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "defenderResource": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "decisionQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, White a4, Black h4.",
+        "transferQuestion": "Stage 1: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Does a rook lift improve the escort or give the defender another checking rank? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. The authored five-ply example is h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6 on the board, then substitute the resisting defender route b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Resisting authored line: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers h4→h3 · a1→a2 · h8→h4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: h4→h3 · a1→a2 · h8→h4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-05",
+      "source": "authored",
+      "sourceLabel": "P112 · Rook behind the passer · calc:p102-17",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Rook behind the passer — Test active resistance",
+      "prompt": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h4, White b2. The defending rook can check laterally or move behind the pawn while the opposing king approaches. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k5r/8/8/8/P6p/8/1P6/RK6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h8h5",
+      "principalVariation": [
+        "h8h5",
+        "a1a2",
+        "b8c7",
+        "a2a3",
+        "c7d6"
+      ],
+      "explanation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h4, White b2. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Principal legal reference: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Alternate defense: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Alternative start: h4→h3 · a1→a2 · h8→h4. Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. The board is a 180° color-reversed educational transformation of original calc:p102-17, not the original exact game's win/draw claim.",
+      "replyReason": "After h8h5, the recorded response a1→a2 forces a new decision. The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+      "continuationReason": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "defenderIdea": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "continuation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "reflection": "Recall b1 and b8, the pawn on White a4, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "b8c7",
+              "a1a2",
+              "h8h5",
+              "a2a3",
+              "c7d6"
+            ],
+            "explanation": "The defending rook can check laterally or move behind the pawn while the opposing king approaches. Legally derived from original calc:p102-17; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "h4h3",
+              "a1a2",
+              "h8h4"
+            ],
+            "explanation": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-17",
+        "family": "Rook behind the passer",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "defenderResource": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "decisionQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h4, White b2.",
+        "transferQuestion": "Stage 2: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Does a rook lift improve the escort or give the defender another checking rank? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h4, White b2. The defending rook can check laterally or move behind the pawn while the opposing king approaches. The authored five-ply example is h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6 on the board, then substitute the resisting defender route b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Resisting authored line: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers h4→h3 · a1→a2 · h8→h4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: h4→h3 · a1→a2 · h8→h4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h4, White b2. The defending rook can check laterally or move behind the pawn while the opposing king approaches. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-06",
+      "source": "authored",
+      "sourceLabel": "P112 · Rook behind the passer · calc:p102-18",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Rook behind the passer — Revise and transfer",
+      "prompt": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black e7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k5r/4p3/8/8/P6p/8/8/RK6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h8h5",
+      "principalVariation": [
+        "h8h5",
+        "a1a2",
+        "b8c7",
+        "a2a3",
+        "c7d6"
+      ],
+      "explanation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black e7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Principal legal reference: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Alternate defense: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Alternative start: h4→h3 · a1→a2 · h8→h4. Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. The board is a 180° color-reversed educational transformation of original calc:p102-18, not the original exact game's win/draw claim.",
+      "replyReason": "After h8h5, the recorded response a1→a2 forces a new decision. The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+      "continuationReason": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "defenderIdea": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "continuation": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "reflection": "Recall b1 and b8, the pawn on Black e7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "b8c7",
+              "a1a2",
+              "h8h5",
+              "a2a3",
+              "c7d6"
+            ],
+            "explanation": "The defending rook can check laterally or move behind the pawn while the opposing king approaches. Legally derived from original calc:p102-18; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "h4h3",
+              "a1a2",
+              "h8h4"
+            ],
+            "explanation": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-18",
+        "family": "Rook behind the passer",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover.",
+        "defenderResource": "The defending rook can check laterally or move behind the pawn while the opposing king approaches.",
+        "misconception": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks.",
+        "decisionQuestion": "Does a rook lift improve the escort or give the defender another checking rank?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black e7, White a4, Black h4.",
+        "transferQuestion": "Stage 3: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Does a rook lift improve the escort or give the defender another checking rank? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black e7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. The authored five-ply example is h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6 on the board, then substitute the resisting defender route b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h8→h5 · a1→a2 · b8→c7 · a2→a3 · c7→d6. Resisting authored line: b8→c7 · a1→a2 · h8→h5 · a2→a3 · c7→d6. The defending rook can check laterally or move behind the pawn while the opposing king approaches. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers h4→h3 · a1→a2 · h8→h4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: h4→h3 · a1→a2 · h8→h4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Activity behind a passed pawn can outrank immediate pawn pushing; count checking distance and king cover. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black e7, White a4, Black h4. The defending rook can check laterally or move behind the pawn while the opposing king approaches. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Putting a rook behind a pawn is not itself a winning evaluation; assess pawn color and defensive checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-07",
+      "source": "authored",
+      "sourceLabel": "P112 · Wrong-bishop drawing resource · calc:p102-25",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Wrong-bishop drawing resource — Identify the decision",
+      "prompt": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2b5/8/8/8/p1k5/8/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c8d7",
+      "principalVariation": [
+        "c8d7",
+        "a1a2",
+        "d7e6",
+        "a2a3",
+        "e6d5"
+      ],
+      "explanation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. Principal legal reference: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Alternate defense: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Alternative start: a4→a3 · a1→a2 · c8→e6. An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. The board is a 180° color-reversed educational transformation of original calc:p102-25, not the original exact game's win/draw claim.",
+      "replyReason": "After c8d7, the recorded response a1→a2 forces a new decision. The defender can remain near the corner and exploit the bishop's inability to control it.",
+      "continuationReason": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "defenderIdea": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "continuation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "reflection": "Recall a1 and c4, the pawn on Black a4, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "c8f5",
+              "a1a2",
+              "f5e4",
+              "a2a3",
+              "e4d5"
+            ],
+            "explanation": "The defender can remain near the corner and exploit the bishop's inability to control it. Legally derived from original calc:p102-25; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "a4a3",
+              "a1a2",
+              "c8e6"
+            ],
+            "explanation": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-25",
+        "family": "Wrong-bishop drawing resource",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "defenderResource": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "decisionQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "structure": "White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4.",
+        "transferQuestion": "Stage 1: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Which corner must the bishop control, and what can the defending king still occupy? In this specific position with kings on a1/c4, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. The authored five-ply example is c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5 on the board, then substitute the resisting defender route c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Resisting authored line: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. The defender can remain near the corner and exploit the bishop's inability to control it. The promotion corner and the bishop's square color matter more than an apparent extra pawn. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers a4→a3 · a1→a2 · c8→e6 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: a4→a3 · a1→a2 · c8→e6. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-08",
+      "source": "authored",
+      "sourceLabel": "P112 · Wrong-bishop drawing resource · calc:p102-26",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Wrong-bishop drawing resource — Test active resistance",
+      "prompt": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black h7, Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2b5/7p/8/8/p1k5/8/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c8d7",
+      "principalVariation": [
+        "c8d7",
+        "a1a2",
+        "d7e6",
+        "a2a3",
+        "e6d5"
+      ],
+      "explanation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black h7, Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. Principal legal reference: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Alternate defense: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Alternative start: a4→a3 · a1→a2 · c8→e6. An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. The board is a 180° color-reversed educational transformation of original calc:p102-26, not the original exact game's win/draw claim.",
+      "replyReason": "After c8d7, the recorded response a1→a2 forces a new decision. The defender can remain near the corner and exploit the bishop's inability to control it.",
+      "continuationReason": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "defenderIdea": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "continuation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "reflection": "Recall a1 and c4, the pawn on Black h7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "c8f5",
+              "a1a2",
+              "f5e4",
+              "a2a3",
+              "e4d5"
+            ],
+            "explanation": "The defender can remain near the corner and exploit the bishop's inability to control it. Legally derived from original calc:p102-26; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "a4a3",
+              "a1a2",
+              "c8e6"
+            ],
+            "explanation": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-26",
+        "family": "Wrong-bishop drawing resource",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "defenderResource": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "decisionQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "structure": "White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black h7, Black a4.",
+        "transferQuestion": "Stage 2: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Which corner must the bishop control, and what can the defending king still occupy? In this specific position with kings on a1/c4, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black h7, Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. The authored five-ply example is c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5 on the board, then substitute the resisting defender route c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Resisting authored line: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. The defender can remain near the corner and exploit the bishop's inability to control it. The promotion corner and the bishop's square color matter more than an apparent extra pawn. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers a4→a3 · a1→a2 · c8→e6 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: a4→a3 · a1→a2 · c8→e6. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black h7, Black a4. The defender can remain near the corner and exploit the bishop's inability to control it. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-09",
+      "source": "authored",
+      "sourceLabel": "P112 · Wrong-bishop drawing resource · calc:p102-27",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Wrong-bishop drawing resource — Revise and transfer",
+      "prompt": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4, White h2. The defender can remain near the corner and exploit the bishop's inability to control it. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2b5/8/8/8/p1k5/8/7P/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c8d7",
+      "principalVariation": [
+        "c8d7",
+        "a1a2",
+        "d7e6",
+        "a2a3",
+        "e6d5"
+      ],
+      "explanation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4, White h2. The defender can remain near the corner and exploit the bishop's inability to control it. Principal legal reference: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Alternate defense: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Alternative start: a4→a3 · a1→a2 · c8→e6. An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. The board is a 180° color-reversed educational transformation of original calc:p102-27, not the original exact game's win/draw claim.",
+      "replyReason": "After c8d7, the recorded response a1→a2 forces a new decision. The defender can remain near the corner and exploit the bishop's inability to control it.",
+      "continuationReason": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "defenderIdea": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "continuation": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "reflection": "Recall a1 and c4, the pawn on Black a4, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "c8f5",
+              "a1a2",
+              "f5e4",
+              "a2a3",
+              "e4d5"
+            ],
+            "explanation": "The defender can remain near the corner and exploit the bishop's inability to control it. Legally derived from original calc:p102-27; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "a4a3",
+              "a1a2",
+              "c8e6"
+            ],
+            "explanation": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-27",
+        "family": "Wrong-bishop drawing resource",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "The promotion corner and the bishop's square color matter more than an apparent extra pawn.",
+        "defenderResource": "The defender can remain near the corner and exploit the bishop's inability to control it.",
+        "misconception": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof.",
+        "decisionQuestion": "Which corner must the bishop control, and what can the defending king still occupy?",
+        "structure": "White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4, White h2.",
+        "transferQuestion": "Stage 3: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Which corner must the bishop control, and what can the defending king still occupy? In this specific position with kings on a1/c4, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4, White h2. The defender can remain near the corner and exploit the bishop's inability to control it. The authored five-ply example is c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5 on the board, then substitute the resisting defender route c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: c8→d7 · a1→a2 · d7→e6 · a2→a3 · e6→d5. Resisting authored line: c8→f5 · a1→a2 · f5→e4 · a2→a3 · e4→d5. The defender can remain near the corner and exploit the bishop's inability to control it. The promotion corner and the bishop's square color matter more than an apparent extra pawn. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers a4→a3 · a1→a2 · c8→e6 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: a4→a3 · a1→a2 · c8→e6. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The promotion corner and the bishop's square color matter more than an apparent extra pawn. White's king is on a1; Black's king is on c4. The pawn inventory visible from the board includes Black a4, White h2. The defender can remain near the corner and exploit the bishop's inability to control it. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "An extra bishop and rook pawn do not universally force a win; avoid asserting a tablebase result without proof. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-10",
+      "source": "authored",
+      "sourceLabel": "P112 · Passer timing and the opposing race · calc:p102-31",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Passer timing and the opposing race — Identify the decision",
+      "prompt": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black g7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2k5/6p1/8/8/P7/7p/K7/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h3h2",
+      "principalVariation": [
+        "h3h2",
+        "a4a5",
+        "h2h1q",
+        "a5a6",
+        "h1a8"
+      ],
+      "explanation": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black g7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Principal legal reference: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Alternate defense: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Alternative start: c8→c7 · a4→a5 · h3→h2. Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. The board is a 180° color-reversed educational transformation of original calc:p102-31, not the original exact game's win/draw claim.",
+      "replyReason": "After h3h2, the recorded response a4→a5 forces a new decision. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+      "continuationReason": "Count each pawn's exact promoting move and the queen's first checking opportunities. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "defenderIdea": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "continuation": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "reflection": "Recall a2 and c8, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "h3h2",
+              "a4a5",
+              "h2h1q",
+              "a5a6",
+              "h1h4"
+            ],
+            "explanation": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Legally derived from original calc:p102-31; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "c8c7",
+              "a4a5",
+              "h3h2"
+            ],
+            "explanation": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-31",
+        "family": "Passer timing and the opposing race",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "defenderResource": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "decisionQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "structure": "White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black g7, White a4, Black h3.",
+        "transferQuestion": "Stage 1: after a4→a5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Does promotion change whose king is in check before the opposing pawn advances? In this specific position with kings on a2/c8, name the first improvement and why the opponent could answer a4→a5.",
+            "answer": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black g7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. The authored five-ply example is h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. The second move a4→a5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8 on the board, then substitute the resisting defender route h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Resisting authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Count each pawn's exact promoting move and the queen's first checking opportunities. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers c8→c7 · a4→a5 · h3→h2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: c8→c7 · a4→a5 · h3→h2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black g7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-11",
+      "source": "authored",
+      "sourceLabel": "P112 · Passer timing and the opposing race · calc:p102-32",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Passer timing and the opposing race — Test active resistance",
+      "prompt": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes White a4, Black h3, White b2. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2k5/8/8/8/P7/7p/KP6/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h3h2",
+      "principalVariation": [
+        "h3h2",
+        "a4a5",
+        "h2h1q",
+        "a5a6",
+        "h1a8"
+      ],
+      "explanation": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes White a4, Black h3, White b2. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Principal legal reference: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Alternate defense: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Alternative start: c8→c7 · a4→a5 · h3→h2. Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. The board is a 180° color-reversed educational transformation of original calc:p102-32, not the original exact game's win/draw claim.",
+      "replyReason": "After h3h2, the recorded response a4→a5 forces a new decision. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+      "continuationReason": "Count each pawn's exact promoting move and the queen's first checking opportunities. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "defenderIdea": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "continuation": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "reflection": "Recall a2 and c8, the pawn on White a4, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "h3h2",
+              "a4a5",
+              "h2h1q",
+              "a5a6",
+              "h1h4"
+            ],
+            "explanation": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Legally derived from original calc:p102-32; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "c8c7",
+              "a4a5",
+              "h3h2"
+            ],
+            "explanation": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-32",
+        "family": "Passer timing and the opposing race",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "defenderResource": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "decisionQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "structure": "White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes White a4, Black h3, White b2.",
+        "transferQuestion": "Stage 2: after a4→a5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Does promotion change whose king is in check before the opposing pawn advances? In this specific position with kings on a2/c8, name the first improvement and why the opponent could answer a4→a5.",
+            "answer": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes White a4, Black h3, White b2. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. The authored five-ply example is h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. The second move a4→a5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8 on the board, then substitute the resisting defender route h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Resisting authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Count each pawn's exact promoting move and the queen's first checking opportunities. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers c8→c7 · a4→a5 · h3→h2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: c8→c7 · a4→a5 · h3→h2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes White a4, Black h3, White b2. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-12",
+      "source": "authored",
+      "sourceLabel": "P112 · Passer timing and the opposing race · calc:p102-33",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Passer timing and the opposing race — Revise and transfer",
+      "prompt": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black e7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2k5/4p3/8/8/P7/7p/K7/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h3h2",
+      "principalVariation": [
+        "h3h2",
+        "a4a5",
+        "h2h1q",
+        "a5a6",
+        "h1a8"
+      ],
+      "explanation": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black e7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Principal legal reference: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Alternate defense: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Alternative start: c8→c7 · a4→a5 · h3→h2. Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. The board is a 180° color-reversed educational transformation of original calc:p102-33, not the original exact game's win/draw claim.",
+      "replyReason": "After h3h2, the recorded response a4→a5 forces a new decision. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+      "continuationReason": "Count each pawn's exact promoting move and the queen's first checking opportunities. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "defenderIdea": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "continuation": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "reflection": "Recall a2 and c8, the pawn on Black e7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "h3h2",
+              "a4a5",
+              "h2h1q",
+              "a5a6",
+              "h1h4"
+            ],
+            "explanation": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Legally derived from original calc:p102-33; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "c8c7",
+              "a4a5",
+              "h3h2"
+            ],
+            "explanation": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-33",
+        "family": "Passer timing and the opposing race",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "Count each pawn's exact promoting move and the queen's first checking opportunities.",
+        "defenderResource": "The opponent's passer advances while your pawn promotes; a queen move must answer a real threat.",
+        "misconception": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate.",
+        "decisionQuestion": "Does promotion change whose king is in check before the opposing pawn advances?",
+        "structure": "White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black e7, White a4, Black h3.",
+        "transferQuestion": "Stage 3: after a4→a5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Does promotion change whose king is in check before the opposing pawn advances? In this specific position with kings on a2/c8, name the first improvement and why the opponent could answer a4→a5.",
+            "answer": "Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black e7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. The authored five-ply example is h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. The second move a4→a5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8 on the board, then substitute the resisting defender route h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→a8. Resisting authored line: h3→h2 · a4→a5 · h2→h1=Q · a5→a6 · h1→h4. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. Count each pawn's exact promoting move and the queen's first checking opportunities. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers c8→c7 · a4→a5 · h3→h2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: c8→c7 · a4→a5 · h3→h2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Count each pawn's exact promoting move and the queen's first checking opportunities. White's king is on a2; Black's king is on c8. The pawn inventory visible from the board includes Black e7, White a4, Black h3. The opponent's passer advances while your pawn promotes; a queen move must answer a real threat. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Reaching the eighth rank first is not always enough; do not overlook immediate checks and stalemate. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-13",
+      "source": "authored",
+      "sourceLabel": "P112 · Opposition and reserve tempi · calc:p102-40",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Opposition and reserve tempi — Identify the decision",
+      "prompt": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black h7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/7p/5p2/4k3/8/3K4/8/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e5d5",
+      "principalVariation": [
+        "e5d5",
+        "d3e3",
+        "d5c4",
+        "e3e4",
+        "f6f5"
+      ],
+      "explanation": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black h7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. Principal legal reference: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Alternate defense: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Alternative start: f6→f5 · d3→e3 · e5→d5. The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. The board is a 180° color-reversed educational transformation of original calc:p102-40, not the original exact game's win/draw claim.",
+      "replyReason": "After e5d5, the recorded response d3→e3 forces a new decision. The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+      "continuationReason": "The distant opposition depends on whose turn it is and which pawn move is still available. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "defenderIdea": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "continuation": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "reflection": "Recall d3 and e5, the pawn on Black h7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e5f5",
+              "d3e3",
+              "f5g4",
+              "e3e4",
+              "f6f5"
+            ],
+            "explanation": "The defender can choose a side-step that makes a premature pawn push surrender a key square. Legally derived from original calc:p102-40; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "f6f5",
+              "d3e3",
+              "e5d5"
+            ],
+            "explanation": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-40",
+        "family": "Opposition and reserve tempi",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "defenderResource": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "decisionQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "structure": "White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black h7, Black f6.",
+        "transferQuestion": "Stage 1: after d3→e3, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Which king route preserves your opposition when the defending king refuses the direct approach? In this specific position with kings on d3/e5, name the first improvement and why the opponent could answer d3→e3.",
+            "answer": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black h7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. The authored five-ply example is e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. The second move d3→e3 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5 on the board, then substitute the resisting defender route e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Resisting authored line: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. The defender can choose a side-step that makes a premature pawn push surrender a key square. The distant opposition depends on whose turn it is and which pawn move is still available. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers f6→f5 · d3→e3 · e5→d5 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: f6→f5 · d3→e3 · e5→d5. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black h7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-14",
+      "source": "authored",
+      "sourceLabel": "P112 · Opposition and reserve tempi · calc:p102-41",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Opposition and reserve tempi — Test active resistance",
+      "prompt": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black f6, White a2. The defender can choose a side-step that makes a premature pawn push surrender a key square. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/8/5p2/4k3/8/3K4/P7/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e5d5",
+      "principalVariation": [
+        "e5d5",
+        "d3e3",
+        "d5c4",
+        "e3e4",
+        "f6f5"
+      ],
+      "explanation": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black f6, White a2. The defender can choose a side-step that makes a premature pawn push surrender a key square. Principal legal reference: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Alternate defense: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Alternative start: f6→f5 · d3→e3 · e5→d5. The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. The board is a 180° color-reversed educational transformation of original calc:p102-41, not the original exact game's win/draw claim.",
+      "replyReason": "After e5d5, the recorded response d3→e3 forces a new decision. The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+      "continuationReason": "The distant opposition depends on whose turn it is and which pawn move is still available. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "defenderIdea": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "continuation": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "reflection": "Recall d3 and e5, the pawn on Black f6, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e5f5",
+              "d3e3",
+              "f5g4",
+              "e3e4",
+              "f6f5"
+            ],
+            "explanation": "The defender can choose a side-step that makes a premature pawn push surrender a key square. Legally derived from original calc:p102-41; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "f6f5",
+              "d3e3",
+              "e5d5"
+            ],
+            "explanation": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-41",
+        "family": "Opposition and reserve tempi",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "defenderResource": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "decisionQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "structure": "White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black f6, White a2.",
+        "transferQuestion": "Stage 2: after d3→e3, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Which king route preserves your opposition when the defending king refuses the direct approach? In this specific position with kings on d3/e5, name the first improvement and why the opponent could answer d3→e3.",
+            "answer": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black f6, White a2. The defender can choose a side-step that makes a premature pawn push surrender a key square. The authored five-ply example is e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. The second move d3→e3 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5 on the board, then substitute the resisting defender route e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Resisting authored line: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. The defender can choose a side-step that makes a premature pawn push surrender a key square. The distant opposition depends on whose turn it is and which pawn move is still available. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers f6→f5 · d3→e3 · e5→d5 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: f6→f5 · d3→e3 · e5→d5. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black f6, White a2. The defender can choose a side-step that makes a premature pawn push surrender a key square. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-15",
+      "source": "authored",
+      "sourceLabel": "P112 · Opposition and reserve tempi · calc:p102-42",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Opposition and reserve tempi — Revise and transfer",
+      "prompt": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black g7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/6p1/5p2/4k3/8/3K4/8/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e5d5",
+      "principalVariation": [
+        "e5d5",
+        "d3e3",
+        "d5c4",
+        "e3e4",
+        "f6f5"
+      ],
+      "explanation": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black g7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. Principal legal reference: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Alternate defense: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Alternative start: f6→f5 · d3→e3 · e5→d5. The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. The board is a 180° color-reversed educational transformation of original calc:p102-42, not the original exact game's win/draw claim.",
+      "replyReason": "After e5d5, the recorded response d3→e3 forces a new decision. The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+      "continuationReason": "The distant opposition depends on whose turn it is and which pawn move is still available. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "defenderIdea": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "continuation": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "reflection": "Recall d3 and e5, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e5f5",
+              "d3e3",
+              "f5g4",
+              "e3e4",
+              "f6f5"
+            ],
+            "explanation": "The defender can choose a side-step that makes a premature pawn push surrender a key square. Legally derived from original calc:p102-42; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "f6f5",
+              "d3e3",
+              "e5d5"
+            ],
+            "explanation": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-42",
+        "family": "Opposition and reserve tempi",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "The distant opposition depends on whose turn it is and which pawn move is still available.",
+        "defenderResource": "The defender can choose a side-step that makes a premature pawn push surrender a key square.",
+        "misconception": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move.",
+        "decisionQuestion": "Which king route preserves your opposition when the defending king refuses the direct approach?",
+        "structure": "White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black g7, Black f6.",
+        "transferQuestion": "Stage 3: after d3→e3, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Which king route preserves your opposition when the defending king refuses the direct approach? In this specific position with kings on d3/e5, name the first improvement and why the opponent could answer d3→e3.",
+            "answer": "The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black g7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. The authored five-ply example is e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. The second move d3→e3 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5 on the board, then substitute the resisting defender route e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e5→d5 · d3→e3 · d5→c4 · e3→e4 · f6→f5. Resisting authored line: e5→f5 · d3→e3 · f5→g4 · e3→e4 · f6→f5. The defender can choose a side-step that makes a premature pawn push surrender a key square. The distant opposition depends on whose turn it is and which pawn move is still available. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers f6→f5 · d3→e3 · e5→d5 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: f6→f5 · d3→e3 · e5→d5. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. The distant opposition depends on whose turn it is and which pawn move is still available. White's king is on d3; Black's king is on e5. The pawn inventory visible from the board includes Black g7, Black f6. The defender can choose a side-step that makes a premature pawn push surrender a key square. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "The nearest king move is not necessarily best; recalculate the exact tempo after each pawn move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    }
+  ]
+}

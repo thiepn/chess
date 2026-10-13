@@ -491,6 +491,9 @@ export default function App() {
   const strategicPositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.strategicImbalanceStudy || item.prophylaxisStudy)), [state, catalogRevision]);
+  const endgameDecisionPositions = useMemo(() => calculationCatalog(state).filter(
+    item => item.assessmentStatus === "instructional-only" &&
+      Boolean(item.endgameDecisionStudy)), [state, catalogRevision]);
   const openingBridgePositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.openingTransitionStudy)), [state, catalogRevision]);
@@ -677,7 +680,7 @@ export default function App() {
   }
 
   function openManualActivity(activity: TrainingActivity) {
-    setTrainingReturnPath(route.path === "/train" ? "/train" : route.path);
+    setTrainingReturnPath(route.path.startsWith("/train/") ? trainingReturnPath : route.path);
     setActiveIndex(null);
     setActiveModelGameId(null);
     setAssessmentSession(null);
@@ -687,7 +690,7 @@ export default function App() {
 
   function openStrategicStudy(position: import("./calculation/types").CalculationPosition) {
     if (position.assessmentStatus !== "instructional-only" ||
-        ![...strategicPositions, ...openingBridgePositions].some(item => item.id === position.id)) return;
+        ![...strategicPositions, ...openingBridgePositions, ...endgameDecisionPositions].some(item => item.id === position.id)) return;
     const skillId = position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
     const skill = skillId ? skillById[skillId] : null;
     if (!skill || !skillId) return;
@@ -702,13 +705,16 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: position.openingTransitionStudy
+      reason: position.endgameDecisionStudy
+        ? "P112 · Endgame decision lab (unscored)"
+        : position.openingTransitionStudy
         ? "P111 · Opening-to-middlegame transition (unscored)"
         : position.prophylaxisStudy
         ? "P110 · Anticipate threats (unscored)"
         : "P109 · Independent positional decision (unscored)",
       title: position.title,
-      subtitle: position.openingTransitionStudy?.theme ??
+      subtitle: position.endgameDecisionStudy?.family ??
+        position.openingTransitionStudy?.theme ??
         position.prophylaxisStudy?.theme ??
         position.strategicImbalanceStudy?.theme ?? "Strategic decision",
     });
@@ -2916,6 +2922,14 @@ export default function App() {
                           skill={activeSkill}
                           position={activeEndgamePosition}
                           delayedRetention={activeEndgameDelayedRetention}
+                          decisionStudies={endgameDecisionPositions.filter(p => {
+                            const t = activeEndgamePosition.techniqueId;
+                            const match = /rook|lucena|philidor/.test(t) ? "rook"
+                              : /queen/.test(t) ? "queen" : /bishop/.test(t) ? "bishop"
+                              : /minor/.test(t) ? "minor" : /opposition|key/.test(t) ? "opposition" : "passer";
+                            return p.endgameDecisionStudy?.family.toLowerCase().includes(match);
+                          }).slice(0, 3)}
+                          onOpenDecision={openStrategicStudy}
                           onComplete={completeActivity}
                         />
                       ) : active.activityType === "themedPuzzle" ||
@@ -3096,9 +3110,9 @@ export default function App() {
               </div>
 
               <StrategicStudyLibrary
-                positions={strategicPositions}
+                positions={[...strategicPositions, ...endgameDecisionPositions]}
                 loading={catalogStatus.pending > 0}
-                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-")).length}
+                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
                 onRetry={retryFailedCalculationSources}
                 onStart={openStrategicStudy}
               />
