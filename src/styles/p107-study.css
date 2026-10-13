@@ -69,6 +69,3 @@
 .opening-bridge-list p{line-height:1.5;margin:6px 0}
 .opening-bridge-list button{min-height:44px}
 
-.endgame-decision-handoff{display:grid;gap:8px;padding:12px;border:1px solid currentColor}
-.endgame-decision-handoff>div{display:flex;flex-wrap:wrap;gap:8px}
-.endgame-decision-handoff button{min-height:44px}

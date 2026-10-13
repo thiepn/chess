@@ -409,10 +409,8 @@ export function OpeningsView({
         <header>
           <p className="eyebrow">P111 · UNGRADED REPERTOIRE TRANSITIONS</p>
           <h2>From opening memory to a concrete plan</h2>
-          <p>These studies start from the original repertoire board. Predict the
-            opponent's response, examine a legal alternative, then independently
-            explain the pawn break and resulting piece placements. No opening grade
-            or automatic repertoire mastery is awarded.</p>
+          <p>Start from your original repertoire board, then compare plans and
+            defensive replies. Studies do not change opening mastery.</p>
         </header>
         {bridgeStudies.length ? (
           <div className="opening-bridge-list">

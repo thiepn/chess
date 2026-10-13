@@ -420,16 +420,11 @@ function EndgameTechniqueSession({
           </span>
         </div>
 
-        {onOpenDecision && !!decisionStudies?.length && (
-          <section className="endgame-decision-handoff" aria-label="Optional unscored endgame study">
-            <strong>Optional · unscored endgame decisions</strong>
-            <div>{decisionStudies.map(p => (
-              <button key={p.id} type="button" className="secondary"
-                onClick={() => onOpenDecision(p)}>
-                Stage {p.endgameDecisionStudy?.stage}/3 · {p.title}
-              </button>
-            ))}</div>
-          </section>
+        {onOpenDecision && decisionStudies?.[0] && (
+          <button type="button" className="secondary"
+            onClick={() => onOpenDecision(decisionStudies[0])}>
+            Study a related endgame decision · unscored
+          </button>
         )}
 
         <div className="endgame-recognition-layout">
