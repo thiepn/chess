@@ -637,9 +637,9 @@
           {
             "label": "Preventative alternative · exploratory legal extension",
             "moves": [
-              "c7c5"
+              "g8f6"
             ],
-            "explanation": "The bishop on f5 is not untouchable after h4 and Ng3 Different start c7–c5 invites a different pawn or piece structure; legal extension is not an engine conclusion."
+            "explanation": "The bishop on f5 is not untouchable after h4 and Ng3 Different start g8–f6 invites a different pawn or piece structure; legal extension is not an engine conclusion."
           }
         ]
       },
