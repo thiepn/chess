@@ -241,9 +241,9 @@
             "moves": [
               "b1a1",
               "h8h7",
-              "a1a8"
+              "a1a4"
             ],
-            "explanation": "Qa1 relocates from b1, avoiding the initial diagonal check that Qb2 would have given to h8. It allows the defender time before Qa8."
+            "explanation": "After moving from b1 to a1, the black a5 pawn obstructs the a-file; Qa4 is legal but Qa8 through the pawn would be illegal."
           }
         ]
       },
