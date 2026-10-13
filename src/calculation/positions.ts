@@ -21,6 +21,9 @@ if (typeof window !== "undefined") {
     ["p97-promotions-v1.json", "calc:p97-", 10],
     ["p97-mixed-v1.json", "calc:p97-", 10],
     ["p98-essential-pawn-endgames-v1.json", "calc:p98-", 40],
+    ["p99-rook-foundations-v1.json", "calc:p99-", 15],
+    ["p99-rook-geometry-v1.json", "calc:p99-", 15],
+    ["p99-rook-practical-v1.json", "calc:p99-", 15],
   ] as const) {
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
       .then(r => r.json())
