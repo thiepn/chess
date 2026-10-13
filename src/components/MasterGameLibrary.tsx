@@ -1,7 +1,7 @@
 import "../styles/p113-master-games.css";
 import { Chess } from "chess.js";
 import { ChevronLeft, ChevronRight, Eye, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { ChessBoard } from "./ChessBoard";
 import {
   emptyMasterDraft, hydrateMasterGames, masterDraftKey,
@@ -9,6 +9,9 @@ import {
   type MasterDraft, type MasterTimeline,
 } from "../model-games/masterGames";
 
+const CrossGameTransferLab = lazy(() => import("./CrossGameTransferLab").then((module) => ({
+  default: module.CrossGameTransferLab,
+})));
 const MAX_WRITING = 1200;
 
 export function MasterGameLibrary({ owner }: { owner: string }) {
@@ -17,6 +20,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
   const [rejected, setRejected] = useState(0);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("");
+  const [transferOpen, setTransferOpen] = useState(false);
   const [decisionIndex, setDecisionIndex] = useState(0);
   const [viewPly, setViewPly] = useState(0);
   const [drafts, setDrafts] = useState<Record<string, MasterDraft>>({});
@@ -83,6 +87,16 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
     setDecisionIndex(0);
     setViewPly(item.game.checkpoints[0].ply);
   }
+  function openPairSource(gameId: string, checkpointId: string) {
+    const game = collection?.find((entry) => entry.game.id === gameId);
+    if (!game) return;
+    const index = game.game.checkpoints.findIndex((checkpoint) => checkpoint.id === checkpointId);
+    if (index < 0) return;
+    setSelectedId(gameId);
+    setDecisionIndex(index);
+    setViewPly(game.game.checkpoints[index].ply);
+    setTransferOpen(false);
+  }
   function selectDecision(index: number) {
     if (!current) return;
     setDecisionIndex(index);
@@ -126,7 +140,26 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
       {expanded && error && <div role="alert">
         <p>{error}</p><button className="secondary" type="button" onClick={() => { setError(""); setCollection(null); }}>Retry source</button>
       </div>}
-      {expanded && collection && !current && (
+      {expanded && collection && collection.length > 0 && (
+        <nav className="p114-handoff-nav" aria-label="Master-game learning mode">
+          <button type="button" className={!transferOpen ? "selected" : ""}
+            aria-current={!transferOpen ? "page" : undefined}
+            onClick={() => { setTransferOpen(false); setSelectedId(""); }}>
+            Complete games
+          </button>
+          <button type="button" className={transferOpen ? "selected" : ""}
+            aria-current={transferOpen ? "page" : undefined}
+            onClick={() => { setTransferOpen(true); setSelectedId(""); }}>
+            P114 · Compare strategic decisions
+          </button>
+        </nav>
+      )}
+      {expanded && collection && transferOpen && (
+        <Suspense fallback={<p role="status">Opening comparative studies…</p>}>
+          <CrossGameTransferLab owner={owner} games={collection} onOpenPosition={openPairSource}/>
+        </Suspense>
+      )}
+      {expanded && collection && !current && !transferOpen && (
         <>
           <p className="p113-source-caption">Historical PGN move scores are factual records. The original decision questions are interpretations, not unique-best-move or engine-verified claims. No scores, achievements or mastery are written.</p>
           {rejected > 0 && <p role="alert">{rejected} source records excluded because their PGN or metadata could not be validated.</p>}
@@ -148,7 +181,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
           </div>
         </>
       )}
-      {expanded && current && decision && (
+      {expanded && !transferOpen && current && decision && (
         <section className="p113-study" aria-label={current.game.title}>
           <header className="p113-study-head">
             <button className="secondary" type="button" onClick={() => setSelectedId("")}>
