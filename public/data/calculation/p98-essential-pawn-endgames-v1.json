@@ -318,9 +318,9 @@
       "title": "Pawn advance permits king opposition",
       "fen": "8/8/8/4k3/8/2K5/3P4/8 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "c3d3",
+      "bestMove": "c3b3",
       "principalVariation": [
-        "c3d3",
+        "c3b3",
         "e5d5",
         "d2d4"
       ],
@@ -333,12 +333,12 @@
       "prompt": "The timing of d4 relative to the kings controls whether the pawn can be captured. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd5 meets the advancing pawn on its own file; White should reassess protection. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
-      "explanation": "Pawn advance permits king opposition. The timing of d4 relative to the kings controls whether the pawn can be captured. Reference continuation: c3d3 e5d5 d2d4. Defendant alternative: d2d4 e5d5 c3d3. ...Kd5 meets the advancing pawn on its own file; White should reassess protection. Assessment at this instructional endpoint: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself. Specific common error: Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Pawn advance permits king opposition. The timing of d4 relative to the kings controls whether the pawn can be captured. Reference continuation: c3b3 e5d5 d2d4. Defendant alternative: d2d4 e5d5 c3d3. ...Kd5 meets the advancing pawn on its own file; White should reassess protection. Assessment at this instructional endpoint: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself. Specific common error: Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Kb3 is required here because Kd3 would block the d2 pawn's double-step through d3.",
       "defensiveStudy": {
         "keyQuestion": "The timing of d4 relative to the kings controls whether the pawn can be captured.",
         "defenderIdea": "...Kd5 meets the advancing pawn on its own file; White should reassess protection.",
         "continuation": "The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
-        "misconception": "Assuming any fourth-rank pawn is secure ignores the adjacent opposing king.",
+        "misconception": "Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Kd3 also prevents d2–d4 by occupying d3.",
         "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
         "variations": [
           {
