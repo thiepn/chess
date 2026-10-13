@@ -194,64 +194,64 @@
     },
     {
       "id": "calc:p102-43",
-      "title": "The last dangerous pawn and the active king — one pawn each",
-      "fen": "8/8/8/8/1k6/p7/1P6/K7 w - - 0 1",
+      "title": "Mirror-file defender: preserving a g-pawn against h3",
+      "fen": "8/8/8/8/6k1/7p/6P1/7K w - - 0 1",
       "source": "authored",
       "sourceLabel": "P102 · Defending the worse pawn ending",
       "difficulty": 5,
       "playerColor": "w",
-      "bestMove": "a1b1",
+      "bestMove": "h1g1",
       "principalVariation": [
-        "a1b1",
-        "a3a2",
-        "b1a2",
-        "b4c5",
-        "a2b3"
+        "h1g1",
+        "h3h2",
+        "g1h2",
+        "g4f5",
+        "h2g3"
       ],
       "skillIds": [
         "calculation.candidates",
         "calculation.reply",
         "endgames.pawn-races"
       ],
-      "prompt": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. Only one pawn per side: an immediate complete liquidation would leave bare kings. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
-      "replyReason": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. In this variation, Only one pawn per side: an immediate complete liquidation would leave bare kings.",
-      "continuationReason": "At the fifth ply White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
-      "explanation": "The last dangerous pawn and the active king. Five-ply line a1b1 a3a2 b1a2 b4c5 a2b3. Resistance a1b1 a3a2 b1a1 b4c5 a1a2. Plausible different choice a1b1 b4c5 b2b4. The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. ...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Endpoint: White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw. Misconception: Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Pawn reserve: Only one pawn per side: an immediate complete liquidation would leave bare kings. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "prompt": "Black's advanced h3 pawn threatens the white g2 pawn, but the white king can reach g1 and answer ...h2+ by capturing the dangerous pawn. Calculate ...Kf5 and White's next king square before calling it a win; this is the reflected version of a typical last-pawn defense.",
+      "replyReason": "...h2+ checks the king on g1. Kxh2 is legal because Black's king on g4 is too distant to defend h2. ...Kf5 then challenges White's g-pawn conversion.",
+      "continuationReason": "White retains g2 and has K g3, while Black has only its king after the h-pawn is removed. Conversion still requires accurate king play.",
+      "explanation": "Mirror-file original pawn-defense study. Main: h1g1 h3h2 g1h2 g4f5 h2g3. Alternative: h1g1 h3h2 g1h1 g4f5 h1h2; both involve the white king taking h2 on different tempi. Tempting pawn plan: h1g1 g4f5 g2g4, allowing the black king to attack the pawn from f5. Compare the black pawn h3's attack on g2 with its checking advance h2+. This differs from the a/b-file illustration and represents a distinct legal endgame position. No tablebase-perfect result is claimed beyond the removal of the black pawn in the demonstrated line.",
       "defensiveStudy": {
-        "keyQuestion": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately.",
-        "defenderIdea": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
-        "continuation": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
-        "misconception": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
-        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. Only one pawn per side: an immediate complete liquidation would leave bare kings",
+        "keyQuestion": "Black's advanced h3 pawn threatens the white g2 pawn, but the white king can reach g1 and answer ...h2+ by capturing the dangerous pawn. Calculate ...Kf5 and White's next king square before calling it a win; this is the reflected version of a typical last-pawn defense.",
+        "defenderIdea": "...h2+ checks the king on g1. Kxh2 is legal because Black's king on g4 is too distant to defend h2. ...Kf5 then challenges White's g-pawn conversion.",
+        "continuation": "White retains g2 and has K g3, while Black has only its king after the h-pawn is removed. Conversion still requires accurate king play.",
+        "misconception": "A king escape from h1 is not always passive: after ...h2+ White can capture the last black pawn. But a reckless g-pawn push can give the distant king counterplay.",
+        "reflection": "Rebuild the white king on g3 and white pawn on g2 after the last move; identify Black's most useful king approach and why the h-pawn has vanished. Compare both routes to Kxh2.",
         "variations": [
           {
-            "label": "Alternate opposition route",
+            "label": "Escape first, capture second",
             "moves": [
-              "a1b1",
-              "a3a2",
-              "b1a1",
-              "b4c5",
-              "a1a2"
+              "h1g1",
+              "h3h2",
+              "g1h1",
+              "g4f5",
+              "h1h2"
             ],
-            "explanation": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Only one pawn per side: an immediate complete liquidation would leave bare kings"
+            "explanation": "Kh1 delays the capture on h2 until the fifth ply. Black's king steps to f5, and White still removes the h2 passer; however, king activity differs."
           },
           {
-            "label": "Independent pawn/king candidate",
+            "label": "Tempting immediate pawn race",
             "moves": [
-              "a1b1",
-              "b4c5",
-              "b2b4"
+              "h1g1",
+              "g4f5",
+              "g2g4"
             ],
-            "explanation": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Only one pawn per side: an immediate complete liquidation would leave bare kings"
+            "explanation": "g4 is attacked by the black king on f5 and can be captured later. Pushing the remaining pawn before securing its route can squander the conversion."
           }
         ]
       },
       "conversionStudy": {
         "theme": "Defending the worse pawn ending",
-        "context": "Only one pawn per side: an immediate complete liquidation would leave bare kings",
-        "defenderResource": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
-        "endpoint": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
-        "failedPlan": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "context": "Only one pawn per side, reflected to g/h files; local liquidation must be assessed with king support.",
+        "defenderResource": "...h2+ checks the king on g1. Kxh2 is legal because Black's king on g4 is too distant to defend h2. ...Kf5 then challenges White's g-pawn conversion.",
+        "endpoint": "White retains g2 and has K g3, while Black has only its king after the h-pawn is removed. Conversion still requires accurate king play.",
+        "failedPlan": "A king escape from h1 is not always passive: after ...h2+ White can capture the last black pawn. But a reckless g-pawn push can give the distant king counterplay.",
         "verdict": "Line-local; no full WDL certification"
       }
     },
