@@ -1621,14 +1621,14 @@
       "id": "calc:p98-32",
       "source": "authored",
       "sourceLabel": "P98 · Pawn breakthroughs and passers",
-      "title": "The remaining black a-pawn changes the race",
-      "fen": "6k1/8/p7/1pp5/PP6/8/8/4K3 w - - 0 1",
+      "title": "The liquidation that guarantees a draw",
+      "fen": "8/8/8/8/1k6/p7/1P6/K7 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "a4b5",
+      "bestMove": "b2a3",
       "principalVariation": [
-        "a4b5",
-        "c5b4",
-        "e1f2"
+        "b2a3",
+        "b4a3",
+        "a1b1"
       ],
       "difficulty": 3,
       "skillIds": [
@@ -1636,37 +1636,37 @@
         "calculation.evaluation",
         "pawns.passed"
       ],
-      "prompt": "The same pawn contact becomes strategically different when Black also has a6. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
-      "replyReason": "The extra black pawn remains after the exchange and may change which pawn is passed. Compare the other branch before deciding what the king must do next.",
-      "continuationReason": "After the reply, reconstruct the pawn structure: The endpoint is not equal material even though the two local captures trade evenly.",
-      "explanation": "The remaining black a-pawn changes the race. The same pawn contact becomes strategically different when Black also has a6. Reference continuation: a4b5 c5b4 e1f2. Defendant alternative: b4c5 b5a4 e1f2. The extra black pawn remains after the exchange and may change which pawn is passed. Assessment at this instructional endpoint: The endpoint is not equal material even though the two local captures trade evenly. Specific common error: Do not forget the a6 pawn while counting the endgame after two captures. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
+      "prompt": "White can capture a3, but Black's king is close enough to recapture the last pawn. Calculate the exact moment at which a king-and-pawn ending becomes bare kings; then compare a king-first attempt. Identify the exact draw proof, not just a material guess.",
+      "replyReason": "...Kxa3 is the forcing king recapture: Black's king on b4 legally takes the just-arrived white pawn on a3. The last pawn disappears, leaving king against king.",
+      "continuationReason": "Kb1 is a legal king move in a board containing no pawns or other pieces. The resulting position is a draw by insufficient mating material, independent of move order afterward.",
+      "explanation": "Pawn liquidation and a rigorous draw. White plays bxa3, removing Black's last pawn, but ...Kxa3 immediately removes White's last pawn. Kb1 is legal and the resulting material is king versus king, a theoretical draw because neither side can checkmate. This is a fully established endpoint, not merely an engine guess. Compare 1.Kb1 a2 2.Kxa2, which instead retains White's b-pawn: the pawn count and conversion problem are different. The king's proximity to a3 changes the value of the exchange. Breakthrough calculation requires tracing every countercapture, not stopping at the first pawn gained.",
       "defensiveStudy": {
-        "keyQuestion": "The same pawn contact becomes strategically different when Black also has a6.",
-        "defenderIdea": "The extra black pawn remains after the exchange and may change which pawn is passed.",
-        "continuation": "The endpoint is not equal material even though the two local captures trade evenly.",
-        "misconception": "Do not forget the a6 pawn while counting the endgame after two captures.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endpoint is not equal material even though the two local captures trade evenly. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
+        "keyQuestion": "Does bxa3 preserve a pawn advantage, or does the king on b4 remove the last pawn?",
+        "defenderIdea": "Black recaptures the a3 pawn with ...Kxa3; the position becomes bare kings.",
+        "continuation": "After Kb1, neither side can ever force checkmate: the endpoint is a proven draw.",
+        "misconception": "Calling bxa3 a winning breakthrough forgets ...Kxa3. No pawn survives the exchange, so the claimed passed pawn does not exist.",
+        "reflection": "Independently reconstruct all three plies and list the surviving pieces. Then calculate 1.Kb1 a2 2.Kxa2: why is that a different material ending? The result of the main line is an exact insufficient-material draw.",
         "variations": [
           {
-            "label": "Alternative pawn/king plan",
+            "label": "King-first, keeping a pawn",
             "moves": [
-              "b4c5",
-              "b5a4",
-              "e1f2"
+              "a1b1",
+              "a3a2",
+              "b1a2"
             ],
-            "explanation": "Compare this alternative to a4b5 c5b4 e1f2. Do not forget the a6 pawn while counting the endgame after two captures. Assess the pawn count and defender's next king square before claiming a win or draw."
+            "explanation": "1.Kb1 a2 2.Kxa2 removes the black pawn, but White keeps b2. This alternative preserves material, unlike 1.bxa3 Kxa3. It is not claimed to be a tablebase-certified win."
           }
         ]
       },
       "pawnEndgameStudy": {
         "theme": "Pawn breakthroughs and passers",
-        "assessment": "requires further calculation",
-        "status": "instructional-not-tablebase",
-        "principle": "The same pawn contact becomes strategically different when Black also has a6.",
-        "defensivePlan": "The extra black pawn remains after the exchange and may change which pawn is passed.",
-        "endpoint": "The endpoint is not equal material even though the two local captures trade evenly.",
-        "commonError": "Do not forget the a6 pawn while counting the endgame after two captures.",
-        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
+        "assessment": "draw after complete pawn liquidation",
+        "status": "proved-by-material",
+        "principle": "When the last pawns are exchanged and only two kings remain, the resulting position is immediately drawn by insufficient mating material.",
+        "defensivePlan": "Black takes back on a3 with its king.",
+        "endpoint": "White and Black each have only a king: draw, no remaining pawn moves.",
+        "commonError": "Calling bxa3 a winning breakthrough forgets ...Kxa3. No pawn survives the exchange, so the claimed passed pawn does not exist.",
+        "method": "A breakthrough is only real if a pawn survives opposing captures and can evade the enemy king. Count material after the last possible recapture."
       }
     },
     {
@@ -1933,14 +1933,14 @@
       "id": "calc:p98-38",
       "source": "authored",
       "sourceLabel": "P98 · Pawn races and king activation",
-      "title": "f-pawn queens one tempo before the rival",
-      "fen": "7k/8/5P2/8/8/4K2p/8/8 w - - 0 1",
+      "title": "Protected enemy promotion creates a losing race",
+      "fen": "7k/8/8/8/P7/8/1pk5/K7 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "f6f7",
+      "bestMove": "a1a2",
       "principalVariation": [
-        "f6f7",
-        "h3h2",
-        "f7f8q"
+        "a1a2",
+        "b2b1q",
+        "a2a3"
       ],
       "difficulty": 4,
       "skillIds": [
@@ -1948,37 +1948,37 @@
         "calculation.evaluation",
         "endgames.pawn-races"
       ],
-      "prompt": "White promotes on f8 and checks across the eighth rank toward h8. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
-      "replyReason": "...h2 threatens ...h1=Q, so forcing check after promotion matters. Compare the other branch before deciding what the king must do next.",
-      "continuationReason": "After the reply, reconstruct the pawn structure: A check can slow Black's passer while White's queen controls promotion squares.",
-      "explanation": "f-pawn queens one tempo before the rival. White promotes on f8 and checks across the eighth rank toward h8. Reference continuation: f6f7 h3h2 f7f8q. Defendant alternative: e3d4 h3h2 f6f7. ...h2 threatens ...h1=Q, so forcing check after promotion matters. Assessment at this instructional endpoint: A check can slow Black's passer while White's queen controls promotion squares. Specific common error: A nonchecking promotion would require a different evaluation. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
+      "prompt": "The black pawn on b2 checks the white king on a1. Find a legal king escape, then calculate the threat of a queen supported by Black's king on c2. Count the remaining white a-pawn and test why grabbing the promoted queen is impossible.",
+      "replyReason": "...b1=Q+ promotes with check. The new queen on b1 is defended by Black's king on c2, so White cannot capture it with Kxb1.",
+      "continuationReason": "Ka3 avoids the queen's immediate diagonal check. Black retains a protected queen versus White's king and distant a4 pawn: a severe material disadvantage requiring practical resistance, not a winning pawn race.",
+      "explanation": "Race lost to a protected promotion. Initially the b2 black pawn attacks a1, so White is in check and must address the pawn's attack. Ka2 is legal, then ...b1=Q+ promotes with check from a square defended by the black king on c2. Ka3 escapes the check; White still owns a4 but faces queen against pawn. The recorded endpoint is materially decisive in Black's favor, although a precise tablebase WDL value is not asserted from three plies. Compare Ka2 followed by the slower ...Kd3 and Ka3: the difference is Black using its promotion tempo. An attempted Kxb1 after ...b1=Q is illegal because Black's king defends b1.",
       "defensiveStudy": {
-        "keyQuestion": "White promotes on f8 and checks across the eighth rank toward h8.",
-        "defenderIdea": "...h2 threatens ...h1=Q, so forcing check after promotion matters.",
-        "continuation": "A check can slow Black's passer while White's queen controls promotion squares.",
-        "misconception": "A nonchecking promotion would require a different evaluation.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A check can slow Black's passer while White's queen controls promotion squares. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
+        "keyQuestion": "Why is the white king in check before it moves, and why is the b1 promotion protected?",
+        "defenderIdea": "...b1=Q+ gives Black a defended queen with tempo while White's king has limited flights.",
+        "continuation": "Ka3 exits the check, but Black's queen and king dominate White's remote a-pawn.",
+        "misconception": "Trying Kxb1 fails because the black king on c2 guards b1. Advancing the a-pawn while White is in check is illegal.",
+        "reflection": "Visualize the attacked squares after ...b1=Q+: which king moves remain legal, and what would Black threaten next? Contrast a slow ...Kd3 reply and explain how immediate promotion changes the race.",
         "variations": [
           {
-            "label": "Alternative pawn/king plan",
+            "label": "Black declines immediate promotion",
             "moves": [
-              "e3d4",
-              "h3h2",
-              "f6f7"
+              "a1a2",
+              "c2d3",
+              "a2a3"
             ],
-            "explanation": "Compare this alternative to f6f7 h3h2 f7f8q. A nonchecking promotion would require a different evaluation. Assess the pawn count and defender's next king square before claiming a win or draw."
+            "explanation": "...Kd3 instead of ...b1=Q gives White time to improve king safety. The black b-pawn remains dangerous, but the board is materially and tactically different from an immediate promotion-with-check."
           }
         ]
       },
       "pawnEndgameStudy": {
         "theme": "Pawn races and king activation",
-        "assessment": "practical promotion advantage",
+        "assessment": "severe practical disadvantage for White after protected queen promotion",
         "status": "instructional-not-tablebase",
-        "principle": "White promotes on f8 and checks across the eighth rank toward h8.",
-        "defensivePlan": "...h2 threatens ...h1=Q, so forcing check after promotion matters.",
-        "endpoint": "A check can slow Black's passer while White's queen controls promotion squares.",
-        "commonError": "A nonchecking promotion would require a different evaluation.",
-        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
+        "principle": "A protected pawn on its seventh rank can promote with check and deny the defending king the promoted square.",
+        "defensivePlan": "Black has immediate ...b1=Q+ protected by the king on c2.",
+        "endpoint": "White escapes the check but Black owns a defended queen against the remaining a-pawn.",
+        "commonError": "Trying Kxb1 fails because the black king on c2 guards b1. Advancing the a-pawn while White is in check is illegal.",
+        "method": "Compare exact move order and king attacked squares. A queen cannot be captured by a king when it is protected."
       }
     },
     {
