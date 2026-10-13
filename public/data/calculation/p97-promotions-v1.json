@@ -1,0 +1,587 @@
+{
+  "version": 1,
+  "phase": "P97",
+  "section": "Promotion and evaluation trees",
+  "positions": [
+    {
+      "id": "calc:p97-31",
+      "title": "b-pawn promotion with a rival passer · own pawn reserve",
+      "fen": "7k/1P6/8/8/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b7b8q",
+      "principalVariation": [
+        "b7b8q",
+        "h8h7",
+        "b8b7",
+        "h7g6",
+        "b7c6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank. White retains an a2 pawn: count it in all final material balances. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: b7b8q h8h7 b8d6 h7g8 d6d8. White retains an a2 pawn: count it in all final material balances.",
+      "continuationReason": "Five-ply endpoint: The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion.",
+      "explanation": "b-pawn promotion with a rival passer. b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank. Main b7b8q h8h7 b8b7 h7g6 b7c6. Alternative defender b7b8q h8h7 b8d6 h7g8 d6d8. Other candidate e1f2 h8h7 b7b8q h7g6 b8c7. Endpoint: The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion. Material context: White retains an a2 pawn: count it in all final material balances. Misconception: Treating b8=Q as immediate mate omits legal king flights.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank.",
+        "defenderIdea": "b7b8q h8h7 b8d6 h7g8 d6d8",
+        "continuation": "The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion.",
+        "misconception": "Treating b8=Q as immediate mate omits legal king flights.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. White retains an a2 pawn: count it in all final material balances.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "b7b8q",
+              "h8h7",
+              "b8d6",
+              "h7g8",
+              "d6d8"
+            ],
+            "explanation": "The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion. White retains an a2 pawn: count it in all final material balances."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "h8h7",
+              "b7b8q",
+              "h7g6",
+              "b8c7"
+            ],
+            "explanation": "Treating b8=Q as immediate mate omits legal king flights. White retains an a2 pawn: count it in all final material balances."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-32",
+      "title": "b-pawn promotion with a rival passer · opposing immediate passer",
+      "fen": "7k/1P6/8/8/8/8/1P5p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b7b8q",
+      "principalVariation": [
+        "b7b8q",
+        "h8h7",
+        "b8b7",
+        "h7g6",
+        "b7c6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: b7b8q h8h7 b8d6 h7g8 d6d8. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+      "continuationReason": "Five-ply endpoint: The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion.",
+      "explanation": "b-pawn promotion with a rival passer. b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank. Main b7b8q h8h7 b8b7 h7g6 b7c6. Alternative defender b7b8q h8h7 b8d6 h7g8 d6d8. Other candidate e1f2 h8h7 b7b8q h7g6 b8c7. Endpoint: The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion. Material context: Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Misconception: Treating b8=Q as immediate mate omits legal king flights.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "b8=Q+ gains tempo but the king escapes. The new queen must relocate to the checking rank.",
+        "defenderIdea": "b7b8q h8h7 b8d6 h7g8 d6d8",
+        "continuation": "The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion.",
+        "misconception": "Treating b8=Q as immediate mate omits legal king flights.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. White's b2 pawn also survives, changing the practical promotion race.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "b7b8q",
+              "h8h7",
+              "b8d6",
+              "h7g8",
+              "d6d8"
+            ],
+            "explanation": "The queen can use Qc6+ after Kg6, but enemy pawn progress changes practical conversion. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "h8h7",
+              "b7b8q",
+              "h7g6",
+              "b8c7"
+            ],
+            "explanation": "Treating b8=Q as immediate mate omits legal king flights. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-33",
+      "title": "a-pawn reaches the back rank · own pawn reserve",
+      "fen": "7k/P7/8/8/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a7a8q",
+      "principalVariation": [
+        "a7a8q",
+        "h8h7",
+        "a8h8",
+        "h7g6",
+        "h8g8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "a8=Q+ checks along the eighth rank; the queen can then switch to the h-file. White retains an a2 pawn: count it in all final material balances. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: a7a8q h8h7 a8e4 h7h6 e4e6. White retains an a2 pawn: count it in all final material balances.",
+      "continuationReason": "Five-ply endpoint: Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay.",
+      "explanation": "a-pawn reaches the back rank. a8=Q+ checks along the eighth rank; the queen can then switch to the h-file. Main a7a8q h8h7 a8h8 h7g6 h8g8. Alternative defender a7a8q h8h7 a8e4 h7h6 e4e6. Other candidate e1f2 h8h7 a7a8q h7g6 a8e4. Endpoint: Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay. Material context: White retains an a2 pawn: count it in all final material balances. Misconception: The queen's first check does not imply the king lacks h7.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "a8=Q+ checks along the eighth rank; the queen can then switch to the h-file.",
+        "defenderIdea": "a7a8q h8h7 a8e4 h7h6 e4e6",
+        "continuation": "Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay.",
+        "misconception": "The queen's first check does not imply the king lacks h7.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. White retains an a2 pawn: count it in all final material balances.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "a7a8q",
+              "h8h7",
+              "a8e4",
+              "h7h6",
+              "e4e6"
+            ],
+            "explanation": "Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay. White retains an a2 pawn: count it in all final material balances."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "h8h7",
+              "a7a8q",
+              "h7g6",
+              "a8e4"
+            ],
+            "explanation": "The queen's first check does not imply the king lacks h7. White retains an a2 pawn: count it in all final material balances."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-34",
+      "title": "a-pawn reaches the back rank · opposing immediate passer",
+      "fen": "7k/P7/8/8/8/8/1P5p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a7a8q",
+      "principalVariation": [
+        "a7a8q",
+        "h8h7",
+        "a8h8",
+        "h7g6",
+        "h8g8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "a8=Q+ checks along the eighth rank; the queen can then switch to the h-file. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: a7a8q h8h7 a8e4 h7h6 e4e6. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+      "continuationReason": "Five-ply endpoint: Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay.",
+      "explanation": "a-pawn reaches the back rank. a8=Q+ checks along the eighth rank; the queen can then switch to the h-file. Main a7a8q h8h7 a8h8 h7g6 h8g8. Alternative defender a7a8q h8h7 a8e4 h7h6 e4e6. Other candidate e1f2 h8h7 a7a8q h7g6 a8e4. Endpoint: Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay. Material context: Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Misconception: The queen's first check does not imply the king lacks h7.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "a8=Q+ checks along the eighth rank; the queen can then switch to the h-file.",
+        "defenderIdea": "a7a8q h8h7 a8e4 h7h6 e4e6",
+        "continuation": "Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay.",
+        "misconception": "The queen's first check does not imply the king lacks h7.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. White's b2 pawn also survives, changing the practical promotion race.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "a7a8q",
+              "h8h7",
+              "a8e4",
+              "h7h6",
+              "e4e6"
+            ],
+            "explanation": "Rhythmic checks preserve the initiative, but the side with a passed pawn must still calculate counterplay. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "h8h7",
+              "a7a8q",
+              "h7g6",
+              "a8e4"
+            ],
+            "explanation": "The queen's first check does not imply the king lacks h7. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-35",
+      "title": "e-pawn promotion creates a diagonal check · own pawn reserve",
+      "fen": "6k1/4P3/8/8/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e7e8q",
+      "principalVariation": [
+        "e7e8q",
+        "g8h7",
+        "e8e4",
+        "h7h6",
+        "e4e6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "e8=Q+ gains a queen, but the next meaningful check depends on the king's route. White retains an a2 pawn: count it in all final material balances. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: e7e8q g8h7 e8h5 h7g8 h5e8. White retains an a2 pawn: count it in all final material balances.",
+      "continuationReason": "Five-ply endpoint: Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8.",
+      "explanation": "e-pawn promotion creates a diagonal check. e8=Q+ gains a queen, but the next meaningful check depends on the king's route. Main e7e8q g8h7 e8e4 h7h6 e4e6. Alternative defender e7e8q g8h7 e8h5 h7g8 h5e8. Other candidate e1f2 g8h7 e7e8q h7g6 e8e4. Endpoint: Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8. Material context: White retains an a2 pawn: count it in all final material balances. Misconception: One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "e8=Q+ gains a queen, but the next meaningful check depends on the king's route.",
+        "defenderIdea": "e7e8q g8h7 e8h5 h7g8 h5e8",
+        "continuation": "Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8.",
+        "misconception": "One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. White retains an a2 pawn: count it in all final material balances.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "e7e8q",
+              "g8h7",
+              "e8h5",
+              "h7g8",
+              "h5e8"
+            ],
+            "explanation": "Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8. White retains an a2 pawn: count it in all final material balances."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "g8h7",
+              "e7e8q",
+              "h7h6",
+              "e8e4"
+            ],
+            "explanation": "...Kg6 is illegal because the queen on e8 controls g6 diagonally. ...Kh6 is a legal flight; Qe4 then prepares further queen maneuvers rather than delivering an immediate check."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-36",
+      "title": "e-pawn promotion creates a diagonal check · opposing immediate passer",
+      "fen": "6k1/4P3/8/8/8/8/7p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e7e8q",
+      "principalVariation": [
+        "e7e8q",
+        "g8h7",
+        "e8e4",
+        "h7h6",
+        "e4e6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "e8=Q+ gains a queen, but the next meaningful check depends on the king's route. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: e7e8q g8h7 e8h5 h7g8 h5e8. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+      "continuationReason": "Five-ply endpoint: Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8.",
+      "explanation": "e-pawn promotion creates a diagonal check. e8=Q+ gains a queen, but the next meaningful check depends on the king's route. Main e7e8q g8h7 e8e4 h7h6 e4e6. Alternative defender e7e8q g8h7 e8h5 h7g8 h5e8. Other candidate e1f2 g8h7 e7e8q h7g6 e8e4. Endpoint: Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8. Material context: Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Misconception: One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "e8=Q+ gains a queen, but the next meaningful check depends on the king's route.",
+        "defenderIdea": "e7e8q g8h7 e8h5 h7g8 h5e8",
+        "continuation": "Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8.",
+        "misconception": "One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "e7e8q",
+              "g8h7",
+              "e8h5",
+              "h7g8",
+              "h5e8"
+            ],
+            "explanation": "Qe6+ covers the sixth rank after Kh6; the defender can also return toward g8. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "e1f2",
+              "g8h7",
+              "e7e8q",
+              "h7h6",
+              "e8e4"
+            ],
+            "explanation": "...Kg6 is illegal because the queen on e8 controls g6 diagonally. ...Kh6 is a legal flight; Qe4 then prepares further queen maneuvers rather than delivering an immediate check."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-37",
+      "title": "Underpromotion compared with a queen · own pawn reserve",
+      "fen": "4k3/6P1/8/8/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g7g8q",
+      "principalVariation": [
+        "g7g8q",
+        "e8d7",
+        "g8g7",
+        "d7c6",
+        "g7g6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage. White retains an a2 pawn: count it in all final material balances. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: g7g8q e8d7 g8g7 d7e6 g7g6. White retains an a2 pawn: count it in all final material balances.",
+      "continuationReason": "Five-ply endpoint: Both lines of promotion can retain checks but a queen controls more diagonals.",
+      "explanation": "Underpromotion compared with a queen. Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage. Main g7g8q e8d7 g8g7 d7c6 g7g6. Alternative defender g7g8q e8d7 g8g7 d7e6 g7g6. Other candidate g7g8r e8d7 g8g7 d7e6 g7g6. Endpoint: Both lines of promotion can retain checks but a queen controls more diagonals. Material context: White retains an a2 pawn: count it in all final material balances. Misconception: Calling underpromotion equivalent to a queen ignores the missing diagonals.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage.",
+        "defenderIdea": "g7g8q e8d7 g8g7 d7e6 g7g6",
+        "continuation": "Both lines of promotion can retain checks but a queen controls more diagonals.",
+        "misconception": "Calling underpromotion equivalent to a queen ignores the missing diagonals.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. White retains an a2 pawn: count it in all final material balances.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "g7g8q",
+              "e8d7",
+              "g8g7",
+              "d7e6",
+              "g7g6"
+            ],
+            "explanation": "Both lines of promotion can retain checks but a queen controls more diagonals. White retains an a2 pawn: count it in all final material balances."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "g7g8r",
+              "e8d7",
+              "g8g7",
+              "d7e6",
+              "g7g6"
+            ],
+            "explanation": "Calling underpromotion equivalent to a queen ignores the missing diagonals. White retains an a2 pawn: count it in all final material balances."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-38",
+      "title": "Underpromotion compared with a queen · opposing immediate passer",
+      "fen": "4k3/6P1/8/8/8/8/7p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g7g8q",
+      "principalVariation": [
+        "g7g8q",
+        "e8d7",
+        "g8g7",
+        "d7c6",
+        "g7g6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: g7g8q e8d7 g8g7 d7e6 g7g6. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+      "continuationReason": "Five-ply endpoint: Both lines of promotion can retain checks but a queen controls more diagonals.",
+      "explanation": "Underpromotion compared with a queen. Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage. Main g7g8q e8d7 g8g7 d7c6 g7g6. Alternative defender g7g8q e8d7 g8g7 d7e6 g7g6. Other candidate g7g8r e8d7 g8g7 d7e6 g7g6. Endpoint: Both lines of promotion can retain checks but a queen controls more diagonals. Material context: Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Misconception: Calling underpromotion equivalent to a queen ignores the missing diagonals.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "Promotion on g8 checks the black king on e8; queen and rook promotions create different coverage.",
+        "defenderIdea": "g7g8q e8d7 g8g7 d7e6 g7g6",
+        "continuation": "Both lines of promotion can retain checks but a queen controls more diagonals.",
+        "misconception": "Calling underpromotion equivalent to a queen ignores the missing diagonals.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "g7g8q",
+              "e8d7",
+              "g8g7",
+              "d7e6",
+              "g7g6"
+            ],
+            "explanation": "Both lines of promotion can retain checks but a queen controls more diagonals. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "g7g8r",
+              "e8d7",
+              "g8g7",
+              "d7e6",
+              "g7g6"
+            ],
+            "explanation": "Calling underpromotion equivalent to a queen ignores the missing diagonals. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-39",
+      "title": "c-pawn promotes into a king chase · own pawn reserve",
+      "fen": "4k3/2P5/8/8/8/8/P7/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c7c8q",
+      "principalVariation": [
+        "c7c8q",
+        "e8f7",
+        "c8c7",
+        "f7g6",
+        "c7c6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "A queen on c8 checks across the back rank and then uses the seventh and sixth ranks. White retains an a2 pawn: count it in all final material balances. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: c7c8q e8e7 c8c7 e7f6 c7c6. White retains an a2 pawn: count it in all final material balances.",
+      "continuationReason": "Five-ply endpoint: Different king flights make the continuing sixth-rank check possible on distinct files.",
+      "explanation": "c-pawn promotes into a king chase. A queen on c8 checks across the back rank and then uses the seventh and sixth ranks. Main c7c8q e8f7 c8c7 f7g6 c7c6. Alternative defender c7c8q e8e7 c8c7 e7f6 c7c6. Other candidate c7c8r e8f7 c8c7 f7g6 c7c6. Endpoint: Different king flights make the continuing sixth-rank check possible on distinct files. Material context: White retains an a2 pawn: count it in all final material balances. Misconception: Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "A queen on c8 checks across the back rank and then uses the seventh and sixth ranks.",
+        "defenderIdea": "c7c8q e8e7 c8c7 e7f6 c7c6",
+        "continuation": "Different king flights make the continuing sixth-rank check possible on distinct files.",
+        "misconception": "Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. White retains an a2 pawn: count it in all final material balances.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "c7c8q",
+              "e8e7",
+              "c8c7",
+              "e7f6",
+              "c7c6"
+            ],
+            "explanation": "Different king flights make the continuing sixth-rank check possible on distinct files. White retains an a2 pawn: count it in all final material balances."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "c7c8r",
+              "e8f7",
+              "c8c7",
+              "f7g6",
+              "c7c6"
+            ],
+            "explanation": "Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal. White retains an a2 pawn: count it in all final material balances."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-40",
+      "title": "c-pawn promotes into a king chase · opposing immediate passer",
+      "fen": "4k3/2P5/8/8/8/8/7p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c7c8q",
+      "principalVariation": [
+        "c7c8q",
+        "e8f7",
+        "c8c7",
+        "f7g6",
+        "c7c6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Promotion and evaluation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.branching",
+        "endgames.pawn-races",
+        "calculation.evaluation"
+      ],
+      "prompt": "A queen on c8 checks across the back rank and then uses the seventh and sixth ranks. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Calculate a minimum five plies and contrast defender king flights.",
+      "replyReason": "Defensive alternative: c7c8q e8e7 c8c7 e7f6 c7c6. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+      "continuationReason": "Five-ply endpoint: Different king flights make the continuing sixth-rank check possible on distinct files.",
+      "explanation": "c-pawn promotes into a king chase. A queen on c8 checks across the back rank and then uses the seventh and sixth ranks. Main c7c8q e8f7 c8c7 f7g6 c7c6. Alternative defender c7c8q e8e7 c8c7 e7f6 c7c6. Other candidate c7c8r e8f7 c8c7 f7g6 c7c6. Endpoint: Different king flights make the continuing sixth-rank check possible on distinct files. Material context: Black has an h2 pawn one step from promotion: repeated checks must buy genuine time. Misconception: Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal.. Record the line as instruction rather than an engine-certain result.",
+      "defensiveStudy": {
+        "keyQuestion": "A queen on c8 checks across the back rank and then uses the seventh and sixth ranks.",
+        "defenderIdea": "c7c8q e8e7 c8c7 e7f6 c7c6",
+        "continuation": "Different king flights make the continuing sixth-rank check possible on distinct files.",
+        "misconception": "Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal.",
+        "reflection": "Calculate the fourth and fifth plies for each king escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time.",
+        "variations": [
+          {
+            "label": "Different defender flight",
+            "moves": [
+              "c7c8q",
+              "e8e7",
+              "c8c7",
+              "e7f6",
+              "c7c6"
+            ],
+            "explanation": "Different king flights make the continuing sixth-rank check possible on distinct files. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          },
+          {
+            "label": "Other candidate (or underpromotion)",
+            "moves": [
+              "c7c8r",
+              "e8f7",
+              "c8c7",
+              "f7g6",
+              "c7c6"
+            ],
+            "explanation": "Assuming ...Kd7 is legal after Qc8+ overlooks the promoted queen's diagonal. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+          }
+        ]
+      }
+    }
+  ]
+}
