@@ -26,13 +26,13 @@
       "prompt": "The king shelters its seventh-rank pawn; the rook should reach the fourth rank before the defender can keep giving distant checks. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Ra8+ uses the eighth rank to drive the white king, so a bridge must eventually shield the king rather than merely check.",
       "continuationReason": "After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation.",
-      "explanation": "Build the fourth-rank shield: The king shelters its seventh-rank pawn; the rook should reach the fourth rank before the defender can keep giving distant checks. Instructional principal continuation: d1d4 a2a8 c8b7. Alternative: d1d5 a2a8 c8b7. ...Ra8+ uses the eighth rank to drive the white king, so a bridge must eventually shield the king rather than merely check. At the endpoint, After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation. Misconception-specific correction: Calling Rd4 an immediate win ignores the ongoing long-range checking resource. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Build the fourth-rank shield: The king shelters its seventh-rank pawn; the rook should reach the fourth rank before the defender can keep giving distant checks. Instructional principal continuation: d1d4 a2a8 c8b7. Alternative: d1d5 a2a8 c8b7. ...Ra8+ uses the eighth rank to drive the white king, so a bridge must eventually shield the king rather than merely check. At the endpoint, After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation. Misconception-specific correction: Calling Rd4 an immediate win ignores the ongoing long-range checking resource. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis.",
       "defensiveStudy": {
         "keyQuestion": "The king shelters its seventh-rank pawn; the rook should reach the fourth rank before the defender can keep giving distant checks.",
         "defenderIdea": "...Ra8+ uses the eighth rank to drive the white king, so a bridge must eventually shield the king rather than merely check.",
         "continuation": "After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation.",
         "misconception": "Calling Rd4 an immediate win ignores the ongoing long-range checking resource.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. After Kb7 White still must address rook checks and coordinate the c-pawn with its rook; Rd4 is a characteristic Lucena preparation. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -52,7 +52,8 @@
         "defense": "...Ra8+ uses the eighth rank to drive the white king, so a bridge must eventually shield the king rather than merely check.",
         "misconception": "Calling Rd4 an immediate win ignores the ongoing long-range checking resource.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis."
       }
     },
     {
@@ -78,13 +79,13 @@
       "prompt": "The pawn on f7 cannot promote while its own king occupies f8; it must escape sideways under rook-checking pressure. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rh8+ forces the king off f8 and illustrates how the defender checks from the side.",
       "continuationReason": "Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks.",
-      "explanation": "Move off the promotion square: The pawn on f7 cannot promote while its own king occupies f8; it must escape sideways under rook-checking pressure. Instructional principal continuation: e1e4 h2h8 f8e7. Alternative: e1e5 h2h8 f8e7. ...Rh8+ forces the king off f8 and illustrates how the defender checks from the side. At the endpoint, Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks. Misconception-specific correction: Never announce f8=Q while the white king is still standing on f8. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Move off the promotion square: The pawn on f7 cannot promote while its own king occupies f8; it must escape sideways under rook-checking pressure. Instructional principal continuation: e1e4 h2h8 f8e7. Alternative: e1e5 h2h8 f8e7. ...Rh8+ forces the king off f8 and illustrates how the defender checks from the side. At the endpoint, Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks. Misconception-specific correction: Never announce f8=Q while the white king is still standing on f8. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis.",
       "defensiveStudy": {
         "keyQuestion": "The pawn on f7 cannot promote while its own king occupies f8; it must escape sideways under rook-checking pressure.",
         "defenderIdea": "...Rh8+ forces the king off f8 and illustrates how the defender checks from the side.",
         "continuation": "Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks.",
-        "misconception": "Never announce f8=Q while the white king is still standing on f8.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks.",
+        "misconception": "Never announce f8=Q while the white king is still standing on f8. The line is instructional, and one more defender reply can change the result.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ke7 leaves f8 for possible promotion, but a real bridge is still needed to answer future checks. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -104,7 +105,8 @@
         "defense": "...Rh8+ forces the king off f8 and illustrates how the defender checks from the side.",
         "misconception": "Never announce f8=Q while the white king is still standing on f8.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis."
       }
     },
     {
@@ -130,13 +132,13 @@
       "prompt": "The seventh-rank d-pawn is ready to advance only when its king vacates d8; the supporting rook seeks a sheltering rank. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rh8+ crosses the eighth rank, obliging White to choose a legal king flight.",
       "continuationReason": "Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion.",
-      "explanation": "Create a shield on the c-file: The seventh-rank d-pawn is ready to advance only when its king vacates d8; the supporting rook seeks a sheltering rank. Instructional principal continuation: c1c4 h2h8 d8c7. Alternative: c1c5 h2h8 d8c7. ...Rh8+ crosses the eighth rank, obliging White to choose a legal king flight. At the endpoint, Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion. Misconception-specific correction: A rook on c4 is a building block of the bridge, not an instant promotion. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Create a shield on the c-file: The seventh-rank d-pawn is ready to advance only when its king vacates d8; the supporting rook seeks a sheltering rank. Instructional principal continuation: c1c4 h2h8 d8c7. Alternative: c1c5 h2h8 d8c7. ...Rh8+ crosses the eighth rank, obliging White to choose a legal king flight. At the endpoint, Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion. Misconception-specific correction: A rook on c4 is a building block of the bridge, not an instant promotion. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis.",
       "defensiveStudy": {
         "keyQuestion": "The seventh-rank d-pawn is ready to advance only when its king vacates d8; the supporting rook seeks a sheltering rank.",
         "defenderIdea": "...Rh8+ crosses the eighth rank, obliging White to choose a legal king flight.",
         "continuation": "Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion.",
         "misconception": "A rook on c4 is a building block of the bridge, not an instant promotion.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Kc7 steps away from the checking rank; calculate the next rook check before claiming conversion. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -156,7 +158,8 @@
         "defense": "...Rh8+ crosses the eighth rank, obliging White to choose a legal king flight.",
         "misconception": "A rook on c4 is a building block of the bridge, not an instant promotion.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis."
       }
     },
     {
@@ -182,13 +185,13 @@
       "prompt": "The rook prepares a bridge while the king on b8 still blocks its b7 pawn's promotion square. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rh8+ checks across the back rank, requiring the king to vacate b8.",
       "continuationReason": "Ka7 is a legal flight that clears b8; accurate checking distance remains important.",
-      "explanation": "Shelter the king on the a-file: The rook prepares a bridge while the king on b8 still blocks its b7 pawn's promotion square. Instructional principal continuation: c1c4 h2h8 b8a7. Alternative: c1c5 h2h8 b8a7. ...Rh8+ checks across the back rank, requiring the king to vacate b8. At the endpoint, Ka7 is a legal flight that clears b8; accurate checking distance remains important. Misconception-specific correction: Simply pushing b7-b8 while the king occupies b8 is impossible. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Shelter the king on the a-file: The rook prepares a bridge while the king on b8 still blocks its b7 pawn's promotion square. Instructional principal continuation: c1c4 h2h8 b8a7. Alternative: c1c5 h2h8 b8a7. ...Rh8+ checks across the back rank, requiring the king to vacate b8. At the endpoint, Ka7 is a legal flight that clears b8; accurate checking distance remains important. Misconception-specific correction: Simply pushing b7-b8 while the king occupies b8 is impossible. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis.",
       "defensiveStudy": {
         "keyQuestion": "The rook prepares a bridge while the king on b8 still blocks its b7 pawn's promotion square.",
         "defenderIdea": "...Rh8+ checks across the back rank, requiring the king to vacate b8.",
         "continuation": "Ka7 is a legal flight that clears b8; accurate checking distance remains important.",
-        "misconception": "Simply pushing b7-b8 while the king occupies b8 is impossible.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ka7 is a legal flight that clears b8; accurate checking distance remains important.",
+        "misconception": "Simply pushing b7-b8 while the king occupies b8 is impossible. The line is instructional, and one more defender reply can change the result.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ka7 is a legal flight that clears b8; accurate checking distance remains important. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -208,7 +211,8 @@
         "defense": "...Rh8+ checks across the back rank, requiring the king to vacate b8.",
         "misconception": "Simply pushing b7-b8 while the king occupies b8 is impossible.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis."
       }
     },
     {
@@ -234,13 +238,13 @@
       "prompt": "The white king on e8 must move to allow promotion; reaching the fourth rank with the rook can eventually block horizontal checks. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Ra8+ attacks the king across the eighth rank and tests the rook's defensive coordination.",
       "continuationReason": "Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered.",
-      "explanation": "Prepare a bridge before e8 is clear: The white king on e8 must move to allow promotion; reaching the fourth rank with the rook can eventually block horizontal checks. Instructional principal continuation: d1d4 a2a8 e8f7. Alternative: d1d5 a2a8 e8f7. ...Ra8+ attacks the king across the eighth rank and tests the rook's defensive coordination. At the endpoint, Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered. Misconception-specific correction: Rook activity on the fourth rank supports bridge-building, yet does not itself force immediate victory. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Prepare a bridge before e8 is clear: The white king on e8 must move to allow promotion; reaching the fourth rank with the rook can eventually block horizontal checks. Instructional principal continuation: d1d4 a2a8 e8f7. Alternative: d1d5 a2a8 e8f7. ...Ra8+ attacks the king across the eighth rank and tests the rook's defensive coordination. At the endpoint, Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered. Misconception-specific correction: Rook activity on the fourth rank supports bridge-building, yet does not itself force immediate victory. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis.",
       "defensiveStudy": {
         "keyQuestion": "The white king on e8 must move to allow promotion; reaching the fourth rank with the rook can eventually block horizontal checks.",
         "defenderIdea": "...Ra8+ attacks the king across the eighth rank and tests the rook's defensive coordination.",
         "continuation": "Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered.",
         "misconception": "Rook activity on the fourth rank supports bridge-building, yet does not itself force immediate victory.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Kf7 vacates e8, but Black's rook continues to give checks until the king is sheltered. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -260,7 +264,8 @@
         "defense": "...Ra8+ attacks the king across the eighth rank and tests the rook's defensive coordination.",
         "misconception": "Rook activity on the fourth rank supports bridge-building, yet does not itself force immediate victory.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Lucena geometry: with a pawn on the seventh rank and the stronger king in front, the king may initially block its own promotion square. The supporting rook ideally creates a fourth-rank shelter; a rook check from behind or the side must then be met before the king can safely escort the pawn. A three-ply sample does not demonstrate the entire bridge and must not be labelled a proven win without exact endgame analysis."
       }
     },
     {
@@ -286,13 +291,13 @@
       "prompt": "The defender uses the sixth rank to deny the attacking king e6; retreating the rook from that rank may lose useful control. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rb6 keeps the rook mobile on the sixth while White tries Rh7 to create pressure.",
       "continuationReason": "...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing.",
-      "explanation": "Patrol the e-file entry squares: The defender uses the sixth rank to deny the attacking king e6; retreating the rook from that rank may lose useful control. Instructional principal continuation: a6b6 h1h7 b6a6. Alternative: a6a5 e5d4 a5a6. ...Rb6 keeps the rook mobile on the sixth while White tries Rh7 to create pressure. At the endpoint, ...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing. Misconception-specific correction: The Philidor position is defensive: a rook patrol is not a promise that the attacker instantly loses the pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Patrol the e-file entry squares: The defender uses the sixth rank to deny the attacking king e6; retreating the rook from that rank may lose useful control. Instructional principal continuation: a6b6 h1h7 b6a6. Alternative: a6a5 e5d4 a5a6. ...Rb6 keeps the rook mobile on the sixth while White tries Rh7 to create pressure. At the endpoint, ...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing. Misconception-specific correction: The Philidor position is defensive: a rook patrol is not a promise that the attacker instantly loses the pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome.",
       "defensiveStudy": {
         "keyQuestion": "The defender uses the sixth rank to deny the attacking king e6; retreating the rook from that rank may lose useful control.",
         "defenderIdea": "...Rb6 keeps the rook mobile on the sixth while White tries Rh7 to create pressure.",
         "continuation": "...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing.",
         "misconception": "The Philidor position is defensive: a rook patrol is not a promise that the attacker instantly loses the pawn.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Ra5+ instead checks from the fifth rank and prompts Kd4, showing why an early rook descent has different timing. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -312,7 +317,8 @@
         "defense": "...Rb6 keeps the rook mobile on the sixth while White tries Rh7 to create pressure.",
         "misconception": "The Philidor position is defensive: a rook patrol is not a promise that the attacker instantly loses the pawn.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome."
       }
     },
     {
@@ -338,13 +344,13 @@
       "prompt": "The black rook on a6 can patrol d6, limiting the attacking king's advance behind the pawn. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rb6 preserves the sixth-rank shield while White activates its rook.",
       "continuationReason": "...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier.",
-      "explanation": "Maintain a barrier across d6: The black rook on a6 can patrol d6, limiting the attacking king's advance behind the pawn. Instructional principal continuation: a6b6 h1h7 b6a6. Alternative: a6a5 d5c4 a5a6. ...Rb6 preserves the sixth-rank shield while White activates its rook. At the endpoint, ...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier. Misconception-specific correction: A defensive sixth-rank rook should not be surrendered merely to chase a harmless pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Maintain a barrier across d6: The black rook on a6 can patrol d6, limiting the attacking king's advance behind the pawn. Instructional principal continuation: a6b6 h1h7 b6a6. Alternative: a6a5 d5c4 a5a6. ...Rb6 preserves the sixth-rank shield while White activates its rook. At the endpoint, ...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier. Misconception-specific correction: A defensive sixth-rank rook should not be surrendered merely to chase a harmless pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome.",
       "defensiveStudy": {
         "keyQuestion": "The black rook on a6 can patrol d6, limiting the attacking king's advance behind the pawn.",
         "defenderIdea": "...Rb6 preserves the sixth-rank shield while White activates its rook.",
         "continuation": "...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier.",
         "misconception": "A defensive sixth-rank rook should not be surrendered merely to chase a harmless pawn.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Ra5+ checks along the fifth rank and forces Kc4, giving a concrete contrast to maintaining the barrier. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -364,7 +370,8 @@
         "defense": "...Rb6 preserves the sixth-rank shield while White activates its rook.",
         "misconception": "A defensive sixth-rank rook should not be surrendered merely to chase a harmless pawn.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome."
       }
     },
     {
@@ -390,13 +397,13 @@
       "prompt": "The rook on b6 controls f6, keeping the enemy king from walking in front of its f-pawn. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rc6 patrols the sixth rank while White seeks active seventh-rank play.",
       "continuationReason": "...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank.",
-      "explanation": "Protect the f6 entry point: The rook on b6 controls f6, keeping the enemy king from walking in front of its f-pawn. Instructional principal continuation: b6c6 a1a7 c6b6. Alternative: b6b5 f5g4 b5b6. ...Rc6 patrols the sixth rank while White seeks active seventh-rank play. At the endpoint, ...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank. Misconception-specific correction: A sequence of checks is not equivalent to a settled Philidor hold; count where the rook can return. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Protect the f6 entry point: The rook on b6 controls f6, keeping the enemy king from walking in front of its f-pawn. Instructional principal continuation: b6c6 a1a7 c6b6. Alternative: b6b5 f5g4 b5b6. ...Rc6 patrols the sixth rank while White seeks active seventh-rank play. At the endpoint, ...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank. Misconception-specific correction: A sequence of checks is not equivalent to a settled Philidor hold; count where the rook can return. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome.",
       "defensiveStudy": {
         "keyQuestion": "The rook on b6 controls f6, keeping the enemy king from walking in front of its f-pawn.",
         "defenderIdea": "...Rc6 patrols the sixth rank while White seeks active seventh-rank play.",
         "continuation": "...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank.",
         "misconception": "A sequence of checks is not equivalent to a settled Philidor hold; count where the rook can return.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rb5+ attacks the fifth-rank king and changes its position, but also leaves the defensive sixth rank. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -416,7 +423,8 @@
         "defense": "...Rc6 patrols the sixth rank while White seeks active seventh-rank play.",
         "misconception": "A sequence of checks is not equivalent to a settled Philidor hold; count where the rook can return.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome."
       }
     },
     {
@@ -442,13 +450,13 @@
       "prompt": "Black's rook on g6 limits the attacking king's access to c6, a central defensive concern with a c-pawn. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rf6 continues sixth-rank coverage while the attacker seeks an active rook.",
       "continuationReason": "...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank.",
-      "explanation": "Hold the c6 blockade: Black's rook on g6 limits the attacking king's access to c6, a central defensive concern with a c-pawn. Instructional principal continuation: g6f6 h1h7 f6g6. Alternative: g6g5 c5d4 g5g6. ...Rf6 continues sixth-rank coverage while the attacker seeks an active rook. At the endpoint, ...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank. Misconception-specific correction: Giving check is not always the most reliable way to keep the attacking king out of the sixth rank. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Hold the c6 blockade: Black's rook on g6 limits the attacking king's access to c6, a central defensive concern with a c-pawn. Instructional principal continuation: g6f6 h1h7 f6g6. Alternative: g6g5 c5d4 g5g6. ...Rf6 continues sixth-rank coverage while the attacker seeks an active rook. At the endpoint, ...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank. Misconception-specific correction: Giving check is not always the most reliable way to keep the attacking king out of the sixth rank. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome.",
       "defensiveStudy": {
         "keyQuestion": "Black's rook on g6 limits the attacking king's access to c6, a central defensive concern with a c-pawn.",
         "defenderIdea": "...Rf6 continues sixth-rank coverage while the attacker seeks an active rook.",
         "continuation": "...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank.",
         "misconception": "Giving check is not always the most reliable way to keep the attacking king out of the sixth rank.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rg5+ forces Kd4 rather than permitting the king to stay on the fifth rank. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -468,7 +476,8 @@
         "defense": "...Rf6 continues sixth-rank coverage while the attacker seeks an active rook.",
         "misconception": "Giving check is not always the most reliable way to keep the attacking king out of the sixth rank.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome."
       }
     },
     {
@@ -492,15 +501,15 @@
         "endgames.philidor"
       ],
       "prompt": "Black's rook controls g6 to keep the attacking king away from the pawn's key squares. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
-      "replyReason": "...Rc6 maintains the barrier while White rook activity continues.",
+      "replyReason": "...Rc6 maintains the barrier while White rook activity continues. The defender must recalculate the checking file, not assume a passive move.",
       "continuationReason": "...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice.",
-      "explanation": "Follow the king on the sixth: Black's rook controls g6 to keep the attacking king away from the pawn's key squares. Instructional principal continuation: b6c6 a1a7 c6b6. Alternative: b6b5 g5f4 b5b6. ...Rc6 maintains the barrier while White rook activity continues. At the endpoint, ...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice. Misconception-specific correction: Do not assume a single lateral rook check conclusively proves a draw against every attacker response. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Follow the king on the sixth: Black's rook controls g6 to keep the attacking king away from the pawn's key squares. Instructional principal continuation: b6c6 a1a7 c6b6. Alternative: b6b5 g5f4 b5b6. ...Rc6 maintains the barrier while White rook activity continues. At the endpoint, ...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice. Misconception-specific correction: Do not assume a single lateral rook check conclusively proves a draw against every attacker response. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome.",
       "defensiveStudy": {
         "keyQuestion": "Black's rook controls g6 to keep the attacking king away from the pawn's key squares.",
         "defenderIdea": "...Rc6 maintains the barrier while White rook activity continues.",
         "continuation": "...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice.",
         "misconception": "Do not assume a single lateral rook check conclusively proves a draw against every attacker response.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. ...Rb5+ forces the attacking king back toward f4, again demonstrating an alternate defensive choice. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -520,7 +529,8 @@
         "defense": "...Rc6 maintains the barrier while White rook activity continues.",
         "misconception": "Do not assume a single lateral rook check conclusively proves a draw against every attacker response.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Philidor geometry: a defending rook on the sixth rank can prevent the attacking king from stepping in front of an unadvanced pawn. The defender typically waits until the pawn moves forward, then seeks safe checking distance from behind. The defender's king must stay in front of the pawn's promotion path. Additional pawns, earlier checks and a rook forced away from the sixth rank may change the theoretical outcome."
       }
     },
     {
@@ -546,13 +556,13 @@
       "prompt": "Ra7 gains activity from behind the b4 pawn, but the defender retains a rook with potential flank checks. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rh6 keeps Black's rook active from the sixth rank rather than waiting passively.",
       "continuationReason": "Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant.",
-      "explanation": "Seventh rank then checking rank: Ra7 gains activity from behind the b4 pawn, but the defender retains a rook with potential flank checks. Instructional principal continuation: a1a7 h8h6 a7a8. Alternative: a1a2 h8h6 a2a7. ...Rh6 keeps Black's rook active from the sixth rank rather than waiting passively. At the endpoint, Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant. Misconception-specific correction: A seventh-rank rook is useful only when enemy counterchecks and pawn threats have been counted. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Seventh rank then checking rank: Ra7 gains activity from behind the b4 pawn, but the defender retains a rook with potential flank checks. Instructional principal continuation: a1a7 h8h6 a7a8. Alternative: a1a2 h8h6 a2a7. ...Rh6 keeps Black's rook active from the sixth rank rather than waiting passively. At the endpoint, Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant. Misconception-specific correction: A seventh-rank rook is useful only when enemy counterchecks and pawn threats have been counted. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan.",
       "defensiveStudy": {
         "keyQuestion": "Ra7 gains activity from behind the b4 pawn, but the defender retains a rook with potential flank checks.",
         "defenderIdea": "...Rh6 keeps Black's rook active from the sixth rank rather than waiting passively.",
         "continuation": "Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant.",
         "misconception": "A seventh-rank rook is useful only when enemy counterchecks and pawn threats have been counted.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ra8+ switches to the checking rank; judge whether the checking rook remains safely distant. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -572,7 +582,8 @@
         "defense": "...Rh6 keeps Black's rook active from the sixth rank rather than waiting passively.",
         "misconception": "A seventh-rank rook is useful only when enemy counterchecks and pawn threats have been counted.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan."
       }
     },
     {
@@ -598,13 +609,13 @@
       "prompt": "With the c-file empty, Rc7 improves White's rook activity and threatens to use the eighth rank. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Ra6 counters with lateral checking potential and a rook ready to attack White's passer.",
       "continuationReason": "Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn.",
-      "explanation": "Using the open c-file: With the c-file empty, Rc7 improves White's rook activity and threatens to use the eighth rank. Instructional principal continuation: c1c7 a8a6 c7c8. Alternative: c1c2 a8a6 c2c7. ...Ra6 counters with lateral checking potential and a rook ready to attack White's passer. At the endpoint, Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn. Misconception-specific correction: An invasion is not automatically decisive if the defender can keep counterattacking the pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Using the open c-file: With the c-file empty, Rc7 improves White's rook activity and threatens to use the eighth rank. Instructional principal continuation: c1c7 a8a6 c7c8. Alternative: c1c2 a8a6 c2c7. ...Ra6 counters with lateral checking potential and a rook ready to attack White's passer. At the endpoint, Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn. Misconception-specific correction: An invasion is not automatically decisive if the defender can keep counterattacking the pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan.",
       "defensiveStudy": {
         "keyQuestion": "With the c-file empty, Rc7 improves White's rook activity and threatens to use the eighth rank.",
         "defenderIdea": "...Ra6 counters with lateral checking potential and a rook ready to attack White's passer.",
         "continuation": "Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn.",
         "misconception": "An invasion is not automatically decisive if the defender can keep counterattacking the pawn.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rc8+ checks along the eighth; the pawn on d4 is not yet a promoted pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -624,7 +635,8 @@
         "defense": "...Ra6 counters with lateral checking potential and a rook ready to attack White's passer.",
         "misconception": "An invasion is not automatically decisive if the defender can keep counterattacking the pawn.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan."
       }
     },
     {
@@ -650,13 +662,13 @@
       "prompt": "The h-file is open. Moving to h7 prepares a check on the eighth rank, but the pawn on a6 matters. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rb7 shifts the defending rook away from b8, making the back-rank checking line available.",
       "continuationReason": "Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn.",
-      "explanation": "Rook lift to the back rank: The h-file is open. Moving to h7 prepares a check on the eighth rank, but the pawn on a6 matters. Instructional principal continuation: h1h7 b8b7 h7h8. Alternative: h1h6 b8b7 h6h8. ...Rb7 shifts the defending rook away from b8, making the back-rank checking line available. At the endpoint, Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn. Misconception-specific correction: A back-rank check cannot replace the whole task of stopping the a6 pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Rook lift to the back rank: The h-file is open. Moving to h7 prepares a check on the eighth rank, but the pawn on a6 matters. Instructional principal continuation: h1h7 b8b7 h7h8. Alternative: h1h6 b8b7 h6h8. ...Rb7 shifts the defending rook away from b8, making the back-rank checking line available. At the endpoint, Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn. Misconception-specific correction: A back-rank check cannot replace the whole task of stopping the a6 pawn. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan.",
       "defensiveStudy": {
         "keyQuestion": "The h-file is open. Moving to h7 prepares a check on the eighth rank, but the pawn on a6 matters.",
         "defenderIdea": "...Rb7 shifts the defending rook away from b8, making the back-rank checking line available.",
         "continuation": "Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn.",
         "misconception": "A back-rank check cannot replace the whole task of stopping the a6 pawn.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rh8+ attacks the king on a8 from a distance while Black still has a queenside pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -676,7 +688,8 @@
         "defense": "...Rb7 shifts the defending rook away from b8, making the back-rank checking line available.",
         "misconception": "A back-rank check cannot replace the whole task of stopping the a6 pawn.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan."
       }
     },
     {
@@ -702,13 +715,13 @@
       "prompt": "The rook leaves the first rank to pressure the black king while retaining access to checking squares. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rh6 keeps counterplay against White's f4 pawn and discourages unguarded rook advances.",
       "continuationReason": "Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance.",
-      "explanation": "Switching the rook against a kingside passer: The rook leaves the first rank to pressure the black king while retaining access to checking squares. Instructional principal continuation: a1a7 h8h6 a7a8. Alternative: a1a3 h8h6 a3a7. ...Rh6 keeps counterplay against White's f4 pawn and discourages unguarded rook advances. At the endpoint, Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance. Misconception-specific correction: Rook checking activity does not eliminate an enemy passed pawn from the board. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Switching the rook against a kingside passer: The rook leaves the first rank to pressure the black king while retaining access to checking squares. Instructional principal continuation: a1a7 h8h6 a7a8. Alternative: a1a3 h8h6 a3a7. ...Rh6 keeps counterplay against White's f4 pawn and discourages unguarded rook advances. At the endpoint, Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance. Misconception-specific correction: Rook checking activity does not eliminate an enemy passed pawn from the board. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan.",
       "defensiveStudy": {
         "keyQuestion": "The rook leaves the first rank to pressure the black king while retaining access to checking squares.",
         "defenderIdea": "...Rh6 keeps counterplay against White's f4 pawn and discourages unguarded rook advances.",
         "continuation": "Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance.",
         "misconception": "Rook checking activity does not eliminate an enemy passed pawn from the board.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Ra8+ checks on the back rank; White must still weigh the black e-pawn's advance. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -728,7 +741,8 @@
         "defense": "...Rh6 keeps counterplay against White's f4 pawn and discourages unguarded rook advances.",
         "misconception": "Rook checking activity does not eliminate an enemy passed pawn from the board.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan."
       }
     },
     {
@@ -754,13 +768,13 @@
       "prompt": "The open h-file provides checking activity against the black king on f8. Reconstruct the first three plies before moving, then compare the other legal move order and the defender's king/rook resource.",
       "replyReason": "...Rc6 gives the defender an active rook that may attack the a4 passer.",
       "continuationReason": "Rh8+ is a legal check from across the eighth rank but does not win the game by itself.",
-      "explanation": "Lateral pressure before promotion: The open h-file provides checking activity against the black king on f8. Instructional principal continuation: h1h7 c8c6 h7h8. Alternative: h1h6 c8c6 h6h8. ...Rc6 gives the defender an active rook that may attack the a4 passer. At the endpoint, Rh8+ is a legal check from across the eighth rank but does not win the game by itself. Misconception-specific correction: Rook activity and the a-pawn's safety must be assessed together. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate.",
+      "explanation": "Lateral pressure before promotion: The open h-file provides checking activity against the black king on f8. Instructional principal continuation: h1h7 c8c6 h7h8. Alternative: h1h6 c8c6 h6h8. ...Rc6 gives the defender an active rook that may attack the a4 passer. At the endpoint, Rh8+ is a legal check from across the eighth rank but does not win the game by itself. Misconception-specific correction: Rook activity and the a-pawn's safety must be assessed together. Do not confuse a three-ply legal demonstration with a seven-piece tablebase result or a forced checkmate. Technique study: Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan.",
       "defensiveStudy": {
         "keyQuestion": "The open h-file provides checking activity against the black king on f8.",
         "defenderIdea": "...Rc6 gives the defender an active rook that may attack the a4 passer.",
         "continuation": "Rh8+ is a legal check from across the eighth rank but does not win the game by itself.",
-        "misconception": "Rook activity and the a-pawn's safety must be assessed together.",
-        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rh8+ is a legal check from across the eighth rank but does not win the game by itself.",
+        "misconception": "Rook activity and the a-pawn's safety must be assessed together. The line is instructional, and one more defender reply can change the result.",
+        "reflection": "Before repeating the line, name which rook controls the sixth/seventh rank, which king is cut off, and whether the passed pawn can safely advance. Rh8+ is a legal check from across the eighth rank but does not win the game by itself. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
         "variations": [
           {
             "label": "Alternative defensive plan",
@@ -780,7 +794,8 @@
         "defense": "...Rc6 gives the defender an active rook that may attack the a4 passer.",
         "misconception": "Rook activity and the a-pawn's safety must be assessed together.",
         "outcome": "unresolved without full analysis",
-        "authority": "original worked teaching line, not tablebase"
+        "authority": "original worked teaching line, not tablebase",
+        "method": "Rook activity is measured by active files, checking options, access to enemy pawns, and whether the rook can give checks without being captured. Occupying the seventh rank is often helpful but can allow a lateral attack from the defender. Compare each rook lift to king safety and any outside passer before promoting a checking sequence as an objectively winning plan."
       }
     }
   ]
