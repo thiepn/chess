@@ -433,11 +433,11 @@
           {
             "label": "Plausible failure (3 plies)",
             "moves": [
-              "g1h2",
+              "g1f1",
               "c2c1",
-              "h2g3"
+              "f1g2"
             ],
-            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: White owns an a2 pawn as a separate possible future passer; track it independently of the featured exchange, and do not erase it in the endpoint material count."
+            "explanation": "Kf1? permits ...Rxc1+, then Kg2 escapes the first-rank rook. Kh2 initially would be illegal because the black rook attacks h2 from c2."
           }
         ]
       },
@@ -496,11 +496,11 @@
           {
             "label": "Plausible failure (3 plies)",
             "moves": [
-              "g1h2",
+              "g1f1",
               "c2c1",
-              "h2g3"
+              "f1g2"
             ],
-            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: Black retains h7 as an outside pawn reserve. An apparently decisive simplification may therefore lead to rook or king versus pawn rather than a bare-king ending."
+            "explanation": "Kf1? permits ...Rxc1+, then Kg2 escapes the first-rank rook. Kh2 initially would be illegal because the black rook attacks h2 from c2."
           }
         ]
       },
@@ -559,11 +559,11 @@
           {
             "label": "Plausible failure (3 plies)",
             "moves": [
-              "g1h2",
+              "g1f1",
               "c2c1",
-              "h2g3"
+              "f1g2"
             ],
-            "explanation": "A rook on the seventh rank is not safe merely because it gives check; test whether a nearby king can capture it. In this particular pawn-reserve variant: White has an additional b2 pawn. Assess whether the rook or black king can attack b2 after the sample rather than treating it as a permanently secure extra pawn."
+            "explanation": "Kf1? permits ...Rxc1+, then Kg2 escapes the first-rank rook. Kh2 initially would be illegal because the black rook attacks h2 from c2."
           }
         ]
       },
