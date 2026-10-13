@@ -8,30 +8,31 @@ import type {
   CalculationPosition,
 } from "./types";
 
-// P95 defensive studies reuse the same runner and owner-scoped review authority.
-let p95Positions: CalculationPosition[] = [];
-if (typeof window !== "undefined") {
-  fetch(`${import.meta.env.BASE_URL}data/calculation/p95-defensive-resistance-v1.json`)
-    .then(r => r.json())
-    .then(({positions}: {positions: CalculationPosition[]}) => {
-      if (positions.length !== 40) return;
-      p95Positions = positions.filter(p => p.id.startsWith("calc:p95-") &&
-        legalCalculationBranch(p) &&
-        p.defensiveStudy?.variations.every(v => legalCalculationBranch({
-          ...p, bestMove: v.moves[0], principalVariation: v.moves,
-        })));
-    }).catch(() => {});
-}
-
-// P94 lessons remain a static asset; the existing runner verifies lines.
+// P94–P96 authored studies use native scoring and review; the large corpus stays static.
 let p94Positions: CalculationPosition[] = [];
+let p95Positions: CalculationPosition[] = [];
+let p96Positions: CalculationPosition[] = [];
 if (typeof window !== "undefined") {
-  fetch(`${import.meta.env.BASE_URL}data/calculation/p94-candidates-v1.json`)
-    .then(r => r.json())
-    .then(({ positions }: {positions: CalculationPosition[]}) => {
-      p94Positions = positions.filter(p => p.id.startsWith("calc:p94-") &&
-        legalCalculationBranch(p));
-    }).catch(() => {});
+  for (const [file, prefix, count] of [
+    ["p94-candidates-v1.json", "calc:p94-", 40],
+    ["p95-defensive-resistance-v1.json", "calc:p95-", 40],
+    ["p96-quiet-positional-v1.json", "calc:p96-", 35],
+  ] as const) {
+    fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
+      .then(r => r.json())
+      .then(({positions}: {positions: CalculationPosition[]}) => {
+        if (!Array.isArray(positions) || positions.length !== count) return;
+        const valid = positions.filter(p => p.id.startsWith(prefix) &&
+          legalCalculationBranch(p) && (prefix === "calc:p94-" ||
+          p.defensiveStudy?.variations.every(v => legalCalculationBranch({
+            ...p, bestMove: v.moves[0], principalVariation: v.moves,
+          }))));
+        if (valid.length !== count) return;
+        if (prefix === "calc:p94-") p94Positions = valid;
+        else if (prefix === "calc:p95-") p95Positions = valid;
+        else p96Positions = valid;
+      }).catch(() => {});
+  }
 }
 
 const authoredPositions: CalculationPosition[] = [
@@ -279,6 +280,7 @@ export function calculationCatalog(
 ) {
   return [
     ...personalPositions(state),
+    ...p96Positions,
     ...p95Positions,
     ...p94Positions,
     ...authoredPositions,
@@ -317,7 +319,7 @@ export function calculationPositionFor(
   }
 
   const authored =
-    [...p95Positions, ...p94Positions, ...authoredPositions]
+    [...p96Positions, ...p95Positions, ...p94Positions, ...authoredPositions]
       .filter(
         (position) =>
           position.skillIds.includes(
@@ -373,7 +375,7 @@ export function resolveCalculationPosition(
 
 // Use the same 3-ply legal-line authority as the interactive calculation runner.
 export function calculationCatalogIssues() {
-  return [...authoredPositions, ...p94Positions, ...p95Positions]
+  return [...authoredPositions, ...p94Positions, ...p95Positions, ...p96Positions]
     .filter(position => !legalCalculationBranch(position))
     .map(position => `${position.id}: invalid calculation line`);
 }

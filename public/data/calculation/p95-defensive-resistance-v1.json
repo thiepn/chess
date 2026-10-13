@@ -1270,10 +1270,10 @@
             "label": "Defender or continuation alternative",
             "moves": [
               "b8c6",
-              "e2e4",
+              "d2d3",
               "g8f6"
             ],
-            "explanation": "White can take central space with e4; Black develops again rather than exchanging on d4."
+            "explanation": "White can support e4 with d3 instead of playing Bb5; Black develops ...Nf6, reinforcing the center without being drawn into a bishop challenge. Compare the quieter d3 setup with the forcing pressure of Bb5."
           }
         ]
       }

@@ -1,0 +1,1513 @@
+{
+  "version": 1,
+  "phase": "P96",
+  "title": "Quiet Moves & Positional Calculation",
+  "rights": "Original THIEPN-authored teaching positions; variations are illustrative, not certified engine-unique.",
+  "positions": [
+    {
+      "id": "calc:p96-01",
+      "title": "Dislodge the pin",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "prompt": "The bishop on g4 attacks Nf3 along the queen's diagonal. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/3p1n2/4p3/4P1b1/3P1N2/5PPP/1NBQ2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h2h3",
+      "principalVariation": [
+        "h2h3",
+        "g4h5",
+        "c1e3"
+      ],
+      "explanation": "The bishop on g4 attacks Nf3 along the queen's diagonal. In the recorded instructional line h2h3 g4h5 c1e3, ...Bh5 maintains the bishop but loses its direct pin. After that, Be3 develops without exposing the queen. Compare h2h3 g4f3 d1f3. Correction: g4 too soon allows the bishop to take f3. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Bh5 maintains the bishop but loses its direct pin",
+      "continuationReason": "Be3 develops without exposing the queen",
+      "source": "authored",
+      "sourceLabel": "P96 · Prevention",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "The bishop on g4 attacks Nf3 along the queen's diagonal",
+        "defenderIdea": "...Bh5 maintains the bishop but loses its direct pin",
+        "continuation": "Be3 develops without exposing the queen",
+        "misconception": "g4 too soon allows the bishop to take f3",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "h2h3",
+              "g4f3",
+              "d1f3"
+            ],
+            "explanation": "g4 too soon allows the bishop to take f3. Compare the different move order or defender's choice with h2h3 g4h5 c1e3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-02",
+      "title": "Deny the knight b4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "prompt": "A black knight on c6 could jump to b4 and attack c2. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k1n1/pp6/2n5/8/3P4/2N5/PPP1P3/1NB3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a2a3",
+      "principalVariation": [
+        "a2a3",
+        "g8f6",
+        "c1f4"
+      ],
+      "explanation": "A black knight on c6 could jump to b4 and attack c2. In the recorded instructional line a2a3 g8f6 c1f4, ...Nf6 develops instead of playing into a3xb4. After that, Bf4 controls central squares behind the queenside restraint. Compare a2a3 a7a6 e2e3. Correction: a3 does not win material if Black declines Nb4. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nf6 develops instead of playing into a3xb4",
+      "continuationReason": "Bf4 controls central squares behind the queenside restraint",
+      "source": "authored",
+      "sourceLabel": "P96 · Prevention",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "A black knight on c6 could jump to b4 and attack c2",
+        "defenderIdea": "...Nf6 develops instead of playing into a3xb4",
+        "continuation": "Bf4 controls central squares behind the queenside restraint",
+        "misconception": "a3 does not win material if Black declines Nb4",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a2a3",
+              "a7a6",
+              "e2e3"
+            ],
+            "explanation": "a3 does not win material if Black declines Nb4. Compare the different move order or defender's choice with a2a3 g8f6 c1f4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-03",
+      "title": "Remove Ng5 as a free square",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "prompt": "A knight on f3 can visit g5 unless Black controls it. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/3p1ppp/5n2/8/8/5N2/3PP3/6K1 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h7h6",
+      "principalVariation": [
+        "h7h6",
+        "d2d4",
+        "d7d5"
+      ],
+      "explanation": "A knight on f3 can visit g5 unless Black controls it. In the recorded instructional line h7h6 d2d4 d7d5, d4 contests the center rather than offering the knight. After that, ...d5 matches the white d-pawn challenge. Compare h7h6 f3g5 h6g5. Correction: After ...h6, Ng5 loses a knight to ...hxg5. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "d4 contests the center rather than offering the knight",
+      "continuationReason": "...d5 matches the white d-pawn challenge",
+      "source": "authored",
+      "sourceLabel": "P96 · Prevention",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "A knight on f3 can visit g5 unless Black controls it",
+        "defenderIdea": "d4 contests the center rather than offering the knight",
+        "continuation": "...d5 matches the white d-pawn challenge",
+        "misconception": "After ...h6, Ng5 loses a knight to ...hxg5",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "h7h6",
+              "f3g5",
+              "h6g5"
+            ],
+            "explanation": "After ...h6, Ng5 loses a knight to ...hxg5. Compare the different move order or defender's choice with h7h6 d2d4 d7d5; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-04",
+      "title": "Quiet king sidestep",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "prompt": "Kh1 adjusts king safety while preserving the f2 pawn shield. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "3q2k1/3p1p2/8/2b1p3/2B1P3/8/5PPP/3Q1RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g1h1",
+      "principalVariation": [
+        "g1h1",
+        "g8h8",
+        "f1e1"
+      ],
+      "explanation": "Kh1 adjusts king safety while preserving the f2 pawn shield. In the recorded instructional line g1h1 g8h8 f1e1, ...Kh8 is a legal reciprocal king-safety move. After that, Re1 improves the rook behind e4 without forcing a capture. Compare g1h1 d7d6 f1e1. Correction: Kh1 does not itself prevent a future ...Bxf2+. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Kh8 is a legal reciprocal king-safety move",
+      "continuationReason": "Re1 improves the rook behind e4 without forcing a capture",
+      "source": "authored",
+      "sourceLabel": "P96 · Prevention",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Kh1 adjusts king safety while preserving the f2 pawn shield",
+        "defenderIdea": "...Kh8 is a legal reciprocal king-safety move",
+        "continuation": "Re1 improves the rook behind e4 without forcing a capture",
+        "misconception": "Kh1 does not itself prevent a future ...Bxf2+",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "g1h1",
+              "d7d6",
+              "f1e1"
+            ],
+            "explanation": "Kh1 does not itself prevent a future ...Bxf2+. Compare the different move order or defender's choice with g1h1 g8h8 f1e1; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-05",
+      "title": "Control b4 before e4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "prompt": "The a3 pawn will attack any bishop landing on b4. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/4p3/2b5/3P4/2P5/P3P3/1NBQK3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a2a3",
+      "principalVariation": [
+        "a2a3",
+        "c5b6",
+        "e2e4"
+      ],
+      "explanation": "The a3 pawn will attack any bishop landing on b4. In the recorded instructional line a2a3 c5b6 e2e4, ...Bb6 preserves the bishop without a tactical concession. After that, e4 then gains space while leaving options on the queenside. Compare a2a3 c5a7 e2e4. Correction: A bishop that may retreat is not trapped by a3. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Bb6 preserves the bishop without a tactical concession",
+      "continuationReason": "e4 then gains space while leaving options on the queenside",
+      "source": "authored",
+      "sourceLabel": "P96 · Prevention",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "The a3 pawn will attack any bishop landing on b4",
+        "defenderIdea": "...Bb6 preserves the bishop without a tactical concession",
+        "continuation": "e4 then gains space while leaving options on the queenside",
+        "misconception": "A bishop that may retreat is not trapped by a3",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a2a3",
+              "c5a7",
+              "e2e4"
+            ],
+            "explanation": "A bishop that may retreat is not trapped by a3. Compare the different move order or defender's choice with a2a3 c5b6 e2e4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-06",
+      "title": "Nd2 keeps c3 for a pawn",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Nd2 allows a later c3 break and defends central light squares. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/8/3p1n2/4p3/4P3/3P4/2P3P1/1N3RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1d2",
+      "principalVariation": [
+        "b1d2",
+        "b8c6",
+        "f1e1"
+      ],
+      "explanation": "Nd2 allows a later c3 break and defends central light squares. In the recorded instructional line b1d2 b8c6 f1e1, ...Nc6 adds Black's own pressure on the center. After that, Re1 builds behind e4 in a coherent positional sequence. Compare b1c3 b8c6 f1e1. Correction: Nc3 is playable but blocks the c-pawn's first advance. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 adds Black's own pressure on the center",
+      "continuationReason": "Re1 builds behind e4 in a coherent positional sequence",
+      "source": "authored",
+      "sourceLabel": "P96 · Rerouting",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nd2 allows a later c3 break and defends central light squares",
+        "defenderIdea": "...Nc6 adds Black's own pressure on the center",
+        "continuation": "Re1 builds behind e4 in a coherent positional sequence",
+        "misconception": "Nc3 is playable but blocks the c-pawn's first advance",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "b1c3",
+              "b8c6",
+              "f1e1"
+            ],
+            "explanation": "Nc3 is playable but blocks the c-pawn's first advance. Compare the different move order or defender's choice with b1d2 b8c6 f1e1; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-07",
+      "title": "Develop bishop and knight together",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Be3 adds control of d4 before the knight chooses a square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/8/3p4/4p3/4P3/3P1N2/8/1NB3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1e3",
+      "principalVariation": [
+        "c1e3",
+        "b8c6",
+        "b1c3"
+      ],
+      "explanation": "Be3 adds control of d4 before the knight chooses a square. In the recorded instructional line c1e3 b8c6 b1c3, ...Nc6 gives e5 another defender rather than yielding tactics. After that, Nc3 increases central piece coordination. Compare c1g5 b8c6 b1c3. Correction: Bg5 cannot pin a knight that has not reached f6. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 gives e5 another defender rather than yielding tactics",
+      "continuationReason": "Nc3 increases central piece coordination",
+      "source": "authored",
+      "sourceLabel": "P96 · Rerouting",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Be3 adds control of d4 before the knight chooses a square",
+        "defenderIdea": "...Nc6 gives e5 another defender rather than yielding tactics",
+        "continuation": "Nc3 increases central piece coordination",
+        "misconception": "Bg5 cannot pin a knight that has not reached f6",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "c1g5",
+              "b8c6",
+              "b1c3"
+            ],
+            "explanation": "Bg5 cannot pin a knight that has not reached f6. Compare the different move order or defender's choice with c1e3 b8c6 b1c3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-08",
+      "title": "Rook to the open c-file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Without a c-pawn White can place a rook on c1. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/1p6/4p3/3p4/3P4/4PN2/1P6/R4BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1c1",
+      "principalVariation": [
+        "a1c1",
+        "b8c6",
+        "f1d3"
+      ],
+      "explanation": "Without a c-pawn White can place a rook on c1. In the recorded instructional line a1c1 b8c6 f1d3, ...Nc6 contests the central pawn and develops normally. After that, Bd3 points toward h7 while the rook supports c-file play. Compare a1b1 b8c6 f1d3. Correction: A rook on c1 does not threaten a pawn that is not on c7. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 contests the central pawn and develops normally",
+      "continuationReason": "Bd3 points toward h7 while the rook supports c-file play",
+      "source": "authored",
+      "sourceLabel": "P96 · Rerouting",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Without a c-pawn White can place a rook on c1",
+        "defenderIdea": "...Nc6 contests the central pawn and develops normally",
+        "continuation": "Bd3 points toward h7 while the rook supports c-file play",
+        "misconception": "A rook on c1 does not threaten a pawn that is not on c7",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a1b1",
+              "b8c6",
+              "f1d3"
+            ],
+            "explanation": "A rook on c1 does not threaten a pawn that is not on c7. Compare the different move order or defender's choice with a1c1 b8c6 f1d3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-09",
+      "title": "Knight through f1 to g3",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Nf1 can lead to g3 and a later occupation of f5. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k1n1/8/2np4/4p3/4P3/3P4/2PN1P2/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2f1",
+      "principalVariation": [
+        "d2f1",
+        "g8f6",
+        "f1g3"
+      ],
+      "explanation": "Nf1 can lead to g3 and a later occupation of f5. In the recorded instructional line d2f1 g8f6 f1g3, ...Nf6 gives Black extra central control. After that, Ng3 creates future squares rather than a forced fork. Compare d2b3 g8f6 c1e3. Correction: Judging Nf1 as a wasted move ignores the planned reroute. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nf6 gives Black extra central control",
+      "continuationReason": "Ng3 creates future squares rather than a forced fork",
+      "source": "authored",
+      "sourceLabel": "P96 · Rerouting",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nf1 can lead to g3 and a later occupation of f5",
+        "defenderIdea": "...Nf6 gives Black extra central control",
+        "continuation": "Ng3 creates future squares rather than a forced fork",
+        "misconception": "Judging Nf1 as a wasted move ignores the planned reroute",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d2b3",
+              "g8f6",
+              "c1e3"
+            ],
+            "explanation": "Judging Nf1 as a wasted move ignores the planned reroute. Compare the different move order or defender's choice with d2f1 g8f6 f1g3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-10",
+      "title": "Complete a fianchetto",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "The g3 pawn opens the bishop's long diagonal from g2. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/3p4/4pn2/8/3P4/6P1/2P5/1N3BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "d7d5",
+        "b1c3"
+      ],
+      "explanation": "The g3 pawn opens the bishop's long diagonal from g2. In the recorded instructional line f1g2 d7d5 b1c3, ...d5 challenges central control and fixes a structural decision. After that, Nc3 supports White's d4 pawn and contests d5. Compare f1h3 d7d5 b1c3. Correction: Bh3 has a different plan and is not interchangeable with Bg2. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...d5 challenges central control and fixes a structural decision",
+      "continuationReason": "Nc3 supports White's d4 pawn and contests d5",
+      "source": "authored",
+      "sourceLabel": "P96 · Rerouting",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "The g3 pawn opens the bishop's long diagonal from g2",
+        "defenderIdea": "...d5 challenges central control and fixes a structural decision",
+        "continuation": "Nc3 supports White's d4 pawn and contests d5",
+        "misconception": "Bh3 has a different plan and is not interchangeable with Bg2",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f1h3",
+              "d7d5",
+              "b1c3"
+            ],
+            "explanation": "Bh3 has a different plan and is not interchangeable with Bg2. Compare the different move order or defender's choice with f1g2 d7d5 b1c3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-11",
+      "title": "Queen supports the e-pawn",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Qe2 gives the center another defender before expansion. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/8/5n2/4p3/4P3/3P1N2/8/1N1Q1BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1e2",
+      "principalVariation": [
+        "d1e2",
+        "b8c6",
+        "b1c3"
+      ],
+      "explanation": "Qe2 gives the center another defender before expansion. In the recorded instructional line d1e2 b8c6 b1c3, ...Nc6 reinforces e5 through development. After that, Nc3 adds control of d5 while maintaining e4. Compare d1e2 b8c6 f1c4. Correction: Immediate pawn advances may leave the center loose. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 reinforces e5 through development",
+      "continuationReason": "Nc3 adds control of d5 while maintaining e4",
+      "source": "authored",
+      "sourceLabel": "P96 · Preparation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Qe2 gives the center another defender before expansion",
+        "defenderIdea": "...Nc6 reinforces e5 through development",
+        "continuation": "Nc3 adds control of d5 while maintaining e4",
+        "misconception": "Immediate pawn advances may leave the center loose",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d1e2",
+              "b8c6",
+              "g1h1"
+            ],
+            "explanation": "After Qe2 and ...Nc6, Kh1 makes a quiet king-safety move instead of immediately developing the bishop. The queen on e2 temporarily blocks the original f1–c4 diagonal."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-12",
+      "title": "Rook prepares d4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Re1 works behind e4 and prepares supported central expansion. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "5nk1/5p2/2n5/4p3/2B1P3/3P1N2/2P5/3Q1RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1e1",
+      "principalVariation": [
+        "f1e1",
+        "f8g6",
+        "c2c3"
+      ],
+      "explanation": "Re1 works behind e4 and prepares supported central expansion. In the recorded instructional line f1e1 f8g6 c2c3, ...Ng6 reroutes Black's piece and prepares counterplay. After that, c3 makes a later d4 advance better supported. Compare f1e1 f8g6 b1c3. Correction: The rook cannot attack through its own e4 pawn. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Ng6 reroutes Black's piece and prepares counterplay",
+      "continuationReason": "c3 makes a later d4 advance better supported",
+      "source": "authored",
+      "sourceLabel": "P96 · Preparation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Re1 works behind e4 and prepares supported central expansion",
+        "defenderIdea": "...Ng6 reroutes Black's piece and prepares counterplay",
+        "continuation": "c3 makes a later d4 advance better supported",
+        "misconception": "The rook cannot attack through its own e4 pawn",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f1e1",
+              "f8g6",
+              "g1h1"
+            ],
+            "explanation": "After Re1 ...Ng6, Kh1 is a quiet king-safety alternative to c3. Neither continuation forces a material change."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-13",
+      "title": "Rook behind the b-pawn",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Rb1 supports b4 with a rook behind the pawn. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "rn4k1/pp6/8/8/3P4/8/PPP5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "b8c6",
+        "b2b4"
+      ],
+      "explanation": "Rb1 supports b4 with a rook behind the pawn. In the recorded instructional line a1b1 b8c6 b2b4, ...Nc6 contests White's center while White plays on the flank. After that, b4 gains space but may become a target. Compare a1c1 b8c6 b2b4. Correction: Queenside pawn gains do not negate Black's central plans. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 contests White's center while White plays on the flank",
+      "continuationReason": "b4 gains space but may become a target",
+      "source": "authored",
+      "sourceLabel": "P96 · Preparation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Rb1 supports b4 with a rook behind the pawn",
+        "defenderIdea": "...Nc6 contests White's center while White plays on the flank",
+        "continuation": "b4 gains space but may become a target",
+        "misconception": "Queenside pawn gains do not negate Black's central plans",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a1c1",
+              "b8c6",
+              "b2b4"
+            ],
+            "explanation": "Queenside pawn gains do not negate Black's central plans. Compare the different move order or defender's choice with a1b1 b8c6 b2b4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-14",
+      "title": "Coordinate queen and pawn",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Qd2 frees d1 and prepares a3 to restrict b4. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k1n1/8/2np4/4p3/4P3/3P4/P1P5/1NBQ2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "g8f6",
+        "a2a3"
+      ],
+      "explanation": "Qd2 frees d1 and prepares a3 to restrict b4. In the recorded instructional line d1d2 g8f6 a2a3, ...Nf6 develops against e4 rather than conceding space. After that, a3 takes away a landing square without winning a piece. Compare d1e2 g8f6 c1e3. Correction: Qd2 also blocks the bishop's path to e3, unlike Qe2. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nf6 develops against e4 rather than conceding space",
+      "continuationReason": "a3 takes away a landing square without winning a piece",
+      "source": "authored",
+      "sourceLabel": "P96 · Preparation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Qd2 frees d1 and prepares a3 to restrict b4",
+        "defenderIdea": "...Nf6 develops against e4 rather than conceding space",
+        "continuation": "a3 takes away a landing square without winning a piece",
+        "misconception": "Qd2 also blocks the bishop's path to e3, unlike Qe2",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d1e2",
+              "g8f6",
+              "c1e3"
+            ],
+            "explanation": "Qd2 also blocks the bishop's path to e3, unlike Qe2. Compare the different move order or defender's choice with d1d2 g8f6 a2a3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-15",
+      "title": "Nc4 must expect ...Nd4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Nc4 puts pressure on e5 but leaves d4 as a counter-square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/2np4/4p3/4P3/3P4/2PN4/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2c4",
+      "principalVariation": [
+        "d2c4",
+        "c6d4",
+        "c2c3"
+      ],
+      "explanation": "Nc4 puts pressure on e5 but leaves d4 as a counter-square. In the recorded instructional line d2c4 c6d4 c2c3, ...Nd4 attacks c2 instead of passively defending e5. After that, c3 confronts the advanced knight and prepares d4. Compare d2f1 c6d4 f1e3. Correction: Thinking Black has no reply to Nc4 misses ...Nd4. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nd4 attacks c2 instead of passively defending e5",
+      "continuationReason": "c3 confronts the advanced knight and prepares d4",
+      "source": "authored",
+      "sourceLabel": "P96 · Preparation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nc4 puts pressure on e5 but leaves d4 as a counter-square",
+        "defenderIdea": "...Nd4 attacks c2 instead of passively defending e5",
+        "continuation": "c3 confronts the advanced knight and prepares d4",
+        "misconception": "Thinking Black has no reply to Nc4 misses ...Nd4",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d2f1",
+              "c6d4",
+              "f1e3"
+            ],
+            "explanation": "Thinking Black has no reply to Nc4 misses ...Nd4. Compare the different move order or defender's choice with d2c4 c6d4 c2c3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-16",
+      "title": "c3 before the d4 push",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "c3 is the support for a later supported central d4 break. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/8/3p1n2/4p3/4P3/5N2/2PP1P2/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c3",
+      "principalVariation": [
+        "c2c3",
+        "b8c6",
+        "d2d4"
+      ],
+      "explanation": "c3 is the support for a later supported central d4 break. In the recorded instructional line c2c3 b8c6 d2d4, ...Nc6 adds pressure to White's intended center. After that, d4 confronts e5 without an immediate unsupported exchange. Compare d2d4 e5d4 c2c3. Correction: d4 first permits ...exd4 before the supporting c-pawn moves. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 adds pressure to White's intended center",
+      "continuationReason": "d4 confronts e5 without an immediate unsupported exchange",
+      "source": "authored",
+      "sourceLabel": "P96 · Pawn breaks",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "c3 is the support for a later supported central d4 break",
+        "defenderIdea": "...Nc6 adds pressure to White's intended center",
+        "continuation": "d4 confronts e5 without an immediate unsupported exchange",
+        "misconception": "d4 first permits ...exd4 before the supporting c-pawn moves",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "c2c3"
+            ],
+            "explanation": "d4 first permits ...exd4 before the supporting c-pawn moves. Compare the different move order or defender's choice with c2c3 b8c6 d2d4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-17",
+      "title": "e3 opens the bishop",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "e3 clears the f1 bishop's diagonal without immediate pawn contact. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/8/5n2/3p4/3P4/8/2P1P3/2B2BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2e3",
+      "principalVariation": [
+        "e2e3",
+        "b8c6",
+        "f1d3"
+      ],
+      "explanation": "e3 clears the f1 bishop's diagonal without immediate pawn contact. In the recorded instructional line e2e3 b8c6 f1d3, ...Nc6 contests central dark squares. After that, Bd3 is a useful bishop post supporting later coordination. Compare e2e4 d5e4 c1g5. Correction: A quick e4 gives Black ...dxe4 and changes the structure. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 contests central dark squares",
+      "continuationReason": "Bd3 is a useful bishop post supporting later coordination",
+      "source": "authored",
+      "sourceLabel": "P96 · Pawn breaks",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "e3 clears the f1 bishop's diagonal without immediate pawn contact",
+        "defenderIdea": "...Nc6 contests central dark squares",
+        "continuation": "Bd3 is a useful bishop post supporting later coordination",
+        "misconception": "A quick e4 gives Black ...dxe4 and changes the structure",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "e2e4",
+              "d5e4",
+              "c1g5"
+            ],
+            "explanation": "A quick e4 gives Black ...dxe4 and changes the structure. Compare the different move order or defender's choice with e2e3 b8c6 f1d3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-18",
+      "title": "g3 before Bg2",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "g3 is necessary to vacate the bishop's destination square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n4k1/4p3/5n2/3p4/3P4/8/2P3P1/5BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g2g3",
+      "principalVariation": [
+        "g2g3",
+        "b8c6",
+        "f1g2"
+      ],
+      "explanation": "g3 is necessary to vacate the bishop's destination square. In the recorded instructional line g2g3 b8c6 f1g2, ...Nc6 challenges White's central light squares. After that, Bg2 claims a long diagonal that was blocked by its own pawn. Compare g2g3 e7e6 f1g2. Correction: Attempting Bg2 with a pawn still on g2 is illegal. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 challenges White's central light squares",
+      "continuationReason": "Bg2 claims a long diagonal that was blocked by its own pawn",
+      "source": "authored",
+      "sourceLabel": "P96 · Pawn breaks",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "g3 is necessary to vacate the bishop's destination square",
+        "defenderIdea": "...Nc6 challenges White's central light squares",
+        "continuation": "Bg2 claims a long diagonal that was blocked by its own pawn",
+        "misconception": "Attempting Bg2 with a pawn still on g2 is illegal",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "g2g3",
+              "e7e6",
+              "f1g2"
+            ],
+            "explanation": "Attempting Bg2 with a pawn still on g2 is illegal. Compare the different move order or defender's choice with g2g3 b8c6 f1g2; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-19",
+      "title": "Ask the pinning bishop first",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "h3 challenges the g4 bishop before White changes the pawn shield. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/8/4p3/4P1b1/5N2/6PP/2BQ2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h2h3",
+      "principalVariation": [
+        "h2h3",
+        "g4h5",
+        "g2g3"
+      ],
+      "explanation": "h3 challenges the g4 bishop before White changes the pawn shield. In the recorded instructional line h2h3 g4h5 g2g3, ...Bh5 saves the bishop while conceding the immediate f3 threat. After that, g3 supports a kingside fianchetto plan. Compare h2h3 g4f3 d1f3. Correction: The alternative ...Bxf3 must be met by Qxf3, not ignored. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Bh5 saves the bishop while conceding the immediate f3 threat",
+      "continuationReason": "g3 supports a kingside fianchetto plan",
+      "source": "authored",
+      "sourceLabel": "P96 · Pawn breaks",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "h3 challenges the g4 bishop before White changes the pawn shield",
+        "defenderIdea": "...Bh5 saves the bishop while conceding the immediate f3 threat",
+        "continuation": "g3 supports a kingside fianchetto plan",
+        "misconception": "The alternative ...Bxf3 must be met by Qxf3, not ignored",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "h2h3",
+              "g4f3",
+              "d1f3"
+            ],
+            "explanation": "The alternative ...Bxf3 must be met by Qxf3, not ignored. Compare the different move order or defender's choice with h2h3 g4h5 g2g3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-20",
+      "title": "a3 prepares b4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "a3 threatens to capture a bishop that settles on b4. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/4pn2/2b5/3P4/8/PPP5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a2a3",
+      "principalVariation": [
+        "a2a3",
+        "c5b6",
+        "b2b4"
+      ],
+      "explanation": "a3 threatens to capture a bishop that settles on b4. In the recorded instructional line a2a3 c5b6 b2b4, ...Bb6 saves the bishop and continues to influence d4. After that, b4 establishes useful queenside space with a plan. Compare a2a3 c5a7 b2b4. Correction: Unprepared b4 can be met by bishop captures or attacks. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Bb6 saves the bishop and continues to influence d4",
+      "continuationReason": "b4 establishes useful queenside space with a plan",
+      "source": "authored",
+      "sourceLabel": "P96 · Pawn breaks",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "a3 threatens to capture a bishop that settles on b4",
+        "defenderIdea": "...Bb6 saves the bishop and continues to influence d4",
+        "continuation": "b4 establishes useful queenside space with a plan",
+        "misconception": "Unprepared b4 can be met by bishop captures or attacks",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a2a3",
+              "c5a7",
+              "b2b4"
+            ],
+            "explanation": "Unprepared b4 can be met by bishop captures or attacks. Compare the different move order or defender's choice with a2a3 c5b6 b2b4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-21",
+      "title": "Queen's Gambit pawn offer",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "c4 offers a pawn to deflect Black's central d-pawn. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1nbqkbn1/2p1p3/8/3p4/3P4/8/2P1P3/1NBQKBN1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c4",
+      "principalVariation": [
+        "c2c4",
+        "d5c4",
+        "e2e3"
+      ],
+      "explanation": "c4 offers a pawn to deflect Black's central d-pawn. In the recorded instructional line c2c4 d5c4 e2e3, ...dxc4 accepts the gambit and gains material temporarily. After that, e3 opens the f1 bishop to recapture later on c4. Compare c2c4 d5c4 b1c3. Correction: A pawn offer is not automatically recovered within this line. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...dxc4 accepts the gambit and gains material temporarily",
+      "continuationReason": "e3 opens the f1 bishop to recapture later on c4",
+      "source": "authored",
+      "sourceLabel": "P96 · Offers",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "c4 offers a pawn to deflect Black's central d-pawn",
+        "defenderIdea": "...dxc4 accepts the gambit and gains material temporarily",
+        "continuation": "e3 opens the f1 bishop to recapture later on c4",
+        "misconception": "A pawn offer is not automatically recovered within this line",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "c2c4",
+              "d5c4",
+              "b1c3"
+            ],
+            "explanation": "A pawn offer is not automatically recovered within this line. Compare the different move order or defender's choice with c2c4 d5c4 e2e3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-22",
+      "title": "Invite queen recapture to gain tempo",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "...cxd4 invites White's queen to the central d4 square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n1qkbn1/4p3/3p4/2p5/2PP4/8/4P3/3QKB2 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c5d4",
+      "principalVariation": [
+        "c5d4",
+        "d1d4",
+        "b8c6"
+      ],
+      "explanation": "...cxd4 invites White's queen to the central d4 square. In the recorded instructional line c5d4 d1d4 b8c6, Qxd4 restores a pawn, but exposes the queen to development. After that, ...Nc6 gains a tempo on the queen while developing a piece. Compare c5d4 d1d4 g8f6. Correction: Material is balanced; the compensation concerns piece timing. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "Qxd4 restores a pawn, but exposes the queen to development",
+      "continuationReason": "...Nc6 gains a tempo on the queen while developing a piece",
+      "source": "authored",
+      "sourceLabel": "P96 · Offers",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "...cxd4 invites White's queen to the central d4 square",
+        "defenderIdea": "Qxd4 restores a pawn, but exposes the queen to development",
+        "continuation": "...Nc6 gains a tempo on the queen while developing a piece",
+        "misconception": "Material is balanced; the compensation concerns piece timing",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "c5d4",
+              "d1d4",
+              "g8f6"
+            ],
+            "explanation": "Material is balanced; the compensation concerns piece timing. Compare the different move order or defender's choice with c5d4 d1d4 b8c6; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-23",
+      "title": "Pawn advances can loosen e4",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "d5 gains space but frees the f6 knight to capture e4. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k3/2p5/3p1n2/4p3/3PP3/8/2P5/3QKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d4d5",
+      "principalVariation": [
+        "d4d5",
+        "f6e4",
+        "d1e2"
+      ],
+      "explanation": "d5 gains space but frees the f6 knight to capture e4. In the recorded instructional line d4d5 f6e4 d1e2, ...Nxe4 takes material; Black need not retreat automatically. After that, Qe2 attacks the knight on e4 along the newly open file. Compare d4d5 f6e4 d1d3. Correction: Not every space gain survives the opponent's most forcing capture. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nxe4 takes material; Black need not retreat automatically",
+      "continuationReason": "Qe2 attacks the knight on e4 along the newly open file",
+      "source": "authored",
+      "sourceLabel": "P96 · Offers",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "d5 gains space but frees the f6 knight to capture e4",
+        "defenderIdea": "...Nxe4 takes material; Black need not retreat automatically",
+        "continuation": "Qe2 attacks the knight on e4 along the newly open file",
+        "misconception": "Not every space gain survives the opponent's most forcing capture",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d4d5",
+              "f6e4",
+              "d1d3"
+            ],
+            "explanation": "Not every space gain survives the opponent's most forcing capture. Compare the different move order or defender's choice with d4d5 f6e4 d1e2; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-24",
+      "title": "Kingside pawn offer",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "f4 offers the f-pawn to seek active center and open lines. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k3/3p4/8/4p3/4P3/8/3P1P2/3QKBN1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f2f4",
+      "principalVariation": [
+        "f2f4",
+        "e5f4",
+        "g1f3"
+      ],
+      "explanation": "f4 offers the f-pawn to seek active center and open lines. In the recorded instructional line f2f4 e5f4 g1f3, ...exf4 accepts the pawn; White has not won material. After that, Nf3 develops and prepares central expansion with d4. Compare f2f4 e5f4 d2d4. Correction: An open f-file does not alone prove enough compensation. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...exf4 accepts the pawn; White has not won material",
+      "continuationReason": "Nf3 develops and prepares central expansion with d4",
+      "source": "authored",
+      "sourceLabel": "P96 · Offers",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "f4 offers the f-pawn to seek active center and open lines",
+        "defenderIdea": "...exf4 accepts the pawn; White has not won material",
+        "continuation": "Nf3 develops and prepares central expansion with d4",
+        "misconception": "An open f-file does not alone prove enough compensation",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f2f4",
+              "e5f4",
+              "d2d4"
+            ],
+            "explanation": "An open f-file does not alone prove enough compensation. Compare the different move order or defender's choice with f2f4 e5f4 g1f3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-25",
+      "title": "Central gambit with c3",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "d4 offers a central pawn and c3 can challenge the capturer. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k3/2pp4/8/4p3/4P3/8/2PP4/1NBQKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "e5d4",
+        "c2c3"
+      ],
+      "explanation": "d4 offers a central pawn and c3 can challenge the capturer. In the recorded instructional line d2d4 e5d4 c2c3, ...exd4 claims a central pawn that White may later attack. After that, c3 contests Black's pawn on d4, offering further material. Compare d2d4 e5d4 d1d4. Correction: Without further analysis the pawn offer cannot be called forced good. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...exd4 claims a central pawn that White may later attack",
+      "continuationReason": "c3 contests Black's pawn on d4, offering further material",
+      "source": "authored",
+      "sourceLabel": "P96 · Offers",
+      "difficulty": 5,
+      "defensiveStudy": {
+        "keyQuestion": "d4 offers a central pawn and c3 can challenge the capturer",
+        "defenderIdea": "...exd4 claims a central pawn that White may later attack",
+        "continuation": "c3 contests Black's pawn on d4, offering further material",
+        "misconception": "Without further analysis the pawn offer cannot be called forced good",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "d1d4"
+            ],
+            "explanation": "Without further analysis the pawn offer cannot be called forced good. Compare the different move order or defender's choice with d2d4 e5d4 c2c3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-26",
+      "title": "Knight before bishop",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "prompt": "Nf3 attacks e5 and prompts Black to choose a developing defense. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "1n2k1n1/8/8/4p3/4P3/8/2PP4/1N1QKBN1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g1f3",
+      "principalVariation": [
+        "g1f3",
+        "b8c6",
+        "f1c4"
+      ],
+      "explanation": "Nf3 attacks e5 and prompts Black to choose a developing defense. In the recorded instructional line g1f3 b8c6 f1c4, ...Nc6 protects e5 as a useful opponent reply. After that, Bc4 targets f7 after Black has settled the pawn defense. Compare f1c4 g8f6 g1f3. Correction: Bishop-first is also legal and changes the timing of ...Nf6. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nc6 protects e5 as a useful opponent reply",
+      "continuationReason": "Bc4 targets f7 after Black has settled the pawn defense",
+      "source": "authored",
+      "sourceLabel": "P96 · Sequencing",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nf3 attacks e5 and prompts Black to choose a developing defense",
+        "defenderIdea": "...Nc6 protects e5 as a useful opponent reply",
+        "continuation": "Bc4 targets f7 after Black has settled the pawn defense",
+        "misconception": "Bishop-first is also legal and changes the timing of ...Nf6",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f1c4",
+              "g8f6",
+              "g1f3"
+            ],
+            "explanation": "Bishop-first is also legal and changes the timing of ...Nf6. Compare the different move order or defender's choice with g1f3 b8c6 f1c4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-27",
+      "title": "Pawn first or rook first",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "prompt": "d5 fixes central space and suggests a rook behind the pawn. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/2p5/3p4/8/3PP3/8/2P5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d4d5",
+      "principalVariation": [
+        "d4d5",
+        "c7c6",
+        "a1d1"
+      ],
+      "explanation": "d5 fixes central space and suggests a rook behind the pawn. In the recorded instructional line d4d5 c7c6 a1d1, ...c6 prepares to undermine White's advanced d-pawn. After that, Rd1 reinforces central play without promising a quick breakthrough. Compare a1d1 c7c6 d4d5. Correction: The move order affects the pawn contact, not the legality. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...c6 prepares to undermine White's advanced d-pawn",
+      "continuationReason": "Rd1 reinforces central play without promising a quick breakthrough",
+      "source": "authored",
+      "sourceLabel": "P96 · Sequencing",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "d5 fixes central space and suggests a rook behind the pawn",
+        "defenderIdea": "...c6 prepares to undermine White's advanced d-pawn",
+        "continuation": "Rd1 reinforces central play without promising a quick breakthrough",
+        "misconception": "The move order affects the pawn contact, not the legality",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a1d1",
+              "c7c6",
+              "d4d5"
+            ],
+            "explanation": "The move order affects the pawn contact, not the legality. Compare the different move order or defender's choice with d4d5 c7c6 a1d1; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-28",
+      "title": "Route the knight around the pawn",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "prompt": "Nd2 retains c3 for a possible c-pawn push. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k1n1/8/2np4/4p3/4P3/3P4/2P5/1NB3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1d2",
+      "principalVariation": [
+        "b1d2",
+        "g8f6",
+        "d2c4"
+      ],
+      "explanation": "Nd2 retains c3 for a possible c-pawn push. In the recorded instructional line b1d2 g8f6 d2c4, ...Nf6 adds a second piece against central squares. After that, Nc4 questions the e5 pawn rather than forcing a capture. Compare b1c3 g8f6 c1e3. Correction: Nc3 is fine, but it commits to a different pawn setup. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nf6 adds a second piece against central squares",
+      "continuationReason": "Nc4 questions the e5 pawn rather than forcing a capture",
+      "source": "authored",
+      "sourceLabel": "P96 · Sequencing",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nd2 retains c3 for a possible c-pawn push",
+        "defenderIdea": "...Nf6 adds a second piece against central squares",
+        "continuation": "Nc4 questions the e5 pawn rather than forcing a capture",
+        "misconception": "Nc3 is fine, but it commits to a different pawn setup",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "b1c3",
+              "g8f6",
+              "c1e3"
+            ],
+            "explanation": "Nc3 is fine, but it commits to a different pawn setup. Compare the different move order or defender's choice with b1d2 g8f6 d2c4; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-29",
+      "title": "Rook supports b5",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "prompt": "...Rb8 places the rook behind the expanding b-pawn. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "r5k1/1p6/2n5/4p3/3PP3/8/8/1N4K1 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "a8b8",
+      "principalVariation": [
+        "a8b8",
+        "b1c3",
+        "b7b5"
+      ],
+      "explanation": "...Rb8 places the rook behind the expanding b-pawn. In the recorded instructional line a8b8 b1c3 b7b5, Nc3 lets White develop and counterattack in the center. After that, ...b5 gains queenside space without deciding central tensions. Compare b7b5 b1c3 a8b8. Correction: Rook lifts do not erase White's e4/d4 pawn control. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "Nc3 lets White develop and counterattack in the center",
+      "continuationReason": "...b5 gains queenside space without deciding central tensions",
+      "source": "authored",
+      "sourceLabel": "P96 · Sequencing",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "...Rb8 places the rook behind the expanding b-pawn",
+        "defenderIdea": "Nc3 lets White develop and counterattack in the center",
+        "continuation": "...b5 gains queenside space without deciding central tensions",
+        "misconception": "Rook lifts do not erase White's e4/d4 pawn control",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "b7b5",
+              "b1c3",
+              "a8b8"
+            ],
+            "explanation": "Rook lifts do not erase White's e4/d4 pawn control. Compare the different move order or defender's choice with a8b8 b1c3 b7b5; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-30",
+      "title": "Bishop-knight transposition",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "prompt": "Be3 develops while leaving the option of Nc3 next. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "4k1n1/8/2n5/4p3/4P3/3P4/8/1NBQ2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1e3",
+      "principalVariation": [
+        "c1e3",
+        "g8f6",
+        "b1c3"
+      ],
+      "explanation": "Be3 develops while leaving the option of Nc3 next. In the recorded instructional line c1e3 g8f6 b1c3, ...Nf6 contests White's central pawns in either sequence. After that, Nc3 produces a familiar two-minor-piece structure. Compare b1c3 g8f6 c1e3. Correction: Different move order need not mean a different evaluation. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Nf6 contests White's central pawns in either sequence",
+      "continuationReason": "Nc3 produces a familiar two-minor-piece structure",
+      "source": "authored",
+      "sourceLabel": "P96 · Sequencing",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Be3 develops while leaving the option of Nc3 next",
+        "defenderIdea": "...Nf6 contests White's central pawns in either sequence",
+        "continuation": "Nc3 produces a familiar two-minor-piece structure",
+        "misconception": "Different move order need not mean a different evaluation",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "b1c3",
+              "g8f6",
+              "c1e3"
+            ],
+            "explanation": "Different move order need not mean a different evaluation. Compare the different move order or defender's choice with c1e3 g8f6 b1c3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-31",
+      "title": "Switch the rook file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Rb1 supports queenside b-pawn ideas while Rc1 seeks a different file. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "r5k1/ppp5/8/8/8/8/PPP5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "a8b8",
+        "b1c1"
+      ],
+      "explanation": "Rb1 supports queenside b-pawn ideas while Rc1 seeks a different file. In the recorded instructional line a1b1 a8b8 b1c1, ...Rb8 meets White's plan without conceding tactics. After that, Rc1 relocates the rook but the c7 pawn still blocks direct entry. Compare a1c1 a8c8 c1b1. Correction: A rook on an occupied file is not an immediate threat. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Rb8 meets White's plan without conceding tactics",
+      "continuationReason": "Rc1 relocates the rook but the c7 pawn still blocks direct entry",
+      "source": "authored",
+      "sourceLabel": "P96 · Evaluation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Rb1 supports queenside b-pawn ideas while Rc1 seeks a different file",
+        "defenderIdea": "...Rb8 meets White's plan without conceding tactics",
+        "continuation": "Rc1 relocates the rook but the c7 pawn still blocks direct entry",
+        "misconception": "A rook on an occupied file is not an immediate threat",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "a1c1",
+              "a8c8",
+              "c1b1"
+            ],
+            "explanation": "A rook on an occupied file is not an immediate threat. Compare the different move order or defender's choice with a1b1 a8b8 b1c1; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-32",
+      "title": "Compare the knight routes",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Nc4 attacks e5 whereas Nf1 aims toward another route. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "6k1/8/2np4/4p3/4P3/3P4/3N1P2/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2c4",
+      "principalVariation": [
+        "d2c4",
+        "g8h8",
+        "c4e3"
+      ],
+      "explanation": "Nc4 attacks e5 whereas Nf1 aims toward another route. In the recorded instructional line d2c4 g8h8 c4e3, ...Kh8 does not answer with a tactical concession. After that, Ne3 develops toward f5 and d5 while the center stays intact. Compare d2f1 g8h8 f1e3. Correction: Calling Nc4 a won pawn ignores Black's possible future defenses. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Kh8 does not answer with a tactical concession",
+      "continuationReason": "Ne3 develops toward f5 and d5 while the center stays intact",
+      "source": "authored",
+      "sourceLabel": "P96 · Evaluation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Nc4 attacks e5 whereas Nf1 aims toward another route",
+        "defenderIdea": "...Kh8 does not answer with a tactical concession",
+        "continuation": "Ne3 develops toward f5 and d5 while the center stays intact",
+        "misconception": "Calling Nc4 a won pawn ignores Black's possible future defenses",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "d2f1",
+              "g8h8",
+              "f1e3"
+            ],
+            "explanation": "Calling Nc4 a won pawn ignores Black's possible future defenses. Compare the different move order or defender's choice with d2c4 g8h8 c4e3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-33",
+      "title": "A long diagonal is not decisive",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Bd2 keeps the bishop mobile with a potential Ba5 route. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "2b3k1/1p6/4p3/3p4/3P4/4P3/5P2/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1d2",
+      "principalVariation": [
+        "c1d2",
+        "c8d7",
+        "d2a5"
+      ],
+      "explanation": "Bd2 keeps the bishop mobile with a potential Ba5 route. In the recorded instructional line c1d2 c8d7 d2a5, ...Bd7 develops Black's light-squared bishop. After that, Ba5 controls queenside squares without a tactical capture. Compare c1e3 c8d7 e3d2. Correction: The longest diagonal is not necessarily the strongest plan. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Bd7 develops Black's light-squared bishop",
+      "continuationReason": "Ba5 controls queenside squares without a tactical capture",
+      "source": "authored",
+      "sourceLabel": "P96 · Evaluation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Bd2 keeps the bishop mobile with a potential Ba5 route",
+        "defenderIdea": "...Bd7 develops Black's light-squared bishop",
+        "continuation": "Ba5 controls queenside squares without a tactical capture",
+        "misconception": "The longest diagonal is not necessarily the strongest plan",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "c1d2",
+              "c8d7",
+              "d2c3"
+            ],
+            "explanation": "Bd2 ...Bd7 Bc3 points along the c3–g7 diagonal, while the principal continuation Ba5 reaches the a5 diagonal. The e3 square is occupied by White's own pawn."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-34",
+      "title": "The bishop chooses its long route",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Be2 keeps Bf3 available while Bg2 targets other squares. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "5bk1/1pp5/3p4/8/8/3P4/1PP5/5BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1e2",
+      "principalVariation": [
+        "f1e2",
+        "f8e7",
+        "e2f3"
+      ],
+      "explanation": "Be2 keeps Bf3 available while Bg2 targets other squares. In the recorded instructional line f1e2 f8e7 e2f3, ...Be7 develops calmly and maintains flexibility. After that, Bf3 pressures central diagonals rather than a particular pawn. Compare f1g2 f8e7 g2d5. Correction: Bishop activity is not guaranteed by move count alone. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Be7 develops calmly and maintains flexibility",
+      "continuationReason": "Bf3 pressures central diagonals rather than a particular pawn",
+      "source": "authored",
+      "sourceLabel": "P96 · Evaluation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Be2 keeps Bf3 available while Bg2 targets other squares",
+        "defenderIdea": "...Be7 develops calmly and maintains flexibility",
+        "continuation": "Bf3 pressures central diagonals rather than a particular pawn",
+        "misconception": "Bishop activity is not guaranteed by move count alone",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f1g2",
+              "f8e7",
+              "g2d5"
+            ],
+            "explanation": "Bishop activity is not guaranteed by move count alone. Compare the different move order or defender's choice with f1e2 f8e7 e2f3; neither line is claimed unique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p96-35",
+      "title": "The pawn still blocks the e-file",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "prompt": "Re1 places a rook behind White's e4 pawn. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
+      "fen": "5rk1/5pp1/8/4p3/4P3/8/5PP1/5RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1e1",
+      "principalVariation": [
+        "f1e1",
+        "f8e8",
+        "e1e2"
+      ],
+      "explanation": "Re1 places a rook behind White's e4 pawn. In the recorded instructional line f1e1 f8e8 e1e2, ...Re8 answers with a rook behind Black's e5 pawn. After that, Re2 is a flexible lift but does not check the black king. Compare f1e1 f8e8 g1h1. Correction: An e-file rook cannot attack through its own pawn. This is a legal illustrative sequence, not engine-proven unique best play.",
+      "replyReason": "...Re8 answers with a rook behind Black's e5 pawn",
+      "continuationReason": "Re2 is a flexible lift but does not check the black king",
+      "source": "authored",
+      "sourceLabel": "P96 · Evaluation",
+      "difficulty": 4,
+      "defensiveStudy": {
+        "keyQuestion": "Re1 places a rook behind White's e4 pawn",
+        "defenderIdea": "...Re8 answers with a rook behind Black's e5 pawn",
+        "continuation": "Re2 is a flexible lift but does not check the black king",
+        "misconception": "An e-file rook cannot attack through its own pawn",
+        "reflection": "Recalculate both lines. Which pawn structure, square or defensive resource changes the resulting evaluation?",
+        "variations": [
+          {
+            "label": "Alternative plan",
+            "moves": [
+              "f1e1",
+              "f8e8",
+              "g1h1"
+            ],
+            "explanation": "An e-file rook cannot attack through its own pawn. Compare the different move order or defender's choice with f1e1 f8e8 e1e2; neither line is claimed unique."
+          }
+        ]
+      }
+    }
+  ]
+}
