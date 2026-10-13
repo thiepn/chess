@@ -8,6 +8,69 @@ import type {
   CalculationPosition,
 } from "./types";
 
+// P94 keeps its substantial original instructional corpus outside the JavaScript
+// bundle. It reuses the same positions, selection, scoring and mastery authority.
+let p94Positions: CalculationPosition[] = [];
+let p94Load: Promise<number> | undefined;
+let p94Attempted = false;
+
+function validP94Position(value: unknown): value is CalculationPosition {
+  if (!value || typeof value !== "object") return false;
+  const item = value as Partial<CalculationPosition>;
+  if (typeof item.id !== "string" || !item.id.startsWith("calc:p94-") ||
+    typeof item.fen !== "string" || typeof item.title !== "string" ||
+    typeof item.prompt !== "string" || typeof item.explanation !== "string" ||
+    typeof item.replyReason !== "string" || typeof item.continuationReason !== "string" ||
+    typeof item.sourceLabel !== "string" || item.source !== "authored" ||
+    (item.playerColor !== "w" && item.playerColor !== "b") ||
+    typeof item.bestMove !== "string" || !Array.isArray(item.skillIds) ||
+    !item.skillIds.includes("calculation.candidates") ||
+    !Array.isArray(item.principalVariation) ||
+    item.principalVariation.length !== 3 ||
+    item.bestMove !== item.principalVariation[0]) return false;
+  try {
+    const chess = new Chess(item.fen);
+    if (chess.turn() !== item.playerColor) return false;
+    for (const uci of item.principalVariation) {
+      if (typeof uci !== "string" || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(uci)) return false;
+      const move = chess.move({from:uci.slice(0,2),to:uci.slice(2,4),
+        promotion:uci.slice(4,5)||"q"});
+      if (!move || (move.promotion && move.promotion !== uci.slice(4,5))) return false;
+    }
+    return true;
+  } catch { return false; }
+}
+
+/** Idempotent static-content fetch; failures leave the original training library usable. */
+export function loadP94CalculationContent(): Promise<number> {
+  if (p94Positions.length) return Promise.resolve(p94Positions.length);
+  if (p94Load) return p94Load;
+  p94Attempted = true;
+  p94Load = fetch(`${import.meta.env.BASE_URL}data/calculation/p94-candidates-v1.json`)
+    .then(response => {
+      if (!response.ok) throw new Error("P94 calculation content unavailable");
+      return response.json() as Promise<unknown>;
+    })
+    .then(payload => {
+      if (!payload || typeof payload !== "object" || !("positions" in payload)) return 0;
+      const positions = (payload as { positions: unknown }).positions;
+      if (!Array.isArray(positions) || positions.length !== 40 ||
+        positions.some(position => !validP94Position(position))) return 0;
+      const ids = positions.map(position => (position as CalculationPosition).id);
+      const fens = positions.map(position => (position as CalculationPosition).fen);
+      if (new Set(ids).size !== 40 || new Set(fens).size !== 40) return 0;
+      p94Positions = positions as CalculationPosition[];
+      return p94Positions.length;
+    })
+    .catch(() => 0)
+    .finally(() => { p94Load = undefined; });
+  return p94Load;
+}
+
+if (typeof window !== "undefined" && typeof fetch === "function" && !p94Attempted) {
+  void loadP94CalculationContent();
+}
+
 const authoredPositions: CalculationPosition[] = [
   {
     id: "calc:fork-candidates",
@@ -253,6 +316,7 @@ export function calculationCatalog(
 ) {
   return [
     ...personalPositions(state),
+    ...p94Positions,
     ...authoredPositions,
   ];
 }
@@ -289,7 +353,7 @@ export function calculationPositionFor(
   }
 
   const authored =
-    authoredPositions
+    [...p94Positions, ...authoredPositions]
       .filter(
         (position) =>
           position.skillIds.includes(
@@ -346,7 +410,7 @@ export function resolveCalculationPosition(
 export function calculationCatalogIssues() {
   const issues: string[] = [];
 
-  for (const position of authoredPositions) {
+  for (const position of [...authoredPositions, ...p94Positions]) {
     let chess: Chess;
     try {
       chess = new Chess(position.fen);
