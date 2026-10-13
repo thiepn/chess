@@ -49,11 +49,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "a5a6",
-              "h8h7",
-              "a1a5"
+              "g1f1",
+              "c2c1",
+              "f1g2"
             ],
-            "explanation": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Compare this three-ply miscalculation with the correct reference. white b2 pawn remains a future passer or target"
+            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
           }
         ]
       },
@@ -112,11 +112,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "a5a6",
-              "h8h7",
-              "a1a5"
+              "g1f1",
+              "c2c1",
+              "f1g2"
             ],
-            "explanation": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Compare this three-ply miscalculation with the correct reference. black g7 pawn adds a second wing race"
+            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
           }
         ]
       },
@@ -175,11 +175,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "a5a6",
-              "h8h7",
-              "a1a5"
+              "g1f1",
+              "c2c1",
+              "f1g2"
             ],
-            "explanation": "Advancing a pawn without checking lateral rook attacks may squander a useful escort tempo. Compare this three-ply miscalculation with the correct reference. white d2 pawn provides a potential waiting move"
+            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
           }
         ]
       },
