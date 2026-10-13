@@ -306,7 +306,7 @@
       },
       "kingAttackStudy": {
         "theme": "Open a-file pressure",
-        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
         "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
@@ -388,7 +388,7 @@
       },
       "kingAttackStudy": {
         "theme": "Open a-file pressure",
-        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
         "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
@@ -470,7 +470,7 @@
       },
       "kingAttackStudy": {
         "theme": "Open a-file pressure",
-        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck.",
+        "attackingPrinciple": "An attacking rook must balance entry on the seventh rank with the need to stop a first-rank countercheck. In this exact position: Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8. The next defensive counterplan also changes the material evaluation: Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "defenderReply": "Black can run through f7 or h7. ...Re1+ is a resource when White moves its rook to a5 without first using the checking entry on a8.",
         "materialAndKingSafety": "Ra6 attacks along the sixth rank against a king on f6/g6; it is an attack line, not a forced checkmate sequence.",
         "badPlan": "A visually active Ra5 neglects the defender's ...Re1+ rook invasion. Both players can use open files.",
