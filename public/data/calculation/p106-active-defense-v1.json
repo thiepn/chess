@@ -1,0 +1,1267 @@
+{
+  "version": 1,
+  "phase": "P106",
+  "section": "Interpositions, rook threats and forcing material defense",
+  "positions": [
+    {
+      "id": "calc:p106-01",
+      "title": "Do not capture a king-defended block — White outside pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Protected interposition and material triage",
+      "difficulty": 5,
+      "fen": "6k1/5r2/8/8/8/8/P7/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Context: The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. In this position: The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition.",
+      "continuationReason": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Protected interposition and material triage. Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Worked five-ply defensive reference: e1e8 f7f8 e8e6 g8h8 e6f6. Real five-ply opponent/defender alternative: e1e8 f7f8 e8d8 g8h7 d8d5. Plausible failed candidate: e1e8 f7f8 e8f8. Attacker's reply: ...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Endpoint position: The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. Misconception-specific repair: A forcing rook capture is not a material win if the defending king can recapture the queen. Difference of this distinct material variant: The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material?",
+        "defenderIdea": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "continuation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Correction: A forcing rook capture is not a material win if the defending king can recapture the queen. The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Actual alternative: e1e8 f7f8 e8d8 g8h7 d8d5. The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. With the added material, The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "A forcing rook capture is not a material win if the defending king can recapture the queen. The line e1e8 f7f8 e8f8 is a legal but instructional warning. The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Protected interposition and material triage",
+        "principle": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss.",
+        "attackerThreat": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "modelLine": "e1e8 f7f8 e8e6 g8h8 e6f6",
+        "opponentResistance": "e1e8 f7f8 e8d8 g8h7 d8d5",
+        "failedPlan": "e1e8 f7f8 e8f8",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "context": "The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition.",
+        "practicalEvaluation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. The white a2 pawn is an outside conversion resource only if the queen survives the tactical rook interposition.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-02",
+      "title": "Do not capture a king-defended block — A target near the king",
+      "source": "authored",
+      "sourceLabel": "P106 · Protected interposition and material triage",
+      "difficulty": 5,
+      "fen": "6k1/5r2/8/8/8/8/1P6/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Context: White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. In this position: White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource.",
+      "continuationReason": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Protected interposition and material triage. Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Worked five-ply defensive reference: e1e8 f7f8 e8e6 g8h8 e6f6. Real five-ply opponent/defender alternative: e1e8 f7f8 e8d8 g8h7 d8d5. Plausible failed candidate: e1e8 f7f8 e8f8. Attacker's reply: ...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Endpoint position: The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. Misconception-specific repair: A forcing rook capture is not a material win if the defending king can recapture the queen. Difference of this distinct material variant: White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material?",
+        "defenderIdea": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "continuation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Correction: A forcing rook capture is not a material win if the defending king can recapture the queen. White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Actual alternative: e1e8 f7f8 e8d8 g8h7 d8d5. The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. With the added material, White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "A forcing rook capture is not a material win if the defending king can recapture the queen. The line e1e8 f7f8 e8f8 is a legal but instructional warning. White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Protected interposition and material triage",
+        "principle": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss.",
+        "attackerThreat": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "modelLine": "e1e8 f7f8 e8e6 g8h8 e6f6",
+        "opponentResistance": "e1e8 f7f8 e8d8 g8h7 d8d5",
+        "failedPlan": "e1e8 f7f8 e8f8",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "context": "White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource.",
+        "practicalEvaluation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. White's b2 pawn provides future shelter but does not prevent Black's protected ...Rf8 resource.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-03",
+      "title": "Do not capture a king-defended block — Black central reserve",
+      "source": "authored",
+      "sourceLabel": "P106 · Protected interposition and material triage",
+      "difficulty": 5,
+      "fen": "6k1/2p2r2/8/8/8/8/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "f7f8",
+        "e8e6",
+        "g8h8",
+        "e6f6"
+      ],
+      "prompt": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Context: Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. In this position: Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8.",
+      "continuationReason": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Protected interposition and material triage. Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material? Worked five-ply defensive reference: e1e8 f7f8 e8e6 g8h8 e6f6. Real five-ply opponent/defender alternative: e1e8 f7f8 e8d8 g8h7 d8d5. Plausible failed candidate: e1e8 f7f8 e8f8. Attacker's reply: ...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Endpoint position: The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. Misconception-specific repair: A forcing rook capture is not a material win if the defending king can recapture the queen. Difference of this distinct material variant: Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's rook can interpose on f8 against Qe8+. Which continuation preserves the queen, and why does taking the block surrender too much material?",
+        "defenderIdea": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "continuation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Correction: A forcing rook capture is not a material win if the defending king can recapture the queen. Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8d8",
+              "g8h7",
+              "d8d5"
+            ],
+            "explanation": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8. Actual alternative: e1e8 f7f8 e8d8 g8h7 d8d5. The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook. With the added material, Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "e1e8",
+              "f7f8",
+              "e8f8"
+            ],
+            "explanation": "A forcing rook capture is not a material win if the defending king can recapture the queen. The line e1e8 f7f8 e8f8 is a legal but instructional warning. Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Protected interposition and material triage",
+        "principle": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss.",
+        "attackerThreat": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+        "modelLine": "e1e8 f7f8 e8e6 g8h8 e6f6",
+        "opponentResistance": "e1e8 f7f8 e8d8 g8h7 d8d5",
+        "failedPlan": "e1e8 f7f8 e8f8",
+        "misconception": "A forcing rook capture is not a material win if the defending king can recapture the queen.",
+        "context": "Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8.",
+        "practicalEvaluation": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Rf8 both stops the back-rank check and invites an expensive queen capture; Black's king guards f8, so 3.Qxf8+? has ...Kxf8.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "The queen escapes to e6 and f6 while the rook remains on f8. White has not proved a mate and must account for Black's surviving rook.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Calculate the protected interposition, name the recapture and choose active but safe defense over a queen-for-rook loss. Black's c7 pawn may supply a later counterpasser if White wastes the queen against f8.",
+            "repair": "A forcing rook capture is not a material win if the defending king can recapture the queen."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-04",
+      "title": "Check before the defender invades e1 — White a-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Neutralizing rook threats with forcing tempo",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/P7/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e7e8",
+        "d8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Context: A future outside passer does not neutralize ...Re1+; the queen needs a tempo now. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. In this position: A future outside passer does not neutralize ...Re1+; the queen needs a tempo now.",
+      "continuationReason": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Neutralizing rook threats with forcing tempo. Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Worked five-ply defensive reference: d1d8 e7e8 d8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: d1d8 g8f7 d8d5 f7g6 d5g5. Plausible failed candidate: d1d4 e7e1 g1h2. Attacker's reply: ...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Endpoint position: White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. Misconception-specific repair: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. Difference of this distinct material variant: A future outside passer does not neutralize ...Re1+; the queen needs a tempo now. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight.",
+        "defenderIdea": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "continuation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. Correction: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. A future outside passer does not neutralize ...Re1+; the queen needs a tempo now.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d5",
+              "f7g6",
+              "d5g5"
+            ],
+            "explanation": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Actual alternative: d1d8 g8f7 d8d5 f7g6 d5g5. White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. With the added material, A future outside passer does not neutralize ...Re1+; the queen needs a tempo now."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "d1d4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. The line d1d4 e7e1 g1h2 is a legal but instructional warning. A future outside passer does not neutralize ...Re1+; the queen needs a tempo now."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Neutralizing rook threats with forcing tempo",
+        "principle": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade.",
+        "attackerThreat": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "modelLine": "d1d8 e7e8 d8e8 g8h7 e8e4",
+        "opponentResistance": "d1d8 g8f7 d8d5 f7g6 d5g5",
+        "failedPlan": "d1d4 e7e1 g1h2",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "context": "A future outside passer does not neutralize ...Re1+; the queen needs a tempo now.",
+        "practicalEvaluation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. A future outside passer does not neutralize ...Re1+; the queen needs a tempo now.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-05",
+      "title": "Check before the defender invades e1 — White b-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Neutralizing rook threats with forcing tempo",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/1P6/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e7e8",
+        "d8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Context: The queen should preserve protection of the king and keep the b-pawn after the rook exchange. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. In this position: The queen should preserve protection of the king and keep the b-pawn after the rook exchange.",
+      "continuationReason": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Neutralizing rook threats with forcing tempo. Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Worked five-ply defensive reference: d1d8 e7e8 d8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: d1d8 g8f7 d8d5 f7g6 d5g5. Plausible failed candidate: d1d4 e7e1 g1h2. Attacker's reply: ...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Endpoint position: White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. Misconception-specific repair: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. Difference of this distinct material variant: The queen should preserve protection of the king and keep the b-pawn after the rook exchange. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight.",
+        "defenderIdea": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "continuation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. Correction: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. The queen should preserve protection of the king and keep the b-pawn after the rook exchange.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d5",
+              "f7g6",
+              "d5g5"
+            ],
+            "explanation": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Actual alternative: d1d8 g8f7 d8d5 f7g6 d5g5. White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. With the added material, The queen should preserve protection of the king and keep the b-pawn after the rook exchange."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "d1d4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. The line d1d4 e7e1 g1h2 is a legal but instructional warning. The queen should preserve protection of the king and keep the b-pawn after the rook exchange."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Neutralizing rook threats with forcing tempo",
+        "principle": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade.",
+        "attackerThreat": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "modelLine": "d1d8 e7e8 d8e8 g8h7 e8e4",
+        "opponentResistance": "d1d8 g8f7 d8d5 f7g6 d5g5",
+        "failedPlan": "d1d4 e7e1 g1h2",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "context": "The queen should preserve protection of the king and keep the b-pawn after the rook exchange.",
+        "practicalEvaluation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. The queen should preserve protection of the king and keep the b-pawn after the rook exchange.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-06",
+      "title": "Check before the defender invades e1 — Black outside pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Neutralizing rook threats with forcing tempo",
+      "difficulty": 5,
+      "fen": "6k1/p3r3/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e7e8",
+        "d8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Context: The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. In this position: The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange.",
+      "continuationReason": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Neutralizing rook threats with forcing tempo. Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight. Worked five-ply defensive reference: d1d8 e7e8 d8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: d1d8 g8f7 d8d5 f7g6 d5g5. Plausible failed candidate: d1d4 e7e1 g1h2. Attacker's reply: ...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Endpoint position: White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. Misconception-specific repair: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. Difference of this distinct material variant: The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on e7 can invade e1 when White plays a quiet queen lift. Use an eighth-rank check to force a reaction and analyze both interposition and king flight.",
+        "defenderIdea": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "continuation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. Correction: Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d8",
+              "g8f7",
+              "d8d5",
+              "f7g6",
+              "d5g5"
+            ],
+            "explanation": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king. Actual alternative: d1d8 g8f7 d8d5 f7g6 d5g5. White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate. With the added material, The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "d1d4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay. The line d1d4 e7e1 g1h2 is a legal but instructional warning. The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Neutralizing rook threats with forcing tempo",
+        "principle": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade.",
+        "attackerThreat": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+        "modelLine": "d1d8 e7e8 d8e8 g8h7 e8e4",
+        "opponentResistance": "d1d8 g8f7 d8d5 f7g6 d5g5",
+        "failedPlan": "d1d4 e7e1 g1h2",
+        "misconception": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay.",
+        "context": "The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange.",
+        "practicalEvaluation": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 is a legal block which Qxe8+ captures; ...Kf7 is a separate king escape. Without a check ...Re1+ hits the white king.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White can capture the blocking rook on e8 or maintain queen checking distance, but neither five-ply chase is an established forced mate.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Active defense creates a forcing obligation for the attacker; check the king before it is the opponent's turn to invade. The black a7 pawn survives the queen maneuver and gives Black practical resources after an exchange.",
+            "repair": "Ignoring ...Re1+ because a quiet queen move looks active neglects the opponent's first-rank counterplay."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-07",
+      "title": "A checking queen forces ...Re8 before ...Re1 — White a-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposition on the c-file checking lane",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/P7/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "e7e8",
+        "c8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Context: White's extra a2 pawn is not a defense against the immediate back-rank countercheck. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. In this position: White's extra a2 pawn is not a defense against the immediate back-rank countercheck.",
+      "continuationReason": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Interposition on the c-file checking lane. Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Worked five-ply defensive reference: c1c8 e7e8 c8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: c1c8 g8f7 c8c4 f7g6 c4g4. Plausible failed candidate: c1c4 e7e1 g1h2. Attacker's reply: ...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Endpoint position: White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. Misconception-specific repair: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. Difference of this distinct material variant: White's extra a2 pawn is not a defense against the immediate back-rank countercheck. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative.",
+        "defenderIdea": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "continuation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Correction: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. White's extra a2 pawn is not a defense against the immediate back-rank countercheck.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "c1c8",
+              "g8f7",
+              "c8c4",
+              "f7g6",
+              "c4g4"
+            ],
+            "explanation": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Actual alternative: c1c8 g8f7 c8c4 f7g6 c4g4. White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. With the added material, White's extra a2 pawn is not a defense against the immediate back-rank countercheck."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "c1c4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. The line c1c4 e7e1 g1h2 is a legal but instructional warning. White's extra a2 pawn is not a defense against the immediate back-rank countercheck."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposition on the c-file checking lane",
+        "principle": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation.",
+        "attackerThreat": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "modelLine": "c1c8 e7e8 c8e8 g8h7 e8e4",
+        "opponentResistance": "c1c8 g8f7 c8c4 f7g6 c4g4",
+        "failedPlan": "c1c4 e7e1 g1h2",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "context": "White's extra a2 pawn is not a defense against the immediate back-rank countercheck.",
+        "practicalEvaluation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. White's extra a2 pawn is not a defense against the immediate back-rank countercheck.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-08",
+      "title": "A checking queen forces ...Re8 before ...Re1 — White b-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposition on the c-file checking lane",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/1P6/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "e7e8",
+        "c8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Context: The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. In this position: The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately.",
+      "continuationReason": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Interposition on the c-file checking lane. Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Worked five-ply defensive reference: c1c8 e7e8 c8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: c1c8 g8f7 c8c4 f7g6 c4g4. Plausible failed candidate: c1c4 e7e1 g1h2. Attacker's reply: ...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Endpoint position: White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. Misconception-specific repair: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. Difference of this distinct material variant: The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative.",
+        "defenderIdea": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "continuation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Correction: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "c1c8",
+              "g8f7",
+              "c8c4",
+              "f7g6",
+              "c4g4"
+            ],
+            "explanation": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Actual alternative: c1c8 g8f7 c8c4 f7g6 c4g4. White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. With the added material, The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "c1c4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. The line c1c4 e7e1 g1h2 is a legal but instructional warning. The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposition on the c-file checking lane",
+        "principle": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation.",
+        "attackerThreat": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "modelLine": "c1c8 e7e8 c8e8 g8h7 e8e4",
+        "opponentResistance": "c1c8 g8f7 c8c4 f7g6 c4g4",
+        "failedPlan": "c1c4 e7e1 g1h2",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "context": "The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately.",
+        "practicalEvaluation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. The b2 pawn is a later pawn-ending reserve; White still must respond to ...Re1+ immediately.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-09",
+      "title": "A checking queen forces ...Re8 before ...Re1 — Black a-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposition on the c-file checking lane",
+      "difficulty": 5,
+      "fen": "6k1/p3r3/8/8/8/8/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "e7e8",
+        "c8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Context: Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. In this position: Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay.",
+      "continuationReason": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Interposition on the c-file checking lane. Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative. Worked five-ply defensive reference: c1c8 e7e8 c8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: c1c8 g8f7 c8c4 f7g6 c4g4. Plausible failed candidate: c1c4 e7e1 g1h2. Attacker's reply: ...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Endpoint position: White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. Misconception-specific repair: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. Difference of this distinct material variant: Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's e7 rook threatens first-rank counterplay. White can switch its queen from c1 to c8 with check, provoking ...Re8 or a king flight. Calculate both and the false quiet alternative.",
+        "defenderIdea": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "continuation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Correction: An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "c1c8",
+              "g8f7",
+              "c8c4",
+              "f7g6",
+              "c4g4"
+            ],
+            "explanation": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands. Actual alternative: c1c8 g8f7 c8c4 f7g6 c4g4. White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established. With the added material, Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "c1c4",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check. The line c1c4 e7e1 g1h2 is a legal but instructional warning. Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposition on the c-file checking lane",
+        "principle": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation.",
+        "attackerThreat": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+        "modelLine": "c1c8 e7e8 c8e8 g8h7 e8e4",
+        "opponentResistance": "c1c8 g8f7 c8c4 f7g6 c4g4",
+        "failedPlan": "c1c4 e7e1 g1h2",
+        "misconception": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check.",
+        "context": "Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay.",
+        "practicalEvaluation": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "...Re8 shields g8 on the back rank while ...Kf7 leaves Black's rook active. ...Re1+ punishes 1.Qc4? if White allows the initiative to change hands.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White captures the blocking rook after Qc8+ ...Re8 or keeps checking from g4. The king has legal escapes, so no automatic mate is established.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Distinguish the value of an interposing rook from the danger of an unchecked rook invasion and plan an active defensive continuation. Black has an outside a7 pawn, so even exchanging its rook leaves long-term counterplay.",
+            "repair": "An apparently useful queen relocation that ignores ...Re1+ is worse than a genuinely forcing check."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-10",
+      "title": "Queen on b1 defends by making the rook respond — White a-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · The b-file checking shield",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/P7/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "e7e8",
+        "b8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Context: White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. In this position: White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats.",
+      "continuationReason": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — The b-file checking shield. Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Worked five-ply defensive reference: b1b8 e7e8 b8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Plausible failed candidate: b1b5 e7e1 g1h2. Attacker's reply: The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Endpoint position: Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. Misconception-specific repair: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. Difference of this distinct material variant: White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares.",
+        "defenderIdea": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "continuation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. Correction: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "b1b8",
+              "g8f7",
+              "b8b3",
+              "f7g6",
+              "b3g3"
+            ],
+            "explanation": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Actual alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. With the added material, White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "b1b5",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. The line b1b5 e7e1 g1h2 is a legal but instructional warning. White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "The b-file checking shield",
+        "principle": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift.",
+        "attackerThreat": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "modelLine": "b1b8 e7e8 b8e8 g8h7 e8e4",
+        "opponentResistance": "b1b8 g8f7 b8b3 f7g6 b3g3",
+        "failedPlan": "b1b5 e7e1 g1h2",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "context": "White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats.",
+        "practicalEvaluation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. White's a-pawn could decide a technical ending, but only after the queen has addressed immediate rook threats.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-11",
+      "title": "Queen on b1 defends by making the rook respond — White c-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · The b-file checking shield",
+      "difficulty": 5,
+      "fen": "6k1/4r3/8/8/8/8/2P5/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "e7e8",
+        "b8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Context: The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. In this position: The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks.",
+      "continuationReason": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — The b-file checking shield. Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Worked five-ply defensive reference: b1b8 e7e8 b8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Plausible failed candidate: b1b5 e7e1 g1h2. Attacker's reply: The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Endpoint position: Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. Misconception-specific repair: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. Difference of this distinct material variant: The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares.",
+        "defenderIdea": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "continuation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. Correction: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "b1b8",
+              "g8f7",
+              "b8b3",
+              "f7g6",
+              "b3g3"
+            ],
+            "explanation": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Actual alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. With the added material, The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "b1b5",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. The line b1b5 e7e1 g1h2 is a legal but instructional warning. The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "The b-file checking shield",
+        "principle": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift.",
+        "attackerThreat": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "modelLine": "b1b8 e7e8 b8e8 g8h7 e8e4",
+        "opponentResistance": "b1b8 g8f7 b8b3 f7g6 b3g3",
+        "failedPlan": "b1b5 e7e1 g1h2",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "context": "The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks.",
+        "practicalEvaluation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. The c2 pawn is a future king-shelter asset and does not obstruct White's b-file queen checks.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-12",
+      "title": "Queen on b1 defends by making the rook respond — Black a-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · The b-file checking shield",
+      "difficulty": 5,
+      "fen": "6k1/p3r3/8/8/8/8/8/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "e7e8",
+        "b8e8",
+        "g8h7",
+        "e8e4"
+      ],
+      "prompt": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Context: The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. In this position: The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route.",
+      "continuationReason": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — The b-file checking shield. Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares. Worked five-ply defensive reference: b1b8 e7e8 b8e8 g8h7 e8e4. Real five-ply opponent/defender alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Plausible failed candidate: b1b5 e7e1 g1h2. Attacker's reply: The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Endpoint position: Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. Misconception-specific repair: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. Difference of this distinct material variant: The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The defending queen on b1 can check the enemy king before the active rook enters e1. Verify ...Re8, Qxe8+, and the alternative ...Kf7 with accurate checking squares.",
+        "defenderIdea": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "continuation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. Correction: A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "b1b8",
+              "g8f7",
+              "b8b3",
+              "f7g6",
+              "b3g3"
+            ],
+            "explanation": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check. Actual alternative: b1b8 g8f7 b8b3 f7g6 b3g3. Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance. With the added material, The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "b1b5",
+              "e7e1",
+              "g1h2"
+            ],
+            "explanation": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king. The line b1b5 e7e1 g1h2 is a legal but instructional warning. The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "The b-file checking shield",
+        "principle": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift.",
+        "attackerThreat": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+        "modelLine": "b1b8 e7e8 b8e8 g8h7 e8e4",
+        "opponentResistance": "b1b8 g8f7 b8b3 f7g6 b3g3",
+        "failedPlan": "b1b5 e7e1 g1h2",
+        "misconception": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king.",
+        "context": "The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route.",
+        "practicalEvaluation": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "The opponent can interpose its e7 rook on e8, escape with the king, or create ...Re1+ when a quiet fifth-rank queen move fails to check.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "Qxe8+ gains the defending rook but leaves the king mobile; Qg3+ in the alternative keeps checking distance.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Find the move that makes the attacker spend a tempo on defense, and compare it with an unsafe positional queen lift. The defender has a distant a-pawn that survives exchanges; assess the counterpasser after choosing the checking route.",
+            "repair": "A queen moved to b5 without an immediate forcing threat cannot disregard ...Re1+ against its own king."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-13",
+      "title": "Capture the invasive rook before the king move — White outside pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Material-first active rook defense",
+      "difficulty": 5,
+      "fen": "7k/3r4/8/8/8/8/P7/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "h8g8",
+        "d7d8",
+        "g8f7",
+        "d8d7"
+      ],
+      "prompt": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Context: White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. In this position: White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first.",
+      "continuationReason": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Material-first active rook defense. Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Worked five-ply defensive reference: d1d7 h8g8 d7d8 g8f7 d8d7. Real five-ply opponent/defender alternative: d1d7 h8g8 d7d6 g8f7 d6d7. Plausible failed candidate: g1f1 d7d1 f1f2. Attacker's reply: After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Endpoint position: White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. Misconception-specific repair: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. Difference of this distinct material variant: White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king.",
+        "defenderIdea": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "continuation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. Correction: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d7",
+              "h8g8",
+              "d7d6",
+              "g8f7",
+              "d6d7"
+            ],
+            "explanation": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Actual alternative: d1d7 h8g8 d7d6 g8f7 d6d7. White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. With the added material, White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "g1f1",
+              "d7d1",
+              "f1f2"
+            ],
+            "explanation": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. The line g1f1 d7d1 f1f2 is a legal but instructional warning. White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Material-first active rook defense",
+        "principle": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture.",
+        "attackerThreat": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "modelLine": "d1d7 h8g8 d7d8 g8f7 d8d7",
+        "opponentResistance": "d1d7 h8g8 d7d6 g8f7 d6d7",
+        "failedPlan": "g1f1 d7d1 f1f2",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "context": "White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first.",
+        "practicalEvaluation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. White has an a2 pawn for the ensuing rook endgame; capturing the invader still comes first.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-14",
+      "title": "Capture the invasive rook before the king move — White b-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Material-first active rook defense",
+      "difficulty": 5,
+      "fen": "7k/3r4/8/8/8/8/1P6/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "h8g8",
+        "d7d8",
+        "g8f7",
+        "d8d7"
+      ],
+      "prompt": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Context: The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. In this position: The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately.",
+      "continuationReason": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Material-first active rook defense. Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Worked five-ply defensive reference: d1d7 h8g8 d7d8 g8f7 d8d7. Real five-ply opponent/defender alternative: d1d7 h8g8 d7d6 g8f7 d6d7. Plausible failed candidate: g1f1 d7d1 f1f2. Attacker's reply: After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Endpoint position: White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. Misconception-specific repair: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. Difference of this distinct material variant: The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king.",
+        "defenderIdea": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "continuation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. Correction: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d7",
+              "h8g8",
+              "d7d6",
+              "g8f7",
+              "d6d7"
+            ],
+            "explanation": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Actual alternative: d1d7 h8g8 d7d6 g8f7 d6d7. White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. With the added material, The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "g1f1",
+              "d7d1",
+              "f1f2"
+            ],
+            "explanation": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. The line g1f1 d7d1 f1f2 is a legal but instructional warning. The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Material-first active rook defense",
+        "principle": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture.",
+        "attackerThreat": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "modelLine": "d1d7 h8g8 d7d8 g8f7 d8d7",
+        "opponentResistance": "d1d7 h8g8 d7d6 g8f7 d6d7",
+        "failedPlan": "g1f1 d7d1 f1f2",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "context": "The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately.",
+        "practicalEvaluation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. The b2 pawn matters after exchanging rooks, not when Black can win the rook on d1 immediately.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-15",
+      "title": "Capture the invasive rook before the king move — Black h-pawn",
+      "source": "authored",
+      "sourceLabel": "P106 · Material-first active rook defense",
+      "difficulty": 5,
+      "fen": "7k/3r3p/8/8/8/8/8/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "h8g8",
+        "d7d8",
+        "g8f7",
+        "d8d7"
+      ],
+      "prompt": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Context: Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races. First find Black's strongest threat, identify a safe defensive response, and calculate five plies. Assess material after each capture rather than awarding points for a visually forcing move.",
+      "replyReason": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. In this position: Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races.",
+      "continuationReason": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. State whether White solved the immediate tactical problem and name the next non-cooperative defender resource.",
+      "explanation": "Original defensive scenario — Material-first active rook defense. Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king. Worked five-ply defensive reference: d1d7 h8g8 d7d8 g8f7 d8d7. Real five-ply opponent/defender alternative: d1d7 h8g8 d7d6 g8f7 d6d7. Plausible failed candidate: g1f1 d7d1 f1f2. Attacker's reply: After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Endpoint position: White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. Misconception-specific repair: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. Difference of this distinct material variant: Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races. Defending successfully is not the same as proving a mate, forced draw, or unique best engine move. Record the material balance and all safe king flights after the sequence.",
+      "defensiveStudy": {
+        "keyQuestion": "The black rook on d7 looks active and can take the white rook on d1 if White plays an idle king move. Calculate Rxd7 and the defender's king flights before improving the king.",
+        "defenderIdea": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "continuation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "reflection": "Independent board recall: Reconstruct the attacker's immediate idea, then replay the forcing defense and show the strongest attacker reply. Which defender is overloaded, which king-square escape remains and how does the added pawn alter conversion? Model: Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. Correction: King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races.",
+        "variations": [
+          {
+            "label": "Opponent resistance and route comparison",
+            "moves": [
+              "d1d7",
+              "h8g8",
+              "d7d6",
+              "g8f7",
+              "d6d7"
+            ],
+            "explanation": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook. Actual alternative: d1d7 h8g8 d7d6 g8f7 d6d7. White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion. With the added material, Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races."
+          },
+          {
+            "label": "Misleading passive defense",
+            "moves": [
+              "g1f1",
+              "d7d1",
+              "f1f2"
+            ],
+            "explanation": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook. The line g1f1 d7d1 f1f2 is a legal but instructional warning. Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Material-first active rook defense",
+        "principle": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture.",
+        "attackerThreat": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+        "modelLine": "d1d7 h8g8 d7d8 g8f7 d8d7",
+        "opponentResistance": "d1d7 h8g8 d7d6 g8f7 d6d7",
+        "failedPlan": "g1f1 d7d1 f1f2",
+        "misconception": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook.",
+        "context": "Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races.",
+        "practicalEvaluation": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify the immediate attacker threat and choose a forcing or prophylactic defense.",
+            "answer": "After Rxd7, Black can retreat its king to g8, while 1.Kf1? allows ...Rxd1 and leaves White without its active rook.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Reconstruct the five-ply continuation and count the surviving material.",
+            "answer": "White retains a rook after winning the d7 rook; the black king can still escape and Black's remaining pawns decide technical conversion.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          },
+          {
+            "prompt": "Contrast the failed candidate with the opponent's independent defensive resource.",
+            "answer": "Count material before choosing a quiet defending move and select the precise rook check that does not allow a recapture. Black retains an outside h7 pawn, so even Rxd7 does not finish the conversion; remain alert to pawn races.",
+            "repair": "King improvement before an available rook capture is not prophylaxis: it permits ...Rxd1 and loses a whole rook."
+          }
+        ]
+      }
+    }
+  ]
+}
