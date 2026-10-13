@@ -27,13 +27,13 @@
       "prompt": "White's king must choose a flank before advancing e3. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "Black can mirror with ...Kd6 or seek ...Kd5; the reply controls future king entry. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After e4, the king must still escort the pawn past the defender.",
-      "explanation": "Choose the king's route. White's king must choose a flank before advancing e3. Reference continuation: e4d4 e6d6 e3e4. Defendant alternative: e4f4 e6d5 e3e4. Black can mirror with ...Kd6 or seek ...Kd5; the reply controls future king entry. Assessment at this instructional endpoint: After e4, the king must still escort the pawn past the defender. Specific common error: Pushing a pawn onto your own king square is illegal; first move the king. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Choose the king's route. White's king must choose a flank before advancing e3. Reference continuation: e4d4 e6d6 e3e4. Defendant alternative: e4f4 e6d5 e3e4. Black can mirror with ...Kd6 or seek ...Kd5; the reply controls future king entry. Assessment at this instructional endpoint: After e4, the king must still escort the pawn past the defender. Specific common error: Pushing a pawn onto your own king square is illegal; first move the king. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "White's king must choose a flank before advancing e3.",
         "defenderIdea": "Black can mirror with ...Kd6 or seek ...Kd5; the reply controls future king entry.",
         "continuation": "After e4, the king must still escort the pawn past the defender.",
         "misconception": "Pushing a pawn onto your own king square is illegal; first move the king.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After e4, the king must still escort the pawn past the defender.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After e4, the king must still escort the pawn past the defender. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -53,7 +53,8 @@
         "principle": "White's king must choose a flank before advancing e3.",
         "defensivePlan": "Black can mirror with ...Kd6 or seek ...Kd5; the reply controls future king entry.",
         "endpoint": "After e4, the king must still escort the pawn past the defender.",
-        "commonError": "Pushing a pawn onto your own king square is illegal; first move the king."
+        "commonError": "Pushing a pawn onto your own king square is illegal; first move the king.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -78,13 +79,13 @@
       "prompt": "King first, pawn second: use c4 to leave the e-pawn's path clear. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 and ...Kc6 take different defensive routes and must not be treated as equivalent. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The e4 pawn still requires king support; the sample line does not establish a forced win.",
-      "explanation": "Keep the pawn behind the king. King first, pawn second: use c4 to leave the e-pawn's path clear. Reference continuation: d4c4 d6e6 e3e4. Defendant alternative: d4c4 d6c6 e3e4. ...Ke6 and ...Kc6 take different defensive routes and must not be treated as equivalent. Assessment at this instructional endpoint: The e4 pawn still requires king support; the sample line does not establish a forced win. Specific common error: Do not confuse capturing key squares with already having promoted. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Keep the pawn behind the king. King first, pawn second: use c4 to leave the e-pawn's path clear. Reference continuation: d4c4 d6e6 e3e4. Defendant alternative: d4c4 d6c6 e3e4. ...Ke6 and ...Kc6 take different defensive routes and must not be treated as equivalent. Assessment at this instructional endpoint: The e4 pawn still requires king support; the sample line does not establish a forced win. Specific common error: Do not confuse capturing key squares with already having promoted. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "King first, pawn second: use c4 to leave the e-pawn's path clear.",
         "defenderIdea": "...Ke6 and ...Kc6 take different defensive routes and must not be treated as equivalent.",
         "continuation": "The e4 pawn still requires king support; the sample line does not establish a forced win.",
         "misconception": "Do not confuse capturing key squares with already having promoted.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The e4 pawn still requires king support; the sample line does not establish a forced win.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The e4 pawn still requires king support; the sample line does not establish a forced win. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -104,7 +105,8 @@
         "principle": "King first, pawn second: use c4 to leave the e-pawn's path clear.",
         "defensivePlan": "...Ke6 and ...Kc6 take different defensive routes and must not be treated as equivalent.",
         "endpoint": "The e4 pawn still requires king support; the sample line does not establish a forced win.",
-        "commonError": "Do not confuse capturing key squares with already having promoted."
+        "commonError": "Do not confuse capturing key squares with already having promoted.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -129,13 +131,13 @@
       "prompt": "King route and pawn timing determine whether the d-pawn remains supported. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 faces the pawn from the front and changes who has opposition. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn reaches d4; black king can still attempt an approach.",
-      "explanation": "Approach from the queenside. King route and pawn timing determine whether the d-pawn remains supported. Reference continuation: c4b5 e6d6 d3d4. Defendant alternative: d3d4 e6d6 c4b5. ...Kd6 faces the pawn from the front and changes who has opposition. Assessment at this instructional endpoint: The pawn reaches d4; black king can still attempt an approach. Specific common error: A quick push is not intrinsically bad or good without checking the king's squares. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Approach from the queenside. King route and pawn timing determine whether the d-pawn remains supported. Reference continuation: c4b5 e6d6 d3d4. Defendant alternative: d3d4 e6d6 c4b5. ...Kd6 faces the pawn from the front and changes who has opposition. Assessment at this instructional endpoint: The pawn reaches d4; black king can still attempt an approach. Specific common error: A quick push is not intrinsically bad or good without checking the king's squares. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "King route and pawn timing determine whether the d-pawn remains supported.",
         "defenderIdea": "...Kd6 faces the pawn from the front and changes who has opposition.",
         "continuation": "The pawn reaches d4; black king can still attempt an approach.",
         "misconception": "A quick push is not intrinsically bad or good without checking the king's squares.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn reaches d4; black king can still attempt an approach.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn reaches d4; black king can still attempt an approach. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -155,7 +157,8 @@
         "principle": "King route and pawn timing determine whether the d-pawn remains supported.",
         "defensivePlan": "...Kd6 faces the pawn from the front and changes who has opposition.",
         "endpoint": "The pawn reaches d4; black king can still attempt an approach.",
-        "commonError": "A quick push is not intrinsically bad or good without checking the king's squares."
+        "commonError": "A quick push is not intrinsically bad or good without checking the king's squares.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -180,13 +183,13 @@
       "prompt": "Choose f4 so the d-pawn can move to d4 unobstructed. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 heads toward d4 while White tries to reserve key squares. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After d4 the next test is whether the king can reach e5 or c5.",
-      "explanation": "Support d4 without blocking it. Choose f4 so the d-pawn can move to d4 unobstructed. Reference continuation: e4f4 e7d6 d3d4. Defendant alternative: e4d5 e7d7 d3d4. ...Kd6 heads toward d4 while White tries to reserve key squares. Assessment at this instructional endpoint: After d4 the next test is whether the king can reach e5 or c5. Specific common error: Moving the king to d4 and then asking the pawn to advance onto d4 cannot work. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Support d4 without blocking it. Choose f4 so the d-pawn can move to d4 unobstructed. Reference continuation: e4f4 e7d6 d3d4. Defendant alternative: e4d5 e7d7 d3d4. ...Kd6 heads toward d4 while White tries to reserve key squares. Assessment at this instructional endpoint: After d4 the next test is whether the king can reach e5 or c5. Specific common error: Moving the king to d4 and then asking the pawn to advance onto d4 cannot work. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "Choose f4 so the d-pawn can move to d4 unobstructed.",
         "defenderIdea": "...Kd6 heads toward d4 while White tries to reserve key squares.",
         "continuation": "After d4 the next test is whether the king can reach e5 or c5.",
         "misconception": "Moving the king to d4 and then asking the pawn to advance onto d4 cannot work.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After d4 the next test is whether the king can reach e5 or c5.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After d4 the next test is whether the king can reach e5 or c5. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -206,7 +209,8 @@
         "principle": "Choose f4 so the d-pawn can move to d4 unobstructed.",
         "defensivePlan": "...Kd6 heads toward d4 while White tries to reserve key squares.",
         "endpoint": "After d4 the next test is whether the king can reach e5 or c5.",
-        "commonError": "Moving the king to d4 and then asking the pawn to advance onto d4 cannot work."
+        "commonError": "Moving the king to d4 and then asking the pawn to advance onto d4 cannot work.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -231,13 +235,13 @@
       "prompt": "e4 can be reached by a two-square push only if e3 and e4 are empty. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 sets up a frontal defense; White must evaluate corresponding king squares. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: White's king on c4 can support a later central approach.",
-      "explanation": "The pawn's double-step is not enough. e4 can be reached by a two-square push only if e3 and e4 are empty. Reference continuation: d3c4 d6e6 e2e4. Defendant alternative: e2e4 d6e6 d3c4. ...Ke6 sets up a frontal defense; White must evaluate corresponding king squares. Assessment at this instructional endpoint: White's king on c4 can support a later central approach. Specific common error: A pawn double-step gains distance, but it does not automatically claim the key square. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "The pawn's double-step is not enough. e4 can be reached by a two-square push only if e3 and e4 are empty. Reference continuation: d3c4 d6e6 e2e4. Defendant alternative: e2e4 d6e6 d3c4. ...Ke6 sets up a frontal defense; White must evaluate corresponding king squares. Assessment at this instructional endpoint: White's king on c4 can support a later central approach. Specific common error: A pawn double-step gains distance, but it does not automatically claim the key square. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "e4 can be reached by a two-square push only if e3 and e4 are empty.",
         "defenderIdea": "...Ke6 sets up a frontal defense; White must evaluate corresponding king squares.",
         "continuation": "White's king on c4 can support a later central approach.",
         "misconception": "A pawn double-step gains distance, but it does not automatically claim the key square.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. White's king on c4 can support a later central approach.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. White's king on c4 can support a later central approach. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -257,7 +261,8 @@
         "principle": "e4 can be reached by a two-square push only if e3 and e4 are empty.",
         "defensivePlan": "...Ke6 sets up a frontal defense; White must evaluate corresponding king squares.",
         "endpoint": "White's king on c4 can support a later central approach.",
-        "commonError": "A pawn double-step gains distance, but it does not automatically claim the key square."
+        "commonError": "A pawn double-step gains distance, but it does not automatically claim the key square.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -282,13 +287,13 @@
       "prompt": "The king on e4 is the pawn's shield, with e3 behind it. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 keeps frontal access limited and requires deeper calculation. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The lesson ends before promotion; the key question is where the kings can move next.",
-      "explanation": "Escort behind the e-pawn. The king on e4 is the pawn's shield, with e3 behind it. Reference continuation: f3e4 d6e6 e2e3. Defendant alternative: e2e4 d6e6 f3e3. ...Ke6 keeps frontal access limited and requires deeper calculation. Assessment at this instructional endpoint: The lesson ends before promotion; the key question is where the kings can move next. Specific common error: Counting the pawn as promoted because it advanced one rank skips the defender's moves. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Escort behind the e-pawn. The king on e4 is the pawn's shield, with e3 behind it. Reference continuation: f3e4 d6e6 e2e3. Defendant alternative: e2e4 d6e6 f3e3. ...Ke6 keeps frontal access limited and requires deeper calculation. Assessment at this instructional endpoint: The lesson ends before promotion; the key question is where the kings can move next. Specific common error: Counting the pawn as promoted because it advanced one rank skips the defender's moves. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "The king on e4 is the pawn's shield, with e3 behind it.",
         "defenderIdea": "...Ke6 keeps frontal access limited and requires deeper calculation.",
         "continuation": "The lesson ends before promotion; the key question is where the kings can move next.",
         "misconception": "Counting the pawn as promoted because it advanced one rank skips the defender's moves.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The lesson ends before promotion; the key question is where the kings can move next.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The lesson ends before promotion; the key question is where the kings can move next. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -308,7 +313,8 @@
         "principle": "The king on e4 is the pawn's shield, with e3 behind it.",
         "defensivePlan": "...Ke6 keeps frontal access limited and requires deeper calculation.",
         "endpoint": "The lesson ends before promotion; the key question is where the kings can move next.",
-        "commonError": "Counting the pawn as promoted because it advanced one rank skips the defender's moves."
+        "commonError": "Counting the pawn as promoted because it advanced one rank skips the defender's moves.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -333,13 +339,13 @@
       "prompt": "The timing of d4 relative to the kings controls whether the pawn can be captured. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd5 meets the advancing pawn on its own file; White should reassess protection. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
-      "explanation": "Pawn advance permits king opposition. The timing of d4 relative to the kings controls whether the pawn can be captured. Reference continuation: c3b3 e5d5 d2d4. Defendant alternative: d2d4 e5d5 c3d3. ...Kd5 meets the advancing pawn on its own file; White should reassess protection. Assessment at this instructional endpoint: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself. Specific common error: Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Kb3 is required here because Kd3 would block the d2 pawn's double-step through d3.",
+      "explanation": "Pawn advance permits king opposition. The timing of d4 relative to the kings controls whether the pawn can be captured. Reference continuation: c3b3 e5d5 d2d4. Defendant alternative: d2d4 e5d5 c3d3. ...Kd5 meets the advancing pawn on its own file; White should reassess protection. Assessment at this instructional endpoint: The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself. Specific common error: Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Kb3 is required here because Kd3 would block the d2 pawn's double-step through d3. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "The timing of d4 relative to the kings controls whether the pawn can be captured.",
         "defenderIdea": "...Kd5 meets the advancing pawn on its own file; White should reassess protection.",
         "continuation": "The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
         "misconception": "Assuming any fourth-rank pawn is secure ignores the adjacent opposing king. Kd3 also prevents d2–d4 by occupying d3.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -359,7 +365,8 @@
         "principle": "The timing of d4 relative to the kings controls whether the pawn can be captured.",
         "defensivePlan": "...Kd5 meets the advancing pawn on its own file; White should reassess protection.",
         "endpoint": "The d4 pawn may be vulnerable to ...Kxd4 and cannot be considered safe by itself.",
-        "commonError": "Assuming any fourth-rank pawn is secure ignores the adjacent opposing king."
+        "commonError": "Assuming any fourth-rank pawn is secure ignores the adjacent opposing king.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -384,13 +391,13 @@
       "prompt": "White's king chooses d4, allowing the pawn on f2 to advance later. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kf5 is an active king approach; Black need not retreat simply because White centralizes. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn on f4 could be attacked next, so calculate a protective king reply.",
-      "explanation": "Front of a pawn versus flank. White's king chooses d4, allowing the pawn on f2 to advance later. Reference continuation: e3d4 e6f5 f2f4. Defendant alternative: f2f4 e6d5 e3f3. ...Kf5 is an active king approach; Black need not retreat simply because White centralizes. Assessment at this instructional endpoint: The pawn on f4 could be attacked next, so calculate a protective king reply. Specific common error: A key-square diagram must include the next defending move, not just the first advance. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Front of a pawn versus flank. White's king chooses d4, allowing the pawn on f2 to advance later. Reference continuation: e3d4 e6f5 f2f4. Defendant alternative: f2f4 e6d5 e3f3. ...Kf5 is an active king approach; Black need not retreat simply because White centralizes. Assessment at this instructional endpoint: The pawn on f4 could be attacked next, so calculate a protective king reply. Specific common error: A key-square diagram must include the next defending move, not just the first advance. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns.",
       "defensiveStudy": {
         "keyQuestion": "White's king chooses d4, allowing the pawn on f2 to advance later.",
         "defenderIdea": "...Kf5 is an active king approach; Black need not retreat simply because White centralizes.",
         "continuation": "The pawn on f4 could be attacked next, so calculate a protective king reply.",
         "misconception": "A key-square diagram must include the next defending move, not just the first advance.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn on f4 could be attacked next, so calculate a protective king reply.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn on f4 could be attacked next, so calculate a protective king reply. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -410,7 +417,8 @@
         "principle": "White's king chooses d4, allowing the pawn on f2 to advance later.",
         "defensivePlan": "...Kf5 is an active king approach; Black need not retreat simply because White centralizes.",
         "endpoint": "The pawn on f4 could be attacked next, so calculate a protective king reply.",
-        "commonError": "A key-square diagram must include the next defending move, not just the first advance."
+        "commonError": "A key-square diagram must include the next defending move, not just the first advance.",
+        "method": "Direct opposition involves two kings facing along a rank or file with one vacant square between them. The player who must move may be forced to yield an entry square, but a spare pawn move or alternate flank route can change the result. For a pawn on its home ranks, key squares vary by pawn location; do not assume a universal three-square pattern for rook pawns."
       }
     },
     {
@@ -435,13 +443,13 @@
       "prompt": "Ke3 followed by Kd4 is a two-leg king maneuver, with the c-pawn held back. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 chooses a corresponding front, so the king's exact next square matters. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The diagonal approach changes which king has the move in a later direct confrontation.",
-      "explanation": "Trade a direct approach for a triangle. Ke3 followed by Kd4 is a two-leg king maneuver, with the c-pawn held back. Reference continuation: d3e3 d6e6 e3d4. Defendant alternative: d3d4 d6e6 c2c4. ...Ke6 chooses a corresponding front, so the king's exact next square matters. Assessment at this instructional endpoint: The diagonal approach changes which king has the move in a later direct confrontation. Specific common error: Triangulation is about tempo, not simply drawing a geometric triangle. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Trade a direct approach for a triangle. Ke3 followed by Kd4 is a two-leg king maneuver, with the c-pawn held back. Reference continuation: d3e3 d6e6 e3d4. Defendant alternative: d3d4 d6e6 c2c4. ...Ke6 chooses a corresponding front, so the king's exact next square matters. Assessment at this instructional endpoint: The diagonal approach changes which king has the move in a later direct confrontation. Specific common error: Triangulation is about tempo, not simply drawing a geometric triangle. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "Ke3 followed by Kd4 is a two-leg king maneuver, with the c-pawn held back.",
         "defenderIdea": "...Ke6 chooses a corresponding front, so the king's exact next square matters.",
         "continuation": "The diagonal approach changes which king has the move in a later direct confrontation.",
         "misconception": "Triangulation is about tempo, not simply drawing a geometric triangle.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The diagonal approach changes which king has the move in a later direct confrontation.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The diagonal approach changes which king has the move in a later direct confrontation. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -461,7 +469,8 @@
         "principle": "Ke3 followed by Kd4 is a two-leg king maneuver, with the c-pawn held back.",
         "defensivePlan": "...Ke6 chooses a corresponding front, so the king's exact next square matters.",
         "endpoint": "The diagonal approach changes which king has the move in a later direct confrontation.",
-        "commonError": "Triangulation is about tempo, not simply drawing a geometric triangle."
+        "commonError": "Triangulation is about tempo, not simply drawing a geometric triangle.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -486,13 +495,13 @@
       "prompt": "White can preserve b2 and maneuver Kd3–c4 before committing to a push. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 follows White toward the key central squares. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn remains on b2, preserving a reserve tempo for later zugzwang.",
-      "explanation": "Cycle around the b-pawn. White can preserve b2 and maneuver Kd3–c4 before committing to a push. Reference continuation: c3d3 e6d6 d3c4. Defendant alternative: b2b4 e6d5 c3d3. ...Kd6 follows White toward the key central squares. Assessment at this instructional endpoint: The pawn remains on b2, preserving a reserve tempo for later zugzwang. Specific common error: If you spend b2–b4 too early, you may lose a useful pawn waiting move. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Cycle around the b-pawn. White can preserve b2 and maneuver Kd3–c4 before committing to a push. Reference continuation: c3d3 e6d6 d3c4. Defendant alternative: b2b4 e6d5 c3d3. ...Kd6 follows White toward the key central squares. Assessment at this instructional endpoint: The pawn remains on b2, preserving a reserve tempo for later zugzwang. Specific common error: If you spend b2–b4 too early, you may lose a useful pawn waiting move. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "White can preserve b2 and maneuver Kd3–c4 before committing to a push.",
         "defenderIdea": "...Kd6 follows White toward the key central squares.",
         "continuation": "The pawn remains on b2, preserving a reserve tempo for later zugzwang.",
         "misconception": "If you spend b2–b4 too early, you may lose a useful pawn waiting move.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn remains on b2, preserving a reserve tempo for later zugzwang.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn remains on b2, preserving a reserve tempo for later zugzwang. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -512,7 +521,8 @@
         "principle": "White can preserve b2 and maneuver Kd3–c4 before committing to a push.",
         "defensivePlan": "...Kd6 follows White toward the key central squares.",
         "endpoint": "The pawn remains on b2, preserving a reserve tempo for later zugzwang.",
-        "commonError": "If you spend b2–b4 too early, you may lose a useful pawn waiting move."
+        "commonError": "If you spend b2–b4 too early, you may lose a useful pawn waiting move.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -537,13 +547,13 @@
       "prompt": "Kd3 and Ke4 use two tempi while the pawn remains on f2. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 places the defending king near the center; White has not won any pawn. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: At e4, White must calculate whether moving first changes the opposition.",
-      "explanation": "Return toward the central file. Kd3 and Ke4 use two tempi while the pawn remains on f2. Reference continuation: e3d3 e7d6 d3e4. Defendant alternative: e3f3 e7d6 f3e3. ...Kd6 places the defending king near the center; White has not won any pawn. Assessment at this instructional endpoint: At e4, White must calculate whether moving first changes the opposition. Specific common error: Merely moving a king back and forth does not force zugzwang in every position. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Return toward the central file. Kd3 and Ke4 use two tempi while the pawn remains on f2. Reference continuation: e3d3 e7d6 d3e4. Defendant alternative: e3f3 e7d6 f3e3. ...Kd6 places the defending king near the center; White has not won any pawn. Assessment at this instructional endpoint: At e4, White must calculate whether moving first changes the opposition. Specific common error: Merely moving a king back and forth does not force zugzwang in every position. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "Kd3 and Ke4 use two tempi while the pawn remains on f2.",
         "defenderIdea": "...Kd6 places the defending king near the center; White has not won any pawn.",
         "continuation": "At e4, White must calculate whether moving first changes the opposition.",
         "misconception": "Merely moving a king back and forth does not force zugzwang in every position.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. At e4, White must calculate whether moving first changes the opposition.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. At e4, White must calculate whether moving first changes the opposition. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -563,7 +573,8 @@
         "principle": "Kd3 and Ke4 use two tempi while the pawn remains on f2.",
         "defensivePlan": "...Kd6 places the defending king near the center; White has not won any pawn.",
         "endpoint": "At e4, White must calculate whether moving first changes the opposition.",
-        "commonError": "Merely moving a king back and forth does not force zugzwang in every position."
+        "commonError": "Merely moving a king back and forth does not force zugzwang in every position.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -588,13 +599,13 @@
       "prompt": "Ke4–d3 is a deliberate retreat toward the c-pawn's protection. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 can contest the approach to d5 and c5. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The retreat leaves d4 free for the pawn's future advance.",
-      "explanation": "Leave a future entry square. Ke4–d3 is a deliberate retreat toward the c-pawn's protection. Reference continuation: d4e4 e6d6 e4d3. Defendant alternative: d4c4 e6d6 c4b5. ...Kd6 can contest the approach to d5 and c5. Assessment at this instructional endpoint: The retreat leaves d4 free for the pawn's future advance. Specific common error: An apparent retreat can preserve a winning plan, but not every retreat is best. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Leave a future entry square. Ke4–d3 is a deliberate retreat toward the c-pawn's protection. Reference continuation: d4e4 e6d6 e4d3. Defendant alternative: d4c4 e6d6 c4b5. ...Kd6 can contest the approach to d5 and c5. Assessment at this instructional endpoint: The retreat leaves d4 free for the pawn's future advance. Specific common error: An apparent retreat can preserve a winning plan, but not every retreat is best. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "Ke4–d3 is a deliberate retreat toward the c-pawn's protection.",
         "defenderIdea": "...Kd6 can contest the approach to d5 and c5.",
         "continuation": "The retreat leaves d4 free for the pawn's future advance.",
         "misconception": "An apparent retreat can preserve a winning plan, but not every retreat is best.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The retreat leaves d4 free for the pawn's future advance.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The retreat leaves d4 free for the pawn's future advance. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -614,7 +625,8 @@
         "principle": "Ke4–d3 is a deliberate retreat toward the c-pawn's protection.",
         "defensivePlan": "...Kd6 can contest the approach to d5 and c5.",
         "endpoint": "The retreat leaves d4 free for the pawn's future advance.",
-        "commonError": "An apparent retreat can preserve a winning plan, but not every retreat is best."
+        "commonError": "An apparent retreat can preserve a winning plan, but not every retreat is best.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -639,13 +651,13 @@
       "prompt": "White's king can triangulate through e3 or approach more directly through f4. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 approaches the e-pawn; the defender controls important entry routes. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Kd4 prepares to support e3–e4 if Black allows it.",
-      "explanation": "King steps around a shield pawn. White's king can triangulate through e3 or approach more directly through f4. Reference continuation: f3e3 d7e6 e3d4. Defendant alternative: f3f4 d7e6 f4e4. ...Ke6 approaches the e-pawn; the defender controls important entry routes. Assessment at this instructional endpoint: Kd4 prepares to support e3–e4 if Black allows it. Specific common error: Key-square labels must be recalculated after every king move. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "King steps around a shield pawn. White's king can triangulate through e3 or approach more directly through f4. Reference continuation: f3e3 d7e6 e3d4. Defendant alternative: f3f4 d7e6 f4e4. ...Ke6 approaches the e-pawn; the defender controls important entry routes. Assessment at this instructional endpoint: Kd4 prepares to support e3–e4 if Black allows it. Specific common error: Key-square labels must be recalculated after every king move. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "White's king can triangulate through e3 or approach more directly through f4.",
         "defenderIdea": "...Ke6 approaches the e-pawn; the defender controls important entry routes.",
         "continuation": "Kd4 prepares to support e3–e4 if Black allows it.",
         "misconception": "Key-square labels must be recalculated after every king move.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Kd4 prepares to support e3–e4 if Black allows it.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Kd4 prepares to support e3–e4 if Black allows it. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -665,7 +677,8 @@
         "principle": "White's king can triangulate through e3 or approach more directly through f4.",
         "defensivePlan": "...Ke6 approaches the e-pawn; the defender controls important entry routes.",
         "endpoint": "Kd4 prepares to support e3–e4 if Black allows it.",
-        "commonError": "Key-square labels must be recalculated after every king move."
+        "commonError": "Key-square labels must be recalculated after every king move.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -690,13 +703,13 @@
       "prompt": "White can choose a queenside loop or a central route to c4. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 confronts the approaching king while d2 remains a reserve pawn. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Both lines reach c4 with distinct tempos and geometries; compare who moves next.",
-      "explanation": "Corresponding routes toward d5. White can choose a queenside loop or a central route to c4. Reference continuation: c3b3 f6e6 b3c4. Defendant alternative: c3d3 f6e6 d3c4. ...Ke6 confronts the approaching king while d2 remains a reserve pawn. Assessment at this instructional endpoint: Both lines reach c4 with distinct tempos and geometries; compare who moves next. Specific common error: Two routes to c4 cannot be ranked solely by distance if opposition differs. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Corresponding routes toward d5. White can choose a queenside loop or a central route to c4. Reference continuation: c3b3 f6e6 b3c4. Defendant alternative: c3d3 f6e6 d3c4. ...Ke6 confronts the approaching king while d2 remains a reserve pawn. Assessment at this instructional endpoint: Both lines reach c4 with distinct tempos and geometries; compare who moves next. Specific common error: Two routes to c4 cannot be ranked solely by distance if opposition differs. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "White can choose a queenside loop or a central route to c4.",
         "defenderIdea": "...Ke6 confronts the approaching king while d2 remains a reserve pawn.",
         "continuation": "Both lines reach c4 with distinct tempos and geometries; compare who moves next.",
         "misconception": "Two routes to c4 cannot be ranked solely by distance if opposition differs.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Both lines reach c4 with distinct tempos and geometries; compare who moves next.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Both lines reach c4 with distinct tempos and geometries; compare who moves next. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -716,7 +729,8 @@
         "principle": "White can choose a queenside loop or a central route to c4.",
         "defensivePlan": "...Ke6 confronts the approaching king while d2 remains a reserve pawn.",
         "endpoint": "Both lines reach c4 with distinct tempos and geometries; compare who moves next.",
-        "commonError": "Two routes to c4 cannot be ranked solely by distance if opposition differs."
+        "commonError": "Two routes to c4 cannot be ranked solely by distance if opposition differs.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -741,13 +755,13 @@
       "prompt": "The g-pawn remains available as a tempo while White's king explores central squares. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 is an active defensive approach, not a compulsory passive king move. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After Kg4, evaluate the distant king squares before advancing g2.",
-      "explanation": "Waiting with a g-pawn in reserve. The g-pawn remains available as a tempo while White's king explores central squares. Reference continuation: e3f3 d6e6 f3g4. Defendant alternative: e3d3 d6e6 d3e4. ...Ke6 is an active defensive approach, not a compulsory passive king move. Assessment at this instructional endpoint: After Kg4, evaluate the distant king squares before advancing g2. Specific common error: Corresponding squares must be derived from legal move sequences, not guessed from symmetry. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Waiting with a g-pawn in reserve. The g-pawn remains available as a tempo while White's king explores central squares. Reference continuation: e3f3 d6e6 f3g4. Defendant alternative: e3d3 d6e6 d3e4. ...Ke6 is an active defensive approach, not a compulsory passive king move. Assessment at this instructional endpoint: After Kg4, evaluate the distant king squares before advancing g2. Specific common error: Corresponding squares must be derived from legal move sequences, not guessed from symmetry. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "The g-pawn remains available as a tempo while White's king explores central squares.",
         "defenderIdea": "...Ke6 is an active defensive approach, not a compulsory passive king move.",
         "continuation": "After Kg4, evaluate the distant king squares before advancing g2.",
         "misconception": "Corresponding squares must be derived from legal move sequences, not guessed from symmetry.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After Kg4, evaluate the distant king squares before advancing g2.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After Kg4, evaluate the distant king squares before advancing g2. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -767,7 +781,8 @@
         "principle": "The g-pawn remains available as a tempo while White's king explores central squares.",
         "defensivePlan": "...Ke6 is an active defensive approach, not a compulsory passive king move.",
         "endpoint": "After Kg4, evaluate the distant king squares before advancing g2.",
-        "commonError": "Corresponding squares must be derived from legal move sequences, not guessed from symmetry."
+        "commonError": "Corresponding squares must be derived from legal move sequences, not guessed from symmetry.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -792,13 +807,13 @@
       "prompt": "C3 and e3 are alternate entry squares for approaching d4. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 contests the central path; Black controls the d-file. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Both options lead to d4 but change how many legal pawn waiting moves remain.",
-      "explanation": "A return to the pawn's file. C3 and e3 are alternate entry squares for approaching d4. Reference continuation: d3c3 e6d6 c3d4. Defendant alternative: d3e3 e6d6 e3d4. ...Kd6 contests the central path; Black controls the d-file. Assessment at this instructional endpoint: Both options lead to d4 but change how many legal pawn waiting moves remain. Specific common error: Triangulation is not a win claim without complete defender resistance. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "A return to the pawn's file. C3 and e3 are alternate entry squares for approaching d4. Reference continuation: d3c3 e6d6 c3d4. Defendant alternative: d3e3 e6d6 e3d4. ...Kd6 contests the central path; Black controls the d-file. Assessment at this instructional endpoint: Both options lead to d4 but change how many legal pawn waiting moves remain. Specific common error: Triangulation is not a win claim without complete defender resistance. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves.",
       "defensiveStudy": {
         "keyQuestion": "C3 and e3 are alternate entry squares for approaching d4.",
         "defenderIdea": "...Kd6 contests the central path; Black controls the d-file.",
         "continuation": "Both options lead to d4 but change how many legal pawn waiting moves remain.",
         "misconception": "Triangulation is not a win claim without complete defender resistance.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Both options lead to d4 but change how many legal pawn waiting moves remain.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Both options lead to d4 but change how many legal pawn waiting moves remain. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -818,7 +833,8 @@
         "principle": "C3 and e3 are alternate entry squares for approaching d4.",
         "defensivePlan": "...Kd6 contests the central path; Black controls the d-file.",
         "endpoint": "Both options lead to d4 but change how many legal pawn waiting moves remain.",
-        "commonError": "Triangulation is not a win claim without complete defender resistance."
+        "commonError": "Triangulation is not a win claim without complete defender resistance.",
+        "method": "Corresponding squares are paired king positions that preserve a defensive relationship; stepping from one to another can change who must concede space. Triangulation attempts to lose a tempo with a king circuit while maintaining access to important squares. A three-step king route is only a useful triangulation when the defender cannot keep parity with equally useful moves."
       }
     },
     {
@@ -843,13 +859,13 @@
       "prompt": "Kb5 vacates c4 so the c-pawn can advance. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke5 is an active king response that may contest c4 later. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn's push changes attack squares to b5 and d5.",
-      "explanation": "Do not crowd a c-pawn. Kb5 vacates c4 so the c-pawn can advance. Reference continuation: c4b5 d6e5 c3c4. Defendant alternative: c4d3 d6e5 c3c4. ...Ke5 is an active king response that may contest c4 later. Assessment at this instructional endpoint: The pawn's push changes attack squares to b5 and d5. Specific common error: A pawn cannot step onto c4 while its own king is still on c4. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Do not crowd a c-pawn. Kb5 vacates c4 so the c-pawn can advance. Reference continuation: c4b5 d6e5 c3c4. Defendant alternative: c4d3 d6e5 c3c4. ...Ke5 is an active king response that may contest c4 later. Assessment at this instructional endpoint: The pawn's push changes attack squares to b5 and d5. Specific common error: A pawn cannot step onto c4 while its own king is still on c4. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "Kb5 vacates c4 so the c-pawn can advance.",
         "defenderIdea": "...Ke5 is an active king response that may contest c4 later.",
         "continuation": "The pawn's push changes attack squares to b5 and d5.",
         "misconception": "A pawn cannot step onto c4 while its own king is still on c4.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn's push changes attack squares to b5 and d5.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn's push changes attack squares to b5 and d5. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -869,7 +885,8 @@
         "principle": "Kb5 vacates c4 so the c-pawn can advance.",
         "defensivePlan": "...Ke5 is an active king response that may contest c4 later.",
         "endpoint": "The pawn's push changes attack squares to b5 and d5.",
-        "commonError": "A pawn cannot step onto c4 while its own king is still on c4."
+        "commonError": "A pawn cannot step onto c4 while its own king is still on c4.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -894,13 +911,13 @@
       "prompt": "White may maneuver first and hold the d-pawn as a waiting move. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 approaches d4 and challenges the escorting king. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The black b-pawn is another reserve tempo, so no forced zugzwang is proven.",
-      "explanation": "Use a pawn tempo to change the turn. White may maneuver first and hold the d-pawn as a waiting move. Reference continuation: e4f4 e6d6 d3d4. Defendant alternative: d3d4 e6d6 e4f4. ...Kd6 approaches d4 and challenges the escorting king. Assessment at this instructional endpoint: The black b-pawn is another reserve tempo, so no forced zugzwang is proven. Specific common error: Calling a single pawn tempo decisive ignores the opponent's own waiting move. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Use a pawn tempo to change the turn. White may maneuver first and hold the d-pawn as a waiting move. Reference continuation: e4f4 e6d6 d3d4. Defendant alternative: d3d4 e6d6 e4f4. ...Kd6 approaches d4 and challenges the escorting king. Assessment at this instructional endpoint: The black b-pawn is another reserve tempo, so no forced zugzwang is proven. Specific common error: Calling a single pawn tempo decisive ignores the opponent's own waiting move. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "White may maneuver first and hold the d-pawn as a waiting move.",
         "defenderIdea": "...Kd6 approaches d4 and challenges the escorting king.",
         "continuation": "The black b-pawn is another reserve tempo, so no forced zugzwang is proven.",
         "misconception": "Calling a single pawn tempo decisive ignores the opponent's own waiting move.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The black b-pawn is another reserve tempo, so no forced zugzwang is proven.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The black b-pawn is another reserve tempo, so no forced zugzwang is proven. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -920,7 +937,8 @@
         "principle": "White may maneuver first and hold the d-pawn as a waiting move.",
         "defensivePlan": "...Kd6 approaches d4 and challenges the escorting king.",
         "endpoint": "The black b-pawn is another reserve tempo, so no forced zugzwang is proven.",
-        "commonError": "Calling a single pawn tempo decisive ignores the opponent's own waiting move."
+        "commonError": "Calling a single pawn tempo decisive ignores the opponent's own waiting move.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -945,13 +963,13 @@
       "prompt": "The e-pawn can skip e3 while the white king remains on c4. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 controls the center and may oppose the king next. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The double-step saves a tempo but can also put the pawn ahead of its king.",
-      "explanation": "Two-square push changes pawn geometry. The e-pawn can skip e3 while the white king remains on c4. Reference continuation: d3c4 e6d6 e2e4. Defendant alternative: e2e4 e6d6 d3c4. ...Kd6 controls the center and may oppose the king next. Assessment at this instructional endpoint: The double-step saves a tempo but can also put the pawn ahead of its king. Specific common error: Do not make a win/draw claim from pawn distance alone. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Two-square push changes pawn geometry. The e-pawn can skip e3 while the white king remains on c4. Reference continuation: d3c4 e6d6 e2e4. Defendant alternative: e2e4 e6d6 d3c4. ...Kd6 controls the center and may oppose the king next. Assessment at this instructional endpoint: The double-step saves a tempo but can also put the pawn ahead of its king. Specific common error: Do not make a win/draw claim from pawn distance alone. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "The e-pawn can skip e3 while the white king remains on c4.",
         "defenderIdea": "...Kd6 controls the center and may oppose the king next.",
         "continuation": "The double-step saves a tempo but can also put the pawn ahead of its king.",
         "misconception": "Do not make a win/draw claim from pawn distance alone.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The double-step saves a tempo but can also put the pawn ahead of its king.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The double-step saves a tempo but can also put the pawn ahead of its king. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -971,7 +989,8 @@
         "principle": "The e-pawn can skip e3 while the white king remains on c4.",
         "defensivePlan": "...Kd6 controls the center and may oppose the king next.",
         "endpoint": "The double-step saves a tempo but can also put the pawn ahead of its king.",
-        "commonError": "Do not make a win/draw claim from pawn distance alone."
+        "commonError": "Do not make a win/draw claim from pawn distance alone.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -996,13 +1015,13 @@
       "prompt": "Holding b3 until the third ply changes who must move near the kings. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 keeps a central defensive option and does not commit to the queenside. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: b4 gains space, but White still needs to calculate the opponent's king entry.",
-      "explanation": "Preserve b4 as a break square. Holding b3 until the third ply changes who must move near the kings. Reference continuation: c4d4 e6d6 b3b4. Defendant alternative: b3b4 e6d6 c4d3. ...Kd6 keeps a central defensive option and does not commit to the queenside. Assessment at this instructional endpoint: b4 gains space, but White still needs to calculate the opponent's king entry. Specific common error: A reserve tempo may be useful without producing a forced zugzwang. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Preserve b4 as a break square. Holding b3 until the third ply changes who must move near the kings. Reference continuation: c4d4 e6d6 b3b4. Defendant alternative: b3b4 e6d6 c4d3. ...Kd6 keeps a central defensive option and does not commit to the queenside. Assessment at this instructional endpoint: b4 gains space, but White still needs to calculate the opponent's king entry. Specific common error: A reserve tempo may be useful without producing a forced zugzwang. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "Holding b3 until the third ply changes who must move near the kings.",
         "defenderIdea": "...Kd6 keeps a central defensive option and does not commit to the queenside.",
         "continuation": "b4 gains space, but White still needs to calculate the opponent's king entry.",
         "misconception": "A reserve tempo may be useful without producing a forced zugzwang.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. b4 gains space, but White still needs to calculate the opponent's king entry.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. b4 gains space, but White still needs to calculate the opponent's king entry. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1022,7 +1041,8 @@
         "principle": "Holding b3 until the third ply changes who must move near the kings.",
         "defensivePlan": "...Kd6 keeps a central defensive option and does not commit to the queenside.",
         "endpoint": "b4 gains space, but White still needs to calculate the opponent's king entry.",
-        "commonError": "A reserve tempo may be useful without producing a forced zugzwang."
+        "commonError": "A reserve tempo may be useful without producing a forced zugzwang.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -1047,13 +1067,13 @@
       "prompt": "The c-pawn may advance after the escorting king changes square. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kd6 counters the center, so both sides have a king plan. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn attacks b5 and d5 from c4 while the white king supports the center.",
-      "explanation": "Maintain c-pawn support. The c-pawn may advance after the escorting king changes square. Reference continuation: d4e4 e7d6 c3c4. Defendant alternative: c3c4 e7d6 d4e4. ...Kd6 counters the center, so both sides have a king plan. Assessment at this instructional endpoint: The pawn attacks b5 and d5 from c4 while the white king supports the center. Specific common error: A pawn advance should be evaluated by its new defended squares. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Maintain c-pawn support. The c-pawn may advance after the escorting king changes square. Reference continuation: d4e4 e7d6 c3c4. Defendant alternative: c3c4 e7d6 d4e4. ...Kd6 counters the center, so both sides have a king plan. Assessment at this instructional endpoint: The pawn attacks b5 and d5 from c4 while the white king supports the center. Specific common error: A pawn advance should be evaluated by its new defended squares. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "The c-pawn may advance after the escorting king changes square.",
         "defenderIdea": "...Kd6 counters the center, so both sides have a king plan.",
         "continuation": "The pawn attacks b5 and d5 from c4 while the white king supports the center.",
         "misconception": "A pawn advance should be evaluated by its new defended squares.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn attacks b5 and d5 from c4 while the white king supports the center.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn attacks b5 and d5 from c4 while the white king supports the center. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1073,7 +1093,8 @@
         "principle": "The c-pawn may advance after the escorting king changes square.",
         "defensivePlan": "...Kd6 counters the center, so both sides have a king plan.",
         "endpoint": "The pawn attacks b5 and d5 from c4 while the white king supports the center.",
-        "commonError": "A pawn advance should be evaluated by its new defended squares."
+        "commonError": "A pawn advance should be evaluated by its new defended squares.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -1098,13 +1119,13 @@
       "prompt": "Kg4 deliberately leaves e4 open for the e-pawn. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 resists the push by staying near the key squares. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The pawn reaches e4; the defender may still blockade the center.",
-      "explanation": "Keep e4 empty until the pawn is ready. Kg4 deliberately leaves e4 open for the e-pawn. Reference continuation: f4g4 d6e6 e3e4. Defendant alternative: e3e4 d6e6 f4f3. ...Ke6 resists the push by staying near the key squares. Assessment at this instructional endpoint: The pawn reaches e4; the defender may still blockade the center. Specific common error: A tempo move is not a sacrifice unless material is actually given up. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Keep e4 empty until the pawn is ready. Kg4 deliberately leaves e4 open for the e-pawn. Reference continuation: f4g4 d6e6 e3e4. Defendant alternative: e3e4 d6e6 f4f3. ...Ke6 resists the push by staying near the key squares. Assessment at this instructional endpoint: The pawn reaches e4; the defender may still blockade the center. Specific common error: A tempo move is not a sacrifice unless material is actually given up. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "Kg4 deliberately leaves e4 open for the e-pawn.",
         "defenderIdea": "...Ke6 resists the push by staying near the key squares.",
         "continuation": "The pawn reaches e4; the defender may still blockade the center.",
         "misconception": "A tempo move is not a sacrifice unless material is actually given up.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn reaches e4; the defender may still blockade the center.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The pawn reaches e4; the defender may still blockade the center. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1124,7 +1145,8 @@
         "principle": "Kg4 deliberately leaves e4 open for the e-pawn.",
         "defensivePlan": "...Ke6 resists the push by staying near the key squares.",
         "endpoint": "The pawn reaches e4; the defender may still blockade the center.",
-        "commonError": "A tempo move is not a sacrifice unless material is actually given up."
+        "commonError": "A tempo move is not a sacrifice unless material is actually given up.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -1149,13 +1171,13 @@
       "prompt": "The a3 pawn can be kept for a waiting move while the king maneuvers. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke5 approaches from the center rather than racing the a-pawn. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After a4 the pawn attacks b5, and the king must ensure b5 remains safe.",
-      "explanation": "Reserve the a-pawn push. The a3 pawn can be kept for a waiting move while the king maneuvers. Reference continuation: c4b5 d6e5 a3a4. Defendant alternative: a3a4 d6e5 c4b5. ...Ke5 approaches from the center rather than racing the a-pawn. Assessment at this instructional endpoint: After a4 the pawn attacks b5, and the king must ensure b5 remains safe. Specific common error: Assuming an a-pawn push is automatically passed ignores the opposing king's distance. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Reserve the a-pawn push. The a3 pawn can be kept for a waiting move while the king maneuvers. Reference continuation: c4b5 d6e5 a3a4. Defendant alternative: a3a4 d6e5 c4b5. ...Ke5 approaches from the center rather than racing the a-pawn. Assessment at this instructional endpoint: After a4 the pawn attacks b5, and the king must ensure b5 remains safe. Specific common error: Assuming an a-pawn push is automatically passed ignores the opposing king's distance. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "The a3 pawn can be kept for a waiting move while the king maneuvers.",
         "defenderIdea": "...Ke5 approaches from the center rather than racing the a-pawn.",
         "continuation": "After a4 the pawn attacks b5, and the king must ensure b5 remains safe.",
         "misconception": "Assuming an a-pawn push is automatically passed ignores the opposing king's distance.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After a4 the pawn attacks b5, and the king must ensure b5 remains safe.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After a4 the pawn attacks b5, and the king must ensure b5 remains safe. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1175,7 +1197,8 @@
         "principle": "The a3 pawn can be kept for a waiting move while the king maneuvers.",
         "defensivePlan": "...Ke5 approaches from the center rather than racing the a-pawn.",
         "endpoint": "After a4 the pawn attacks b5, and the king must ensure b5 remains safe.",
-        "commonError": "Assuming an a-pawn push is automatically passed ignores the opposing king's distance."
+        "commonError": "Assuming an a-pawn push is automatically passed ignores the opposing king's distance.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -1200,13 +1223,13 @@
       "prompt": "The h-pawn's double step supplies a distant tempo that may not affect the king confrontation immediately. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Ke6 remains a plausible central defense and the king race still needs analysis. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The h-pawn is far from the defender but not yet guaranteed promotion.",
-      "explanation": "The h-pawn supplies a distant tempo. The h-pawn's double step supplies a distant tempo that may not affect the king confrontation immediately. Reference continuation: e3d4 d6e6 h2h4. Defendant alternative: h2h4 d6e6 e3d4. ...Ke6 remains a plausible central defense and the king race still needs analysis. Assessment at this instructional endpoint: The h-pawn is far from the defender but not yet guaranteed promotion. Specific common error: A distant pawn push is useful only if it does not surrender the center at the wrong time. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "The h-pawn supplies a distant tempo. The h-pawn's double step supplies a distant tempo that may not affect the king confrontation immediately. Reference continuation: e3d4 d6e6 h2h4. Defendant alternative: h2h4 d6e6 e3d4. ...Ke6 remains a plausible central defense and the king race still needs analysis. Assessment at this instructional endpoint: The h-pawn is far from the defender but not yet guaranteed promotion. Specific common error: A distant pawn push is useful only if it does not surrender the center at the wrong time. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang.",
       "defensiveStudy": {
         "keyQuestion": "The h-pawn's double step supplies a distant tempo that may not affect the king confrontation immediately.",
         "defenderIdea": "...Ke6 remains a plausible central defense and the king race still needs analysis.",
         "continuation": "The h-pawn is far from the defender but not yet guaranteed promotion.",
         "misconception": "A distant pawn push is useful only if it does not surrender the center at the wrong time.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The h-pawn is far from the defender but not yet guaranteed promotion.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The h-pawn is far from the defender but not yet guaranteed promotion. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1226,7 +1249,8 @@
         "principle": "The h-pawn's double step supplies a distant tempo that may not affect the king confrontation immediately.",
         "defensivePlan": "...Ke6 remains a plausible central defense and the king race still needs analysis.",
         "endpoint": "The h-pawn is far from the defender but not yet guaranteed promotion.",
-        "commonError": "A distant pawn push is useful only if it does not surrender the center at the wrong time."
+        "commonError": "A distant pawn push is useful only if it does not surrender the center at the wrong time.",
+        "method": "Zugzwang is a position where every legal move worsens the mover's situation, not simply a position with few good moves. Spare pawn pushes alter move parity; however, every pawn advance irreversibly changes its attack squares and may remove a key reserve tempo. Evaluate both sides' spare pawns before declaring a decisive zugzwang."
       }
     },
     {
@@ -1251,13 +1275,13 @@
       "prompt": "White may choose axb5 or bxc5 as the first exchange in a breakthrough attempt. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "Black has a cross-capture in either line, preserving a pawn despite losing another. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race.",
-      "explanation": "Two possible captures on the queenside. White may choose axb5 or bxc5 as the first exchange in a breakthrough attempt. Reference continuation: a4b5 c5b4 e1f2. Defendant alternative: b4c5 b5a4 e1f2. Black has a cross-capture in either line, preserving a pawn despite losing another. Assessment at this instructional endpoint: Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race. Specific common error: This is pawn contact and a breakthrough candidate, not automatic creation of a passed pawn. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Two possible captures on the queenside. White may choose axb5 or bxc5 as the first exchange in a breakthrough attempt. Reference continuation: a4b5 c5b4 e1f2. Defendant alternative: b4c5 b5a4 e1f2. Black has a cross-capture in either line, preserving a pawn despite losing another. Assessment at this instructional endpoint: Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race. Specific common error: This is pawn contact and a breakthrough candidate, not automatic creation of a passed pawn. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "White may choose axb5 or bxc5 as the first exchange in a breakthrough attempt.",
         "defenderIdea": "Black has a cross-capture in either line, preserving a pawn despite losing another.",
         "continuation": "Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race.",
         "misconception": "This is pawn contact and a breakthrough candidate, not automatic creation of a passed pawn.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1277,7 +1301,8 @@
         "principle": "White may choose axb5 or bxc5 as the first exchange in a breakthrough attempt.",
         "defensivePlan": "Black has a cross-capture in either line, preserving a pawn despite losing another.",
         "endpoint": "Material is exchanged 1-for-1 initially; the remaining pawn's file determines the later race.",
-        "commonError": "This is pawn contact and a breakthrough candidate, not automatic creation of a passed pawn."
+        "commonError": "This is pawn contact and a breakthrough candidate, not automatic creation of a passed pawn.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1302,13 +1327,13 @@
       "prompt": "The neighboring white pawns can take different opposing pawns. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "Black can recapture on the opposite wing, creating a different surviving pawn. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After exchanges, compare whether a newly isolated pawn can be escorted.",
-      "explanation": "Choose which pawn captures. The neighboring white pawns can take different opposing pawns. Reference continuation: b4a5 b5c4 e1f2. Defendant alternative: c4b5 a5b4 e1f2. Black can recapture on the opposite wing, creating a different surviving pawn. Assessment at this instructional endpoint: After exchanges, compare whether a newly isolated pawn can be escorted. Specific common error: Pawns that capture are not guaranteed to emerge passed when another pawn remains. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Choose which pawn captures. The neighboring white pawns can take different opposing pawns. Reference continuation: b4a5 b5c4 e1f2. Defendant alternative: c4b5 a5b4 e1f2. Black can recapture on the opposite wing, creating a different surviving pawn. Assessment at this instructional endpoint: After exchanges, compare whether a newly isolated pawn can be escorted. Specific common error: Pawns that capture are not guaranteed to emerge passed when another pawn remains. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "The neighboring white pawns can take different opposing pawns.",
         "defenderIdea": "Black can recapture on the opposite wing, creating a different surviving pawn.",
         "continuation": "After exchanges, compare whether a newly isolated pawn can be escorted.",
         "misconception": "Pawns that capture are not guaranteed to emerge passed when another pawn remains.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After exchanges, compare whether a newly isolated pawn can be escorted.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After exchanges, compare whether a newly isolated pawn can be escorted. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1328,7 +1353,8 @@
         "principle": "The neighboring white pawns can take different opposing pawns.",
         "defensivePlan": "Black can recapture on the opposite wing, creating a different surviving pawn.",
         "endpoint": "After exchanges, compare whether a newly isolated pawn can be escorted.",
-        "commonError": "Pawns that capture are not guaranteed to emerge passed when another pawn remains."
+        "commonError": "Pawns that capture are not guaranteed to emerge passed when another pawn remains.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1353,13 +1379,13 @@
       "prompt": "Two captures change the file distribution of the remaining pawns. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...cxd4 or ...bxc4 is a concrete resisting recapture. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The king must enter the pawn ending only after the exchange balance is clear.",
-      "explanation": "Move the c-pawn or d-pawn. Two captures change the file distribution of the remaining pawns. Reference continuation: c4b5 c5d4 e1f2. Defendant alternative: d4c5 b5c4 e1f2. ...cxd4 or ...bxc4 is a concrete resisting recapture. Assessment at this instructional endpoint: The king must enter the pawn ending only after the exchange balance is clear. Specific common error: Ignoring the black countercapture produces a false extra-pawn assessment. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Move the c-pawn or d-pawn. Two captures change the file distribution of the remaining pawns. Reference continuation: c4b5 c5d4 e1f2. Defendant alternative: d4c5 b5c4 e1f2. ...cxd4 or ...bxc4 is a concrete resisting recapture. Assessment at this instructional endpoint: The king must enter the pawn ending only after the exchange balance is clear. Specific common error: Ignoring the black countercapture produces a false extra-pawn assessment. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "Two captures change the file distribution of the remaining pawns.",
         "defenderIdea": "...cxd4 or ...bxc4 is a concrete resisting recapture.",
         "continuation": "The king must enter the pawn ending only after the exchange balance is clear.",
         "misconception": "Ignoring the black countercapture produces a false extra-pawn assessment.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The king must enter the pawn ending only after the exchange balance is clear.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The king must enter the pawn ending only after the exchange balance is clear. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1379,7 +1405,8 @@
         "principle": "Two captures change the file distribution of the remaining pawns.",
         "defensivePlan": "...cxd4 or ...bxc4 is a concrete resisting recapture.",
         "endpoint": "The king must enter the pawn ending only after the exchange balance is clear.",
-        "commonError": "Ignoring the black countercapture produces a false extra-pawn assessment."
+        "commonError": "Ignoring the black countercapture produces a false extra-pawn assessment.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1404,13 +1431,13 @@
       "prompt": "White's d- and e-pawns can exchange with two connected black pawns. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "Each defender countercapture picks off the other white pawn, altering files. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: A new isolated passer is possible later only if the remaining pawns can get through.",
-      "explanation": "D-pawn versus e-pawn capture order. White's d- and e-pawns can exchange with two connected black pawns. Reference continuation: d4c5 d5e4 e1f2. Defendant alternative: e4d5 c5d4 e1f2. Each defender countercapture picks off the other white pawn, altering files. Assessment at this instructional endpoint: A new isolated passer is possible later only if the remaining pawns can get through. Specific common error: Do not announce a pawn breakthrough from the first capture alone. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "D-pawn versus e-pawn capture order. White's d- and e-pawns can exchange with two connected black pawns. Reference continuation: d4c5 d5e4 e1f2. Defendant alternative: e4d5 c5d4 e1f2. Each defender countercapture picks off the other white pawn, altering files. Assessment at this instructional endpoint: A new isolated passer is possible later only if the remaining pawns can get through. Specific common error: Do not announce a pawn breakthrough from the first capture alone. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "White's d- and e-pawns can exchange with two connected black pawns.",
         "defenderIdea": "Each defender countercapture picks off the other white pawn, altering files.",
         "continuation": "A new isolated passer is possible later only if the remaining pawns can get through.",
         "misconception": "Do not announce a pawn breakthrough from the first capture alone.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A new isolated passer is possible later only if the remaining pawns can get through.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A new isolated passer is possible later only if the remaining pawns can get through. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1430,7 +1457,8 @@
         "principle": "White's d- and e-pawns can exchange with two connected black pawns.",
         "defensivePlan": "Each defender countercapture picks off the other white pawn, altering files.",
         "endpoint": "A new isolated passer is possible later only if the remaining pawns can get through.",
-        "commonError": "Do not announce a pawn breakthrough from the first capture alone."
+        "commonError": "Do not announce a pawn breakthrough from the first capture alone.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1455,13 +1483,13 @@
       "prompt": "White can trade e4 for d5 or f4 for e5 to make different pawn structures. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "The defender immediately cross-captures a neighboring pawn in each case. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Count surviving pawn files before estimating which side can run.",
-      "explanation": "Central exchange changes the file. White can trade e4 for d5 or f4 for e5 to make different pawn structures. Reference continuation: e4d5 e5f4 e1f2. Defendant alternative: f4e5 d5e4 e1f2. The defender immediately cross-captures a neighboring pawn in each case. Assessment at this instructional endpoint: Count surviving pawn files before estimating which side can run. Specific common error: Two successive captures do not necessarily create a winning passer. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Central exchange changes the file. White can trade e4 for d5 or f4 for e5 to make different pawn structures. Reference continuation: e4d5 e5f4 e1f2. Defendant alternative: f4e5 d5e4 e1f2. The defender immediately cross-captures a neighboring pawn in each case. Assessment at this instructional endpoint: Count surviving pawn files before estimating which side can run. Specific common error: Two successive captures do not necessarily create a winning passer. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "White can trade e4 for d5 or f4 for e5 to make different pawn structures.",
         "defenderIdea": "The defender immediately cross-captures a neighboring pawn in each case.",
         "continuation": "Count surviving pawn files before estimating which side can run.",
         "misconception": "Two successive captures do not necessarily create a winning passer.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Count surviving pawn files before estimating which side can run.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Count surviving pawn files before estimating which side can run. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1481,7 +1509,8 @@
         "principle": "White can trade e4 for d5 or f4 for e5 to make different pawn structures.",
         "defensivePlan": "The defender immediately cross-captures a neighboring pawn in each case.",
         "endpoint": "Count surviving pawn files before estimating which side can run.",
-        "commonError": "Two successive captures do not necessarily create a winning passer."
+        "commonError": "Two successive captures do not necessarily create a winning passer.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1506,13 +1535,13 @@
       "prompt": "A pawn breakthrough requires calculating both attacking and defending diagonals. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...fxg4 or ...exf4 restores pawn balance in different files. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After the exchange, use the king to support a survivor.",
-      "explanation": "Opposed f- and g-pawns. A pawn breakthrough requires calculating both attacking and defending diagonals. Reference continuation: f4e5 f5g4 e1f2. Defendant alternative: g4f5 e5f4 e1f2. ...fxg4 or ...exf4 restores pawn balance in different files. Assessment at this instructional endpoint: After the exchange, use the king to support a survivor. Specific common error: Treating fxe5 as a free pawn misses ...fxg4. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Opposed f- and g-pawns. A pawn breakthrough requires calculating both attacking and defending diagonals. Reference continuation: f4e5 f5g4 e1f2. Defendant alternative: g4f5 e5f4 e1f2. ...fxg4 or ...exf4 restores pawn balance in different files. Assessment at this instructional endpoint: After the exchange, use the king to support a survivor. Specific common error: Treating fxe5 as a free pawn misses ...fxg4. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "A pawn breakthrough requires calculating both attacking and defending diagonals.",
         "defenderIdea": "...fxg4 or ...exf4 restores pawn balance in different files.",
         "continuation": "After the exchange, use the king to support a survivor.",
         "misconception": "Treating fxe5 as a free pawn misses ...fxg4.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After the exchange, use the king to support a survivor.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After the exchange, use the king to support a survivor. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1532,7 +1561,8 @@
         "principle": "A pawn breakthrough requires calculating both attacking and defending diagonals.",
         "defensivePlan": "...fxg4 or ...exf4 restores pawn balance in different files.",
         "endpoint": "After the exchange, use the king to support a survivor.",
-        "commonError": "Treating fxe5 as a free pawn misses ...fxg4."
+        "commonError": "Treating fxe5 as a free pawn misses ...fxg4.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1557,13 +1587,13 @@
       "prompt": "Connected wing pawns can transform into isolated survivors after the first capture. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "Black's opposite pawn has an immediate capture in both branches. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The endgame may become a single-pawn race, dependent on king distance.",
-      "explanation": "Opposed g- and h-pawns. Connected wing pawns can transform into isolated survivors after the first capture. Reference continuation: g4f5 g5h4 e1f2. Defendant alternative: h4g5 f5g4 e1f2. Black's opposite pawn has an immediate capture in both branches. Assessment at this instructional endpoint: The endgame may become a single-pawn race, dependent on king distance. Specific common error: The opposing capture must be included before assessing the resulting extra pawn. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Opposed g- and h-pawns. Connected wing pawns can transform into isolated survivors after the first capture. Reference continuation: g4f5 g5h4 e1f2. Defendant alternative: h4g5 f5g4 e1f2. Black's opposite pawn has an immediate capture in both branches. Assessment at this instructional endpoint: The endgame may become a single-pawn race, dependent on king distance. Specific common error: The opposing capture must be included before assessing the resulting extra pawn. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "Connected wing pawns can transform into isolated survivors after the first capture.",
         "defenderIdea": "Black's opposite pawn has an immediate capture in both branches.",
         "continuation": "The endgame may become a single-pawn race, dependent on king distance.",
         "misconception": "The opposing capture must be included before assessing the resulting extra pawn.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endgame may become a single-pawn race, dependent on king distance.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endgame may become a single-pawn race, dependent on king distance. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1583,7 +1613,8 @@
         "principle": "Connected wing pawns can transform into isolated survivors after the first capture.",
         "defensivePlan": "Black's opposite pawn has an immediate capture in both branches.",
         "endpoint": "The endgame may become a single-pawn race, dependent on king distance.",
-        "commonError": "The opposing capture must be included before assessing the resulting extra pawn."
+        "commonError": "The opposing capture must be included before assessing the resulting extra pawn.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1608,13 +1639,13 @@
       "prompt": "The same pawn contact becomes strategically different when Black also has a6. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "The extra black pawn remains after the exchange and may change which pawn is passed. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The endpoint is not equal material even though the two local captures trade evenly.",
-      "explanation": "The remaining black a-pawn changes the race. The same pawn contact becomes strategically different when Black also has a6. Reference continuation: a4b5 c5b4 e1f2. Defendant alternative: b4c5 b5a4 e1f2. The extra black pawn remains after the exchange and may change which pawn is passed. Assessment at this instructional endpoint: The endpoint is not equal material even though the two local captures trade evenly. Specific common error: Do not forget the a6 pawn while counting the endgame after two captures. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "The remaining black a-pawn changes the race. The same pawn contact becomes strategically different when Black also has a6. Reference continuation: a4b5 c5b4 e1f2. Defendant alternative: b4c5 b5a4 e1f2. The extra black pawn remains after the exchange and may change which pawn is passed. Assessment at this instructional endpoint: The endpoint is not equal material even though the two local captures trade evenly. Specific common error: Do not forget the a6 pawn while counting the endgame after two captures. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert.",
       "defensiveStudy": {
         "keyQuestion": "The same pawn contact becomes strategically different when Black also has a6.",
         "defenderIdea": "The extra black pawn remains after the exchange and may change which pawn is passed.",
         "continuation": "The endpoint is not equal material even though the two local captures trade evenly.",
         "misconception": "Do not forget the a6 pawn while counting the endgame after two captures.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endpoint is not equal material even though the two local captures trade evenly.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endpoint is not equal material even though the two local captures trade evenly. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1634,7 +1665,8 @@
         "principle": "The same pawn contact becomes strategically different when Black also has a6.",
         "defensivePlan": "The extra black pawn remains after the exchange and may change which pawn is passed.",
         "endpoint": "The endpoint is not equal material even though the two local captures trade evenly.",
-        "commonError": "Do not forget the a6 pawn while counting the endgame after two captures."
+        "commonError": "Do not forget the a6 pawn while counting the endgame after two captures.",
+        "method": "A pawn breakthrough often gives up one pawn to open an unstoppable route for another. Count all immediate captures, countercaptures and surviving pawn files before announcing a passer. If a king can intercept the resulting pawn, a locally clever pawn exchange may still fail to convert."
       }
     },
     {
@@ -1659,13 +1691,13 @@
       "prompt": "White's advanced a-pawn can promote before the distant h-pawn. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h4 advances the enemy passer but cannot promote on its next turn. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: After a8=Q the white queen should prevent ...h1=Q or force favorable checks.",
-      "explanation": "a-pawn promotion outruns a distant h-pawn. White's advanced a-pawn can promote before the distant h-pawn. Reference continuation: a6a7 h5h4 a7a8q. Defendant alternative: e1f2 h5h4 a6a7. ...h4 advances the enemy passer but cannot promote on its next turn. Assessment at this instructional endpoint: After a8=Q the white queen should prevent ...h1=Q or force favorable checks. Specific common error: Delaying a7 is not equivalent: every move costs one promotion tempo. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "a-pawn promotion outruns a distant h-pawn. White's advanced a-pawn can promote before the distant h-pawn. Reference continuation: a6a7 h5h4 a7a8q. Defendant alternative: e1f2 h5h4 a6a7. ...h4 advances the enemy passer but cannot promote on its next turn. Assessment at this instructional endpoint: After a8=Q the white queen should prevent ...h1=Q or force favorable checks. Specific common error: Delaying a7 is not equivalent: every move costs one promotion tempo. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "White's advanced a-pawn can promote before the distant h-pawn.",
         "defenderIdea": "...h4 advances the enemy passer but cannot promote on its next turn.",
         "continuation": "After a8=Q the white queen should prevent ...h1=Q or force favorable checks.",
         "misconception": "Delaying a7 is not equivalent: every move costs one promotion tempo.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After a8=Q the white queen should prevent ...h1=Q or force favorable checks.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. After a8=Q the white queen should prevent ...h1=Q or force favorable checks. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1685,7 +1717,8 @@
         "principle": "White's advanced a-pawn can promote before the distant h-pawn.",
         "defensivePlan": "...h4 advances the enemy passer but cannot promote on its next turn.",
         "endpoint": "After a8=Q the white queen should prevent ...h1=Q or force favorable checks.",
-        "commonError": "Delaying a7 is not equivalent: every move costs one promotion tempo."
+        "commonError": "Delaying a7 is not equivalent: every move costs one promotion tempo.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1710,13 +1743,13 @@
       "prompt": "Two b-pawn advances create a queen while the black h-pawn advances one square. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h3 is Black's fastest straightforward pawn move; queen checks may then matter. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion.",
-      "explanation": "Count the b-pawn's last two steps. Two b-pawn advances create a queen while the black h-pawn advances one square. Reference continuation: b6b7 h4h3 b7b8q. Defendant alternative: e1f2 h4h3 b6b7. ...h3 is Black's fastest straightforward pawn move; queen checks may then matter. Assessment at this instructional endpoint: A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion. Specific common error: A quiet king move loses one tempo in a short pawn race. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "Count the b-pawn's last two steps. Two b-pawn advances create a queen while the black h-pawn advances one square. Reference continuation: b6b7 h4h3 b7b8q. Defendant alternative: e1f2 h4h3 b6b7. ...h3 is Black's fastest straightforward pawn move; queen checks may then matter. Assessment at this instructional endpoint: A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion. Specific common error: A quiet king move loses one tempo in a short pawn race. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "Two b-pawn advances create a queen while the black h-pawn advances one square.",
         "defenderIdea": "...h3 is Black's fastest straightforward pawn move; queen checks may then matter.",
         "continuation": "A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion.",
         "misconception": "A quiet king move loses one tempo in a short pawn race.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1736,7 +1769,8 @@
         "principle": "Two b-pawn advances create a queen while the black h-pawn advances one square.",
         "defensivePlan": "...h3 is Black's fastest straightforward pawn move; queen checks may then matter.",
         "endpoint": "A new queen normally beats an unprotected h-pawn, but calculate king safety before assuming conversion.",
-        "commonError": "A quiet king move loses one tempo in a short pawn race."
+        "commonError": "A quiet king move loses one tempo in a short pawn race.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1761,13 +1795,13 @@
       "prompt": "Qc8+ attacks the black king on h8 along the back rank. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h2 leaves the black pawn one step from promotion, but Black must answer the queen check. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The queen's check can buy a tempo to prevent ...h1=Q.",
-      "explanation": "Promote with check from c8. Qc8+ attacks the black king on h8 along the back rank. Reference continuation: c6c7 h3h2 c7c8q. Defendant alternative: e1d2 h3h2 c6c7. ...h2 leaves the black pawn one step from promotion, but Black must answer the queen check. Assessment at this instructional endpoint: The queen's check can buy a tempo to prevent ...h1=Q. Specific common error: Not every promotion is immediately winning; the exact queen checking ray matters. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "Promote with check from c8. Qc8+ attacks the black king on h8 along the back rank. Reference continuation: c6c7 h3h2 c7c8q. Defendant alternative: e1d2 h3h2 c6c7. ...h2 leaves the black pawn one step from promotion, but Black must answer the queen check. Assessment at this instructional endpoint: The queen's check can buy a tempo to prevent ...h1=Q. Specific common error: Not every promotion is immediately winning; the exact queen checking ray matters. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "Qc8+ attacks the black king on h8 along the back rank.",
         "defenderIdea": "...h2 leaves the black pawn one step from promotion, but Black must answer the queen check.",
         "continuation": "The queen's check can buy a tempo to prevent ...h1=Q.",
         "misconception": "Not every promotion is immediately winning; the exact queen checking ray matters.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The queen's check can buy a tempo to prevent ...h1=Q.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The queen's check can buy a tempo to prevent ...h1=Q. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1787,7 +1821,8 @@
         "principle": "Qc8+ attacks the black king on h8 along the back rank.",
         "defensivePlan": "...h2 leaves the black pawn one step from promotion, but Black must answer the queen check.",
         "endpoint": "The queen's check can buy a tempo to prevent ...h1=Q.",
-        "commonError": "Not every promotion is immediately winning; the exact queen checking ray matters."
+        "commonError": "Not every promotion is immediately winning; the exact queen checking ray matters.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1812,13 +1847,13 @@
       "prompt": "After d7, Black's pawn can queen first; White must calculate whether the resulting queen ending is safe. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h1=Q changes material; d8=Q+ can follow because the white king on e3 is not checked. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The endpoint has two queens, not a proven white win. The first check has practical value.",
-      "explanation": "Two new queens, one unresolved race. After d7, Black's pawn can queen first; White must calculate whether the resulting queen ending is safe. Reference continuation: d6d7 h2h1q d7d8q. Defendant alternative: e3f4 h2h1q d6d7. ...h1=Q changes material; d8=Q+ can follow because the white king on e3 is not checked. Assessment at this instructional endpoint: The endpoint has two queens, not a proven white win. The first check has practical value. Specific common error: Never label a pawn race a win while ignoring the opponent's promotion. Outcome guidance: the full theoretical result is not asserted without tablebase proof.",
+      "explanation": "Two new queens, one unresolved race. After d7, Black's pawn can queen first; White must calculate whether the resulting queen ending is safe. Reference continuation: d6d7 h2h1q d7d8q. Defendant alternative: e3f4 h2h1q d6d7. ...h1=Q changes material; d8=Q+ can follow because the white king on e3 is not checked. Assessment at this instructional endpoint: The endpoint has two queens, not a proven white win. The first check has practical value. Specific common error: Never label a pawn race a win while ignoring the opponent's promotion. Outcome guidance: the full theoretical result is not asserted without tablebase proof. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "After d7, Black's pawn can queen first; White must calculate whether the resulting queen ending is safe.",
         "defenderIdea": "...h1=Q changes material; d8=Q+ can follow because the white king on e3 is not checked.",
         "continuation": "The endpoint has two queens, not a proven white win. The first check has practical value.",
         "misconception": "Never label a pawn race a win while ignoring the opponent's promotion.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endpoint has two queens, not a proven white win. The first check has practical value.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The endpoint has two queens, not a proven white win. The first check has practical value. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1838,7 +1873,8 @@
         "principle": "After d7, Black's pawn can queen first; White must calculate whether the resulting queen ending is safe.",
         "defensivePlan": "...h1=Q changes material; d8=Q+ can follow because the white king on e3 is not checked.",
         "endpoint": "The endpoint has two queens, not a proven white win. The first check has practical value.",
-        "commonError": "Never label a pawn race a win while ignoring the opponent's promotion."
+        "commonError": "Never label a pawn race a win while ignoring the opponent's promotion.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1863,13 +1899,13 @@
       "prompt": "White's pawn reaches e8 with a check along the eighth rank. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h3 is progress, but it leaves Black two tempi from promotion. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: Qe8+ gains a move to restrict the defender while retaining a queen.",
-      "explanation": "e-pawn queens with a checking tempo. White's pawn reaches e8 with a check along the eighth rank. Reference continuation: e6e7 h4h3 e7e8q. Defendant alternative: e3d4 h4h3 e6e7. ...h3 is progress, but it leaves Black two tempi from promotion. Assessment at this instructional endpoint: Qe8+ gains a move to restrict the defender while retaining a queen. Specific common error: Counting pawn advances without checking what the promoted queen attacks can misjudge the race. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "e-pawn queens with a checking tempo. White's pawn reaches e8 with a check along the eighth rank. Reference continuation: e6e7 h4h3 e7e8q. Defendant alternative: e3d4 h4h3 e6e7. ...h3 is progress, but it leaves Black two tempi from promotion. Assessment at this instructional endpoint: Qe8+ gains a move to restrict the defender while retaining a queen. Specific common error: Counting pawn advances without checking what the promoted queen attacks can misjudge the race. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "White's pawn reaches e8 with a check along the eighth rank.",
         "defenderIdea": "...h3 is progress, but it leaves Black two tempi from promotion.",
         "continuation": "Qe8+ gains a move to restrict the defender while retaining a queen.",
         "misconception": "Counting pawn advances without checking what the promoted queen attacks can misjudge the race.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Qe8+ gains a move to restrict the defender while retaining a queen.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. Qe8+ gains a move to restrict the defender while retaining a queen. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1889,7 +1925,8 @@
         "principle": "White's pawn reaches e8 with a check along the eighth rank.",
         "defensivePlan": "...h3 is progress, but it leaves Black two tempi from promotion.",
         "endpoint": "Qe8+ gains a move to restrict the defender while retaining a queen.",
-        "commonError": "Counting pawn advances without checking what the promoted queen attacks can misjudge the race."
+        "commonError": "Counting pawn advances without checking what the promoted queen attacks can misjudge the race.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1914,13 +1951,13 @@
       "prompt": "White promotes on f8 and checks across the eighth rank toward h8. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...h2 threatens ...h1=Q, so forcing check after promotion matters. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: A check can slow Black's passer while White's queen controls promotion squares.",
-      "explanation": "f-pawn queens one tempo before the rival. White promotes on f8 and checks across the eighth rank toward h8. Reference continuation: f6f7 h3h2 f7f8q. Defendant alternative: e3d4 h3h2 f6f7. ...h2 threatens ...h1=Q, so forcing check after promotion matters. Assessment at this instructional endpoint: A check can slow Black's passer while White's queen controls promotion squares. Specific common error: A nonchecking promotion would require a different evaluation. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "f-pawn queens one tempo before the rival. White promotes on f8 and checks across the eighth rank toward h8. Reference continuation: f6f7 h3h2 f7f8q. Defendant alternative: e3d4 h3h2 f6f7. ...h2 threatens ...h1=Q, so forcing check after promotion matters. Assessment at this instructional endpoint: A check can slow Black's passer while White's queen controls promotion squares. Specific common error: A nonchecking promotion would require a different evaluation. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "White promotes on f8 and checks across the eighth rank toward h8.",
         "defenderIdea": "...h2 threatens ...h1=Q, so forcing check after promotion matters.",
         "continuation": "A check can slow Black's passer while White's queen controls promotion squares.",
         "misconception": "A nonchecking promotion would require a different evaluation.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A check can slow Black's passer while White's queen controls promotion squares.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. A check can slow Black's passer while White's queen controls promotion squares. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1940,7 +1977,8 @@
         "principle": "White promotes on f8 and checks across the eighth rank toward h8.",
         "defensivePlan": "...h2 threatens ...h1=Q, so forcing check after promotion matters.",
         "endpoint": "A check can slow Black's passer while White's queen controls promotion squares.",
-        "commonError": "A nonchecking promotion would require a different evaluation."
+        "commonError": "A nonchecking promotion would require a different evaluation.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -1965,13 +2003,13 @@
       "prompt": "g7 attacks h8, so Black must answer the pawn check rather than promote h2. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kh7 steps away from the pawn attack and does not eliminate the white passer. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: g8=Q+ checks again, creating vital tempo against the advanced h-pawn.",
-      "explanation": "Pawn check forces a king reply. g7 attacks h8, so Black must answer the pawn check rather than promote h2. Reference continuation: g6g7 h8h7 g7g8q. Defendant alternative: e3d4 h2h1q g6g7. ...Kh7 steps away from the pawn attack and does not eliminate the white passer. Assessment at this instructional endpoint: g8=Q+ checks again, creating vital tempo against the advanced h-pawn. Specific common error: A pawn on the seventh rank can deliver check before it promotes. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "Pawn check forces a king reply. g7 attacks h8, so Black must answer the pawn check rather than promote h2. Reference continuation: g6g7 h8h7 g7g8q. Defendant alternative: e3d4 h2h1q g6g7. ...Kh7 steps away from the pawn attack and does not eliminate the white passer. Assessment at this instructional endpoint: g8=Q+ checks again, creating vital tempo against the advanced h-pawn. Specific common error: A pawn on the seventh rank can deliver check before it promotes. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "g7 attacks h8, so Black must answer the pawn check rather than promote h2.",
         "defenderIdea": "...Kh7 steps away from the pawn attack and does not eliminate the white passer.",
         "continuation": "g8=Q+ checks again, creating vital tempo against the advanced h-pawn.",
         "misconception": "A pawn on the seventh rank can deliver check before it promotes.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. g8=Q+ checks again, creating vital tempo against the advanced h-pawn.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. g8=Q+ checks again, creating vital tempo against the advanced h-pawn. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -1991,7 +2029,8 @@
         "principle": "g7 attacks h8, so Black must answer the pawn check rather than promote h2.",
         "defensivePlan": "...Kh7 steps away from the pawn attack and does not eliminate the white passer.",
         "endpoint": "g8=Q+ checks again, creating vital tempo against the advanced h-pawn.",
-        "commonError": "A pawn on the seventh rank can deliver check before it promotes."
+        "commonError": "A pawn on the seventh rank can deliver check before it promotes.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     },
     {
@@ -2016,13 +2055,13 @@
       "prompt": "h7 checks the king on g8, forcing a flight before promotion. First identify the critical king squares, the defender's strongest resource and a second legal candidate. Do not claim a forced result from only three plies.",
       "replyReason": "...Kg7 leaves g8, and h8=Q+ checks along the diagonal to g7. Compare the other branch before deciding what the king must do next.",
       "continuationReason": "After the reply, reconstruct the pawn structure: The queen must still deal with Black's distant a-pawn; this is not an automatic mate.",
-      "explanation": "H-pawn promotes with a checking move. h7 checks the king on g8, forcing a flight before promotion. Reference continuation: h6h7 g8g7 h7h8q. Defendant alternative: e3d4 a3a2 h6h7. ...Kg7 leaves g8, and h8=Q+ checks along the diagonal to g7. Assessment at this instructional endpoint: The queen must still deal with Black's distant a-pawn; this is not an automatic mate. Specific common error: Ignoring the black a-pawn after promotion is a common race error. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result.",
+      "explanation": "H-pawn promotes with a checking move. h7 checks the king on g8, forcing a flight before promotion. Reference continuation: h6h7 g8g7 h7h8q. Defendant alternative: e3d4 a3a2 h6h7. ...Kg7 leaves g8, and h8=Q+ checks along the diagonal to g7. Assessment at this instructional endpoint: The queen must still deal with Black's distant a-pawn; this is not an automatic mate. Specific common error: Ignoring the black a-pawn after promotion is a common race error. Outcome guidance: promotion gives an apparent practical winning chance, not a tablebase-certified result. Endgame method: A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately.",
       "defensiveStudy": {
         "keyQuestion": "h7 checks the king on g8, forcing a flight before promotion.",
         "defenderIdea": "...Kg7 leaves g8, and h8=Q+ checks along the diagonal to g7.",
         "continuation": "The queen must still deal with Black's distant a-pawn; this is not an automatic mate.",
         "misconception": "Ignoring the black a-pawn after promotion is a common race error.",
-        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The queen must still deal with Black's distant a-pawn; this is not an automatic mate.",
+        "reflection": "Calculate the defender's fourth ply, assess any pawn recapture or check and explain why the king's route matters. The queen must still deal with Black's distant a-pawn; this is not an automatic mate. Independent study: name the king's next legal target square, the opponent's best capture or check, and whether the pawn move spends a reserve tempo. Compare with the alternative branch before claiming a theoretical result.",
         "variations": [
           {
             "label": "Alternative pawn/king plan",
@@ -2042,7 +2081,8 @@
         "principle": "h7 checks the king on g8, forcing a flight before promotion.",
         "defensivePlan": "...Kg7 leaves g8, and h8=Q+ checks along the diagonal to g7.",
         "endpoint": "The queen must still deal with Black's distant a-pawn; this is not an automatic mate.",
-        "commonError": "Ignoring the black a-pawn after promotion is a common race error."
+        "commonError": "Ignoring the black a-pawn after promotion is a common race error.",
+        "method": "A pawn race is decided by exact promotion tempi, legal checks, enemy king proximity and what newly promoted queens attack. Apply the square-of-the-pawn idea while remembering the first double-step and any promotion-with-check exception. After each promotion, inspect whether the opponent is in check before assuming it can promote immediately."
       }
     }
   ]
