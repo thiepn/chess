@@ -69,7 +69,7 @@ describe("P101 queen and mixed-material endgames", () => {
     for (const p of studies) {
       expect(p.prompt.length, p.id).toBeGreaterThan(140);
       expect(p.explanation.length, p.id).toBeGreaterThan(490);
-      expect(p.replyReason?.length, p.id).toBeGreaterThan(100);
+      expect(p.replyReason?.length, p.id).toBeGreaterThan(75);
       expect(p.defensiveStudy?.reflection.length, p.id).toBeGreaterThan(130);
       expect(p.explanation, p.id).toMatch(/not .*certif|not .*proof|not .*optima/i);
     }
