@@ -50,11 +50,11 @@
           {
             "label": "Misleading candidate · 3 plies",
             "moves": [
-              "g1f2",
+              "g1f1",
               "d2d1",
-              "f2e3"
+              "f1f2"
             ],
-            "explanation": "Why the alternative differs: 1.Kf2 permits ...Rxd1, abandoning the only active rook. White has an a-pawn that can support a future conversion; count it after exchanges."
+            "explanation": "1.Kf1?! permits ...Rxd1+ and gives up the last rook; Kf2 merely escapes. Capturing on d2 first preserves the material edge."
           }
         ]
       }
@@ -106,11 +106,11 @@
           {
             "label": "Misleading candidate · 3 plies",
             "moves": [
-              "g1f2",
+              "g1f1",
               "d2d1",
-              "f2e3"
+              "f1f2"
             ],
-            "explanation": "Why the alternative differs: 1.Kf2 permits ...Rxd1, abandoning the only active rook. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material."
+            "explanation": "1.Kf1?! permits ...Rxd1+ and gives up the last rook; Kf2 merely escapes. Capturing on d2 first preserves the material edge."
           }
         ]
       }
@@ -286,7 +286,7 @@
     {
       "id": "calc:p97-06",
       "title": "Knight fork and recapture — Black pawn reserve",
-      "fen": "2q1k3/p7/8/5N2/8/8/8/4K3 w - - 0 1",
+      "fen": "2q1k3/p7/8/5N2/8/8/7P/4K3 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -342,7 +342,7 @@
     {
       "id": "calc:p97-07",
       "title": "Rook-rank chase — White pawn reserve",
-      "fen": "4k3/8/8/8/8/8/P7/R5K1 w - - 0 1",
+      "fen": "4k3/8/8/8/8/8/1P6/R5K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -398,7 +398,7 @@
     {
       "id": "calc:p97-08",
       "title": "Rook-rank chase — Black pawn reserve",
-      "fen": "4k3/p7/8/8/8/8/8/R5K1 w - - 0 1",
+      "fen": "4k3/8/1p6/8/8/8/8/R5K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -417,7 +417,7 @@
       "prompt": "Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. This time: Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Calculate the five-ply reference and compare the defender's second option before showing the board.",
       "replyReason": "The defender can change the king's flight or attacking reply: a1a8 e8f7 a8a7 f7e6 a7a6. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
       "continuationReason": "Follow the line to the fifth ply and tally material: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
-      "explanation": "Rook-rank chase. Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Reference: a1a8 e8d7 a8a7 d7d6 a7a6. Defender branch: a1a8 e8f7 a8a7 f7e6 a7a6. Alternative candidate: a1a7 e8d8 a7a8. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Assuming a king must remain on e8 turns a check into an invented mate.. The authored continuations are instructional, not engine-certified unique moves.",
+      "explanation": "Rook-rank chase. Ra8+ begins a rook pursuit. Both ...Kd7 and ...Kf7 are playable flights, forcing new checking ranks. Reference: a1a8 e8d7 a8a7 d7d6 a7a6. Defender branch: a1a8 e8f7 a8a7 f7e6 a7a6. Alternative candidate: a1a7 e8d8 a7a8. Endpoint: The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition. Black's b-pawn survives many variations and changes the ending; do not erase it when counting material. Misconception: Assuming a king must remain on e8 turns a check into an invented mate.. The authored continuations are instructional, not engine-certified unique moves.",
       "source": "authored",
       "sourceLabel": "P97 · Forcing decisions",
       "difficulty": 5,
@@ -426,7 +426,7 @@
         "defenderIdea": "a1a8 e8f7 a8a7 f7e6 a7a6",
         "continuation": "The rook can keep checking, but the opponent retains king mobility. Do not infer mate from repetition.",
         "misconception": "Assuming a king must remain on e8 turns a check into an invented mate.",
-        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's a-pawn survives many variations and changes the ending; do not erase it when counting material.",
+        "reflection": "Contrast the two defender continuations and the pawn inventory. Black's b-pawn survives many variations and changes the ending; do not erase it when counting material.",
         "variations": [
           {
             "label": "Resistant reply · 5 plies",
