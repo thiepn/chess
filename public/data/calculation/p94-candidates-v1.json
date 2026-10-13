@@ -229,7 +229,7 @@
         "calculation.visualization"
       ],
       "title": "Rook check and rank transfer",
-      "prompt": "Identify a forcing rook move and forecast the next checking rank.",
+      "prompt": "Identify a forcing rook move and forecast the next checking rank. Name a nonchecking alternative before selecting a line.",
       "fen": "6k1/8/8/8/8/8/8/R5K1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "a1a8",
@@ -359,7 +359,7 @@
         "h8h7"
       ],
       "explanation": "Rh8+ uses the open h-file and eighth rank; do not count the check as a win without looking at the king's escape. Compare 1.Rh3, which leaves the checking route unused and gives Black time to improve. This is a replayable instructional line, not a claim that every other legal move is inferior.",
-      "replyReason": "...Kd7 is a legal king flight that abandons the back rank.",
+      "replyReason": "...Kd7 is a legal king flight that abandons the back rank. The knight on c3 still requires evaluation.",
       "continuationReason": "Rh7+ creates a second check from the seventh rank, but the knight remains on the board.",
       "source": "authored",
       "sourceLabel": "P94 · Checks first",
@@ -407,7 +407,7 @@
         "d3c4"
       ],
       "explanation": "Bxd3 eliminates the advanced knight; after the capture, relocating the bishop can keep useful diagonals. Compare 1.Bf3, which preserves the bishop but leaves the knight's activity intact. This is a replayable instructional line, not a claim that every other legal move is inferior.",
-      "replyReason": "...Kf7 activates Black's king after the minor-piece capture.",
+      "replyReason": "...Kf7 activates Black's king after the minor-piece capture. Its destination must be checked for threats before the bishop's next move.",
       "continuationReason": "Bc4 develops the remaining bishop toward central squares; conversion still depends on the rest of the position.",
       "source": "authored",
       "sourceLabel": "P94 · Captures and trades",
@@ -527,7 +527,7 @@
         "e7a7"
       ],
       "explanation": "Rxe7 trades off the black rook and leaves White with the active rook. Distinguish a material advantage from a particular checking technique. Compare 1.Ra1, which postpones the capture and leaves a second active rook on the board. This is a replayable instructional line, not a claim that every other legal move is inferior.",
-      "replyReason": "...Kf8 is a legal defender move after the exchange.",
+      "replyReason": "...Kf8 is a legal defender move after the exchange. It does not immediately capture or attack the surviving white rook.",
       "continuationReason": "Ra7 keeps the rook active horizontally without making a false forced-mate claim.",
       "source": "authored",
       "sourceLabel": "P94 · Captures and trades",
@@ -720,7 +720,7 @@
       ],
       "explanation": "c4 gains queenside space, then Nc3 develops the knight behind the new pawn front. Compare 1.Na3, which heads to a different network of squares after c4. This is a replayable instructional line, not a claim that every other legal move is inferior.",
       "replyReason": "...Kf7 is a legal defender improvement in this sparse demonstration position.",
-      "continuationReason": "Nc3 supports d5/e4 and begins a plan behind the c-pawn.",
+      "continuationReason": "Nc3 supports d5/e4 and begins a plan behind the c-pawn. This is a quiet move, not a forcing check.",
       "source": "authored",
       "sourceLabel": "P94 · Quiet candidates",
       "difficulty": 2
@@ -733,7 +733,7 @@
         "calculation.visualization"
       ],
       "title": "Open the bishop's path first",
-      "prompt": "Compare moving the bishop immediately with preparing its route.",
+      "prompt": "Compare moving the bishop immediately with preparing its route. Watch how the e-pawn initially obstructs the f1 bishop.",
       "fen": "4k3/8/8/8/8/8/4P3/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "e2e4",
