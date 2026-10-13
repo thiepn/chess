@@ -10,8 +10,6 @@ import {
 } from "lucide-react";
 import {
   useEffect,
-  lazy,
-  Suspense,
   useMemo,
   useRef,
   useState,
@@ -33,7 +31,7 @@ import { CalculationStudyPanel } from "./CalculationStudyPanel";
 import { studyMaterialFor } from "../calculation/studyDelivery";
 import { verifiedDeepBranches } from "../calculation/deepCalculation";
 
-const DeepCalculationLab = lazy(() => import("./DeepCalculationLab").then(module => ({ default: module.DeepCalculationLab })));
+import { DeepCalculationLab } from "./DeepCalculationLab";
 
 interface CalculationRunnerProps {
   activity: TrainingActivity;
@@ -693,7 +691,6 @@ export function CalculationRunner({
 
 
             {phase === "result" && hasDeepBranches && !deepDone && (
-              <Suspense fallback={<p role="status">Preparing multi-ply study…</p>}>
                 <DeepCalculationLab
                   position={position}
                   storageOwner={storageOwner}
@@ -703,7 +700,6 @@ export function CalculationRunner({
                     return engine ? engine.evaluate(fen, 10) : null;
                   }}
                 />
-              </Suspense>
             )}
 
             {phase === "result" && (!hasDeepBranches || deepDone) && !showWorkedReview && hasIndependentStudy && (
