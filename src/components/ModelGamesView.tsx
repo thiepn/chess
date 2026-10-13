@@ -1,3 +1,4 @@
+import { lazy, Suspense, useState } from "react";
 import {
   BookOpen,
   ChevronRight,
@@ -17,17 +18,22 @@ import type {
   ModelGameProgress,
 } from "../model-games/types";
 
+const MasterGameLibrary = lazy(() => import("./MasterGameLibrary").then((module) => ({ default: module.MasterGameLibrary })));
+
 interface ModelGamesViewProps {
+  owner: string;
   progress: Record<string, ModelGameProgress>;
   onStartGame: (gameId: string) => void;
   onBack: () => void;
 }
 
 export function ModelGamesView({
+  owner,
   progress,
   onStartGame,
   onBack,
 }: ModelGamesViewProps) {
+  const [openMaster, setOpenMaster] = useState(false);
   const completed = modelGames.filter(
     (game) =>
       (progress[game.id]?.completions ?? 0) > 0,
@@ -172,6 +178,18 @@ export function ModelGamesView({
           any useful position can be saved for later practice.
         </p>
       </section>
+      <section className="p113-launch" aria-label="P113 historical complete game lab">
+        <p className="eyebrow">P113 · NEXT STAGE</p>
+        <h2>Study complete master games</h2>
+        <p>Eight additional source-grounded historical scores, 32 independent decision points, move-by-move replay, local legal variations and unscored writing. The four existing scored model games above remain unchanged.</p>
+        <button className="secondary" type="button" aria-expanded={openMaster}
+          onClick={() => setOpenMaster(value => !value)}>
+          {openMaster ? "Hide master-game workspace" : "Open master-game workspace"}
+        </button>
+      </section>
+      {openMaster && <Suspense fallback={<p role="status">Opening master-game workspace…</p>}>
+        <MasterGameLibrary owner={owner} />
+      </Suspense>}
     </section>
   );
 }
