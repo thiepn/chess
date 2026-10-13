@@ -14,51 +14,51 @@
       "summary": "Space, restraint and pawn commitments. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"Baltimore\"]\n[Date \"1885.??.??\"]\n[White \"Steinitz, W\"]\n[Black \"Sellman, A.G.\"]\n[Result \"1-0\"]\n\n1. e4 e6 2. d4 d5 3. Nc3 Nf6 4. e5 Nfd7 5. f4 c5 6. dxc5 Bxc5 7. Nf3 a6 8. Bd3 Nc6 9. Qe2 Nb4 10. Bd2 b5 11. Nd1 Nxd3+ 12. cxd3 Qb6 13. b4 Be7 14. a3 f5 15. Rc1 Bb7 16. Be3 Qd8 17. Nd4 Nf8 18. h5 Nc3 19. Kf7 Nb1 20. g6 Nd2 21. Nd7 N2b3 22. Rc8 Na5 23. Rxc8 Qxc8 24. Rc1 Qb8 25. Qc2 Bd8 26. Nac6 Nxd8+ 27. Rxd8 Qc7 28. Qb8 Bf2 29. Qb6 Nf3 30. Qxc7 Rxc7 31. Ng5 Nf8 32. Bc5 Nd7 33. Bd6 1-0",
+      "pgn": "[Event \"?\"]\n[Site \"Baltimore\"]\n[Date \"1885.??.??\"]\n[White \"Steinitz, W\"]\n[Black \"Sellman, A.G.\"]\n[Result \"1-0\"]\n\n1. e4 e6 2. d4 d5 3. Nc3 Nf6 4. e5 Nfd7 5. f4 c5 6. dxc5 Bxc5 7. Nf3 a6 8. Bd3 Nc6 9. Qe2 Nb4 10. Bd2 b5 11. Nd1 Nxd3+ 12. cxd3 Qb6 13. b4 Be7 14. a3 f5 15. Rc1 Bb7 16. Be3 Qd8 17. Nd4 Nf8 18. O-O h5 19. Nc3 Kf7 20. Nb1 g6 21. Nd2 Nd7 22. N2b3 Rc8 23. Na5 Ba8 24. Rxc8 Qxc8 25. Rc1 Qb8 26. Qc2 Bd8 27. Nac6 Qb7 28. Nxd8+ Rxd8 29. Qc7 Qb8 30. Bf2 Qb6 31. Nf3 Qxc7 32. Rxc7 Ke8 33. Ng5 Nf8 34. Bc5 Nd7 35. Bd6 1-0",
       "checkpoints": [
         {
           "id": "steinitz-sellman-1885-decision-1",
-          "ply": 12,
+          "ply": 13,
           "focus": "Contest the French center without surrendering development",
           "lens": "opening pawn chain",
-          "prompt": "Before White's recorded Nf3, assess the position without revealing the move. Contest the French center without surrendering development. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Nf3, a6, Bd3. Nf3 is a developing, centralizing or restraining move. Inspect the board immediately before and after Nf3: identify which squares, files or pawn contacts have changed. Then replay a6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Nf3 with a unique best move, or assume a6 is forced. The repair is to name an independent candidate, replay Nf3 a6 Bd3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Nf3. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Nf3 a6 Bd3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented a6, assess the board without moving ahead. Contest the French center without surrendering development. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is a6, Bd3, Nc6. The recorded a6 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Bd3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating a6 as engine-certified or assuming Bd3 is the only defence. Replay a6 Bd3 Nc6 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to a6, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: a6 Bd3 Nc6. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "steinitz-sellman-1885-decision-2",
-          "ply": 26,
+          "ply": 27,
           "focus": "Evaluate the consequences of a pawn capture",
           "lens": "structural commitment",
-          "prompt": "Before White's recorded a3, assess the position without revealing the move. Evaluate the consequences of a pawn capture. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues a3, f5, Rc1. a3 is a developing, centralizing or restraining move. Inspect the board immediately before and after a3: identify which squares, files or pawn contacts have changed. Then replay f5 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played a3 with a unique best move, or assume f5 is forced. The repair is to name an independent candidate, replay a3 f5 Rc1 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to a3. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: a3 f5 Rc1. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented f5, assess the board without moving ahead. Evaluate the consequences of a pawn capture. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is f5, Rc1, Bb7. The recorded f5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Rc1 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating f5 as engine-certified or assuming Rc1 is the only defence. Replay f5 Rc1 Bb7 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to f5, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: f5 Rc1 Bb7. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "steinitz-sellman-1885-decision-3",
-          "ply": 40,
+          "ply": 43,
           "focus": "Track how king safety changes after exchanges",
           "lens": "piece activity",
-          "prompt": "Before White's recorded Nd7, assess the position without revealing the move. Track how king safety changes after exchanges. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Nd7, N2b3, Rc8. Nd7 is a developing, centralizing or restraining move. Inspect the board immediately before and after Nd7: identify which squares, files or pawn contacts have changed. Then replay N2b3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Nd7 with a unique best move, or assume N2b3 is forced. The repair is to name an independent candidate, replay Nd7 N2b3 Rc8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Nd7. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Nd7 N2b3 Rc8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Rc8, assess the board without moving ahead. Track how king safety changes after exchanges. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Rc8, Na5, Ba8. The recorded Rc8 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Na5 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Rc8 as engine-certified or assuming Na5 is the only defence. Replay Rc8 Na5 Ba8 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Rc8, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Rc8 Na5 Ba8. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "steinitz-sellman-1885-decision-4",
-          "ply": 53,
+          "ply": 56,
           "focus": "Find the conversion plan after the center opens",
           "lens": "conversion",
-          "prompt": "Before Black's recorded Qc7, assess the position without revealing the move. Find the conversion plan after the center opens. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Qc7, Qb8, Bf2. Qc7 is a developing, centralizing or restraining move. Inspect the board immediately before and after Qc7: identify which squares, files or pawn contacts have changed. Then replay Qb8 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Qc7 with a unique best move, or assume Qb8 is forced. The repair is to name an independent candidate, replay Qc7 Qb8 Bf2 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Qc7. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Qc7 Qb8 Bf2. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Qc7, assess the board without moving ahead. Find the conversion plan after the center opens. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Qc7, Qb8, Bf2. The recorded Qc7 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Qb8 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Qc7 as engine-certified or assuming Qb8 is the only defence. Replay Qc7 Qb8 Bf2 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Qc7, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Qc7 Qb8 Bf2. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -73,51 +73,51 @@
       "summary": "Plan continuity through a changing position. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"1909.??.??\"]\n[White \"Lasker\"]\n[Black \"Janowski\"]\n[Result \"1-0\"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bc6 dxc6 5. d4 exd4 6. Qd4 Bg4 7. Nc3 Qd4 8. Nd4 Be3 9. Bb4 Ne2 10. Be2 Ke2 11. Bc3 bc3 12. Nf6 f3 13. Nd7 Rad1 14. Ne5 Rd4 15. b6 f4 16. Nd7 Rhd1 17. c5 R4d3 18. Nb8 Kf3 19. Rde8 f5 20. f6 g4 21. Re7 Bf4 22. Rhe8 Re3 23. Nc6 g5 24. Na5 h4 25. Nc4 Re2 26. Rf7 Rg1 27. Kd7 h5 28. Nd6 h6 29. fxg5 Rg5 30. g6 fxg6 31. hxg6 Rg6 32. Ref8 Rg7 33. Rg7 hxg7 34. Rg8 Rg2 35. Ne8 Be5 36. Ke6 Kf4 37. Kf7 Kf5 1-0",
+      "pgn": "[Event \"?\"]\n[Site \"?\"]\n[Date \"1909.??.??\"]\n[White \"Lasker\"]\n[Black \"Janowski\"]\n[Result \"1-0\"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bc6 dxc6 5. d4 exd4 6. Qd4 Bg4 7. Nc3 Qd4 8. Nd4 O-O-O 9. Be3 Bb4 10. Ne2 Be2 11. Ke2 Bc3 12. bxc3 Nf6 13. f3 Nd7 14. Rad1 Ne5 15. Rd4 b6 16. f4 Nd7 17. Rhd1 c5 18. R4d3 Nb8 19. Kf3 Rde8 20. f5 f6 21. g4 Re7 22. Bf4 Rhe8 23. Re3 Nc6 24. g5 Na5 25. h4 Nc4 26. Re2 Rf7 27. Rg1 Kd7 28. h5 Nd6 29. h6 fxg5 30. Rg5 g6 31. fxg6 hxg6 32. Rg6 Ref8 33. Rg7 Rg7 34. hxg7 Rg8 35. Rg2 Ne8 36. Be5 Ke6 37. Kf4 Kf7 38. Kf5 1-0",
       "checkpoints": [
         {
           "id": "lasker-janowski-1909-decision-1",
           "ply": 14,
           "focus": "Separate immediate threats from long-term coordination",
           "lens": "opening priorities",
-          "prompt": "Before White's recorded Nd4, assess the position without revealing the move. Separate immediate threats from long-term coordination. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Nd4, Be3, Bb4. Nd4 is a developing, centralizing or restraining move. Inspect the board immediately before and after Nd4: identify which squares, files or pawn contacts have changed. Then replay Be3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Nd4 with a unique best move, or assume Be3 is forced. The repair is to name an independent candidate, replay Nd4 Be3 Bb4 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Nd4. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Nd4 Be3 Bb4. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Nd4, assess the board without moving ahead. Separate immediate threats from long-term coordination. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Nd4, O-O-O, Be3. The recorded Nd4 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply O-O-O is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Nd4 as engine-certified or assuming O-O-O is the only defence. Replay Nd4 O-O-O Be3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Nd4, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Nd4 O-O-O Be3. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "lasker-janowski-1909-decision-2",
-          "ply": 29,
+          "ply": 30,
           "focus": "Re-evaluate central control after a piece manoeuvre",
           "lens": "piece coordination",
-          "prompt": "Before Black's recorded f4, assess the position without revealing the move. Re-evaluate central control after a piece manoeuvre. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues f4, Nd7, Rhd1. f4 is a developing, centralizing or restraining move. Inspect the board immediately before and after f4: identify which squares, files or pawn contacts have changed. Then replay Nd7 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played f4 with a unique best move, or assume Nd7 is forced. The repair is to name an independent candidate, replay f4 Nd7 Rhd1 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to f4. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: f4 Nd7 Rhd1. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented f4, assess the board without moving ahead. Re-evaluate central control after a piece manoeuvre. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is f4, Nd7, Rhd1. The recorded f4 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Nd7 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating f4 as engine-certified or assuming Nd7 is the only defence. Replay f4 Nd7 Rhd1 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to f4, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: f4 Nd7 Rhd1. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "lasker-janowski-1909-decision-3",
-          "ply": 46,
+          "ply": 47,
           "focus": "Compare pawn advances with piece improvement",
           "lens": "pawn commitment",
-          "prompt": "Before White's recorded Na5, assess the position without revealing the move. Compare pawn advances with piece improvement. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Na5, h4, Nc4. Na5 is a developing, centralizing or restraining move. Inspect the board immediately before and after Na5: identify which squares, files or pawn contacts have changed. Then replay h4 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Na5 with a unique best move, or assume h4 is forced. The repair is to name an independent candidate, replay Na5 h4 Nc4 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Na5. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Na5 h4 Nc4. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Na5, assess the board without moving ahead. Compare pawn advances with piece improvement. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Na5, h4, Nc4. The recorded Na5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply h4 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Na5 as engine-certified or assuming h4 is the only defence. Replay Na5 h4 Nc4 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Na5, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Na5 h4 Nc4. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "lasker-janowski-1909-decision-4",
-          "ply": 60,
+          "ply": 61,
           "focus": "Recognize defensive resources late in the game",
           "lens": "defensive resistance",
-          "prompt": "Before White's recorded hxg6, assess the position without revealing the move. Recognize defensive resources late in the game. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues hxg6, Rg6, Ref8. hxg6 is a capture changing the material or pawn structure. Inspect the board immediately before and after hxg6: identify which squares, files or pawn contacts have changed. Then replay Rg6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played hxg6 with a unique best move, or assume Rg6 is forced. The repair is to name an independent candidate, replay hxg6 Rg6 Ref8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to hxg6. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: hxg6 Rg6 Ref8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented hxg6, assess the board without moving ahead. Recognize defensive resources late in the game. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is hxg6, Rg6, Ref8. The recorded hxg6 is a capture that changes material or pawn structure. Compare the board before and after the move: explain which squares or lines change. The reply Rg6 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating hxg6 as engine-certified or assuming Rg6 is the only defence. Replay hxg6 Rg6 Ref8 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to hxg6, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: hxg6 Rg6 Ref8. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -132,51 +132,51 @@
       "summary": "Small advantages and active exchanges. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"Margate\"]\n[Date \"1939.??.??\"]\n[White \"Capablanca\"]\n[Black \"Golombek, H\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 d5 5. cxd5 exd5 6. Bg5 c6 7. e3 Nbd7 8. Bd3 h6 9. Bh4 Nf3 10. Re8 Be7 11. Bg3 Nf8 12. h3 Be6 13. Rab1 Nh5 14. Bh2 g6 15. Ne5 Ng7 16. b4 Bf5 17. Na4 Bxd3 18. Qxd3 Nd7 19. Rfc1 Nxe5 20. Bxe5 Bd6 21. Bxd6 Qxd6 22. b5 cxb5 23. Qxb5 Ne6 24. Nc3 Red8 25. Qxb7 Qa3 26. Nxd5 Qxa2 27. Nb4 Qa4 28. Nc6 1-0",
+      "pgn": "[Event \"?\"]\n[Site \"Margate\"]\n[Date \"1939.??.??\"]\n[White \"Capablanca\"]\n[Black \"Golombek, H\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qc2 d5 5. cxd5 exd5 6. Bg5 c6 7. e3 Nbd7 8. Bd3 h6 9. Bh4 O-O 10. Nf3 Re8 11. O-O Be7 12. Bg3 Nf8 13. h3 Be6 14. Rab1 Nh5 15. Bh2 g6 16. Ne5 Ng7 17. b4 Bf5 18. Na4 Bxd3 19. Qxd3 Nd7 20. Rfc1 Nxe5 21. Bxe5 Bd6 22. Bxd6 Qxd6 23. b5 cxb5 24. Qxb5 Ne6 25. Nc3 Red8 26. Qxb7 Qa3 27. Nxd5 Qxa2 28. Nb4 Qa4 29. Nc6 1-0",
       "checkpoints": [
         {
           "id": "capablanca-golombek-1939-decision-1",
           "ply": 10,
           "focus": "Identify the central structure after the initial exchanges",
           "lens": "pawn structure",
-          "prompt": "Before White's recorded Bg5, assess the position without revealing the move. Identify the central structure after the initial exchanges. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Bg5, c6, e3. Bg5 is a developing, centralizing or restraining move. Inspect the board immediately before and after Bg5: identify which squares, files or pawn contacts have changed. Then replay c6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Bg5 with a unique best move, or assume c6 is forced. The repair is to name an independent candidate, replay Bg5 c6 e3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Bg5. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Bg5 c6 e3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Bg5, assess the board without moving ahead. Identify the central structure after the initial exchanges. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bg5, c6, e3. The recorded Bg5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply c6 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bg5 as engine-certified or assuming c6 is the only defence. Replay Bg5 c6 e3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bg5, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bg5 c6 e3. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "capablanca-golombek-1939-decision-2",
           "ply": 22,
           "focus": "Choose squares for the least active pieces",
           "lens": "development",
-          "prompt": "Before White's recorded h3, assess the position without revealing the move. Choose squares for the least active pieces. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues h3, Be6, Rab1. h3 is a developing, centralizing or restraining move. Inspect the board immediately before and after h3: identify which squares, files or pawn contacts have changed. Then replay Be6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played h3 with a unique best move, or assume Be6 is forced. The repair is to name an independent candidate, replay h3 Be6 Rab1 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to h3. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: h3 Be6 Rab1. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Bg3, assess the board without moving ahead. Choose squares for the least active pieces. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bg3, Nf8, h3. The recorded Bg3 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Nf8 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bg3 as engine-certified or assuming Nf8 is the only defence. Replay Bg3 Nf8 h3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bg3, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bg3 Nf8 h3. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "capablanca-golombek-1939-decision-3",
-          "ply": 34,
+          "ply": 35,
           "focus": "Track open-file access after a material exchange",
           "lens": "exchange decision",
-          "prompt": "Before White's recorded Qxd3, assess the position without revealing the move. Track open-file access after a material exchange. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Qxd3, Nd7, Rfc1. Qxd3 is a capture changing the material or pawn structure. Inspect the board immediately before and after Qxd3: identify which squares, files or pawn contacts have changed. Then replay Nd7 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Qxd3 with a unique best move, or assume Nd7 is forced. The repair is to name an independent candidate, replay Qxd3 Nd7 Rfc1 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Qxd3. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Qxd3 Nd7 Rfc1. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Bxd3, assess the board without moving ahead. Track open-file access after a material exchange. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bxd3, Qxd3, Nd7. The recorded Bxd3 is a capture that changes material or pawn structure. Compare the board before and after the move: explain which squares or lines change. The reply Qxd3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bxd3 as engine-certified or assuming Qxd3 is the only defence. Replay Bxd3 Qxd3 Nd7 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bxd3, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bxd3 Qxd3 Nd7. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "capablanca-golombek-1939-decision-4",
-          "ply": 45,
+          "ply": 46,
           "focus": "Translate initiative into a concrete continuation",
           "lens": "late-game conversion",
-          "prompt": "Before Black's recorded Ne6, assess the position without revealing the move. Translate initiative into a concrete continuation. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Ne6, Nc3, Red8. Ne6 is a developing, centralizing or restraining move. Inspect the board immediately before and after Ne6: identify which squares, files or pawn contacts have changed. Then replay Nc3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Ne6 with a unique best move, or assume Nc3 is forced. The repair is to name an independent candidate, replay Ne6 Nc3 Red8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Ne6. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Ne6 Nc3 Red8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Qxb5, assess the board without moving ahead. Translate initiative into a concrete continuation. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Qxb5, Ne6, Nc3. The recorded Qxb5 is a capture that changes material or pawn structure. Compare the board before and after the move: explain which squares or lines change. The reply Ne6 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Qxb5 as engine-certified or assuming Ne6 is the only defence. Replay Qxb5 Ne6 Nc3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Qxb5, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Qxb5 Ne6 Nc3. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -191,51 +191,51 @@
       "summary": "Counterplay rather than passive defence. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"Baden - Baden\"]\n[Date \"1925.??.??\"]\n[White \"Reti\"]\n[Black \"Alekhine\"]\n[Result \"0-1\"]\n\n1. g3 e5 2. Nf3 e4 3. Nd4 d5 4. d3 ed3 5. Qxd3 Nf6 6. Bg2 Bb4+ 7. Bd2 Bxd2 8. Nxd2 c4 9. Na6 cd5 10. Nb4 Qc4 11. Nbd5 N2b3 12. c6 Re8 13. Rfd1 Bg4 14. Rd2 Qc8 15. Nc5 Bh3 16. Bf3 Bg4 17. Bg2 Bh3 18. Bf3 Bg4 19. Bh1 h5 20. b4 a6 21. Rc1 h4 22. a4 hxg3 23. hxg3 Qc7 24. b5 ab5 25. ab5 Re3 26. Nf3 cxb5 27. Qxb5 Nc3 28. Qxb7 Qxb7 29. Nxb7 Nxe2+ 30. Kh2 Ne4 31. Rc4 Nf2 32. Bg2 Be6 33. Rcc2 Ng4+ 34. Kh3 Ne5+ 35. Kh2 Rf3 36. Rxe2 Ng4+ 37. Kh3 Ne3+ 38. Kh2 Nxc2 39. Bxf3 Nd4 40. Rf2 Nxf3 41. Rxf3 Bd5 0-1",
+      "pgn": "[Event \"?\"]\n[Site \"Baden - Baden\"]\n[Date \"1925.??.??\"]\n[White \"Reti\"]\n[Black \"Alekhine\"]\n[Result \"0-1\"]\n\n1. g3 e5 2. Nf3 e4 3. Nd4 d5 4. d3 exd3 5. Qxd3 Nf6 6. Bg2 Bb4+ 7. Bd2 Bxd2 8. Nxd2 O-O 9. c4 Na6 10. cxd5 Nb4 11. Qc4 Nbd5 12. N2b3 c6 13. O-O Re8 14. Rfd1 Bg4 15. Rd2 Qc8 16. Nc5 Bh3 17. Bf3 Bg4 18. Bg2 Bh3 19. Bf3 Bg4 20. Bh1 h5 21. b4 a6 22. Rc1 h4 23. a4 hxg3 24. hxg3 Qc7 25. b5 axb5 26. axb5 Re3 27. Nf3 cxb5 28. Qxb5 Nc3 29. Qxb7 Qxb7 30. Nxb7 Nxe2+ 31. Kh2 Ne4 32. Rc4 Nf2 33. Bg2 Be6 34. Rcc2 Ng4+ 35. Kh3 Ne5+ 36. Kh2 Rf3 37. Rxe2 Ng4+ 38. Kh3 Ne3+ 39. Kh2 Nxc2 40. Bxf3 Nd4 41. Rf2 Nxf3 42. Rxf3 Bd5 0-1",
       "checkpoints": [
         {
           "id": "reti-alekhine-1925-decision-1",
           "ply": 15,
           "focus": "Spot the first challenge to the central pawns",
           "lens": "central counterplay",
-          "prompt": "Before Black's recorded c4, assess the position without revealing the move. Spot the first challenge to the central pawns. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues c4, Na6, cd5. c4 is a developing, centralizing or restraining move. Inspect the board immediately before and after c4: identify which squares, files or pawn contacts have changed. Then replay Na6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played c4 with a unique best move, or assume Na6 is forced. The repair is to name an independent candidate, replay c4 Na6 cd5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to c4. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: c4 Na6 cd5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented O-O, assess the board without moving ahead. Spot the first challenge to the central pawns. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is O-O, c4, Na6. The recorded O-O is a castling move that also activates a rook. Compare the board before and after the move: explain which squares or lines change. The reply c4 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating O-O as engine-certified or assuming c4 is the only defence. Replay O-O c4 Na6 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to O-O, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: O-O c4 Na6. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "reti-alekhine-1925-decision-2",
-          "ply": 32,
+          "ply": 33,
           "focus": "Ask what a developing move prevents",
           "lens": "restrictive manoeuvre",
-          "prompt": "Before White's recorded Bg2, assess the position without revealing the move. Ask what a developing move prevents. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Bg2, Bh3, Bf3. Bg2 is a developing, centralizing or restraining move. Inspect the board immediately before and after Bg2: identify which squares, files or pawn contacts have changed. Then replay Bh3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Bg2 with a unique best move, or assume Bh3 is forced. The repair is to name an independent candidate, replay Bg2 Bh3 Bf3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Bg2. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Bg2 Bh3 Bf3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Bg4, assess the board without moving ahead. Ask what a developing move prevents. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bg4, Bg2, Bh3. The recorded Bg4 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Bg2 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bg4 as engine-certified or assuming Bg2 is the only defence. Replay Bg4 Bg2 Bh3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bg4, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bg4 Bg2 Bh3. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "reti-alekhine-1925-decision-3",
-          "ply": 51,
+          "ply": 52,
           "focus": "Explain the defender's forcing reply before committing",
           "lens": "opponent resources",
-          "prompt": "Before Black's recorded cxb5, assess the position without revealing the move. Explain the defender's forcing reply before committing. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues cxb5, Qxb5, Nc3. cxb5 is a capture changing the material or pawn structure. Inspect the board immediately before and after cxb5: identify which squares, files or pawn contacts have changed. Then replay Qxb5 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played cxb5 with a unique best move, or assume Qxb5 is forced. The repair is to name an independent candidate, replay cxb5 Qxb5 Nc3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to cxb5. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: cxb5 Qxb5 Nc3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Nf3, assess the board without moving ahead. Explain the defender's forcing reply before committing. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Nf3, cxb5, Qxb5. The recorded Nf3 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply cxb5 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Nf3 as engine-certified or assuming cxb5 is the only defence. Replay Nf3 cxb5 Qxb5 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Nf3, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Nf3 cxb5 Qxb5. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "reti-alekhine-1925-decision-4",
-          "ply": 67,
+          "ply": 68,
           "focus": "Calculate checks and counterchecks in a sharp phase",
           "lens": "forcing play",
-          "prompt": "Before Black's recorded Ne5+, assess the position without revealing the move. Calculate checks and counterchecks in a sharp phase. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Ne5+, Kh2, Rf3. Ne5+ is a forcing check. Inspect the board immediately before and after Ne5+: identify which squares, files or pawn contacts have changed. Then replay Kh2 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Ne5+ with a unique best move, or assume Kh2 is forced. The repair is to name an independent candidate, replay Ne5+ Kh2 Rf3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Ne5+. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Ne5+ Kh2 Rf3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Kh3, assess the board without moving ahead. Calculate checks and counterchecks in a sharp phase. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Kh3, Ne5+, Kh2. The recorded Kh3 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Ne5+ is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Kh3 as engine-certified or assuming Ne5+ is the only defence. Replay Kh3 Ne5+ Kh2 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Kh3, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Kh3 Ne5+ Kh2. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -250,51 +250,51 @@
       "summary": "Central pressure and strategic timing. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"New York\"]\n[Date \"1927.??.??\"]\n[White \"Alekhine\"]\n[Black \"Marshall, F.J.\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. c4 e6 3. Nf3 Ne4 4. Nfd2 Bb4 5. Qc2 d5 6. Nc3 f5 7. Nde4 fe4 8. Bf4 e3 9. c6 Be2 10. Nd7 a3 11. Be7 Bg5 12. f3 Bxf4 13. exf4 Rxf4 14. fxe4 Rxf1+ 15. Rxf1 e5 16. Qd2 c5 17. dxe5 d4 18. Qf4 dxc3 19. Qf7+ Kh8 20. bxc3 Qg8 21. Qe7 h6 22. Bh5 a5 23. e6 g6 24. ed7 Bxd7 25. Rf7 1-0",
+      "pgn": "[Event \"?\"]\n[Site \"New York\"]\n[Date \"1927.??.??\"]\n[White \"Alekhine\"]\n[Black \"Marshall, F.J.\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. c4 e6 3. Nf3 Ne4 4. Nfd2 Bb4 5. Qc2 d5 6. Nc3 f5 7. Nde4 fxe4 8. Bf4 O-O 9. e3 c6 10. Be2 Nd7 11. a3 Be7 12. O-O Bg5 13. f3 Bxf4 14. exf4 Rxf4 15. fxe4 Rxf1+ 16. Rxf1 e5 17. Qd2 c5 18. dxe5 d4 19. Qf4 dxc3 20. Qf7+ Kh8 21. bxc3 Qg8 22. Qe7 h6 23. Bh5 a5 24. e6 g6 25. exd7 Bxd7 26. Rf7 1-0",
       "checkpoints": [
         {
           "id": "alekhine-marshall-1927-decision-1",
           "ply": 9,
           "focus": "Locate the side with uncompleted development",
           "lens": "development",
-          "prompt": "Before Black's recorded d5, assess the position without revealing the move. Locate the side with uncompleted development. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues d5, Nc3, f5. d5 is a developing, centralizing or restraining move. Inspect the board immediately before and after d5: identify which squares, files or pawn contacts have changed. Then replay Nc3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played d5 with a unique best move, or assume Nc3 is forced. The repair is to name an independent candidate, replay d5 Nc3 f5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to d5. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: d5 Nc3 f5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented d5, assess the board without moving ahead. Locate the side with uncompleted development. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is d5, Nc3, f5. The recorded d5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Nc3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating d5 as engine-certified or assuming Nc3 is the only defence. Replay d5 Nc3 f5 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to d5, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: d5 Nc3 f5. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "alekhine-marshall-1927-decision-2",
-          "ply": 19,
+          "ply": 20,
           "focus": "Determine whether a trade solves a structural problem",
           "lens": "exchange",
-          "prompt": "Before Black's recorded a3, assess the position without revealing the move. Determine whether a trade solves a structural problem. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues a3, Be7, Bg5. a3 is a developing, centralizing or restraining move. Inspect the board immediately before and after a3: identify which squares, files or pawn contacts have changed. Then replay Be7 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played a3 with a unique best move, or assume Be7 is forced. The repair is to name an independent candidate, replay a3 Be7 Bg5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to a3. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: a3 Be7 Bg5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented a3, assess the board without moving ahead. Determine whether a trade solves a structural problem. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is a3, Be7, O-O. The recorded a3 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Be7 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating a3 as engine-certified or assuming Be7 is the only defence. Replay a3 Be7 O-O and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to a3, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: a3 Be7 O-O. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "alekhine-marshall-1927-decision-3",
-          "ply": 30,
+          "ply": 32,
           "focus": "Identify a pawn lever and the cost of opening lines",
           "lens": "pawn break",
-          "prompt": "Before White's recorded Qd2, assess the position without revealing the move. Identify a pawn lever and the cost of opening lines. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Qd2, c5, dxe5. Qd2 is a developing, centralizing or restraining move. Inspect the board immediately before and after Qd2: identify which squares, files or pawn contacts have changed. Then replay c5 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Qd2 with a unique best move, or assume c5 is forced. The repair is to name an independent candidate, replay Qd2 c5 dxe5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Qd2. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Qd2 c5 dxe5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Qd2, assess the board without moving ahead. Identify a pawn lever and the cost of opening lines. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Qd2, c5, dxe5. The recorded Qd2 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply c5 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Qd2 as engine-certified or assuming c5 is the only defence. Replay Qd2 c5 dxe5 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Qd2, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Qd2 c5 dxe5. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "alekhine-marshall-1927-decision-4",
-          "ply": 40,
+          "ply": 41,
           "focus": "Keep the opponent's active threats in view",
           "lens": "initiative",
-          "prompt": "Before White's recorded Qe7, assess the position without revealing the move. Keep the opponent's active threats in view. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Qe7, h6, Bh5. Qe7 is a developing, centralizing or restraining move. Inspect the board immediately before and after Qe7: identify which squares, files or pawn contacts have changed. Then replay h6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Qe7 with a unique best move, or assume h6 is forced. The repair is to name an independent candidate, replay Qe7 h6 Bh5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Qe7. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Qe7 h6 Bh5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Qg8, assess the board without moving ahead. Keep the opponent's active threats in view. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Qg8, Qe7, h6. The recorded Qg8 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Qe7 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Qg8 as engine-certified or assuming Qe7 is the only defence. Replay Qg8 Qe7 h6 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Qg8, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Qg8 Qe7 h6. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -316,44 +316,44 @@
           "ply": 13,
           "focus": "Describe the pawn structure before choosing a plan",
           "lens": "structure",
-          "prompt": "Before Black's recorded c6, assess the position without revealing the move. Describe the pawn structure before choosing a plan. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues c6, a3, h6. c6 is a developing, centralizing or restraining move. Inspect the board immediately before and after c6: identify which squares, files or pawn contacts have changed. Then replay a3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played c6 with a unique best move, or assume a3 is forced. The repair is to name an independent candidate, replay c6 a3 h6 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to c6. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: c6 a3 h6. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented c6, assess the board without moving ahead. Describe the pawn structure before choosing a plan. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is c6, a3, h6. The recorded c6 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply a3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating c6 as engine-certified or assuming a3 is the only defence. Replay c6 a3 h6 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to c6, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: c6 a3 h6. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "euwe-maroczy-1936-decision-2",
           "ply": 27,
           "focus": "Explain a piece's best practical route",
           "lens": "manoeuvre",
-          "prompt": "Before Black's recorded c4, assess the position without revealing the move. Explain a piece's best practical route. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues c4, Bb1, Re8. c4 is a developing, centralizing or restraining move. Inspect the board immediately before and after c4: identify which squares, files or pawn contacts have changed. Then replay Bb1 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played c4 with a unique best move, or assume Bb1 is forced. The repair is to name an independent candidate, replay c4 Bb1 Re8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to c4. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: c4 Bb1 Re8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented c4, assess the board without moving ahead. Explain a piece's best practical route. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is c4, Bb1, Re8. The recorded c4 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Bb1 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating c4 as engine-certified or assuming Bb1 is the only defence. Replay c4 Bb1 Re8 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to c4, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: c4 Bb1 Re8. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "euwe-maroczy-1936-decision-3",
           "ply": 43,
           "focus": "Track which open line the pawn contact creates",
           "lens": "open files",
-          "prompt": "Before Black's recorded Bxf6, assess the position without revealing the move. Track which open line the pawn contact creates. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Bxf6, Rg4+, Bg7. Bxf6 is a capture changing the material or pawn structure. Inspect the board immediately before and after Bxf6: identify which squares, files or pawn contacts have changed. Then replay Rg4+ as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Bxf6 with a unique best move, or assume Rg4+ is forced. The repair is to name an independent candidate, replay Bxf6 Rg4+ Bg7 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Bxf6. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Bxf6 Rg4+ Bg7. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Bxf6, assess the board without moving ahead. Track which open line the pawn contact creates. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bxf6, Rg4+, Bg7. The recorded Bxf6 is a capture that changes material or pawn structure. Compare the board before and after the move: explain which squares or lines change. The reply Rg4+ is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bxf6 as engine-certified or assuming Rg4+ is the only defence. Replay Bxf6 Rg4+ Bg7 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bxf6, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bxf6 Rg4+ Bg7. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "euwe-maroczy-1936-decision-4",
           "ply": 56,
           "focus": "Check forcing replies before claiming a winning attack",
           "lens": "king attack",
-          "prompt": "Before White's recorded Qh5, assess the position without revealing the move. Check forcing replies before claiming a winning attack. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Qh5, Qf7, h4. Qh5 is a developing, centralizing or restraining move. Inspect the board immediately before and after Qh5: identify which squares, files or pawn contacts have changed. Then replay Qf7 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Qh5 with a unique best move, or assume Qf7 is forced. The repair is to name an independent candidate, replay Qh5 Qf7 h4 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Qh5. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Qh5 Qf7 h4. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Qh5, assess the board without moving ahead. Check forcing replies before claiming a winning attack. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Qh5, Qf7, h4. The recorded Qh5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Qf7 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Qh5 as engine-certified or assuming Qf7 is the only defence. Replay Qh5 Qf7 h4 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Qh5, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Qh5 Qf7 h4. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -368,51 +368,51 @@
       "summary": "Open lines and a coordinated attack. Four independent source-grounded critical-decision pauses within a complete historical score.",
       "source": "https://github.com/mcostalba/chess_db/blob/master/pgn/great_masters.pgn",
       "sourceNote": "Factual historical move score extracted from the referenced collection; all third-party narrative comments, variations and annotations discarded. Original P113 prompts are instructional interpretation, not engine proof.",
-      "pgn": "[Event \"?\"]\n[Site \"Leipzig\"]\n[Date \"1894.??.??\"]\n[White \"Tarrasch, S\"]\n[Black \"Von Scheve, T\"]\n[Result \"1-0\"]\n\n1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Nf3 Be7 5. Bf4 c6 6. e3 Nbd7 7. h3 Ne4 8. Nxe4 dxe4 9. Nd2 Bb4 10. a3 Bxd2+ 11. Qd2 Qc2 12. f5 Bd6 13. Re8 Nf6 14. Be5 Bd7 15. f3 exf3 16. gxf3 b5 17. Rg1 Rf8 18. Rd2 Rf7 19. Rdg2 a5 20. Qf2 Ne8 21. Rg5 Qe7 22. Qh4 Nf6 23. Qh6 Ra7 24. Bd6 Qxd6 25. Rxg7+ Kf8 26. Rxh7+ Ke7 27. Rxf7+ Kxf7 28. Rg7+ Ke8 29. Qxf6 1-0",
+      "pgn": "[Event \"?\"]\n[Site \"Leipzig\"]\n[Date \"1894.??.??\"]\n[White \"Tarrasch, S\"]\n[Black \"Von Scheve, T\"]\n[Result \"1-0\"]\n\n1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Nf3 Be7 5. Bf4 c6 6. e3 Nbd7 7. h3 Ne4 8. Nxe4 dxe4 9. Nd2 Bb4 10. a3 Bxd2+ 11. Qd2 O-O 12. Qc2 f5 13. Bd6 Re8 14. O-O-O Nf6 15. Be5 Bd7 16. f3 exf3 17. gxf3 b5 18. Rg1 Rf8 19. Rd2 Rf7 20. Rdg2 a5 21. Qf2 Ne8 22. Rg5 Qe7 23. Qh4 Nf6 24. Qh6 Ra7 25. Bd6 Qxd6 26. Rxg7+ Kf8 27. Rxh7+ Ke7 28. Rxf7+ Kxf7 29. Rg7+ Ke8 30. Qxf6 1-0",
       "checkpoints": [
         {
           "id": "tarrasch-von-scheve-1894-decision-1",
-          "ply": 10,
+          "ply": 11,
           "focus": "Find the developmental purpose of the early moves",
           "lens": "opening development",
-          "prompt": "Before White's recorded e3, assess the position without revealing the move. Find the developmental purpose of the early moves. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues e3, Nbd7, h3. e3 is a developing, centralizing or restraining move. Inspect the board immediately before and after e3: identify which squares, files or pawn contacts have changed. Then replay Nbd7 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played e3 with a unique best move, or assume Nbd7 is forced. The repair is to name an independent candidate, replay e3 Nbd7 h3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to e3. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: e3 Nbd7 h3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Nbd7, assess the board without moving ahead. Find the developmental purpose of the early moves. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Nbd7, h3, Ne4. The recorded Nbd7 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply h3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Nbd7 as engine-certified or assuming h3 is the only defence. Replay Nbd7 h3 Ne4 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Nbd7, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Nbd7 h3 Ne4. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "tarrasch-von-scheve-1894-decision-2",
-          "ply": 22,
+          "ply": 23,
           "focus": "Study how central contact affects piece coordination",
           "lens": "center",
-          "prompt": "Before White's recorded f5, assess the position without revealing the move. Study how central contact affects piece coordination. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues f5, Bd6, Re8. f5 is a developing, centralizing or restraining move. Inspect the board immediately before and after f5: identify which squares, files or pawn contacts have changed. Then replay Bd6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played f5 with a unique best move, or assume Bd6 is forced. The repair is to name an independent candidate, replay f5 Bd6 Re8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to f5. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: f5 Bd6 Re8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented f5, assess the board without moving ahead. Study how central contact affects piece coordination. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is f5, Bd6, Re8. The recorded f5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Bd6 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating f5 as engine-certified or assuming Bd6 is the only defence. Replay f5 Bd6 Re8 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to f5, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: f5 Bd6 Re8. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "tarrasch-von-scheve-1894-decision-3",
-          "ply": 35,
+          "ply": 37,
           "focus": "Locate the move that creates a concrete threat",
           "lens": "coordination",
-          "prompt": "Before Black's recorded Rf7, assess the position without revealing the move. Locate the move that creates a concrete threat. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Rf7, Rdg2, a5. Rf7 is a developing, centralizing or restraining move. Inspect the board immediately before and after Rf7: identify which squares, files or pawn contacts have changed. Then replay Rdg2 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Rf7 with a unique best move, or assume Rdg2 is forced. The repair is to name an independent candidate, replay Rf7 Rdg2 a5 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Rf7. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Rf7 Rdg2 a5. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Rf7, assess the board without moving ahead. Locate the move that creates a concrete threat. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Rf7, Rdg2, a5. The recorded Rf7 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Rdg2 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Rf7 as engine-certified or assuming Rdg2 is the only defence. Replay Rf7 Rdg2 a5 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Rf7, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Rf7 Rdg2 a5. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "tarrasch-von-scheve-1894-decision-4",
-          "ply": 46,
+          "ply": 48,
           "focus": "Calculate the defensive reply before playing forcing moves",
           "lens": "forcing continuation",
-          "prompt": "Before White's recorded Bd6, assess the position without revealing the move. Calculate the defensive reply before playing forcing moves. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Bd6, Qxd6, Rxg7+. Bd6 is a developing, centralizing or restraining move. Inspect the board immediately before and after Bd6: identify which squares, files or pawn contacts have changed. Then replay Qxd6 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Bd6 with a unique best move, or assume Qxd6 is forced. The repair is to name an independent candidate, replay Bd6 Qxd6 Rxg7+ legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Bd6. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Bd6 Qxd6 Rxg7+. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Bd6, assess the board without moving ahead. Calculate the defensive reply before playing forcing moves. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Bd6, Qxd6, Rxg7+. The recorded Bd6 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Qxd6 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Bd6 as engine-certified or assuming Qxd6 is the only defence. Replay Bd6 Qxd6 Rxg7+ and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Bd6, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Bd6 Qxd6 Rxg7+. The source score alone cannot establish a winning evaluation."
         }
       ]
     },
@@ -434,44 +434,44 @@
           "ply": 9,
           "focus": "Name the pawn chain's potential pressure points",
           "lens": "pawn chain",
-          "prompt": "Before Black's recorded Be7, assess the position without revealing the move. Name the pawn chain's potential pressure points. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Be7, Nc3, O-O. Be7 is a developing, centralizing or restraining move. Inspect the board immediately before and after Be7: identify which squares, files or pawn contacts have changed. Then replay Nc3 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Be7 with a unique best move, or assume Nc3 is forced. The repair is to name an independent candidate, replay Be7 Nc3 O-O legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Be7. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Be7 Nc3 O-O. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Be7, assess the board without moving ahead. Name the pawn chain's potential pressure points. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Be7, Nc3, O-O. The recorded Be7 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Nc3 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Be7 as engine-certified or assuming Nc3 is the only defence. Replay Be7 Nc3 O-O and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Be7, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Be7 Nc3 O-O. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "saemisch-nimzowitsch-1923-decision-2",
           "ply": 20,
           "focus": "Follow the strategic value of a piece's new square",
           "lens": "piece placement",
-          "prompt": "Before White's recorded Rc1, assess the position without revealing the move. Follow the strategic value of a piece's new square. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Rc1, b5, Qb3. Rc1 is a developing, centralizing or restraining move. Inspect the board immediately before and after Rc1: identify which squares, files or pawn contacts have changed. Then replay b5 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Rc1 with a unique best move, or assume b5 is forced. The repair is to name an independent candidate, replay Rc1 b5 Qb3 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Rc1. What should White check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Rc1 b5 Qb3. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before White's documented Rc1, assess the board without moving ahead. Follow the strategic value of a piece's new square. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Rc1, b5, Qb3. The recorded Rc1 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply b5 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Rc1 as engine-certified or assuming b5 is the only defence. Replay Rc1 b5 Qb3 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Rc1, how should White revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Rc1 b5 Qb3. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "saemisch-nimzowitsch-1923-decision-3",
           "ply": 31,
           "focus": "Reassess king safety when heavy pieces mobilize",
           "lens": "king safety",
-          "prompt": "Before Black's recorded f5, assess the position without revealing the move. Reassess king safety when heavy pieces mobilize. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues f5, Qd1, b4. f5 is a developing, centralizing or restraining move. Inspect the board immediately before and after f5: identify which squares, files or pawn contacts have changed. Then replay Qd1 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played f5 with a unique best move, or assume Qd1 is forced. The repair is to name an independent candidate, replay f5 Qd1 b4 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to f5. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: f5 Qd1 b4. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented f5, assess the board without moving ahead. Reassess king safety when heavy pieces mobilize. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is f5, Qd1, b4. The recorded f5 is a move whose positional purpose must be checked against the board. Compare the board before and after the move: explain which squares or lines change. The reply Qd1 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating f5 as engine-certified or assuming Qd1 is the only defence. Replay f5 Qd1 b4 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to f5, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: f5 Qd1 b4. The source score alone cannot establish a winning evaluation."
         },
         {
           "id": "saemisch-nimzowitsch-1923-decision-4",
           "ply": 41,
           "focus": "Evaluate the defender's resources before the final threats",
           "lens": "counterplay",
-          "prompt": "Before Black's recorded Rxf2, assess the position without revealing the move. Evaluate the defender's resources before the final threats. Which candidate would you calculate, and what is the opponent's most relevant reply?",
-          "model": "The historical record continues Rxf2, Qg5, Raf8. Rxf2 is a capture changing the material or pawn structure. Inspect the board immediately before and after Rxf2: identify which squares, files or pawn contacts have changed. Then replay Qg5 as the opponent's actual answer; it is one documented resource, not proof that alternatives fail.",
-          "misconception": "Do not equate the historically played Rxf2 with a unique best move, or assume Qg5 is forced. The repair is to name an independent candidate, replay Rxf2 Qg5 Raf8 legally and explain what changes concretely on the board.",
-          "transfer": "Imagine that the opponent chose a different legal reply to Rxf2. What should Black check before committing to the plan? Identify the relevant king safety, pawn structure and active pieces.",
-          "observed": "Source continuation: Rxf2 Qg5 Raf8. Explain the consequence from the board; the move record alone cannot establish an evaluation."
+          "prompt": "Before Black's documented Rxf2, assess the board without moving ahead. Evaluate the defender's resources before the final threats. Which legal candidates would you examine and what reply would challenge your idea?",
+          "model": "The historical line is Rxf2, Qg5, Raf8. The recorded Rxf2 is a capture that changes material or pawn structure. Compare the board before and after the move: explain which squares or lines change. The reply Qg5 is what was played, not proof that another defence is impossible.",
+          "misconception": "Avoid treating Rxf2 as engine-certified or assuming Qg5 is the only defence. Replay Rxf2 Qg5 Raf8 and evaluate piece activity, king safety and pawn commitments from the actual positions.",
+          "transfer": "Against a different legal answer to Rxf2, how should Black revise the plan? Name a concrete square, possible exchange and safety issue.",
+          "observed": "Factual continuation: Rxf2 Qg5 Raf8. The source score alone cannot establish a winning evaluation."
         }
       ]
     }
