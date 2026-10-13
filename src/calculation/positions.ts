@@ -20,6 +20,7 @@ if (typeof window !== "undefined") {
     ["p97-positional-v1.json", "calc:p97-", 10],
     ["p97-promotions-v1.json", "calc:p97-", 10],
     ["p97-mixed-v1.json", "calc:p97-", 10],
+    ["p98-essential-pawn-endgames-v1.json", "calc:p98-", 40],
   ] as const) {
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
       .then(r => r.json())
