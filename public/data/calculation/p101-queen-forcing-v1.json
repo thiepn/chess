@@ -195,14 +195,14 @@
     {
       "id": "calc:p101-04",
       "title": "Long-file checking against a corner king",
-      "fen": "7k/8/8/p7/8/8/1Q6/6K1 w - - 0 1",
+      "fen": "7k/8/8/p7/8/8/8/1Q4K1 w - - 0 1",
       "playerColor": "w",
       "source": "authored",
       "sourceLabel": "P101 · Queen checking networks",
       "difficulty": 5,
-      "bestMove": "b2b8",
+      "bestMove": "b1b8",
       "principalVariation": [
-        "b2b8",
+        "b1b8",
         "h8h7",
         "b8b7",
         "h7h6",
@@ -228,7 +228,7 @@
           {
             "label": "Resistant alternative",
             "moves": [
-              "b2b8",
+              "b1b8",
               "h8g7",
               "b8b7",
               "g7h6",
@@ -239,11 +239,11 @@
           {
             "label": "Competing candidate",
             "moves": [
-              "b2a3",
+              "b1a1",
               "h8h7",
-              "a3f8"
+              "a1a8"
             ],
-            "explanation": "A queen's ability to deliver checks is not a proof of mate or a perpetual-draw mechanism. Recalculate b2a3 h8h7 a3f8 and compare its material/king safety with b2b8 h8h7 b8b7 h7h6 b7b6."
+            "explanation": "Qa1 relocates from b1, avoiding the initial diagonal check that Qb2 would have given to h8. It allows the defender time before Qa8."
           }
         ]
       },
@@ -356,11 +356,11 @@
             "moves": [
               "d1d8",
               "h8g7",
-              "d8d4",
+              "d8d5",
               "a3a2",
-              "d4a1"
+              "d5a2"
             ],
-            "explanation": "...Kg7 escapes the check and ...a2 threatens promotion; White must count moves until a1=Q. The five-ply defensive line changes the ending; Do not assume that giving check alone catches a pawn one step from promotion."
+            "explanation": "Qd5 does not check the king on g7; ...a2 is playable, but Qxa2 then captures the pawn along the d5–a2 diagonal. This is a distinct route from Qd3–c2."
           },
           {
             "label": "Competing candidate",
@@ -392,7 +392,7 @@
       "bestMove": "c1c8",
       "principalVariation": [
         "c1c8",
-        "h8h7",
+        "h8g7",
         "c8c2",
         "b2b1q",
         "c2b1"
@@ -418,12 +418,12 @@
             "label": "Resistant alternative",
             "moves": [
               "c1c8",
-              "h8h7",
-              "c8d7",
+              "h8g7",
+              "c8c5",
               "b2b1q",
-              "d7d1"
+              "c5c1"
             ],
-            "explanation": "...b1=Q+ checks along the first rank because c1 becomes vacant; the queen on c2 can capture the new queen on b1. The five-ply defensive line changes the ending; A promotion with check is not always decisive when the opponent's queen can capture the new queen immediately."
+            "explanation": "Qc5 allows ...b1=Q+; Qc1 blocks the promotion check on the first rank but is exposed to ...Qxc1. Unlike Qc2, the new queen is not immediately captured."
           },
           {
             "label": "Competing candidate",
@@ -456,9 +456,9 @@
       "principalVariation": [
         "d1d8",
         "h8h7",
-        "d8d3",
+        "d8d5",
         "a2a1q",
-        "d3a3"
+        "d5a2"
       ],
       "skillIds": [
         "calculation.candidates",
@@ -469,7 +469,7 @@
       "prompt": "White should analyze whether a newly promoted queen at a1 can be attacked or captured along a diagonal. Calculate at least five plies and compare a real defensive resource before trusting the first check.",
       "replyReason": "...a1=Q creates a queen; Qd4 allows Qxa1 along a direct diagonal, whereas Qa3 first targets the a-file.",
       "continuationReason": "Assess the board after five plies: The first branch gives mutual queen activity; the alternative directly removes the promoted piece.",
-      "explanation": "New black queen creates a tactical contest. White should analyze whether a newly promoted queen at a1 can be attacked or captured along a diagonal. Main instructional sequence: d1d8 h8h7 d8d3 a2a1q d3a3. Resistant alternative: d1d8 h8h7 d8d4 a2a1q d4a1. Candidate comparison: d1a4 h8h7 a4a2. ...a1=Q creates a queen; Qd4 allows Qxa1 along a direct diagonal, whereas Qa3 first targets the a-file. Endpoint: The first branch gives mutual queen activity; the alternative directly removes the promoted piece. Misconception and correction: Calling both queen routes equivalent ignores the queen-on-queen capture after ...a1=Q. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
+      "explanation": "New black queen creates a tactical contest. White should analyze whether a newly promoted queen at a1 can be attacked or captured along a diagonal. Main instructional sequence: d1d8 h8h7 d8d5 a2a1q d5a2. Resistant alternative: d1d8 h8h7 d8d4 a2a1q d4a1. Candidate comparison: d1a4 h8h7 a4a2. ...a1=Q creates a queen; Qd4 allows Qxa1 along a direct diagonal, whereas Qa2 from d5 targets the promoted queen along the a-file. Endpoint: The first branch gives mutual queen activity; the alternative directly removes the promoted piece. Misconception and correction: Calling both queen routes equivalent ignores the queen-on-queen capture after ...a1=Q. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
       "defensiveStudy": {
         "keyQuestion": "White should analyze whether a newly promoted queen at a1 can be attacked or captured along a diagonal.",
         "defenderIdea": "...a1=Q creates a queen; Qd4 allows Qxa1 along a direct diagonal, whereas Qa3 first targets the a-file.",
@@ -486,7 +486,7 @@
               "a2a1q",
               "d4a1"
             ],
-            "explanation": "...a1=Q creates a queen; Qd4 allows Qxa1 along a direct diagonal, whereas Qa3 first targets the a-file. The five-ply defensive line changes the ending; Calling both queen routes equivalent ignores the queen-on-queen capture after ...a1=Q."
+            "explanation": "Qd4 does not give check and lets ...a1=Q, but Qxa1 recaptures the new queen along the d4–a1 diagonal. The Qd5 line instead creates a-file pressure from a2."
           },
           {
             "label": "Competing candidate",
@@ -556,9 +556,9 @@
             "moves": [
               "g1f2",
               "h8h7",
-              "f2h2"
+              "f2f7"
             ],
-            "explanation": "A queen versus pawn ending can still contain an immediate queen-loss threat from the pawn itself. Recalculate g1f2 h8h7 f2h2 and compare its material/king safety with g1h1 h8g7 h1h2 g7f6 h2h6."
+            "explanation": "Qf2 relocates the queen, then Qf7+ offers a check but leaves the dangerous h2 pawn alive. Qh1 and Qxh2 instead prioritize pawn elimination."
           }
         ]
       },
@@ -573,14 +573,14 @@
     {
       "id": "calc:p101-10",
       "title": "Immediate pawn capture versus delayed recapture",
-      "fen": "7k/8/8/8/8/8/p7/Q4K2 w - - 0 1",
+      "fen": "7k/8/8/8/8/8/p7/1Q3K2 w - - 0 1",
       "playerColor": "w",
       "source": "authored",
       "sourceLabel": "P101 · Queen versus pawn",
       "difficulty": 5,
-      "bestMove": "a1a2",
+      "bestMove": "b1a2",
       "principalVariation": [
-        "a1a2",
+        "b1a2",
         "h8g7",
         "a2e6",
         "g7f8",
@@ -595,7 +595,7 @@
       "prompt": "White's queen on a1 can take the pawn on a2 immediately; compare the rook-file king's options. Calculate at least five plies and compare a real defensive resource before trusting the first check.",
       "replyReason": "Black can promote if the queen leaves a1, but Qxa1 can recapture the newly promoted queen after a queen sidestep to b1.",
       "continuationReason": "Assess the board after five plies: The direct Qxa2 removes the pawn; the alternate Qb1 a1=Q Qxa1 shows why material must be counted after a counterpromotion.",
-      "explanation": "Immediate pawn capture versus delayed recapture. White's queen on a1 can take the pawn on a2 immediately; compare the rook-file king's options. Main instructional sequence: a1a2 h8g7 a2e6 g7f8 e6d7. Resistant alternative: a1b1 a2a1q b1a1. Candidate comparison: a1a5 h8g7 a5a2. Black can promote if the queen leaves a1, but Qxa1 can recapture the newly promoted queen after a queen sidestep to b1. Endpoint: The direct Qxa2 removes the pawn; the alternate Qb1 a1=Q Qxa1 shows why material must be counted after a counterpromotion. Misconception and correction: Treating a2 as a guaranteed promotion ignores the queen already controlling its square. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
+      "explanation": "Immediate pawn capture versus delayed recapture. White's queen on a1 can take the pawn on a2 immediately; compare the rook-file king's options. Main instructional sequence: b1a2 h8g7 a2e6 g7f8 e6d7. Resistant alternative: b1c1 a2a1q c1a1. Candidate comparison: b1b5 h8g7 b5a5. Black can promote if the queen leaves a1, but Qxa1 can recapture the newly promoted queen after a queen sidestep to b1. Endpoint: The direct Qxa2 removes the pawn; the alternate Qb1 a1=Q Qxa1 shows why material must be counted after a counterpromotion. Misconception and correction: Treating a2 as a guaranteed promotion ignores the queen already controlling its square. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
       "defensiveStudy": {
         "keyQuestion": "White's queen on a1 can take the pawn on a2 immediately; compare the rook-file king's options.",
         "defenderIdea": "Black can promote if the queen leaves a1, but Qxa1 can recapture the newly promoted queen after a queen sidestep to b1.",
@@ -606,18 +606,18 @@
           {
             "label": "Resistant alternative",
             "moves": [
-              "a1b1",
+              "b1c1",
               "a2a1q",
-              "b1a1"
+              "c1a1"
             ],
-            "explanation": "Black can promote if the queen leaves a1, but Qxa1 can recapture the newly promoted queen after a queen sidestep to b1. The five-ply defensive line changes the ending; Treating a2 as a guaranteed promotion ignores the queen already controlling its square."
+            "explanation": "Qc1 vacates the b1 square and allows ...a1=Q, but Qxa1 captures the new queen from c1 across the empty b1 square. Taking a2 immediately is simpler."
           },
           {
             "label": "Competing candidate",
             "moves": [
-              "a1a5",
+              "b1b5",
               "h8g7",
-              "a5a2"
+              "b5a5"
             ],
             "explanation": "Treating a2 as a guaranteed promotion ignores the queen already controlling its square. Recalculate a1a5 h8g7 a5a2 and compare its material/king safety with a1a2 h8g7 a2e6 g7f8 e6d7."
           }
