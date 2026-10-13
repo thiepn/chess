@@ -25,11 +25,11 @@ export function legalCalculationBranch(position:Pick<CalculationPosition,
 export function calculationMisconceptions(position:CalculationPosition,evidence:CalculationEvidence):string[]{
   const details:string[]=[];
   if(!evidence.selectedMoveScore)
-    details.push("Main move: you did not choose the recorded forcing or improving resource. Recheck checks, captures, and tactical safety.");
+    details.push("Main move: revisit checks, captures, threats and quiet candidates.");
   if(!evidence.replyScore)
-    details.push(`Opponent reply: do not assume the opponent helps your plan. ${position.replyReason ?? "Rebuild the position and find the strongest legal response."}`);
+    details.push(`Opponent reply: look for resistance. ${position.replyReason ?? "Recheck legal defenses."}`);
   if(!evidence.continuationScore)
-    details.push(`Continuation: calculate another full ply after the response. ${position.continuationReason ?? "Compare the resulting pieces and king safety."}`);
+    details.push(`Continuation: calculate one ply deeper. ${position.continuationReason ?? "Reevaluate the board."}`);
   if(position.defensiveStudy){
     details.push(`Defensive misconception: ${position.defensiveStudy.misconception}`);
     for(const branch of position.defensiveStudy.variations){
@@ -39,5 +39,5 @@ export function calculationMisconceptions(position:CalculationPosition,evidence:
     }
     details.push(position.defensiveStudy.reflection);
   }
-  return details.length?details:["The recorded three-ply line was reconstructed. Retention still requires a later independent attempt."];
+  return details.length?details:["Line reconstructed. Confirm later with independent recall."];
 }
