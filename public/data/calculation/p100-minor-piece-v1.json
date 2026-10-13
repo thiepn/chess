@@ -63,7 +63,7 @@
       "bestMove": "c3d5",
       "principalVariation": [
         "c3d5",
-        "f8c5",
+        "f8e7",
         "d5f6"
       ],
       "source": "authored",
@@ -75,25 +75,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "Nd5 puts the knight near Black's e5 pawn, asking whether the bishop's long diagonal can compensate. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bc5 activates Black's bishop; the quiet knight move to f6 is a tactical check on g8. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, After Nf6+ Black must respond to the check, but that fact alone does not prove a win. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Knight pressure against e5. Nd5 puts the knight near Black's e5 pawn, asking whether the bishop's long diagonal can compensate. Worked main variation c3d5 f8c5 d5f6; alternative c3b5 f8c5 b5d6. Defender resistance: ...Bc5 activates Black's bishop; the quiet knight move to f6 is a tactical check on g8. At the end of the three plies: After Nf6+ Black must respond to the check, but that fact alone does not prove a win. Specific misconception: A checking fork requires calculation beyond the displayed three plies. Theoretical context: Do not judge bishop-versus-knight endgames by piece values alone. A bishop wants open diagonals and distant pawn targets; a knight wants supported central squares and fixed opposing pawns. Test the reply that hits your pawn chain, not merely the opponent's quiet developing move. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "Nd5 and Nb5 are candidate knight routes, but ...Be7 defends central approach squares and can capture a knight placed on f6 or d6. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Be7 deliberately keeps the bishop available to capture either Nf6+ or Nd6 rather than passively conceding a checking square. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Nf6+ checks the king but the black bishop is poised to capture the knight on f6. Continue the evaluation after the defender's next move.",
+      "explanation": "Knight pressure against e5. Nd5 and Nb5 are candidate knight routes, but ...Be7 defends central approach squares and can capture a knight placed on f6 or d6. Reference c3d5 f8e7 d5f6, compared with c3b5 f8e7 b5d6. Defender: ...Be7 deliberately keeps the bishop available to capture either Nf6+ or Nd6 rather than passively conceding a checking square. Endpoint: Nf6+ checks the king but the black bishop is poised to capture the knight on f6. Misconception: A forcing knight check can be answered by ...Bxf6; a check is not the same as winning material. Theory: Do not judge bishop-versus-knight endgames by piece values alone. A bishop wants open diagonals and distant pawn targets; a knight wants supported central squares and fixed opposing pawns. Test the reply that hits your pawn chain, not merely the opponent's quiet developing move. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "Nd5 puts the knight near Black's e5 pawn, asking whether the bishop's long diagonal can compensate.",
-        "defenderIdea": "...Bc5 activates Black's bishop; the quiet knight move to f6 is a tactical check on g8.",
-        "continuation": "After Nf6+ Black must respond to the check, but that fact alone does not prove a win.",
-        "misconception": "A checking fork requires calculation beyond the displayed three plies.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. After Nf6+ Black must respond to the check, but that fact alone does not prove a win.",
+        "keyQuestion": "Nd5 and Nb5 are candidate knight routes, but ...Be7 defends central approach squares and can capture a knight placed on f6 or d6.",
+        "defenderIdea": "...Be7 deliberately keeps the bishop available to capture either Nf6+ or Nd6 rather than passively conceding a checking square.",
+        "continuation": "Nf6+ checks the king but the black bishop is poised to capture the knight on f6.",
+        "misconception": "A forcing knight check can be answered by ...Bxf6; a check is not the same as winning material.",
+        "reflection": "Reconstruct c3d5 f8e7 d5f6 and c3b5 f8e7 b5d6 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Nf6+ checks the king but the black bishop is poised to capture the knight on f6.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "c3b5",
-              "f8c5",
+              "f8e7",
               "b5d6"
             ],
-            "explanation": "In the alternative c3b5 f8c5 b5d6, A checking fork requires calculation beyond the displayed three plies. Compare the position and defender's available checks with c3d5 f8c5 d5f6."
+            "explanation": "A forcing knight check can be answered by ...Bxf6; a check is not the same as winning material. The alternate c3b5 f8e7 b5d6 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -101,9 +101,9 @@
         "theme": "Bishop versus knight",
         "method": "Do not judge bishop-versus-knight endgames by piece values alone. A bishop wants open diagonals and distant pawn targets; a knight wants supported central squares and fixed opposing pawns. Test the reply that hits your pawn chain, not merely the opponent's quiet developing move.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bc5 activates Black's bishop; the quiet knight move to f6 is a tactical check on g8.",
-        "misconception": "A checking fork requires calculation beyond the displayed three plies.",
-        "endpoint": "After Nf6+ Black must respond to the check, but that fact alone does not prove a win."
+        "defenderResource": "...Be7 deliberately keeps the bishop available to capture either Nf6+ or Nd6 rather than passively conceding a checking square.",
+        "misconception": "A forcing knight check can be answered by ...Bxf6; a check is not the same as winning material.",
+        "endpoint": "Nf6+ checks the king but the black bishop is poised to capture the knight on f6."
       }
     },
     {
@@ -517,12 +517,12 @@
     {
       "id": "calc:p100-11",
       "title": "Outside a-pawn with unlike bishops",
-      "fen": "2b3k1/8/1p6/P7/8/8/8/5BK1 w - - 0 1",
+      "fen": "7k/6b1/1p6/P7/8/8/8/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1c4",
       "principalVariation": [
         "f1c4",
-        "c8b7",
+        "g7f6",
         "c4b5"
       ],
       "source": "authored",
@@ -534,25 +534,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "White's light-squared bishop cannot directly contest Black's dark-squared squares around b6. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bb7 develops on the other color complex while White keeps a5 as an outside pawn. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bb5 pressures c6/d7 but the pawn race still needs king participation. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Outside a-pawn with unlike bishops. White's light-squared bishop cannot directly contest Black's dark-squared squares around b6. Worked main variation f1c4 c8b7 c4b5; alternative f1b5 c8d7 b5d7. Defender resistance: ...Bb7 develops on the other color complex while White keeps a5 as an outside pawn. At the end of the three plies: Bb5 pressures c6/d7 but the pawn race still needs king participation. Specific misconception: Opposite colors often aid a defender, but no automatic draw follows from one pawn. Theoretical context: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "White's light-square bishop and Black's dark-square bishop cannot trade directly; the a5 pawn needs king support. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bf6 challenges White from the opposite-colored long diagonal without putting its king on the checking square. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bb5 pressures d7 while Black retains a bishop that cannot be directly exchanged for White's. Continue the evaluation after the defender's next move.",
+      "explanation": "Outside a-pawn with unlike bishops. White's light-square bishop and Black's dark-square bishop cannot trade directly; the a5 pawn needs king support. Reference f1c4 g7f6 c4b5, compared with f1e2 g7f6 e2f3. Defender: ...Bf6 challenges White from the opposite-colored long diagonal without putting its king on the checking square. Endpoint: Bb5 pressures d7 while Black retains a bishop that cannot be directly exchanged for White's. Misconception: Opposite-coloured bishops often defend effectively, but one outside pawn is not an automatic draw. Theory: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "White's light-squared bishop cannot directly contest Black's dark-squared squares around b6.",
-        "defenderIdea": "...Bb7 develops on the other color complex while White keeps a5 as an outside pawn.",
-        "continuation": "Bb5 pressures c6/d7 but the pawn race still needs king participation.",
-        "misconception": "Opposite colors often aid a defender, but no automatic draw follows from one pawn.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bb5 pressures c6/d7 but the pawn race still needs king participation.",
+        "keyQuestion": "White's light-square bishop and Black's dark-square bishop cannot trade directly; the a5 pawn needs king support.",
+        "defenderIdea": "...Bf6 challenges White from the opposite-colored long diagonal without putting its king on the checking square.",
+        "continuation": "Bb5 pressures d7 while Black retains a bishop that cannot be directly exchanged for White's.",
+        "misconception": "Opposite-coloured bishops often defend effectively, but one outside pawn is not an automatic draw.",
+        "reflection": "Reconstruct f1c4 g7f6 c4b5 and f1e2 g7f6 e2f3 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bb5 pressures d7 while Black retains a bishop that cannot be directly exchanged for White's.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
-              "f1b5",
-              "c8d7",
-              "b5d7"
+              "f1e2",
+              "g7f6",
+              "e2f3"
             ],
-            "explanation": "In the alternative f1b5 c8d7 b5d7, Opposite colors often aid a defender, but no automatic draw follows from one pawn. Compare the position and defender's available checks with f1c4 c8b7 c4b5."
+            "explanation": "Opposite-coloured bishops often defend effectively, but one outside pawn is not an automatic draw. The alternate f1e2 g7f6 e2f3 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -560,20 +560,20 @@
         "theme": "Opposite-coloured bishops",
         "method": "Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bb7 develops on the other color complex while White keeps a5 as an outside pawn.",
-        "misconception": "Opposite colors often aid a defender, but no automatic draw follows from one pawn.",
-        "endpoint": "Bb5 pressures c6/d7 but the pawn race still needs king participation."
+        "defenderResource": "...Bf6 challenges White from the opposite-colored long diagonal without putting its king on the checking square.",
+        "misconception": "Opposite-coloured bishops often defend effectively, but one outside pawn is not an automatic draw.",
+        "endpoint": "Bb5 pressures d7 while Black retains a bishop that cannot be directly exchanged for White's."
       }
     },
     {
       "id": "calc:p100-12",
       "title": "Dark bishop meets light bishop",
-      "fen": "5bk1/8/7p/7P/8/8/8/2B3K1 w - - 0 1",
+      "fen": "2b3k1/8/7p/7P/8/8/8/2B3K1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "c1d2",
       "principalVariation": [
         "c1d2",
-        "f8e7",
+        "c8d7",
         "d2f4"
       ],
       "source": "authored",
@@ -585,25 +585,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "The bishops move on different colors, so White must target pawns through king support. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Be7 meets White's positional bishop move without having to exchange. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bf4 chooses a diagonal that may help defend h5 from the side. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Dark bishop meets light bishop. The bishops move on different colors, so White must target pawns through king support. Worked main variation c1d2 f8e7 d2f4; alternative c1b2 f8g7 b2e5. Defender resistance: ...Be7 meets White's positional bishop move without having to exchange. At the end of the three plies: Bf4 chooses a diagonal that may help defend h5 from the side. Specific misconception: Assuming bishops will exchange ignores that opposite-colored bishops cannot capture each other. Theoretical context: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "White's dark-square bishop and Black's light-square bishop cover nonoverlapping color complexes around h5. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bd7 improves Black's light bishop while the black h6 pawn still contests h5. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bf4 becomes a useful long-diagonal post without forcing pawn gains. Continue the evaluation after the defender's next move.",
+      "explanation": "Dark bishop meets light bishop. White's dark-square bishop and Black's light-square bishop cover nonoverlapping color complexes around h5. Reference c1d2 c8d7 d2f4, compared with c1b2 c8d7 b2e5. Defender: ...Bd7 improves Black's light bishop while the black h6 pawn still contests h5. Endpoint: Bf4 becomes a useful long-diagonal post without forcing pawn gains. Misconception: The opposite bishop colors do not automatically prove a draw while kings and pawn races remain live. Theory: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "The bishops move on different colors, so White must target pawns through king support.",
-        "defenderIdea": "...Be7 meets White's positional bishop move without having to exchange.",
-        "continuation": "Bf4 chooses a diagonal that may help defend h5 from the side.",
-        "misconception": "Assuming bishops will exchange ignores that opposite-colored bishops cannot capture each other.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bf4 chooses a diagonal that may help defend h5 from the side.",
+        "keyQuestion": "White's dark-square bishop and Black's light-square bishop cover nonoverlapping color complexes around h5.",
+        "defenderIdea": "...Bd7 improves Black's light bishop while the black h6 pawn still contests h5.",
+        "continuation": "Bf4 becomes a useful long-diagonal post without forcing pawn gains.",
+        "misconception": "The opposite bishop colors do not automatically prove a draw while kings and pawn races remain live.",
+        "reflection": "Reconstruct c1d2 c8d7 d2f4 and c1b2 c8d7 b2e5 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bf4 becomes a useful long-diagonal post without forcing pawn gains.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "c1b2",
-              "f8g7",
+              "c8d7",
               "b2e5"
             ],
-            "explanation": "In the alternative c1b2 f8g7 b2e5, Assuming bishops will exchange ignores that opposite-colored bishops cannot capture each other. Compare the position and defender's available checks with c1d2 f8e7 d2f4."
+            "explanation": "The opposite bishop colors do not automatically prove a draw while kings and pawn races remain live. The alternate c1b2 c8d7 b2e5 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -611,20 +611,20 @@
         "theme": "Opposite-coloured bishops",
         "method": "Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Be7 meets White's positional bishop move without having to exchange.",
-        "misconception": "Assuming bishops will exchange ignores that opposite-colored bishops cannot capture each other.",
-        "endpoint": "Bf4 chooses a diagonal that may help defend h5 from the side."
+        "defenderResource": "...Bd7 improves Black's light bishop while the black h6 pawn still contests h5.",
+        "misconception": "The opposite bishop colors do not automatically prove a draw while kings and pawn races remain live.",
+        "endpoint": "Bf4 becomes a useful long-diagonal post without forcing pawn gains."
       }
     },
     {
       "id": "calc:p100-13",
       "title": "Use c4 against a dark bishop",
-      "fen": "2b3k1/p7/1p6/P7/2B5/8/8/6K1 w - - 0 1",
+      "fen": "7k/p7/1p1b4/P7/2B5/8/8/6K1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "c4d5",
       "principalVariation": [
         "c4d5",
-        "c8a6",
+        "d6e5",
         "d5e4"
       ],
       "source": "authored",
@@ -636,25 +636,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "The white bishop operates on light squares while Black's bishop operates on dark squares. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Ba6 extends the defender's diagonal into the queenside pawn fight. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Be4 centralizes while the a5 pawn remains vulnerable to king entry. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Use c4 against a dark bishop. The white bishop operates on light squares while Black's bishop operates on dark squares. Worked main variation c4d5 c8a6 d5e4; alternative c4b3 c8a6 b3a4. Defender resistance: ...Ba6 extends the defender's diagonal into the queenside pawn fight. At the end of the three plies: Be4 centralizes while the a5 pawn remains vulnerable to king entry. Specific misconception: The attacker needs more than one target to break a typical opposite-color defense. Theoretical context: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "White's light bishop on c4 cannot directly exchange Black's dark bishop on d6; the outside a5 pawn remains critical. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Be5 centralizes the dark-square defender and may challenge queenside king entries. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Be4 is a viable light-square post while both sides retain queenside pawns. Continue the evaluation after the defender's next move.",
+      "explanation": "Use c4 against a dark bishop. White's light bishop on c4 cannot directly exchange Black's dark bishop on d6; the outside a5 pawn remains critical. Reference c4d5 d6e5 d5e4, compared with c4b3 d6e5 b3a4. Defender: ...Be5 centralizes the dark-square defender and may challenge queenside king entries. Endpoint: Be4 is a viable light-square post while both sides retain queenside pawns. Misconception: A fortress verdict needs analysis of a5, a7 and b6, not only opposite bishop colors. Theory: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "The white bishop operates on light squares while Black's bishop operates on dark squares.",
-        "defenderIdea": "...Ba6 extends the defender's diagonal into the queenside pawn fight.",
-        "continuation": "Be4 centralizes while the a5 pawn remains vulnerable to king entry.",
-        "misconception": "The attacker needs more than one target to break a typical opposite-color defense.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Be4 centralizes while the a5 pawn remains vulnerable to king entry.",
+        "keyQuestion": "White's light bishop on c4 cannot directly exchange Black's dark bishop on d6; the outside a5 pawn remains critical.",
+        "defenderIdea": "...Be5 centralizes the dark-square defender and may challenge queenside king entries.",
+        "continuation": "Be4 is a viable light-square post while both sides retain queenside pawns.",
+        "misconception": "A fortress verdict needs analysis of a5, a7 and b6, not only opposite bishop colors.",
+        "reflection": "Reconstruct c4d5 d6e5 d5e4 and c4b3 d6e5 b3a4 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Be4 is a viable light-square post while both sides retain queenside pawns.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "c4b3",
-              "c8a6",
+              "d6e5",
               "b3a4"
             ],
-            "explanation": "In the alternative c4b3 c8a6 b3a4, The attacker needs more than one target to break a typical opposite-color defense. Compare the position and defender's available checks with c4d5 c8a6 d5e4."
+            "explanation": "A fortress verdict needs analysis of a5, a7 and b6, not only opposite bishop colors. The alternate c4b3 d6e5 b3a4 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -662,9 +662,9 @@
         "theme": "Opposite-coloured bishops",
         "method": "Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Ba6 extends the defender's diagonal into the queenside pawn fight.",
-        "misconception": "The attacker needs more than one target to break a typical opposite-color defense.",
-        "endpoint": "Be4 centralizes while the a5 pawn remains vulnerable to king entry."
+        "defenderResource": "...Be5 centralizes the dark-square defender and may challenge queenside king entries.",
+        "misconception": "A fortress verdict needs analysis of a5, a7 and b6, not only opposite bishop colors.",
+        "endpoint": "Be4 is a viable light-square post while both sides retain queenside pawns."
       }
     },
     {
@@ -721,12 +721,12 @@
     {
       "id": "calc:p100-15",
       "title": "Rook pawn and different bishop colors",
-      "fen": "2b1k3/8/7p/7P/8/8/4K3/5B2 w - - 0 1",
+      "fen": "4k3/6b1/7p/7P/8/8/4K3/5B2 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1g2",
       "principalVariation": [
         "f1g2",
-        "c8d7",
+        "g7f6",
         "g2e4"
       ],
       "source": "authored",
@@ -738,25 +738,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "White's light bishop cannot control dark h8, so the h-pawn's corner may be defensively important. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bd7 develops a dark-squared bishop instead of accepting a direct pawn challenge. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Be4 centralizes White's bishop; the h5 pawn still needs king escort. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Rook pawn and different bishop colors. White's light bishop cannot control dark h8, so the h-pawn's corner may be defensively important. Worked main variation f1g2 c8d7 g2e4; alternative f1b5 c8d7 b5d7. Defender resistance: ...Bd7 develops a dark-squared bishop instead of accepting a direct pawn challenge. At the end of the three plies: Be4 centralizes White's bishop; the h5 pawn still needs king escort. Specific misconception: Do not call this an exact draw without checking black pawn h6 and both kings. Theoretical context: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "White's king blocks the bishop's usual f1–b5 diagonal at e2, so the light bishop must reroute via g2 or h3. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bf6 centralizes Black's dark bishop while White's h5 pawn remains stopped by h6. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Be4 develops along a legal light-square diagonal and preserves pawn material. Continue the evaluation after the defender's next move.",
+      "explanation": "Rook pawn and different bishop colors. White's king blocks the bishop's usual f1–b5 diagonal at e2, so the light bishop must reroute via g2 or h3. Reference f1g2 g7f6 g2e4, compared with f1h3 g7f6 h3g2. Defender: ...Bf6 centralizes Black's dark bishop while White's h5 pawn remains stopped by h6. Endpoint: Be4 develops along a legal light-square diagonal and preserves pawn material. Misconception: Trying Bb5 directly is illegal while the white king occupies e2; choose a real diagonal. Theory: Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "White's light bishop cannot control dark h8, so the h-pawn's corner may be defensively important.",
-        "defenderIdea": "...Bd7 develops a dark-squared bishop instead of accepting a direct pawn challenge.",
-        "continuation": "Be4 centralizes White's bishop; the h5 pawn still needs king escort.",
-        "misconception": "Do not call this an exact draw without checking black pawn h6 and both kings.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Be4 centralizes White's bishop; the h5 pawn still needs king escort.",
+        "keyQuestion": "White's king blocks the bishop's usual f1–b5 diagonal at e2, so the light bishop must reroute via g2 or h3.",
+        "defenderIdea": "...Bf6 centralizes Black's dark bishop while White's h5 pawn remains stopped by h6.",
+        "continuation": "Be4 develops along a legal light-square diagonal and preserves pawn material.",
+        "misconception": "Trying Bb5 directly is illegal while the white king occupies e2; choose a real diagonal.",
+        "reflection": "Reconstruct f1g2 g7f6 g2e4 and f1h3 g7f6 h3g2 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Be4 develops along a legal light-square diagonal and preserves pawn material.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
-              "f1b5",
-              "c8d7",
-              "b5d7"
+              "f1h3",
+              "g7f6",
+              "h3g2"
             ],
-            "explanation": "In the alternative f1b5 c8d7 b5d7, Do not call this an exact draw without checking black pawn h6 and both kings. Compare the position and defender's available checks with f1g2 c8d7 g2e4."
+            "explanation": "Trying Bb5 directly is illegal while the white king occupies e2; choose a real diagonal. The alternate f1h3 g7f6 h3g2 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -764,9 +764,9 @@
         "theme": "Opposite-coloured bishops",
         "method": "Opposite-coloured bishop endings can be difficult to convert because each bishop defends squares its rival cannot directly attack. A single extra pawn is often insufficient, but positions with widely separated passers or an active king are exceptions. Never claim an automatic draw from bishop color alone.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bd7 develops a dark-squared bishop instead of accepting a direct pawn challenge.",
-        "misconception": "Do not call this an exact draw without checking black pawn h6 and both kings.",
-        "endpoint": "Be4 centralizes White's bishop; the h5 pawn still needs king escort."
+        "defenderResource": "...Bf6 centralizes Black's dark bishop while White's h5 pawn remains stopped by h6.",
+        "misconception": "Trying Bb5 directly is illegal while the white king occupies e2; choose a real diagonal.",
+        "endpoint": "Be4 develops along a legal light-square diagonal and preserves pawn material."
       }
     },
     {
@@ -823,7 +823,7 @@
     {
       "id": "calc:p100-17",
       "title": "Challenge central light-squared lines",
-      "fen": "2b3k1/8/3p4/8/8/3P4/8/5BK1 w - - 0 1",
+      "fen": "2b3k1/8/3p4/8/8/4P3/8/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1c4",
       "principalVariation": [
@@ -840,25 +840,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "Bc4 directs the light bishop toward f7 while Black develops on the same color. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bg4 introduces diagonal counterplay instead of mirroring passively. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bf7+ checks the king at g8 but the line does not establish mate. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Challenge central light-squared lines. Bc4 directs the light bishop toward f7 while Black develops on the same color. Worked main variation f1c4 c8g4 c4f7; alternative f1b5 c8d7 b5d7. Defender resistance: ...Bg4 introduces diagonal counterplay instead of mirroring passively. At the end of the three plies: Bf7+ checks the king at g8 but the line does not establish mate. Specific misconception: An apparent bishop check on f7 is not necessarily a decisive tactic. Theoretical context: With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bg4 counters with light-square influence while White's bishop eyes f7. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bf7+ checks the king on g8 but Black may find a legal king escape. Continue the evaluation after the defender's next move.",
+      "explanation": "Challenge central light-squared lines. With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4. Reference f1c4 c8g4 c4f7, compared with f1b5 c8d7 b5d7. Defender: ...Bg4 counters with light-square influence while White's bishop eyes f7. Endpoint: Bf7+ checks the king on g8 but Black may find a legal king escape. Misconception: A bishop check needs a response tree; it is not a proof of mate. Theory: With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "Bc4 directs the light bishop toward f7 while Black develops on the same color.",
-        "defenderIdea": "...Bg4 introduces diagonal counterplay instead of mirroring passively.",
-        "continuation": "Bf7+ checks the king at g8 but the line does not establish mate.",
-        "misconception": "An apparent bishop check on f7 is not necessarily a decisive tactic.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bf7+ checks the king at g8 but the line does not establish mate.",
+        "keyQuestion": "With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4.",
+        "defenderIdea": "...Bg4 counters with light-square influence while White's bishop eyes f7.",
+        "continuation": "Bf7+ checks the king on g8 but Black may find a legal king escape.",
+        "misconception": "A bishop check needs a response tree; it is not a proof of mate.",
+        "reflection": "Reconstruct f1c4 c8g4 c4f7 and f1b5 c8d7 b5d7 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bf7+ checks the king on g8 but Black may find a legal king escape.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "f1b5",
               "c8d7",
               "b5d7"
             ],
-            "explanation": "In the alternative f1b5 c8d7 b5d7, An apparent bishop check on f7 is not necessarily a decisive tactic. Compare the position and defender's available checks with f1c4 c8g4 c4f7."
+            "explanation": "A bishop check needs a response tree; it is not a proof of mate. The alternate f1b5 c8d7 b5d7 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -866,9 +866,9 @@
         "theme": "Same-coloured bishops",
         "method": "With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bg4 introduces diagonal counterplay instead of mirroring passively.",
-        "misconception": "An apparent bishop check on f7 is not necessarily a decisive tactic.",
-        "endpoint": "Bf7+ checks the king at g8 but the line does not establish mate."
+        "defenderResource": "...Bg4 counters with light-square influence while White's bishop eyes f7.",
+        "misconception": "A bishop check needs a response tree; it is not a proof of mate.",
+        "endpoint": "Bf7+ checks the king on g8 but Black may find a legal king escape."
       }
     },
     {
@@ -1491,7 +1491,7 @@
       "bestMove": "c3d5",
       "principalVariation": [
         "c3d5",
-        "f8c5",
+        "f8e7",
         "d5f6"
       ],
       "source": "authored",
@@ -1503,25 +1503,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "Nd5 contests f6 and b6, putting the black king under a potential fork. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bc5 actively uses the dark-square bishop to pressure central squares. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Nf6+ checks g8; evaluate the response before deciding that it wins material. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Knight check on f6. Nd5 contests f6 and b6, putting the black king under a potential fork. Worked main variation c3d5 f8c5 d5f6; alternative c3b5 f8c5 b5d6. Defender resistance: ...Bc5 actively uses the dark-square bishop to pressure central squares. At the end of the three plies: Nf6+ checks g8; evaluate the response before deciding that it wins material. Specific misconception: The knight's check does not automatically win a bishop placed on c5. Theoretical context: A knight can sit directly in front of a passed pawn and blockade it while threatening new squares. But a knight may itself become tactically vulnerable to a bishop or king attack. Compare the resulting move order and the pawn's actual ability to advance. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "The knight's Nf6+ looks attractive but Black's bishop can answer from e7. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Be7 keeps Black's bishop available for ...Bxf6 or ...Bxd6 after a checking knight jump. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Nf6+ checks g8 but does not produce free material, because the knight remains en prise to ...Bxf6. Continue the evaluation after the defender's next move.",
+      "explanation": "Knight check on f6. The knight's Nf6+ looks attractive but Black's bishop can answer from e7. Reference c3d5 f8e7 d5f6, compared with c3b5 f8e7 b5d6. Defender: ...Be7 keeps Black's bishop available for ...Bxf6 or ...Bxd6 after a checking knight jump. Endpoint: Nf6+ checks g8 but does not produce free material, because the knight remains en prise to ...Bxf6. Misconception: Do not evaluate knight checking moves without calculating the defending bishop's capture. Theory: A knight can sit directly in front of a passed pawn and blockade it while threatening new squares. But a knight may itself become tactically vulnerable to a bishop or king attack. Compare the resulting move order and the pawn's actual ability to advance. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "Nd5 contests f6 and b6, putting the black king under a potential fork.",
-        "defenderIdea": "...Bc5 actively uses the dark-square bishop to pressure central squares.",
-        "continuation": "Nf6+ checks g8; evaluate the response before deciding that it wins material.",
-        "misconception": "The knight's check does not automatically win a bishop placed on c5.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Nf6+ checks g8; evaluate the response before deciding that it wins material.",
+        "keyQuestion": "The knight's Nf6+ looks attractive but Black's bishop can answer from e7.",
+        "defenderIdea": "...Be7 keeps Black's bishop available for ...Bxf6 or ...Bxd6 after a checking knight jump.",
+        "continuation": "Nf6+ checks g8 but does not produce free material, because the knight remains en prise to ...Bxf6.",
+        "misconception": "Do not evaluate knight checking moves without calculating the defending bishop's capture.",
+        "reflection": "Reconstruct c3d5 f8e7 d5f6 and c3b5 f8e7 b5d6 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Nf6+ checks g8 but does not produce free material, because the knight remains en prise to ...Bxf6.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "c3b5",
-              "f8c5",
+              "f8e7",
               "b5d6"
             ],
-            "explanation": "In the alternative c3b5 f8c5 b5d6, The knight's check does not automatically win a bishop placed on c5. Compare the position and defender's available checks with c3d5 f8c5 d5f6."
+            "explanation": "Do not evaluate knight checking moves without calculating the defending bishop's capture. The alternate c3b5 f8e7 b5d6 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -1529,9 +1529,9 @@
         "theme": "Knight blockades and outposts",
         "method": "A knight can sit directly in front of a passed pawn and blockade it while threatening new squares. But a knight may itself become tactically vulnerable to a bishop or king attack. Compare the resulting move order and the pawn's actual ability to advance.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bc5 actively uses the dark-square bishop to pressure central squares.",
-        "misconception": "The knight's check does not automatically win a bishop placed on c5.",
-        "endpoint": "Nf6+ checks g8; evaluate the response before deciding that it wins material."
+        "defenderResource": "...Be7 keeps Black's bishop available for ...Bxf6 or ...Bxd6 after a checking knight jump.",
+        "misconception": "Do not evaluate knight checking moves without calculating the defending bishop's capture.",
+        "endpoint": "Nf6+ checks g8 but does not produce free material, because the knight remains en prise to ...Bxf6."
       }
     },
     {
@@ -1792,12 +1792,12 @@
     {
       "id": "calc:p100-36",
       "title": "Wrong-bishop corner despite a second bishop",
-      "fen": "2b4k/8/8/5K1P/8/8/8/5B2 w - - 0 1",
+      "fen": "7k/6b1/8/5K1P/8/8/8/5B2 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1c4",
       "principalVariation": [
         "f1c4",
-        "c8b7",
+        "g7f6",
         "c4d5"
       ],
       "source": "authored",
@@ -1809,25 +1809,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "White's light bishop still cannot control dark-square h8 even though Black has a minor piece of its own. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bb7 develops the defensive bishop, but Black might also retain the corner instead. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bd5 creates scope; the king and rook pawn must still solve h8. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Wrong-bishop corner despite a second bishop. White's light bishop still cannot control dark-square h8 even though Black has a minor piece of its own. Worked main variation f1c4 c8b7 c4d5; alternative f1e2 c8d7 e2f3. Defender resistance: ...Bb7 develops the defensive bishop, but Black might also retain the corner instead. At the end of the three plies: Bd5 creates scope; the king and rook pawn must still solve h8. Specific misconception: Do not infer a certified draw if other black pieces or pawn structure permit tactics. Theoretical context: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "With a light bishop and h-pawn, White cannot control h8, while Black's dark bishop can move on a different complex. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bf6 centralizes the defender without abandoning the theoretical importance of h8. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bd5 is an active bishop move, but White still needs to dislodge the king from the promotion corner. Continue the evaluation after the defender's next move.",
+      "explanation": "Wrong-bishop corner despite a second bishop. With a light bishop and h-pawn, White cannot control h8, while Black's dark bishop can move on a different complex. Reference f1c4 g7f6 c4d5, compared with f1e2 g7f6 e2f3. Defender: ...Bf6 centralizes the defender without abandoning the theoretical importance of h8. Endpoint: Bd5 is an active bishop move, but White still needs to dislodge the king from the promotion corner. Misconception: The presence of another defensive minor piece makes an automatic theoretical draw claim unsafe. Theory: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "White's light bishop still cannot control dark-square h8 even though Black has a minor piece of its own.",
-        "defenderIdea": "...Bb7 develops the defensive bishop, but Black might also retain the corner instead.",
-        "continuation": "Bd5 creates scope; the king and rook pawn must still solve h8.",
-        "misconception": "Do not infer a certified draw if other black pieces or pawn structure permit tactics.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bd5 creates scope; the king and rook pawn must still solve h8.",
+        "keyQuestion": "With a light bishop and h-pawn, White cannot control h8, while Black's dark bishop can move on a different complex.",
+        "defenderIdea": "...Bf6 centralizes the defender without abandoning the theoretical importance of h8.",
+        "continuation": "Bd5 is an active bishop move, but White still needs to dislodge the king from the promotion corner.",
+        "misconception": "The presence of another defensive minor piece makes an automatic theoretical draw claim unsafe.",
+        "reflection": "Reconstruct f1c4 g7f6 c4d5 and f1e2 g7f6 e2f3 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bd5 is an active bishop move, but White still needs to dislodge the king from the promotion corner.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "f1e2",
-              "c8d7",
+              "g7f6",
               "e2f3"
             ],
-            "explanation": "In the alternative f1e2 c8d7 e2f3, Do not infer a certified draw if other black pieces or pawn structure permit tactics. Compare the position and defender's available checks with f1c4 c8b7 c4d5."
+            "explanation": "The presence of another defensive minor piece makes an automatic theoretical draw claim unsafe. The alternate f1e2 g7f6 e2f3 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -1835,15 +1835,15 @@
         "theme": "Fortress and practical verdicts",
         "method": "A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bb7 develops the defensive bishop, but Black might also retain the corner instead.",
-        "misconception": "Do not infer a certified draw if other black pieces or pawn structure permit tactics.",
-        "endpoint": "Bd5 creates scope; the king and rook pawn must still solve h8."
+        "defenderResource": "...Bf6 centralizes the defender without abandoning the theoretical importance of h8.",
+        "misconception": "The presence of another defensive minor piece makes an automatic theoretical draw claim unsafe.",
+        "endpoint": "Bd5 is an active bishop move, but White still needs to dislodge the king from the promotion corner."
       }
     },
     {
       "id": "calc:p100-37",
       "title": "Bishop reaches a7 but does not win b6",
-      "fen": "k7/4b3/1p6/P7/8/8/8/5BK1 w - - 0 1",
+      "fen": "1k6/4b3/1p6/P7/8/8/8/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1g2",
       "principalVariation": [
@@ -1860,25 +1860,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "Bg2 opens the long light diagonal toward the black king on a8. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Bd6 keeps the black bishop active and prepared to answer b7. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bb7+ checks the a8 king, but forced king moves remain to be calculated. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Bishop reaches a7 but does not win b6. Bg2 opens the long light diagonal toward the black king on a8. Worked main variation f1g2 e7d6 g2b7; alternative f1b5 e7d6 b5c6. Defender resistance: ...Bd6 keeps the black bishop active and prepared to answer b7. At the end of the three plies: Bb7+ checks the a8 king, but forced king moves remain to be calculated. Specific misconception: An outside passed pawn is not a guaranteed win without securing its promotion square. Theoretical context: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "Bg2 aims at a8, but Black's king is on b8 and the black bishop can respond ...Bd6. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Bd6 is a legal defensive move because the white bishop's long diagonal does not attack b8. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bb7 sets up a light-square diagonal and threatens the a8 corner, not an immediate forced queen promotion. Continue the evaluation after the defender's next move.",
+      "explanation": "Bishop reaches a7 but does not win b6. Bg2 aims at a8, but Black's king is on b8 and the black bishop can respond ...Bd6. Reference f1g2 e7d6 g2b7, compared with f1b5 e7d6 b5c6. Defender: ...Bd6 is a legal defensive move because the white bishop's long diagonal does not attack b8. Endpoint: Bb7 sets up a light-square diagonal and threatens the a8 corner, not an immediate forced queen promotion. Misconception: If the opposing king actually stood on a8, Bg2 would check it and ...Bd6 would be an illegal reply. Theory: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "Bg2 opens the long light diagonal toward the black king on a8.",
-        "defenderIdea": "...Bd6 keeps the black bishop active and prepared to answer b7.",
-        "continuation": "Bb7+ checks the a8 king, but forced king moves remain to be calculated.",
-        "misconception": "An outside passed pawn is not a guaranteed win without securing its promotion square.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bb7+ checks the a8 king, but forced king moves remain to be calculated.",
+        "keyQuestion": "Bg2 aims at a8, but Black's king is on b8 and the black bishop can respond ...Bd6.",
+        "defenderIdea": "...Bd6 is a legal defensive move because the white bishop's long diagonal does not attack b8.",
+        "continuation": "Bb7 sets up a light-square diagonal and threatens the a8 corner, not an immediate forced queen promotion.",
+        "misconception": "If the opposing king actually stood on a8, Bg2 would check it and ...Bd6 would be an illegal reply.",
+        "reflection": "Reconstruct f1g2 e7d6 g2b7 and f1b5 e7d6 b5c6 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bb7 sets up a light-square diagonal and threatens the a8 corner, not an immediate forced queen promotion.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
               "f1b5",
               "e7d6",
               "b5c6"
             ],
-            "explanation": "In the alternative f1b5 e7d6 b5c6, An outside passed pawn is not a guaranteed win without securing its promotion square. Compare the position and defender's available checks with f1g2 e7d6 g2b7."
+            "explanation": "If the opposing king actually stood on a8, Bg2 would check it and ...Bd6 would be an illegal reply. The alternate f1b5 e7d6 b5c6 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -1886,19 +1886,19 @@
         "theme": "Fortress and practical verdicts",
         "method": "A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bd6 keeps the black bishop active and prepared to answer b7.",
-        "misconception": "An outside passed pawn is not a guaranteed win without securing its promotion square.",
-        "endpoint": "Bb7+ checks the a8 king, but forced king moves remain to be calculated."
+        "defenderResource": "...Bd6 is a legal defensive move because the white bishop's long diagonal does not attack b8.",
+        "misconception": "If the opposing king actually stood on a8, Bg2 would check it and ...Bd6 would be an illegal reply.",
+        "endpoint": "Bb7 sets up a light-square diagonal and threatens the a8 corner, not an immediate forced queen promotion."
       }
     },
     {
       "id": "calc:p100-38",
       "title": "Knight freezes an advanced e-pawn",
-      "fen": "6k1/8/4pn2/4P3/4K3/8/8/2B5 w - - 0 1",
+      "fen": "6k1/8/4pn2/8/3P4/3K4/8/2B5 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "e4d4",
+      "bestMove": "d3e2",
       "principalVariation": [
-        "e4d4",
+        "d3e2",
         "f6d5",
         "c1g5"
       ],
@@ -1911,25 +1911,25 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "Kd4 escorts e5 while ...Nd5 can blockade a central pawn advance. Identify the key defender reply and calculate three plies before moving; compare the independent alternative line.",
-      "replyReason": "...Nd5 occupies a central square that White must challenge before e6. The resulting material, king access and pawn color complex must be reassessed.",
-      "continuationReason": "At the endpoint, Bg5 creates bishop pressure but the knight remains a blocking defender. Calculate the next defender reply before claiming win or draw.",
-      "explanation": "Knight freezes an advanced e-pawn. Kd4 escorts e5 while ...Nd5 can blockade a central pawn advance. Worked main variation e4d4 f6d5 c1g5; alternative e4f4 f6d5 c1e3. Defender resistance: ...Nd5 occupies a central square that White must challenge before e6. At the end of the three plies: Bg5 creates bishop pressure but the knight remains a blocking defender. Specific misconception: A blockaded pawn is not automatically a draw; the bishop or king may dislodge the knight. Theoretical context: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The recorded sequence is illustrative and is not a tablebase WDL certificate or engine-certified uniqueness judgment.",
+      "prompt": "The active white king changes route while the black knight seeks to occupy d5 before the pawn can advance. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
+      "replyReason": "...Nd5 restricts the white king's central choices and contests d4. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
+      "continuationReason": "Bg5 prepares long-diagonal pressure but cannot promote d4 without solving the knight blockade. Continue the evaluation after the defender's next move.",
+      "explanation": "Knight freezes an advanced e-pawn. The active white king changes route while the black knight seeks to occupy d5 before the pawn can advance. Reference d3e2 f6d5 c1g5, compared with d3c2 f6d5 c1g5. Defender: ...Nd5 restricts the white king's central choices and contests d4. Endpoint: Bg5 prepares long-diagonal pressure but cannot promote d4 without solving the knight blockade. Misconception: The king must not step onto c3 or e3 where the knight on d5 gives check; the bishop must also avoid blocking pawns. Theory: A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
       "defensiveStudy": {
-        "keyQuestion": "Kd4 escorts e5 while ...Nd5 can blockade a central pawn advance.",
-        "defenderIdea": "...Nd5 occupies a central square that White must challenge before e6.",
-        "continuation": "Bg5 creates bishop pressure but the knight remains a blocking defender.",
-        "misconception": "A blockaded pawn is not automatically a draw; the bishop or king may dislodge the knight.",
-        "reflection": "Reconstruct both lines and identify whether the next defender move attacks a pawn, bishop or knight. Explain which squares the bishops can never change color to. Bg5 creates bishop pressure but the knight remains a blocking defender.",
+        "keyQuestion": "The active white king changes route while the black knight seeks to occupy d5 before the pawn can advance.",
+        "defenderIdea": "...Nd5 restricts the white king's central choices and contests d4.",
+        "continuation": "Bg5 prepares long-diagonal pressure but cannot promote d4 without solving the knight blockade.",
+        "misconception": "The king must not step onto c3 or e3 where the knight on d5 gives check; the bishop must also avoid blocking pawns.",
+        "reflection": "Reconstruct d3e2 f6d5 c1g5 and d3c2 f6d5 c1g5 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bg5 prepares long-diagonal pressure but cannot promote d4 without solving the knight blockade.",
         "variations": [
           {
-            "label": "Independent candidate or defensive choice",
+            "label": "Defensive or alternate candidate",
             "moves": [
-              "e4f4",
+              "d3c2",
               "f6d5",
-              "c1e3"
+              "c1g5"
             ],
-            "explanation": "In the alternative e4f4 f6d5 c1e3, A blockaded pawn is not automatically a draw; the bishop or king may dislodge the knight. Compare the position and defender's available checks with e4d4 f6d5 c1g5."
+            "explanation": "The king must not step onto c3 or e3 where the knight on d5 gives check; the bishop must also avoid blocking pawns. The alternate d3c2 f6d5 c1g5 changes the geometric pressure and must be analyzed beyond the endpoint."
           }
         ]
       },
@@ -1937,9 +1937,9 @@
         "theme": "Fortress and practical verdicts",
         "method": "A fortress or draw requires evidence that the stronger side cannot make progress, not merely an elegant-looking blockade. Check the potential pawn breaks, the wrong-bishop corner, which king has entry squares, and whether a tactical capture changes material. Three-ply examples here teach a decision, not an independently certified tablebase result.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Nd5 occupies a central square that White must challenge before e6.",
-        "misconception": "A blockaded pawn is not automatically a draw; the bishop or king may dislodge the knight.",
-        "endpoint": "Bg5 creates bishop pressure but the knight remains a blocking defender."
+        "defenderResource": "...Nd5 restricts the white king's central choices and contests d4.",
+        "misconception": "The king must not step onto c3 or e3 where the knight on d5 gives check; the bishop must also avoid blocking pawns.",
+        "endpoint": "Bg5 prepares long-diagonal pressure but cannot promote d4 without solving the knight blockade."
       }
     },
     {
