@@ -634,7 +634,7 @@
     {
       "id": "calc:p101-11",
       "title": "Queen check met by the e-file rook",
-      "fen": "6k1/4r3/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "fen": "6k1/p3r3/8/8/8/8/8/3Q2K1 w - - 0 1",
       "playerColor": "w",
       "source": "authored",
       "sourceLabel": "P101 · Queen interpositions",
@@ -656,13 +656,13 @@
       "prompt": "Qd8+ attacks across e8 and f8. Search an interposing rook rather than assuming the king must flee. Calculate at least five plies and compare a real defensive resource before trusting the first check.",
       "replyReason": "...Re8 blocks the line, Qxe8+ captures the rook, but Black can escape toward h7.",
       "continuationReason": "Assess the board after five plies: A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king.",
-      "explanation": "Queen check met by the e-file rook. Qd8+ attacks across e8 and f8. Search an interposing rook rather than assuming the king must flee. Main instructional sequence: d1d8 e7e8 d8e8 g8h7 e8e4. Resistant alternative: d1d8 g8f7 d8d5. Candidate comparison: d1a4 e7e1 g1h2. ...Re8 blocks the line, Qxe8+ captures the rook, but Black can escape toward h7. Endpoint: A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king. Misconception and correction: An opponent's rook on the seventh rank is not a passive spectator when the queen checks along the eighth. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
+      "explanation": "Queen check met by the e-file rook. Qd8+ attacks across e8 and f8. Search an interposing rook rather than assuming the king must flee. Main instructional sequence: d1d8 e7e8 d8e8 g8h7 e8e4. Resistant alternative: d1d8 g8f7 d8d5. Candidate comparison: d1a4 e7e1 g1h2. ...Re8 blocks the line, Qxe8+ captures the rook, but Black can escape toward h7. Endpoint: A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king. Misconception and correction: An opponent's rook on the seventh rank is not a passive spectator when the queen checks along the eighth. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict. The black a7 pawn survives the rook exchange, so queen-versus-king-and-pawn conversion remains practical rather than an immediate mate.",
       "defensiveStudy": {
         "keyQuestion": "Qd8+ attacks across e8 and f8. Search an interposing rook rather than assuming the king must flee.",
         "defenderIdea": "...Re8 blocks the line, Qxe8+ captures the rook, but Black can escape toward h7.",
         "continuation": "A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king.",
         "misconception": "An opponent's rook on the seventh rank is not a passive spectator when the queen checks along the eighth.",
-        "reflection": "Visualize both king squares at ply five, count all pawns and queens and identify the first legal countercheck for the defender. A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king.",
+        "reflection": "Visualize both king squares at ply five, count all pawns and queens and identify the first legal countercheck for the defender. A queen-checking move that wins a rook still needs calculation beyond the capture, particularly with an exposed king. Include the a7 pawn in your endpoint count.",
         "variations": [
           {
             "label": "Resistant alternative",
