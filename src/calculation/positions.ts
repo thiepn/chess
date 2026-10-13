@@ -24,6 +24,7 @@ if (typeof window !== "undefined") {
     ["p99-rook-foundations-v1.json", "calc:p99-", 15],
     ["p99-rook-geometry-v1.json", "calc:p99-", 15],
     ["p99-rook-practical-v1.json", "calc:p99-", 15],
+    ["p100-minor-piece-v1.json", "calc:p100-", 40],
   ] as const) {
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
       .then(r => r.json())
