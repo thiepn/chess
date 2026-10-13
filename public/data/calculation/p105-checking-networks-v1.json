@@ -306,7 +306,7 @@
       },
       "kingAttackStudy": {
         "theme": "Rook checks and king flights",
-        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6.",
+        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. In this exact position: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. The next defensive counterplan also changes the material evaluation: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "defenderReply": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "materialAndKingSafety": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "badPlan": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
@@ -388,7 +388,7 @@
       },
       "kingAttackStudy": {
         "theme": "Rook checks and king flights",
-        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6.",
+        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. In this exact position: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. The next defensive counterplan also changes the material evaluation: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "defenderReply": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "materialAndKingSafety": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "badPlan": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
@@ -470,7 +470,7 @@
       },
       "kingAttackStudy": {
         "theme": "Rook checks and king flights",
-        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6.",
+        "attackingPrinciple": "Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. In this exact position: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. The next defensive counterplan also changes the material evaluation: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "defenderReply": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "materialAndKingSafety": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "badPlan": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
