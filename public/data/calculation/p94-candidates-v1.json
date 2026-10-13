@@ -1,0 +1,969 @@
+{
+  "version": 1,
+  "phase": "P94",
+  "title": "Candidate Moves & Calculation Foundations",
+  "license": "Original THIEPN authored instructional content; not engine-certified uniqueness",
+  "method": "Each position contains a legal instructional line to be replay-checked with chess.js at load time. Only the current runner judges the exact recorded line, which should not be treated as a claim that alternative moves are inferior.",
+  "positions": [
+    {
+      "id": "calc:p94-01",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "Meet the central pawn",
+      "prompt": "Black has advanced ...e5. List a central pawn challenge, a developing move, and a quiet alternative before choosing.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 1 2",
+      "playerColor": "w",
+      "bestMove": "e2e4",
+      "principalVariation": [
+        "e2e4",
+        "b8c6",
+        "f1b5"
+      ],
+      "explanation": "e4 claims space and opens a diagonal for the bishop. The first plan should contain both a reply and a next development. Compare 2.d3, which is solid but does not challenge the center immediately. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Nc6 develops while defending e5; do not treat the central challenge as an unanswered pawn move.",
+      "continuationReason": "Bb5 develops with pressure on the knight which supports e5.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-02",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet"
+      ],
+      "title": "Symmetry is a choice",
+      "prompt": "White has developed a knight. Compare a developing reply, a direct central pawn move, and an asymmetric response.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1",
+      "playerColor": "b",
+      "bestMove": "g8f6",
+      "principalVariation": [
+        "g8f6",
+        "d2d4",
+        "d7d5"
+      ],
+      "explanation": "...Nf6 develops a piece and keeps several central structures available. Calculate White's next central claim. Compare ...a6, which uses a tempo without contributing to central control. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "d4 contests central squares without forcing a tactical confrontation.",
+      "continuationReason": "...d5 meets White's center and gives Black a coherent follow-up.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-03",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "Defend e4 while developing",
+      "prompt": "Before moving, name which pawn is vulnerable and two ways to address it.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "playerColor": "w",
+      "bestMove": "g1f3",
+      "principalVariation": [
+        "g1f3",
+        "b8c6",
+        "f1c4"
+      ],
+      "explanation": "Nf3 attacks e5 and develops with tempo toward central control. The bishop can develop after Black supports the pawn. Compare 2.f4, a more committal pawn thrust that changes king-side risk. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Nc6 protects e5 with a piece while increasing central influence.",
+      "continuationReason": "Bc4 activates the bishop along an open e2–d3 diagonal and eyes f7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-04",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order"
+      ],
+      "title": "The queen's gambit question",
+      "prompt": "Identify the central pawn tension. Generate three candidates without moving the same piece twice.",
+      "fen": "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2",
+      "playerColor": "w",
+      "bestMove": "c2c4",
+      "principalVariation": [
+        "c2c4",
+        "e7e6",
+        "b1c3"
+      ],
+      "explanation": "c4 challenges d5 rather than automatically defending d4. The follow-up development supports future central decisions. Compare 2.Nf3, also principled but preserving rather than immediately increasing the central pawn tension. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...e6 reinforces d5 while reducing the immediate activity of the c8 bishop.",
+      "continuationReason": "Nc3 puts another attacker on d5 and develops a new piece.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-05",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order"
+      ],
+      "title": "Against an asymmetric center",
+      "prompt": "Black has played ...c5. Do you mirror, build a center, or develop? Choose with the second move in mind.",
+      "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "playerColor": "w",
+      "bestMove": "g1f3",
+      "principalVariation": [
+        "g1f3",
+        "d7d6",
+        "d2d4"
+      ],
+      "explanation": "Nf3 keeps d4 available. After Black supports c5, White can challenge with d4 while both sides retain choices. Compare 2.c3, a slower Alapin-style plan that can be legitimate but requires a different follow-up. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...d6 strengthens c5 and prepares kingside development, without immediately resolving the center.",
+      "continuationReason": "d4 creates central tension and opens the d-file after possible exchanges.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-06",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization"
+      ],
+      "title": "A reply creates a new target",
+      "prompt": "After 1.e4 e5 2.Nf3, select a move that supports the pawn and anticipate how White could question its defender.",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "playerColor": "b",
+      "bestMove": "b8c6",
+      "principalVariation": [
+        "b8c6",
+        "f1b5",
+        "a7a6"
+      ],
+      "explanation": "...Nc6 protects e5, but Bb5 shows why developing a defender creates a new point of contact. Compare ...d6, a playable pawn defense that blocks the f8 bishop's diagonal. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "Bb5 develops with pressure on c6, indirectly increasing attention on e5.",
+      "continuationReason": "...a6 challenges the bishop's placement; White must now reassess rather than blindly exchange.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-07",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation"
+      ],
+      "title": "Answer a developing bishop",
+      "prompt": "White's bishop points toward f7. List a developing move, a pawn challenge, and a king-safety idea.",
+      "fen": "rnbqkbnr/pppppppp/8/8/2B1P3/8/PPPP1PPP/RNBQK1NR b KQkq - 1 1",
+      "playerColor": "b",
+      "bestMove": "g8f6",
+      "principalVariation": [
+        "g8f6",
+        "d2d3",
+        "b8c6"
+      ],
+      "explanation": "...Nf6 contests e4 and develops; it is useful to calculate the quiet White response instead of searching for a phantom tactic. Compare ...h6, which does not address the central development race. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "d3 supports e4 and prepares further development rather than forcing a premature exchange.",
+      "continuationReason": "...Nc6 continues natural coordination against the central light squares.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-08",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation"
+      ],
+      "title": "Build the center against a fianchetto",
+      "prompt": "Black has committed to ...g6 and ...Bg7. Compare your central pawn options and predict Black's restraint.",
+      "fen": "rnbqk1nr/ppppppbp/6p1/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 0 2",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "d7d6",
+        "e2e4"
+      ],
+      "explanation": "d4 supports a broad central formation, and e4 follows after Black's d-pawn commits. Count the dark-square influence of the g7 bishop. Compare 2.g3, a sound alternative that leads to a less space-grabbing setup. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...d6 supports a later central counterstrike while keeping the diagonal relevant.",
+      "continuationReason": "e4 builds the pawn duo; now look for ...e5 or ...c5 as future counters.",
+      "source": "authored",
+      "sourceLabel": "P94 · Candidate generation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-09",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Queen checks across the board",
+      "prompt": "Search for a check, then mentally rebuild the board after the king steps away.",
+      "fen": "6k1/8/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "g8h7",
+        "d8h4"
+      ],
+      "explanation": "Qd8+ uses the open eighth rank, but finding the check is only the first ply; the queen needs a purposeful follow-up. Compare 1.Qd5, which gives a different kind of central queen activity without the same immediate forcing sequence. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kh7 escapes the eighth-rank attack; other king moves may also be legal and should be compared.",
+      "continuationReason": "Qh4+ uses a diagonal repositioning to deliver another file check on h7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-10",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Rook check and rank transfer",
+      "prompt": "Identify a forcing rook move and forecast the next checking rank.",
+      "fen": "6k1/8/8/8/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8h7",
+        "a8a7"
+      ],
+      "explanation": "Ra8+ takes advantage of a clear back rank; after a king escape, the rook can switch to a seventh-rank check. Compare 1.Ra7, which is active but not the same immediate back-rank check. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kh7 moves off the attacked eighth rank without approaching the rook.",
+      "continuationReason": "Ra7+ switches to the seventh rank; reconstruct the horizontal checking ray.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-11",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.reply"
+      ],
+      "title": "The diagonal check changes the king",
+      "prompt": "Generate checks and calculate whether you can keep the bishop safe afterward.",
+      "fen": "4k3/8/8/8/2B5/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4b5",
+      "principalVariation": [
+        "c4b5",
+        "e8f8",
+        "b5c4"
+      ],
+      "explanation": "Bb5+ demonstrates a diagonal check. After the king moves, the bishop can return, but a check by itself does not establish an advantage. Compare 1.Bd3, an ordinary repositioning that does not force the defender to respond. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf8 leaves the b5–e8 diagonal; confirm the bishop's other covered squares before choosing.",
+      "continuationReason": "Bc4 returns to a useful diagonal without claiming an attack against a lone king.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-12",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order"
+      ],
+      "title": "Respond to the rook check",
+      "prompt": "You are in check. Reject every attractive candidate that fails to answer it.",
+      "fen": "4k3/8/8/8/8/8/4r3/4K2R w K - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1d1",
+      "principalVariation": [
+        "e1d1",
+        "e2e4",
+        "h1e1"
+      ],
+      "explanation": "Kd1 steps off the rook's file. A full calculation must then examine the attacking rook's new square and the possibility of trading. Compare 1.Rh8+, which cannot be played while the king remains in check. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Re4 keeps the black rook active rather than assuming the defender is free to attack.",
+      "continuationReason": "Re1 offers an exchange on the e-file; evaluate the ensuing rook swap before making it.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-13",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "Take the attacker, then use tempo",
+      "prompt": "The black rook threatens your queen on d1. Identify the safest forcing candidate.",
+      "fen": "4k3/8/8/8/8/8/3r4/3QK3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7"
+      ],
+      "explanation": "Qxd2 removes the rook. Calculate the king's next square so the queen does not stop thinking after the exchange. Compare 1.Qe2, retreating the queen without removing the rook's initiative. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 approaches the center in the simplified queen-versus-king setting.",
+      "continuationReason": "Qd7+ follows with tempo and centralizes the queen on the seventh rank.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-14",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization"
+      ],
+      "title": "Escape a rook on the second rank",
+      "prompt": "Black's rook checks along the a-file. Calculate a king escape and one follow-up development.",
+      "fen": "4k3/8/8/8/8/8/r7/K6R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "a2a6",
+        "h1d1"
+      ],
+      "explanation": "Kb1 leaves the rook's file; the key discipline is to check whether b1 is itself attacked. Compare 1.Rh8+, illegal while the king on a1 remains in check. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Ra6 retains rook activity while the defender regains a tempo for coordination.",
+      "continuationReason": "Rd1 brings White's rook to an open central file after the king's escape.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-15",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Check with a long rook",
+      "prompt": "The opponent has an active knight. Compare attacking that piece with making a forcing rook move.",
+      "fen": "4k3/8/8/8/8/2n5/8/4K2R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8h7"
+      ],
+      "explanation": "Rh8+ uses the open h-file and eighth rank; do not count the check as a win without looking at the king's escape. Compare 1.Rh3, which leaves the checking route unused and gives Black time to improve. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd7 is a legal king flight that abandons the back rank.",
+      "continuationReason": "Rh7+ creates a second check from the seventh rank, but the knight remains on the board.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-16",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "title": "Capturing a rook is not winning",
+      "prompt": "White's knight attacks a rook. Visualize the position after the rook is captured and the king recaptures.",
+      "fen": "3rk3/8/2N5/8/8/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c6d8",
+      "principalVariation": [
+        "c6d8",
+        "e8d8",
+        "g1f2"
+      ],
+      "explanation": "Nxd8 gains the rook but permits ...Kxd8, leaving bare kings and a draw. Material won during a line must be compared with what survives it. Compare 1.Na5, which leaves the attack on d8 and creates a completely different calculation. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kxd8 captures the knight legally; check the defender's king adjacency and piece protection.",
+      "continuationReason": "Kf2 is a legal waiting move in the resulting bare-king draw; there is no remaining material edge.",
+      "source": "authored",
+      "sourceLabel": "P94 · Checks first",
+      "difficulty": 5
+    },
+    {
+      "id": "calc:p94-17",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "calculation.reply"
+      ],
+      "title": "Remove the centralized knight",
+      "prompt": "A black knight occupies d3. Calculate a capture and where your surviving bishop belongs.",
+      "fen": "4k3/8/8/8/8/3n4/4B3/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2d3",
+      "principalVariation": [
+        "e2d3",
+        "e8f7",
+        "d3c4"
+      ],
+      "explanation": "Bxd3 eliminates the advanced knight; after the capture, relocating the bishop can keep useful diagonals. Compare 1.Bf3, which preserves the bishop but leaves the knight's activity intact. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 activates Black's king after the minor-piece capture.",
+      "continuationReason": "Bc4 develops the remaining bishop toward central squares; conversion still depends on the rest of the position.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-18",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "title": "Exchange rooks before planning",
+      "prompt": "The black rook is exposed on a7. Calculate the material balance through the full line.",
+      "fen": "4k3/r7/8/8/8/8/8/R3K3 w Q - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a7",
+      "principalVariation": [
+        "a1a7",
+        "e8f7",
+        "a7a6"
+      ],
+      "explanation": "Rxa7 removes the opposing rook, and the surviving rook can remain active. This is an illustrative rook conversion, not a forced-mate claim. Compare 1.Ra8+, an alternative forcing check that does not remove the rook immediately. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 improves the defender's king; the new game is rook and king against king.",
+      "continuationReason": "Ra6 retains the rook at useful checking distance from the defender.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-19",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Queen captures on a diagonal",
+      "prompt": "Your queen attacks a bishop on e8. Calculate the capture and the defender's next square.",
+      "fen": "k3b3/8/8/7Q/8/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h5e8",
+      "principalVariation": [
+        "h5e8",
+        "a8b7",
+        "e8c6"
+      ],
+      "explanation": "Qxe8+ takes the bishop and gives check along the eighth rank. A queen check does not finish until the king can escape. Compare 1.Qh1, saving the queen without taking available material. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kb7 steps off the eighth-rank line and must be visualized before the next queen move.",
+      "continuationReason": "Qc6+ changes the checking diagonal, attacking the king on b7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-20",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "Knight takes the bishop",
+      "prompt": "White can trade a knight for an active bishop. Visualize the knight's landing and retreat squares.",
+      "fen": "4k3/8/8/3b4/5N2/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f4d5",
+      "principalVariation": [
+        "f4d5",
+        "e8f7",
+        "d5f4"
+      ],
+      "explanation": "Nxd5 removes the bishop. Before celebrating a capture, inspect whether a king or pawn can recapture the knight. Compare 1.Nh5, a knight move that abandons the capture and cannot be judged by material alone. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 brings Black's king closer but cannot recapture the knight immediately.",
+      "continuationReason": "Nf4 brings the knight to a controlled post and illustrates a safe next decision.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-21",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "calculation.move-order"
+      ],
+      "title": "Pawn capture changes the file",
+      "prompt": "Calculate the pawn exchange, king approach, and resulting pawn majority.",
+      "fen": "4k3/8/8/4p3/3P4/8/8/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d4e5",
+      "principalVariation": [
+        "d4e5",
+        "e8d7",
+        "e1d2"
+      ],
+      "explanation": "dxe5 leaves White with a pawn on e5 and removes Black's central pawn. Track which file each side's king must contest. Compare 1.Kd2, improving the king before the capture and allowing Black to change the pawn contact. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd7 approaches the advanced e-pawn rather than making an unrelated king move.",
+      "continuationReason": "Kd2 activates the white king while leaving the e5 pawn on the board.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-22",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "calculation.visualization"
+      ],
+      "title": "A rook remains after the swap",
+      "prompt": "The rooks face each other on an open file. Count the surviving pieces after Rxe7.",
+      "fen": "6k1/4r3/8/8/8/8/8/4R1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e7",
+      "principalVariation": [
+        "e1e7",
+        "g8f8",
+        "e7a7"
+      ],
+      "explanation": "Rxe7 trades off the black rook and leaves White with the active rook. Distinguish a material advantage from a particular checking technique. Compare 1.Ra1, which postpones the capture and leaves a second active rook on the board. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf8 is a legal defender move after the exchange.",
+      "continuationReason": "Ra7 keeps the rook active horizontally without making a false forced-mate claim.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-23",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "title": "Bishop capture must be defended",
+      "prompt": "The bishops can meet on f7. Count what protects the landing square before calculating the king's response.",
+      "fen": "4k3/5b2/8/8/2B5/8/8/5RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4f7",
+      "principalVariation": [
+        "c4f7",
+        "e8d7",
+        "f7e6"
+      ],
+      "explanation": "Bxf7+ works as a concrete bishop capture because the rook on f1 guards f7. Without that support ...Kxf7 would be a different story. Compare 1.Bd5, centralization that does not resolve the bishop exchange immediately. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd7 moves away from the bishop's e8 diagonal instead of capturing the guarded bishop.",
+      "continuationReason": "Be6+ gives another check; reconstruct the bishop's diagonal to the king on d7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 5
+    },
+    {
+      "id": "calc:p94-24",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization"
+      ],
+      "title": "Take first, check second",
+      "prompt": "The d-file is open, and a bishop blocks it. Identify the capture and the next forcing move.",
+      "fen": "6k1/3b4/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "g8f8",
+        "d7d8"
+      ],
+      "explanation": "Qxd7 wins the bishop on d7. Do not confuse the queen's seventh-rank control with a direct check until the follow-up. Compare 1.Qd5, a checking or attacking idea that leaves the bishop alive. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf8 is legal because the d7 queen does not yet attack the f8 square.",
+      "continuationReason": "Qd8+ gives check along the eighth rank after Black leaves g8.",
+      "source": "authored",
+      "sourceLabel": "P94 · Captures and trades",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-25",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.reply"
+      ],
+      "title": "A seventh-rank rook under counterplay",
+      "prompt": "You have a rook and so does Black. Evaluate a rook lift without assuming the opponent is passive.",
+      "fen": "6kr/8/8/8/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a7",
+      "principalVariation": [
+        "a1a7",
+        "h8h7",
+        "a7a8"
+      ],
+      "explanation": "Ra7 activates the rook but also permits Black to contest the seventh rank. The continuation should account for that active reply. Compare 1.Ra6, an earlier rook lift that gives Black another move to organize. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Rh7 meets the intruder on the same rank and creates a tactical question.",
+      "continuationReason": "Ra8+ switches ranks with tempo before the rook can be challenged horizontally.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-26",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.visualization"
+      ],
+      "title": "The knight's second landing square",
+      "prompt": "Do not stop at the first developing move: calculate where your knight can go next.",
+      "fen": "4k1n1/8/8/8/8/8/8/1N2K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1c3",
+      "principalVariation": [
+        "b1c3",
+        "g8f6",
+        "c3d5"
+      ],
+      "explanation": "Nc3 claims central influence, and Nd5 can establish a new outpost if Black does not contest it. Compare 1.Na3, which also develops but gives the knight fewer central routes. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Nf6 develops Black's knight and changes the squares each side attacks.",
+      "continuationReason": "Nd5 improves the knight's reach; evaluation requires noticing future ...Nxd5 alternatives if pieces change.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-27",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation"
+      ],
+      "title": "Bishops choose diagonals",
+      "prompt": "Choose your bishop's diagonal, and visualize Black's opposing bishop before moving again.",
+      "fen": "2b1k3/8/8/8/8/8/8/2B1K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1f4",
+      "principalVariation": [
+        "c1f4",
+        "c8g4",
+        "f4e5"
+      ],
+      "explanation": "Bf4 brings the bishop onto a long active diagonal. Moves can be useful without delivering a check or winning immediate material. Compare 1.Bd2, a legal but more restrained bishop deployment. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Bg4 activates the opposing bishop, so your next move must not assume one-sided development.",
+      "continuationReason": "Be5 maintains centralized bishop influence without pretending the position has a forced tactical solution.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-28",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation"
+      ],
+      "title": "A rook behind its pawn",
+      "prompt": "You have a pawn on d4. Generate rook-lift candidates and predict where Black can activate.",
+      "fen": "6kr/8/8/8/3P4/8/8/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d3",
+      "principalVariation": [
+        "d1d3",
+        "h8h6",
+        "d3c3"
+      ],
+      "explanation": "Rd3 supports the d-pawn from behind. A quiet move can prepare the next plan while keeping the rook mobile. Compare 1.Rd2, which is also possible but limits the immediate third-rank lateral move. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Rh6 brings Black's rook to a more active rank instead of cooperating with White's pawn plan.",
+      "continuationReason": "Rc3 changes the rook's file while retaining third-rank activity.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-29",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.evaluation"
+      ],
+      "title": "Two central pawns meet",
+      "prompt": "Compare pushing a pawn with improving the king, then visualize the pawn structure after both pushes.",
+      "fen": "4k3/4p3/8/8/8/8/4P3/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2e4",
+      "principalVariation": [
+        "e2e4",
+        "e7e5",
+        "e1f2"
+      ],
+      "explanation": "e4 claims space, but ...e5 fixes a confrontation that neither king can ignore forever. The result is about structure, not a quick tactical shot. Compare 1.Kd2, a legal king approach that saves the pawn push for later. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...e5 meets the advance symmetrically and leaves both pawns blocked on the e-file.",
+      "continuationReason": "Kf2 improves White's king while maintaining the fixed pawn center.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-30",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.move-order"
+      ],
+      "title": "Support a flank pawn",
+      "prompt": "List a pawn-space gain and two knight moves. Which sequence brings the knight into support?",
+      "fen": "4k3/8/8/8/8/8/2P5/1N4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c4",
+      "principalVariation": [
+        "c2c4",
+        "e8f7",
+        "b1c3"
+      ],
+      "explanation": "c4 gains queenside space, then Nc3 develops the knight behind the new pawn front. Compare 1.Na3, which heads to a different network of squares after c4. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 is a legal defender improvement in this sparse demonstration position.",
+      "continuationReason": "Nc3 supports d5/e4 and begins a plan behind the c-pawn.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-31",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.visualization"
+      ],
+      "title": "Open the bishop's path first",
+      "prompt": "Compare moving the bishop immediately with preparing its route.",
+      "fen": "4k3/8/8/8/8/8/4P3/5BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2e4",
+      "principalVariation": [
+        "e2e4",
+        "e8d7",
+        "f1c4"
+      ],
+      "explanation": "e4 opens the e2 square and therefore the f1–c4 diagonal. Calculation includes identifying the geometry created by pawn moves. Compare 1.Bg2, which develops a bishop without opening the same central diagonal. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd7 approaches the center rather than making a tactical threat.",
+      "continuationReason": "Bc4 uses the diagonal opened by e4; the bishop could not have taken that path before the pawn moved.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 2
+    },
+    {
+      "id": "calc:p94-32",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.forcing-lines"
+      ],
+      "title": "Use the eighth rank",
+      "prompt": "With a rook and a distant pawn, calculate how a rook can switch from activity to a forcing check.",
+      "fen": "4k3/8/8/8/8/8/1P6/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a7",
+      "principalVariation": [
+        "a1a7",
+        "e8d8",
+        "a7a8"
+      ],
+      "explanation": "Ra7 enters the seventh rank. After a king move, Ra8+ gains a tempo on the eighth rank; neither move alone determines conversion. Compare 1.b4, a space-gaining pawn move that leaves the rook without a forcing tempo. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd8 leaves the rook's seventh-rank ray while keeping an eye on the pawn race.",
+      "continuationReason": "Ra8+ drives the king's next decision and preserves room for subsequent rook activity.",
+      "source": "authored",
+      "sourceLabel": "P94 · Quiet candidates",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-33",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Queen checks through a diagonal",
+      "prompt": "Before moving your queen, identify the opposing rooks and calculate a check followed by a new checking angle.",
+      "fen": "r3k3/8/8/8/8/8/r7/6KQ w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8d4"
+      ],
+      "explanation": "Qh8+ reaches the back rank; a king escape forces White to change diagonals rather than keeping the queen stationary. Compare 1.Qa8, a superficially similar invasion that runs into rook control on the a-file. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kd7 avoids the horizontal back-rank check and leaves the queen to choose a continuation.",
+      "continuationReason": "Qd4+ crosses the long diagonal and gives check on the d-file against the king on d7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 5
+    },
+    {
+      "id": "calc:p94-34",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization"
+      ],
+      "title": "Rescue the attacked queen",
+      "prompt": "A knight on c3 attacks your queen on b1. Find a safe square and anticipate the knight's relocation.",
+      "fen": "4k3/8/8/8/8/2n5/8/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1b2",
+      "principalVariation": [
+        "b1b2",
+        "c3d5",
+        "b2b7"
+      ],
+      "explanation": "Qb2 leaves the knight's attack pattern; a good escape also preserves chances to become active later. Compare 1.Qa1, another retreat that keeps the queen on the back rank and does less to create counterplay. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Nd5 centralizes the knight and changes which queen squares are safe.",
+      "continuationReason": "Qb7 takes an active seventh-rank post with the immediate attack avoided.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-35",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.evaluation"
+      ],
+      "title": "Promotion is not the end of the line",
+      "prompt": "A pawn is one step from promotion, but the opponent also has a dangerous pawn. Calculate three moves.",
+      "fen": "7k/P7/8/8/8/8/7p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a7a8q",
+      "principalVariation": [
+        "a7a8q",
+        "h8h7",
+        "a8b7"
+      ],
+      "explanation": "a8=Q+ promotes with tempo; the new queen must then keep the opposing king occupied while accounting for ...h1=Q. Compare 1.Kf2, allowing the enemy pawn to remain one step from promotion. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kh7 escapes the queen's back-rank check, while the h-pawn remains a serious race threat.",
+      "continuationReason": "Qb7+ continues with a horizontal check; do not confuse repeated checks with guaranteed conversion.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-36",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "After the rook capture",
+      "prompt": "The rook on d2 attacks your rook. Count what remains after exchanging it.",
+      "fen": "6k1/8/8/8/8/8/3r4/3RK3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "g8f7",
+        "d2d7"
+      ],
+      "explanation": "Rxd2 removes the attacker and leaves White with a rook, so the follow-up can activate rather than defend. Compare 1.Rd8+, which does not remove the attack on your rook and changes the calculation entirely. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 centralizes the lone defending king and is not a reply to a check.",
+      "continuationReason": "Rd7+ puts the rook onto the seventh rank with tempo against the king on f7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-37",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation"
+      ],
+      "title": "A developing move has a reply",
+      "prompt": "After ...Nc6, calculate a bishop development and Black's natural reply before choosing your d-pawn move.",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "playerColor": "w",
+      "bestMove": "f1c4",
+      "principalVariation": [
+        "f1c4",
+        "g8f6",
+        "d2d3"
+      ],
+      "explanation": "Bc4 aims at f7 and develops. After ...Nf6, d3 supports e4 without assuming Black must take anything. Compare 3.Bb5, a different Ruy Lopez structure whose follow-up should not be confused with the Italian. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Nf6 attacks e4 and develops; it is the natural test of an unguarded center.",
+      "continuationReason": "d3 supports e4 and sets up a slower Italian-game structure.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 3
+    },
+    {
+      "id": "calc:p94-38",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Defend the queen's landing square",
+      "prompt": "The queen can take the rook beside Black's king. Confirm whether the destination is defended.",
+      "fen": "3rk3/8/1B6/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e8f7",
+        "d8d7"
+      ],
+      "explanation": "Qxd8+ captures the rook; the bishop on b6 protects d8, so ...Kxd8 is not a legal recapture. This protection changes the entire line. Compare 1.Qa4+, checking along a different diagonal but leaving the rook on d8. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 leaves the checked eighth rank while staying away from the bishop's defense.",
+      "continuationReason": "Qd7+ follows along the seventh rank against the king on f7.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 5
+    },
+    {
+      "id": "calc:p94-39",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines"
+      ],
+      "title": "Stop the promotion threat",
+      "prompt": "The black pawn on d2 attacks your king and threatens to promote. Which candidate answers the check?",
+      "fen": "4k3/8/8/8/8/8/3p4/3RK3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7"
+      ],
+      "explanation": "Rxd2 removes both the check and the promotion threat. Finishing the line requires identifying the next rook check. Compare 1.Kf1, a king move that may escape the check but leaves the advanced pawn alive. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kf7 activates the lone defender's king once the pawn disappears.",
+      "continuationReason": "Rd7+ continues with an active rook check along the seventh rank.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 4
+    },
+    {
+      "id": "calc:p94-40",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.forcing-lines",
+        "calculation.visualization"
+      ],
+      "title": "Rook check, pawn capture, check",
+      "prompt": "Calculate the entire line from the rook's entry to the possible capture on g7.",
+      "fen": "7k/6p1/8/8/8/8/6P1/6KR w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h7",
+      "principalVariation": [
+        "h1h7",
+        "h8g8",
+        "h7g7"
+      ],
+      "explanation": "Rh7+ forces the king to leave the h-file; Rxg7+ then captures the pawn with another tempo. Be precise about why the g7 square is accessible. Compare 1.Kf2, which develops the king but wastes an opportunity to use the rook's tempo. This is a replayable instructional line, not a claim that every other legal move is inferior.",
+      "replyReason": "...Kg8 escapes the vertical check while leaving the g7 pawn on the seventh rank.",
+      "continuationReason": "Rxg7+ captures the pawn and checks along the g-file, not the same line as Rh7+.",
+      "source": "authored",
+      "sourceLabel": "P94 · Line evaluation",
+      "difficulty": 4
+    }
+  ]
+}
