@@ -1,0 +1,587 @@
+{
+  "version": 1,
+  "phase": "P97",
+  "section": "Positional variation trees",
+  "positions": [
+    {
+      "id": "calc:p97-21",
+      "title": "Knight reroute into d4 · White reserve",
+      "fen": "1n4nk/8/3p4/4p3/4P3/3P4/2P4P/1N3RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1d2",
+      "principalVariation": [
+        "b1d2",
+        "b8c6",
+        "f1e1",
+        "g8f6",
+        "d3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Nd2 preserves a c-pawn lever while Black's knights can contest the center. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: b1d2 b8c6 c2c3 g8f6 f1e1. White keeps h2 as a kingside pawn reserve.",
+      "continuationReason": "At the endpoint: The d4 break is prepared, not forced; Black's counterplay against e4 remains.",
+      "explanation": "Knight reroute into d4: Nd2 preserves a c-pawn lever while Black's knights can contest the center. Recorded line b1d2 b8c6 f1e1 g8f6 d3d4. Resistance b1d2 b8c6 c2c3 g8f6 f1e1. Alternative candidate b1c3 b8c6 f1e1 g8f6 d3d4. Endpoint: The d4 break is prepared, not forced; Black's counterplay against e4 remains. White keeps h2 as a kingside pawn reserve. Misconception: Declaring ...Nc6 helpless ignores the second developing reply ...Nf6. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Nd2 preserves a c-pawn lever while Black's knights can contest the center.",
+        "defenderIdea": "b1d2 b8c6 c2c3 g8f6 f1e1",
+        "continuation": "The d4 break is prepared, not forced; Black's counterplay against e4 remains.",
+        "misconception": "Declaring ...Nc6 helpless ignores the second developing reply ...Nf6.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "b1d2",
+              "b8c6",
+              "c2c3",
+              "g8f6",
+              "f1e1"
+            ],
+            "explanation": "The d4 break is prepared, not forced; Black's counterplay against e4 remains. White keeps h2 as a kingside pawn reserve."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "b1c3",
+              "b8c6",
+              "f1e1",
+              "g8f6",
+              "d3d4"
+            ],
+            "explanation": "Declaring ...Nc6 helpless ignores the second developing reply ...Nf6. White keeps h2 as a kingside pawn reserve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-22",
+      "title": "Knight reroute into d4 · Black reserve",
+      "fen": "1n4nk/7p/3p4/4p3/4P3/3P4/2P5/1N3RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1d2",
+      "principalVariation": [
+        "b1d2",
+        "b8c6",
+        "f1e1",
+        "g8f6",
+        "d3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Nd2 preserves a c-pawn lever while Black's knights can contest the center. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: b1d2 b8c6 c2c3 g8f6 f1e1. Black retains h7 to build a later kingside pawn shelter.",
+      "continuationReason": "At the endpoint: The d4 break is prepared, not forced; Black's counterplay against e4 remains.",
+      "explanation": "Knight reroute into d4: Nd2 preserves a c-pawn lever while Black's knights can contest the center. Recorded line b1d2 b8c6 f1e1 g8f6 d3d4. Resistance b1d2 b8c6 c2c3 g8f6 f1e1. Alternative candidate b1c3 b8c6 f1e1 g8f6 d3d4. Endpoint: The d4 break is prepared, not forced; Black's counterplay against e4 remains. Black retains h7 to build a later kingside pawn shelter. Misconception: Declaring ...Nc6 helpless ignores the second developing reply ...Nf6. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Nd2 preserves a c-pawn lever while Black's knights can contest the center.",
+        "defenderIdea": "b1d2 b8c6 c2c3 g8f6 f1e1",
+        "continuation": "The d4 break is prepared, not forced; Black's counterplay against e4 remains.",
+        "misconception": "Declaring ...Nc6 helpless ignores the second developing reply ...Nf6.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "b1d2",
+              "b8c6",
+              "c2c3",
+              "g8f6",
+              "f1e1"
+            ],
+            "explanation": "The d4 break is prepared, not forced; Black's counterplay against e4 remains. Black retains h7 to build a later kingside pawn shelter."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "b1c3",
+              "b8c6",
+              "f1e1",
+              "g8f6",
+              "d3d4"
+            ],
+            "explanation": "Declaring ...Nc6 helpless ignores the second developing reply ...Nf6. Black retains h7 to build a later kingside pawn shelter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-23",
+      "title": "C-pawn recapture after a central break · White reserve",
+      "fen": "1n4nk/8/3p4/4p3/4P3/5N2/2PP3P/1N4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c3",
+      "principalVariation": [
+        "c2c3",
+        "b8c6",
+        "d2d4",
+        "e5d4",
+        "c3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "c3 supports the recapture after White launches d4. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: c2c3 b8c6 d2d4 g8f6 d4e5. White keeps h2 as a kingside pawn reserve.",
+      "continuationReason": "At the endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
+      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. White keeps h2 as a kingside pawn reserve. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "c3 supports the recapture after White launches d4.",
+        "defenderIdea": "c2c3 b8c6 d2d4 g8f6 d4e5",
+        "continuation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
+        "misconception": "Treating d4 as permanent overlooks ...exd4.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "c2c3",
+              "b8c6",
+              "d2d4",
+              "g8f6",
+              "d4e5"
+            ],
+            "explanation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain. White keeps h2 as a kingside pawn reserve."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "c2c3",
+              "b8c6",
+              "c3d4"
+            ],
+            "explanation": "Treating d4 as permanent overlooks ...exd4. White keeps h2 as a kingside pawn reserve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-24",
+      "title": "C-pawn recapture after a central break · Black reserve",
+      "fen": "1n4nk/7p/3p4/4p3/4P3/5N2/2PP4/1N4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c3",
+      "principalVariation": [
+        "c2c3",
+        "b8c6",
+        "d2d4",
+        "e5d4",
+        "c3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "c3 supports the recapture after White launches d4. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: c2c3 b8c6 d2d4 g8f6 d4e5. Black retains h7 to build a later kingside pawn shelter.",
+      "continuationReason": "At the endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
+      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. Black retains h7 to build a later kingside pawn shelter. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "c3 supports the recapture after White launches d4.",
+        "defenderIdea": "c2c3 b8c6 d2d4 g8f6 d4e5",
+        "continuation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
+        "misconception": "Treating d4 as permanent overlooks ...exd4.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "c2c3",
+              "b8c6",
+              "d2d4",
+              "g8f6",
+              "d4e5"
+            ],
+            "explanation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain. Black retains h7 to build a later kingside pawn shelter."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "c2c3",
+              "b8c6",
+              "c3d4"
+            ],
+            "explanation": "Treating d4 as permanent overlooks ...exd4. Black retains h7 to build a later kingside pawn shelter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-25",
+      "title": "Fianchetto before c4 · White reserve",
+      "fen": "1n4k1/3pp3/8/8/3P4/6P1/2P4P/1N3BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "d7d5",
+        "b1c3",
+        "b8c6",
+        "c2c4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Bg2 gives White long-diagonal influence before pressure against d5. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: f1g2 e7e6 b1c3 d7d5 c2c4. White keeps h2 as a kingside pawn reserve.",
+      "continuationReason": "At the endpoint: c4 creates tension while Black's queenside pieces also improve.",
+      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 c2c4. Resistance f1g2 e7e6 b1c3 d7d5 c2c4. Alternative candidate f1h3 d7d5 b1c3 b8c6 c2c4. Endpoint: c4 creates tension while Black's queenside pieces also improve. White keeps h2 as a kingside pawn reserve. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Bg2 gives White long-diagonal influence before pressure against d5.",
+        "defenderIdea": "f1g2 e7e6 b1c3 d7d5 c2c4",
+        "continuation": "c4 creates tension while Black's queenside pieces also improve.",
+        "misconception": "A fianchetto bishop does not immediately win a defended central pawn.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "f1g2",
+              "e7e6",
+              "b1c3",
+              "d7d5",
+              "c2c4"
+            ],
+            "explanation": "c4 creates tension while Black's queenside pieces also improve. White keeps h2 as a kingside pawn reserve."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "f1h3",
+              "d7d5",
+              "b1c3",
+              "b8c6",
+              "c2c4"
+            ],
+            "explanation": "A fianchetto bishop does not immediately win a defended central pawn. White keeps h2 as a kingside pawn reserve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-26",
+      "title": "Fianchetto before c4 · Black reserve",
+      "fen": "1n4k1/3pp2p/8/8/3P4/6P1/2P5/1N3BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "d7d5",
+        "b1c3",
+        "b8c6",
+        "c2c4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Bg2 gives White long-diagonal influence before pressure against d5. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: f1g2 e7e6 b1c3 d7d5 c2c4. Black retains h7 to build a later kingside pawn shelter.",
+      "continuationReason": "At the endpoint: c4 creates tension while Black's queenside pieces also improve.",
+      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 c2c4. Resistance f1g2 e7e6 b1c3 d7d5 c2c4. Alternative candidate f1h3 d7d5 b1c3 b8c6 c2c4. Endpoint: c4 creates tension while Black's queenside pieces also improve. Black retains h7 to build a later kingside pawn shelter. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Bg2 gives White long-diagonal influence before pressure against d5.",
+        "defenderIdea": "f1g2 e7e6 b1c3 d7d5 c2c4",
+        "continuation": "c4 creates tension while Black's queenside pieces also improve.",
+        "misconception": "A fianchetto bishop does not immediately win a defended central pawn.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "f1g2",
+              "e7e6",
+              "b1c3",
+              "d7d5",
+              "c2c4"
+            ],
+            "explanation": "c4 creates tension while Black's queenside pieces also improve. Black retains h7 to build a later kingside pawn shelter."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "f1h3",
+              "d7d5",
+              "b1c3",
+              "b8c6",
+              "c2c4"
+            ],
+            "explanation": "A fianchetto bishop does not immediately win a defended central pawn. Black retains h7 to build a later kingside pawn shelter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-27",
+      "title": "Rook behind a future b-pawn break · White reserve",
+      "fen": "1n4k1/pp6/8/8/3P4/8/PPP4P/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "b8c6",
+        "b2b4",
+        "a7a6",
+        "c2c3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Rb1 is preparation for b4, and Black may still use ...Nc6 in the center. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: a1b1 a7a6 b2b4 b8c6 c2c3. White keeps h2 as a kingside pawn reserve.",
+      "continuationReason": "At the endpoint: Queenside space and center stability should be evaluated together.",
+      "explanation": "Rook behind a future b-pawn break: Rb1 is preparation for b4, and Black may still use ...Nc6 in the center. Recorded line a1b1 b8c6 b2b4 a7a6 c2c3. Resistance a1b1 a7a6 b2b4 b8c6 c2c3. Alternative candidate a1c1 b8c6 b2b4 a7a6 c2c3. Endpoint: Queenside space and center stability should be evaluated together. White keeps h2 as a kingside pawn reserve. Misconception: A rook on b1 does not defend every pawn after a b4 push. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Rb1 is preparation for b4, and Black may still use ...Nc6 in the center.",
+        "defenderIdea": "a1b1 a7a6 b2b4 b8c6 c2c3",
+        "continuation": "Queenside space and center stability should be evaluated together.",
+        "misconception": "A rook on b1 does not defend every pawn after a b4 push.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "a1b1",
+              "a7a6",
+              "b2b4",
+              "b8c6",
+              "c2c3"
+            ],
+            "explanation": "Queenside space and center stability should be evaluated together. White keeps h2 as a kingside pawn reserve."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "a1c1",
+              "b8c6",
+              "b2b4",
+              "a7a6",
+              "c2c3"
+            ],
+            "explanation": "A rook on b1 does not defend every pawn after a b4 push. White keeps h2 as a kingside pawn reserve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-28",
+      "title": "Rook behind a future b-pawn break · Black reserve",
+      "fen": "1n4k1/pp5p/8/8/3P4/8/PPP5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "b8c6",
+        "b2b4",
+        "a7a6",
+        "c2c3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Rb1 is preparation for b4, and Black may still use ...Nc6 in the center. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: a1b1 a7a6 b2b4 b8c6 c2c3. Black retains h7 to build a later kingside pawn shelter.",
+      "continuationReason": "At the endpoint: Queenside space and center stability should be evaluated together.",
+      "explanation": "Rook behind a future b-pawn break: Rb1 is preparation for b4, and Black may still use ...Nc6 in the center. Recorded line a1b1 b8c6 b2b4 a7a6 c2c3. Resistance a1b1 a7a6 b2b4 b8c6 c2c3. Alternative candidate a1c1 b8c6 b2b4 a7a6 c2c3. Endpoint: Queenside space and center stability should be evaluated together. Black retains h7 to build a later kingside pawn shelter. Misconception: A rook on b1 does not defend every pawn after a b4 push. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Rb1 is preparation for b4, and Black may still use ...Nc6 in the center.",
+        "defenderIdea": "a1b1 a7a6 b2b4 b8c6 c2c3",
+        "continuation": "Queenside space and center stability should be evaluated together.",
+        "misconception": "A rook on b1 does not defend every pawn after a b4 push.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "a1b1",
+              "a7a6",
+              "b2b4",
+              "b8c6",
+              "c2c3"
+            ],
+            "explanation": "Queenside space and center stability should be evaluated together. Black retains h7 to build a later kingside pawn shelter."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "a1c1",
+              "b8c6",
+              "b2b4",
+              "a7a6",
+              "c2c3"
+            ],
+            "explanation": "A rook on b1 does not defend every pawn after a b4 push. Black retains h7 to build a later kingside pawn shelter."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-29",
+      "title": "Bishop and knight transposition · White reserve",
+      "fen": "1n4nk/8/3p4/4p3/4P3/3P4/7P/1NB3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1e3",
+      "principalVariation": [
+        "c1e3",
+        "g8f6",
+        "b1c3",
+        "b8c6",
+        "d3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Be3 and Nc3 can be interchanged while Black also develops. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: c1e3 b8c6 b1c3 g8f6 d3d4. White keeps h2 as a kingside pawn reserve.",
+      "continuationReason": "At the endpoint: d4 is a long-term plan, not a forced pawn win.",
+      "explanation": "Bishop and knight transposition: Be3 and Nc3 can be interchanged while Black also develops. Recorded line c1e3 g8f6 b1c3 b8c6 d3d4. Resistance c1e3 b8c6 b1c3 g8f6 d3d4. Alternative candidate b1c3 g8f6 c1e3 b8c6 d3d4. Endpoint: d4 is a long-term plan, not a forced pawn win. White keeps h2 as a kingside pawn reserve. Misconception: The opponent is not forced to respond to Be3 with a particular knight. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Be3 and Nc3 can be interchanged while Black also develops.",
+        "defenderIdea": "c1e3 b8c6 b1c3 g8f6 d3d4",
+        "continuation": "d4 is a long-term plan, not a forced pawn win.",
+        "misconception": "The opponent is not forced to respond to Be3 with a particular knight.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "c1e3",
+              "b8c6",
+              "b1c3",
+              "g8f6",
+              "d3d4"
+            ],
+            "explanation": "d4 is a long-term plan, not a forced pawn win. White keeps h2 as a kingside pawn reserve."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "b1c3",
+              "g8f6",
+              "c1e3",
+              "b8c6",
+              "d3d4"
+            ],
+            "explanation": "The opponent is not forced to respond to Be3 with a particular knight. White keeps h2 as a kingside pawn reserve."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-30",
+      "title": "Bishop and knight transposition · Black reserve",
+      "fen": "1n4nk/7p/3p4/4p3/4P3/3P4/8/1NB3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1e3",
+      "principalVariation": [
+        "c1e3",
+        "g8f6",
+        "b1c3",
+        "b8c6",
+        "d3d4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Positional variation trees",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.quiet",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "prompt": "Be3 and Nc3 can be interchanged while Black also develops. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
+      "replyReason": "The defender may vary development: c1e3 b8c6 b1c3 g8f6 d3d4. Black retains h7 to build a later kingside pawn shelter.",
+      "continuationReason": "At the endpoint: d4 is a long-term plan, not a forced pawn win.",
+      "explanation": "Bishop and knight transposition: Be3 and Nc3 can be interchanged while Black also develops. Recorded line c1e3 g8f6 b1c3 b8c6 d3d4. Resistance c1e3 b8c6 b1c3 g8f6 d3d4. Alternative candidate b1c3 g8f6 c1e3 b8c6 d3d4. Endpoint: d4 is a long-term plan, not a forced pawn win. Black retains h7 to build a later kingside pawn shelter. Misconception: The opponent is not forced to respond to Be3 with a particular knight. Legal demonstration, not a proof of unique optimality.",
+      "defensiveStudy": {
+        "keyQuestion": "Be3 and Nc3 can be interchanged while Black also develops.",
+        "defenderIdea": "c1e3 b8c6 b1c3 g8f6 d3d4",
+        "continuation": "d4 is a long-term plan, not a forced pawn win.",
+        "misconception": "The opponent is not forced to respond to Be3 with a particular knight.",
+        "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
+        "variations": [
+          {
+            "label": "Defensive development",
+            "moves": [
+              "c1e3",
+              "b8c6",
+              "b1c3",
+              "g8f6",
+              "d3d4"
+            ],
+            "explanation": "d4 is a long-term plan, not a forced pawn win. Black retains h7 to build a later kingside pawn shelter."
+          },
+          {
+            "label": "Different candidate move order",
+            "moves": [
+              "b1c3",
+              "g8f6",
+              "c1e3",
+              "b8c6",
+              "d3d4"
+            ],
+            "explanation": "The opponent is not forced to respond to Be3 with a particular knight. Black retains h7 to build a later kingside pawn shelter."
+          }
+        ]
+      }
+    }
+  ]
+}
