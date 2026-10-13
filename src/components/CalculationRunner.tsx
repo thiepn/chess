@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import {
   useEffect,
+  lazy,
+  Suspense,
   useMemo,
   useRef,
   useState,
@@ -29,6 +31,9 @@ import type {
 import { ChessBoard } from "./ChessBoard";
 import { CalculationStudyPanel } from "./CalculationStudyPanel";
 import { studyMaterialFor } from "../calculation/studyDelivery";
+import { verifiedDeepBranches } from "../calculation/deepCalculation";
+
+const DeepCalculationLab = lazy(() => import("./DeepCalculationLab").then(module => ({ default: module.DeepCalculationLab })));
 
 interface CalculationRunnerProps {
   activity: TrainingActivity;
@@ -141,6 +146,8 @@ export function CalculationRunner({
 
   const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position), [position]);
   const [showWorkedReview, setShowWorkedReview] = useState(!hasIndependentStudy);
+  const hasDeepBranches = useMemo(() => verifiedDeepBranches(position).length > 0, [position]);
+  const [deepDone, setDeepDone] = useState(false);
   const verifiedBranch=useMemo(()=>legalCalculationBranch(position),[position]);
   const referenceLine=verifiedBranch?.map(p=>p.san)??[];
 
@@ -194,6 +201,7 @@ export function CalculationRunner({
 
   function resetExercise() {
     setShowWorkedReview(!hasIndependentStudy);
+    setDeepDone(false);
     setPhase("candidates");
     setCandidates([]);
     setSelectedMove(undefined);
@@ -325,6 +333,7 @@ export function CalculationRunner({
     !boardRevealed;
 
   const canFinish =
+    (!hasDeepBranches || deepDone) &&
     showWorkedReview &&
     Boolean(verifiedBranch) &&
     phase === "result" &&
@@ -682,7 +691,22 @@ export function CalculationRunner({
               </>
             )}
 
-            {phase === "result" && !showWorkedReview && hasIndependentStudy && (
+
+            {phase === "result" && hasDeepBranches && !deepDone && (
+              <Suspense fallback={<p role="status">Preparing multi-ply study…</p>}>
+                <DeepCalculationLab
+                  position={position}
+                  storageOwner={storageOwner}
+                  onComplete={() => setDeepDone(true)}
+                  evaluateLocally={async fen => {
+                    const engine = engineRef.current ?? await enginePromiseRef.current;
+                    return engine ? engine.evaluate(fen, 10) : null;
+                  }}
+                />
+              </Suspense>
+            )}
+
+            {phase === "result" && (!hasDeepBranches || deepDone) && !showWorkedReview && hasIndependentStudy && (
               <div className="calculation-study-gate">
                 <CalculationStudyPanel key={`${storageOwner}:${position.id}`}
                   position={position} storageOwner={storageOwner} />
@@ -695,8 +719,15 @@ export function CalculationRunner({
               </div>
             )}
 
+            {phase === "result" && hasDeepBranches && deepDone && (
+              <button type="button" className="secondary"
+                onClick={() => { setDeepDone(false); setShowWorkedReview(!hasIndependentStudy); }}>
+                Reopen multi-ply board and saved branch
+              </button>
+            )}
+
             {phase === "result" &&
-              score && showWorkedReview && (
+              score && (!hasDeepBranches || deepDone) && showWorkedReview && (
                 <>
                   <div
                     className={[
