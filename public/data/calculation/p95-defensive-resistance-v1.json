@@ -1,0 +1,1328 @@
+{
+  "version": 1,
+  "phase": "P95",
+  "title": "Opponent Resistance & Defensive Calculation",
+  "notice": "Original authored instructional branches; legal continuation does not imply engine-unique optimum.",
+  "positions": [
+    {
+      "id": "calc:p95-01",
+      "title": "The eighth rank has an escape",
+      "fen": "6k1/8/8/8/8/8/8/1R4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "g8h7",
+        "b8b7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Rb8+ makes a forcing check, but the king's flight squares must be enumerated. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kh7 steps off the eighth rank; a check alone is not checkmate.",
+      "continuationReason": "Rb7+ checks on a new rank while leaving the defender additional king moves.",
+      "explanation": "The eighth rank has an escape: Rb8+ makes a forcing check, but the king's flight squares must be enumerated. In the recorded continuation, ...Kh7 steps off the eighth rank; a check alone is not checkmate. Your follow-up is important because Rb7+ checks on a new rank while leaving the defender additional king moves. Common mistaken calculation: Calling Rb8+ mate overlooks the free h7 square. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rb8+ makes a forcing check, but the king's flight squares must be enumerated.",
+        "defenderIdea": "...Kh7 steps off the eighth rank; a check alone is not checkmate.",
+        "continuation": "Rb7+ checks on a new rank while leaving the defender additional king moves.",
+        "misconception": "Calling Rb8+ mate overlooks the free h7 square.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-02",
+      "title": "Rook checks after a sidestep",
+      "fen": "4k3/8/8/8/8/8/8/6KR w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8h7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Rh8+ attacks along the eighth rank; the next move requires finding the defender's square. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd7 abandons the rook's checking rank rather than meeting it with a capture.",
+      "continuationReason": "Rh7+ follows along the seventh rank, but a further reply must still be examined.",
+      "explanation": "Rook checks after a sidestep: Rh8+ attacks along the eighth rank; the next move requires finding the defender's square. In the recorded continuation, ...Kd7 abandons the rook's checking rank rather than meeting it with a capture. Your follow-up is important because Rh7+ follows along the seventh rank, but a further reply must still be examined. Common mistaken calculation: Counting repeated rook checks as an immediate win ignores legal king flights. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rh8+ attacks along the eighth rank; the next move requires finding the defender's square.",
+        "defenderIdea": "...Kd7 abandons the rook's checking rank rather than meeting it with a capture.",
+        "continuation": "Rh7+ follows along the seventh rank, but a further reply must still be examined.",
+        "misconception": "Counting repeated rook checks as an immediate win ignores legal king flights.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-03",
+      "title": "The queen's diagonal expires",
+      "fen": "4k3/8/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1a4",
+      "principalVariation": [
+        "d1a4",
+        "e8f8",
+        "a4d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Qa4+ is a diagonal check whose geometry changes when the king moves. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf8 leaves the a4–e8 diagonal, so White must choose a new direction.",
+      "continuationReason": "Qd7 is an active queen move, not a check on f8; describe the new attack map accurately.",
+      "explanation": "The queen's diagonal expires: Qa4+ is a diagonal check whose geometry changes when the king moves. In the recorded continuation, ...Kf8 leaves the a4–e8 diagonal, so White must choose a new direction. Your follow-up is important because Qd7 is an active queen move, not a check on f8; describe the new attack map accurately. Common mistaken calculation: Writing Qd7+ after ...Kf8 falsely treats the king as if it stayed on e8. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qa4+ is a diagonal check whose geometry changes when the king moves.",
+        "defenderIdea": "...Kf8 leaves the a4–e8 diagonal, so White must choose a new direction.",
+        "continuation": "Qd7 is an active queen move, not a check on f8; describe the new attack map accurately.",
+        "misconception": "Writing Qd7+ after ...Kf8 falsely treats the king as if it stayed on e8.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-04",
+      "title": "A bishop check is not a mate",
+      "fen": "4k3/8/8/1B6/8/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b5c6",
+      "principalVariation": [
+        "b5c6",
+        "e8d8",
+        "c6d5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Bc6+ is forcing but material sufficiency also matters. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive.",
+      "continuationReason": "Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king.",
+      "explanation": "A bishop check is not a mate: Bc6+ is forcing but material sufficiency also matters. In the recorded continuation, ...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive. Your follow-up is important because Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king. Common mistaken calculation: Inferring a won ending from one bishop check confuses activity with material sufficiency. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Bc6+ is forcing but material sufficiency also matters.",
+        "defenderIdea": "...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive.",
+        "continuation": "Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king.",
+        "misconception": "Inferring a won ending from one bishop check confuses activity with material sufficiency.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-05",
+      "title": "Move the rook to the new checking rank",
+      "fen": "4k3/8/8/8/8/8/R7/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a2a8",
+      "principalVariation": [
+        "a2a8",
+        "e8d7",
+        "a8a7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Ra8+ reaches the eighth rank while Black retains legal king retreats. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd7 vacates that rank and gives the defender another move.",
+      "continuationReason": "Ra7+ checks the king across the seventh rank, unlike an unfounded mate claim.",
+      "explanation": "Move the rook to the new checking rank: Ra8+ reaches the eighth rank while Black retains legal king retreats. In the recorded continuation, ...Kd7 vacates that rank and gives the defender another move. Your follow-up is important because Ra7+ checks the king across the seventh rank, unlike an unfounded mate claim. Common mistaken calculation: Ignoring d7 means failing to update the defended king's actual location. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ reaches the eighth rank while Black retains legal king retreats.",
+        "defenderIdea": "...Kd7 vacates that rank and gives the defender another move.",
+        "continuation": "Ra7+ checks the king across the seventh rank, unlike an unfounded mate claim.",
+        "misconception": "Ignoring d7 means failing to update the defended king's actual location.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-06",
+      "title": "Queen switches from file to diagonal",
+      "fen": "4k3/8/8/8/8/8/7Q/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h2h8",
+      "principalVariation": [
+        "h2h8",
+        "e8d7",
+        "h8d4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 4,
+      "prompt": "Qh8+ checks the back rank, but a second checking route must be calculated. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd7 is legal and makes the initial back-rank threat insufficient.",
+      "continuationReason": "Qd4+ travels h8–g7–f6–e5–d4 and checks up the d-file.",
+      "explanation": "Queen switches from file to diagonal: Qh8+ checks the back rank, but a second checking route must be calculated. In the recorded continuation, ...Kd7 is legal and makes the initial back-rank threat insufficient. Your follow-up is important because Qd4+ travels h8–g7–f6–e5–d4 and checks up the d-file. Common mistaken calculation: Imagining a diagonal through occupied squares or forgetting the king's flight gives a fictitious variation. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qh8+ checks the back rank, but a second checking route must be calculated.",
+        "defenderIdea": "...Kd7 is legal and makes the initial back-rank threat insufficient.",
+        "continuation": "Qd4+ travels h8–g7–f6–e5–d4 and checks up the d-file.",
+        "misconception": "Imagining a diagonal through occupied squares or forgetting the king's flight gives a fictitious variation.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-07",
+      "title": "King flight from a g-file rook check",
+      "fen": "4k3/8/8/8/8/8/6R1/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g2g8",
+      "principalVariation": [
+        "g2g8",
+        "e8d7",
+        "g8g7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Rg8+ crosses to the eighth rank and demands a king-flight inventory. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd7 avoids the rook's horizontal attack instead of staying on e8.",
+      "continuationReason": "Rg7+ checks the king across the seventh rank with the rook remaining active.",
+      "explanation": "King flight from a g-file rook check: Rg8+ crosses to the eighth rank and demands a king-flight inventory. In the recorded continuation, ...Kd7 avoids the rook's horizontal attack instead of staying on e8. Your follow-up is important because Rg7+ checks the king across the seventh rank with the rook remaining active. Common mistaken calculation: The common error is to count only the initial checking square and not the legal escape. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rg8+ crosses to the eighth rank and demands a king-flight inventory.",
+        "defenderIdea": "...Kd7 avoids the rook's horizontal attack instead of staying on e8.",
+        "continuation": "Rg7+ checks the king across the seventh rank with the rook remaining active.",
+        "misconception": "The common error is to count only the initial checking square and not the legal escape.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-08",
+      "title": "The queen has to find f7",
+      "fen": "4k3/8/8/8/8/8/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "e8f7",
+        "c8c7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · King flights",
+      "difficulty": 3,
+      "prompt": "Qc8+ checks across the eighth rank, but the king has a resource on f7. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 is outside the c8 queen's attack, allowing Black to avoid the immediate check.",
+      "continuationReason": "Qc7+ gives another check along the seventh rank to f7.",
+      "explanation": "The queen has to find f7: Qc8+ checks across the eighth rank, but the king has a resource on f7. In the recorded continuation, ...Kf7 is outside the c8 queen's attack, allowing Black to avoid the immediate check. Your follow-up is important because Qc7+ gives another check along the seventh rank to f7. Common mistaken calculation: King moves to d7 or f8 are attacked by Qc8, but f7 must not be excluded by analogy. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qc8+ checks across the eighth rank, but the king has a resource on f7.",
+        "defenderIdea": "...Kf7 is outside the c8 queen's attack, allowing Black to avoid the immediate check.",
+        "continuation": "Qc7+ gives another check along the seventh rank to f7.",
+        "misconception": "King moves to d7 or f8 are attacked by Qc8, but f7 must not be excluded by analogy.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-09",
+      "title": "A defensive rook meets the check",
+      "fen": "6k1/p4ppp/8/8/8/8/4rPPP/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e2e8",
+        "d8e8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Rd8+ is a forcing defense, yet Black can challenge the checking line. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Re8 interposes and converts the attack into a direct exchange.",
+      "continuationReason": "Rxe8+ takes the rook, leaving an ending to evaluate after the exchange.",
+      "explanation": "A defensive rook meets the check: Rd8+ is a forcing defense, yet Black can challenge the checking line. In the recorded continuation, ...Re8 interposes and converts the attack into a direct exchange. Your follow-up is important because Rxe8+ takes the rook, leaving an ending to evaluate after the exchange. Common mistaken calculation: Expecting ...Kh7 ignores Black's own pawn on h7; the interposition must be calculated. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rd8+ is a forcing defense, yet Black can challenge the checking line.",
+        "defenderIdea": "...Re8 interposes and converts the attack into a direct exchange.",
+        "continuation": "Rxe8+ takes the rook, leaving an ending to evaluate after the exchange.",
+        "misconception": "Expecting ...Kh7 ignores Black's own pawn on h7; the interposition must be calculated.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-10",
+      "title": "The h7 square is occupied",
+      "fen": "6k1/5ppp/8/8/8/8/4r1PP/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e2e8",
+        "d8e8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "With ...Kh7 unavailable because h7 is occupied, find a more concrete defensive reply. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Re8 blocks the checking rook and offers an immediate liquidation.",
+      "continuationReason": "Rxe8+ captures the interposer, though further king and pawn play is required.",
+      "explanation": "The h7 square is occupied: With ...Kh7 unavailable because h7 is occupied, find a more concrete defensive reply. In the recorded continuation, ...Re8 blocks the checking rook and offers an immediate liquidation. Your follow-up is important because Rxe8+ captures the interposer, though further king and pawn play is required. Common mistaken calculation: A player who assumes every back-rank check permits a king retreat will miss rook blocks. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "With ...Kh7 unavailable because h7 is occupied, find a more concrete defensive reply.",
+        "defenderIdea": "...Re8 blocks the checking rook and offers an immediate liquidation.",
+        "continuation": "Rxe8+ captures the interposer, though further king and pawn play is required.",
+        "misconception": "A player who assumes every back-rank check permits a king retreat will miss rook blocks.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-11",
+      "title": "Rook block from the e-file",
+      "fen": "6k1/8/8/8/8/8/4r1PP/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "e2e8",
+        "c8e8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Rc8+ creates a long checking line from the c-file. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Re8 interrupts that line from the second rank, without surrendering legality.",
+      "continuationReason": "Rxe8+ captures the blocking rook along c8–d8–e8.",
+      "explanation": "Rook block from the e-file: Rc8+ creates a long checking line from the c-file. In the recorded continuation, ...Re8 interrupts that line from the second rank, without surrendering legality. Your follow-up is important because Rxe8+ captures the blocking rook along c8–d8–e8. Common mistaken calculation: The check is not unstoppable merely because the black king cannot capture the attacking rook. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rc8+ creates a long checking line from the c-file.",
+        "defenderIdea": "...Re8 interrupts that line from the second rank, without surrendering legality.",
+        "continuation": "Rxe8+ captures the blocking rook along c8–d8–e8.",
+        "misconception": "The check is not unstoppable merely because the black king cannot capture the attacking rook.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-12",
+      "title": "The queen meets a rook interposition",
+      "fen": "6k1/4r3/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e7e8",
+        "d8e8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Qd8+ aims across to g8 but leaves intermediate squares for a defender. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Re8 is a precise block on e8; it is not a random rook retreat.",
+      "continuationReason": "Qxe8+ captures the interposer and checks again across f8 to g8.",
+      "explanation": "The queen meets a rook interposition: Qd8+ aims across to g8 but leaves intermediate squares for a defender. In the recorded continuation, ...Re8 is a precise block on e8; it is not a random rook retreat. Your follow-up is important because Qxe8+ captures the interposer and checks again across f8 to g8. Common mistaken calculation: Misreading a sliding queen check as unblockable skips a legitimate defensive category. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ aims across to g8 but leaves intermediate squares for a defender.",
+        "defenderIdea": "...Re8 is a precise block on e8; it is not a random rook retreat.",
+        "continuation": "Qxe8+ captures the interposer and checks again across f8 to g8.",
+        "misconception": "Misreading a sliding queen check as unblockable skips a legitimate defensive category.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-13",
+      "title": "A block from the seventh rank",
+      "fen": "6k1/4r3/8/8/8/8/2Q5/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c8",
+      "principalVariation": [
+        "c2c8",
+        "e7e8",
+        "c8e8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Qc8+ reaches the eighth rank from c2 while a rook can defend from e7. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Re8 blocks the queen's line toward g8.",
+      "continuationReason": "Qxe8+ trades the check for material and retains the initiative in this simple example.",
+      "explanation": "A block from the seventh rank: Qc8+ reaches the eighth rank from c2 while a rook can defend from e7. In the recorded continuation, ...Re8 blocks the queen's line toward g8. Your follow-up is important because Qxe8+ trades the check for material and retains the initiative in this simple example. Common mistaken calculation: If you inspect only king moves, you cannot understand why the rook from e7 matters. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qc8+ reaches the eighth rank from c2 while a rook can defend from e7.",
+        "defenderIdea": "...Re8 blocks the queen's line toward g8.",
+        "continuation": "Qxe8+ trades the check for material and retains the initiative in this simple example.",
+        "misconception": "If you inspect only king moves, you cannot understand why the rook from e7 matters.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-14",
+      "title": "A bishop protects the exchange square",
+      "fen": "6k1/5r2/8/2B5/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "f7f8",
+        "a8f8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Ra8+ draws an interposition onto f8; determine whether the final capture is protected. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Rf8 blocks the check, putting the defending rook directly in the path of the rook on a8.",
+      "continuationReason": "Rxf8+ captures the rook; Bc5 protects f8 so the king cannot simply take back.",
+      "explanation": "A bishop protects the exchange square: Ra8+ draws an interposition onto f8; determine whether the final capture is protected. In the recorded continuation, ...Rf8 blocks the check, putting the defending rook directly in the path of the rook on a8. Your follow-up is important because Rxf8+ captures the rook; Bc5 protects f8 so the king cannot simply take back. Common mistaken calculation: Declaring Rxf8 a blunder without seeing the c5 bishop mistakes an exchange for a loss. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ draws an interposition onto f8; determine whether the final capture is protected.",
+        "defenderIdea": "...Rf8 blocks the check, putting the defending rook directly in the path of the rook on a8.",
+        "continuation": "Rxf8+ captures the rook; Bc5 protects f8 so the king cannot simply take back.",
+        "misconception": "Declaring Rxf8 a blunder without seeing the c5 bishop mistakes an exchange for a loss.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-15",
+      "title": "The block comes from g7",
+      "fen": "4k3/6r1/8/8/8/8/8/6KR w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "g7g8",
+        "h8g8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Rh8+ checks the black king on e8 along the eighth rank. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Rg8 interposes from g7 between the white rook and king.",
+      "continuationReason": "Rxg8+ captures the blocker and forces Black to address the new rook check.",
+      "explanation": "The block comes from g7: Rh8+ checks the black king on e8 along the eighth rank. In the recorded continuation, ...Rg8 interposes from g7 between the white rook and king. Your follow-up is important because Rxg8+ captures the blocker and forces Black to address the new rook check. Common mistaken calculation: Watching only the black king misses a rook on g7 that can interpose in one move. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Rh8+ checks the black king on e8 along the eighth rank.",
+        "defenderIdea": "...Rg8 interposes from g7 between the white rook and king.",
+        "continuation": "Rxg8+ captures the blocker and forces Black to address the new rook check.",
+        "misconception": "Watching only the black king misses a rook on g7 that can interpose in one move.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-16",
+      "title": "The bishop can take the blocking rook",
+      "fen": "3rk3/8/8/1B6/8/8/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b5c6",
+      "principalVariation": [
+        "b5c6",
+        "d8d7",
+        "c6d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "tactics.defensive-resources"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Blocks",
+      "difficulty": 5,
+      "prompt": "Bc6+ reveals a diagonal checking line from c6 to e8. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Rd7 blocks the check on the critical intermediate square.",
+      "continuationReason": "Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply.",
+      "explanation": "The bishop can take the blocking rook: Bc6+ reveals a diagonal checking line from c6 to e8. In the recorded continuation, ...Rd7 blocks the check on the critical intermediate square. Your follow-up is important because Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply. Common mistaken calculation: Assuming Bxd7+ wins a clean rook without counting the king's recapture overstates the material result. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Bc6+ reveals a diagonal checking line from c6 to e8.",
+        "defenderIdea": "...Rd7 blocks the check on the critical intermediate square.",
+        "continuation": "Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply.",
+        "misconception": "Assuming Bxd7+ wins a clean rook without counting the king's recapture overstates the material result.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-17",
+      "title": "A supported queen takes the knight",
+      "fen": "4k3/3n4/8/8/8/8/3Q4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d7",
+      "principalVariation": [
+        "d2d7",
+        "e8f8",
+        "d7d8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 4,
+      "prompt": "The knight on d7 can be captured despite being adjacent to Black's king. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf8 leaves the checked square; the rook on d1 defends the queen on d7.",
+      "continuationReason": "Qd8+ gives a new back-rank check with the rook still on d1.",
+      "explanation": "A supported queen takes the knight: The knight on d7 can be captured despite being adjacent to Black's king. In the recorded continuation, ...Kf8 leaves the checked square; the rook on d1 defends the queen on d7. Your follow-up is important because Qd8+ gives a new back-rank check with the rook still on d1. Common mistaken calculation: Believing ...Kxd7 wins the queen overlooks the supporting rook on d1. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The knight on d7 can be captured despite being adjacent to Black's king.",
+        "defenderIdea": "...Kf8 leaves the checked square; the rook on d1 defends the queen on d7.",
+        "continuation": "Qd8+ gives a new back-rank check with the rook still on d1.",
+        "misconception": "Believing ...Kxd7 wins the queen overlooks the supporting rook on d1.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-18",
+      "title": "Capture on c7, then change ranks",
+      "fen": "4k3/2r5/8/8/8/8/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c7",
+      "principalVariation": [
+        "c1c7",
+        "e8f8",
+        "c7c8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 3,
+      "prompt": "The rook on c7 is undefended and the queen has a clear c-file. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf8 is an active legal retreat when the rook disappears.",
+      "continuationReason": "Qc8+ checks along the eighth rank rather than stopping at the material grab.",
+      "explanation": "Capture on c7, then change ranks: The rook on c7 is undefended and the queen has a clear c-file. In the recorded continuation, ...Kf8 is an active legal retreat when the rook disappears. Your follow-up is important because Qc8+ checks along the eighth rank rather than stopping at the material grab. Common mistaken calculation: Mistaking Kf8 for Kf7 leads to an incorrect checking claim on the next ply. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The rook on c7 is undefended and the queen has a clear c-file.",
+        "defenderIdea": "...Kf8 is an active legal retreat when the rook disappears.",
+        "continuation": "Qc8+ checks along the eighth rank rather than stopping at the material grab.",
+        "misconception": "Mistaking Kf8 for Kf7 leads to an incorrect checking claim on the next ply.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-19",
+      "title": "Rook takes the knight on the file",
+      "fen": "4k3/8/8/8/8/8/3n4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 3,
+      "prompt": "A knight on d2 blocks the rook and can be captured. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 gives the defending king a better central square.",
+      "continuationReason": "Rd7+ offers a forcing seventh-rank check once the knight is gone.",
+      "explanation": "Rook takes the knight on the file: A knight on d2 blocks the rook and can be captured. In the recorded continuation, ...Kf7 gives the defending king a better central square. Your follow-up is important because Rd7+ offers a forcing seventh-rank check once the knight is gone. Common mistaken calculation: A capture is not checkmate simply because it removes an important blocking piece. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "A knight on d2 blocks the rook and can be captured.",
+        "defenderIdea": "...Kf7 gives the defending king a better central square.",
+        "continuation": "Rd7+ offers a forcing seventh-rank check once the knight is gone.",
+        "misconception": "A capture is not checkmate simply because it removes an important blocking piece.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-20",
+      "title": "The pawn captures before the king moves",
+      "fen": "4k3/8/8/8/8/3b4/4P3/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2d3",
+      "principalVariation": [
+        "e2d3",
+        "e8f7",
+        "e1d2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 3,
+      "prompt": "The e2 pawn can capture a bishop that sits on d3. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 keeps the defending king active despite the loss of the bishop.",
+      "continuationReason": "Kd2 approaches the newly advanced d-pawn and prepares its support.",
+      "explanation": "The pawn captures before the king moves: The e2 pawn can capture a bishop that sits on d3. In the recorded continuation, ...Kf7 keeps the defending king active despite the loss of the bishop. Your follow-up is important because Kd2 approaches the newly advanced d-pawn and prepares its support. Common mistaken calculation: Playing a random king move first gives Black extra opportunities while leaving the bishop. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The e2 pawn can capture a bishop that sits on d3.",
+        "defenderIdea": "...Kf7 keeps the defending king active despite the loss of the bishop.",
+        "continuation": "Kd2 approaches the newly advanced d-pawn and prepares its support.",
+        "misconception": "Playing a random king move first gives Black extra opportunities while leaving the bishop.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-21",
+      "title": "Use a checking route to the rook",
+      "fen": "r3k3/8/8/8/8/8/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1a4",
+      "principalVariation": [
+        "d1a4",
+        "e8f8",
+        "a4a8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 5,
+      "prompt": "White's queen cannot capture the a8 rook directly from d1. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf8 answers the Qa4+ diagonal check by leaving e8.",
+      "continuationReason": "Qxa8+ takes the rook up the a-file and delivers a rank check to the king on f8.",
+      "explanation": "Use a checking route to the rook: White's queen cannot capture the a8 rook directly from d1. In the recorded continuation, ...Kf8 answers the Qa4+ diagonal check by leaving e8. Your follow-up is important because Qxa8+ takes the rook up the a-file and delivers a rank check to the king on f8. Common mistaken calculation: Pretending Qxa8 is a one-move capture from d1 ignores the intermediate geometry. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "White's queen cannot capture the a8 rook directly from d1.",
+        "defenderIdea": "...Kf8 answers the Qa4+ diagonal check by leaving e8.",
+        "continuation": "Qxa8+ takes the rook up the a-file and delivers a rank check to the king on f8.",
+        "misconception": "Pretending Qxa8 is a one-move capture from d1 ignores the intermediate geometry.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-22",
+      "title": "Take the invading rook and check",
+      "fen": "4k3/8/8/8/8/8/4r3/4R1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e2",
+      "principalVariation": [
+        "e1e2",
+        "e8f7",
+        "e2e7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 4,
+      "prompt": "The rook on e2 attacks White's remaining rook on e1. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 improves king activity once the rook has been captured.",
+      "continuationReason": "Re7+ checks the king from the seventh rank, continuing to use tempo.",
+      "explanation": "Take the invading rook and check: The rook on e2 attacks White's remaining rook on e1. In the recorded continuation, ...Kf7 improves king activity once the rook has been captured. Your follow-up is important because Re7+ checks the king from the seventh rank, continuing to use tempo. Common mistaken calculation: A passive rook retreat lets an invading rook stay active instead of simplifying. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The rook on e2 attacks White's remaining rook on e1.",
+        "defenderIdea": "...Kf7 improves king activity once the rook has been captured.",
+        "continuation": "Re7+ checks the king from the seventh rank, continuing to use tempo.",
+        "misconception": "A passive rook retreat lets an invading rook stay active instead of simplifying.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-23",
+      "title": "Exchange rooks on d2",
+      "fen": "4k3/8/8/8/8/8/3r4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 4,
+      "prompt": "The opponent's rook has penetrated to d2 but is not protected. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 develops the defender's king after White captures.",
+      "continuationReason": "Rd7+ forces the king to answer another rook check.",
+      "explanation": "Exchange rooks on d2: The opponent's rook has penetrated to d2 but is not protected. In the recorded continuation, ...Kf7 develops the defender's king after White captures. Your follow-up is important because Rd7+ forces the king to answer another rook check. Common mistaken calculation: A king move on the first ply can leave the attacking rook unnecessarily alive. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The opponent's rook has penetrated to d2 but is not protected.",
+        "defenderIdea": "...Kf7 develops the defender's king after White captures.",
+        "continuation": "Rd7+ forces the king to answer another rook check.",
+        "misconception": "A king move on the first ply can leave the attacking rook unnecessarily alive.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-24",
+      "title": "The queen fork is not the whole line",
+      "fen": "2q1k3/p7/8/5N2/8/8/8/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f5d6",
+      "principalVariation": [
+        "f5d6",
+        "e8d8",
+        "d6c8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.move-order"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Intermezzo",
+      "difficulty": 5,
+      "prompt": "Nd6+ forks the king and queen, but count the material after a fourth ply. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd8 preserves the king's opportunity to capture the knight on c8 next.",
+      "continuationReason": "Nxc8 takes the queen, and ...Kxc8 can then recapture, with the a7 pawn remaining.",
+      "explanation": "The queen fork is not the whole line: Nd6+ forks the king and queen, but count the material after a fourth ply. In the recorded continuation, ...Kd8 preserves the king's opportunity to capture the knight on c8 next. Your follow-up is important because Nxc8 takes the queen, and ...Kxc8 can then recapture, with the a7 pawn remaining. Common mistaken calculation: Calling this a won queen ignores ...Kxc8 and the pawn still on the board. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Nd6+ forks the king and queen, but count the material after a fourth ply.",
+        "defenderIdea": "...Kd8 preserves the king's opportunity to capture the knight on c8 next.",
+        "continuation": "Nxc8 takes the queen, and ...Kxc8 can then recapture, with the a7 pawn remaining.",
+        "misconception": "Calling this a won queen ignores ...Kxc8 and the pawn still on the board.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-25",
+      "title": "Meet the central pawn break",
+      "fen": "rnbqkbnr/pppppppp/8/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 1",
+      "playerColor": "b",
+      "bestMove": "d7d5",
+      "principalVariation": [
+        "d7d5",
+        "e4d5",
+        "d8d5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 4,
+      "prompt": "Black challenges e4 by advancing ...d5 rather than copying White. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "exd5 accepts the challenge and changes the central pawn structure.",
+      "continuationReason": "...Qxd5 recaptures along the opened d-file, but the queen can later be attacked.",
+      "explanation": "Meet the central pawn break: Black challenges e4 by advancing ...d5 rather than copying White. In the recorded continuation, exd5 accepts the challenge and changes the central pawn structure. Your follow-up is important because ...Qxd5 recaptures along the opened d-file, but the queen can later be attacked. Common mistaken calculation: Counting White's pawn capture as free material neglects the straightforward queen recapture. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black challenges e4 by advancing ...d5 rather than copying White.",
+        "defenderIdea": "exd5 accepts the challenge and changes the central pawn structure.",
+        "continuation": "...Qxd5 recaptures along the opened d-file, but the queen can later be attacked.",
+        "misconception": "Counting White's pawn capture as free material neglects the straightforward queen recapture.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-26",
+      "title": "The knight presses the center",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2",
+      "playerColor": "b",
+      "bestMove": "g8f6",
+      "principalVariation": [
+        "g8f6",
+        "b1c3",
+        "b8c6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 3,
+      "prompt": "Black develops ...Nf6 to contest the e4 pawn and central squares. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "Nc3 protects White's e4 pawn while developing a new piece.",
+      "continuationReason": "...Nc6 develops for Black without pretending the opponent must concede a piece.",
+      "explanation": "The knight presses the center: Black develops ...Nf6 to contest the e4 pawn and central squares. In the recorded continuation, Nc3 protects White's e4 pawn while developing a new piece. Your follow-up is important because ...Nc6 develops for Black without pretending the opponent must concede a piece. Common mistaken calculation: Ignoring White's supporting knight and declaring a free e4 pawn is shallow one-ply calculation. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black develops ...Nf6 to contest the e4 pawn and central squares.",
+        "defenderIdea": "Nc3 protects White's e4 pawn while developing a new piece.",
+        "continuation": "...Nc6 develops for Black without pretending the opponent must concede a piece.",
+        "misconception": "Ignoring White's supporting knight and declaring a free e4 pawn is shallow one-ply calculation.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-27",
+      "title": "The Sicilian central counterstrike",
+      "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "playerColor": "b",
+      "bestMove": "d7d6",
+      "principalVariation": [
+        "d7d6",
+        "d2d4",
+        "c5d4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 4,
+      "prompt": "After ...d6, White can immediately strike with d4. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "d4 challenges Black's c5 pawn and changes the pawn contact.",
+      "continuationReason": "...cxd4 captures the newly advanced pawn, beginning an exchange sequence.",
+      "explanation": "The Sicilian central counterstrike: After ...d6, White can immediately strike with d4. In the recorded continuation, d4 challenges Black's c5 pawn and changes the pawn contact. Your follow-up is important because ...cxd4 captures the newly advanced pawn, beginning an exchange sequence. Common mistaken calculation: Expecting White to wait peacefully after ...d6 neglects central counterplay. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "After ...d6, White can immediately strike with d4.",
+        "defenderIdea": "d4 challenges Black's c5 pawn and changes the pawn contact.",
+        "continuation": "...cxd4 captures the newly advanced pawn, beginning an exchange sequence.",
+        "misconception": "Expecting White to wait peacefully after ...d6 neglects central counterplay.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-28",
+      "title": "Develop against the Scandinavian queen",
+      "fen": "rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+      "playerColor": "w",
+      "bestMove": "e4d5",
+      "principalVariation": [
+        "e4d5",
+        "d8d5",
+        "b1c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 4,
+      "prompt": "White captures ...d5 but must consider Black's queen recapture. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Qxd5 restores the pawn, leaving Black's queen centralized and exposed.",
+      "continuationReason": "Nc3 attacks that queen with a developing knight, gaining tempo.",
+      "explanation": "Develop against the Scandinavian queen: White captures ...d5 but must consider Black's queen recapture. In the recorded continuation, ...Qxd5 restores the pawn, leaving Black's queen centralized and exposed. Your follow-up is important because Nc3 attacks that queen with a developing knight, gaining tempo. Common mistaken calculation: Playing exd5 as if Black had no queen recapture misses the immediate response. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "White captures ...d5 but must consider Black's queen recapture.",
+        "defenderIdea": "...Qxd5 restores the pawn, leaving Black's queen centralized and exposed.",
+        "continuation": "Nc3 attacks that queen with a developing knight, gaining tempo.",
+        "misconception": "Playing exd5 as if Black had no queen recapture misses the immediate response.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-29",
+      "title": "The quiet pawn support answers c4",
+      "fen": "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 2",
+      "playerColor": "b",
+      "bestMove": "g8f6",
+      "principalVariation": [
+        "g8f6",
+        "c2c4",
+        "e7e6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 3,
+      "prompt": "Black develops against d4, but White may add a second pawn attack. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "c4 intensifies White's pressure on d5 after ...Nf6.",
+      "continuationReason": "...e6 supports d5 and helps stabilize the structure, restricting the c8 bishop temporarily.",
+      "explanation": "The quiet pawn support answers c4: Black develops against d4, but White may add a second pawn attack. In the recorded continuation, c4 intensifies White's pressure on d5 after ...Nf6. Your follow-up is important because ...e6 supports d5 and helps stabilize the structure, restricting the c8 bishop temporarily. Common mistaken calculation: A player who considers only knight development misses the direct c-pawn challenge. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black develops against d4, but White may add a second pawn attack.",
+        "defenderIdea": "c4 intensifies White's pressure on d5 after ...Nf6.",
+        "continuation": "...e6 supports d5 and helps stabilize the structure, restricting the c8 bishop temporarily.",
+        "misconception": "A player who considers only knight development misses the direct c-pawn challenge.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-30",
+      "title": "The queen's gambit is a real reply",
+      "fen": "rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1",
+      "playerColor": "b",
+      "bestMove": "d7d5",
+      "principalVariation": [
+        "d7d5",
+        "c2c4",
+        "e7e6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 3,
+      "prompt": "Black grabs central space with ...d5, but White need not mirror it. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "c4 creates pawn tension and threatens to undermine d5.",
+      "continuationReason": "...e6 supports the advanced pawn without immediately winning or losing material.",
+      "explanation": "The queen's gambit is a real reply: Black grabs central space with ...d5, but White need not mirror it. In the recorded continuation, c4 creates pawn tension and threatens to undermine d5. Your follow-up is important because ...e6 supports the advanced pawn without immediately winning or losing material. Common mistaken calculation: Assuming ...d5 will remain unchallenged ignores a standard structural countermeasure. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black grabs central space with ...d5, but White need not mirror it.",
+        "defenderIdea": "c4 creates pawn tension and threatens to undermine d5.",
+        "continuation": "...e6 supports the advanced pawn without immediately winning or losing material.",
+        "misconception": "Assuming ...d5 will remain unchallenged ignores a standard structural countermeasure.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-31",
+      "title": "A defender can become the target",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "playerColor": "b",
+      "bestMove": "b8c6",
+      "principalVariation": [
+        "b8c6",
+        "f1b5",
+        "a7a6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 4,
+      "prompt": "Black defends e5 by developing the b8 knight. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "Bb5 targets that knight, indirectly renewing pressure on the e5 pawn.",
+      "continuationReason": "...a6 questions the bishop and makes the initiative less one-sided.",
+      "explanation": "A defender can become the target: Black defends e5 by developing the b8 knight. In the recorded continuation, Bb5 targets that knight, indirectly renewing pressure on the e5 pawn. Your follow-up is important because ...a6 questions the bishop and makes the initiative less one-sided. Common mistaken calculation: Treating ...Nc6 as the end of the calculation ignores the piece that now guards e5. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black defends e5 by developing the b8 knight.",
+        "defenderIdea": "Bb5 targets that knight, indirectly renewing pressure on the e5 pawn.",
+        "continuation": "...a6 questions the bishop and makes the initiative less one-sided.",
+        "misconception": "Treating ...Nc6 as the end of the calculation ignores the piece that now guards e5.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-32",
+      "title": "A central capture can answer d4",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1",
+      "playerColor": "b",
+      "bestMove": "b8c6",
+      "principalVariation": [
+        "b8c6",
+        "d2d4",
+        "e5d4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Opening",
+      "difficulty": 4,
+      "prompt": "...Nc6 supports e5, but White can challenge the pawn center. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "d4 creates central tension and opens the game to immediate contact.",
+      "continuationReason": "...exd4 captures the d4 pawn, forcing White to calculate a recapture.",
+      "explanation": "A central capture can answer d4: ...Nc6 supports e5, but White can challenge the pawn center. In the recorded continuation, d4 creates central tension and opens the game to immediate contact. Your follow-up is important because ...exd4 captures the d4 pawn, forcing White to calculate a recapture. Common mistaken calculation: Pretending ...Nc6 ends White's central play neglects the next pawn thrust. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "...Nc6 supports e5, but White can challenge the pawn center.",
+        "defenderIdea": "d4 creates central tension and opens the game to immediate contact.",
+        "continuation": "...exd4 captures the d4 pawn, forcing White to calculate a recapture.",
+        "misconception": "Pretending ...Nc6 ends White's central play neglects the next pawn thrust.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-33",
+      "title": "Remove the advanced passer",
+      "fen": "4k3/8/8/8/8/3p4/4P3/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e2d3",
+      "principalVariation": [
+        "e2d3",
+        "e8f7",
+        "e1d2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 3,
+      "prompt": "Black's d3 pawn is dangerous, so eliminate it before making distant plans. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 activates Black's king rather than conceding an easy ending.",
+      "continuationReason": "Kd2 centralizes White's king near the newly captured pawn's square.",
+      "explanation": "Remove the advanced passer: Black's d3 pawn is dangerous, so eliminate it before making distant plans. In the recorded continuation, ...Kf7 activates Black's king rather than conceding an easy ending. Your follow-up is important because Kd2 centralizes White's king near the newly captured pawn's square. Common mistaken calculation: A random king move before exd3 leaves Black's advanced pawn intact. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's d3 pawn is dangerous, so eliminate it before making distant plans.",
+        "defenderIdea": "...Kf7 activates Black's king rather than conceding an easy ending.",
+        "continuation": "Kd2 centralizes White's king near the newly captured pawn's square.",
+        "misconception": "A random king move before exd3 leaves Black's advanced pawn intact.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-34",
+      "title": "A bishop can capture the invader",
+      "fen": "4k3/8/8/8/8/8/3r4/2B3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1d2",
+      "principalVariation": [
+        "c1d2",
+        "e8f7",
+        "d2c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 3,
+      "prompt": "A black rook on d2 appears active, but White's bishop attacks it. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 improves king activity after the bishop takes the rook.",
+      "continuationReason": "Bc3 keeps the bishop on a useful diagonal; the capture has genuinely changed material.",
+      "explanation": "A bishop can capture the invader: A black rook on d2 appears active, but White's bishop attacks it. In the recorded continuation, ...Kf7 improves king activity after the bishop takes the rook. Your follow-up is important because Bc3 keeps the bishop on a useful diagonal; the capture has genuinely changed material. Common mistaken calculation: Allowing the rook to remain because it looks intimidating misses Bxd2. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "A black rook on d2 appears active, but White's bishop attacks it.",
+        "defenderIdea": "...Kf7 improves king activity after the bishop takes the rook.",
+        "continuation": "Bc3 keeps the bishop on a useful diagonal; the capture has genuinely changed material.",
+        "misconception": "Allowing the rook to remain because it looks intimidating misses Bxd2.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-35",
+      "title": "Capture the rook on the c-file",
+      "fen": "4k3/8/8/8/8/8/2r5/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c2",
+      "principalVariation": [
+        "c1c2",
+        "e8f7",
+        "c2c7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 3,
+      "prompt": "The queen on c1 can take the black rook invading c2. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 centralizes the defending king after the capture.",
+      "continuationReason": "Qc7+ checks along the seventh rank toward f7.",
+      "explanation": "Capture the rook on the c-file: The queen on c1 can take the black rook invading c2. In the recorded continuation, ...Kf7 centralizes the defending king after the capture. Your follow-up is important because Qc7+ checks along the seventh rank toward f7. Common mistaken calculation: Calling the second-rank rook permanently dangerous ignores the direct queen capture. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "The queen on c1 can take the black rook invading c2.",
+        "defenderIdea": "...Kf7 centralizes the defending king after the capture.",
+        "continuation": "Qc7+ checks along the seventh rank toward f7.",
+        "misconception": "Calling the second-rank rook permanently dangerous ignores the direct queen capture.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-36",
+      "title": "Simplify and keep the rook active",
+      "fen": "4k3/8/8/8/8/8/7p/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "e8f7",
+        "d8d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 4,
+      "prompt": "White has the initiative but Black has a distant passed pawn; give the king a concrete reply. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 leaves the eighth-rank check without approaching the rook.",
+      "continuationReason": "Rd7+ checks horizontally on f7 and retains tempo while the h2 pawn still threatens to advance.",
+      "explanation": "Simplify and keep the rook active: White has the initiative but Black has a distant passed pawn; give the king a concrete reply. In the recorded continuation, ...Kf7 leaves the eighth-rank check without approaching the rook. Your follow-up is important because Rd7+ checks horizontally on f7 and retains tempo while the h2 pawn still threatens to advance. Common mistaken calculation: Assuming a distant passed pawn disappears after one check causes a false conversion claim. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "White has the initiative but Black has a distant passed pawn; give the king a concrete reply.",
+        "defenderIdea": "...Kf7 leaves the eighth-rank check without approaching the rook.",
+        "continuation": "Rd7+ checks horizontally on f7 and retains tempo while the h2 pawn still threatens to advance.",
+        "misconception": "Assuming a distant passed pawn disappears after one check causes a false conversion claim.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-37",
+      "title": "The supported queen can take d7",
+      "fen": "4k3/3b4/8/8/8/8/3Q4/3R2K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d7",
+      "principalVariation": [
+        "d2d7",
+        "e8f8",
+        "d7d8"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 4,
+      "prompt": "Qxd7+ looks risky next to the king, but the rook on d1 supports it. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf8 is legal; ...Kxd7 would walk into the white rook's attack.",
+      "continuationReason": "Qd8+ keeps checking while White retains a queen and rook.",
+      "explanation": "The supported queen can take d7: Qxd7+ looks risky next to the king, but the rook on d1 supports it. In the recorded continuation, ...Kf8 is legal; ...Kxd7 would walk into the white rook's attack. Your follow-up is important because Qd8+ keeps checking while White retains a queen and rook. Common mistaken calculation: Rejecting every queen capture near the king ignores defenders of its destination. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Qxd7+ looks risky next to the king, but the rook on d1 supports it.",
+        "defenderIdea": "...Kf8 is legal; ...Kxd7 would walk into the white rook's attack.",
+        "continuation": "Qd8+ keeps checking while White retains a queen and rook.",
+        "misconception": "Rejecting every queen capture near the king ignores defenders of its destination.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-38",
+      "title": "Answer the advanced pawn check",
+      "fen": "4k3/8/8/8/8/8/3p4/3RK3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d2",
+      "principalVariation": [
+        "d1d2",
+        "e8f7",
+        "d2d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 4,
+      "prompt": "Black's pawn on d2 checks the king on e1 and threatens promotion. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kf7 advances the king after White's rook removes the pawn.",
+      "continuationReason": "Rd7+ checks from the seventh rank after resolving the forced defensive task.",
+      "explanation": "Answer the advanced pawn check: Black's pawn on d2 checks the king on e1 and threatens promotion. In the recorded continuation, ...Kf7 advances the king after White's rook removes the pawn. Your follow-up is important because Rd7+ checks from the seventh rank after resolving the forced defensive task. Common mistaken calculation: Trying to attack elsewhere while in check is illegal; moving without removing the pawn preserves its danger. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's pawn on d2 checks the king on e1 and threatens promotion.",
+        "defenderIdea": "...Kf7 advances the king after White's rook removes the pawn.",
+        "continuation": "Rd7+ checks from the seventh rank after resolving the forced defensive task.",
+        "misconception": "Trying to attack elsewhere while in check is illegal; moving without removing the pawn preserves its danger.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-39",
+      "title": "A knight attack requires a queen escape",
+      "fen": "4k3/8/8/8/3n4/1Q6/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b3d3",
+      "principalVariation": [
+        "b3d3",
+        "d4f5",
+        "d3d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 4,
+      "prompt": "Black's knight on d4 attacks the queen on b3. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Nf5 improves the knight after the queen gets out of the fork.",
+      "continuationReason": "Qd7+ gives a diagonal check toward the king on e8.",
+      "explanation": "A knight attack requires a queen escape: Black's knight on d4 attacks the queen on b3. In the recorded continuation, ...Nf5 improves the knight after the queen gets out of the fork. Your follow-up is important because Qd7+ gives a diagonal check toward the king on e8. Common mistaken calculation: Ignoring the knight's attack while pursuing an attractive queen check can immediately lose the queen. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's knight on d4 attacks the queen on b3.",
+        "defenderIdea": "...Nf5 improves the knight after the queen gets out of the fork.",
+        "continuation": "Qd7+ gives a diagonal check toward the king on e8.",
+        "misconception": "Ignoring the knight's attack while pursuing an attractive queen check can immediately lose the queen.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    },
+    {
+      "id": "calc:p95-40",
+      "title": "Promotion does not remove the opposing passer",
+      "fen": "7k/1P6/8/8/8/8/7p/4K3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b7b8q",
+      "principalVariation": [
+        "b7b8q",
+        "h8h7",
+        "b8b7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.visualization",
+        "calculation.forcing-lines"
+      ],
+      "source": "authored",
+      "sourceLabel": "P95 · Conversion",
+      "difficulty": 5,
+      "prompt": "White promotes with check, but Black still holds a dangerous h2 pawn. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kh7 is a legal king flight without surrendering the h-pawn.",
+      "continuationReason": "Qb7+ keeps checking along the seventh rank and buys another tempo.",
+      "explanation": "Promotion does not remove the opposing passer: White promotes with check, but Black still holds a dangerous h2 pawn. In the recorded continuation, ...Kh7 is a legal king flight without surrendering the h-pawn. Your follow-up is important because Qb7+ keeps checking along the seventh rank and buys another tempo. Common mistaken calculation: Calling b8=Q immediate victory without accounting for ...h1=Q is incomplete race analysis. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "defensiveStudy": {
+        "keyQuestion": "White promotes with check, but Black still holds a dangerous h2 pawn.",
+        "defenderIdea": "...Kh7 is a legal king flight without surrendering the h-pawn.",
+        "continuation": "Qb7+ keeps checking along the seventh rank and buys another tempo.",
+        "misconception": "Calling b8=Q immediate victory without accounting for ...h1=Q is incomplete race analysis.",
+        "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
+        "variations": []
+      }
+    }
+  ]
+}
