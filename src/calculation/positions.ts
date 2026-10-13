@@ -27,6 +27,11 @@ if (typeof window !== "undefined") {
     ["p100-minor-piece-v1.json", 40],
     ["p101-queen-forcing-v1.json", 15],
     ["p101-queen-practical-v1.json", 20],
+    ["p102-conversion-v1.json", 15],
+    ["p102-activity-v1.json", 9],
+    ["p102-defense-v1.json", 6],
+    ["p102-races-stalemate-v1.json", 9],
+    ["p102-precision-v1.json", 6],
   ] as const) {
     const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
