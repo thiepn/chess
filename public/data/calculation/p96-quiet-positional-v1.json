@@ -513,9 +513,9 @@
             "moves": [
               "f1e1",
               "f8g6",
-              "b1c3"
+              "g1h1"
             ],
-            "explanation": "The rook cannot attack through its own e4 pawn. Compare the different move order or defender's choice with f1e1 f8g6 c2c3; neither line is claimed unique."
+            "explanation": "After Re1 ...Ng6, Kh1 is a quiet king-safety alternative to c3. Neither continuation forces a material change."
           }
         ]
       }
@@ -745,7 +745,7 @@
         "calculation.visualization"
       ],
       "prompt": "g3 is necessary to vacate the bishop's destination square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
-      "fen": "1n2p1k1/8/5n2/3p4/3P4/8/2P3P1/5BK1 w - - 0 1",
+      "fen": "1n4k1/4p3/5n2/3p4/3P4/8/2P3P1/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "g2g3",
       "principalVariation": [
