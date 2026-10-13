@@ -106,13 +106,13 @@
     {
       "id": "calc:p95-04",
       "title": "A bishop check is not a mate",
-      "fen": "4k3/8/8/1B6/8/8/8/6K1 w - - 0 1",
+      "fen": "4k3/8/8/8/2B5/8/8/6K1 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "b5c6",
+      "bestMove": "c4b5",
       "principalVariation": [
-        "b5c6",
+        "c4b5",
         "e8d8",
-        "c6d5"
+        "b5c6"
       ],
       "skillIds": [
         "calculation.candidates",
@@ -123,10 +123,10 @@
       "source": "authored",
       "sourceLabel": "P95 · King flights",
       "difficulty": 3,
-      "prompt": "Bc6+ is forcing but material sufficiency also matters. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
-      "replyReason": "...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive.",
-      "continuationReason": "Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king.",
-      "explanation": "A bishop check is not a mate: Bc6+ is forcing but material sufficiency also matters. In the recorded continuation, ...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive. Your follow-up is important because Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king. Common mistaken calculation: Inferring a won ending from one bishop check confuses activity with material sufficiency. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "prompt": "Bb5+ is forcing but material sufficiency also matters. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "replyReason": "...Kd8 escapes the b5–e8 bishop diagonal and keeps Black alive.",
+      "continuationReason": "Bc6 improves bishop centralization; bishop and king cannot force mate against a bare king.",
+      "explanation": "A bishop check is not a mate: Bb5+ is forcing but material sufficiency also matters. In the recorded continuation, ...Kd8 escapes the b5–e8 bishop diagonal and keeps Black alive. Your follow-up is important because Bc6 improves bishop centralization; bishop and king cannot force mate against a bare king. Common mistaken calculation: Inferring a won ending from one bishop check confuses activity with material sufficiency. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
       "defensiveStudy": {
         "keyQuestion": "Bc6+ is forcing but material sufficiency also matters.",
         "defenderIdea": "...Kd8 escapes the c6–e8 bishop diagonal and keeps Black alive.",
@@ -469,7 +469,7 @@
     {
       "id": "calc:p95-15",
       "title": "The block comes from g7",
-      "fen": "4k3/6r1/8/8/8/8/8/6KR w - - 0 1",
+      "fen": "4k3/6r1/8/8/8/8/8/5K1R w - - 0 1",
       "playerColor": "w",
       "bestMove": "h1h8",
       "principalVariation": [
@@ -502,13 +502,13 @@
     {
       "id": "calc:p95-16",
       "title": "The bishop can take the blocking rook",
-      "fen": "3rk3/8/8/1B6/8/8/8/6K1 w - - 0 1",
+      "fen": "3rk3/8/8/8/2B5/8/8/6K1 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "b5c6",
+      "bestMove": "c4b5",
       "principalVariation": [
-        "b5c6",
+        "c4b5",
         "d8d7",
-        "c6d7"
+        "b5d7"
       ],
       "skillIds": [
         "calculation.candidates",
@@ -519,10 +519,10 @@
       "source": "authored",
       "sourceLabel": "P95 · Blocks",
       "difficulty": 5,
-      "prompt": "Bc6+ reveals a diagonal checking line from c6 to e8. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
+      "prompt": "Bb5+ reveals a diagonal checking line from c6 to e8. Before selecting your first move, name at least two candidates and visualize the defender's most inconvenient legal response.",
       "replyReason": "...Rd7 blocks the check on the critical intermediate square.",
       "continuationReason": "Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply.",
-      "explanation": "The bishop can take the blocking rook: Bc6+ reveals a diagonal checking line from c6 to e8. In the recorded continuation, ...Rd7 blocks the check on the critical intermediate square. Your follow-up is important because Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply. Common mistaken calculation: Assuming Bxd7+ wins a clean rook without counting the king's recapture overstates the material result. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
+      "explanation": "The bishop can take the blocking rook: Bb5+ reveals a diagonal checking line from c6 to e8. In the recorded continuation, ...Rd7 blocks the check on the critical intermediate square. Your follow-up is important because Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply. Common mistaken calculation: Assuming Bxd7+ wins a clean rook without counting the king's recapture overstates the material result. The line illustrates one legal defensive decision and does not certify unique engine-best play.",
       "defensiveStudy": {
         "keyQuestion": "Bc6+ reveals a diagonal checking line from c6 to e8.",
         "defenderIdea": "...Rd7 blocks the check on the critical intermediate square.",
