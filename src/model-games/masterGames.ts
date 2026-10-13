@@ -39,7 +39,7 @@ export interface MasterDraft {
 }
 const EMPTY: MasterDraft = { plan: "", defense: "", transfer: "", revealed: false, mark: null };
 export const emptyMasterDraft = (): MasterDraft => ({ ...EMPTY });
-export const masterGameAsset = "/data/model-games/p113-master-games-v1.json";
+export const masterGameAsset = `${import.meta.env.BASE_URL}data/model-games/p113-master-games-v1.json`;
 
 /** Reject stale, incomplete or illegal source data before any learner-facing claim. */
 export function hydrateMasterGames(input: unknown) {
