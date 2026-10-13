@@ -2891,7 +2891,7 @@ export default function App() {
                           onInstructionalExit={() => {
                             if (repo.getProfileId() !== activeOwner ||
                               activeCalculationPosition.assessmentStatus !== "instructional-only") return;
-                            closeTrainingRuntime("/train");
+                            closeTrainingRuntime(trainingReturnPath);
                           }}
                           onComplete={completeActivity}
                         />
