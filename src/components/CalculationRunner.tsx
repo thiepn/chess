@@ -27,11 +27,14 @@ import type {
   CalculationPosition,
 } from "../calculation/types";
 import { ChessBoard } from "./ChessBoard";
+import { CalculationStudyPanel } from "./CalculationStudyPanel";
+import { studyMaterialFor } from "../calculation/studyDelivery";
 
 interface CalculationRunnerProps {
   activity: TrainingActivity;
   skill: ChessSkill;
   position: CalculationPosition;
+  storageOwner: string;
   onComplete: (
     outcome: TrainingOutcome,
   ) => void;
@@ -70,6 +73,7 @@ export function CalculationRunner({
   activity,
   skill,
   position,
+  storageOwner,
   onComplete,
 }: CalculationRunnerProps) {
   const [phase, setPhase] =
@@ -135,6 +139,8 @@ export function CalculationRunner({
       Promise<StockfishBrowserEngine> | null
     >(null);
 
+  const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position), [position]);
+  const [showWorkedReview, setShowWorkedReview] = useState(!hasIndependentStudy);
   const verifiedBranch=useMemo(()=>legalCalculationBranch(position),[position]);
   const referenceLine=verifiedBranch?.map(p=>p.san)??[];
 
@@ -187,6 +193,7 @@ export function CalculationRunner({
   }
 
   function resetExercise() {
+    setShowWorkedReview(!hasIndependentStudy);
     setPhase("candidates");
     setCandidates([]);
     setSelectedMove(undefined);
@@ -318,6 +325,7 @@ export function CalculationRunner({
     !boardRevealed;
 
   const canFinish =
+    showWorkedReview &&
     Boolean(verifiedBranch) &&
     phase === "result" &&
     score &&
@@ -674,8 +682,21 @@ export function CalculationRunner({
               </>
             )}
 
+            {phase === "result" && !showWorkedReview && hasIndependentStudy && (
+              <div className="calculation-study-gate">
+                <CalculationStudyPanel key={`${storageOwner}:${position.id}`}
+                  position={position} storageOwner={storageOwner} />
+                <button type="button" className="primary"
+                  onClick={() => setShowWorkedReview(true)}>
+                  Continue to worked calculation review <ChevronRight size={17}/>
+                </button>
+                <small>You can continue without self-assessing, but unanswered study
+                  questions receive no credit and are not included in mastery.</small>
+              </div>
+            )}
+
             {phase === "result" &&
-              score && (
+              score && showWorkedReview && (
                 <>
                   <div
                     className={[

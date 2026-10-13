@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   BarChart3,
   Bookmark,
@@ -52,7 +52,11 @@ import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress"
 import { openingDeviationsForGame } from "./openings/match";
 
 import { StockfishBrowserEngine } from "./engine/stockfish";
-import { calculationPositionFor, resolveCalculationPosition } from "./calculation/positions";
+import {
+  calculationPositionFor, resolveCalculationPosition,
+  subscribeCalculationSources, calculationSourceRevision, calculationSourceStatus,
+  retryFailedCalculationSources,
+} from "./calculation/positions";
 import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
 import { analyzeImportedGame } from "./games/analyze";
 import { timeControlWeight } from "./games/practical";
@@ -478,16 +482,24 @@ export default function App() {
     activeModelGame ||
     (active && activeSkill),
   );
-  const activeCalculationPosition =
-    active &&
-    activeSkill &&
-    active.activityType === "calculation"
-      ? resolveCalculationPosition(
-          state,
-          active,
-          activeSkill,
-        )
-      : undefined;
+  // Source files are asynchronous. Use an observable catalog, but never switch
+  // the board under a learner who is already calculating a chosen position.
+  const catalogRevision = useSyncExternalStore(
+    subscribeCalculationSources, calculationSourceRevision, calculationSourceRevision);
+  const catalogStatus = useMemo(() => calculationSourceStatus(), [catalogRevision]);
+  const pinnedCalculation = useRef<{
+    key: string; position: ReturnType<typeof resolveCalculationPosition>;
+  } | null>(null);
+  const calculationKey = active?.activityType === "calculation" && activeSkill
+    ? [activeOwner, active.id, activeSkill.id, route.path].join(":") : "";
+  if (calculationKey && pinnedCalculation.current?.key !== calculationKey && active && activeSkill) {
+    pinnedCalculation.current = {
+      key: calculationKey, position: resolveCalculationPosition(state, active, activeSkill),
+    };
+  }
+  const activeCalculationPosition = calculationKey &&
+    pinnedCalculation.current?.key === calculationKey
+      ? pinnedCalculation.current.position : undefined;
   const activeEndgamePosition =
     active &&
     activeSkill &&
@@ -2776,6 +2788,18 @@ export default function App() {
                       </div>
                     )}
 
+                    {active.activityType === "calculation" &&
+                      (catalogStatus.pending > 0 || catalogStatus.failedFiles.length > 0) && (
+                      <div className="calculation-source-notice" role="status">
+                        <span>{catalogStatus.failedFiles.length
+                          ? `${catalogStatus.failedFiles.length} study files unavailable; existing exercises remain usable.`
+                          : `Loading study catalog (${catalogStatus.ready}/${catalogStatus.total}). The current board remains fixed.`}</span>
+                        {catalogStatus.failedFiles.length > 0 && (
+                          <button type="button" className="secondary"
+                            onClick={retryFailedCalculationSources}>Retry missing studies</button>
+                        )}
+                      </div>
+                    )}
                     <div className="train-runtime-runner">
                       {active.activityType === "engineGame" && activeScenario ? (
                         <GameArena
@@ -2816,9 +2840,11 @@ export default function App() {
                       ) : active.activityType === "calculation" &&
                       activeCalculationPosition ? (
                         <CalculationRunner
+                          key={`${activeOwner}:${active.id}:${activeCalculationPosition.id}`}
                           activity={active}
                           skill={activeSkill}
                           position={activeCalculationPosition}
+                          storageOwner={activeOwner}
                           onComplete={completeActivity}
                         />
                       ) : (active.activityType === "endgameDrill" ||
