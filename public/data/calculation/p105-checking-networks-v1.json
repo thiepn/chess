@@ -274,10 +274,10 @@
       "prompt": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Variant: White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal. Compute the check, the defender's strongest plausible reply, and a safe fifth ply. Independently decide whether the line wins material or merely maintains initiative.",
       "replyReason": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Variant-sensitive consequence: White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal.",
       "continuationReason": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Contrast that outcome with the defensive and unsuccessful alternatives before claiming a decisive attack.",
-      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint.",
+      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint. The king cannot play ...Kh7 directly against a rook on h8, since that square is attacked on the open h-file.",
       "defensiveStudy": {
         "keyQuestion": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file.",
-        "defenderIdea": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
+        "defenderIdea": "Black can choose f7 or g7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "continuation": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "misconception": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
         "reflection": "Independent mental-board questions: Which king flight remains? Which defender can block the check? What changes if the extra pawn is still alive? Model correction: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal.",
@@ -286,12 +286,12 @@
             "label": "Realistic defensive alternative",
             "moves": [
               "h1h8",
-              "g8h7",
+              "g8g7",
               "h8h7",
-              "h7g6",
+              "g7f6",
               "h7h6"
             ],
-            "explanation": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Play h1h8 g8h7 h8h7 h7g6 h7h6 and compare the king's reachable squares and whether a queen or rook is threatened. White's a2 pawn survives rook checks and would matter if the defending king reaches the queenside, but does not make a king escape illegal."
+            "explanation": "...Kg7, not ...Kh7, is the legal alternative to ...Kf7: the rook on h8 controls h7. After Rh7+ Black can escape to f6 before Rh6+."
           },
           {
             "label": "Tempting but unsafe candidate",
@@ -356,10 +356,10 @@
       "prompt": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Variant: The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first. Compute the check, the defender's strongest plausible reply, and a safe fifth ply. Independently decide whether the line wins material or merely maintains initiative.",
       "replyReason": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Variant-sensitive consequence: The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first.",
       "continuationReason": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Contrast that outcome with the defensive and unsuccessful alternatives before claiming a decisive attack.",
-      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint.",
+      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint. The king cannot play ...Kh7 directly against a rook on h8, since that square is attacked on the open h-file.",
       "defensiveStudy": {
         "keyQuestion": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file.",
-        "defenderIdea": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
+        "defenderIdea": "Black can choose f7 or g7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "continuation": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "misconception": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
         "reflection": "Independent mental-board questions: Which king flight remains? Which defender can block the check? What changes if the extra pawn is still alive? Model correction: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first.",
@@ -368,12 +368,12 @@
             "label": "Realistic defensive alternative",
             "moves": [
               "h1h8",
-              "g8h7",
+              "g8g7",
               "h8h7",
-              "h7g6",
+              "g7f6",
               "h7h6"
             ],
-            "explanation": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Play h1h8 g8h7 h8h7 h7g6 h7h6 and compare the king's reachable squares and whether a queen or rook is threatened. The white b2 pawn affects later queenside king races, not the rook's legal attacking line; calculate the rook's checking ranks first."
+            "explanation": "...Kg7, not ...Kh7, is the legal alternative to ...Kf7: the rook on h8 controls h7. After Rh7+ Black can escape to f6 before Rh6+."
           },
           {
             "label": "Tempting but unsafe candidate",
@@ -438,10 +438,10 @@
       "prompt": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Variant: Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay. Compute the check, the defender's strongest plausible reply, and a safe fifth ply. Independently decide whether the line wins material or merely maintains initiative.",
       "replyReason": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Variant-sensitive consequence: Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay.",
       "continuationReason": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Contrast that outcome with the defensive and unsuccessful alternatives before claiming a decisive attack.",
-      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint.",
+      "explanation": "King safety study — Rook checks and king flights. Attacking principle: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Worked question: Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file. Authored five-ply continuation h1h8 g8f7 h8h7 f7f6 h7h6. Defender's five-ply alternative h1h8 g8h7 h8h7 h7g6 h7h6. Misleading three-ply plan h1h6 g8f7 h6h7. Concrete defensive resistance: Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Endpoint: After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry. Misconception repair: Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes. Additional material context: Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay. The recorded choices are legal teaching lines rather than unique engine-best moves or a certified win, draw or mate. Count checks, king flights and material at each endpoint. The king cannot play ...Kh7 directly against a rook on h8, since that square is attacked on the open h-file.",
       "defensiveStudy": {
         "keyQuestion": "Rh8+ is an open-file check. Against ...Kf7, Rh7+ continues on rank seven; against ...Kh7 the rook must react to the king on its file.",
-        "defenderIdea": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
+        "defenderIdea": "Black can choose f7 or g7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern.",
         "continuation": "After Rh6+ White has a rook on the sixth rank while Black's king retains squares; the line is an exercise in accurate rook checking geometry.",
         "misconception": "Assuming all king replies to Rh8+ lead to mate omits ...Kf7 and further sideways escapes.",
         "reflection": "Independent mental-board questions: Which king flight remains? Which defender can block the check? What changes if the extra pawn is still alive? Model correction: Trace squares attacked by the rook after every rank switch, especially when the king reaches f6 or g6. Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay.",
@@ -450,12 +450,12 @@
             "label": "Realistic defensive alternative",
             "moves": [
               "h1h8",
-              "g8h7",
+              "g8g7",
               "h8h7",
-              "h7g6",
+              "g7f6",
               "h7h6"
             ],
-            "explanation": "Black can choose f7 or h7 as a king flight. The rook should not confuse a legal chase with a complete forced-mate pattern. Play h1h8 g8h7 h8h7 h7g6 h7h6 and compare the king's reachable squares and whether a queen or rook is threatened. Black keeps a c7 pawn that may become a passer. Rh6+ does not itself neutralize this counterplay."
+            "explanation": "...Kg7, not ...Kh7, is the legal alternative to ...Kf7: the rook on h8 controls h7. After Rh7+ Black can escape to f6 before Rh6+."
           },
           {
             "label": "Tempting but unsafe candidate",
