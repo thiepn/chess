@@ -29,12 +29,15 @@ import type {
   TrainingOutcome,
 } from "../domain/types";
 import { ChessBoard } from "./ChessBoard";
+import type { CalculationPosition } from "../calculation/types";
 
 interface EndgameTechniqueRunnerProps {
   activity: TrainingActivity;
   skill: ChessSkill;
   position: EndgamePosition;
   delayedRetention: boolean;
+  decisionStudies?: CalculationPosition[];
+  onOpenDecision?: (study: CalculationPosition) => void;
   onComplete: (
     outcome: TrainingOutcome,
   ) => void;
@@ -97,6 +100,8 @@ function EndgameTechniqueSession({
   skill,
   position,
   delayedRetention,
+  decisionStudies,
+  onOpenDecision,
   onComplete,
 }: EndgameTechniqueRunnerProps) {
   const gameRef = useRef(
@@ -414,6 +419,24 @@ function EndgameTechniqueSession({
             {skill.title}
           </span>
         </div>
+
+        {onOpenDecision && decisionStudies && decisionStudies.length > 0 && (
+          <section className="endgame-decision-handoff" aria-label="Optional endgame decision studies">
+            <strong>Optional decision lab · unscored</strong>
+            <p>Investigate three linked board decisions before playing the original
+              graded technique. Leaving this exercise does not submit an outcome.</p>
+            <div>
+              {decisionStudies.slice(0, 3).map(item => (
+                <button type="button" key={item.id} className="secondary"
+                  onClick={() => onOpenDecision(item)}>
+                  {item.endgameDecisionStudy
+                    ? `Stage ${item.endgameDecisionStudy.stage}/3: ${item.endgameDecisionStudy.family}`
+                    : item.title}
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className="endgame-recognition-layout">
           <div className="endgame-preview-board">

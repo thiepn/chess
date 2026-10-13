@@ -1,0 +1,1312 @@
+{
+  "version": 1,
+  "phase": "P112",
+  "provenance": "New instructional texts; exact 180-degree color inversions of this repository's owned P101/P102 calculated source FEN and UCI moves. No tablebase outcome or best-move claim; last alternative carries only 3 authored plies.",
+  "positions": [
+    {
+      "id": "calc:p112-16",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen checks versus king shelter · calc:p101-01",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen checks versus king shelter — Identify the decision",
+      "prompt": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The defending king may choose a different escape square and change the queen's checking diagonal. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k6/q7/8/8/7Q/8/7P/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "a7a1",
+      "principalVariation": [
+        "a7a1",
+        "d1e2",
+        "a1e5",
+        "e2d3",
+        "e5e4"
+      ],
+      "explanation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The defending king may choose a different escape square and change the queen's checking diagonal. Principal legal reference: a7→a1 · d1→e2 · a1→e5 · e2→d3 · e5→e4. Alternate defense: a7→a1 · d1→c2 · a1→a2 · c2→d3 · a2→a3. Alternative start: a7→d4 · d1→c1 · d4→e3. A legal check is not automatically perpetual, a win, or the only useful queen move. The board is a 180° color-reversed educational transformation of original calc:p101-01, not the original exact game's win/draw claim.",
+      "replyReason": "After a7a1, the recorded response d1→e2 forces a new decision. The defending king may choose a different escape square and change the queen's checking diagonal.",
+      "continuationReason": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "defenderIdea": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "continuation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "reflection": "Recall d1 and b8, the pawn on White h2, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "a7a1",
+              "d1c2",
+              "a1a2",
+              "c2d3",
+              "a2a3"
+            ],
+            "explanation": "The defending king may choose a different escape square and change the queen's checking diagonal. Legally derived from original calc:p101-01; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "a7d4",
+              "d1c1",
+              "d4e3"
+            ],
+            "explanation": "A legal check is not automatically perpetual, a win, or the only useful queen move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-01",
+        "family": "Queen checks versus king shelter",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "defenderResource": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "decisionQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White h2.",
+        "transferQuestion": "Stage 1: after d1→e2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Which king flight square forces your queen to switch file, rank, or diagonal? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→e2.",
+            "answer": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The defending king may choose a different escape square and change the queen's checking diagonal. The authored five-ply example is a7→a1 · d1→e2 · a1→e5 · e2→d3 · e5→e4. The second move d1→e2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line a7→a1 · d1→e2 · a1→e5 · e2→d3 · e5→e4 on the board, then substitute the resisting defender route a7→a1 · d1→c2 · a1→a2 · c2→d3 · a2→a3. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: a7→a1 · d1→e2 · a1→e5 · e2→d3 · e5→e4. Resisting authored line: a7→a1 · d1→c2 · a1→a2 · c2→d3 · a2→a3. The defending king may choose a different escape square and change the queen's checking diagonal. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers a7→d4 · d1→c1 · d4→e3 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: a7→d4 · d1→c1 · d4→e3. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The defending king may choose a different escape square and change the queen's checking diagonal. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-17",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen checks versus king shelter · calc:p101-02",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen checks versus king shelter — Test active resistance",
+      "prompt": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2q3/8/8/8/8/8/P7/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8a4",
+      "principalVariation": [
+        "e8a4",
+        "d1e2",
+        "a4c2",
+        "e2e3",
+        "c2c3"
+      ],
+      "explanation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. Principal legal reference: e8→a4 · d1→e2 · a4→c2 · e2→e3 · c2→c3. Alternate defense: e8→a4 · d1→c1 · a4→c2 · c1→c2 · b8→c7. Alternative start: e8→d7 · d1→c2 · d7→d4. A legal check is not automatically perpetual, a win, or the only useful queen move. The board is a 180° color-reversed educational transformation of original calc:p101-02, not the original exact game's win/draw claim.",
+      "replyReason": "After e8a4, the recorded response d1→e2 forces a new decision. The defending king may choose a different escape square and change the queen's checking diagonal.",
+      "continuationReason": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "defenderIdea": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "continuation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "reflection": "Recall d1 and b8, the pawn on White a2, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8a4",
+              "d1c1",
+              "a4c2",
+              "c1c2",
+              "b8c7"
+            ],
+            "explanation": "The defending king may choose a different escape square and change the queen's checking diagonal. Legally derived from original calc:p101-02; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8d7",
+              "d1c2",
+              "d7d4"
+            ],
+            "explanation": "A legal check is not automatically perpetual, a win, or the only useful queen move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-02",
+        "family": "Queen checks versus king shelter",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "defenderResource": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "decisionQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2.",
+        "transferQuestion": "Stage 2: after d1→e2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Which king flight square forces your queen to switch file, rank, or diagonal? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→e2.",
+            "answer": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. The authored five-ply example is e8→a4 · d1→e2 · a4→c2 · e2→e3 · c2→c3. The second move d1→e2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→a4 · d1→e2 · a4→c2 · e2→e3 · c2→c3 on the board, then substitute the resisting defender route e8→a4 · d1→c1 · a4→c2 · c1→c2 · b8→c7. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→a4 · d1→e2 · a4→c2 · e2→e3 · c2→c3. Resisting authored line: e8→a4 · d1→c1 · a4→c2 · c1→c2 · b8→c7. The defending king may choose a different escape square and change the queen's checking diagonal. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→d7 · d1→c2 · d7→d4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→d7 · d1→c2 · d7→d4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-18",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen checks versus king shelter · calc:p101-03",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen checks versus king shelter — Revise and transfer",
+      "prompt": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k5q/8/8/8/8/8/P7/3K4 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h8h1",
+      "principalVariation": [
+        "h8h1",
+        "d1e2",
+        "h1h2",
+        "e2f3",
+        "h2h3"
+      ],
+      "explanation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. Principal legal reference: h8→h1 · d1→e2 · h1→h2 · e2→f3 · h2→h3. Alternate defense: h8→h1 · d1→c2 · h1→h2 · c2→b3 · h2→h3. Alternative start: h8→h4 · d1→c2 · h4→c4. A legal check is not automatically perpetual, a win, or the only useful queen move. The board is a 180° color-reversed educational transformation of original calc:p101-03, not the original exact game's win/draw claim.",
+      "replyReason": "After h8h1, the recorded response d1→e2 forces a new decision. The defending king may choose a different escape square and change the queen's checking diagonal.",
+      "continuationReason": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "defenderIdea": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "continuation": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "reflection": "Recall d1 and b8, the pawn on White a2, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "h8h1",
+              "d1c2",
+              "h1h2",
+              "c2b3",
+              "h2h3"
+            ],
+            "explanation": "The defending king may choose a different escape square and change the queen's checking diagonal. Legally derived from original calc:p101-03; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "h8h4",
+              "d1c2",
+              "h4c4"
+            ],
+            "explanation": "A legal check is not automatically perpetual, a win, or the only useful queen move. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-03",
+        "family": "Queen checks versus king shelter",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check.",
+        "defenderResource": "The defending king may choose a different escape square and change the queen's checking diagonal.",
+        "misconception": "A legal check is not automatically perpetual, a win, or the only useful queen move.",
+        "decisionQuestion": "Which king flight square forces your queen to switch file, rank, or diagonal?",
+        "structure": "White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2.",
+        "transferQuestion": "Stage 3: after d1→e2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Which king flight square forces your queen to switch file, rank, or diagonal? In this specific position with kings on d1/b8, name the first improvement and why the opponent could answer d1→e2.",
+            "answer": "Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. The authored five-ply example is h8→h1 · d1→e2 · h1→h2 · e2→f3 · h2→h3. The second move d1→e2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line h8→h1 · d1→e2 · h1→h2 · e2→f3 · h2→h3 on the board, then substitute the resisting defender route h8→h1 · d1→c2 · h1→h2 · c2→b3 · h2→h3. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: h8→h1 · d1→e2 · h1→h2 · e2→f3 · h2→h3. Resisting authored line: h8→h1 · d1→c2 · h1→h2 · c2→b3 · h2→h3. The defending king may choose a different escape square and change the queen's checking diagonal. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers h8→h4 · d1→c2 · h4→c4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: h8→h4 · d1→c2 · h4→c4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Queen endgames demand checking geometry and a safe queen retreat, not only one forcing check. White's king is on d1; Black's king is on b8. The pawn inventory visible from the board includes White a2. The defending king may choose a different escape square and change the queen's checking diagonal. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A legal check is not automatically perpetual, a win, or the only useful queen move. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-19",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen support and outside passer · calc:p101-16",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen support and outside passer — Identify the decision",
+      "prompt": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h3. The defender races a pawn while the queen changes files; count promotions and candidate checks. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2q3/8/8/8/P7/7p/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e1",
+      "principalVariation": [
+        "e8e1",
+        "a1a2",
+        "h3h2",
+        "a4a5",
+        "h2h1q"
+      ],
+      "explanation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h3. The defender races a pawn while the queen changes files; count promotions and candidate checks. Principal legal reference: e8→e1 · a1→a2 · h3→h2 · a4→a5 · h2→h1=Q. Alternate defense: e8→e1 · a1→a2 · h3→h2 · a4→a5 · e1→h4. Alternative start: e8→h5 · a1→a2 · h3→h2. A passed pawn supported by a queen still requires accurate promotion-race calculation. The board is a 180° color-reversed educational transformation of original calc:p101-16, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e1, the recorded response a1→a2 forces a new decision. The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+      "continuationReason": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "defenderIdea": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "continuation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "reflection": "Recall a1 and b8, the pawn on White a4, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e1",
+              "a1a2",
+              "h3h2",
+              "a4a5",
+              "e1h4"
+            ],
+            "explanation": "The defender races a pawn while the queen changes files; count promotions and candidate checks. Legally derived from original calc:p101-16; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8h5",
+              "a1a2",
+              "h3h2"
+            ],
+            "explanation": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-16",
+        "family": "Queen support and outside passer",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "defenderResource": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "decisionQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "structure": "White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h3.",
+        "transferQuestion": "Stage 1: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Should the queen protect the passer now or reserve a checking square after promotion? In this specific position with kings on a1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h3. The defender races a pawn while the queen changes files; count promotions and candidate checks. The authored five-ply example is e8→e1 · a1→a2 · h3→h2 · a4→a5 · h2→h1=Q. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e1 · a1→a2 · h3→h2 · a4→a5 · h2→h1=Q on the board, then substitute the resisting defender route e8→e1 · a1→a2 · h3→h2 · a4→a5 · e1→h4. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e1 · a1→a2 · h3→h2 · a4→a5 · h2→h1=Q. Resisting authored line: e8→e1 · a1→a2 · h3→h2 · a4→a5 · e1→h4. The defender races a pawn while the queen changes files; count promotions and candidate checks. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→h5 · a1→a2 · h3→h2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→h5 · a1→a2 · h3→h2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White a4, Black h3. The defender races a pawn while the queen changes files; count promotions and candidate checks. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-20",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen support and outside passer · calc:p101-17",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen support and outside passer — Test active resistance",
+      "prompt": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c8. The pawn inventory visible from the board includes White a6, Black g3. The defender races a pawn while the queen changes files; count promotions and candidate checks. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "2k2q2/8/P7/8/8/6p1/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8f1",
+      "principalVariation": [
+        "f8f1",
+        "a1a2",
+        "g3g2",
+        "a6a7",
+        "g2g1q"
+      ],
+      "explanation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c8. The pawn inventory visible from the board includes White a6, Black g3. The defender races a pawn while the queen changes files; count promotions and candidate checks. Principal legal reference: f8→f1 · a1→a2 · g3→g2 · a6→a7 · g2→g1=Q. Alternate defense: f8→f1 · a1→a2 · g3→g2 · a6→a7 · f1→a6. Alternative start: f8→f5 · a1→a2 · g3→g2. A passed pawn supported by a queen still requires accurate promotion-race calculation. The board is a 180° color-reversed educational transformation of original calc:p101-17, not the original exact game's win/draw claim.",
+      "replyReason": "After f8f1, the recorded response a1→a2 forces a new decision. The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+      "continuationReason": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "defenderIdea": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "continuation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "reflection": "Recall a1 and c8, the pawn on White a6, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f8f1",
+              "a1a2",
+              "g3g2",
+              "a6a7",
+              "f1a6"
+            ],
+            "explanation": "The defender races a pawn while the queen changes files; count promotions and candidate checks. Legally derived from original calc:p101-17; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "f8f5",
+              "a1a2",
+              "g3g2"
+            ],
+            "explanation": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-17",
+        "family": "Queen support and outside passer",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "defenderResource": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "decisionQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "structure": "White's king is on a1; Black's king is on c8. The pawn inventory visible from the board includes White a6, Black g3.",
+        "transferQuestion": "Stage 2: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Should the queen protect the passer now or reserve a checking square after promotion? In this specific position with kings on a1/c8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c8. The pawn inventory visible from the board includes White a6, Black g3. The defender races a pawn while the queen changes files; count promotions and candidate checks. The authored five-ply example is f8→f1 · a1→a2 · g3→g2 · a6→a7 · g2→g1=Q. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f8→f1 · a1→a2 · g3→g2 · a6→a7 · g2→g1=Q on the board, then substitute the resisting defender route f8→f1 · a1→a2 · g3→g2 · a6→a7 · f1→a6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f8→f1 · a1→a2 · g3→g2 · a6→a7 · g2→g1=Q. Resisting authored line: f8→f1 · a1→a2 · g3→g2 · a6→a7 · f1→a6. The defender races a pawn while the queen changes files; count promotions and candidate checks. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers f8→f5 · a1→a2 · g3→g2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: f8→f5 · a1→a2 · g3→g2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c8. The pawn inventory visible from the board includes White a6, Black g3. The defender races a pawn while the queen changes files; count promotions and candidate checks. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-21",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen support and outside passer · calc:p101-18",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen support and outside passer — Revise and transfer",
+      "prompt": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c7. The pawn inventory visible from the board includes White h6, Black f3. The defender races a pawn while the queen changes files; count promotions and candidate checks. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "4q3/2k5/7P/8/8/5p2/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e1",
+      "principalVariation": [
+        "e8e1",
+        "a1a2",
+        "f3f2",
+        "h6h7",
+        "f2f1q"
+      ],
+      "explanation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c7. The pawn inventory visible from the board includes White h6, Black f3. The defender races a pawn while the queen changes files; count promotions and candidate checks. Principal legal reference: e8→e1 · a1→a2 · f3→f2 · h6→h7 · f2→f1=Q. Alternate defense: e8→e1 · a1→a2 · f3→f2 · h6→h7 · e1→e6. Alternative start: e8→e5 · a1→a2 · f3→f2. A passed pawn supported by a queen still requires accurate promotion-race calculation. The board is a 180° color-reversed educational transformation of original calc:p101-18, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e1, the recorded response a1→a2 forces a new decision. The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+      "continuationReason": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "defenderIdea": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "continuation": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "reflection": "Recall a1 and c7, the pawn on White h6, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e1",
+              "a1a2",
+              "f3f2",
+              "h6h7",
+              "e1e6"
+            ],
+            "explanation": "The defender races a pawn while the queen changes files; count promotions and candidate checks. Legally derived from original calc:p101-18; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8e5",
+              "a1a2",
+              "f3f2"
+            ],
+            "explanation": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p101-18",
+        "family": "Queen support and outside passer",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing.",
+        "defenderResource": "The defender races a pawn while the queen changes files; count promotions and candidate checks.",
+        "misconception": "A passed pawn supported by a queen still requires accurate promotion-race calculation.",
+        "decisionQuestion": "Should the queen protect the passer now or reserve a checking square after promotion?",
+        "structure": "White's king is on a1; Black's king is on c7. The pawn inventory visible from the board includes White h6, Black f3.",
+        "transferQuestion": "Stage 3: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Should the queen protect the passer now or reserve a checking square after promotion? In this specific position with kings on a1/c7, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c7. The pawn inventory visible from the board includes White h6, Black f3. The defender races a pawn while the queen changes files; count promotions and candidate checks. The authored five-ply example is e8→e1 · a1→a2 · f3→f2 · h6→h7 · f2→f1=Q. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e1 · a1→a2 · f3→f2 · h6→h7 · f2→f1=Q on the board, then substitute the resisting defender route e8→e1 · a1→a2 · f3→f2 · h6→h7 · e1→e6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e1 · a1→a2 · f3→f2 · h6→h7 · f2→f1=Q. Resisting authored line: e8→e1 · a1→a2 · f3→f2 · h6→h7 · e1→e6. The defender races a pawn while the queen changes files; count promotions and candidate checks. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→e5 · a1→a2 · f3→f2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→e5 · a1→a2 · f3→f2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. A distant advanced pawn can gain promotion tempo when the queen restrains the other wing. White's king is on a1; Black's king is on c7. The pawn inventory visible from the board includes White h6, Black f3. The defender races a pawn while the queen changes files; count promotions and candidate checks. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "A passed pawn supported by a queen still requires accurate promotion-race calculation. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-22",
+      "source": "authored",
+      "sourceLabel": "P112 · Minor piece versus active king · calc:p102-19",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Minor piece versus active king — Identify the decision",
+      "prompt": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black h7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k3b2/7p/8/3p4/3P4/2N5/8/1K6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8b4",
+      "principalVariation": [
+        "f8b4",
+        "c3d5",
+        "b4e1",
+        "d5c7",
+        "b8c7"
+      ],
+      "explanation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black h7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Principal legal reference: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Alternate defense: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Alternative start: b8→c8 · c3→d5 · f8→b4. Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. The board is a 180° color-reversed educational transformation of original calc:p102-19, not the original exact game's win/draw claim.",
+      "replyReason": "After f8b4, the recorded response c3→d5 forces a new decision. A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+      "continuationReason": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "defenderIdea": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "continuation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "reflection": "Recall b1 and b8, the pawn on Black h7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f8c5",
+              "c3d5",
+              "c5d4",
+              "b1c2",
+              "d4f2"
+            ],
+            "explanation": "A knight hop can fork the bishop's route or demand a king recapture after an exchange. Legally derived from original calc:p102-19; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "c3d5",
+              "f8b4"
+            ],
+            "explanation": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-19",
+        "family": "Minor piece versus active king",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "defenderResource": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "decisionQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black h7, Black d5, White d4.",
+        "transferQuestion": "Stage 1: after c3→d5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: After a knight incursion, does the bishop reposition or should the king join the defense? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer c3→d5.",
+            "answer": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black h7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. The authored five-ply example is f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. The second move c3→d5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7 on the board, then substitute the resisting defender route f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Resisting authored line: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Minor pieces only restrict an invading knight when the king helps defend the contact squares. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · c3→d5 · f8→b4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · c3→d5 · f8→b4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black h7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-23",
+      "source": "authored",
+      "sourceLabel": "P112 · Minor piece versus active king · calc:p102-20",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Minor piece versus active king — Test active resistance",
+      "prompt": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black d5, White d4, White h2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k3b2/8/8/3p4/3P4/2N5/7P/1K6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8b4",
+      "principalVariation": [
+        "f8b4",
+        "c3d5",
+        "b4e1",
+        "d5c7",
+        "b8c7"
+      ],
+      "explanation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black d5, White d4, White h2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Principal legal reference: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Alternate defense: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Alternative start: b8→c8 · c3→d5 · f8→b4. Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. The board is a 180° color-reversed educational transformation of original calc:p102-20, not the original exact game's win/draw claim.",
+      "replyReason": "After f8b4, the recorded response c3→d5 forces a new decision. A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+      "continuationReason": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "defenderIdea": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "continuation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "reflection": "Recall b1 and b8, the pawn on Black d5, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f8c5",
+              "c3d5",
+              "c5d4",
+              "b1c2",
+              "d4f2"
+            ],
+            "explanation": "A knight hop can fork the bishop's route or demand a king recapture after an exchange. Legally derived from original calc:p102-20; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "c3d5",
+              "f8b4"
+            ],
+            "explanation": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-20",
+        "family": "Minor piece versus active king",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "defenderResource": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "decisionQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black d5, White d4, White h2.",
+        "transferQuestion": "Stage 2: after c3→d5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: After a knight incursion, does the bishop reposition or should the king join the defense? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer c3→d5.",
+            "answer": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black d5, White d4, White h2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. The authored five-ply example is f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. The second move c3→d5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7 on the board, then substitute the resisting defender route f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Resisting authored line: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Minor pieces only restrict an invading knight when the king helps defend the contact squares. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · c3→d5 · f8→b4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · c3→d5 · f8→b4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black d5, White d4, White h2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-24",
+      "source": "authored",
+      "sourceLabel": "P112 · Minor piece versus active king · calc:p102-21",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Minor piece versus active king — Revise and transfer",
+      "prompt": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k3b2/6p1/8/3p4/3P4/2N5/8/1K6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8b4",
+      "principalVariation": [
+        "f8b4",
+        "c3d5",
+        "b4e1",
+        "d5c7",
+        "b8c7"
+      ],
+      "explanation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Principal legal reference: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Alternate defense: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Alternative start: b8→c8 · c3→d5 · f8→b4. Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. The board is a 180° color-reversed educational transformation of original calc:p102-21, not the original exact game's win/draw claim.",
+      "replyReason": "After f8b4, the recorded response c3→d5 forces a new decision. A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+      "continuationReason": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "defenderIdea": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "continuation": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "reflection": "Recall b1 and b8, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f8c5",
+              "c3d5",
+              "c5d4",
+              "b1c2",
+              "d4f2"
+            ],
+            "explanation": "A knight hop can fork the bishop's route or demand a king recapture after an exchange. Legally derived from original calc:p102-21; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "b8c8",
+              "c3d5",
+              "f8b4"
+            ],
+            "explanation": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-21",
+        "family": "Minor piece versus active king",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "Minor pieces only restrict an invading knight when the king helps defend the contact squares.",
+        "defenderResource": "A knight hop can fork the bishop's route or demand a king recapture after an exchange.",
+        "misconception": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps.",
+        "decisionQuestion": "After a knight incursion, does the bishop reposition or should the king join the defense?",
+        "structure": "White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, Black d5, White d4.",
+        "transferQuestion": "Stage 3: after c3→d5, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: After a knight incursion, does the bishop reposition or should the king join the defense? In this specific position with kings on b1/b8, name the first improvement and why the opponent could answer c3→d5.",
+            "answer": "Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. The authored five-ply example is f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. The second move c3→d5 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7 on the board, then substitute the resisting defender route f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f8→b4 · c3→d5 · b4→e1 · d5→c7 · b8→c7. Resisting authored line: f8→c5 · c3→d5 · c5→d4 · b1→c2 · d4→f2. A knight hop can fork the bishop's route or demand a king recapture after an exchange. Minor pieces only restrict an invading knight when the king helps defend the contact squares. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers b8→c8 · c3→d5 · f8→b4 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: b8→c8 · c3→d5 · f8→b4. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Minor pieces only restrict an invading knight when the king helps defend the contact squares. White's king is on b1; Black's king is on b8. The pawn inventory visible from the board includes Black g7, Black d5, White d4. A knight hop can fork the bishop's route or demand a king recapture after an exchange. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Keeping the bishop pair is not always possible; recognize the defender's central knight jumps. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-25",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen counterchecks and survival · calc:p102-28",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen counterchecks and survival — Identify the decision",
+      "prompt": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. The opponent's queen can switch diagonals and check while the active queen is far away. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2q3/7p/8/8/8/Q7/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e1",
+      "principalVariation": [
+        "e8e1",
+        "a1a2",
+        "e1e4",
+        "a3d6",
+        "b8a8"
+      ],
+      "explanation": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. The opponent's queen can switch diagonals and check while the active queen is far away. Principal legal reference: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Alternate defense: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Alternative start: e8→h5 · a3→d6 · b8→a8. One offensive check does not neutralize the enemy queen; respond to real checks. The board is a 180° color-reversed educational transformation of original calc:p102-28, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e1, the recorded response a1→a2 forces a new decision. The opponent's queen can switch diagonals and check while the active queen is far away.",
+      "continuationReason": "Before simplifying queen endgames, map every countercheck and the king's safe replies. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "defenderIdea": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "continuation": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "reflection": "Recall a1 and b8, the pawn on Black h7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e1",
+              "a1a2",
+              "e1a5",
+              "a3a5",
+              "b8c8"
+            ],
+            "explanation": "The opponent's queen can switch diagonals and check while the active queen is far away. Legally derived from original calc:p102-28; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8h5",
+              "a3d6",
+              "b8a8"
+            ],
+            "explanation": "One offensive check does not neutralize the enemy queen; respond to real checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-28",
+        "family": "Queen counterchecks and survival",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "defenderResource": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "decisionQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "structure": "White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black h7.",
+        "transferQuestion": "Stage 1: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: Can the king escape an opponent's diagonal check without surrendering the queen's defense? In this specific position with kings on a1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. The opponent's queen can switch diagonals and check while the active queen is far away. The authored five-ply example is e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8 on the board, then substitute the resisting defender route e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Resisting authored line: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. The opponent's queen can switch diagonals and check while the active queen is far away. Before simplifying queen endgames, map every countercheck and the king's safe replies. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→h5 · a3→d6 · b8→a8 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→h5 · a3→d6 · b8→a8. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black h7. The opponent's queen can switch diagonals and check while the active queen is far away. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-26",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen counterchecks and survival · calc:p102-29",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen counterchecks and survival — Test active resistance",
+      "prompt": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The opponent's queen can switch diagonals and check while the active queen is far away. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2q3/8/8/8/8/Q7/7P/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e1",
+      "principalVariation": [
+        "e8e1",
+        "a1a2",
+        "e1e4",
+        "a3d6",
+        "b8a8"
+      ],
+      "explanation": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The opponent's queen can switch diagonals and check while the active queen is far away. Principal legal reference: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Alternate defense: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Alternative start: e8→h5 · a3→d6 · b8→a8. One offensive check does not neutralize the enemy queen; respond to real checks. The board is a 180° color-reversed educational transformation of original calc:p102-29, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e1, the recorded response a1→a2 forces a new decision. The opponent's queen can switch diagonals and check while the active queen is far away.",
+      "continuationReason": "Before simplifying queen endgames, map every countercheck and the king's safe replies. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "defenderIdea": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "continuation": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "reflection": "Recall a1 and b8, the pawn on White h2, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e1",
+              "a1a2",
+              "e1a5",
+              "a3a5",
+              "b8c8"
+            ],
+            "explanation": "The opponent's queen can switch diagonals and check while the active queen is far away. Legally derived from original calc:p102-29; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8h5",
+              "a3d6",
+              "b8a8"
+            ],
+            "explanation": "One offensive check does not neutralize the enemy queen; respond to real checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-29",
+        "family": "Queen counterchecks and survival",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "defenderResource": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "decisionQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "structure": "White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White h2.",
+        "transferQuestion": "Stage 2: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: Can the king escape an opponent's diagonal check without surrendering the queen's defense? In this specific position with kings on a1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The opponent's queen can switch diagonals and check while the active queen is far away. The authored five-ply example is e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8 on the board, then substitute the resisting defender route e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Resisting authored line: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. The opponent's queen can switch diagonals and check while the active queen is far away. Before simplifying queen endgames, map every countercheck and the king's safe replies. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→h5 · a3→d6 · b8→a8 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→h5 · a3→d6 · b8→a8. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes White h2. The opponent's queen can switch diagonals and check while the active queen is far away. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-27",
+      "source": "authored",
+      "sourceLabel": "P112 · Queen counterchecks and survival · calc:p102-30",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Queen counterchecks and survival — Revise and transfer",
+      "prompt": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. The opponent's queen can switch diagonals and check while the active queen is far away. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "1k2q3/6p1/8/8/8/Q7/8/K7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8e1",
+      "principalVariation": [
+        "e8e1",
+        "a1a2",
+        "e1e4",
+        "a3d6",
+        "b8a8"
+      ],
+      "explanation": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. The opponent's queen can switch diagonals and check while the active queen is far away. Principal legal reference: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Alternate defense: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Alternative start: e8→h5 · a3→d6 · b8→a8. One offensive check does not neutralize the enemy queen; respond to real checks. The board is a 180° color-reversed educational transformation of original calc:p102-30, not the original exact game's win/draw claim.",
+      "replyReason": "After e8e1, the recorded response a1→a2 forces a new decision. The opponent's queen can switch diagonals and check while the active queen is far away.",
+      "continuationReason": "Before simplifying queen endgames, map every countercheck and the king's safe replies. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "defenderIdea": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "continuation": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "reflection": "Recall a1 and b8, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "e8e1",
+              "a1a2",
+              "e1a5",
+              "a3a5",
+              "b8c8"
+            ],
+            "explanation": "The opponent's queen can switch diagonals and check while the active queen is far away. Legally derived from original calc:p102-30; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "e8h5",
+              "a3d6",
+              "b8a8"
+            ],
+            "explanation": "One offensive check does not neutralize the enemy queen; respond to real checks. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-30",
+        "family": "Queen counterchecks and survival",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "Before simplifying queen endgames, map every countercheck and the king's safe replies.",
+        "defenderResource": "The opponent's queen can switch diagonals and check while the active queen is far away.",
+        "misconception": "One offensive check does not neutralize the enemy queen; respond to real checks.",
+        "decisionQuestion": "Can the king escape an opponent's diagonal check without surrendering the queen's defense?",
+        "structure": "White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black g7.",
+        "transferQuestion": "Stage 3: after a1→a2, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: Can the king escape an opponent's diagonal check without surrendering the queen's defense? In this specific position with kings on a1/b8, name the first improvement and why the opponent could answer a1→a2.",
+            "answer": "Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. The opponent's queen can switch diagonals and check while the active queen is far away. The authored five-ply example is e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. The second move a1→a2 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8 on the board, then substitute the resisting defender route e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: e8→e1 · a1→a2 · e1→e4 · a3→d6 · b8→a8. Resisting authored line: e8→e1 · a1→a2 · e1→a5 · a3→a5 · b8→c8. The opponent's queen can switch diagonals and check while the active queen is far away. Before simplifying queen endgames, map every countercheck and the king's safe replies. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers e8→h5 · a3→d6 · b8→a8 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: e8→h5 · a3→d6 · b8→a8. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. Before simplifying queen endgames, map every countercheck and the king's safe replies. White's king is on a1; Black's king is on b8. The pawn inventory visible from the board includes Black g7. The opponent's queen can switch diagonals and check while the active queen is far away. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "One offensive check does not neutralize the enemy queen; respond to real checks. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-28",
+      "source": "authored",
+      "sourceLabel": "P112 · Both pawns queen: revise the plan · calc:p102-34",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Both pawns queen: revise the plan — Identify the decision",
+      "prompt": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black g7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/3k2p1/P7/8/8/5p2/K7/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f3f2",
+      "principalVariation": [
+        "f3f2",
+        "a6a7",
+        "f2f1q",
+        "a7a8q",
+        "f1f4"
+      ],
+      "explanation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black g7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. Principal legal reference: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Alternate defense: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Alternative start: d7→e6 · a6→a7 · f3→f2. Two promoted queens do not establish a win or draw until checks and stalemate are counted. The board is a 180° color-reversed educational transformation of original calc:p102-34, not the original exact game's win/draw claim.",
+      "replyReason": "After f3f2, the recorded response a6→a7 forces a new decision. The defender also promotes; the first queen move may meet a new checking resource.",
+      "continuationReason": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "defenderIdea": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "continuation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "reflection": "Recall a2 and d7, the pawn on Black g7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f3f2",
+              "a6a7",
+              "f2f1q",
+              "a7a8q",
+              "f1f6"
+            ],
+            "explanation": "The defender also promotes; the first queen move may meet a new checking resource. Legally derived from original calc:p102-34; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "d7e6",
+              "a6a7",
+              "f3f2"
+            ],
+            "explanation": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-34",
+        "family": "Both pawns queen: revise the plan",
+        "stage": 1,
+        "stageCount": 3,
+        "mainPlan": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "defenderResource": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "decisionQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "structure": "White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black g7, White a6, Black f3.",
+        "transferQuestion": "Stage 1: after a6→a7, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 1: After both promotions, which queen move retains checking distance and limits counterchecks? In this specific position with kings on a2/d7, name the first improvement and why the opponent could answer a6→a7.",
+            "answer": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black g7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. The authored five-ply example is f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. The second move a6→a7 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4 on the board, then substitute the resisting defender route f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Resisting authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. The defender also promotes; the first queen move may meet a new checking resource. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers d7→e6 · a6→a7 · f3→f2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: d7→e6 · a6→a7 · f3→f2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black g7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-29",
+      "source": "authored",
+      "sourceLabel": "P112 · Both pawns queen: revise the plan · calc:p102-35",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Both pawns queen: revise the plan — Test active resistance",
+      "prompt": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes White a6, Black f3, White h2. The defender also promotes; the first queen move may meet a new checking resource. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/3k4/P7/8/8/5p2/K6P/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f3f2",
+      "principalVariation": [
+        "f3f2",
+        "a6a7",
+        "f2f1q",
+        "a7a8q",
+        "f1f4"
+      ],
+      "explanation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes White a6, Black f3, White h2. The defender also promotes; the first queen move may meet a new checking resource. Principal legal reference: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Alternate defense: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Alternative start: d7→e6 · a6→a7 · f3→f2. Two promoted queens do not establish a win or draw until checks and stalemate are counted. The board is a 180° color-reversed educational transformation of original calc:p102-35, not the original exact game's win/draw claim.",
+      "replyReason": "After f3f2, the recorded response a6→a7 forces a new decision. The defender also promotes; the first queen move may meet a new checking resource.",
+      "continuationReason": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "defenderIdea": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "continuation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "reflection": "Recall a2 and d7, the pawn on White a6, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f3f2",
+              "a6a7",
+              "f2f1q",
+              "a7a8q",
+              "f1f6"
+            ],
+            "explanation": "The defender also promotes; the first queen move may meet a new checking resource. Legally derived from original calc:p102-35; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "d7e6",
+              "a6a7",
+              "f3f2"
+            ],
+            "explanation": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-35",
+        "family": "Both pawns queen: revise the plan",
+        "stage": 2,
+        "stageCount": 3,
+        "mainPlan": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "defenderResource": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "decisionQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "structure": "White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes White a6, Black f3, White h2.",
+        "transferQuestion": "Stage 2: after a6→a7, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 2: After both promotions, which queen move retains checking distance and limits counterchecks? In this specific position with kings on a2/d7, name the first improvement and why the opponent could answer a6→a7.",
+            "answer": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes White a6, Black f3, White h2. The defender also promotes; the first queen move may meet a new checking resource. The authored five-ply example is f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. The second move a6→a7 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4 on the board, then substitute the resisting defender route f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Resisting authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. The defender also promotes; the first queen move may meet a new checking resource. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers d7→e6 · a6→a7 · f3→f2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: d7→e6 · a6→a7 · f3→f2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes White a6, Black f3, White h2. The defender also promotes; the first queen move may meet a new checking resource. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p112-30",
+      "source": "authored",
+      "sourceLabel": "P112 · Both pawns queen: revise the plan · calc:p102-36",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.move-order",
+        "endgames.rook-activity"
+      ],
+      "title": "Both pawns queen: revise the plan — Revise and transfer",
+      "prompt": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black e7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. In this third-party-independent teaching scenario, work through a legal five-ply decision chain, then compare an unwilling opponent's route before asserting any result.",
+      "fen": "8/3kp3/P7/8/8/5p2/K7/8 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f3f2",
+      "principalVariation": [
+        "f3f2",
+        "a6a7",
+        "f2f1q",
+        "a7a8q",
+        "f1f4"
+      ],
+      "explanation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black e7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. Principal legal reference: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Alternate defense: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Alternative start: d7→e6 · a6→a7 · f3→f2. Two promoted queens do not establish a win or draw until checks and stalemate are counted. The board is a 180° color-reversed educational transformation of original calc:p102-36, not the original exact game's win/draw claim.",
+      "replyReason": "After f3f2, the recorded response a6→a7 forces a new decision. The defender also promotes; the first queen move may meet a new checking resource.",
+      "continuationReason": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Revisit the position after the third, fourth and fifth plies; do not award any conversion grade.",
+      "defensiveStudy": {
+        "keyQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "defenderIdea": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "continuation": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "reflection": "Recall a2 and d7, the pawn on Black e7, then compare why the opponent could refuse the proposed simplification.",
+        "variations": [
+          {
+            "label": "Active defensive reply · authored 5-ply source",
+            "moves": [
+              "f3f2",
+              "a6a7",
+              "f2f1q",
+              "a7a8q",
+              "f1f6"
+            ],
+            "explanation": "The defender also promotes; the first queen move may meet a new checking resource. Legally derived from original calc:p102-36; not a verified unique best defense."
+          },
+          {
+            "label": "Change of plan · authored first 3 plies, exploratory thereafter",
+            "moves": [
+              "d7e6",
+              "a6a7",
+              "f3f2"
+            ],
+            "explanation": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Three-ply source start only; later steps are chess.js-legal exploration, not approved optimal play."
+          }
+        ]
+      },
+      "endgameDecisionStudy": {
+        "sourceId": "calc:p102-36",
+        "family": "Both pawns queen: revise the plan",
+        "stage": 3,
+        "stageCount": 3,
+        "mainPlan": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations.",
+        "defenderResource": "The defender also promotes; the first queen move may meet a new checking resource.",
+        "misconception": "Two promoted queens do not establish a win or draw until checks and stalemate are counted.",
+        "decisionQuestion": "After both promotions, which queen move retains checking distance and limits counterchecks?",
+        "structure": "White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black e7, White a6, Black f3.",
+        "transferQuestion": "Stage 3: after a6→a7, what would make you keep or change the plan?",
+        "proofStatus": "Legal transformed source examples, no verified tablebase or forced result",
+        "exercises": [
+          {
+            "prompt": "Stage 3: After both promotions, which queen move retains checking distance and limits counterchecks? In this specific position with kings on a2/d7, name the first improvement and why the opponent could answer a6→a7.",
+            "answer": "When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black e7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. The authored five-ply example is f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. The second move a6→a7 changes the contact squares; after it, check legal captures and whether the initially desired exchange still improves the surviving pieces. No engine or tablebase result is asserted.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Reconstruct the king squares and the actual pawn route rather than explaining an unrelated generic endgame."
+          },
+          {
+            "prompt": "Compute the principal line f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4 on the board, then substitute the resisting defender route f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. Which piece or pawn must change its job after ply four?",
+            "answer": "Main authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f4. Resisting authored line: f3→f2 · a6→a7 · f2→f1=Q · a7→a8=Q · f1→f6. The defender also promotes; the first queen move may meet a new checking resource. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. Do not call one continuation uniquely optimal; study the two distinct legal positions after the fourth ply and count future threats before trading.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. A move that appears active before an opponent's reply may lose its purpose after that reply."
+          },
+          {
+            "prompt": "Independent transfer: the side to move considers d7→e6 · a6→a7 · f3→f2 instead of the principal approach. Can the plan still be converted or held? Name an evidence gap before making any objective win/draw claim.",
+            "answer": "The original source gives this three-ply alternate start: d7→e6 · a6→a7 · f3→f2. Only the first three moves are authored. Any subsequent legal moves are explorative board-navigation examples. When both sides promote, stop assuming a simple pawn race and switch to queen-check calculations. White's king is on a2; Black's king is on d7. The pawn inventory visible from the board includes Black e7, White a6, Black f3. The defender also promotes; the first queen move may meet a new checking resource. A result would require genuine finished play, reliable tablebase verification or sufficiently grounded local engine evidence; legality alone cannot establish it.",
+            "repair": "Two promoted queens do not establish a win or draw until checks and stalemate are counted. Declaring a forced result from an attractive short line is not supported."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -10,10 +10,13 @@ interface Props {
 }
 
 export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry, onStart }: Props) {
-  const [defense, setDefense] = useState(true);
+  const [kind, setKind] = useState<"defense" | "strategy" | "endgame">("defense");
   const [choice, setChoice] = useState("");
-  const selectedItems = positions.filter(p => !!p.prophylaxisStudy === defense);
-  const theme = (p: CalculationPosition) => p.prophylaxisStudy?.theme ??
+  const group = (p: CalculationPosition) => p.endgameDecisionStudy ? "endgame" :
+    p.prophylaxisStudy ? "defense" : "strategy";
+  const selectedItems = positions.filter(p => group(p) === kind);
+  const theme = (p: CalculationPosition) => p.endgameDecisionStudy?.family ??
+    p.prophylaxisStudy?.theme ??
     p.strategicImbalanceStudy?.theme ?? "";
   const themes = [...new Set(selectedItems.map(theme))];
   const current = themes.includes(choice) ? choice : themes[0];
@@ -24,11 +27,10 @@ export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry
       <h2>Anticipate the opponent</h2>
       <p>Predict threats, calculate resistance, compare plans.</p>
       <div className="strategic-library-categories" role="group" aria-label="Study category">
-        {([true, false] as const).map(value => <button type="button" key={String(value)}
-          className={defense === value ? "selected" : ""} aria-pressed={defense === value}
-          onClick={() => { setDefense(value); setChoice(""); }}>
-          {value ? "Defense" : "Positional plans"} ({positions.filter(p =>
-            !!p.prophylaxisStudy === value).length})
+        {(["defense", "strategy", "endgame"] as const).map(value => <button type="button" key={value}
+          className={kind === value ? "selected" : ""} aria-pressed={kind === value}
+          onClick={() => { setKind(value); setChoice(""); }}>
+          {value === "defense" ? "Defense" : value === "strategy" ? "Positional plans" : "Endgame decisions"} ({positions.filter(p => group(p) === value).length})
         </button>)}
       </div>
       {current ? <>
@@ -40,8 +42,8 @@ export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry
         <div className="strategic-library-list">
           {visible.map((p, i) => <button type="button" key={p.id} onClick={() => onStart(p)}
             aria-label={`Open unscored study ${p.title}`}>
-            <span>Position {i + 1}</span><strong>{p.title}</strong>
-            <small>{p.prophylaxisStudy?.transferQuestion ??
+            <span>{p.endgameDecisionStudy ? `Stage ${p.endgameDecisionStudy.stage}/3` : `Position ${i + 1}`}</span><strong>{p.title}</strong>
+            <small>{p.endgameDecisionStudy?.transferQuestion ?? p.prophylaxisStudy?.transferQuestion ??
               p.strategicImbalanceStudy?.transferQuestion}</small>
           </button>)}
         </div>
