@@ -25,19 +25,19 @@ export function legalCalculationBranch(position:Pick<CalculationPosition,
 export function calculationMisconceptions(position:CalculationPosition,evidence:CalculationEvidence):string[]{
   const details:string[]=[];
   if(!evidence.selectedMoveScore)
-    details.push("Reconsider your first move.");
+    details.push("Recheck the move.");
   if(!evidence.replyScore)
-    details.push(`Opponent reply: ${position.replyReason ?? "Check defenses."}`);
+    details.push(`Opponent reply: ${position.replyReason ?? "Find a reply."}`);
   if(!evidence.continuationScore)
-    details.push(`Next move: ${position.continuationReason ?? "Reassess."}`);
+    details.push(`Next move: ${position.continuationReason ?? "Review."}`);
   if(position.defensiveStudy){
     details.push(`Error: ${position.defensiveStudy.misconception}`);
     for(const branch of position.defensiveStudy.variations){
       const line=legalCalculationBranch({...position,
         bestMove:branch.moves[0],principalVariation:branch.moves});
-      if(line)details.push(`Other: ${line.map(move=>move.san).join(" ")} — ${branch.explanation}`);
+      if(line)details.push(`Line: ${line.map(move=>move.san).join(" ")} — ${branch.explanation}`);
     }
     details.push(position.defensiveStudy.reflection);
   }
-  return details.length?details:["Try again unaided."];
+  return details.length?details:["Review unaided."];
 }
