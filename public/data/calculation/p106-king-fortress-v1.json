@@ -1264,7 +1264,7 @@
       }
     },
     {
-      "id": "calc:p106-16",
+      "id": "calc:p106-46",
       "title": "Wrong-bishop corner fortress — Pure wrong-bishop fortress",
       "source": "authored",
       "sourceLabel": "P106 · Fortress, stalemate and material surrender",
@@ -1347,7 +1347,7 @@
       }
     },
     {
-      "id": "calc:p106-17",
+      "id": "calc:p106-47",
       "title": "Wrong-bishop corner fortress — Extra a-pawn changes stalemate",
       "source": "authored",
       "sourceLabel": "P106 · Fortress, stalemate and material surrender",
@@ -1431,7 +1431,7 @@
       }
     },
     {
-      "id": "calc:p106-18",
+      "id": "calc:p106-48",
       "title": "Wrong-bishop corner fortress — Extra b-pawn permits a waiting move",
       "source": "authored",
       "sourceLabel": "P106 · Fortress, stalemate and material surrender",
