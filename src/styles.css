@@ -151,17 +151,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
 .placeholder .secondary { margin-top: 15px; }
 .mobile-nav { display: none; }
 
-.training-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(3,6,12,.75);
-  backdrop-filter: blur(14px);
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  z-index: 20;
-}
-
 .close-button {
   position: absolute;
   top: 18px;
@@ -217,7 +206,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   }
 
   .mobile-nav button.active { color: #aebcff; }
-  .training-overlay { padding: 0; align-items: end; }
 
   .training-actions .primary,
   .training-actions .secondary { flex: 1; }
@@ -722,22 +710,6 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   html:not([data-motion="full"]) .puzzle-loading svg {
     animation: none;
   }
-}
-
-.curriculum-practice {
-  min-height: 38px;
-  padding: 0 12px;
-  border-radius: 11px;
-  border: 1px solid rgba(87, 212, 155, .16);
-  background: rgba(87, 212, 155, .065);
-  color: #9ce2bf;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.curriculum-practice:hover {
-  background: rgba(87, 212, 155, .11);
 }
 
 @media (max-width: 420px) {
@@ -1981,10 +1953,6 @@ button {
   view-transition-name: chess-main;
 }
 
-.training-overlay {
-  animation: overlay-in var(--motion-standard) ease both;
-}
-
 .board-square {
   touch-action: manipulation;
 }
@@ -2338,10 +2306,6 @@ button {
     box-shadow: 0 16px 40px rgba(0,0,0,.16);
   }
 
-  .training-overlay {
-    overscroll-behavior: contain;
-  }
-
   .chess-board-wrap {
     padding: 6px;
     border-radius: 17px;
@@ -2582,9 +2546,7 @@ html[data-motion="reduced"] .dashboard-grid {
 }
 
 
-/* P12 — placement diagnostics, stage gates and course assessment */
-
-.home-placement-card,
+/* P12 — placement diagnostics,
 .placement-card {
   margin-bottom: 18px;
   padding: 16px 18px;
@@ -2598,8 +2560,6 @@ html[data-motion="reduced"] .dashboard-grid {
   gap: 14px;
   align-items: center;
 }
-
-.home-placement-icon,
 .placement-card-icon {
   width: 44px;
   height: 44px;
@@ -2610,43 +2570,19 @@ html[data-motion="reduced"] .dashboard-grid {
   background: rgba(118,151,255,.08);
   border: 1px solid rgba(118,151,255,.10);
 }
-
-.home-placement-card > div:nth-child(2),
 .placement-card > div:nth-child(2) {
   min-width: 0;
   display: grid;
   gap: 3px;
 }
-
-.home-placement-card strong,
 .placement-card strong {
   color: #d7dfef;
   font-size: 12px;
 }
-
-.home-placement-card span,
 .placement-card span {
   color: #77859e;
   font-size: 9px;
   line-height: 1.5;
-}
-
-.stage-gate-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.stage-gate-heading > div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stage-gate-heading > div > strong {
-  color: #aeb8ca;
-  font-size: 9px;
 }
 
 .gate-status {
@@ -2958,20 +2894,12 @@ html[data-motion="reduced"] .dashboard-grid {
 }
 
 @media (max-width: 720px) {
-  .home-placement-card,
   .placement-card {
     grid-template-columns: auto 1fr;
   }
-
-  .home-placement-card > button,
   .placement-card > button {
     grid-column: 2;
     width: fit-content;
-  }
-
-  .stage-gate-heading {
-    align-items: stretch;
-    flex-direction: column;
   }
 
   .assessment-runner {
@@ -3218,8 +3146,6 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
-
-.train-plan-strip span,
 .train-competition-summary span {
   color: #627188;
   font-size: 7px;
@@ -3227,8 +3153,6 @@ html[data-motion="reduced"] .dashboard-grid {
   text-transform: uppercase;
   letter-spacing: .055em;
 }
-
-.train-plan-strip strong,
 .train-competition-summary strong {
   overflow: hidden;
   color: #b8c3d3;
@@ -3236,14 +3160,10 @@ html[data-motion="reduced"] .dashboard-grid {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.planning-select-grid label,
 .planning-retrospective-notes label {
   display: grid;
   gap: 4px;
 }
-
-.planning-select-grid label > span,
 .planning-retrospective-notes label > span {
   color: #627188;
   font-size: 7px;
@@ -3251,9 +3171,6 @@ html[data-motion="reduced"] .dashboard-grid {
   text-transform: uppercase;
   letter-spacing: .055em;
 }
-
-.planning-select-grid select,
-.planning-select-grid input,
 .planning-retrospective-notes textarea {
   width: 100%;
   min-height: 33px;
@@ -3265,8 +3182,6 @@ html[data-motion="reduced"] .dashboard-grid {
   font: inherit;
   font-size: 8px;
 }
-
-.planning-toggle-grid label,
 .planning-competition-toggle {
   padding: 9px;
   border-radius: 10px;
@@ -3278,8 +3193,6 @@ html[data-motion="reduced"] .dashboard-grid {
   color: #8996aa;
   font-size: 8px;
 }
-
-.planning-toggle-grid input,
 .planning-competition-toggle input {
   margin-top: 1px;
   accent-color: #7799ff;
@@ -3294,10 +3207,6 @@ html[data-motion="reduced"] .dashboard-grid {
   .train-session-footer {
     display: grid;
   }
-
-  .planning-select-grid,
-  .planning-select-grid.competition,
-  .planning-toggle-grid,
   .planning-retrospective-notes {
     grid-template-columns: 1fr;
   }
@@ -5823,13 +5732,6 @@ summary:focus-visible,
   pointer-events: none;
 }
 
-.training-overlay {
-  padding: 16px;
-  background:
-    radial-gradient(circle at 50% 4%, rgba(86,105,190,.10), transparent 34rem),
-    rgba(3,6,12,.82);
-}
-
 .close-button {
   width: 44px;
   height: 44px;
@@ -5987,8 +5889,7 @@ summary:focus-visible,
   .back-link,
   .close-button,
   .experience-trigger,
-  .curriculum-start,
-  .curriculum-practice {
+  .curriculum-start{
     min-height: 48px;
   }
 
@@ -5999,35 +5900,6 @@ summary:focus-visible,
 }
 
 @media (max-width: 820px) {
-  .training-overlay {
-    padding: 0;
-    place-items: stretch;
-    background: #080d16;
-    backdrop-filter: none;
-  }
-
-  .immersive-training-sheet,
-  .training-sheet.immersive-training-sheet,
-  .adaptive-game-sheet.immersive-training-sheet,
-  .calculation-sheet.immersive-training-sheet,
-  .endgame-technique-sheet.immersive-training-sheet,
-  .model-game-sheet.immersive-training-sheet,
-  .assessment-sheet.immersive-training-sheet {
-    width: 100%;
-    height: 100dvh;
-    max-height: none;
-    min-height: 100dvh;
-    border: 0;
-    border-radius: 0;
-    padding:
-      max(18px, env(safe-area-inset-top))
-      12px
-      max(22px, env(safe-area-inset-bottom));
-    box-shadow: none;
-    background:
-      radial-gradient(circle at 78% -8%, rgba(118,151,255,.06), transparent 23rem),
-      #0b111d;
-  }
 
   .board-first-sheet .lesson-stage,
   .calculation-sheet .calculation-stage,
@@ -6066,12 +5938,6 @@ summary:focus-visible,
 
   .board-first-sheet .lesson-instruction {
     padding: 2px 2px 0;
-  }
-
-  .immersive-training-sheet .lesson-body,
-  .immersive-training-sheet .lesson-prompt {
-    font-size: 13px;
-    line-height: 1.58;
   }
 
   .calculation-stage-rail,
@@ -6150,16 +6016,6 @@ summary:focus-visible,
 }
 
 @media (max-width: 960px) and (orientation: landscape) and (max-height: 650px) {
-  .immersive-training-sheet,
-  .training-sheet.immersive-training-sheet {
-    height: 100dvh;
-    min-height: 100dvh;
-    padding:
-      max(8px, env(safe-area-inset-top))
-      max(10px, env(safe-area-inset-right))
-      max(8px, env(safe-area-inset-bottom))
-      max(10px, env(safe-area-inset-left));
-  }
 
   .board-first-sheet .lesson-stage,
   .calculation-sheet .calculation-stage {
@@ -6187,8 +6043,6 @@ summary:focus-visible,
     padding-right: 4px;
   }
 }
-
-html[data-motion="reduced"] .immersive-training-sheet,
 html[data-motion="reduced"] .board-square,
 html[data-motion="reduced"] .train-now-button {
   animation: none !important;
