@@ -15,8 +15,13 @@ import p101b from "../../public/data/calculation/p101-queen-practical-v1.json";
 import { legalCalculationBranch } from "./branchFeedback";
 import type { CalculationPosition } from "./types";
 
-const sources = [conversion, activity, defense, races, precision];
-const studies = sources.flatMap(s => s.positions) as CalculationPosition[];
+const studies = [
+  ...conversion.positions, ...activity.positions, ...defense.positions,
+  ...races.positions, ...precision.positions,
+] as CalculationPosition[];
+const sourceCounts = [conversion, activity, defense, races, precision].map(
+  s => s.positions.length,
+);
 const previous = new Set([
   ...p98.positions, ...p99a.positions, ...p99b.positions, ...p99c.positions,
   ...p100.positions, ...p101a.positions, ...p101b.positions,
@@ -24,7 +29,7 @@ const previous = new Set([
 
 describe("P102 original endgame conversion and practical resistance", () => {
   it("delivers 45 unique FENs across all five external learner-content files", () => {
-    expect(sources.map(s => s.positions.length)).toEqual([15, 9, 6, 9, 6]);
+    expect(sourceCounts).toEqual([15, 9, 6, 9, 6]);
     expect(studies).toHaveLength(45);
     expect(new Set(studies.map(p => p.id)).size).toBe(45);
     expect(new Set(studies.map(p => p.fen)).size).toBe(45);
