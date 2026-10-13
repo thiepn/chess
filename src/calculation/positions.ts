@@ -8,15 +8,18 @@ import type {
   CalculationPosition,
 } from "./types";
 
-// P94–P96 authored studies use native scoring and review; the large corpus stays static.
-let p94Positions: CalculationPosition[] = [];
-let p95Positions: CalculationPosition[] = [];
-let p96Positions: CalculationPosition[] = [];
+// Original authored calculation content stays in external static assets.
+const externalPositions: CalculationPosition[] = [];
 if (typeof window !== "undefined") {
   for (const [file, prefix, count] of [
     ["p94-candidates-v1.json", "calc:p94-", 40],
     ["p95-defensive-resistance-v1.json", "calc:p95-", 40],
     ["p96-quiet-positional-v1.json", "calc:p96-", 35],
+    ["p97-forcing-v1.json", "calc:p97-", 10],
+    ["p97-defenses-v1.json", "calc:p97-", 10],
+    ["p97-positional-v1.json", "calc:p97-", 10],
+    ["p97-promotions-v1.json", "calc:p97-", 10],
+    ["p97-mixed-v1.json", "calc:p97-", 10],
   ] as const) {
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
       .then(r => r.json())
@@ -27,10 +30,7 @@ if (typeof window !== "undefined") {
           p.defensiveStudy?.variations.every(v => legalCalculationBranch({
             ...p, bestMove: v.moves[0], principalVariation: v.moves,
           }))));
-        if (valid.length !== count) return;
-        if (prefix === "calc:p94-") p94Positions = valid;
-        else if (prefix === "calc:p95-") p95Positions = valid;
-        else p96Positions = valid;
+        if (valid.length === count) externalPositions.push(...valid);
       }).catch(() => {});
   }
 }
@@ -280,9 +280,7 @@ export function calculationCatalog(
 ) {
   return [
     ...personalPositions(state),
-    ...p96Positions,
-    ...p95Positions,
-    ...p94Positions,
+    ...externalPositions,
     ...authoredPositions,
   ];
 }
@@ -319,7 +317,7 @@ export function calculationPositionFor(
   }
 
   const authored =
-    [...p96Positions, ...p95Positions, ...p94Positions, ...authoredPositions]
+    [...externalPositions, ...authoredPositions]
       .filter(
         (position) =>
           position.skillIds.includes(
@@ -375,7 +373,7 @@ export function resolveCalculationPosition(
 
 // Use the same 3-ply legal-line authority as the interactive calculation runner.
 export function calculationCatalogIssues() {
-  return [...authoredPositions, ...p94Positions, ...p95Positions, ...p96Positions]
+  return [...authoredPositions, ...externalPositions]
     .filter(position => !legalCalculationBranch(position))
     .map(position => `${position.id}: invalid calculation line`);
 }
