@@ -24,7 +24,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
       "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
@@ -85,7 +85,8 @@
             "answer": "White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
             "feedback": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -108,7 +109,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
       "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
@@ -169,7 +170,8 @@
             "answer": "Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
             "feedback": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -192,7 +194,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
       "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
@@ -253,7 +255,8 @@
             "answer": "White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
             "feedback": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -276,7 +279,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "An e4 pawn behind c4/d4 can advance to e5 once the c-pawn trades on d5. Black can respond by bringing a bishop to b4; identify the rook and bishop squares it attacks. Position-specific plan: White's a2 is an eventual a-file lever; the central e5 pawn determines whether time exists for it. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bb4 pins an unprotected c1 bishop's future paths against the rook on e1. Bd2 blocks the diagonal, while ...Bxd2 is a concrete minor-piece exchange. Concrete context: White's a2 is an eventual a-file lever; the central e5 pawn determines whether time exists for it.",
@@ -337,7 +340,8 @@
             "answer": "White's a2 is an eventual a-file lever; the central e5 pawn determines whether time exists for it.",
             "feedback": "Blindly pushing c5 can leave d4 without leverage while Black completes ...Be7; compare structure, not merely advance distance."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -360,7 +364,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "An e4 pawn behind c4/d4 can advance to e5 once the c-pawn trades on d5. Black can respond by bringing a bishop to b4; identify the rook and bishop squares it attacks. Position-specific plan: Black's g7 pawn improves king-side safety and permits a longer fight over e5 and d4. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bb4 pins an unprotected c1 bishop's future paths against the rook on e1. Bd2 blocks the diagonal, while ...Bxd2 is a concrete minor-piece exchange. Concrete context: Black's g7 pawn improves king-side safety and permits a longer fight over e5 and d4.",
@@ -421,7 +425,8 @@
             "answer": "Black's g7 pawn improves king-side safety and permits a longer fight over e5 and d4.",
             "feedback": "Blindly pushing c5 can leave d4 without leverage while Black completes ...Be7; compare structure, not merely advance distance."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -444,7 +449,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "pawns.passed"
       ],
       "prompt": "White can create an advanced d-pawn by cxd5 while Black recaptures on d4, or create a c-pawn by dxc5. Trace whose rook can reach the seventh rank to stop promotion. Position-specific plan: White's a-pawn may become a second passer but also limits the freedom of White's rook on a1. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...cxd4 and ...dxc4 are accurate defensive countercaptures. The black a8 rook can reach a7 and potentially capture an advanced pawn on the seventh rank. Concrete context: White's a-pawn may become a second passer but also limits the freedom of White's rook on a1.",
@@ -505,7 +510,8 @@
             "answer": "White's a-pawn may become a second passer but also limits the freedom of White's rook on a1.",
             "feedback": "Spending a tempo on Kh2 while an advanced passer requires d6 may permit the rook to attack the pawn from a7."
           }
-        ]
+        ],
+        "learningFocus": "pawns.passed"
       }
     },
     {
@@ -528,7 +534,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "pawns.passed"
       ],
       "prompt": "White can create an advanced d-pawn by cxd5 while Black recaptures on d4, or create a c-pawn by dxc5. Trace whose rook can reach the seventh rank to stop promotion. Position-specific plan: Black h7 provides a distant race and can distract the white king from supporting d7. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...cxd4 and ...dxc4 are accurate defensive countercaptures. The black a8 rook can reach a7 and potentially capture an advanced pawn on the seventh rank. Concrete context: Black h7 provides a distant race and can distract the white king from supporting d7.",
@@ -589,7 +595,8 @@
             "answer": "Black h7 provides a distant race and can distract the white king from supporting d7.",
             "feedback": "Spending a tempo on Kh2 while an advanced passer requires d6 may permit the rook to attack the pawn from a7."
           }
-        ]
+        ],
+        "learningFocus": "pawns.passed"
       }
     },
     {
@@ -612,7 +619,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "pawns.passed"
       ],
       "prompt": "White can create an advanced d-pawn by cxd5 while Black recaptures on d4, or create a c-pawn by dxc5. Trace whose rook can reach the seventh rank to stop promotion. Position-specific plan: White's b2 pawn offers another majority lever while the opposing rook prepares ...Ra7. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...cxd4 and ...dxc4 are accurate defensive countercaptures. The black a8 rook can reach a7 and potentially capture an advanced pawn on the seventh rank. Concrete context: White's b2 pawn offers another majority lever while the opposing rook prepares ...Ra7.",
@@ -673,7 +680,8 @@
             "answer": "White's b2 pawn offers another majority lever while the opposing rook prepares ...Ra7.",
             "feedback": "Spending a tempo on Kh2 while an advanced passer requires d6 may permit the rook to attack the pawn from a7."
           }
-        ]
+        ],
+        "learningFocus": "pawns.passed"
       }
     },
     {
@@ -696,7 +704,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "pawns.passed"
       ],
       "prompt": "White's pawn pair b4/a5 can produce a b6 pawn, but Black's rook on b8 may capture it. Compare immediate b5 and immediate axb6 against the rook's open-file defense. Position-specific plan: White's h2 pawn offers a safe king route while the rook b8 continues to attack its advanced passer. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...axb5 ...Rxb6 remove the advanced white pawn in the first line; in the alternative ...a5–a4 allows White b7, which still faces a rook on b8. Concrete context: White's h2 pawn offers a safe king route while the rook b8 continues to attack its advanced passer.",
@@ -757,7 +765,8 @@
             "answer": "White's h2 pawn offers a safe king route while the rook b8 continues to attack its advanced passer.",
             "feedback": "Calling 3.axb6 a breakthrough without calculating ...Rxb6 counts a pawn that does not survive."
           }
-        ]
+        ],
+        "learningFocus": "pawns.passed"
       }
     },
     {
@@ -780,7 +789,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "pawns.passed"
       ],
       "prompt": "White's pawn pair b4/a5 can produce a b6 pawn, but Black's rook on b8 may capture it. Compare immediate b5 and immediate axb6 against the rook's open-file defense. Position-specific plan: Black's g7 pawn supplies counterplay if White's king travels to the queenside. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...axb5 ...Rxb6 remove the advanced white pawn in the first line; in the alternative ...a5–a4 allows White b7, which still faces a rook on b8. Concrete context: Black's g7 pawn supplies counterplay if White's king travels to the queenside.",
@@ -841,7 +850,8 @@
             "answer": "Black's g7 pawn supplies counterplay if White's king travels to the queenside.",
             "feedback": "Calling 3.axb6 a breakthrough without calculating ...Rxb6 counts a pawn that does not survive."
           }
-        ]
+        ],
+        "learningFocus": "pawns.passed"
       }
     },
     {
@@ -864,7 +874,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White's dark-square bishop c1 is obstructed by its own pawn on e3 if it tries Bf4. Find Bd2–a5 instead; Black can reposition its matching bishop to b5 or c6. Position-specific plan: A white a-pawn could challenge Black's a-file access, but the important restricted bishop route is via d2. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bd7 followed by ...Bb5 challenges queenside bishop targets. White's pawn break e4 may open a new diagonal but also allows ...dxe4. Concrete context: A white a-pawn could challenge Black's a-file access, but the important restricted bishop route is via d2.",
@@ -925,7 +935,8 @@
             "answer": "A white a-pawn could challenge Black's a-file access, but the important restricted bishop route is via d2.",
             "feedback": "A nominally bad bishop is not lost; however e4 before checking ...dxe4 can destroy a useful pawn base."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -948,7 +959,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White's dark-square bishop c1 is obstructed by its own pawn on e3 if it tries Bf4. Find Bd2–a5 instead; Black can reposition its matching bishop to b5 or c6. Position-specific plan: Black g7 can support a kingside pawn break, making long-term dark-square weaknesses more important. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bd7 followed by ...Bb5 challenges queenside bishop targets. White's pawn break e4 may open a new diagonal but also allows ...dxe4. Concrete context: Black g7 can support a kingside pawn break, making long-term dark-square weaknesses more important.",
@@ -1009,7 +1020,8 @@
             "answer": "Black g7 can support a kingside pawn break, making long-term dark-square weaknesses more important.",
             "feedback": "A nominally bad bishop is not lost; however e4 before checking ...dxe4 can destroy a useful pawn base."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1032,7 +1044,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White's dark-square bishop c1 is obstructed by its own pawn on e3 if it tries Bf4. Find Bd2–a5 instead; Black can reposition its matching bishop to b5 or c6. Position-specific plan: White b2 supports a3/c3 squares and may prevent Black's bishop from occupying a5 without consequences. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bd7 followed by ...Bb5 challenges queenside bishop targets. White's pawn break e4 may open a new diagonal but also allows ...dxe4. Concrete context: White b2 supports a3/c3 squares and may prevent Black's bishop from occupying a5 without consequences.",
@@ -1093,7 +1105,8 @@
             "answer": "White b2 supports a3/c3 squares and may prevent Black's bishop from occupying a5 without consequences.",
             "feedback": "A nominally bad bishop is not lost; however e4 before checking ...dxe4 can destroy a useful pawn base."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1116,7 +1129,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White's pawn chain e3/d4 points toward the queenside. Place the light-squared bishop at d3 or c2 while weighing e3–e4 and its ...dxe4 reply. Position-specific plan: An a2 pawn becomes part of the queenside chain; king infiltration on c4/b4 may matter later. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bd6 keeps Black's bishop active and contests b4/e5. ...dxe4 answers an early pawn break by changing the center immediately. Concrete context: An a2 pawn becomes part of the queenside chain; king infiltration on c4/b4 may matter later.",
@@ -1177,7 +1190,8 @@
             "answer": "An a2 pawn becomes part of the queenside chain; king infiltration on c4/b4 may matter later.",
             "feedback": "The mere appearance of a free bishop diagonal does not prove e4 safe after ...dxe4; count whose pawn survives."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1200,7 +1214,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White's pawn chain e3/d4 points toward the queenside. Place the light-squared bishop at d3 or c2 while weighing e3–e4 and its ...dxe4 reply. Position-specific plan: Black g7 increases potential dark-square targets and gives the defending bishop extra long-diagonal scope. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Bd6 keeps Black's bishop active and contests b4/e5. ...dxe4 answers an early pawn break by changing the center immediately. Concrete context: Black g7 increases potential dark-square targets and gives the defending bishop extra long-diagonal scope.",
@@ -1261,7 +1275,8 @@
             "answer": "Black g7 increases potential dark-square targets and gives the defending bishop extra long-diagonal scope.",
             "feedback": "The mere appearance of a free bishop diagonal does not prove e4 safe after ...dxe4; count whose pawn survives."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1284,7 +1299,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "After e4–e5, White gains forward squares, but Black can move the knight and later play ...dxe5. Place the knight on g5 and calculate the central recapture. Position-specific plan: White a2 can become an outside majority lever but should not take attention from the immediate d-file exchange. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Nd7 avoids the e5 space gain, and ...dxe5 breaks the pawn wedge rather than conceding permanent control. Concrete context: White a2 can become an outside majority lever but should not take attention from the immediate d-file exchange.",
@@ -1345,7 +1360,8 @@
             "answer": "White a2 can become an outside majority lever but should not take attention from the immediate d-file exchange.",
             "feedback": "Nf3–e5 before advancing the pawn allows ...dxe5 to capture the knight, an actual material-losing move order."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1368,7 +1384,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "After e4–e5, White gains forward squares, but Black can move the knight and later play ...dxe5. Place the knight on g5 and calculate the central recapture. Position-specific plan: Black g7 supports a possible ...g6 while its knight searches for f5 and e4 squares. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Nd7 avoids the e5 space gain, and ...dxe5 breaks the pawn wedge rather than conceding permanent control. Concrete context: Black g7 supports a possible ...g6 while its knight searches for f5 and e4 squares.",
@@ -1429,7 +1445,8 @@
             "answer": "Black g7 supports a possible ...g6 while its knight searches for f5 and e4 squares.",
             "feedback": "Nf3–e5 before advancing the pawn allows ...dxe5 to capture the knight, an actual material-losing move order."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1452,7 +1469,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "After e4–e5, White gains forward squares, but Black can move the knight and later play ...dxe5. Place the knight on g5 and calculate the central recapture. Position-specific plan: White b2 stabilizes the queenside while the extended e5/d4 pawn chain is challenged. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...Nd7 avoids the e5 space gain, and ...dxe5 breaks the pawn wedge rather than conceding permanent control. Concrete context: White b2 stabilizes the queenside while the extended e5/d4 pawn chain is challenged.",
@@ -1513,7 +1530,8 @@
             "answer": "White b2 stabilizes the queenside while the extended e5/d4 pawn chain is challenged.",
             "feedback": "Nf3–e5 before advancing the pawn allows ...dxe5 to capture the knight, an actual material-losing move order."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1536,7 +1554,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White may trade Nxd5 ...exd5 cxd5 ...Nxd5 Bxd5, or cxd5 followed by Nb5 and Be4. Count the bishop's access to d5 after the center clears. Position-specific plan: The white a-pawn is a long-term file asset after the center clears. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...exd5 and ...Nxd5 require White to calculate material to the final bishop recapture. Black can use ...Ne4 as an alternative initiative. Concrete context: The white a-pawn is a long-term file asset after the center clears.",
@@ -1597,7 +1615,8 @@
             "answer": "The white a-pawn is a long-term file asset after the center clears.",
             "feedback": "If White plays Nxd5 exd5 Bxd5 without first clearing c4, a knight has been traded for a pawn, and the resulting long-term structure is unclear."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1620,7 +1639,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "White may trade Nxd5 ...exd5 cxd5 ...Nxd5 Bxd5, or cxd5 followed by Nb5 and Be4. Count the bishop's access to d5 after the center clears. Position-specific plan: Black g7 offers shelter while minor pieces exchange in the center. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...exd5 and ...Nxd5 require White to calculate material to the final bishop recapture. Black can use ...Ne4 as an alternative initiative. Concrete context: Black g7 offers shelter while minor pieces exchange in the center.",
@@ -1681,7 +1700,8 @@
             "answer": "Black g7 offers shelter while minor pieces exchange in the center.",
             "feedback": "If White plays Nxd5 exd5 Bxd5 without first clearing c4, a knight has been traded for a pawn, and the resulting long-term structure is unclear."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1704,7 +1724,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "White must choose between the center e5 break and a slower f4–f5 lever. Black can capture e5 with d6 or answer f5 with ...g6; count the surviving pawn after each line. Position-specific plan: An a2 pawn remains available while White must use the correct central or kingside lever. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...dxe5, ...f6 and ...g6 create different contacts. In the e5 line Black can still recapture on f6 with its g-pawn next turn. Concrete context: An a2 pawn remains available while White must use the correct central or kingside lever.",
@@ -1765,7 +1785,8 @@
             "answer": "An a2 pawn remains available while White must use the correct central or kingside lever.",
             "feedback": "d5 exd5 exd5 is a legal exchange, but it trades center space without first placing a rook on the newly open file."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -1788,7 +1809,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "White must choose between the center e5 break and a slower f4–f5 lever. Black can capture e5 with d6 or answer f5 with ...g6; count the surviving pawn after each line. Position-specific plan: The h7 pawn gives Black a second recapture or hook in a later kingside pawn storm. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...dxe5, ...f6 and ...g6 create different contacts. In the e5 line Black can still recapture on f6 with its g-pawn next turn. Concrete context: The h7 pawn gives Black a second recapture or hook in a later kingside pawn storm.",
@@ -1849,7 +1870,8 @@
             "answer": "The h7 pawn gives Black a second recapture or hook in a later kingside pawn storm.",
             "feedback": "d5 exd5 exd5 is a legal exchange, but it trades center space without first placing a rook on the newly open file."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -1872,7 +1894,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "White must choose between the center e5 break and a slower f4–f5 lever. Black can capture e5 with d6 or answer f5 with ...g6; count the surviving pawn after each line. Position-specific plan: White's c2 pawn can support d4 after a break but can also become a backward target when the d-file opens. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...dxe5, ...f6 and ...g6 create different contacts. In the e5 line Black can still recapture on f6 with its g-pawn next turn. Concrete context: White's c2 pawn can support d4 after a break but can also become a backward target when the d-file opens.",
@@ -1933,7 +1955,8 @@
             "answer": "White's c2 pawn can support d4 after a break but can also become a backward target when the d-file opens.",
             "feedback": "d5 exd5 exd5 is a legal exchange, but it trades center space without first placing a rook on the newly open file."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -1956,7 +1979,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "The f4–f5 break asks Black whether ...exf5 permits e4xf5, then ...Ne4 challenges White's king and central squares. Compare e5 and a premature c5 donation. Position-specific plan: White's a-pawn remains an outside plan only after the center has stabilized. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...exf5 opens the e-pawn's access to f5 and ...Ne4 seeks an advanced knight post; ...dxe5 in the alternative changes which pawn can recapture. Concrete context: White's a-pawn remains an outside plan only after the center has stabilized.",
@@ -2017,7 +2040,8 @@
             "answer": "White's a-pawn remains an outside plan only after the center has stabilized.",
             "feedback": "c5? dxc5 lets Black win White's c-pawn without producing the same supported f5 break."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     },
     {
@@ -2040,7 +2064,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.forcing-lines"
       ],
       "prompt": "The f4–f5 break asks Black whether ...exf5 permits e4xf5, then ...Ne4 challenges White's king and central squares. Compare e5 and a premature c5 donation. Position-specific plan: An added black g7 pawn makes the f5 break more tactical because g-pawn recaptures may be available later. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
       "replyReason": "...exf5 opens the e-pawn's access to f5 and ...Ne4 seeks an advanced knight post; ...dxe5 in the alternative changes which pawn can recapture. Concrete context: An added black g7 pawn makes the f5 break more tactical because g-pawn recaptures may be available later.",
@@ -2101,7 +2125,8 @@
             "answer": "An added black g7 pawn makes the f5 break more tactical because g-pawn recaptures may be available later.",
             "feedback": "c5? dxc5 lets Black win White's c-pawn without producing the same supported f5 break."
           }
-        ]
+        ],
+        "learningFocus": "calculation.forcing-lines"
       }
     }
   ]
