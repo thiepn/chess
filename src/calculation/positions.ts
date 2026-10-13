@@ -9,22 +9,18 @@ import type {
   CalculationPosition,
 } from "./types";
 
-// Original P94 instructional JSON stays outside the JS/CSS performance budget.
-// Chess legality uses the existing runner's authoritative line verifier.
+// P94 adds original content, but no new engine or compiled lesson bundle.
 let p94Positions: CalculationPosition[] = [];
-if (typeof window !== "undefined" && typeof fetch === "function") {
+if (typeof window !== "undefined") {
   void fetch(`${import.meta.env.BASE_URL}data/calculation/p94-candidates-v1.json`)
-    .then(response => response.ok ? response.json() : null)
-    .then((data: { positions?: CalculationPosition[] } | null) => {
-      const list = data?.positions;
-      if (list?.length === 40 &&
-        new Set(list.map(item => item.id)).size === 40 &&
-        list.every(item => item.id.startsWith("calc:p94-") &&
-          item.source === "authored" &&
-          item.skillIds?.includes("calculation.candidates") &&
-          legalCalculationBranch(item))) p94Positions = list;
-    })
-    .catch(() => { /* Previous authored exercises remain available offline. */ });
+    .then(response => response.json())
+    .then((data: { positions?: CalculationPosition[] }) => {
+      const positions = data?.positions;
+      if (positions?.length === 40 && positions.every(position =>
+        position.id?.startsWith("calc:p94-") &&
+        position.source === "authored" &&
+        legalCalculationBranch(position))) p94Positions = positions;
+    }).catch(() => {});
 }
 
 const authoredPositions: CalculationPosition[] = [
