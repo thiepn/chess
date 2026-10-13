@@ -1162,7 +1162,7 @@
     {
       "id": "calc:p95-36",
       "title": "Simplify and keep the rook active",
-      "fen": "4k3/8/8/8/8/8/7p/3R2K1 w - - 0 1",
+      "fen": "4k3/8/8/8/8/8/7p/3R1K2 w - - 0 1",
       "playerColor": "w",
       "bestMove": "d1d8",
       "principalVariation": [
