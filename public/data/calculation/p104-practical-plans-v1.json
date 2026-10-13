@@ -274,12 +274,12 @@
       "prompt": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Variation: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. Context: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
       "continuationReason": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. The e5 square already holds a black pawn. The legal competing plan is a5 rook lift, which can squander time instead of guarding e4.",
       "defensiveStudy": {
         "keyQuestion": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook.",
         "defenderIdea": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
         "continuation": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
         "variations": [
           {
@@ -296,11 +296,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "a1a5",
+              "h8h6",
               "c1e3"
             ],
-            "explanation": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Calculate e4e5 d6e5 c1e3 before accepting it as positional progress. The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn."
+            "explanation": "Ra5 is legal but has no immediate target, and ...Rh6 activates Black before the bishop reaches e3. The e5 square is occupied by a black pawn, so White cannot push e4–e5 until that blocker is removed."
           }
         ]
       },
@@ -309,7 +309,7 @@
         "principle": "Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square.",
         "planContrast": "Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares.",
         "defenderPlan": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "variant": "queenside hook",
         "context": "The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
         "practice": [
@@ -356,12 +356,12 @@
       "prompt": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Variation: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. Context: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
       "continuationReason": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. The e5 square already holds a black pawn. The legal competing plan is a5 rook lift, which can squander time instead of guarding e4.",
       "defensiveStudy": {
         "keyQuestion": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook.",
         "defenderIdea": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
         "continuation": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
         "variations": [
           {
@@ -378,11 +378,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "a1a5",
+              "h8h6",
               "c1e3"
             ],
-            "explanation": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Calculate e4e5 d6e5 c1e3 before accepting it as positional progress. White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack."
+            "explanation": "Ra5 is legal but has no immediate target, and ...Rh6 activates Black before the bishop reaches e3. The e5 square is occupied by a black pawn, so White cannot push e4–e5 until that blocker is removed."
           }
         ]
       },
@@ -391,7 +391,7 @@
         "principle": "Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square.",
         "planContrast": "Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares.",
         "defenderPlan": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "variant": "king-safe regrouping",
         "context": "White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
         "practice": [
@@ -438,12 +438,12 @@
       "prompt": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Variation: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. Context: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
       "continuationReason": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Prophylaxis before expansion. Strategy: Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square. Exercise situation: The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook. Five-ply reference: c1e3 h8h6 e3d2 h6h5 a1a4. Five-ply alternative: a1a3 h8h6 c1e3 h6h5 a3c3. Plausible failed plan: e4e5 d6e5 c1e3. Exact resistance: ...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture. What the endpoint proves: The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain. Repair: A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Why plans differ: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Variant: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. The e5 square already holds a black pawn. The legal competing plan is a5 rook lift, which can squander time instead of guarding e4.",
       "defensiveStudy": {
         "keyQuestion": "The bishop on c1 can cover a broad light-squared approach through e3 and d2 while the rook prepares a fourth-rank lift. Compare this with advancing e4 before Black has committed its h-rook.",
         "defenderIdea": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
         "continuation": "The bishop reaches d2 and the rook a4 in the main line. This limits Black's freely available attacking files without proving a direct material gain.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares. Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
         "variations": [
           {
@@ -460,11 +460,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "a1a5",
+              "h8h6",
               "c1e3"
             ],
-            "explanation": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook. Calculate e4e5 d6e5 c1e3 before accepting it as positional progress. Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo."
+            "explanation": "Ra5 is legal but has no immediate target, and ...Rh6 activates Black before the bishop reaches e3. The e5 square is occupied by a black pawn, so White cannot push e4–e5 until that blocker is removed."
           }
         ]
       },
@@ -473,7 +473,7 @@
         "principle": "Prophylaxis means anticipating a threat, not wasting a move: the bishop route and rook lift must each deny a concrete enemy entry square.",
         "planContrast": "Improving Bc1–e3–d2 first keeps central e4 intact while Ra4 activates horizontally; activating the rook early is also playable, but the defender's ...Rh6 plan changes the relevant squares.",
         "defenderPlan": "...Rh6 and ...Rh5 offer Black lateral activity. A quiet bishop regrouping avoids losing central control to an immediate ...dxe5 pawn capture.",
-        "misconception": "A rushed e5? ...dxe5 trades White's central pawn and opens the d-file for Black before White coordinates bishop and rook.",
+        "misconception": "A premature rook trip to a5 creates no central pawn break and allows Black's ...Rh6. An immediate e4–e5 is blocked by a black pawn on e5.",
         "variant": "opponent's f-pawn resource",
         "context": "Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
         "practice": [
@@ -766,12 +766,12 @@
       "prompt": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Variation: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. Context: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
       "continuationReason": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. Since e5 is occupied by Black's pawn, an immediate White e4–e5 is illegal. The actual failed pawn-contact line is c5 ...dxc5 Bd3.",
       "defensiveStudy": {
         "keyQuestion": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift.",
         "defenderIdea": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
         "continuation": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
         "variations": [
           {
@@ -788,11 +788,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "c4c5",
+              "d6c5",
               "f1d3"
             ],
-            "explanation": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Calculate e4e5 d6e5 f1d3 before accepting it as positional progress. The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn."
+            "explanation": "c5? dxc5 lets the black d6 pawn capture White's c-pawn. Bd3 then develops but cannot restore the missing pawn without further work."
           }
         ]
       },
@@ -801,7 +801,7 @@
         "principle": "Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered.",
         "planContrast": "Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win.",
         "defenderPlan": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "variant": "queenside hook",
         "context": "The white b2 pawn supports a later b-file expansion but may become a new rook target. Judge whether the improved piece controls the b-file before moving the pawn.",
         "practice": [
@@ -848,12 +848,12 @@
       "prompt": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Variation: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. Context: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
       "continuationReason": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. Since e5 is occupied by Black's pawn, an immediate White e4–e5 is illegal. The actual failed pawn-contact line is c5 ...dxc5 Bd3.",
       "defensiveStudy": {
         "keyQuestion": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift.",
         "defenderIdea": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
         "continuation": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
         "variations": [
           {
@@ -870,11 +870,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "c4c5",
+              "d6c5",
               "f1d3"
             ],
-            "explanation": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Calculate e4e5 d6e5 f1d3 before accepting it as positional progress. White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack."
+            "explanation": "c5? dxc5 lets the black d6 pawn capture White's c-pawn. Bd3 then develops but cannot restore the missing pawn without further work."
           }
         ]
       },
@@ -883,7 +883,7 @@
         "principle": "Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered.",
         "planContrast": "Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win.",
         "defenderPlan": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "variant": "king-safe regrouping",
         "context": "White's g2 pawn supports king safety yet can be attacked after an opened rook file. The quiet move's value must be checked against a king-side counterattack.",
         "practice": [
@@ -930,12 +930,12 @@
       "prompt": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Variation: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Identify the worst placed piece and compare a proactive and a prophylactic move before calculating five plies.",
       "replyReason": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. Context: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
       "continuationReason": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Endgame or middlegame evaluation requires additional defender replies.",
-      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values.",
+      "explanation": "Original motif: Converting space into initiative. Strategy: Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered. Exercise situation: White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift. Five-ply reference: f1d3 h8h6 e1e3 h6h5 e3g3. Five-ply alternative: e1e3 h8h6 f1d3 h6h5 e3g3. Plausible failed plan: e4e5 d6e5 f1d3. Exact resistance: ...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares. What the endpoint proves: The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break. Repair: e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Why plans differ: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Variant: Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo. Authored instructive examples are not unique-engine-best or tablebase-certified WDL values. Since e5 is occupied by Black's pawn, an immediate White e4–e5 is illegal. The actual failed pawn-contact line is c5 ...dxc5 Bd3.",
       "defensiveStudy": {
         "keyQuestion": "White's e4 and c4 pawns gain space, but Black's d6/e5 wedge can answer a premature e4–e5. Prepare Bd3 and Re3–g3 to create a useful third-rank horizontal lift.",
         "defenderIdea": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
         "continuation": "The white rook reaches g3 without surrendering the central e4 pawn. Whether this yields an advantage depends on Black's eventual central ...d5 break.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "reflection": "Without the board, identify the coordinating piece pair, their useful squares, and one counterbreak the defender can still make. Explain how the two plans change tempo. Worked comparison: Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win. Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
         "variations": [
           {
@@ -952,11 +952,11 @@
           {
             "label": "Failed or competing candidate",
             "moves": [
-              "e4e5",
-              "d6e5",
+              "c4c5",
+              "d6c5",
               "f1d3"
             ],
-            "explanation": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated. Calculate e4e5 d6e5 f1d3 before accepting it as positional progress. Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo."
+            "explanation": "c5? dxc5 lets the black d6 pawn capture White's c-pawn. Bd3 then develops but cannot restore the missing pawn without further work."
           }
         ]
       },
@@ -965,7 +965,7 @@
         "principle": "Piece activity converts a space edge only when the rook's chosen file is supported by the pawn chain and the enemy counterbreak can be answered.",
         "planContrast": "Both Bd3 and Re3 first lead to a rook on g3 and bishop on d3, but they give Black distinct tempi to use ...Rh6. The pawn-preserving route is more important than a supposed tactical win.",
         "defenderPlan": "...Rh6–h5 creates direct lateral counterplay, so a rook on g3 should coordinate with the bishop d3 to cover king-side entry squares.",
-        "misconception": "e5? ...dxe5 loses the fixed White e-pawn and opens a new diagonal for the defender before the rook is activated.",
+        "misconception": "The premature c4–c5 break allows ...dxc5 and loses White's c-pawn. e4–e5 is not yet legal because Black already occupies e5.",
         "variant": "opponent's f-pawn resource",
         "context": "Black has an f7 pawn that can later advance to f6 or serve as a king shelter. Reconsider whether a bishop or knight entry square remains strong if Black uses that pawn tempo.",
         "practice": [
