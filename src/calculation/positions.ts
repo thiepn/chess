@@ -38,12 +38,11 @@ if (typeof window !== "undefined") {
       .then(r => r.json())
       .then(({positions}: {positions: CalculationPosition[]}) => {
         if (!Array.isArray(positions) || positions.length !== count) return;
-        const valid = positions.filter(p => p.id.startsWith(prefix) &&
+        if (positions.every(p => p.id.startsWith(prefix) &&
           legalCalculationBranch(p) && (prefix === "calc:p94-" ||
           p.defensiveStudy?.variations.every(v => legalCalculationBranch({
             ...p, bestMove: v.moves[0], principalVariation: v.moves,
-          }))));
-        if (valid.length === count) externalPositions.push(...valid);
+          }))))) externalPositions.push(...positions);
       }).catch(() => {});
   }
 }
@@ -294,6 +293,8 @@ export function calculationPositionFor(
   skillId: string,
   now = new Date(),
 ) {
+  const byDue = (a: CalculationPosition, b: CalculationPosition) =>
+    dueScore(state, b.id, now) - dueScore(state, a.id, now);
   const personal =
     personalPositions(state)
       .filter(
@@ -302,19 +303,7 @@ export function calculationPositionFor(
             skillId,
           ),
       )
-      .sort(
-        (a, b) =>
-          dueScore(
-            state,
-            b.id,
-            now,
-          ) -
-          dueScore(
-            state,
-            a.id,
-            now,
-          ),
-      );
+      .sort(byDue);
 
   if (personal[0]) {
     return personal[0];
@@ -328,19 +317,7 @@ export function calculationPositionFor(
             skillId,
           ),
       )
-      .sort(
-        (a, b) =>
-          dueScore(
-            state,
-            b.id,
-            now,
-          ) -
-          dueScore(
-            state,
-            a.id,
-            now,
-          ),
-      );
+      .sort(byDue);
 
   return (
     authored[0] ??
