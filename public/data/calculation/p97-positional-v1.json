@@ -144,12 +144,12 @@
       "prompt": "c3 supports the recapture after White launches d4. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
       "replyReason": "The defender may vary development: c2c3 b8c6 d2d4 g8f6 d4e5. White keeps h2 as a kingside pawn reserve.",
       "continuationReason": "At the endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
-      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. White keeps h2 as a kingside pawn reserve. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality.",
+      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. White keeps h2 as a kingside pawn reserve. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality. The bishop's fianchetto does not compel a pawn concession.",
       "defensiveStudy": {
         "keyQuestion": "c3 supports the recapture after White launches d4.",
         "defenderIdea": "c2c3 b8c6 d2d4 g8f6 d4e5",
         "continuation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
-        "misconception": "Treating d4 as permanent overlooks ...exd4.",
+        "misconception": "Treating d4 as permanent overlooks ...exd4. Even after the fianchetto, Black retains ways to defend d5.",
         "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
         "variations": [
           {
@@ -202,12 +202,12 @@
       "prompt": "c3 supports the recapture after White launches d4. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
       "replyReason": "The defender may vary development: c2c3 b8c6 d2d4 g8f6 d4e5. Black retains h7 to build a later kingside pawn shelter.",
       "continuationReason": "At the endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
-      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. Black retains h7 to build a later kingside pawn shelter. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality.",
+      "explanation": "C-pawn recapture after a central break: c3 supports the recapture after White launches d4. Recorded line c2c3 b8c6 d2d4 e5d4 c3d4. Resistance c2c3 b8c6 d2d4 g8f6 d4e5. Alternative candidate d2d4 e5d4 c2c3 b8c6 c3d4. Endpoint: A central exchange changes the pawn structure; there is no guaranteed pawn gain. Black retains h7 to build a later kingside pawn shelter. Misconception: Treating d4 as permanent overlooks ...exd4. Legal demonstration, not a proof of unique optimality. The bishop's fianchetto does not compel a pawn concession.",
       "defensiveStudy": {
         "keyQuestion": "c3 supports the recapture after White launches d4.",
         "defenderIdea": "c2c3 b8c6 d2d4 g8f6 d4e5",
         "continuation": "A central exchange changes the pawn structure; there is no guaranteed pawn gain.",
-        "misconception": "Treating d4 as permanent overlooks ...exd4.",
+        "misconception": "Treating d4 as permanent overlooks ...exd4. Even after the fianchetto, Black retains ways to defend d5.",
         "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
         "variations": [
           {
