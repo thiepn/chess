@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import type { CalculationPosition } from "../calculation/types";
 
 interface Props {
@@ -8,72 +8,50 @@ interface Props {
   onRetry: () => void;
   onStart: (position: CalculationPosition) => void;
 }
-type StudyFamily = "strategy" | "defense";
-function family(position: CalculationPosition): StudyFamily {
-  return position.prophylaxisStudy ? "defense" : "strategy";
-}
-function theme(position: CalculationPosition): string {
-  return position.prophylaxisStudy?.theme ??
-    position.strategicImbalanceStudy?.theme ?? "Other study";
-}
-function transfer(position: CalculationPosition): string {
-  return position.prophylaxisStudy?.transferQuestion ??
-    position.strategicImbalanceStudy?.transferQuestion ?? position.prompt;
-}
 
-/** P109–P110: owner-safe discovery of original, unscored calculation assets. */
-export function StrategicStudyLibrary({
-  positions, loading, failedCount, onRetry, onStart,
-}: Props) {
-  const [chosenFamily, setFamily] = useState<StudyFamily>("defense");
-  const [chosenTheme, setTheme] = useState("");
-  const category = useMemo(() =>
-    positions.filter(item => family(item) === chosenFamily), [positions, chosenFamily]);
-  const themes = [...new Set(category.map(theme))];
-  const selectedTheme = themes.includes(chosenTheme) ? chosenTheme : themes[0];
-  const visible = category.filter(p => theme(p) === selectedTheme);
-  const strategyCount = positions.filter(p => family(p) === "strategy").length;
-  const defenseCount = positions.length - strategyCount;
-
+/** Reuse original course assets; this selector never records learner grades. */
+export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry, onStart }: Props) {
+  const [kind, setKind] = useState<"defense" | "strategy">("defense");
+  const [choice, setChoice] = useState("");
+  const filtered = positions.filter(p => (kind === "defense") === !!p.prophylaxisStudy);
+  const theme = (p: CalculationPosition) => p.prophylaxisStudy?.theme ??
+    p.strategicImbalanceStudy?.theme ?? "";
+  const themes = [...new Set(filtered.map(theme))];
+  const selected = themes.includes(choice) ? choice : themes[0];
+  const visible = filtered.filter(p => theme(p) === selected);
   return (
-    <section className="strategic-library" aria-label="Strategy and prophylaxis studies">
-      <p className="eyebrow">POSITION STUDY · ORIGINAL SOURCES · UNSCORED</p>
-      <h2>Plan ahead of your opponent</h2>
-      <p>Choose a board, predict the opponent's resource, calculate their response
-        and compare the authored alternatives without creating a mastery grade.</p>
-      <div className="strategic-library-categories" role="group" aria-label="Choose study type">
-        <button type="button" className={chosenFamily === "defense" ? "selected" : ""}
-          aria-pressed={chosenFamily === "defense"} onClick={() => { setFamily("defense"); setTheme(""); }}>
-          Defense & prevention ({defenseCount})
-        </button>
-        <button type="button" className={chosenFamily === "strategy" ? "selected" : ""}
-          aria-pressed={chosenFamily === "strategy"} onClick={() => { setFamily("strategy"); setTheme(""); }}>
-          Positional plans ({strategyCount})
-        </button>
+    <section className="strategic-library" aria-label="Positional and preventive study">
+      <p className="eyebrow">ORIGINAL STUDIES · UNSCORED</p>
+      <h2>Anticipate the opponent</h2>
+      <p>Calculate both sides, compare defensive alternatives and explain the plan.</p>
+      <div className="strategic-library-categories" role="group" aria-label="Study category">
+        {(["defense", "strategy"] as const).map(item => (
+          <button type="button" key={item} className={kind === item ? "selected" : ""}
+            aria-pressed={kind === item}
+            onClick={() => { setKind(item); setChoice(""); }}>
+            {item === "defense" ? "Defense & prevention" : "Positional plans"} ({positions.filter(p =>
+              Boolean(p.prophylaxisStudy) === (item === "defense")).length})
+          </button>
+        ))}
       </div>
-      {themes.length ? <>
+      {selected ? <>
         <label htmlFor="strategy-theme">Specific theme</label>
-        <select id="strategy-theme" value={selectedTheme}
-          onChange={event => setTheme(event.target.value)}>
-          {themes.map(name => <option value={name} key={name}>{name}</option>)}
+        <select id="strategy-theme" value={selected} onChange={e => setChoice(e.target.value)}>
+          {themes.map(name => <option key={name} value={name}>{name}</option>)}
         </select>
-        <p role="status">{category.length} available studies · {visible.length} in this theme</p>
+        <p role="status">{filtered.length} sourced studies · {visible.length} in this theme</p>
         <div className="strategic-library-list">
-          {visible.map((position, index) => (
-            <button type="button" key={position.id}
-              aria-label={`Open unscored study ${position.title}`}
-              onClick={() => onStart(position)}>
-              <span>Position {index + 1} of {visible.length}</span>
-              <strong>{position.title}</strong>
-              <small>{transfer(position)}</small>
-            </button>
-          ))}
+          {visible.map((p, i) => <button type="button" key={p.id}
+            aria-label={`Open unscored study ${p.title}`} onClick={() => onStart(p)}>
+            <span>Position {i + 1}</span>
+            <strong>{p.title}</strong>
+            <small>{p.prophylaxisStudy?.transferQuestion ??
+              p.strategicImbalanceStudy?.transferQuestion}</small>
+          </button>)}
         </div>
-      </> : <p role="status">{loading
-        ? "Loading study source files; this category is not yet ready."
-        : "No source-qualified positions available for this category."}</p>}
+      </> : <p role="status">{loading ? "Loading chess studies…" : "Study source unavailable."}</p>}
       {failedCount > 0 && <button type="button" className="secondary" onClick={onRetry}>
-        Retry {failedCount} unavailable P109–P110 study {failedCount === 1 ? "file" : "files"}
+        Retry {failedCount} missing source {failedCount === 1 ? "file" : "files"}
       </button>}
     </section>
   );
