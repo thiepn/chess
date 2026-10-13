@@ -8,6 +8,21 @@ import type {
   CalculationPosition,
 } from "./types";
 
+// P95 defensive studies reuse the same runner and owner-scoped review authority.
+let p95Positions: CalculationPosition[] = [];
+if (typeof window !== "undefined") {
+  fetch(`${import.meta.env.BASE_URL}data/calculation/p95-defensive-resistance-v1.json`)
+    .then(r => r.json())
+    .then(({positions}: {positions: CalculationPosition[]}) => {
+      if (positions.length !== 40) return;
+      p95Positions = positions.filter(p => p.id.startsWith("calc:p95-") &&
+        legalCalculationBranch(p) &&
+        p.defensiveStudy?.variations.every(v => legalCalculationBranch({
+          ...p, bestMove: v.moves[0], principalVariation: v.moves,
+        })));
+    }).catch(() => {});
+}
+
 // P94 lessons remain a static asset; the existing runner verifies lines.
 let p94Positions: CalculationPosition[] = [];
 if (typeof window !== "undefined") {
@@ -264,6 +279,7 @@ export function calculationCatalog(
 ) {
   return [
     ...personalPositions(state),
+    ...p95Positions,
     ...p94Positions,
     ...authoredPositions,
   ];
@@ -301,7 +317,7 @@ export function calculationPositionFor(
   }
 
   const authored =
-    [...p94Positions, ...authoredPositions]
+    [...p95Positions, ...p94Positions, ...authoredPositions]
       .filter(
         (position) =>
           position.skillIds.includes(
@@ -357,7 +373,7 @@ export function resolveCalculationPosition(
 
 // Use the same 3-ply legal-line authority as the interactive calculation runner.
 export function calculationCatalogIssues() {
-  return [...authoredPositions, ...p94Positions]
+  return [...authoredPositions, ...p94Positions, ...p95Positions]
     .filter(position => !legalCalculationBranch(position))
     .map(position => `${position.id}: invalid calculation line`);
 }
