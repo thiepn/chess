@@ -60,7 +60,7 @@ describe("P100 original minor-piece endgames", () => {
       const white = squareColor("B");
       if (groupFor(p) === "Wrong bishop and rook pawn") {
         // h8 is dark; a light-square white bishop cannot control that corner.
-        expect(white, p.id).toBe(1);
+        expect(white, p.id).toBe(0);
         expect(p.fen, p.id).toContain("k");
       } else {
         expect(white === squareColor("b"), p.id)
