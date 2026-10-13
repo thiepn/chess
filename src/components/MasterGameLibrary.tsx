@@ -1,3 +1,4 @@
+import "../styles/p113-master-games.css";
 import { Chess } from "chess.js";
 import { ChevronLeft, ChevronRight, Eye, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -11,7 +12,7 @@ import {
 const MAX_WRITING = 1200;
 
 export function MasterGameLibrary({ owner }: { owner: string }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const [collection, setCollection] = useState<MasterTimeline[] | null>(null);
   const [rejected, setRejected] = useState(0);
   const [error, setError] = useState("");
