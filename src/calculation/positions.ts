@@ -293,36 +293,12 @@ export function calculationPositionFor(
   skillId: string,
   now = new Date(),
 ) {
-  const byDue = (a: CalculationPosition, b: CalculationPosition) =>
-    dueScore(state, b.id, now) - dueScore(state, a.id, now);
-  const personal =
-    personalPositions(state)
-      .filter(
-        (position) =>
-          position.skillIds.includes(
-            skillId,
-          ),
-      )
-      .sort(byDue);
-
-  if (personal[0]) {
-    return personal[0];
-  }
-
-  const authored =
-    [...externalPositions, ...authoredPositions]
-      .filter(
-        (position) =>
-          position.skillIds.includes(
-            skillId,
-          ),
-      )
-      .sort(byDue);
-
-  return (
-    authored[0] ??
-    authoredPositions[0]
-  );
+  const select = (positions: CalculationPosition[]) =>
+    positions.filter(p => p.skillIds.includes(skillId))
+      .sort((a, b) => dueScore(state, b.id, now) - dueScore(state, a.id, now))[0];
+  return select(personalPositions(state)) ??
+    select([...externalPositions, ...authoredPositions]) ??
+    authoredPositions[0];
 }
 
 export function resolveCalculationPosition(
