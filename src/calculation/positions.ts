@@ -32,6 +32,8 @@ if (typeof window !== "undefined") {
     ["p102-defense-v1.json", 6],
     ["p102-races-stalemate-v1.json", 9],
     ["p102-precision-v1.json", 6],
+    ["p103-structures-a-v1.json", 25],
+    ["p103-structures-b-v1.json", 25],
   ] as const) {
     const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
