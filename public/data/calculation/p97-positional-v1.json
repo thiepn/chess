@@ -237,7 +237,7 @@
     },
     {
       "id": "calc:p97-25",
-      "title": "Fianchetto before c4 · White reserve",
+      "title": "Fianchetto and blocked c-pawn · White reserve",
       "fen": "1n4k1/3pp3/8/8/3P4/6P1/2P4P/1N3BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1g2",
@@ -246,7 +246,7 @@
         "d7d5",
         "b1c3",
         "b8c6",
-        "c2c4"
+        "g3g4"
       ],
       "source": "authored",
       "sourceLabel": "P97 · Positional variation trees",
@@ -259,13 +259,13 @@
       ],
       "prompt": "Bg2 gives White long-diagonal influence before pressure against d5. White keeps h2 as a kingside pawn reserve. Calculate the five-ply line and both plausible move-order alternatives.",
       "replyReason": "The defender may vary development: f1g2 e7e6 b1c3 d7d5 c2c4. White keeps h2 as a kingside pawn reserve.",
-      "continuationReason": "At the endpoint: c4 creates tension while Black's queenside pieces also improve.",
-      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 c2c4. Resistance f1g2 e7e6 b1c3 d7d5 c2c4. Alternative candidate f1h3 d7d5 b1c3 b8c6 c2c4. Endpoint: c4 creates tension while Black's queenside pieces also improve. White keeps h2 as a kingside pawn reserve. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality.",
+      "continuationReason": "The c-pawn cannot jump from c2 to c4 through White's knight on c3. g4 is a legal space-gaining alternative; evaluate it without pretending to have played c4.",
+      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 g3g4. Resistance f1g2 e7e6 b1c3 d7d5 g3g4. Alternative candidate f1h3 d7d5 b1c3 b8c6 g3g4. Endpoint: c4 creates tension while Black's queenside pieces also improve. White keeps h2 as a kingside pawn reserve. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality. An earlier version wrongly advanced c2–c4 through a knight on c3; the current line teaches that blocked-pawn constraint.",
       "defensiveStudy": {
         "keyQuestion": "Bg2 gives White long-diagonal influence before pressure against d5.",
         "defenderIdea": "f1g2 e7e6 b1c3 d7d5 c2c4",
-        "continuation": "c4 creates tension while Black's queenside pieces also improve.",
-        "misconception": "A fianchetto bishop does not immediately win a defended central pawn.",
+        "continuation": "The c-pawn cannot jump from c2 to c4 through White's knight on c3. g4 is a legal space-gaining alternative; evaluate it without pretending to have played c4.",
+        "misconception": "Attempting c4 while the knight occupies c3 is an illegal pawn advance; calculate a real alternative such as g4.",
         "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. White keeps h2 as a kingside pawn reserve.",
         "variations": [
           {
@@ -275,7 +275,7 @@
               "e7e6",
               "b1c3",
               "d7d5",
-              "c2c4"
+              "g3g4"
             ],
             "explanation": "c4 creates tension while Black's queenside pieces also improve. White keeps h2 as a kingside pawn reserve."
           },
@@ -286,7 +286,7 @@
               "d7d5",
               "b1c3",
               "b8c6",
-              "c2c4"
+              "g3g4"
             ],
             "explanation": "A fianchetto bishop does not immediately win a defended central pawn. White keeps h2 as a kingside pawn reserve."
           }
@@ -295,7 +295,7 @@
     },
     {
       "id": "calc:p97-26",
-      "title": "Fianchetto before c4 · Black reserve",
+      "title": "Fianchetto and blocked c-pawn · Black reserve",
       "fen": "1n4k1/3pp2p/8/8/3P4/6P1/2P5/1N3BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1g2",
@@ -304,7 +304,7 @@
         "d7d5",
         "b1c3",
         "b8c6",
-        "c2c4"
+        "g3g4"
       ],
       "source": "authored",
       "sourceLabel": "P97 · Positional variation trees",
@@ -317,13 +317,13 @@
       ],
       "prompt": "Bg2 gives White long-diagonal influence before pressure against d5. Black retains h7 to build a later kingside pawn shelter. Calculate the five-ply line and both plausible move-order alternatives.",
       "replyReason": "The defender may vary development: f1g2 e7e6 b1c3 d7d5 c2c4. Black retains h7 to build a later kingside pawn shelter.",
-      "continuationReason": "At the endpoint: c4 creates tension while Black's queenside pieces also improve.",
-      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 c2c4. Resistance f1g2 e7e6 b1c3 d7d5 c2c4. Alternative candidate f1h3 d7d5 b1c3 b8c6 c2c4. Endpoint: c4 creates tension while Black's queenside pieces also improve. Black retains h7 to build a later kingside pawn shelter. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality.",
+      "continuationReason": "The c-pawn cannot jump from c2 to c4 through White's knight on c3. g4 is a legal space-gaining alternative; evaluate it without pretending to have played c4.",
+      "explanation": "Fianchetto before c4: Bg2 gives White long-diagonal influence before pressure against d5. Recorded line f1g2 d7d5 b1c3 b8c6 g3g4. Resistance f1g2 e7e6 b1c3 d7d5 g3g4. Alternative candidate f1h3 d7d5 b1c3 b8c6 g3g4. Endpoint: c4 creates tension while Black's queenside pieces also improve. Black retains h7 to build a later kingside pawn shelter. Misconception: A fianchetto bishop does not immediately win a defended central pawn. Legal demonstration, not a proof of unique optimality. An earlier version wrongly advanced c2–c4 through a knight on c3; the current line teaches that blocked-pawn constraint.",
       "defensiveStudy": {
         "keyQuestion": "Bg2 gives White long-diagonal influence before pressure against d5.",
         "defenderIdea": "f1g2 e7e6 b1c3 d7d5 c2c4",
-        "continuation": "c4 creates tension while Black's queenside pieces also improve.",
-        "misconception": "A fianchetto bishop does not immediately win a defended central pawn.",
+        "continuation": "The c-pawn cannot jump from c2 to c4 through White's knight on c3. g4 is a legal space-gaining alternative; evaluate it without pretending to have played c4.",
+        "misconception": "Attempting c4 while the knight occupies c3 is an illegal pawn advance; calculate a real alternative such as g4.",
         "reflection": "Re-evaluate both fifth-ply endpoints and defend your pawn-structure assessment. Black retains h7 to build a later kingside pawn shelter.",
         "variations": [
           {
@@ -333,7 +333,7 @@
               "e7e6",
               "b1c3",
               "d7d5",
-              "c2c4"
+              "g3g4"
             ],
             "explanation": "c4 creates tension while Black's queenside pieces also improve. Black retains h7 to build a later kingside pawn shelter."
           },
@@ -344,7 +344,7 @@
               "d7d5",
               "b1c3",
               "b8c6",
-              "c2c4"
+              "g3g4"
             ],
             "explanation": "A fianchetto bishop does not immediately win a defended central pawn. Black retains h7 to build a later kingside pawn shelter."
           }
