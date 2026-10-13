@@ -9,17 +9,14 @@ import type {
   CalculationPosition,
 } from "./types";
 
-// P94 adds original content, but no new engine or compiled lesson bundle.
+// P94 lessons remain a static asset; the existing runner verifies lines.
 let p94Positions: CalculationPosition[] = [];
 if (typeof window !== "undefined") {
-  void fetch(`${import.meta.env.BASE_URL}data/calculation/p94-candidates-v1.json`)
-    .then(response => response.json())
-    .then((data: { positions?: CalculationPosition[] }) => {
-      const positions = data?.positions;
-      if (positions?.length === 40 && positions.every(position =>
-        position.id?.startsWith("calc:p94-") &&
-        position.source === "authored" &&
-        legalCalculationBranch(position))) p94Positions = positions;
+  fetch(`${import.meta.env.BASE_URL}data/calculation/p94-candidates-v1.json`)
+    .then(r => r.json())
+    .then(({ positions }: {positions: CalculationPosition[]}) => {
+      p94Positions = positions.filter(p => p.id.startsWith("calc:p94-") &&
+        legalCalculationBranch(p));
     }).catch(() => {});
 }
 
