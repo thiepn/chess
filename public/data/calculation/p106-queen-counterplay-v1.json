@@ -816,7 +816,7 @@
       },
       "defensiveTechniqueStudy": {
         "theme": "Queen-file blockade and positional defense",
-        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. First test the black queen's c5-to-h5 interposition and the alternative ...Qxb5 before choosing which checking diagonal leaves the white queen protected.",
         "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
         "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
         "opponentResistance": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive.",
@@ -900,7 +900,7 @@
       },
       "defensiveTechniqueStudy": {
         "theme": "Queen-file blockade and positional defense",
-        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. First test the black queen's c5-to-h5 interposition and the alternative ...Qxb5 before choosing which checking diagonal leaves the white queen protected.",
         "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
         "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
         "opponentResistance": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive.",
@@ -984,7 +984,7 @@
       },
       "defensiveTechniqueStudy": {
         "theme": "Queen-file blockade and positional defense",
-        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. First test the black queen's c5-to-h5 interposition and the alternative ...Qxb5 before choosing which checking diagonal leaves the white queen protected.",
         "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
         "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
         "opponentResistance": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade.",
