@@ -550,7 +550,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.evaluation",
-        "endgames.passed-pawn",
+        "pawns.passed",
         "endgames.rook-activity"
       ],
       "prompt": "A rook placed behind an a5 passed pawn on a4 can support later pawn advances and keep attacking its promotion lane. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
@@ -603,7 +603,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.evaluation",
-        "endgames.passed-pawn",
+        "pawns.passed",
         "endgames.rook-activity"
       ],
       "prompt": "The b5 pawn needs a rook behind it; Rb4 supports it from the fourth rank. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
@@ -656,7 +656,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.evaluation",
-        "endgames.passed-pawn",
+        "pawns.passed",
         "endgames.rook-activity"
       ],
       "prompt": "Rc4 keeps the rook behind a c5 passer and permits a king approach. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win. Name the active rook's next square and the defender's outside pawn resource.",
@@ -709,7 +709,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.evaluation",
-        "endgames.passed-pawn",
+        "pawns.passed",
         "endgames.rook-activity"
       ],
       "prompt": "Rd4 supports d5 from behind and leaves the pawn's advance route unobstructed. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
@@ -762,7 +762,7 @@
       "skillIds": [
         "calculation.candidates",
         "calculation.evaluation",
-        "endgames.passed-pawn",
+        "pawns.passed",
         "endgames.rook-activity"
       ],
       "prompt": "Re4 keeps White's rook behind the e5 passer and protects the pawn's route toward e6. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
