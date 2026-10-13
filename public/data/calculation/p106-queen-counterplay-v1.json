@@ -1,0 +1,1267 @@
+{
+  "version": 1,
+  "phase": "P106",
+  "section": "Defensive queen counterchecks, interpositions and accurate trades",
+  "positions": [
+    {
+      "id": "calc:p106-16",
+      "title": "The queen on h6 cannot prevent every back-rank check — a-pawn and b-pawn opposition",
+      "source": "authored",
+      "sourceLabel": "P106 · Countercheck to break the queen's attack",
+      "difficulty": 5,
+      "fen": "7k/8/1p5q/8/8/P7/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "prompt": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Variant: White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The additional pawn context is White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically.",
+      "continuationReason": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Countercheck to break the queen's attack. Practical model: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Position-specific problem: The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Calculated reference: d1d8 h8h7 d8d5 h6e3 g1h1. Other defense from the same board: d1d8 h8h7 d8h4 h6h4 g1f1. Failed but legal attempt: d1a4 h6e3 g1h1. Attacker resistance: ...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. Concrete endpoint: Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Misconception to repair: The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. Extra pawn context: White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do.",
+        "defenderIdea": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "continuation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Specific variant: White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The exact variation d1d8 h8h7 d8h4 h6h4 g1f1 changes where the queens meet; White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. After d1a4 h6e3 g1h1, the material count is not what a superficial checking-line estimate suggests. White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Countercheck to break the queen's attack",
+        "principle": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation.",
+        "attackerThreat": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "modelLine": "d1d8 h8h7 d8d5 h6e3 g1h1",
+        "opponentResistance": "d1d8 h8h7 d8h4 h6h4 g1f1",
+        "failedPlan": "d1a4 h6e3 g1h1",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "context": "White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically.",
+        "practicalEvaluation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. White a3 and Black b6 create future queenside targets without answering ...Qe3+ automatically.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-17",
+      "title": "The queen on h6 cannot prevent every back-rank check — b-pawn and a-pawn reserve",
+      "source": "authored",
+      "sourceLabel": "P106 · Countercheck to break the queen's attack",
+      "difficulty": 5,
+      "fen": "7k/8/p6q/8/8/8/1P6/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "prompt": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Variant: White b2 can matter in a queen trade; Black a6 remains a distant passer candidate. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The additional pawn context is White b2 can matter in a queen trade; Black a6 remains a distant passer candidate.",
+      "continuationReason": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Countercheck to break the queen's attack. Practical model: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Position-specific problem: The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Calculated reference: d1d8 h8h7 d8d5 h6e3 g1h1. Other defense from the same board: d1d8 h8h7 d8h4 h6h4 g1f1. Failed but legal attempt: d1a4 h6e3 g1h1. Attacker resistance: ...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. Concrete endpoint: Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Misconception to repair: The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. Extra pawn context: White b2 can matter in a queen trade; Black a6 remains a distant passer candidate. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do.",
+        "defenderIdea": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "continuation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Specific variant: White b2 can matter in a queen trade; Black a6 remains a distant passer candidate.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The exact variation d1d8 h8h7 d8h4 h6h4 g1f1 changes where the queens meet; White b2 can matter in a queen trade; Black a6 remains a distant passer candidate."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. After d1a4 h6e3 g1h1, the material count is not what a superficial checking-line estimate suggests. White b2 can matter in a queen trade; Black a6 remains a distant passer candidate."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Countercheck to break the queen's attack",
+        "principle": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation.",
+        "attackerThreat": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "modelLine": "d1d8 h8h7 d8d5 h6e3 g1h1",
+        "opponentResistance": "d1d8 h8h7 d8h4 h6h4 g1f1",
+        "failedPlan": "d1a4 h6e3 g1h1",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "context": "White b2 can matter in a queen trade; Black a6 remains a distant passer candidate.",
+        "practicalEvaluation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. White b2 can matter in a queen trade; Black a6 remains a distant passer candidate.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-18",
+      "title": "The queen on h6 cannot prevent every back-rank check — c-file contact",
+      "source": "authored",
+      "sourceLabel": "P106 · Countercheck to break the queen's attack",
+      "difficulty": 5,
+      "fen": "7k/2p5/7q/8/8/2P5/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "prompt": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Variant: Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The additional pawn context is Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety.",
+      "continuationReason": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Countercheck to break the queen's attack. Practical model: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Position-specific problem: The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do. Calculated reference: d1d8 h8h7 d8d5 h6e3 g1h1. Other defense from the same board: d1d8 h8h7 d8h4 h6h4 g1f1. Failed but legal attempt: d1a4 h6e3 g1h1. Attacker resistance: ...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. Concrete endpoint: Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route. Misconception to repair: The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. Extra pawn context: Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on h6 targets checking diagonals near g1. Defend actively with Qd8+, then calculate what ...Qe3+ forces your king to do.",
+        "defenderIdea": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "continuation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Specific variant: Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan. The exact variation d1d8 h8h7 d8h4 h6h4 g1f1 changes where the queens meet; Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck. After d1a4 h6e3 g1h1, the material count is not what a superficial checking-line estimate suggests. Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Countercheck to break the queen's attack",
+        "principle": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation.",
+        "attackerThreat": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+        "modelLine": "d1d8 h8h7 d8d5 h6e3 g1h1",
+        "opponentResistance": "d1d8 h8h7 d8h4 h6h4 g1f1",
+        "failedPlan": "d1a4 h6e3 g1h1",
+        "misconception": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck.",
+        "context": "Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety.",
+        "practicalEvaluation": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe3+ is a real countercheck after Qd5, while ...Qxh4 answers an unprotected queen on h4. White's king must obey the check before continuing its plan.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Kh1 preserves the white queen in the reference; Qh4 loses the queen to Black. No permanent repetition is established from one checked king route.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "An active countercheck is a defensive resource, but material preservation and legal king replies determine the real evaluation. Both sides have a c-file pawn. White cannot rely on distant wing material instead of checking its own king safety.",
+            "repair": "The tempting queen lift to h4 ignores ...Qxh4, while counting Qd8+ alone as a forced draw overlooks Black's countercheck."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-19",
+      "title": "Capture an interposing queen rather than lose one on d5 — two-wing weakness",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen trade as defensive simplification",
+      "difficulty": 5,
+      "fen": "7k/8/1p6/q7/8/P7/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8h4",
+        "a5h5",
+        "h4h5"
+      ],
+      "prompt": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Variant: White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The additional pawn context is White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat.",
+      "continuationReason": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen trade as defensive simplification. Practical model: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Position-specific problem: Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Calculated reference: d1d8 h8h7 d8h4 a5h5 h4h5. Other defense from the same board: d1d8 h8h7 d8d5 a5d5 g1f2. Failed but legal attempt: d1a4 a5a4 g1f2. Attacker resistance: ...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. Concrete endpoint: Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Misconception to repair: A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. Extra pawn context: White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured.",
+        "defenderIdea": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "continuation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Specific variant: White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8d5",
+              "a5d5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The exact variation d1d8 h8h7 d8d5 a5d5 g1f2 changes where the queens meet; White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "a5a4",
+              "g1f2"
+            ],
+            "explanation": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. After d1a4 a5a4 g1f2, the material count is not what a superficial checking-line estimate suggests. White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen trade as defensive simplification",
+        "principle": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly.",
+        "attackerThreat": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "modelLine": "d1d8 h8h7 d8h4 a5h5 h4h5",
+        "opponentResistance": "d1d8 h8h7 d8d5 a5d5 g1f2",
+        "failedPlan": "d1a4 a5a4 g1f2",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "context": "White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat.",
+        "practicalEvaluation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. White a3 is an outside resource after queens trade; Black b6 can later become a passed-pawn threat.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-20",
+      "title": "Capture an interposing queen rather than lose one on d5 — b2 and a6 counterpassers",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen trade as defensive simplification",
+      "difficulty": 5,
+      "fen": "7k/8/p7/q7/8/8/1P6/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8h4",
+        "a5h5",
+        "h4h5"
+      ],
+      "prompt": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Variant: White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The additional pawn context is White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured.",
+      "continuationReason": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen trade as defensive simplification. Practical model: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Position-specific problem: Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Calculated reference: d1d8 h8h7 d8h4 a5h5 h4h5. Other defense from the same board: d1d8 h8h7 d8d5 a5d5 g1f2. Failed but legal attempt: d1a4 a5a4 g1f2. Attacker resistance: ...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. Concrete endpoint: Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Misconception to repair: A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. Extra pawn context: White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured.",
+        "defenderIdea": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "continuation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Specific variant: White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8d5",
+              "a5d5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The exact variation d1d8 h8h7 d8d5 a5d5 g1f2 changes where the queens meet; White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "a5a4",
+              "g1f2"
+            ],
+            "explanation": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. After d1a4 a5a4 g1f2, the material count is not what a superficial checking-line estimate suggests. White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen trade as defensive simplification",
+        "principle": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly.",
+        "attackerThreat": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "modelLine": "d1d8 h8h7 d8h4 a5h5 h4h5",
+        "opponentResistance": "d1d8 h8h7 d8d5 a5d5 g1f2",
+        "failedPlan": "d1a4 a5a4 g1f2",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "context": "White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured.",
+        "practicalEvaluation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. White's b2 can be attacked later but neither added pawn prevents Qh5 from being captured.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-21",
+      "title": "Capture an interposing queen rather than lose one on d5 — paired c-pawns",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen trade as defensive simplification",
+      "difficulty": 5,
+      "fen": "7k/2p5/8/q7/8/2P5/8/3Q2K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8h4",
+        "a5h5",
+        "h4h5"
+      ],
+      "prompt": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Variant: Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The additional pawn context is Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first.",
+      "continuationReason": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen trade as defensive simplification. Practical model: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Position-specific problem: Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured. Calculated reference: d1d8 h8h7 d8h4 a5h5 h4h5. Other defense from the same board: d1d8 h8h7 d8d5 a5d5 g1f2. Failed but legal attempt: d1a4 a5a4 g1f2. Attacker resistance: ...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. Concrete endpoint: Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material. Misconception to repair: A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. Extra pawn context: Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Against an active black queen on a5, calculate Qd8+ and ...Qh5 after Qh4. Contrast this with the unsafe Qd5 and Qa4 moves that can be captured.",
+        "defenderIdea": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "continuation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Specific variant: Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8d5",
+              "a5d5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square. The exact variation d1d8 h8h7 d8d5 a5d5 g1f2 changes where the queens meet; Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "d1a4",
+              "a5a4",
+              "g1f2"
+            ],
+            "explanation": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first. After d1a4 a5a4 g1f2, the material count is not what a superficial checking-line estimate suggests. Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen trade as defensive simplification",
+        "principle": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly.",
+        "attackerThreat": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+        "modelLine": "d1d8 h8h7 d8h4 a5h5 h4h5",
+        "opponentResistance": "d1d8 h8h7 d8d5 a5d5 g1f2",
+        "failedPlan": "d1a4 a5a4 g1f2",
+        "misconception": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first.",
+        "context": "Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first.",
+        "practicalEvaluation": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition that can be captured; ...Qxd5 and ...Qxa4 instead win the white queen when it invades an attacked square.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "Qxh5+ captures the black queen, while the alternative Qd5 ...Qxd5 concedes the initiative and major material.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Technical defense often involves offering a queen trade on favorable geometry, not chasing the king blindly. Both c-pawns remain as king-ending assets; the queen trade's immediate tactical geometry comes first.",
+            "repair": "A checking sequence does not protect the queen from an enemy queen on the same line; verify the enemy capture ray first."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-22",
+      "title": "h-file queen block can be met without donating the queen — long-term pawns",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposing queen and recapture discipline",
+      "difficulty": 5,
+      "fen": "7k/8/1p6/1q6/8/P7/8/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "h8h7",
+        "c8h3",
+        "b5h5",
+        "h3h5"
+      ],
+      "prompt": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Variant: The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The additional pawn context is The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4.",
+      "continuationReason": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Interposing queen and recapture discipline. Practical model: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Position-specific problem: Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Calculated reference: c1c8 h8h7 c8h3 b5h5 h3h5. Other defense from the same board: c1c8 h8h7 c8c4 b5c4 g1f2. Failed but legal attempt: c1c4 b5c4 g1f2. Attacker resistance: ...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. Concrete endpoint: White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Misconception to repair: A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. Extra pawn context: The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely.",
+        "defenderIdea": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "continuation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Specific variant: The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "c1c8",
+              "h8h7",
+              "c8c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The exact variation c1c8 h8h7 c8c4 b5c4 g1f2 changes where the queens meet; The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "c1c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. After c1c4 b5c4 g1f2, the material count is not what a superficial checking-line estimate suggests. The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposing queen and recapture discipline",
+        "principle": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal.",
+        "attackerThreat": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "modelLine": "c1c8 h8h7 c8h3 b5h5 h3h5",
+        "opponentResistance": "c1c8 h8h7 c8c4 b5c4 g1f2",
+        "failedPlan": "c1c4 b5c4 g1f2",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "context": "The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4.",
+        "practicalEvaluation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. The a3/b6 reserves make the queen ending more complex but do not excuse an immediate ...Qxc4.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-23",
+      "title": "h-file queen block can be met without donating the queen — b2 protection",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposing queen and recapture discipline",
+      "difficulty": 5,
+      "fen": "7k/8/p7/1q6/8/8/1P6/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "h8h7",
+        "c8h3",
+        "b5h5",
+        "h3h5"
+      ],
+      "prompt": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Variant: A b2 pawn changes eventual queenside play but not the black queen's attack on c4. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The additional pawn context is A b2 pawn changes eventual queenside play but not the black queen's attack on c4.",
+      "continuationReason": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Interposing queen and recapture discipline. Practical model: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Position-specific problem: Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Calculated reference: c1c8 h8h7 c8h3 b5h5 h3h5. Other defense from the same board: c1c8 h8h7 c8c4 b5c4 g1f2. Failed but legal attempt: c1c4 b5c4 g1f2. Attacker resistance: ...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. Concrete endpoint: White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Misconception to repair: A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. Extra pawn context: A b2 pawn changes eventual queenside play but not the black queen's attack on c4. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely.",
+        "defenderIdea": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "continuation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Specific variant: A b2 pawn changes eventual queenside play but not the black queen's attack on c4.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "c1c8",
+              "h8h7",
+              "c8c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The exact variation c1c8 h8h7 c8c4 b5c4 g1f2 changes where the queens meet; A b2 pawn changes eventual queenside play but not the black queen's attack on c4."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "c1c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. After c1c4 b5c4 g1f2, the material count is not what a superficial checking-line estimate suggests. A b2 pawn changes eventual queenside play but not the black queen's attack on c4."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposing queen and recapture discipline",
+        "principle": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal.",
+        "attackerThreat": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "modelLine": "c1c8 h8h7 c8h3 b5h5 h3h5",
+        "opponentResistance": "c1c8 h8h7 c8c4 b5c4 g1f2",
+        "failedPlan": "c1c4 b5c4 g1f2",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "context": "A b2 pawn changes eventual queenside play but not the black queen's attack on c4.",
+        "practicalEvaluation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. A b2 pawn changes eventual queenside play but not the black queen's attack on c4.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-24",
+      "title": "h-file queen block can be met without donating the queen — central and flank reserves",
+      "source": "authored",
+      "sourceLabel": "P106 · Interposing queen and recapture discipline",
+      "difficulty": 5,
+      "fen": "7k/8/7p/1q6/8/8/3P4/2Q3K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "h8h7",
+        "c8h3",
+        "b5h5",
+        "h3h5"
+      ],
+      "prompt": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Variant: White d2 may later support a safe queen centralization while Black h6 creates a king-side target. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The additional pawn context is White d2 may later support a safe queen centralization while Black h6 creates a king-side target.",
+      "continuationReason": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Interposing queen and recapture discipline. Practical model: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Position-specific problem: Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely. Calculated reference: c1c8 h8h7 c8h3 b5h5 h3h5. Other defense from the same board: c1c8 h8h7 c8c4 b5c4 g1f2. Failed but legal attempt: c1c4 b5c4 g1f2. Attacker resistance: ...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. Concrete endpoint: White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead. Misconception to repair: A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. Extra pawn context: White d2 may later support a safe queen centralization while Black h6 creates a king-side target. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's queen on b5 can defend the king on h7 by interposing ...Qh5. Find the Qc8+–Qh3 route that permits Qxh5 without stepping onto c4 prematurely.",
+        "defenderIdea": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "continuation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. Specific variant: White d2 may later support a safe queen centralization while Black h6 creates a king-side target.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "c1c8",
+              "h8h7",
+              "c8c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange. The exact variation c1c8 h8h7 c8c4 b5c4 g1f2 changes where the queens meet; White d2 may later support a safe queen centralization while Black h6 creates a king-side target."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "c1c4",
+              "b5c4",
+              "g1f2"
+            ],
+            "explanation": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked. After c1c4 b5c4 g1f2, the material count is not what a superficial checking-line estimate suggests. White d2 may later support a safe queen centralization while Black h6 creates a king-side target."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Interposing queen and recapture discipline",
+        "principle": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal.",
+        "attackerThreat": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+        "modelLine": "c1c8 h8h7 c8h3 b5h5 h3h5",
+        "opponentResistance": "c1c8 h8h7 c8c4 b5c4 g1f2",
+        "failedPlan": "c1c4 b5c4 g1f2",
+        "misconception": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked.",
+        "context": "White d2 may later support a safe queen centralization while Black h6 creates a king-side target.",
+        "practicalEvaluation": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 blocks on the h-file, but Black also has ...Qxc4 against an unguarded queen on c4. The defended square determines the exchange.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the defensive queen on h5 in the reference. The c4 line permits Black to capture White's queen instead.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Defending a king attack requires exact interposition squares and queen capture arithmetic rather than an assumption that all queen moves are equal. White d2 may later support a safe queen centralization while Black h6 creates a king-side target.",
+            "repair": "A queen placed on c4 for vague central activity is vulnerable to ...Qxc4, even when its king has not yet been attacked."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-25",
+      "title": "Leave the b-file only when the checking rank is secure — outside targets",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen-file blockade and positional defense",
+      "difficulty": 5,
+      "fen": "7k/8/1p6/2q5/8/P7/8/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "h8h7",
+        "b8h2",
+        "c5h5",
+        "h2h5"
+      ],
+      "prompt": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Variant: White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive.",
+      "continuationReason": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen-file blockade and positional defense. Practical model: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Position-specific problem: The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Calculated reference: b1b8 h8h7 b8h2 c5h5 h2h5. Other defense from the same board: b1b8 h8h7 b8b5 c5b5 g1f2. Failed but legal attempt: b1b4 c5b4 g1f2. Attacker resistance: ...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. Concrete endpoint: The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Misconception to repair: Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. Extra pawn context: White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square.",
+        "defenderIdea": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "continuation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Specific variant: White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "b1b8",
+              "h8h7",
+              "b8b5",
+              "c5b5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The exact variation b1b8 h8h7 b8b5 c5b5 g1f2 changes where the queens meet; White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "b1b4",
+              "c5b4",
+              "g1f2"
+            ],
+            "explanation": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. After b1b4 c5b4 g1f2, the material count is not what a superficial checking-line estimate suggests. White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen-file blockade and positional defense",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
+        "opponentResistance": "b1b8 h8h7 b8b5 c5b5 g1f2",
+        "failedPlan": "b1b4 c5b4 g1f2",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "context": "White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive.",
+        "practicalEvaluation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. White a3 and Black b6 make later pawn races material, but the queen's defensive capture remains decisive.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-26",
+      "title": "Leave the b-file only when the checking rank is secure — c2 and a6 pawns",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen-file blockade and positional defense",
+      "difficulty": 5,
+      "fen": "7k/8/p7/2q5/8/8/2P5/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "h8h7",
+        "b8h2",
+        "c5h5",
+        "h2h5"
+      ],
+      "prompt": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Variant: White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive.",
+      "continuationReason": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen-file blockade and positional defense. Practical model: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Position-specific problem: The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Calculated reference: b1b8 h8h7 b8h2 c5h5 h2h5. Other defense from the same board: b1b8 h8h7 b8b5 c5b5 g1f2. Failed but legal attempt: b1b4 c5b4 g1f2. Attacker resistance: ...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. Concrete endpoint: The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Misconception to repair: Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. Extra pawn context: White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square.",
+        "defenderIdea": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "continuation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Specific variant: White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "b1b8",
+              "h8h7",
+              "b8b5",
+              "c5b5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The exact variation b1b8 h8h7 b8b5 c5b5 g1f2 changes where the queens meet; White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "b1b4",
+              "c5b4",
+              "g1f2"
+            ],
+            "explanation": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. After b1b4 c5b4 g1f2, the material count is not what a superficial checking-line estimate suggests. White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen-file blockade and positional defense",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
+        "opponentResistance": "b1b8 h8h7 b8b5 c5b5 g1f2",
+        "failedPlan": "b1b4 c5b4 g1f2",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "context": "White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive.",
+        "practicalEvaluation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. White c2 does not block its b-file queen; Black a6 remains an outside pawn if queens survive.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-27",
+      "title": "Leave the b-file only when the checking rank is secure — d2 and h6 pawn levers",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen-file blockade and positional defense",
+      "difficulty": 5,
+      "fen": "7k/8/7p/2q5/8/8/3P4/1Q4K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "b1b8",
+      "principalVariation": [
+        "b1b8",
+        "h8h7",
+        "b8h2",
+        "c5h5",
+        "h2h5"
+      ],
+      "prompt": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Variant: The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The additional pawn context is The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade.",
+      "continuationReason": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen-file blockade and positional defense. Practical model: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Position-specific problem: The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square. Calculated reference: b1b8 h8h7 b8h2 c5h5 h2h5. Other defense from the same board: b1b8 h8h7 b8b5 c5b5 g1f2. Failed but legal attempt: b1b4 c5b4 g1f2. Attacker resistance: ...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. Concrete endpoint: The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4. Misconception to repair: Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. Extra pawn context: The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The black queen on c5 can capture White's queen on b5 or b4. Defend with a checking Qb8+ and calculate the alternative h-file maneuver rather than trading from the wrong square.",
+        "defenderIdea": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "continuation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. Specific variant: The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "b1b8",
+              "h8h7",
+              "b8b5",
+              "c5b5",
+              "g1f2"
+            ],
+            "explanation": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss. The exact variation b1b8 h8h7 b8b5 c5b5 g1f2 changes where the queens meet; The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "b1b4",
+              "c5b4",
+              "g1f2"
+            ],
+            "explanation": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares. After b1b4 c5b4 g1f2, the material count is not what a superficial checking-line estimate suggests. The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen-file blockade and positional defense",
+        "principle": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender.",
+        "attackerThreat": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+        "modelLine": "b1b8 h8h7 b8h2 c5h5 h2h5",
+        "opponentResistance": "b1b8 h8h7 b8b5 c5b5 g1f2",
+        "failedPlan": "b1b4 c5b4 g1f2",
+        "misconception": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares.",
+        "context": "The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade.",
+        "practicalEvaluation": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qh5 is an interposition along rank five; ...Qxb5 or ...Qxb4 turns an unprotected queen advance into a material loss.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "The main line allows Qxh5 to remove the defender's queen. The two b-file approaches permit ...Qxb5/...Qxb4.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Balance counterchecks with refusing a queen exchange on a square already attacked by the defender. The d2 pawn is a future stabilizer, while h6 affects the king's shelter after a queen trade.",
+            "repair": "Treating all queen approaches toward a king as forcing ignores the opponent's direct queen captures on b-file squares."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-28",
+      "title": "The queen on e3 can safely meet ...Qe5 — a-file and b-file assets",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen centralization versus exposed king",
+      "difficulty": 5,
+      "fen": "6k1/8/1p1q4/8/8/P7/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "g8h7",
+        "e8e3",
+        "d6e5",
+        "e3e5"
+      ],
+      "prompt": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Variant: A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The additional pawn context is A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares.",
+      "continuationReason": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen centralization versus exposed king. Practical model: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Position-specific problem: The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Calculated reference: e1e8 g8h7 e8e3 d6e5 e3e5. Other defense from the same board: e1e8 g8h7 e8e3 d6c5 e3c5. Failed but legal attempt: e1e7 d6e7 g1f2. Attacker resistance: ...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. Concrete endpoint: White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Misconception to repair: An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. Extra pawn context: A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal.",
+        "defenderIdea": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "continuation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Specific variant: A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "e1e8",
+              "g8h7",
+              "e8e3",
+              "d6c5",
+              "e3c5"
+            ],
+            "explanation": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The exact variation e1e8 g8h7 e8e3 d6c5 e3c5 changes where the queens meet; A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "e1e7",
+              "d6e7",
+              "g1f2"
+            ],
+            "explanation": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. After e1e7 d6e7 g1f2, the material count is not what a superficial checking-line estimate suggests. A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen centralization versus exposed king",
+        "principle": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense.",
+        "attackerThreat": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "modelLine": "e1e8 g8h7 e8e3 d6e5 e3e5",
+        "opponentResistance": "e1e8 g8h7 e8e3 d6c5 e3c5",
+        "failedPlan": "e1e7 d6e7 g1f2",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "context": "A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares.",
+        "practicalEvaluation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. A white a3 pawn and black b6 pawn create wing tension after the queen trade without altering the capture squares.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-29",
+      "title": "The queen on e3 can safely meet ...Qe5 — b3 and a6 targets",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen centralization versus exposed king",
+      "difficulty": 5,
+      "fen": "6k1/8/p2q4/8/8/1P6/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "g8h7",
+        "e8e3",
+        "d6e5",
+        "e3e5"
+      ],
+      "prompt": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Variant: White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The additional pawn context is White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus.",
+      "continuationReason": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen centralization versus exposed king. Practical model: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Position-specific problem: The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Calculated reference: e1e8 g8h7 e8e3 d6e5 e3e5. Other defense from the same board: e1e8 g8h7 e8e3 d6c5 e3c5. Failed but legal attempt: e1e7 d6e7 g1f2. Attacker resistance: ...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. Concrete endpoint: White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Misconception to repair: An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. Extra pawn context: White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal.",
+        "defenderIdea": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "continuation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Specific variant: White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "e1e8",
+              "g8h7",
+              "e8e3",
+              "d6c5",
+              "e3c5"
+            ],
+            "explanation": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The exact variation e1e8 g8h7 e8e3 d6c5 e3c5 changes where the queens meet; White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "e1e7",
+              "d6e7",
+              "g1f2"
+            ],
+            "explanation": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. After e1e7 d6e7 g1f2, the material count is not what a superficial checking-line estimate suggests. White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen centralization versus exposed king",
+        "principle": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense.",
+        "attackerThreat": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "modelLine": "e1e8 g8h7 e8e3 d6e5 e3e5",
+        "opponentResistance": "e1e8 g8h7 e8e3 d6c5 e3c5",
+        "failedPlan": "e1e7 d6e7 g1f2",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "context": "White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus.",
+        "practicalEvaluation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. White b3 is a possible future queen target, and Black a6 could become a counterpasser. The e3 square remains the immediate calculation focus.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-30",
+      "title": "The queen on e3 can safely meet ...Qe5 — c3 and h6 reserve",
+      "source": "authored",
+      "sourceLabel": "P106 · Queen centralization versus exposed king",
+      "difficulty": 5,
+      "fen": "6k1/8/3q3p/8/8/2P5/8/4Q1K1 w - - 0 1",
+      "playerColor": "w",
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "bestMove": "e1e8",
+      "principalVariation": [
+        "e1e8",
+        "g8h7",
+        "e8e3",
+        "d6e5",
+        "e3e5"
+      ],
+      "prompt": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Variant: The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying. Calculate the principal five plies without a board, then decide whether a queen trade relieves pressure or gives Black the better exchange.",
+      "replyReason": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The additional pawn context is The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying.",
+      "continuationReason": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Count each traded queen and the survival of the outside pawn reserve.",
+      "explanation": "P106 original defensive study — Queen centralization versus exposed king. Practical model: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Position-specific problem: The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal. Calculated reference: e1e8 g8h7 e8e3 d6e5 e3e5. Other defense from the same board: e1e8 g8h7 e8e3 d6c5 e3c5. Failed but legal attempt: e1e7 d6e7 g1f2. Attacker resistance: ...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. Concrete endpoint: White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7. Misconception to repair: An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. Extra pawn context: The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying. This is an instructional five-ply line, not a certified perpetual, mate, tablebase WDL or engine-unique choice. Re-evaluate both king safety and material after the trades.",
+      "defensiveStudy": {
+        "keyQuestion": "The opponent's queen on d6 contests the center. After the forcing Qe8+ and ...Kh7, choose a quiet e3 square that permits Qxe5 or Qxc5 after the black queen steps onto a capturable diagonal.",
+        "defenderIdea": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "continuation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "reflection": "Without replay controls, state which queen can capture the other, which king square is attacked and whether the defender's queen has a legal interposition. Compare the counterline after five plies. Answer guide: Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. Specific variant: The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying.",
+        "variations": [
+          {
+            "label": "Strong attacker counterplay",
+            "moves": [
+              "e1e8",
+              "g8h7",
+              "e8e3",
+              "d6c5",
+              "e3c5"
+            ],
+            "explanation": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance. The exact variation e1e8 g8h7 e8e3 d6c5 e3c5 changes where the queens meet; The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying."
+          },
+          {
+            "label": "Plausible poor defense",
+            "moves": [
+              "e1e7",
+              "d6e7",
+              "g1f2"
+            ],
+            "explanation": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over. After e1e7 d6e7 g1f2, the material count is not what a superficial checking-line estimate suggests. The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Queen centralization versus exposed king",
+        "principle": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense.",
+        "attackerThreat": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+        "modelLine": "e1e8 g8h7 e8e3 d6e5 e3e5",
+        "opponentResistance": "e1e8 g8h7 e8e3 d6c5 e3c5",
+        "failedPlan": "e1e7 d6e7 g1f2",
+        "misconception": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over.",
+        "context": "The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying.",
+        "practicalEvaluation": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's most dangerous immediate queen capture or countercheck and the safe reply.",
+            "answer": "...Qe5 and ...Qc5 are legitimate countercentralizations, but both walk onto diagonals controlled by a white queen on e3. ...Qxe7 punishes a naive seventh-rank queen advance.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Reconstruct each queen trade and explain the material balance after five plies.",
+            "answer": "White can capture the black queen on e5 or c5 with an exact diagonal. The premature Qe7 permits an immediate ...Qxe7.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          },
+          {
+            "prompt": "Compare the failed candidate with the safe centralization or checking interposition.",
+            "answer": "Keep the queen on a square that controls multiple possible opponent counterattack entries; the right square, not the number of checks, maintains the defense. The white c3 pawn may support a future king approach; the black h6 pawn affects king shelter after simplifying.",
+            "repair": "An apparently invasive Qe7 can lose the queen to ...Qxe7. Defense includes refusing a premature exchange that hands the initiative over."
+          }
+        ]
+      }
+    }
+  ]
+}
