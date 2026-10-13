@@ -342,7 +342,7 @@
     {
       "id": "calc:p97-07",
       "title": "Rook-rank chase — White pawn reserve",
-      "fen": "4k3/8/8/8/8/8/1P6/R5K1 w - - 0 1",
+      "fen": "4k3/8/8/8/8/8/1P5P/R5K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
