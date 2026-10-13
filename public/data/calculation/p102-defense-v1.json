@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "phase": "P102",
+  "section": "Fortress resources and perpetual-check candidates",
+  "positions": [
+    {
+      "id": "calc:p102-25",
+      "title": "The h8 wrong-bishop corner — unmodified material",
+      "fen": "7k/8/8/5K1P/8/8/8/5B2 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Fortresses and wrong-bishop defense",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "f1e2",
+      "principalVariation": [
+        "f1e2",
+        "h8h7",
+        "e2d3",
+        "h7h6",
+        "d3e4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.minor-piece"
+      ],
+      "prompt": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Study-specific context: pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Material context: pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn",
+      "continuationReason": "At the endpoint: White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+      "explanation": "Reference f1e2 h8h7 e2d3 h7h6 d3e4. Defender alternative f1c4 h8h7 c4d5 h7h6 d5e4. Misleading move h5h6 h8h7 f1d3. White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Defender: Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Endpoint White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress. Error diagnosis: One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. Variant implications: pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending.",
+        "defenderIdea": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "continuation": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "f1c4",
+              "h8h7",
+              "c4d5",
+              "h7h6",
+              "d5e4"
+            ],
+            "explanation": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Variant: pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "h5h6",
+              "h8h7",
+              "f1d3"
+            ],
+            "explanation": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Fortresses and wrong-bishop defense",
+        "context": "pure rook-pawn ending: the defender has only a king and the attacker only one h-pawn",
+        "defenderResource": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "endpoint": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    },
+    {
+      "id": "calc:p102-26",
+      "title": "The h8 wrong-bishop corner — Pa2",
+      "fen": "7k/8/8/5K1P/8/8/P7/5B2 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Fortresses and wrong-bishop defense",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "f1e2",
+      "principalVariation": [
+        "f1e2",
+        "h8h7",
+        "e2d3",
+        "h7h6",
+        "d3e4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.minor-piece"
+      ],
+      "prompt": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Study-specific context: an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Material context: an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient",
+      "continuationReason": "At the endpoint: White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+      "explanation": "Reference f1e2 h8h7 e2d3 h7h6 d3e4. Defender alternative f1c4 h8h7 c4d5 h7h6 d5e4. Misleading move h5h6 h8h7 f1d3. White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Defender: Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Endpoint White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress. Error diagnosis: One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. Variant implications: an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending.",
+        "defenderIdea": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "continuation": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "f1c4",
+              "h8h7",
+              "c4d5",
+              "h7h6",
+              "d5e4"
+            ],
+            "explanation": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Variant: an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "h5h6",
+              "h8h7",
+              "f1d3"
+            ],
+            "explanation": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Fortresses and wrong-bishop defense",
+        "context": "an extra White a-pawn creates a possible other promotion route, so the corner argument alone is insufficient",
+        "defenderResource": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "endpoint": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    },
+    {
+      "id": "calc:p102-27",
+      "title": "The h8 wrong-bishop corner — pa7",
+      "fen": "7k/p7/8/5K1P/8/8/8/5B2 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Fortresses and wrong-bishop defense",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "f1e2",
+      "principalVariation": [
+        "f1e2",
+        "h8h7",
+        "e2d3",
+        "h7h6",
+        "d3e4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.minor-piece"
+      ],
+      "prompt": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Study-specific context: an extra Black a-pawn introduces a remote race and changes the available waiting moves. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Material context: an extra Black a-pawn introduces a remote race and changes the available waiting moves",
+      "continuationReason": "At the endpoint: White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+      "explanation": "Reference f1e2 h8h7 e2d3 h7h6 d3e4. Defender alternative f1c4 h8h7 c4d5 h7h6 d5e4. Misleading move h5h6 h8h7 f1d3. White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending. Defender: Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Endpoint White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress. Error diagnosis: One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. Variant implications: an extra Black a-pawn introduces a remote race and changes the available waiting moves. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "White owns a light-squared bishop and h-pawn, but the h8 promotion square is dark. A defending king that remains in that corner can prevent promotion in the pure wrong-bishop ending.",
+        "defenderIdea": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "continuation": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: an extra Black a-pawn introduces a remote race and changes the available waiting moves",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "f1c4",
+              "h8h7",
+              "c4d5",
+              "h7h6",
+              "d5e4"
+            ],
+            "explanation": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve. Variant: an extra Black a-pawn introduces a remote race and changes the available waiting moves"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "h5h6",
+              "h8h7",
+              "f1d3"
+            ],
+            "explanation": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn. an extra Black a-pawn introduces a remote race and changes the available waiting moves"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Fortresses and wrong-bishop defense",
+        "context": "an extra Black a-pawn introduces a remote race and changes the available waiting moves",
+        "defenderResource": "Black can choose to remain near h8 rather than offering cooperative ...Kh7 moves; the illustrative replies explore what White can and cannot improve.",
+        "endpoint": "White's bishop can maneuver, yet it never controls h8. An additional white pawn would invalidate a simple inference of a theoretical fortress.",
+        "misconception": "One cannot claim the bishop automatically wins against a corner king or that the drawing mechanism survives every added pawn.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    },
+    {
+      "id": "calc:p102-28",
+      "title": "Do the checks survive the opponent's queen? — Pa2",
+      "fen": "7k/8/7q/8/8/8/P7/3Q2K1 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Perpetual-check candidates",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines"
+      ],
+      "prompt": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Study-specific context: White's a-pawn remains if queens exchange; it changes the later material verdict. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Material context: White's a-pawn remains if queens exchange; it changes the later material verdict",
+      "continuationReason": "At the endpoint: Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+      "explanation": "Reference d1d8 h8h7 d8d5 h6e3 g1h1. Defender alternative d1d8 h8h7 d8h4 h6h4 g1f1. Misleading move d1a4 h6e3 g1h1. Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Defender: Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Endpoint Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated. Error diagnosis: Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. Variant implications: White's a-pawn remains if queens exchange; it changes the later material verdict. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition.",
+        "defenderIdea": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "continuation": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: White's a-pawn remains if queens exchange; it changes the later material verdict",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Variant: White's a-pawn remains if queens exchange; it changes the later material verdict"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. White's a-pawn remains if queens exchange; it changes the later material verdict"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Perpetual-check candidates",
+        "context": "White's a-pawn remains if queens exchange; it changes the later material verdict",
+        "defenderResource": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "endpoint": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    },
+    {
+      "id": "calc:p102-29",
+      "title": "Do the checks survive the opponent's queen? — pa7",
+      "fen": "7k/p7/7q/8/8/8/8/3Q2K1 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Perpetual-check candidates",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines"
+      ],
+      "prompt": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Study-specific context: Black retains an a-pawn that could become decisive after the checks end. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Material context: Black retains an a-pawn that could become decisive after the checks end",
+      "continuationReason": "At the endpoint: Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+      "explanation": "Reference d1d8 h8h7 d8d5 h6e3 g1h1. Defender alternative d1d8 h8h7 d8h4 h6h4 g1f1. Misleading move d1a4 h6e3 g1h1. Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Defender: Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Endpoint Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated. Error diagnosis: Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. Variant implications: Black retains an a-pawn that could become decisive after the checks end. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition.",
+        "defenderIdea": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "continuation": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: Black retains an a-pawn that could become decisive after the checks end",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Variant: Black retains an a-pawn that could become decisive after the checks end"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. Black retains an a-pawn that could become decisive after the checks end"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Perpetual-check candidates",
+        "context": "Black retains an a-pawn that could become decisive after the checks end",
+        "defenderResource": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "endpoint": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    },
+    {
+      "id": "calc:p102-30",
+      "title": "Do the checks survive the opponent's queen? — Pb2",
+      "fen": "7k/8/7q/8/8/8/1P6/3Q2K1 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Perpetual-check candidates",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d1d8",
+      "principalVariation": [
+        "d1d8",
+        "h8h7",
+        "d8d5",
+        "h6e3",
+        "g1h1"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.forcing-lines"
+      ],
+      "prompt": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Study-specific context: White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks. Independently calculate the defender's reply and five complete plies.",
+      "replyReason": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Material context: White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks",
+      "continuationReason": "At the endpoint: Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+      "explanation": "Reference d1d8 h8h7 d8d5 h6e3 g1h1. Defender alternative d1d8 h8h7 d8h4 h6h4 g1f1. Misleading move d1a4 h6e3 g1h1. Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition. Defender: Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Endpoint Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated. Error diagnosis: Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. Variant implications: White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks. This demonstration does not claim an engine-certified WDL or proven perpetual.",
+      "defensiveStudy": {
+        "keyQuestion": "Qd8+ initiates a checking sequence, but the defending queen has counterchecks and queen-capture resources. A single promising check does not establish perpetual repetition.",
+        "defenderIdea": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "continuation": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "reflection": "Which square does the bishop never control, or what countercheck prevents an immediate queen repetition? Recalculate both lines and explain why the reserve pawn matters: White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks",
+        "variations": [
+          {
+            "label": "Other defender move order",
+            "moves": [
+              "d1d8",
+              "h8h7",
+              "d8h4",
+              "h6h4",
+              "g1f1"
+            ],
+            "explanation": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check. Variant: White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks"
+          },
+          {
+            "label": "Misleading continuation",
+            "moves": [
+              "d1a4",
+              "h6e3",
+              "g1h1"
+            ],
+            "explanation": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies. White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Perpetual-check candidates",
+        "context": "White's b-pawn gives king safety and pawn-race considerations beyond the displayed checks",
+        "defenderResource": "Black can answer a quiet Qd5 with ...Qe3+ or punish Qh4? with ...Qxh4; the white king must answer any resulting check.",
+        "endpoint": "Kh1 preserves the queen in the first branch, while Qh4 loses the queen to ...Qxh4. Exact perpetual-check draw conditions have not been demonstrated.",
+        "misconception": "Counting any pair of queen checks as a forced draw overlooks the defender's legal alternatives and checking replies.",
+        "verdict": "No invented complete WDL certificate"
+      }
+    }
+  ]
+}
