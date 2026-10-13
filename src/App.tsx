@@ -490,7 +490,7 @@ export default function App() {
   const catalogStatus = useMemo(() => calculationSourceStatus(), [catalogRevision]);
   const strategicPositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
-      Boolean(item.strategicImbalanceStudy)), [state, catalogRevision]);
+      Boolean(item.strategicImbalanceStudy || item.prophylaxisStudy)), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
@@ -699,9 +699,12 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: "P109 · Independent positional decision (unscored)",
+      reason: position.prophylaxisStudy
+        ? "P110 · Anticipate threats (unscored)"
+        : "P109 · Independent positional decision (unscored)",
       title: position.title,
-      subtitle: position.strategicImbalanceStudy?.theme ?? "Strategic decision",
+      subtitle: position.prophylaxisStudy?.theme ??
+        position.strategicImbalanceStudy?.theme ?? "Strategic decision",
     });
   }
 
@@ -3089,7 +3092,7 @@ export default function App() {
               <StrategicStudyLibrary
                 positions={strategicPositions}
                 loading={catalogStatus.pending > 0}
-                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-")).length}
+                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-")).length}
                 onRetry={retryFailedCalculationSources}
                 onStart={openStrategicStudy}
               />

@@ -524,13 +524,15 @@ export function CalculationRunner({
         <div className="lesson-instruction calculation-instruction">
           <div>
             <p className="eyebrow">
-              CALCULATION TRAINER
+              {position.assessmentStatus === "instructional-only"
+                ? "POSITION STUDY · UNSCORED" : "CALCULATION TRAINER"}
             </p>
             <h2>
               {phase === "candidates"
                 ? position.title
                 : phase === "reply"
-                  ? "Give the opponent their best reply."
+                  ? (position.assessmentStatus === "instructional-only"
+                    ? "Predict a challenging opponent reply." : "Give the opponent their best reply.")
                   : phase ===
                       "continuation"
                     ? "Continue one move deeper."
@@ -544,6 +546,12 @@ export function CalculationRunner({
                 <p className="lesson-prompt">
                   {position.prompt}
                 </p>
+                {position.assessmentStatus === "instructional-only" && (
+                  <p className="calculation-instructional-note">
+                    Authored legal reference lines, not verified best moves. This case
+                    does not submit a score, review record or mastery evidence.
+                  </p>
+                )}
                 <div className="calculation-rule">
                   <Target size={17} />
                   <span>

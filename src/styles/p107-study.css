@@ -60,3 +60,8 @@
 .calculation-instructional-review p{line-height:1.6}
 .calculation-instructional-note{border-left:2px solid currentColor;padding-left:10px}
 .strategic-library button:focus-visible,.strategic-library select:focus-visible{outline:2px solid currentColor}
+
+/* P110 accessible native study-family filters. */
+.strategic-library-categories{display:flex;gap:6px;flex-wrap:wrap}
+.strategic-library-categories button{flex:1 1 120px;min-height:44px;padding:7px;border:1px solid var(--chess-color-separator,var(--line));color:inherit;background:transparent;cursor:pointer}
+.strategic-library-categories .selected{outline:2px solid currentColor;outline-offset:-3px;font-weight:700}
