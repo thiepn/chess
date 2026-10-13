@@ -31,30 +31,19 @@
 .calculation-source-notice { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:12px; border:1px solid var(--chess-color-separator,var(--line)); border-radius:6px; }
 .calculation-source-notice .secondary { min-height:38px; padding:7px 12px; }
 
-/* P108: original chessboard, accessible branch and recovery controls */
-.deep-lab{display:grid;gap:14px;padding:16px;border:1px solid var(--chess-color-separator,var(--line));background:var(--chess-color-surface,var(--surface));border-radius:6px}
-.deep-lab-heading{display:flex;justify-content:space-between;align-items:start;gap:12px}
-.deep-lab-heading h3{margin:0;font-size:1.14rem}
-.deep-lab-heading p,.deep-lab-feedback p,.deep-lab-reveal p{margin:6px 0;line-height:1.55}
-.deep-lab-heading .eyebrow{font-size:.72rem}
-.deep-lab-count{white-space:nowrap;font-weight:700}
-.deep-lab-branches{display:flex;flex-wrap:wrap;gap:6px;border:0;padding:0;margin:0;min-width:0}
-.deep-lab-branches legend{font-weight:700;padding:0 0 8px}
-.deep-lab-branches button,.deep-lab-timeline button{padding:8px 10px;min-height:42px;border:1px solid var(--chess-color-separator,var(--line));background:transparent;color:inherit;border-radius:4px;cursor:pointer}
-.deep-lab-branches .chosen,.deep-lab-timeline .current{border-color:currentColor;outline:1px solid currentColor;outline-offset:-3px}
-.deep-lab-branches small,.deep-lab-timeline small{font-size:.72rem;display:block;font-weight:400}
-.deep-lab-board{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:12px;align-items:start}
-.deep-lab-board .chess-board-wrap{width:100%;max-width:330px}
-.deep-lab-board-details{display:grid;gap:6px;line-height:1.5}
-.deep-lab-board-details span,.deep-lab-feedback small,.deep-lab-engine p{font-size:.86rem;opacity:.84}
-.deep-lab-timeline{display:flex;gap:5px;overflow-x:auto;padding:4px 2px}
-.deep-lab-timeline button{flex:0 0 auto;min-width:58px}
-.deep-lab-actions,.deep-lab-footer{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.deep-lab-actions button,.deep-lab-footer button,.deep-lab-engine button{padding:9px 12px;min-height:44px}
-.deep-lab-feedback,.deep-lab-engine{border-top:1px solid var(--chess-color-separator,var(--line));padding-top:12px}
-.deep-lab-reveal{padding:10px;border-left:2px solid currentColor}
-.deep-lab-feedback small{display:block;margin-top:10px;line-height:1.5}
+
+
+/* P108: reuse native materials, buttons and board focus styling. */
+.deep-lab{display:grid;gap:12px}
+.deep-lab-heading{display:flex;justify-content:space-between;gap:12px}
+.deep-lab-board{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:12px}
+.deep-lab-board .chess-board-wrap{max-width:330px}
+.deep-lab-branches,.deep-lab-actions,.deep-lab-footer{display:flex;flex-wrap:wrap;gap:8px}
+.deep-lab-branches{border:0;padding:0}
+.deep-lab-branches button,.deep-lab-timeline button{padding:8px;min-height:44px}
+.deep-lab-branches .chosen,.deep-lab-timeline .current{outline:2px solid currentColor}
+.deep-lab-timeline{display:flex;gap:5px;overflow-x:auto}
+.deep-lab-timeline button{flex:0 0 auto}
+.deep-lab-branches small,.deep-lab-timeline small{display:block}
 .deep-lab-footer .primary{margin-left:auto}
-.deep-lab-error{font-weight:700}
-.deep-lab button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
-@media(max-width:650px){.deep-lab{padding:12px}.deep-lab-heading{flex-direction:column}.deep-lab-board{grid-template-columns:1fr}.deep-lab-board .chess-board-wrap{max-width:450px}.deep-lab-footer .primary{margin-left:0;width:100%}}
+@media(max-width:650px){.deep-lab-board{grid-template-columns:1fr}.deep-lab-heading{flex-direction:column}.deep-lab-footer .primary{margin-left:0;width:100%}}
