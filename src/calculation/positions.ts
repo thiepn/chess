@@ -45,6 +45,8 @@ const sourceFiles = [
     ["p106-king-fortress-v1.json", 18],
     ["p109-imbalances-a-v1.json", 20],
     ["p109-imbalances-b-v1.json", 20],
+    ["p110-prophylaxis-a-v1.json", 20],
+    ["p110-prophylaxis-b-v1.json", 20],
   ] as const;
 type SourceStatus = "loading" | "ready" | "failed";
 const sourceStatus = new Map<string, SourceStatus>();
@@ -365,7 +367,7 @@ export function calculationPositionFor(
   now = new Date(),
 ) {
   const select = (positions: CalculationPosition[]) =>
-    positions.filter(p => p.skillIds.includes(skillId))
+    positions.filter(p => p.assessmentStatus !== "instructional-only" && p.skillIds.includes(skillId))
       .sort((a, b) => dueScore(state, b.id, now) - dueScore(state, a.id, now))[0];
   return select(personalPositions(state)) ??
     select([...externalPositions, ...authoredPositions]) ??
