@@ -1339,7 +1339,7 @@
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           },
           {
-            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "prompt": "Why is the alternative 3.Kf1 less secure than returning to h1, given the pawn on h2 and the black king's supporting squares?",
             "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           }
@@ -1423,7 +1423,7 @@
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           },
           {
-            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "prompt": "Why is the alternative 3.Kf1 less secure than returning to h1, given the pawn on h2 and the black king's supporting squares?",
             "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           }
@@ -1507,7 +1507,7 @@
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           },
           {
-            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "prompt": "Why is the alternative 3.Kf1 less secure than returning to h1, given the pawn on h2 and the black king's supporting squares?",
             "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
             "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
           }
