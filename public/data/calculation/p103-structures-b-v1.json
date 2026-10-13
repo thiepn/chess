@@ -11,13 +11,13 @@
       "sourceLabel": "P103 · Central pawn chains and levers",
       "playerColor": "w",
       "fen": "rn4k1/8/2p1p3/3pP3/3P4/2P2N2/P7/R5K1 w - - 0 1",
-      "bestMove": "d4d5",
+      "bestMove": "c3c4",
       "principalVariation": [
+        "c3c4",
+        "d5c4",
         "d4d5",
         "e6d5",
-        "e5e6",
-        "a8a7",
-        "f3e5"
+        "e5e6"
       ],
       "difficulty": 4,
       "skillIds": [
@@ -26,16 +26,16 @@
         "calculation.evaluation",
         "pawns.structure"
       ],
-      "prompt": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Position-specific plan: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
-      "replyReason": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Concrete context: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
-      "continuationReason": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Check the opponent's next direct pawn capture before claiming a strategic win.",
-      "explanation": "Structure: Central pawn chains and levers. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. Situation: The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Worked line d4d5 e6d5 e5e6 a8a7 f3e5. Concrete defensive line c3c4 d5c4 d4d5 e6d5 e5e6. Plausible flawed candidate d4d5 e6d5 c3c4. Reply-specific calculation: ...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Evaluation after five plies: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Error repair: An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This variant's important difference: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base. Evaluate pieces behind the pawn front and actual pawn levers before claiming win or draw; there is no tablebase-certified or engine-unique best move implied by the illustrative sequence.",
+      "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
+      "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+      "continuationReason": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+      "explanation": "Central pawn chain and tempo. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. The d5 square is initially occupied by a black pawn, so White must dislodge it before d4–d5 becomes legal. Correct example: c3c4 d5c4 d4d5 e6d5 e5e6. Defensive move-order variant: c3c4 d5c4 d4d5 e6d5 e5e6. Slow plan: f3d2 b8d7 c3c4. Exact reply: ...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5. Result: After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3. Common error: An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance. Additional pawn-specific factor: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base. Do not assert a tablebase win or unique best line on the basis of this excerpt.",
       "defensiveStudy": {
-        "keyQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderIdea": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "continuation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
-        "misconception": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "reflection": "Independent recall: (1) Which pawn is backward, blocked, isolated or passed? (2) Where should your worst minor piece go? (3) What is the defender's pawn lever and which candidate fails after it? Model correction: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Special case: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
+        "keyQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
+        "defenderIdea": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "continuation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+        "misconception": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "reflection": "Reconstruct why 1.d5 is blocked by Black's d5 pawn. Identify the pawn each side owns on c4/d5 after 1.c4 ...dxc4 2.d5 ...exd5 3.e6, and decide whether the advanced pawn can be restrained. White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
         "variations": [
           {
             "label": "Strong pawn-break resistance",
@@ -51,11 +51,11 @@
           {
             "label": "Failed plan with pawn-contact repair",
             "moves": [
-              "d4d5",
-              "e6d5",
+              "f3d2",
+              "b8d7",
               "c3c4"
             ],
-            "explanation": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This candidate d4d5 e6d5 c3c4 must be evaluated as a legal line, not as a forced defeat. Context: White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base."
+            "explanation": "Nd2 and ...Nd7 are a quiet counterplan that postpones the c4 central lever. After c4, the real pawn clash ...dxc4 remains, so White should calculate the trade rather than merely accumulate maneuvers."
           }
         ]
       },
@@ -64,10 +64,10 @@
         "strategicModel": "A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal.",
         "sourcePosition": "e5–e6 after the d-pawn exchange",
         "caseVariation": "Outside a-file tempo",
-        "structuralQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderPlan": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "contrast": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "longTermEvaluation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
+        "structuralQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
+        "defenderPlan": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "contrast": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "longTermEvaluation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
         "context": "White's a2 can advance to a4 later, but e6 and d5 determine which side controls the central pawn base.",
         "independentExercises": [
           {
@@ -95,13 +95,13 @@
       "sourceLabel": "P103 · Central pawn chains and levers",
       "playerColor": "w",
       "fen": "rn4k1/6p1/2p1p3/3pP3/3P4/2P2N2/8/R5K1 w - - 0 1",
-      "bestMove": "d4d5",
+      "bestMove": "c3c4",
       "principalVariation": [
+        "c3c4",
+        "d5c4",
         "d4d5",
         "e6d5",
-        "e5e6",
-        "a8a7",
-        "f3e5"
+        "e5e6"
       ],
       "difficulty": 4,
       "skillIds": [
@@ -110,16 +110,16 @@
         "calculation.evaluation",
         "pawns.structure"
       ],
-      "prompt": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Position-specific plan: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
-      "replyReason": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Concrete context: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
-      "continuationReason": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Check the opponent's next direct pawn capture before claiming a strategic win.",
-      "explanation": "Structure: Central pawn chains and levers. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. Situation: The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Worked line d4d5 e6d5 e5e6 a8a7 f3e5. Concrete defensive line c3c4 d5c4 d4d5 e6d5 e5e6. Plausible flawed candidate d4d5 e6d5 c3c4. Reply-specific calculation: ...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Evaluation after five plies: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Error repair: An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This variant's important difference: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter. Evaluate pieces behind the pawn front and actual pawn levers before claiming win or draw; there is no tablebase-certified or engine-unique best move implied by the illustrative sequence.",
+      "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
+      "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+      "continuationReason": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+      "explanation": "Central pawn chain and tempo. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. The d5 square is initially occupied by a black pawn, so White must dislodge it before d4–d5 becomes legal. Correct example: c3c4 d5c4 d4d5 e6d5 e5e6. Defensive move-order variant: c3c4 d5c4 d4d5 e6d5 e5e6. Slow plan: f3d2 b8d7 c3c4. Exact reply: ...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5. Result: After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3. Common error: An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance. Additional pawn-specific factor: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter. Do not assert a tablebase win or unique best line on the basis of this excerpt.",
       "defensiveStudy": {
-        "keyQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderIdea": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "continuation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
-        "misconception": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "reflection": "Independent recall: (1) Which pawn is backward, blocked, isolated or passed? (2) Where should your worst minor piece go? (3) What is the defender's pawn lever and which candidate fails after it? Model correction: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Special case: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
+        "keyQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
+        "defenderIdea": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "continuation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+        "misconception": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "reflection": "Reconstruct why 1.d5 is blocked by Black's d5 pawn. Identify the pawn each side owns on c4/d5 after 1.c4 ...dxc4 2.d5 ...exd5 3.e6, and decide whether the advanced pawn can be restrained. Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
         "variations": [
           {
             "label": "Strong pawn-break resistance",
@@ -135,11 +135,11 @@
           {
             "label": "Failed plan with pawn-contact repair",
             "moves": [
-              "d4d5",
-              "e6d5",
+              "f3d2",
+              "b8d7",
               "c3c4"
             ],
-            "explanation": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This candidate d4d5 e6d5 c3c4 must be evaluated as a legal line, not as a forced defeat. Context: Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter."
+            "explanation": "Nd2 and ...Nd7 are a quiet counterplan that postpones the c4 central lever. After c4, the real pawn clash ...dxc4 remains, so White should calculate the trade rather than merely accumulate maneuvers."
           }
         ]
       },
@@ -148,10 +148,10 @@
         "strategicModel": "A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal.",
         "sourcePosition": "e5–e6 after the d-pawn exchange",
         "caseVariation": "Black kingside lever",
-        "structuralQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderPlan": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "contrast": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "longTermEvaluation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
+        "structuralQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
+        "defenderPlan": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "contrast": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "longTermEvaluation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
         "context": "Black has g7; a future ...f6 or ...g6 maneuver may challenge e6 and alters its king's shelter.",
         "independentExercises": [
           {
@@ -179,13 +179,13 @@
       "sourceLabel": "P103 · Central pawn chains and levers",
       "playerColor": "w",
       "fen": "rn4k1/8/2p1p3/3pP3/3P4/2P2N2/1P6/R5K1 w - - 0 1",
-      "bestMove": "d4d5",
+      "bestMove": "c3c4",
       "principalVariation": [
+        "c3c4",
+        "d5c4",
         "d4d5",
         "e6d5",
-        "e5e6",
-        "a8a7",
-        "f3e5"
+        "e5e6"
       ],
       "difficulty": 5,
       "skillIds": [
@@ -194,16 +194,16 @@
         "calculation.evaluation",
         "pawns.structure"
       ],
-      "prompt": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Position-specific plan: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply. Name the vulnerable pawn base, choose a piece square and calculate at least five plies rather than judging the pawn silhouette alone.",
-      "replyReason": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Concrete context: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
-      "continuationReason": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Check the opponent's next direct pawn capture before claiming a strategic win.",
-      "explanation": "Structure: Central pawn chains and levers. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. Situation: The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals. Worked line d4d5 e6d5 e5e6 a8a7 f3e5. Concrete defensive line c3c4 d5c4 d4d5 e6d5 e5e6. Plausible flawed candidate d4d5 e6d5 c3c4. Reply-specific calculation: ...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession. Evaluation after five plies: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Error repair: An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This variant's important difference: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply. Evaluate pieces behind the pawn front and actual pawn levers before claiming win or draw; there is no tablebase-certified or engine-unique best move implied by the illustrative sequence.",
+      "prompt": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
+      "replyReason": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+      "continuationReason": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+      "explanation": "Central pawn chain and tempo. A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal. The d5 square is initially occupied by a black pawn, so White must dislodge it before d4–d5 becomes legal. Correct example: c3c4 d5c4 d4d5 e6d5 e5e6. Defensive move-order variant: c3c4 d5c4 d4d5 e6d5 e5e6. Slow plan: f3d2 b8d7 c3c4. Exact reply: ...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5. Result: After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3. Common error: An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance. Additional pawn-specific factor: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply. Do not assert a tablebase win or unique best line on the basis of this excerpt.",
       "defensiveStudy": {
-        "keyQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderIdea": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "continuation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
-        "misconception": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "reflection": "Independent recall: (1) Which pawn is backward, blocked, isolated or passed? (2) Where should your worst minor piece go? (3) What is the defender's pawn lever and which candidate fails after it? Model correction: White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated. Special case: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
+        "keyQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
+        "defenderIdea": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "continuation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
+        "misconception": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "reflection": "Reconstruct why 1.d5 is blocked by Black's d5 pawn. Identify the pawn each side owns on c4/d5 after 1.c4 ...dxc4 2.d5 ...exd5 3.e6, and decide whether the advanced pawn can be restrained. White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
         "variations": [
           {
             "label": "Strong pawn-break resistance",
@@ -219,11 +219,11 @@
           {
             "label": "Failed plan with pawn-contact repair",
             "moves": [
-              "d4d5",
-              "e6d5",
+              "f3d2",
+              "b8d7",
               "c3c4"
             ],
-            "explanation": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges. This candidate d4d5 e6d5 c3c4 must be evaluated as a legal line, not as a forced defeat. Context: White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply."
+            "explanation": "Nd2 and ...Nd7 are a quiet counterplan that postpones the c4 central lever. After c4, the real pawn clash ...dxc4 remains, so White should calculate the trade rather than merely accumulate maneuvers."
           }
         ]
       },
@@ -232,10 +232,10 @@
         "strategicModel": "A central pawn chain points toward the wing where its pawn base can be attacked. Exchanges at the head of the chain may open files, while a timely pawn thrust behind it can create a passer. Decide where the defender can capture, where a knight outpost survives, and whether a central lever changes the bishop's diagonal.",
         "sourcePosition": "e5–e6 after the d-pawn exchange",
         "caseVariation": "Flexible c-pawn support",
-        "structuralQuestion": "The pawn chain c3–d4–e5 points toward kingside space. Play d5 and calculate ...exd5 before checking if e5–e6 gains an advanced pawn and opens diagonals.",
-        "defenderPlan": "...exd5 contests White's head pawn, but vacating e6 allows White's e5 pawn to advance. ...Ra7 is counterplay against the pawn rather than a forced concession.",
-        "contrast": "An automatic c3–c4 after d5 exd5 ignores the stronger e5–e6 tempo and invites further center exchanges.",
-        "longTermEvaluation": "White has a pawn on e6 after the five-ply line and Black a pawn on d5. A knight route to e5 matters only after e5 is vacated.",
+        "structuralQuestion": "The c3–d4–e5 chain must confront a black pawn on d5; d4–d5 is blocked until the d5 pawn moves. Calculate 1.c4 ...dxc4 2.d5 ...exd5 3.e6. Then compare a slow knight approach and evaluate the pawn now on e6. White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
+        "defenderPlan": "...dxc4 trades Black's fixed d5 pawn for White's c4 pawn, permitting d5; ...exd5 then vacates e6 so White's e5 pawn advances. The defender still owns a pawn on d5.",
+        "contrast": "An automatic knight shuffle postpones the structural c4–d5 pawn break and lets Black organize the d-file before the e6 advance.",
+        "longTermEvaluation": "After five plies White owns an advanced e6 pawn and Black a pawn on d5 plus c4, so the passer still needs piece support. White's knight stayed on f3.",
         "context": "White b2 may push b4 after the center opens; it cannot replace calculation of the immediate ...exd5 reply.",
         "independentExercises": [
           {
