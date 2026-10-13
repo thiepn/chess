@@ -38,6 +38,8 @@ interface CalculationRunnerProps {
   skill: ChessSkill;
   position: CalculationPosition;
   storageOwner: string;
+  /** Close unscored source studies without generating fake learning evidence. */
+  onInstructionalExit?: () => void;
   onComplete: (
     outcome: TrainingOutcome,
   ) => void;
@@ -77,6 +79,7 @@ export function CalculationRunner({
   skill,
   position,
   storageOwner,
+  onInstructionalExit,
   onComplete,
 }: CalculationRunnerProps) {
   const [phase, setPhase] =
@@ -294,7 +297,8 @@ export function CalculationRunner({
 
   const score =
     phase === "result" &&
-    selectedMove
+    selectedMove &&
+    position.assessmentStatus !== "instructional-only"
       ? scoreCalculationAttempt({
           positionId: position.id,
           source: position.source,
@@ -715,6 +719,26 @@ export function CalculationRunner({
               </div>
             )}
 
+
+            {phase === "result" && position.assessmentStatus === "instructional-only" &&
+              (!hasDeepBranches || deepDone) && showWorkedReview && (
+              <section className="calculation-instructional-review" aria-label="Authored strategic review">
+                <p className="eyebrow">UNSCORED · AUTHOR-QUALIFIED POSITION</p>
+                <h3>Compare plans, not a fabricated grade</h3>
+                <p>{position.explanation}</p>
+                <p><strong>Legally replayed sample:</strong> {referenceLine.join(" ")}</p>
+                <p>{position.replyReason}</p>
+                <p>{position.continuationReason}</p>
+                <p className="calculation-instructional-note">These moves are legal learning
+                  illustrations, not verified unique-best chess answers. No three-ply
+                  grade, mastery, review history or training credit is recorded.</p>
+                <button type="button" className="primary"
+                  onClick={onInstructionalExit}>
+                  Leave study without writing a score <ChevronRight size={17}/>
+                </button>
+              </section>
+            )}
+
             {phase === "result" && hasDeepBranches && deepDone && (
               <button type="button" className="secondary"
                 onClick={() => { setDeepDone(false); setShowWorkedReview(!hasIndependentStudy); }}>
@@ -880,6 +904,7 @@ export function CalculationRunner({
 
             <div className="lesson-button-row">
               {phase === "result" &&
+                position.assessmentStatus !== "instructional-only" &&
                 !score?.success && (
                   <button
                     type="button"
@@ -895,7 +920,7 @@ export function CalculationRunner({
                   </button>
                 )}
 
-              {phase === "result" && (
+              {phase === "result" && position.assessmentStatus !== "instructional-only" && (
                 <button
                   type="button"
                   className="primary"

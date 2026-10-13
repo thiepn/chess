@@ -36,6 +36,7 @@ import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./acco
 import { chessAccountSso, chessAccountLoginError } from "./account/chessSession";
 
 import { ChessBoard } from "./components/ChessBoard";
+import { StrategicStudyLibrary } from "./components/StrategicStudyLibrary";
 
 
 
@@ -53,7 +54,7 @@ import { openingDeviationsForGame } from "./openings/match";
 
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import {
-  calculationPositionFor, resolveCalculationPosition,
+  calculationCatalog, calculationPositionFor, resolveCalculationPosition,
   subscribeCalculationSources, calculationSourceRevision, calculationSourceStatus,
   retryFailedCalculationSources,
 } from "./calculation/positions";
@@ -487,14 +488,23 @@ export default function App() {
   const catalogRevision = useSyncExternalStore(
     subscribeCalculationSources, calculationSourceRevision, calculationSourceRevision);
   const catalogStatus = useMemo(() => calculationSourceStatus(), [catalogRevision]);
+  const strategicPositions = useMemo(() => calculationCatalog(state).filter(
+    item => item.assessmentStatus === "instructional-only" &&
+      Boolean(item.strategicImbalanceStudy)), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
-    key: string; position: ReturnType<typeof resolveCalculationPosition>;
+    key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
   const calculationKey = active?.activityType === "calculation" && activeSkill
     ? [activeOwner, active.id, activeSkill.id, route.path].join(":") : "";
-  if (calculationKey && pinnedCalculation.current?.key !== calculationKey && active && activeSkill) {
+  if (calculationKey && active && activeSkill &&
+      (pinnedCalculation.current?.key !== calculationKey || !pinnedCalculation.current.position)) {
+    const candidate = resolveCalculationPosition(state, active, activeSkill);
+    // An exact, owner-selected source must never silently turn into a different
+    // scored position while an asynchronous P109 study file is still loading.
     pinnedCalculation.current = {
-      key: calculationKey, position: resolveCalculationPosition(state, active, activeSkill),
+      key: calculationKey,
+      position: active.calculationPositionId &&
+        candidate.id !== active.calculationPositionId ? undefined : candidate,
     };
   }
   const activeCalculationPosition = calculationKey &&
@@ -670,6 +680,29 @@ export default function App() {
     setAssessmentSession(null);
     setManualActivity(activity);
     navigate(trainingPath(activity.id));
+  }
+
+  function openStrategicStudy(position: import("./calculation/types").CalculationPosition) {
+    if (position.assessmentStatus !== "instructional-only" ||
+        !strategicPositions.some(item => item.id === position.id)) return;
+    const skillId = position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
+    const skill = skillId ? skillById[skillId] : null;
+    if (!skill || !skillId) return;
+    openManualActivity({
+      id: `p109:${position.id}`,
+      source: "focus",
+      skillIds: [skillId],
+      activityType: "calculation",
+      calculationPositionId: position.id,
+      estimatedMinutes: 12,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .4,
+      reason: "P109 · Independent positional decision (unscored)",
+      title: position.title,
+      subtitle: position.strategicImbalanceStudy?.theme ?? "Strategic decision",
+    });
   }
 
   useEffect(() => {
@@ -978,7 +1011,8 @@ export default function App() {
     if(active.activityType==="calculation") {
       if(!activeCalculationPosition || incoming.calculationPositionId!==activeCalculationPosition.id ||
         incoming.calculationEvidence?.positionId!==activeCalculationPosition.id ||
-        !legalCalculationBranch(activeCalculationPosition))return;
+        !legalCalculationBranch(activeCalculationPosition) ||
+        activeCalculationPosition.assessmentStatus === "instructional-only")return;
     }
     if(active.activityType==="endgameDrill" || active.activityType==="conversionChallenge") {
       const p=incoming.endgamePractice,e=incoming.endgameEvidence;
@@ -2845,8 +2879,26 @@ export default function App() {
                           skill={activeSkill}
                           position={activeCalculationPosition}
                           storageOwner={activeOwner}
+                          onInstructionalExit={() => {
+                            if (repo.getProfileId() !== activeOwner ||
+                              activeCalculationPosition.assessmentStatus !== "instructional-only") return;
+                            closeTrainingRuntime("/train");
+                          }}
                           onComplete={completeActivity}
                         />
+                      ) : active.activityType === "calculation" &&
+                          active.calculationPositionId && !activeCalculationPosition ? (
+                        <div className="calculation-source-notice" role="status">
+                          <strong>Selected calculation study is not yet available</strong>
+                          <p>Waiting for the exact source record. A different scored position will
+                            never be substituted for your selected study.</p>
+                          {catalogStatus.failedFiles.length > 0 && (
+                            <button type="button" className="secondary"
+                              onClick={retryFailedCalculationSources}>Retry source files</button>
+                          )}
+                          <button type="button" className="secondary"
+                            onClick={() => closeTrainingRuntime("/train")}>Return to Train</button>
+                        </div>
                       ) : (active.activityType === "endgameDrill" ||
                             active.activityType === "conversionChallenge") &&
                           activeEndgamePosition ? (
@@ -3033,6 +3085,14 @@ export default function App() {
                   Study concept
                 </button>
               </div>
+
+              <StrategicStudyLibrary
+                positions={strategicPositions}
+                loading={catalogStatus.pending > 0}
+                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-")).length}
+                onRetry={retryFailedCalculationSources}
+                onStart={openStrategicStudy}
+              />
 
               <dl className="train-session-facts">
                 <div>

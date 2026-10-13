@@ -3,7 +3,7 @@ export interface StudyQuestion { prompt: string; answer: string; repair: string;
 export interface StudyMaterial { theme: string; questions: StudyQuestion[]; reflection?: string; }
 export function studyMaterialFor(position: CalculationPosition): StudyMaterial | null {
   const source = position as unknown as Record<string, unknown>;
-  const groups = ["pawnStructureStudy", "pieceCoordinationStudy", "kingAttackStudy", "defensiveTechniqueStudy"];
+  const groups = ["strategicImbalanceStudy", "pawnStructureStudy", "pieceCoordinationStudy", "kingAttackStudy", "defensiveTechniqueStudy"];
   for (const name of groups) {
     const group = source[name] as Record<string, unknown> | undefined;
     if (!group || typeof group !== "object") continue;

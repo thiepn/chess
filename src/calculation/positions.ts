@@ -43,6 +43,8 @@ const sourceFiles = [
     ["p106-active-defense-v1.json", 15],
     ["p106-queen-counterplay-v1.json", 15],
     ["p106-king-fortress-v1.json", 18],
+    ["p109-imbalances-a-v1.json", 20],
+    ["p109-imbalances-b-v1.json", 20],
   ] as const;
 type SourceStatus = "loading" | "ready" | "failed";
 const sourceStatus = new Map<string, SourceStatus>();

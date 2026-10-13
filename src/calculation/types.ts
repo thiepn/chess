@@ -10,6 +10,21 @@ export interface CalculationPosition {
   bestMove: string;
   principalVariation: string[];
   explanation: string;
+  /** Authored study lines are legal examples, not engine-certified scoring references. */
+  assessmentStatus?: "instructional-only";
+  strategicImbalanceStudy?: {
+    theme: string;
+    focus: string;
+    positionIssue: string;
+    planContrast: string;
+    defenderPlan: string;
+    misconception: string;
+    transferQuestion: string;
+    context: string;
+    modelLine: string;
+    alternativeLine: string;
+    exercises: { prompt: string; answer: string; repair: string }[];
+  };
   /** Optional learner-facing defensive alternatives, all source-lines legally replayed. */
   defensiveStudy?: {
     keyQuestion: string;
