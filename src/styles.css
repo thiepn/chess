@@ -2546,8 +2546,7 @@ html[data-motion="reduced"] .dashboard-grid {
 }
 
 
-/* P12 — placement diagnostics,
-.placement-card {
+/* P12 — placement diagnostics{
   margin-bottom: 18px;
   padding: 16px 18px;
   border-radius: 18px;
@@ -2559,30 +2558,6 @@ html[data-motion="reduced"] .dashboard-grid {
   grid-template-columns: auto 1fr auto;
   gap: 14px;
   align-items: center;
-}
-.placement-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  display: grid;
-  place-items: center;
-  color: #a8b8f4;
-  background: rgba(118,151,255,.08);
-  border: 1px solid rgba(118,151,255,.10);
-}
-.placement-card > div:nth-child(2) {
-  min-width: 0;
-  display: grid;
-  gap: 3px;
-}
-.placement-card strong {
-  color: #d7dfef;
-  font-size: 12px;
-}
-.placement-card span {
-  color: #77859e;
-  font-size: 9px;
-  line-height: 1.5;
 }
 
 .gate-status {
@@ -2894,13 +2869,6 @@ html[data-motion="reduced"] .dashboard-grid {
 }
 
 @media (max-width: 720px) {
-  .placement-card {
-    grid-template-columns: auto 1fr;
-  }
-  .placement-card > button {
-    grid-column: 2;
-    width: fit-content;
-  }
 
   .assessment-runner {
     min-height: auto;
@@ -3146,70 +3114,11 @@ html[data-motion="reduced"] .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
-.train-competition-summary span {
-  color: #627188;
-  font-size: 7px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .055em;
-}
-.train-competition-summary strong {
-  overflow: hidden;
-  color: #b8c3d3;
-  font-size: 9px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.planning-retrospective-notes label {
-  display: grid;
-  gap: 4px;
-}
-.planning-retrospective-notes label > span {
-  color: #627188;
-  font-size: 7px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .055em;
-}
-.planning-retrospective-notes textarea {
-  width: 100%;
-  min-height: 33px;
-  padding: 7px 8px;
-  border-radius: 9px;
-  border: 1px solid rgba(255,255,255,.045);
-  background: #111826;
-  color: #aeb9ca;
-  font: inherit;
-  font-size: 8px;
-}
-.planning-competition-toggle {
-  padding: 9px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.035);
-  background: rgba(255,255,255,.01);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  color: #8996aa;
-  font-size: 8px;
-}
-.planning-competition-toggle input {
-  margin-top: 1px;
-  accent-color: #7799ff;
-}
 
 @media (max-width: 900px) {
 }
 
 @media (max-width: 700px) {
-
-  .train-session-preview-head,
-  .train-session-footer {
-    display: grid;
-  }
-  .planning-retrospective-notes {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 720px) {
@@ -5831,8 +5740,6 @@ summary:focus-visible,
   position: sticky;
   top: 0;
 }
-
-.train-session-preview,
 .home-course-gate,
 .home-coach-brief,
 .curriculum-stage,
@@ -6008,7 +5915,6 @@ summary:focus-visible,
   }
 
   .train-home-hero,
-  .train-session-preview,
   .home-course-gate,
   .home-coach-brief {
     border-radius: 18px;
