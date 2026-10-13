@@ -232,25 +232,15 @@ function personalPositions(
           mistake.centipawnLoss >=
             120),
     )
-    .map((mistake) => ({
+    .map((mistake) => {
+      const calculationSkills = mistake.skillIds.filter(
+        id => id.startsWith("calculation."),
+      );
+      return {
       id: `calc:mistake:${mistake.id}`,
-      skillIds:
-        mistake.skillIds.filter(
-          (skillId) =>
-            skillId.startsWith(
-              "calculation.",
-            ),
-        ).length > 0
-          ? mistake.skillIds.filter(
-              (skillId) =>
-                skillId.startsWith(
-                  "calculation.",
-                ),
-            )
-          : [
-              "calculation.candidates",
-              "calculation.reply",
-            ],
+      skillIds: calculationSkills.length
+        ? calculationSkills
+        : ["calculation.candidates", "calculation.reply"],
       title: "Calculate your game again",
       prompt:
         "This exact position came from one of your games. Generate candidates without looking at the move you played.",
@@ -278,7 +268,8 @@ function personalPositions(
       mistakeId: mistake.id,
       moveNumber:
         mistake.moveNumber,
-    }));
+      };
+    });
 }
 
 export function calculationCatalog(
