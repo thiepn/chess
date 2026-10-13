@@ -1,5 +1,4 @@
 import { legalCalculationBranch } from "./branchFeedback";
-import { Chess } from "chess.js";
 import type {
   ChessSkill,
   TrainingActivity,
@@ -356,66 +355,11 @@ export function resolveCalculationPosition(
   );
 }
 
+// Use the same 3-ply legal-line authority as the interactive calculation runner.
 export function calculationCatalogIssues() {
-  const issues: string[] = [];
-
-  for (const position of [...authoredPositions, ...p94Positions]) {
-    let chess: Chess;
-    try {
-      chess = new Chess(position.fen);
-    } catch {
-      issues.push(
-        `${position.id}: invalid FEN`,
-      );
-      continue;
-    }
-
-    if (
-      position.principalVariation
-        .length < 3
-    ) {
-      issues.push(
-        `${position.id}: line shorter than 3 ply`,
-      );
-    }
-
-    for (
-      const [index, encoded] of
-      position.principalVariation.entries()
-    ) {
-      try {
-        const move = chess.move({
-          from: encoded.slice(0, 2),
-          to: encoded.slice(2, 4),
-          promotion:
-            encoded.slice(4, 5) ||
-            "q",
-        });
-        if (!move) {
-          issues.push(
-            `${position.id}: illegal PV move ${encoded} at ply ${index + 1}`,
-          );
-          break;
-        }
-      } catch {
-        issues.push(
-          `${position.id}: illegal PV move ${encoded} at ply ${index + 1}`,
-        );
-        break;
-      }
-    }
-
-    if (
-      position.bestMove !==
-      position.principalVariation[0]
-    ) {
-      issues.push(
-        `${position.id}: best move and PV disagree`,
-      );
-    }
-  }
-
-  return issues;
+  return [...authoredPositions, ...p94Positions]
+    .filter(position => !legalCalculationBranch(position))
+    .map(position => `${position.id}: invalid calculation line`);
 }
 
 export { authoredPositions };
