@@ -840,31 +840,31 @@
       "principalVariation": [
         "e1e8",
         "g8h7",
-        "e8h5",
-        "d6h6",
-        "h5h6"
+        "e8e3",
+        "d6e5",
+        "e3e5"
       ],
-      "prompt": "White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "prompt": "White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies. Your scored third-ply choice must not sacrifice your queen for a rook or pawn without compensation.",
       "replyReason": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Re-evaluate both material and king safety, including checks made possible by the previous move.",
       "continuationReason": "After the recorded line, Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
-      "explanation": "Queen on d6 trades at the wrong time. White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Main five-ply study: e1e8 g8h7 e8h5 d6h6 h5h6. Resistant alternative: e1e8 g8h7 e8e4 d6e5 e4e5. A tempting competing candidate: e1e7 d6e7 g1f2. ...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Endpoint evaluation: Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different. Misconception to repair: Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "explanation": "Queen on d6 trades at the wrong time. Five-ply preferred illustrative line: e1e8 g8h7 e8e3 d6e5 e3e5. Bad but legal counterexample: e1e8 g8h7 e8h5 d6h6 h5h6. The teaching reference now preserves the queen through Qe3 and Qxe5; the poisoned alternative Qxh6+ allows ...Kxh6 because the black king stands on h7. Original scenario: White can check from e8 or h5, but Black's queen may interpose or attack the attacker. Defender: ...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6. Re-evaluate both material and king safety, including checks made possible by the previous move. Endpoint: After the recorded line, Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different. Misconception: Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check. Compare the actual material after five plies. Neither these examples nor the lesson text imply independent tablebase certification.",
       "defensiveStudy": {
         "keyQuestion": "White can check from e8 or h5, but Black's queen may interpose or attack the attacker.",
         "defenderIdea": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6.",
         "continuation": "Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
         "misconception": "Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check.",
-        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different. Reconstruct the poisoned line and name the exact king or queen recapture. The teaching reference now preserves the queen through Qe3 and Qxe5; the poisoned alternative Qxh6+ allows ...Kxh6 because the black king stands on h7.",
         "variations": [
           {
-            "label": "Defender's other line",
+            "label": "Poisoned tactical alternative",
             "moves": [
               "e1e8",
               "g8h7",
-              "e8e3",
-              "d6e5",
-              "e3e5"
+              "e8h5",
+              "d6h6",
+              "h5h6"
             ],
-            "explanation": "Qe3 is not check on the king at h7, allowing ...Qe5, after which Qxe5 captures the exposed queen. The former Qe4+ alternative would make ...Qe5 illegal."
+            "explanation": "The teaching reference now preserves the queen through Qe3 and Qxe5; the poisoned alternative Qxh6+ allows ...Kxh6 because the black king stands on h7."
           },
           {
             "label": "Candidate or tactical refutation",
@@ -880,8 +880,8 @@
       "queenEndgameStudy": {
         "theme": "Queen defensive resources",
         "defenderCounterplay": "...Qh6 blocks the h-file, yet the black king on h7 may be able to recapture a queen on h6.",
-        "materialAndKingSafety": "Qxh6+ is not necessarily a queen win because the king can take it; the e4–e5 capture alternative is tactically different.",
-        "failedPlan": "Failing to calculate the king's recapture after a queen takes a nearby blocker overvalues a check.",
+        "materialAndKingSafety": "The teaching reference now preserves the queen through Qe3 and Qxe5; the poisoned alternative Qxh6+ allows ...Kxh6 because the black king stands on h7.",
+        "failedPlan": "e1e8 g8h7 e8h5 d6h6 h5h6",
         "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
       }
     },
@@ -903,31 +903,31 @@
       "principalVariation": [
         "d1d8",
         "g8h7",
-        "d8h4",
-        "a6h6",
-        "h4h6"
+        "d8d4",
+        "a6d6",
+        "d4d6"
       ],
-      "prompt": "Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "prompt": "Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies. Your scored third-ply choice must not sacrifice your queen for a rook or pawn without compensation.",
       "replyReason": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Re-evaluate both material and king safety, including checks made possible by the previous move.",
       "continuationReason": "After the recorded line, A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
-      "explanation": "Queen on a6 uses the sixth rank. Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Main five-ply study: d1d8 g8h7 d8h4 a6h6 h4h6. Resistant alternative: d1d8 g8h7 d8d4 a6d6 d4d6. A tempting competing candidate: d1a4 a6a4 g1f2. ...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Endpoint evaluation: A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it. Misconception to repair: Do not treat all queen-for-queen captures as safe solely because they occur with check. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "explanation": "Queen on a6 uses the sixth rank. Five-ply preferred illustrative line: d1d8 g8h7 d8d4 a6d6 d4d6. Bad but legal counterexample: d1d8 g8h7 d8h4 a6h6 h4h6. The instructional reference captures an undefended queen on d6; Qxh6+ in the alternative is poisoned by the king's legal recapture from h7. Original scenario: Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange. Defender: ...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Re-evaluate both material and king safety, including checks made possible by the previous move. Endpoint: After the recorded line, A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it. Misconception: Do not treat all queen-for-queen captures as safe solely because they occur with check. Compare the actual material after five plies. Neither these examples nor the lesson text imply independent tablebase certification.",
       "defensiveStudy": {
         "keyQuestion": "Black can put its queen on h6 as a check blocker or shift to d6 for a queen exchange.",
         "defenderIdea": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6.",
         "continuation": "A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
         "misconception": "Do not treat all queen-for-queen captures as safe solely because they occur with check.",
-        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it. Reconstruct the poisoned line and name the exact king or queen recapture. The instructional reference captures an undefended queen on d6; Qxh6+ in the alternative is poisoned by the king's legal recapture from h7.",
         "variations": [
           {
-            "label": "Defender's other line",
+            "label": "Poisoned tactical alternative",
             "moves": [
               "d1d8",
               "g8h7",
-              "d8d4",
-              "a6d6",
-              "d4d6"
+              "d8h4",
+              "a6h6",
+              "h4h6"
             ],
-            "explanation": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6. Follow the different material exchange through ply 5, not just the first check."
+            "explanation": "The instructional reference captures an undefended queen on d6; Qxh6+ in the alternative is poisoned by the king's legal recapture from h7."
           },
           {
             "label": "Candidate or tactical refutation",
@@ -943,8 +943,8 @@
       "queenEndgameStudy": {
         "theme": "Queen defensive resources",
         "defenderCounterplay": "...Qh6 is a defensive interposition close to the black king, so Qxh6+ must be evaluated for ...Kxh6.",
-        "materialAndKingSafety": "A queen taken on d6 is not defended by Black's distant king, whereas h6 sits next to it.",
-        "failedPlan": "Do not treat all queen-for-queen captures as safe solely because they occur with check.",
+        "materialAndKingSafety": "The instructional reference captures an undefended queen on d6; Qxh6+ in the alternative is poisoned by the king's legal recapture from h7.",
+        "failedPlan": "d1d8 g8h7 d8h4 a6h6 h4h6",
         "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
       }
     },
@@ -1218,31 +1218,31 @@
       "principalVariation": [
         "d1d8",
         "g8h7",
-        "d8d5",
-        "a5d5",
-        "b1b6"
+        "d8d4",
+        "a5e5",
+        "d4e5"
       ],
-      "prompt": "Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies.",
+      "prompt": "Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Compare the defender's strongest direct resource to a less obvious candidate and calculate at least five legal plies. Your scored third-ply choice must not sacrifice your queen for a rook or pawn without compensation.",
       "replyReason": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Re-evaluate both material and king safety, including checks made possible by the previous move.",
       "continuationReason": "After the recorded line, This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
-      "explanation": "Black queen can punish a centralization. Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Main five-ply study: d1d8 g8h7 d8d5 a5d5 b1b6. Resistant alternative: d1d8 g8h7 d8d4 a5e5 d4e5. A tempting competing candidate: d1a4 a5a4 b1b6. ...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Endpoint evaluation: This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique. Misconception to repair: Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake. This is a legal authored calculation example; the first move and final WDL are not engine-certified as optimal.",
+      "explanation": "Black queen can punish a centralization. Five-ply preferred illustrative line: d1d8 g8h7 d8d4 a5e5 d4e5. Bad but legal counterexample: d1d8 g8h7 d8d5 a5d5 b1b6. The main line uses Qd4 and Qxe5 to preserve queen material. Qd5?? ...Qxd5 Rxb6 is the explained failed plan, exchanging a queen for one pawn. Original scenario: Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6. Defender: ...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Re-evaluate both material and king safety, including checks made possible by the previous move. Endpoint: After the recorded line, This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique. Misconception: Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake. Compare the actual material after five plies. Neither these examples nor the lesson text imply independent tablebase certification.",
       "defensiveStudy": {
         "keyQuestion": "Moving the queen onto d5 exposes it to Black's queen on a5, even though White's rook can then capture b6.",
         "defenderIdea": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4.",
         "continuation": "This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
         "misconception": "Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake.",
-        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
+        "reflection": "Reconstruct the final material inventory and the opponent's strongest check. Then re-evaluate the alternative from the original board: This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique. Reconstruct the poisoned line and name the exact king or queen recapture. The main line uses Qd4 and Qxe5 to preserve queen material. Qd5?? ...Qxd5 Rxb6 is the explained failed plan, exchanging a queen for one pawn.",
         "variations": [
           {
-            "label": "Defender's other line",
+            "label": "Poisoned tactical alternative",
             "moves": [
               "d1d8",
               "g8h7",
-              "d8d4",
-              "a5e5",
-              "d4e5"
+              "d8d5",
+              "a5d5",
+              "b1b6"
             ],
-            "explanation": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4. Follow the different material exchange through ply 5, not just the first check."
+            "explanation": "The main line uses Qd4 and Qxe5 to preserve queen material. Qd5?? ...Qxd5 Rxb6 is the explained failed plan, exchanging a queen for one pawn."
           },
           {
             "label": "Candidate or tactical refutation",
@@ -1258,8 +1258,8 @@
       "queenEndgameStudy": {
         "theme": "Initiative and practical counterplay",
         "defenderCounterplay": "...Qxd5 wins White's queen for little compensation; ...Qe5 instead permits Qxe5 if White chooses d4.",
-        "materialAndKingSafety": "This is an evaluation exercise: the main line is deliberately a failed material plan, not a recommended winning technique.",
-        "failedPlan": "Assuming the queen sacrifice is sound because the rook takes one pawn is a severe material-count mistake.",
+        "materialAndKingSafety": "The main line uses Qd4 and Qxe5 to preserve queen material. Qd5?? ...Qxd5 Rxb6 is the explained failed plan, exchanging a queen for one pawn.",
+        "failedPlan": "d1d8 g8h7 d8d5 a5d5 b1b6",
         "analysisStatus": "original illustrative calculation; no tablebase or forced result certification"
       }
     }
