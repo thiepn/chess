@@ -1,6 +1,7 @@
 import { Chess } from "chess.js";
 import type { CalculationPosition } from "../calculation/types";
 import { legalOpeningContinuation } from "../openings/transitionStudy";
+import { legalCalculationBranch } from "../calculation/branchFeedback";
 
 /** Board-source legality only: neither a result predictor nor an evaluation writer. */
 export function hydrateEndgameDecision(position: CalculationPosition): CalculationPosition | null {
@@ -18,8 +19,20 @@ export function hydrateEndgameDecision(position: CalculationPosition): Calculati
   if (!main || main.join(" ") !== position.principalVariation.join(" ")) return null;
   const input = position.defensiveStudy?.variations;
   if (!input || input.length < 2 || input.length > 3) return null;
-  const converted = input.map(variation => legalOpeningContinuation(position.fen, variation.moves));
-  if (converted.some(line => !line)) return null;
+  const converted = input.map((variation, i) => {
+    const extended = legalOpeningContinuation(position.fen, variation.moves);
+    if (extended) return extended;
+    // Some source-authored three-ply branches end in a no-move/drawn position.
+    // Preserve that exact legally checked prefix rather than fabricating moves.
+    if (i > 0 && variation.moves.length === 3 &&
+        legalCalculationBranch({
+          ...position, bestMove: variation.moves[0],
+          principalVariation: variation.moves,
+        })?.length === 3) return variation.moves;
+    return null;
+  });
+  if (converted.some(line => !line || (line.length !== 3 && line.length !== 5))) return null;
+  if (converted[0]?.length !== 5) return null;
   const branches = [main, ...converted as string[][]];
   if (new Set(branches.map(line => line.join(" "))).size !== branches.length) return null;
   return {
