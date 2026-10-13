@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "phase": "P102",
+  "section": "Opposition precision and inferior king-and-pawn defense",
+  "positions": [
+    {
+      "id": "calc:p102-40",
+      "title": "A c-pawn push changes the opposition — Pa2",
+      "fen": "8/8/4k3/8/3K4/2P5/P7/8 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Technical opposition and move order",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d4e4",
+      "principalVariation": [
+        "d4e4",
+        "e6d6",
+        "e4f5",
+        "d6d5",
+        "c3c4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. White keeps a2 as an outside reserve tempo. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. In this variation, White keeps a2 as an outside reserve tempo.",
+      "continuationReason": "At the fifth ply White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+      "explanation": "A c-pawn push changes the opposition. Five-ply line d4e4 e6d6 e4f5 d6d5 c3c4. Resistance d4c4 e6d6 c4b5 d6d5 c3c4. Plausible different choice c3c4 e6d6 d4e4. King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. ...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. Endpoint: White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion. Misconception: A fourth-rank passer is not automatically protected when the opposing king controls its new square. Pawn reserve: White keeps a2 as an outside reserve tempo. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5.",
+        "defenderIdea": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "continuation": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "misconception": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. White keeps a2 as an outside reserve tempo",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "d4c4",
+              "e6d6",
+              "c4b5",
+              "d6d5",
+              "c3c4"
+            ],
+            "explanation": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. White keeps a2 as an outside reserve tempo"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "c3c4",
+              "e6d6",
+              "d4e4"
+            ],
+            "explanation": "A fourth-rank passer is not automatically protected when the opposing king controls its new square. White keeps a2 as an outside reserve tempo"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Technical opposition and move order",
+        "context": "White keeps a2 as an outside reserve tempo",
+        "defenderResource": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "endpoint": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "failedPlan": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    },
+    {
+      "id": "calc:p102-41",
+      "title": "A c-pawn push changes the opposition — ph7",
+      "fen": "8/7p/4k3/8/3K4/2P5/8/8 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Technical opposition and move order",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d4e4",
+      "principalVariation": [
+        "d4e4",
+        "e6d6",
+        "e4f5",
+        "d6d5",
+        "c3c4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. Black's h7 pawn gives an independent waiting move and changes zugzwang parity. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. In this variation, Black's h7 pawn gives an independent waiting move and changes zugzwang parity.",
+      "continuationReason": "At the fifth ply White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+      "explanation": "A c-pawn push changes the opposition. Five-ply line d4e4 e6d6 e4f5 d6d5 c3c4. Resistance d4c4 e6d6 c4b5 d6d5 c3c4. Plausible different choice c3c4 e6d6 d4e4. King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. ...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. Endpoint: White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion. Misconception: A fourth-rank passer is not automatically protected when the opposing king controls its new square. Pawn reserve: Black's h7 pawn gives an independent waiting move and changes zugzwang parity. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5.",
+        "defenderIdea": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "continuation": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "misconception": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. Black's h7 pawn gives an independent waiting move and changes zugzwang parity",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "d4c4",
+              "e6d6",
+              "c4b5",
+              "d6d5",
+              "c3c4"
+            ],
+            "explanation": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. Black's h7 pawn gives an independent waiting move and changes zugzwang parity"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "c3c4",
+              "e6d6",
+              "d4e4"
+            ],
+            "explanation": "A fourth-rank passer is not automatically protected when the opposing king controls its new square. Black's h7 pawn gives an independent waiting move and changes zugzwang parity"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Technical opposition and move order",
+        "context": "Black's h7 pawn gives an independent waiting move and changes zugzwang parity",
+        "defenderResource": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "endpoint": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "failedPlan": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    },
+    {
+      "id": "calc:p102-42",
+      "title": "A c-pawn push changes the opposition — Pb2",
+      "fen": "8/8/4k3/8/3K4/2P5/1P6/8 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Technical opposition and move order",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "d4e4",
+      "principalVariation": [
+        "d4e4",
+        "e6d6",
+        "e4f5",
+        "d6d5",
+        "c3c4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. White's b2 pawn can support a queenside majority but creates additional king choices. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. In this variation, White's b2 pawn can support a queenside majority but creates additional king choices.",
+      "continuationReason": "At the fifth ply White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+      "explanation": "A c-pawn push changes the opposition. Five-ply line d4e4 e6d6 e4f5 d6d5 c3c4. Resistance d4c4 e6d6 c4b5 d6d5 c3c4. Plausible different choice c3c4 e6d6 d4e4. King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5. ...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. Endpoint: White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion. Misconception: A fourth-rank passer is not automatically protected when the opposing king controls its new square. Pawn reserve: White's b2 pawn can support a queenside majority but creates additional king choices. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "King opposition changes when the attacker goes via e4 or c4. The c3 pawn remains a reserve tempo but the defender can contest c4 and d5.",
+        "defenderIdea": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "continuation": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "misconception": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. White's b2 pawn can support a queenside majority but creates additional king choices",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "d4c4",
+              "e6d6",
+              "c4b5",
+              "d6d5",
+              "c3c4"
+            ],
+            "explanation": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king. White's b2 pawn can support a queenside majority but creates additional king choices"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "c3c4",
+              "e6d6",
+              "d4e4"
+            ],
+            "explanation": "A fourth-rank passer is not automatically protected when the opposing king controls its new square. White's b2 pawn can support a queenside majority but creates additional king choices"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Technical opposition and move order",
+        "context": "White's b2 pawn can support a queenside majority but creates additional king choices",
+        "defenderResource": "...Kd6 and ...Kd5 actively oppose the escorting king; after c4 the newly advanced pawn may be attacked by the black king.",
+        "endpoint": "White has increased pawn space, but Black is close enough to contest c4. The recorded five plies do not prove a forced promotion.",
+        "failedPlan": "A fourth-rank passer is not automatically protected when the opposing king controls its new square.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    },
+    {
+      "id": "calc:p102-43",
+      "title": "The last dangerous pawn and the active king — one pawn each",
+      "fen": "8/8/8/8/1k6/p7/1P6/K7 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Defending the worse pawn ending",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "a3a2",
+        "b1a2",
+        "b4c5",
+        "a2b3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. Only one pawn per side: an immediate complete liquidation would leave bare kings. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. In this variation, Only one pawn per side: an immediate complete liquidation would leave bare kings.",
+      "continuationReason": "At the fifth ply White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+      "explanation": "The last dangerous pawn and the active king. Five-ply line a1b1 a3a2 b1a2 b4c5 a2b3. Resistance a1b1 a3a2 b1a1 b4c5 a1a2. Plausible different choice a1b1 b4c5 b2b4. The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. ...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Endpoint: White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw. Misconception: Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Pawn reserve: Only one pawn per side: an immediate complete liquidation would leave bare kings. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately.",
+        "defenderIdea": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "continuation": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "misconception": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. Only one pawn per side: an immediate complete liquidation would leave bare kings",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "a1b1",
+              "a3a2",
+              "b1a1",
+              "b4c5",
+              "a1a2"
+            ],
+            "explanation": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Only one pawn per side: an immediate complete liquidation would leave bare kings"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "a1b1",
+              "b4c5",
+              "b2b4"
+            ],
+            "explanation": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Only one pawn per side: an immediate complete liquidation would leave bare kings"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Defending the worse pawn ending",
+        "context": "Only one pawn per side: an immediate complete liquidation would leave bare kings",
+        "defenderResource": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "endpoint": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "failedPlan": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    },
+    {
+      "id": "calc:p102-44",
+      "title": "The last dangerous pawn and the active king — Ph2",
+      "fen": "8/8/8/8/1k6/p7/1P5P/K7 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Defending the worse pawn ending",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "a3a2",
+        "b1a2",
+        "b4c5",
+        "a2b3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. White has a second h-pawn; a local b-versus-a exchange would not leave bare kings. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. In this variation, White has a second h-pawn; a local b-versus-a exchange would not leave bare kings.",
+      "continuationReason": "At the fifth ply White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+      "explanation": "The last dangerous pawn and the active king. Five-ply line a1b1 a3a2 b1a2 b4c5 a2b3. Resistance a1b1 a3a2 b1a1 b4c5 a1a2. Plausible different choice a1b1 b4c5 b2b4. The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. ...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Endpoint: White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw. Misconception: Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Pawn reserve: White has a second h-pawn; a local b-versus-a exchange would not leave bare kings. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately.",
+        "defenderIdea": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "continuation": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "misconception": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. White has a second h-pawn; a local b-versus-a exchange would not leave bare kings",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "a1b1",
+              "a3a2",
+              "b1a1",
+              "b4c5",
+              "a1a2"
+            ],
+            "explanation": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. White has a second h-pawn; a local b-versus-a exchange would not leave bare kings"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "a1b1",
+              "b4c5",
+              "b2b4"
+            ],
+            "explanation": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. White has a second h-pawn; a local b-versus-a exchange would not leave bare kings"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Defending the worse pawn ending",
+        "context": "White has a second h-pawn; a local b-versus-a exchange would not leave bare kings",
+        "defenderResource": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "endpoint": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "failedPlan": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    },
+    {
+      "id": "calc:p102-45",
+      "title": "The last dangerous pawn and the active king — ph7",
+      "fen": "8/7p/8/8/1k6/p7/1P6/K7 w - - 0 1",
+      "source": "authored",
+      "sourceLabel": "P102 · Defending the worse pawn ending",
+      "difficulty": 5,
+      "playerColor": "w",
+      "bestMove": "a1b1",
+      "principalVariation": [
+        "a1b1",
+        "a3a2",
+        "b1a2",
+        "b4c5",
+        "a2b3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "endgames.pawn-races"
+      ],
+      "prompt": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict. Work both king routes and identify when an apparent pawn win gives the defender a tempo.",
+      "replyReason": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. In this variation, Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict.",
+      "continuationReason": "At the fifth ply White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+      "explanation": "The last dangerous pawn and the active king. Five-ply line a1b1 a3a2 b1a2 b4c5 a2b3. Resistance a1b1 a3a2 b1a1 b4c5 a1a2. Plausible different choice a1b1 b4c5 b2b4. The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately. ...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Endpoint: White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw. Misconception: Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Pawn reserve: Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict. A concrete two-king draw after liquidation is exact only in the pure case; other WDL values require independent proof.",
+      "defensiveStudy": {
+        "keyQuestion": "The defender's black a3 pawn can give a checking threat on a2, but White's king may capture the pawn if it chooses its square accurately.",
+        "defenderIdea": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "continuation": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "misconception": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "reflection": "Reconstruct the king and pawn squares after each reply, count the spare pawn moves and explain whether the black king can actually capture the pawn. Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict",
+        "variations": [
+          {
+            "label": "Alternate opposition route",
+            "moves": [
+              "a1b1",
+              "a3a2",
+              "b1a1",
+              "b4c5",
+              "a1a2"
+            ],
+            "explanation": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4. Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict"
+          },
+          {
+            "label": "Independent pawn/king candidate",
+            "moves": [
+              "a1b1",
+              "b4c5",
+              "b2b4"
+            ],
+            "explanation": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture. Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict"
+          }
+        ]
+      },
+      "conversionStudy": {
+        "theme": "Defending the worse pawn ending",
+        "context": "Black has another h-pawn, so the remote pawn race changes a simple local king-and-pawn verdict",
+        "defenderResource": "...a2 attacks the white king on b1; Kxa2 captures it without entering the black king's attack from b4.",
+        "endpoint": "White retains its b-pawn after the capture. The king positions must still be evaluated for conversion or a draw.",
+        "failedPlan": "Immediately exchanging the last two pawns by bxa3 Kxa3 would be a draw in the pure case; avoid giving the opposing king a free recapture.",
+        "verdict": "Line-local; no full WDL certification"
+      }
+    }
+  ]
+}
