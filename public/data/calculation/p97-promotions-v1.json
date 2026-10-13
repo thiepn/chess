@@ -285,10 +285,10 @@
               "e1f2",
               "g8h7",
               "e7e8q",
-              "h7g6",
+              "h7h6",
               "e8e4"
             ],
-            "explanation": "One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape. White retains an a2 pawn: count it in all final material balances."
+            "explanation": "...Kg6 is illegal because the queen on e8 controls g6 diagonally. ...Kh6 is a legal flight; Qe4 then prepares further queen maneuvers rather than delivering an immediate check."
           }
         ]
       }
@@ -343,10 +343,10 @@
               "e1f2",
               "g8h7",
               "e7e8q",
-              "h7g6",
+              "h7h6",
               "e8e4"
             ],
-            "explanation": "One must verify that Kg6 is attacked by the queen on e4 before listing it as an escape. Black has an h2 pawn one step from promotion: repeated checks must buy genuine time."
+            "explanation": "...Kg6 is illegal because the queen on e8 controls g6 diagonally. ...Kh6 is a legal flight; Qe4 then prepares further queen maneuvers rather than delivering an immediate check."
           }
         ]
       }
