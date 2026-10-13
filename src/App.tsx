@@ -2923,14 +2923,14 @@ export default function App() {
                           position={activeEndgamePosition}
                           delayedRetention={activeEndgameDelayedRetention}
                           decisionStudies={endgameDecisionPositions.filter(p => {
-                            const family = p.endgameDecisionStudy?.family.toLowerCase() ?? "";
-                            const technique = activeEndgamePosition.techniqueId;
-                            if (technique.includes("rook") || technique === "lucena" || technique === "philidor")
-                              return family.includes("rook");
-                            if (technique.includes("queen")) return family.includes("queen");
-                            if (technique.includes("bishop") || technique.includes("minor"))
-                              return family.includes("bishop") || family.includes("minor");
-                            return family.includes("opposition") || family.includes("passer");
+                            const f = p.endgameDecisionStudy?.family.toLowerCase() ?? "";
+                            const t = activeEndgamePosition.techniqueId;
+                            const key = t.includes("rook") || t === "philidor" || t === "lucena" ? "rook"
+                              : t.includes("queen") ? "queen"
+                              : t.includes("bishop") ? "bishop"
+                              : t.includes("minor") ? "minor"
+                              : t.includes("opposition") || t.includes("key") ? "opposition" : "passer";
+                            return f.includes(key);
                           }).slice(0, 3)}
                           onOpenDecision={openStrategicStudy}
                           onComplete={completeActivity}

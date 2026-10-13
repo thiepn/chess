@@ -420,21 +420,15 @@ function EndgameTechniqueSession({
           </span>
         </div>
 
-        {onOpenDecision && decisionStudies && decisionStudies.length > 0 && (
-          <section className="endgame-decision-handoff" aria-label="Optional endgame decision studies">
-            <strong>Optional decision lab · unscored</strong>
-            <p>Investigate three linked board decisions before playing the original
-              graded technique. Leaving this exercise does not submit an outcome.</p>
-            <div>
-              {decisionStudies.slice(0, 3).map(item => (
-                <button type="button" key={item.id} className="secondary"
-                  onClick={() => onOpenDecision(item)}>
-                  {item.endgameDecisionStudy
-                    ? `Stage ${item.endgameDecisionStudy.stage}/3: ${item.endgameDecisionStudy.family}`
-                    : item.title}
-                </button>
-              ))}
-            </div>
+        {onOpenDecision && !!decisionStudies?.length && (
+          <section className="endgame-decision-handoff" aria-label="Optional unscored endgame study">
+            <strong>Optional · unscored endgame decisions</strong>
+            <div>{decisionStudies.map(p => (
+              <button key={p.id} type="button" className="secondary"
+                onClick={() => onOpenDecision(p)}>
+                Stage {p.endgameDecisionStudy?.stage}/3 · {p.title}
+              </button>
+            ))}</div>
           </section>
         )}
 
