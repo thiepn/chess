@@ -34,7 +34,17 @@
         "continuation": "Rb7+ checks on a new rank while leaving the defender additional king moves.",
         "misconception": "Calling Rb8+ mate overlooks the free h7 square.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "b1b8",
+              "g8h7",
+              "b8a8"
+            ],
+            "explanation": "A quiet rook repositioning after the king flight loses the immediate checking tempo; contrast it with Rb7+."
+          }
+        ]
       }
     },
     {
@@ -67,7 +77,17 @@
         "continuation": "Rh7+ follows along the seventh rank, but a further reply must still be examined.",
         "misconception": "Counting repeated rook checks as an immediate win ignores legal king flights.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "h1h8",
+              "e8f7",
+              "h8h7"
+            ],
+            "explanation": "The alternative flight ...Kf7 also survives the first check. Rh7+ requires a new rank calculation."
+          }
+        ]
       }
     },
     {
@@ -100,7 +120,17 @@
         "continuation": "Qd7 is an active queen move, not a check on f8; describe the new attack map accurately.",
         "misconception": "Writing Qd7+ after ...Kf8 falsely treats the king as if it stayed on e8.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d1a4",
+              "e8d8",
+              "a4d7"
+            ],
+            "explanation": "...Kd8 is another defense to Qa4+. Qd7+ is a different consequence from the recorded ...Kf8."
+          }
+        ]
       }
     },
     {
@@ -133,7 +163,17 @@
         "continuation": "Bd5 improves bishop centralization; bishop and king cannot force mate against a bare king.",
         "misconception": "Inferring a won ending from one bishop check confuses activity with material sufficiency.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "c4b5",
+              "e8f8",
+              "b5c6"
+            ],
+            "explanation": "...Kf8 is an alternative escape from Bb5+. Bc6 develops but is not a forced mate."
+          }
+        ]
       }
     },
     {
@@ -166,7 +206,17 @@
         "continuation": "Ra7+ checks the king across the seventh rank, unlike an unfounded mate claim.",
         "misconception": "Ignoring d7 means failing to update the defended king's actual location.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "a2a8",
+              "e8f7",
+              "a8a7"
+            ],
+            "explanation": "...Kf7 survives Ra8+. Ra7+ changes the checking geometry yet again."
+          }
+        ]
       }
     },
     {
@@ -199,7 +249,17 @@
         "continuation": "Qd4+ travels h8–g7–f6–e5–d4 and checks up the d-file.",
         "misconception": "Imagining a diagonal through occupied squares or forgetting the king's flight gives a fictitious variation.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "h2h8",
+              "e8f7",
+              "h8h7"
+            ],
+            "explanation": "...Kf7 meets Qh8+. Qh7+ illustrates shifting to the seventh rank."
+          }
+        ]
       }
     },
     {
@@ -232,7 +292,17 @@
         "continuation": "Rg7+ checks the king across the seventh rank with the rook remaining active.",
         "misconception": "The common error is to count only the initial checking square and not the legal escape.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "g2g8",
+              "e8f7",
+              "g8g7"
+            ],
+            "explanation": "After ...Kf7, Rg7+ uses the seventh rank instead of assuming the king remains on e8."
+          }
+        ]
       }
     },
     {
@@ -265,7 +335,17 @@
         "continuation": "Qc7+ gives another check along the seventh rank to f7.",
         "misconception": "King moves to d7 or f8 are attacked by Qc8, but f7 must not be excluded by analogy.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "c1c8",
+              "e8e7",
+              "c8c7"
+            ],
+            "explanation": "...Ke7 also runs from Qc8+. Qc7+ attacks the new square across the seventh rank."
+          }
+        ]
       }
     },
     {
@@ -397,7 +477,17 @@
         "continuation": "Qxe8+ captures the interposer and checks again across f8 to g8.",
         "misconception": "Misreading a sliding queen check as unblockable skips a legitimate defensive category.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d1d8",
+              "g8h7",
+              "d8d7"
+            ],
+            "explanation": "Rather than ...Re8, Black may flee to h7 here. Qd7 then attacks the rook on e7; do not label it check."
+          }
+        ]
       }
     },
     {
@@ -430,7 +520,17 @@
         "continuation": "Qxe8+ trades the check for material and retains the initiative in this simple example.",
         "misconception": "If you inspect only king moves, you cannot understand why the rook from e7 matters.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "c2c8",
+              "g8h7",
+              "c8c7"
+            ],
+            "explanation": "The king can leave the checking rank instead of accepting ...Re8. Qc7 attacks the e7 rook."
+          }
+        ]
       }
     },
     {
@@ -463,7 +563,17 @@
         "continuation": "Rxf8+ captures the rook; Bc5 protects f8 so the king cannot simply take back.",
         "misconception": "Declaring Rxf8 a blunder without seeing the c5 bishop mistakes an exchange for a loss.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7"
+            ],
+            "explanation": "The king can choose ...Kh7 instead of ...Rf8; the rook then changes rank and eyes the f7 defender."
+          }
+        ]
       }
     },
     {
@@ -496,7 +606,17 @@
         "continuation": "Rxg8+ captures the blocker and forces Black to address the new rook check.",
         "misconception": "Watching only the black king misses a rook on g7 that can interpose in one move.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "h1h8",
+              "e8d7",
+              "h8h7"
+            ],
+            "explanation": "...Kd7 avoids immediate blocking. Rh7 changes ranks but can be attacked by the rook on g7."
+          }
+        ]
       }
     },
     {
@@ -529,7 +649,17 @@
         "continuation": "Bxd7+ captures the rook, but ...Kxd7 remains a possible recapture on the next ply.",
         "misconception": "Assuming Bxd7+ wins a clean rook without counting the king's recapture overstates the material result.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "c4b5",
+              "e8f8",
+              "b5c6"
+            ],
+            "explanation": "...Kf8 declines ...Rd7; there is no reason to assume the bishop wins the rook automatically."
+          }
+        ]
       }
     },
     {
@@ -562,7 +692,17 @@
         "continuation": "Qd8+ gives a new back-rank check with the rook still on d1.",
         "misconception": "Believing ...Kxd7 wins the queen overlooks the supporting rook on d1.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d2d7",
+              "e8f8",
+              "d7d6"
+            ],
+            "explanation": "Qd6 is a legal quieter continuation after winning the knight, illustrating a different choice than Qd8+."
+          }
+        ]
       }
     },
     {
@@ -661,7 +801,17 @@
         "continuation": "Kd2 approaches the newly advanced d-pawn and prepares its support.",
         "misconception": "Playing a random king move first gives Black extra opportunities while leaving the bishop.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "e2d3",
+              "e8d7",
+              "e1d2"
+            ],
+            "explanation": "...Kd7 is an alternative active king move after exd3; Kd2 still centralizes White."
+          }
+        ]
       }
     },
     {
@@ -694,7 +844,17 @@
         "continuation": "Qxa8+ takes the rook up the a-file and delivers a rank check to the king on f8.",
         "misconception": "Pretending Qxa8 is a one-move capture from d1 ignores the intermediate geometry.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d1a4",
+              "e8d8",
+              "a4a8"
+            ],
+            "explanation": "...Kd8 also leaves the diagonal check, and Qxa8+ captures the corner rook with a back-rank check."
+          }
+        ]
       }
     },
     {
@@ -727,7 +887,17 @@
         "continuation": "Re7+ checks the king from the seventh rank, continuing to use tempo.",
         "misconception": "A passive rook retreat lets an invading rook stay active instead of simplifying.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "e1e2",
+              "e8d7",
+              "e2e7"
+            ],
+            "explanation": "...Kd7 sidesteps the rook's e-file check. Re7+ now attacks across the seventh rank."
+          }
+        ]
       }
     },
     {
@@ -793,7 +963,18 @@
         "continuation": "Nxc8 takes the queen, and ...Kxc8 can then recapture, with the a7 pawn remaining.",
         "misconception": "Calling this a won queen ignores ...Kxc8 and the pawn still on the board.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "f5d6",
+              "e8d8",
+              "d6c8",
+              "d8c8"
+            ],
+            "explanation": "The fourth ply ...Kxc8 recaptures the knight. Material evaluation must continue beyond the three scored moves."
+          }
+        ]
       }
     },
     {
@@ -826,7 +1007,17 @@
         "continuation": "...Qxd5 recaptures along the opened d-file, but the queen can later be attacked.",
         "misconception": "Counting White's pawn capture as free material neglects the straightforward queen recapture.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d7d5",
+              "e4e5",
+              "g8f6"
+            ],
+            "explanation": "White may advance e5 instead of exd5; ...Nf6 develops against the advanced center."
+          }
+        ]
       }
     },
     {
@@ -859,7 +1050,17 @@
         "continuation": "...Nc6 develops for Black without pretending the opponent must concede a piece.",
         "misconception": "Ignoring White's supporting knight and declaring a free e4 pawn is shallow one-ply calculation.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "g8f6",
+              "d2d3",
+              "b8c6"
+            ],
+            "explanation": "After ...Nf6, White may reinforce with d3 rather than Nc3. Black develops the other knight."
+          }
+        ]
       }
     },
     {
@@ -892,7 +1093,17 @@
         "continuation": "...cxd4 captures the newly advanced pawn, beginning an exchange sequence.",
         "misconception": "Expecting White to wait peacefully after ...d6 neglects central counterplay.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d7d6",
+              "b1c3",
+              "g8f6"
+            ],
+            "explanation": "White may develop Nc3 instead of playing d4 immediately; Black continues normal development."
+          }
+        ]
       }
     },
     {
@@ -925,7 +1136,17 @@
         "continuation": "Nc3 attacks that queen with a developing knight, gaining tempo.",
         "misconception": "Playing exd5 as if Black had no queen recapture misses the immediate response.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "b1c3",
+              "d5e4",
+              "c3e4"
+            ],
+            "explanation": "White may develop Nc3 before exchanging. Black then takes on e4 and the knight recaptures."
+          }
+        ]
       }
     },
     {
@@ -958,7 +1179,17 @@
         "continuation": "...e6 supports d5 and helps stabilize the structure, restricting the c8 bishop temporarily.",
         "misconception": "A player who considers only knight development misses the direct c-pawn challenge.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "g8f6",
+              "e2e3",
+              "c7c5"
+            ],
+            "explanation": "White may support d4 with e3 instead of an immediate c4 challenge; Black can seek ...c5."
+          }
+        ]
       }
     },
     {
@@ -991,7 +1222,17 @@
         "continuation": "...e6 supports the advanced pawn without immediately winning or losing material.",
         "misconception": "Assuming ...d5 will remain unchallenged ignores a standard structural countermeasure.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d7d5",
+              "g1f3",
+              "g8f6"
+            ],
+            "explanation": "White can develop before challenging d5; Black meets it with symmetric knight development."
+          }
+        ]
       }
     },
     {
@@ -1024,7 +1265,17 @@
         "continuation": "...a6 questions the bishop and makes the initiative less one-sided.",
         "misconception": "Treating ...Nc6 as the end of the calculation ignores the piece that now guards e5.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "b8c6",
+              "e2e4",
+              "g8f6"
+            ],
+            "explanation": "White can take central space with e4; Black develops again rather than exchanging on d4."
+          }
+        ]
       }
     },
     {
@@ -1090,7 +1341,17 @@
         "continuation": "Kd2 centralizes White's king near the newly captured pawn's square.",
         "misconception": "A random king move before exd3 leaves Black's advanced pawn intact.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "e2d3",
+              "e8d7",
+              "e1d2"
+            ],
+            "explanation": "...Kd7 is a second king reply after the advanced pawn is removed; White can still activate its king."
+          }
+        ]
       }
     },
     {
@@ -1255,7 +1516,17 @@
         "continuation": "Rd7+ checks from the seventh rank after resolving the forced defensive task.",
         "misconception": "Trying to attack elsewhere while in check is illegal; moving without removing the pawn preserves its danger.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "d1d2",
+              "e8f7",
+              "d2d8"
+            ],
+            "explanation": "After capturing the checking pawn, White may keep its rook on the eighth rank instead of checking on the seventh."
+          }
+        ]
       }
     },
     {
@@ -1321,7 +1592,17 @@
         "continuation": "Qb7+ keeps checking along the seventh rank and buys another tempo.",
         "misconception": "Calling b8=Q immediate victory without accounting for ...h1=Q is incomplete race analysis.",
         "reflection": "Recalculate from the starting position without the move list. Which opponent reply would most challenge your evaluation?",
-        "variations": []
+        "variations": [
+          {
+            "label": "Defender or continuation alternative",
+            "moves": [
+              "b7b8q",
+              "h8h7",
+              "b8b6"
+            ],
+            "explanation": "After promoting with check, White can choose Qb6 instead of another check, but must then calculate the h-pawn race."
+          }
+        ]
       }
     }
   ]
