@@ -25,13 +25,13 @@ export function legalCalculationBranch(position:Pick<CalculationPosition,
 export function calculationMisconceptions(position:CalculationPosition,evidence:CalculationEvidence):string[]{
   const details:string[]=[];
   if(!evidence.selectedMoveScore)
-    details.push("Main move: revisit checks, captures, threats and quiet candidates.");
+    details.push("Main move: compare forcing and quiet candidates.");
   if(!evidence.replyScore)
-    details.push(`Opponent reply: look for resistance. ${position.replyReason ?? "Recheck legal defenses."}`);
+    details.push(`Opponent reply: ${position.replyReason ?? "Find legal defenses."}`);
   if(!evidence.continuationScore)
-    details.push(`Continuation: calculate one ply deeper. ${position.continuationReason ?? "Reevaluate the board."}`);
+    details.push(`Continuation: ${position.continuationReason ?? "Reassess the board."}`);
   if(position.defensiveStudy){
-    details.push(`Defensive misconception: ${position.defensiveStudy.misconception}`);
+    details.push(`Misconception: ${position.defensiveStudy.misconception}`);
     for(const branch of position.defensiveStudy.variations){
       const line=legalCalculationBranch({...position,
         bestMove:branch.moves[0],principalVariation:branch.moves});
@@ -39,5 +39,5 @@ export function calculationMisconceptions(position:CalculationPosition,evidence:
     }
     details.push(position.defensiveStudy.reflection);
   }
-  return details.length?details:["Line reconstructed. Confirm later with independent recall."];
+  return details.length?details:["Retest this line unaided."];
 }
