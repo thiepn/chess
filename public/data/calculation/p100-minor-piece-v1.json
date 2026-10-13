@@ -825,11 +825,11 @@
       "title": "Challenge central light-squared lines",
       "fen": "2b3k1/8/3p4/8/8/4P3/8/5BK1 w - - 0 1",
       "playerColor": "w",
-      "bestMove": "f1c4",
+      "bestMove": "f1d3",
       "principalVariation": [
-        "f1c4",
+        "f1d3",
         "c8g4",
-        "c4f7"
+        "d3h7"
       ],
       "source": "authored",
       "sourceLabel": "P100 · Same-coloured bishops",
@@ -840,15 +840,15 @@
         "calculation.evaluation",
         "endgames.minor-piece-activity"
       ],
-      "prompt": "With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4. Calculate three legal plies and compare a different route before deciding what the defender can do next.",
-      "replyReason": "...Bg4 counters with light-square influence while White's bishop eyes f7. Identify the exact threatened square, not a generic bishop-versus-knight slogan.",
-      "continuationReason": "Bf7+ checks the king on g8 but Black may find a legal king escape. Continue the evaluation after the defender's next move.",
-      "explanation": "Challenge central light-squared lines. With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4. Reference f1c4 c8g4 c4f7, compared with f1b5 c8d7 b5d7. Defender: ...Bg4 counters with light-square influence while White's bishop eyes f7. Endpoint: Bf7+ checks the king on g8 but Black may find a legal king escape. Misconception: A bishop check needs a response tree; it is not a proof of mate. Theory: With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity. The line illustrates legal choices, not a tablebase-proven WDL or an engine-unique optimum.",
+      "prompt": "Bd3 develops the light-squared bishop without prematurely checking g8, allowing Black ...Bg4 as a reply. Afterward Bh7+ is a forcing test of king mobility; calculate Black's legal king responses before claiming an advantage.",
+      "replyReason": "...Bg4 puts the black bishop on its active diagonal, but White's bishop from d3 can give check on h7. The defender must respond to the check on the next move.",
+      "continuationReason": "Bh7+ is a legal check against the black king on g8, not a forced mate. The minor-piece ending remains dependent on pawn position and king flights.",
+      "explanation": "Challenge central light-squared lines. Bd3 develops the light-squared bishop without prematurely checking g8, allowing Black ...Bg4 as a reply. Afterward Bh7+ is a forcing test of king mobility; calculate Black's legal king responses before claiming an advantage. Main line f1d3 c8g4 d3h7 gives a legal third-ply check. Alternative f1b5 c8d7 b5d7 uses the bishop to capture its same-colored opponent; Black then has to calculate king activity after the exchange. ...Bg4 puts the black bishop on its active diagonal, but White's bishop from d3 can give check on h7. The defender must respond to the check on the next move. Bh7+ is a legal check against the black king on g8, not a forced mate. The minor-piece ending remains dependent on pawn position and king flights. Misconception: assuming 1.Bc4 leaves Black free to play ...Bg4 overlooks that Bc4+ already checks the g8 king. With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity. No tablebase-unique solution is asserted.",
       "defensiveStudy": {
-        "keyQuestion": "With the d3 square clear, the white bishop can travel from f1 via e2 and d3 to c4.",
-        "defenderIdea": "...Bg4 counters with light-square influence while White's bishop eyes f7.",
-        "continuation": "Bf7+ checks the king on g8 but Black may find a legal king escape.",
-        "misconception": "A bishop check needs a response tree; it is not a proof of mate.",
+        "keyQuestion": "Bd3 develops the light-squared bishop without prematurely checking g8, allowing Black ...Bg4 as a reply. Afterward Bh7+ is a forcing test of king mobility; calculate Black's legal king responses before claiming an advantage.",
+        "defenderIdea": "...Bg4 puts the black bishop on its active diagonal, but White's bishop from d3 can give check on h7. The defender must respond to the check on the next move.",
+        "continuation": "Bh7+ is a legal check against the black king on g8, not a forced mate. The minor-piece ending remains dependent on pawn position and king flights.",
+        "misconception": "1.Bc4+ is a checking alternative, so ...Bg4 cannot be played without answering the check. First calculate the attacked king square.",
         "reflection": "Reconstruct f1c4 c8g4 c4f7 and f1b5 c8d7 b5d7 without moving the pieces. Then identify whether the opponent's bishop can capture the promoted target square or the knight that moved. Bf7+ checks the king on g8 but Black may find a legal king escape.",
         "variations": [
           {
@@ -858,7 +858,7 @@
               "c8d7",
               "b5d7"
             ],
-            "explanation": "A bishop check needs a response tree; it is not a proof of mate. The alternate f1b5 c8d7 b5d7 changes the geometric pressure and must be analyzed beyond the endpoint."
+            "explanation": "1.Bb5 ...Bd7 2.Bxd7 changes material via a same-color bishop capture. Compare this with 1.Bd3 ...Bg4 2.Bh7+ and count king escapes."
           }
         ]
       },
@@ -866,9 +866,9 @@
         "theme": "Same-coloured bishops",
         "method": "With bishops on the same color complex, control of the entry diagonals and favorable bishop trades matters. A bishop can challenge its opponent's diagonal directly, making timing and pawn placement especially important. Calculate whether a centralization allows ...Bxd4 before claiming improved activity.",
         "outcome": "not tablebase-certified",
-        "defenderResource": "...Bg4 counters with light-square influence while White's bishop eyes f7.",
-        "misconception": "A bishop check needs a response tree; it is not a proof of mate.",
-        "endpoint": "Bf7+ checks the king on g8 but Black may find a legal king escape."
+        "defenderResource": "...Bg4 puts the black bishop on its active diagonal, but White's bishop from d3 can give check on h7. The defender must respond to the check on the next move.",
+        "misconception": "1.Bc4+ is a checking alternative, so ...Bg4 cannot be played without answering the check. First calculate the attacked king square.",
+        "endpoint": "Bh7+ is a legal check against the black king on g8, not a forced mate. The minor-piece ending remains dependent on pawn position and king flights."
       }
     },
     {
