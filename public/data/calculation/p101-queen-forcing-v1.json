@@ -887,9 +887,9 @@
       "principalVariation": [
         "e1e8",
         "f7f8",
-        "e8f8",
-        "g8f8",
-        "g1f2"
+        "e8e6",
+        "g8h8",
+        "e6f6"
       ],
       "skillIds": [
         "calculation.candidates",
@@ -897,27 +897,27 @@
         "calculation.evaluation",
         "endgames.queen-mate"
       ],
-      "prompt": "Qe8+ allows ...Rf8, a rook block supported by Black's king on g8. Calculate at least five plies and compare a real defensive resource before trusting the first check.",
+      "prompt": "Qe8+ allows ...Rf8, a rook block supported by Black's king on g8. Calculate at least five plies and compare a real defensive resource before trusting the first check. Your scored third-ply choice must not sacrifice your queen for a rook or pawn without compensation.",
       "replyReason": "...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap.",
       "continuationReason": "Assess the board after five plies: The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation.",
-      "explanation": "A defended rook makes queen capture poisonous. Qe8+ allows ...Rf8, a rook block supported by Black's king on g8. Main instructional sequence: e1e8 f7f8 e8f8 g8f8 g1f2. Resistant alternative: e1e8 f7f8 e8e6 g8h8 e6f6. Candidate comparison: e1e5 f7f6 e5e6. ...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap. Endpoint: The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation. Misconception and correction: Capturing an interposing rook without calculating ...Kxf8 loses track of what the black king guards. These lines are authored examples, not engine-certified optimality, perpetual-check proof, or a tablebase WDL verdict.",
+      "explanation": "A defended rook makes queen capture poisonous. Five-ply preferred illustrative line: e1e8 f7f8 e8e6 g8h8 e6f6. Bad but legal counterexample: e1e8 f7f8 e8f8 g8f8 g1f2. After ...Rf8 the safer reference is Qe6+ and a further queen check from f6, not Qxf8+?? Kxf8. The king guards f8. Original scenario: Qe8+ allows ...Rf8, a rook block supported by Black's king on g8. Defender: ...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap. Endpoint: Assess the board after five plies: The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation. Misconception: Capturing an interposing rook without calculating ...Kxf8 loses track of what the black king guards. Compare the actual material after five plies. Neither these examples nor the lesson text imply independent tablebase certification.",
       "defensiveStudy": {
         "keyQuestion": "Qe8+ allows ...Rf8, a rook block supported by Black's king on g8.",
         "defenderIdea": "...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap.",
         "continuation": "The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation.",
         "misconception": "Capturing an interposing rook without calculating ...Kxf8 loses track of what the black king guards.",
-        "reflection": "Visualize both king squares at ply five, count all pawns and queens and identify the first legal countercheck for the defender. The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation.",
+        "reflection": "Visualize both king squares at ply five, count all pawns and queens and identify the first legal countercheck for the defender. The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation. Reconstruct the poisoned line and name the exact king or queen recapture. After ...Rf8 the safer reference is Qe6+ and a further queen check from f6, not Qxf8+?? Kxf8. The king guards f8.",
         "variations": [
           {
-            "label": "Resistant alternative",
+            "label": "Poisoned tactical alternative",
             "moves": [
               "e1e8",
               "f7f8",
-              "e8e6",
-              "g8h8",
-              "e6f6"
+              "e8f8",
+              "g8f8",
+              "g1f2"
             ],
-            "explanation": "...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap. The five-ply defensive line changes the ending; Capturing an interposing rook without calculating ...Kxf8 loses track of what the black king guards."
+            "explanation": "After ...Rf8 the safer reference is Qe6+ and a further queen check from f6, not Qxf8+?? Kxf8. The king guards f8."
           },
           {
             "label": "Competing candidate",
@@ -932,9 +932,9 @@
       },
       "queenEndgameStudy": {
         "theme": "Queen interpositions",
-        "materialAndKingSafety": "The apparent rook win is a losing queen trade for a rook; Qe6+ is a candidate line requiring further calculation.",
+        "materialAndKingSafety": "After ...Rf8 the safer reference is Qe6+ and a further queen check from f6, not Qxf8+?? Kxf8. The king guards f8.",
         "defenderCounterplay": "...Rf8 interposes: Qxf8+ Kxf8 eliminates White's queen, exposing a grave evaluation trap.",
-        "failedPlan": "Capturing an interposing rook without calculating ...Kxf8 loses track of what the black king guards.",
+        "failedPlan": "e1e8 f7f8 e8f8 g8f8 g1f2",
         "analysisStatus": "authored line, not certified tablebase or forced perpetual"
       }
     }
