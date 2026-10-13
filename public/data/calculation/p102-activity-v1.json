@@ -49,11 +49,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "g1f1",
-              "c2c1",
-              "f1g2"
+              "a5a6",
+              "h8h7",
+              "a1a5"
             ],
-            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
           }
         ]
       },
@@ -112,11 +112,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "g1f1",
-              "c2c1",
-              "f1g2"
+              "a5a6",
+              "h8h7",
+              "a1a5"
             ],
-            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
           }
         ]
       },
@@ -175,11 +175,11 @@
           {
             "label": "Mistaken candidate",
             "moves": [
-              "g1f1",
-              "c2c1",
-              "f1g2"
+              "a5a6",
+              "h8h7",
+              "a1a5"
             ],
-            "explanation": "Kf1? allows ...Rxc1+, followed by Kg2, a legal king flight away from the first-rank rook. Kh2 on move one would be illegal because the black rook on c2 attacks h2."
+            "explanation": "The a-pawn advances before White moves its rook to a5 behind the pawn. This is legal but exposes the pawn's tempo choice to ...Rh7 side checks."
           }
         ]
       },
