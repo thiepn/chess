@@ -40,6 +40,9 @@ if (typeof window !== "undefined") {
     ["p105-checking-networks-v1.json", 15],
     ["p105-initiative-resistance-v1.json", 15],
     ["p105-shelter-prophylaxis-v1.json", 15],
+    ["p106-active-defense-v1.json", 15],
+    ["p106-queen-counterplay-v1.json", 15],
+    ["p106-king-fortress-v1.json", 18],
   ] as const) {
     const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
