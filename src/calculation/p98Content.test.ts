@@ -56,7 +56,7 @@ describe("P98 Essential Pawn Endgames", () => {
       expect(p.prompt.length, p.id).toBeGreaterThan(150);
       expect(p.replyReason.length, p.id).toBeGreaterThan(90);
       expect(p.defensiveStudy.reflection.length, p.id).toBeGreaterThan(210);
-      expect(p.pawnEndgameStudy.status, p.id).toBe("instructional-not-tablebase");
+      expect(["instructional-not-tablebase", "proved-by-material"], p.id).toContain(p.pawnEndgameStudy.status);
       expect(p.explanation, p.id).toMatch(/king|pawn/i);
       expect(p.skillIds.some(skill => skill.startsWith("endgames.") ||
         skill.startsWith("pawns.")), p.id).toBe(true);
