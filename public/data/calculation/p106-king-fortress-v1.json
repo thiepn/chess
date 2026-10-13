@@ -1,0 +1,1267 @@
+{
+  "version": 1,
+  "phase": "P106",
+  "section": "King escapes, rook trades, central pawn blockade and active defense",
+  "positions": [
+    {
+      "id": "calc:p106-31",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook trade as a drawing-resource calculation",
+      "title": "Remove the h-file invader before chasing the king — a-pawn available",
+      "fen": "6kr/8/8/8/8/8/P7/6KR w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "g8f7",
+        "h8h7",
+        "f7f6",
+        "h7h6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5.",
+      "continuationReason": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook trade as a drawing-resource calculation. Principle: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Original practical question: An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Correct main five-ply calculation: h1h8 g8f7 h8h7 f7f6 h7h6. Separate attacker/defender five-ply response: h1h8 g8f7 h8h6 f7g7 h6h5. Plausible failed defensive plan: h1h5 h8h5 g1f2. Resistance: Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material and king-safety conclusion: White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. Misconception-specific feedback: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. Extra pawn variant: White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5.",
+        "defenderIdea": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "continuation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Error repair: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "h1h8",
+              "g8f7",
+              "h8h6",
+              "f7g7",
+              "h6h5"
+            ],
+            "explanation": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Variation h1h8 g8f7 h8h6 f7g7 h6h5 changes the relevant king flight or defended piece. White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "h1h5",
+              "h8h5",
+              "g1f2"
+            ],
+            "explanation": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. In h1h5 h8h5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook trade as a drawing-resource calculation",
+        "principle": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights.",
+        "attackerThreat": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "modelLine": "h1h8 g8f7 h8h7 f7f6 h7h6",
+        "opponentResistance": "h1h8 g8f7 h8h6 f7g7 h6h5",
+        "failedPlan": "h1h5 h8h5 g1f2",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "context": "White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5.",
+        "practicalEvaluation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. White's a2 pawn is a future passer after the h-file exchange, provided the rook is not donated on h5.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-32",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook trade as a drawing-resource calculation",
+      "title": "Remove the h-file invader before chasing the king — b-pawn available",
+      "fen": "6kr/8/8/8/8/8/1P6/6KR w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "g8f7",
+        "h8h7",
+        "f7f6",
+        "h7h6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: White's b2 pawn can support later conversion but does not protect the rook that moves to h5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: White's b2 pawn can support later conversion but does not protect the rook that moves to h5.",
+      "continuationReason": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook trade as a drawing-resource calculation. Principle: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Original practical question: An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Correct main five-ply calculation: h1h8 g8f7 h8h7 f7f6 h7h6. Separate attacker/defender five-ply response: h1h8 g8f7 h8h6 f7g7 h6h5. Plausible failed defensive plan: h1h5 h8h5 g1f2. Resistance: Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material and king-safety conclusion: White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. Misconception-specific feedback: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. Extra pawn variant: White's b2 pawn can support later conversion but does not protect the rook that moves to h5. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5.",
+        "defenderIdea": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "continuation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Error repair: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. White's b2 pawn can support later conversion but does not protect the rook that moves to h5.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "h1h8",
+              "g8f7",
+              "h8h6",
+              "f7g7",
+              "h6h5"
+            ],
+            "explanation": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Variation h1h8 g8f7 h8h6 f7g7 h6h5 changes the relevant king flight or defended piece. White's b2 pawn can support later conversion but does not protect the rook that moves to h5."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "h1h5",
+              "h8h5",
+              "g1f2"
+            ],
+            "explanation": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. In h1h5 h8h5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White's b2 pawn can support later conversion but does not protect the rook that moves to h5."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook trade as a drawing-resource calculation",
+        "principle": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights.",
+        "attackerThreat": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "modelLine": "h1h8 g8f7 h8h7 f7f6 h7h6",
+        "opponentResistance": "h1h8 g8f7 h8h6 f7g7 h6h5",
+        "failedPlan": "h1h5 h8h5 g1f2",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "context": "White's b2 pawn can support later conversion but does not protect the rook that moves to h5.",
+        "practicalEvaluation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. White's b2 pawn can support later conversion but does not protect the rook that moves to h5.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-33",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook trade as a drawing-resource calculation",
+      "title": "Remove the h-file invader before chasing the king — defender's counterpasser",
+      "fen": "6kr/2p5/8/8/8/8/8/6KR w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "g8f7",
+        "h8h7",
+        "f7f6",
+        "h7h6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Variant issue: Black retains c7; a rook gain still requires checking distance and practical pawn prevention. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material context: Black retains c7; a rook gain still requires checking distance and practical pawn prevention.",
+      "continuationReason": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook trade as a drawing-resource calculation. Principle: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Original practical question: An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5. Correct main five-ply calculation: h1h8 g8f7 h8h7 f7f6 h7h6. Separate attacker/defender five-ply response: h1h8 g8f7 h8h6 f7g7 h6h5. Plausible failed defensive plan: h1h5 h8h5 g1f2. Resistance: Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Material and king-safety conclusion: White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion. Misconception-specific feedback: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. Extra pawn variant: Black retains c7; a rook gain still requires checking distance and practical pawn prevention. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "An enemy rook on h8 contests the h-file. Rook activity alone is not an advantage: calculate the immediate R on h8 capture, then the defender king's route. Compare the greedy rook lift to h5 that loses to ...Rxh5.",
+        "defenderIdea": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "continuation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Error repair: A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. Black retains c7; a rook gain still requires checking distance and practical pawn prevention.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "h1h8",
+              "g8f7",
+              "h8h6",
+              "f7g7",
+              "h6h5"
+            ],
+            "explanation": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook. Variation h1h8 g8f7 h8h6 f7g7 h6h5 changes the relevant king flight or defended piece. Black retains c7; a rook gain still requires checking distance and practical pawn prevention."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "h1h5",
+              "h8h5",
+              "g1f2"
+            ],
+            "explanation": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift. In h1h5 h8h5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. Black retains c7; a rook gain still requires checking distance and practical pawn prevention."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook trade as a drawing-resource calculation",
+        "principle": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights.",
+        "attackerThreat": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+        "modelLine": "h1h8 g8f7 h8h7 f7f6 h7h6",
+        "opponentResistance": "h1h8 g8f7 h8h6 f7g7 h6h5",
+        "failedPlan": "h1h5 h8h5 g1f2",
+        "misconception": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift.",
+        "context": "Black retains c7; a rook gain still requires checking distance and practical pawn prevention.",
+        "practicalEvaluation": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "Black's king retreats to f7 and then f6/g7 while White keeps the rook. 1.Rh5? allows ...Rxh5, extinguishing White's only active rook.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "White retains a rook against a bare king or the specified pawn reserve after the direct capture; this is favorable material, but a five-ply line is not a certified conversion.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Active defense starts with removing an immediate attacker; only after the capture should the rook chase the king and respect legal king flights. Black retains c7; a rook gain still requires checking distance and practical pawn prevention.",
+            "repair": "A rook placed on an active fifth rank may be directly capturable by the rook on the same file. Count the enemy rook's full attack line before choosing a lift."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-34",
+      "source": "authored",
+      "sourceLabel": "P106 · Open c-file resistance",
+      "title": "Exchange the hostile c8 rook rather than let it capture yours — queenside asset",
+      "fen": "2r3k1/8/8/8/8/8/P7/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8f7",
+        "c8c7",
+        "f7f6",
+        "c7c6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: White's a2 can become a passed pawn once the c-file danger has been eliminated. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: White's a2 can become a passed pawn once the c-file danger has been eliminated.",
+      "continuationReason": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Open c-file resistance. Principle: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Original practical question: Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Correct main five-ply calculation: c1c8 g8f7 c8c7 f7f6 c7c6. Separate attacker/defender five-ply response: c1c8 g8h7 c8c7 h7g6 c7c6. Plausible failed defensive plan: c1c5 c8c5 g1f2. Resistance: ...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material and king-safety conclusion: The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. Misconception-specific feedback: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. Extra pawn variant: White's a2 can become a passed pawn once the c-file danger has been eliminated. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it.",
+        "defenderIdea": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "continuation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Error repair: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. White's a2 can become a passed pawn once the c-file danger has been eliminated.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c7",
+              "h7g6",
+              "c7c6"
+            ],
+            "explanation": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Variation c1c8 g8h7 c8c7 h7g6 c7c6 changes the relevant king flight or defended piece. White's a2 can become a passed pawn once the c-file danger has been eliminated."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c1c5",
+              "c8c5",
+              "g1f2"
+            ],
+            "explanation": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. In c1c5 c8c5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White's a2 can become a passed pawn once the c-file danger has been eliminated."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Open c-file resistance",
+        "principle": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts.",
+        "attackerThreat": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "modelLine": "c1c8 g8f7 c8c7 f7f6 c7c6",
+        "opponentResistance": "c1c8 g8h7 c8c7 h7g6 c7c6",
+        "failedPlan": "c1c5 c8c5 g1f2",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "context": "White's a2 can become a passed pawn once the c-file danger has been eliminated.",
+        "practicalEvaluation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. White's a2 can become a passed pawn once the c-file danger has been eliminated.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-35",
+      "source": "authored",
+      "sourceLabel": "P106 · Open c-file resistance",
+      "title": "Exchange the hostile c8 rook rather than let it capture yours — b-pawn escort",
+      "fen": "2r3k1/8/8/8/8/8/1P6/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8f7",
+        "c8c7",
+        "f7f6",
+        "c7c6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward.",
+      "continuationReason": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Open c-file resistance. Principle: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Original practical question: Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Correct main five-ply calculation: c1c8 g8f7 c8c7 f7f6 c7c6. Separate attacker/defender five-ply response: c1c8 g8h7 c8c7 h7g6 c7c6. Plausible failed defensive plan: c1c5 c8c5 g1f2. Resistance: ...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material and king-safety conclusion: The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. Misconception-specific feedback: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. Extra pawn variant: White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it.",
+        "defenderIdea": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "continuation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Error repair: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c7",
+              "h7g6",
+              "c7c6"
+            ],
+            "explanation": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Variation c1c8 g8h7 c8c7 h7g6 c7c6 changes the relevant king flight or defended piece. White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c1c5",
+              "c8c5",
+              "g1f2"
+            ],
+            "explanation": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. In c1c5 c8c5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Open c-file resistance",
+        "principle": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts.",
+        "attackerThreat": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "modelLine": "c1c8 g8f7 c8c7 f7f6 c7c6",
+        "opponentResistance": "c1c8 g8h7 c8c7 h7g6 c7c6",
+        "failedPlan": "c1c5 c8c5 g1f2",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "context": "White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward.",
+        "practicalEvaluation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. White's b2 pawn survives the exchange; White should use the rook and king to support it only afterward.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-36",
+      "source": "authored",
+      "sourceLabel": "P106 · Open c-file resistance",
+      "title": "Exchange the hostile c8 rook rather than let it capture yours — opposing a-pawn",
+      "fen": "2r3k1/p7/8/8/8/8/8/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c1c8",
+      "principalVariation": [
+        "c1c8",
+        "g8f7",
+        "c8c7",
+        "f7f6",
+        "c7c6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Variant issue: Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material context: Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king.",
+      "continuationReason": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Open c-file resistance. Principle: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Original practical question: Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it. Correct main five-ply calculation: c1c8 g8f7 c8c7 f7f6 c7c6. Separate attacker/defender five-ply response: c1c8 g8h7 c8c7 h7g6 c7c6. Plausible failed defensive plan: c1c5 c8c5 g1f2. Resistance: ...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Material and king-safety conclusion: The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights. Misconception-specific feedback: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. Extra pawn variant: Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's c8 rook controls the c-file. White can exchange it by Rxc8+ and continue checking; moving the rook to c5 before capturing lets ...Rxc5 win it.",
+        "defenderIdea": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "continuation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Error repair: Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c1c8",
+              "g8h7",
+              "c8c7",
+              "h7g6",
+              "c7c6"
+            ],
+            "explanation": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5. Variation c1c8 g8h7 c8c7 h7g6 c7c6 changes the relevant king flight or defended piece. Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c1c5",
+              "c8c5",
+              "g1f2"
+            ],
+            "explanation": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement. In c1c5 c8c5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Open c-file resistance",
+        "principle": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts.",
+        "attackerThreat": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+        "modelLine": "c1c8 g8f7 c8c7 f7f6 c7c6",
+        "opponentResistance": "c1c8 g8h7 c8c7 h7g6 c7c6",
+        "failedPlan": "c1c5 c8c5 g1f2",
+        "misconception": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement.",
+        "context": "Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king.",
+        "practicalEvaluation": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Kf7 and ...Kh7 are different king escapes after the c-file rook is removed. Against 1.Rc5?, Black's rook captures on c5.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The white rook remains against the king (plus the specified extra pawns) after Rxc8; further technical conversion still depends on restricting its flights.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "A defensive rook capture removes the immediate enemy pressure and transforms the position before the endgame technique starts. Black's a7 pawn remains after its c8 rook is captured, so the conversion is not as trivial as rook against bare king.",
+            "repair": "Rook activity without checking the defending rook's capture ray is often a rook blunder, not positional improvement."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-37",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook coordination against an exposed back rank",
+      "title": "Rxa8 clears the rival rook; Ra5 leaves it alive — wing pawn support",
+      "fen": "r5k1/8/8/8/8/8/1P6/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: White b2 can support a practical queenside passer after simplifying the rook tension. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: White b2 can support a practical queenside passer after simplifying the rook tension.",
+      "continuationReason": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook coordination against an exposed back rank. Principle: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Original practical question: The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Correct main five-ply calculation: a1a8 g8f7 a8a7 f7f6 a7a6. Separate attacker/defender five-ply response: a1a8 g8h7 a8a7 h7g6 a7a6. Plausible failed defensive plan: a1a5 a8a5 g1f2. Resistance: The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material and king-safety conclusion: After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. Misconception-specific feedback: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. Extra pawn variant: White b2 can support a practical queenside passer after simplifying the rook tension. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs.",
+        "defenderIdea": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "continuation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Error repair: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. White b2 can support a practical queenside passer after simplifying the rook tension.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Variation a1a8 g8h7 a8a7 h7g6 a7a6 changes the relevant king flight or defended piece. White b2 can support a practical queenside passer after simplifying the rook tension."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "a1a5",
+              "a8a5",
+              "g1f2"
+            ],
+            "explanation": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. In a1a5 a8a5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White b2 can support a practical queenside passer after simplifying the rook tension."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook coordination against an exposed back rank",
+        "principle": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn.",
+        "attackerThreat": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "modelLine": "a1a8 g8f7 a8a7 f7f6 a7a6",
+        "opponentResistance": "a1a8 g8h7 a8a7 h7g6 a7a6",
+        "failedPlan": "a1a5 a8a5 g1f2",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "context": "White b2 can support a practical queenside passer after simplifying the rook tension.",
+        "practicalEvaluation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. White b2 can support a practical queenside passer after simplifying the rook tension.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-38",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook coordination against an exposed back rank",
+      "title": "Rxa8 clears the rival rook; Ra5 leaves it alive — central pawn available",
+      "fen": "r5k1/8/8/8/8/8/2P5/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5.",
+      "continuationReason": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook coordination against an exposed back rank. Principle: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Original practical question: The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Correct main five-ply calculation: a1a8 g8f7 a8a7 f7f6 a7a6. Separate attacker/defender five-ply response: a1a8 g8h7 a8a7 h7g6 a7a6. Plausible failed defensive plan: a1a5 a8a5 g1f2. Resistance: The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material and king-safety conclusion: After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. Misconception-specific feedback: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. Extra pawn variant: White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs.",
+        "defenderIdea": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "continuation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Error repair: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Variation a1a8 g8h7 a8a7 h7g6 a7a6 changes the relevant king flight or defended piece. White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "a1a5",
+              "a8a5",
+              "g1f2"
+            ],
+            "explanation": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. In a1a5 a8a5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook coordination against an exposed back rank",
+        "principle": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn.",
+        "attackerThreat": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "modelLine": "a1a8 g8f7 a8a7 f7f6 a7a6",
+        "opponentResistance": "a1a8 g8h7 a8a7 h7g6 a7a6",
+        "failedPlan": "a1a5 a8a5 g1f2",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "context": "White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5.",
+        "practicalEvaluation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. White c2 is a future pawn asset, but it does not prevent the black rook from capturing on a5.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-39",
+      "source": "authored",
+      "sourceLabel": "P106 · Rook coordination against an exposed back rank",
+      "title": "Rxa8 clears the rival rook; Ra5 leaves it alive — black central pawn",
+      "fen": "r5k1/3p4/8/8/8/8/8/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "g8f7",
+        "a8a7",
+        "f7f6",
+        "a7a6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Variant issue: Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material context: Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters.",
+      "continuationReason": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Rook coordination against an exposed back rank. Principle: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Original practical question: The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs. Correct main five-ply calculation: a1a8 g8f7 a8a7 f7f6 a7a6. Separate attacker/defender five-ply response: a1a8 g8h7 a8a7 h7g6 a7a6. Plausible failed defensive plan: a1a5 a8a5 g1f2. Resistance: The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Material and king-safety conclusion: After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses. Misconception-specific feedback: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. Extra pawn variant: Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The attacking a8 rook can take White's rook if the white rook spends a tempo on a5. Calculate Rxa8+ and the defender's king flights before deciding where the surviving rook belongs.",
+        "defenderIdea": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "continuation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Error repair: A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "a1a8",
+              "g8h7",
+              "a8a7",
+              "h7g6",
+              "a7a6"
+            ],
+            "explanation": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first. Variation a1a8 g8h7 a8a7 h7g6 a7a6 changes the relevant king flight or defended piece. Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "a1a5",
+              "a8a5",
+              "g1f2"
+            ],
+            "explanation": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder. In a1a5 a8a5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Rook coordination against an exposed back rank",
+        "principle": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn.",
+        "attackerThreat": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+        "modelLine": "a1a8 g8f7 a8a7 f7f6 a7a6",
+        "opponentResistance": "a1a8 g8h7 a8a7 h7g6 a7a6",
+        "failedPlan": "a1a5 a8a5 g1f2",
+        "misconception": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder.",
+        "context": "Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters.",
+        "practicalEvaluation": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black king may go to f7 or h7 after Rxa8+. Black's rook, however, can take a rook on a5 if White fails to capture a8 first.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "After Rxa8 White retains an active rook with possible checking maneuvers on a7/a6, not an automatic mate against all king responses.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Eliminate the opposing rook first, then calculate rank-seven checks and the material value of any surviving pawn. Black retains d7 and may protect key king squares after White wins the a8 rook; the king's exact escape matters.",
+            "repair": "A rook lift to a5 is not safe when the opponent rook on a8 controls the entire file and can simply capture the intruder."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-40",
+      "source": "authored",
+      "sourceLabel": "P106 · King flight under forcing rook checks",
+      "title": "Escape the e1 rook without walking into a second check — white outside pawn",
+      "fen": "6k1/8/8/8/8/8/P7/4rK2 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "e1e2",
+        "g2f3",
+        "e2e3",
+        "f3f4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn.",
+      "continuationReason": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: King flight under forcing rook checks. Principle: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Original practical question: White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Correct main five-ply calculation: f1g2 e1e2 g2f3 e2e3 f3f4. Separate attacker/defender five-ply response: f1f2 e1e2 f2g3 e2e3 g3h4. Plausible failed defensive plan: f1g2 e1e2 g2f1. Resistance: The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material and king-safety conclusion: Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. Misconception-specific feedback: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. Extra pawn variant: White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop.",
+        "defenderIdea": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "continuation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Error repair: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "f1f2",
+              "e1e2",
+              "f2g3",
+              "e2e3",
+              "g3h4"
+            ],
+            "explanation": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Variation f1f2 e1e2 f2g3 e2e3 g3h4 changes the relevant king flight or defended piece. White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "f1g2",
+              "e1e2",
+              "g2f1"
+            ],
+            "explanation": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. In f1g2 e1e2 g2f1, White overlooks a concrete rook capture, check or pawn recapture. White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "King flight under forcing rook checks",
+        "principle": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo.",
+        "attackerThreat": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "modelLine": "f1g2 e1e2 g2f3 e2e3 f3f4",
+        "opponentResistance": "f1f2 e1e2 f2g3 e2e3 g3h4",
+        "failedPlan": "f1g2 e1e2 g2f1",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "context": "White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn.",
+        "practicalEvaluation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. White retains a2 as a possible future draw resource, yet the immediate legality of each king flight is independent of that pawn.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-41",
+      "source": "authored",
+      "sourceLabel": "P106 · King flight under forcing rook checks",
+      "title": "Escape the e1 rook without walking into a second check — white pawn reserve",
+      "fen": "6k1/8/8/8/8/8/1P6/4rK2 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "e1e2",
+        "g2f3",
+        "e2e3",
+        "f3f4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank.",
+      "continuationReason": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: King flight under forcing rook checks. Principle: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Original practical question: White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Correct main five-ply calculation: f1g2 e1e2 g2f3 e2e3 f3f4. Separate attacker/defender five-ply response: f1f2 e1e2 f2g3 e2e3 g3h4. Plausible failed defensive plan: f1g2 e1e2 g2f1. Resistance: The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material and king-safety conclusion: Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. Misconception-specific feedback: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. Extra pawn variant: The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop.",
+        "defenderIdea": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "continuation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Error repair: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "f1f2",
+              "e1e2",
+              "f2g3",
+              "e2e3",
+              "g3h4"
+            ],
+            "explanation": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Variation f1f2 e1e2 f2g3 e2e3 g3h4 changes the relevant king flight or defended piece. The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "f1g2",
+              "e1e2",
+              "g2f1"
+            ],
+            "explanation": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. In f1g2 e1e2 g2f1, White overlooks a concrete rook capture, check or pawn recapture. The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "King flight under forcing rook checks",
+        "principle": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo.",
+        "attackerThreat": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "modelLine": "f1g2 e1e2 g2f3 e2e3 f3f4",
+        "opponentResistance": "f1f2 e1e2 f2g3 e2e3 g3h4",
+        "failedPlan": "f1g2 e1e2 g2f1",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "context": "The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank.",
+        "practicalEvaluation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. The b2 pawn might protect future king entries; it cannot block ...Re2+ when the king stays on the second rank.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-42",
+      "source": "authored",
+      "sourceLabel": "P106 · King flight under forcing rook checks",
+      "title": "Escape the e1 rook without walking into a second check — Black counterpasser",
+      "fen": "6k1/p7/8/8/8/8/8/4rK2 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "f1g2",
+      "principalVariation": [
+        "f1g2",
+        "e1e2",
+        "g2f3",
+        "e2e3",
+        "f3f4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Variant issue: Black owns a7, so even a successful king flight leaves an outside pawn to stop. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material context: Black owns a7, so even a successful king flight leaves an outside pawn to stop.",
+      "continuationReason": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: King flight under forcing rook checks. Principle: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Original practical question: White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop. Correct main five-ply calculation: f1g2 e1e2 g2f3 e2e3 f3f4. Separate attacker/defender five-ply response: f1f2 e1e2 f2g3 e2e3 g3h4. Plausible failed defensive plan: f1g2 e1e2 g2f1. Resistance: The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Material and king-safety conclusion: Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay. Misconception-specific feedback: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. Extra pawn variant: Black owns a7, so even a successful king flight leaves an outside pawn to stop. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "White begins in check from the black rook on e1. Find legal king-flight routes through g2/f3/f4 or f2/g3/h4, calculating ...Re2+ and ...Re3+ at each stop.",
+        "defenderIdea": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "continuation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Error repair: A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. Black owns a7, so even a successful king flight leaves an outside pawn to stop.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "f1f2",
+              "e1e2",
+              "f2g3",
+              "e2e3",
+              "g3h4"
+            ],
+            "explanation": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply. Variation f1f2 e1e2 f2g3 e2e3 g3h4 changes the relevant king flight or defended piece. Black owns a7, so even a successful king flight leaves an outside pawn to stop."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "f1g2",
+              "e1e2",
+              "g2f1"
+            ],
+            "explanation": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space. In f1g2 e1e2 g2f1, White overlooks a concrete rook capture, check or pawn recapture. Black owns a7, so even a successful king flight leaves an outside pawn to stop."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "King flight under forcing rook checks",
+        "principle": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo.",
+        "attackerThreat": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+        "modelLine": "f1g2 e1e2 g2f3 e2e3 f3f4",
+        "opponentResistance": "f1f2 e1e2 f2g3 e2e3 g3h4",
+        "failedPlan": "f1g2 e1e2 g2f1",
+        "misconception": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space.",
+        "context": "Black owns a7, so even a successful king flight leaves an outside pawn to stop.",
+        "practicalEvaluation": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "The black rook follows to e2 and e3, using horizontal checks to chase the king. The defender must choose a square outside the rook's rank and file after each reply.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "Both five-ply routes escape the immediate checking rook without conceding a rook capture, but White remains materially worse and must look for later counterplay.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Defensive king escapes are a calculation problem, not an instruction to run away automatically. Draw the rook's ranks and files after every tempo. Black owns a7, so even a successful king flight leaves an outside pawn to stop.",
+            "repair": "A king moved off the checked rank is not permanently safe: the rook can shift ranks and force another accurate king move. Retreating back to f1 concedes space."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-43",
+      "source": "authored",
+      "sourceLabel": "P106 · Knight trade to relieve central pressure",
+      "title": "The e4 pawn recaptures after a central knight exchange — white outside pawn",
+      "fen": "6k1/8/5n2/4p3/4P3/2N5/P7/6K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c3d5",
+      "principalVariation": [
+        "c3d5",
+        "f6d5",
+        "e4d5",
+        "g8h7",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: The white a-pawn survives the knight trade and can later distract Black's king from d5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: The white a-pawn survives the knight trade and can later distract Black's king from d5.",
+      "continuationReason": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Knight trade to relieve central pressure. Principle: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Original practical question: The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Correct main five-ply calculation: c3d5 f6d5 e4d5 g8h7 g1f2. Separate attacker/defender five-ply response: c3b5 f6e4 b5c7 g8f7 c7a8. Plausible failed defensive plan: c3d5 f6d5 g1f2. Resistance: ...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material and king-safety conclusion: The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. Misconception-specific feedback: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. Extra pawn variant: The white a-pawn survives the knight trade and can later distract Black's king from d5. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight.",
+        "defenderIdea": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "continuation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Error repair: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. The white a-pawn survives the knight trade and can later distract Black's king from d5.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c3b5",
+              "f6e4",
+              "b5c7",
+              "g8f7",
+              "c7a8"
+            ],
+            "explanation": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Variation c3b5 f6e4 b5c7 g8f7 c7a8 changes the relevant king flight or defended piece. The white a-pawn survives the knight trade and can later distract Black's king from d5."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c3d5",
+              "f6d5",
+              "g1f2"
+            ],
+            "explanation": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. In c3d5 f6d5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. The white a-pawn survives the knight trade and can later distract Black's king from d5."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Knight trade to relieve central pressure",
+        "principle": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan.",
+        "attackerThreat": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "modelLine": "c3d5 f6d5 e4d5 g8h7 g1f2",
+        "opponentResistance": "c3b5 f6e4 b5c7 g8f7 c7a8",
+        "failedPlan": "c3d5 f6d5 g1f2",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "context": "The white a-pawn survives the knight trade and can later distract Black's king from d5.",
+        "practicalEvaluation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. The white a-pawn survives the knight trade and can later distract Black's king from d5.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-44",
+      "source": "authored",
+      "sourceLabel": "P106 · Knight trade to relieve central pressure",
+      "title": "The e4 pawn recaptures after a central knight exchange — white queenside pawn",
+      "fen": "6k1/8/5n2/4p3/4P3/2N5/1P6/6K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c3d5",
+      "principalVariation": [
+        "c3d5",
+        "f6d5",
+        "e4d5",
+        "g8h7",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5.",
+      "continuationReason": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Knight trade to relieve central pressure. Principle: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Original practical question: The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Correct main five-ply calculation: c3d5 f6d5 e4d5 g8h7 g1f2. Separate attacker/defender five-ply response: c3b5 f6e4 b5c7 g8f7 c7a8. Plausible failed defensive plan: c3d5 f6d5 g1f2. Resistance: ...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material and king-safety conclusion: The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. Misconception-specific feedback: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. Extra pawn variant: White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight.",
+        "defenderIdea": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "continuation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Error repair: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c3b5",
+              "f6e4",
+              "b5c7",
+              "g8f7",
+              "c7a8"
+            ],
+            "explanation": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Variation c3b5 f6e4 b5c7 g8f7 c7a8 changes the relevant king flight or defended piece. White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c3d5",
+              "f6d5",
+              "g1f2"
+            ],
+            "explanation": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. In c3d5 f6d5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Knight trade to relieve central pressure",
+        "principle": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan.",
+        "attackerThreat": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "modelLine": "c3d5 f6d5 e4d5 g8h7 g1f2",
+        "opponentResistance": "c3b5 f6e4 b5c7 g8f7 c7a8",
+        "failedPlan": "c3d5 f6d5 g1f2",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "context": "White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5.",
+        "practicalEvaluation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. White b2 may support a long-term pawn majority, but the immediate e4xd5 recapture is mandatory after ...Nxd5.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-45",
+      "source": "authored",
+      "sourceLabel": "P106 · Knight trade to relieve central pressure",
+      "title": "The e4 pawn recaptures after a central knight exchange — black outside pawn",
+      "fen": "6k1/p7/5n2/4p3/4P3/2N5/8/6K1 w - - 0 1",
+      "playerColor": "w",
+      "difficulty": 5,
+      "bestMove": "c3d5",
+      "principalVariation": [
+        "c3d5",
+        "f6d5",
+        "e4d5",
+        "g8h7",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.defense"
+      ],
+      "prompt": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Variant issue: Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory. Calculate all five plies and the alternative from the same original FEN; explain exactly why the quiet or premature move loses defensive resources.",
+      "replyReason": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material context: Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory.",
+      "continuationReason": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. State the next counterattack the defender still has after this short educational line.",
+      "explanation": "Defensive concept: Knight trade to relieve central pressure. Principle: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Original practical question: The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight. Correct main five-ply calculation: c3d5 f6d5 e4d5 g8h7 g1f2. Separate attacker/defender five-ply response: c3b5 f6e4 b5c7 g8f7 c7a8. Plausible failed defensive plan: c3d5 f6d5 g1f2. Resistance: ...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Material and king-safety conclusion: The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter. Misconception-specific feedback: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. Extra pawn variant: Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory. A legal line is not a certified tablebase result, unique best engine move or proof of a forced draw. Recalculate the surviving pieces, king flights and next pawn break before claiming conversion.",
+      "defensiveStudy": {
+        "keyQuestion": "The black knight on f6 challenges White's central knight. Use Nd5 and ...Nxd5 exd5 to transform pressure into a pawn on d5, rather than receding with the king and losing a knight.",
+        "defenderIdea": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "continuation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "reflection": "Independent reconstruction: List all threatened pieces and identify the square defended by a pawn, rook or king. Rebuild the first five plies in your head and compare the alternate. Solution outline: Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Error repair: Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory.",
+        "variations": [
+          {
+            "label": "Attacker's alternative resistance",
+            "moves": [
+              "c3b5",
+              "f6e4",
+              "b5c7",
+              "g8f7",
+              "c7a8"
+            ],
+            "explanation": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control. Variation c3b5 f6e4 b5c7 g8f7 c7a8 changes the relevant king flight or defended piece. Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory."
+          },
+          {
+            "label": "Failed quiet move or missed recapture",
+            "moves": [
+              "c3d5",
+              "f6d5",
+              "g1f2"
+            ],
+            "explanation": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique. In c3d5 f6d5 g1f2, White overlooks a concrete rook capture, check or pawn recapture. Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Knight trade to relieve central pressure",
+        "principle": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan.",
+        "attackerThreat": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+        "modelLine": "c3d5 f6d5 e4d5 g8h7 g1f2",
+        "opponentResistance": "c3b5 f6e4 b5c7 g8f7 c7a8",
+        "failedPlan": "c3d5 f6d5 g1f2",
+        "misconception": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique.",
+        "context": "Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory.",
+        "practicalEvaluation": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+        "exercises": [
+          {
+            "prompt": "Identify Black's concrete threat and the first legal defensive response.",
+            "answer": "...Nxd5 trades knights and gives White the pawn recapture, while ...Ne4 allows the white knight to jump toward c7 and a8. Both lines change the center's outpost control.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Find the forced defensive capture, correct king flight or central pawn recapture after five plies.",
+            "answer": "The main line removes both knights and leaves White a pawn on d5. The defender retains a pawn on e5, so practical king entry and pawn blockade still matter.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          },
+          {
+            "prompt": "Compare the quiet or premature mistake and say how the extra pawn affects the longer-term result.",
+            "answer": "Exchange a threatened piece under favorable pawn structure, then use the newly created central pawn to restrict the attacker's king and passed-pawn plan. Black has a7 as an extra resource, so winning the central trade does not prove a king-and-pawn victory.",
+            "repair": "Skipping the e-pawn recapture after ...Nxd5 leaves White down a knight without compensation. Capturing the correct piece with a pawn is an active defensive technique."
+          }
+        ]
+      }
+    }
+  ]
+}
