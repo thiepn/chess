@@ -1,0 +1,587 @@
+{
+  "version": 1,
+  "phase": "P97",
+  "section": "Mixed practical transfer",
+  "positions": [
+    {
+      "id": "calc:p97-41",
+      "title": "Scandinavian queen: development with tempo · White queenside resource",
+      "fen": "3qk1n1/8/8/3p4/4P3/8/P2P4/1NBQKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e4d5",
+      "principalVariation": [
+        "e4d5",
+        "d8d5",
+        "b1c3",
+        "d5d8",
+        "d2d4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "The queen can retreat or give a check on e5, creating a meaningful defensive branch. Different defender line: e4d5 d8d5 b1c3 d5e5 f1e2.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+      "explanation": "Scandinavian queen: development with tempo: Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen. Main five-ply line e4d5 d8d5 b1c3 d5d8 d2d4. Defensive alternative e4d5 d8d5 b1c3 d5e5 f1e2. Other candidate d2d4 d5e4 b1c3 g8f6 c1g5. Endpoint: The queen can retreat or give a check on e5, creating a meaningful defensive branch. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Wrong-plan diagnosis: Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen.",
+        "defenderIdea": "e4d5 d8d5 b1c3 d5e5 f1e2",
+        "continuation": "The queen can retreat or give a check on e5, creating a meaningful defensive branch.",
+        "misconception": "Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "e4d5",
+              "d8d5",
+              "b1c3",
+              "d5e5",
+              "f1e2"
+            ],
+            "explanation": "The queen can retreat or give a check on e5, creating a meaningful defensive branch. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "d2d4",
+              "d5e4",
+              "b1c3",
+              "g8f6",
+              "c1g5"
+            ],
+            "explanation": "Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-42",
+      "title": "Scandinavian queen: development with tempo · Black kingside resource",
+      "fen": "3qk1n1/7p/8/3p4/4P3/8/3P4/1NBQKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e4d5",
+      "principalVariation": [
+        "e4d5",
+        "d8d5",
+        "b1c3",
+        "d5d8",
+        "d2d4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "The queen can retreat or give a check on e5, creating a meaningful defensive branch. Different defender line: e4d5 d8d5 b1c3 d5e5 f1e2.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+      "explanation": "Scandinavian queen: development with tempo: Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen. Main five-ply line e4d5 d8d5 b1c3 d5d8 d2d4. Defensive alternative e4d5 d8d5 b1c3 d5e5 f1e2. Other candidate d2d4 d5e4 b1c3 g8f6 c1g5. Endpoint: The queen can retreat or give a check on e5, creating a meaningful defensive branch. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Wrong-plan diagnosis: Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Exd5 invites ...Qxd5 and Nc3; White develops by attacking the queen.",
+        "defenderIdea": "e4d5 d8d5 b1c3 d5e5 f1e2",
+        "continuation": "The queen can retreat or give a check on e5, creating a meaningful defensive branch.",
+        "misconception": "Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "e4d5",
+              "d8d5",
+              "b1c3",
+              "d5e5",
+              "f1e2"
+            ],
+            "explanation": "The queen can retreat or give a check on e5, creating a meaningful defensive branch. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "d2d4",
+              "d5e4",
+              "b1c3",
+              "g8f6",
+              "c1g5"
+            ],
+            "explanation": "Calling exd5 a free pawn overlooks ...Qxd5, whereas counting the queen's retreat as free development overlooks ...Qe5+. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-43",
+      "title": "Central pawn gambit and knight recapture · White queenside resource",
+      "fen": "1n2k3/3p4/8/4p3/8/8/P1PP4/1N1QKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "e5d4",
+        "c2c3",
+        "d4c3",
+        "b1c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "D4 starts a central exchange, then c3 can sacrifice a pawn to gain development. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. Different defender line: d2d4 e5d4 d1d4 b8c6 d4d1.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+      "explanation": "Central pawn gambit and knight recapture: D4 starts a central exchange, then c3 can sacrifice a pawn to gain development. Main five-ply line d2d4 e5d4 c2c3 d4c3 b1c3. Defensive alternative d2d4 e5d4 d1d4 b8c6 d4d1. Other candidate c2c3 e5e4 d2d4 d7d5 f1b5. Endpoint: Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Wrong-plan diagnosis: A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "D4 starts a central exchange, then c3 can sacrifice a pawn to gain development.",
+        "defenderIdea": "d2d4 e5d4 d1d4 b8c6 d4d1",
+        "continuation": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6.",
+        "misconception": "A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "d1d4",
+              "b8c6",
+              "d4d1"
+            ],
+            "explanation": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "c2c3",
+              "e5e4",
+              "d2d4",
+              "d7d5",
+              "f1b5"
+            ],
+            "explanation": "A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-44",
+      "title": "Central pawn gambit and knight recapture · Black kingside resource",
+      "fen": "1n2k3/3p3p/8/4p3/8/8/2PP4/1N1QKB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "e5d4",
+        "c2c3",
+        "d4c3",
+        "b1c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "D4 starts a central exchange, then c3 can sacrifice a pawn to gain development. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. Different defender line: d2d4 e5d4 d1d4 b8c6 d4d1.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+      "explanation": "Central pawn gambit and knight recapture: D4 starts a central exchange, then c3 can sacrifice a pawn to gain development. Main five-ply line d2d4 e5d4 c2c3 d4c3 b1c3. Defensive alternative d2d4 e5d4 d1d4 b8c6 d4d1. Other candidate c2c3 e5e4 d2d4 d7d5 f1b5. Endpoint: Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Wrong-plan diagnosis: A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "D4 starts a central exchange, then c3 can sacrifice a pawn to gain development.",
+        "defenderIdea": "d2d4 e5d4 d1d4 b8c6 d4d1",
+        "continuation": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6.",
+        "misconception": "A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "d1d4",
+              "b8c6",
+              "d4d1"
+            ],
+            "explanation": "Black may capture on c3 or let the queen recapture d4 and attack that queen with ...Nc6. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "c2c3",
+              "e5e4",
+              "d2d4",
+              "d7d5",
+              "f1b5"
+            ],
+            "explanation": "A pawn offer requires evaluation after a recapture, not the assumption that all central pawn pushes gain space. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-45",
+      "title": "Sicilian center and transposition · White queenside resource",
+      "fen": "1n4nk/8/3p4/2p5/4P3/5N2/P2P4/1N4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "c5d4",
+        "f3d4",
+        "b8c6",
+        "b1c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. Different defender line: d2d4 c5d4 f3d4 g8f6 b1c3.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+      "explanation": "Sicilian center and transposition: White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange. Main five-ply line d2d4 c5d4 f3d4 b8c6 b1c3. Defensive alternative d2d4 c5d4 f3d4 g8f6 b1c3. Other candidate b1c3 b8c6 d2d4 c5d4 f3d4. Endpoint: Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Wrong-plan diagnosis: Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange.",
+        "defenderIdea": "d2d4 c5d4 f3d4 g8f6 b1c3",
+        "continuation": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled.",
+        "misconception": "Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "d2d4",
+              "c5d4",
+              "f3d4",
+              "g8f6",
+              "b1c3"
+            ],
+            "explanation": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "b1c3",
+              "b8c6",
+              "d2d4",
+              "c5d4",
+              "f3d4"
+            ],
+            "explanation": "Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-46",
+      "title": "Sicilian center and transposition · Black kingside resource",
+      "fen": "1n4nk/7p/3p4/2p5/4P3/5N2/3P4/1N4K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d2d4",
+      "principalVariation": [
+        "d2d4",
+        "c5d4",
+        "f3d4",
+        "b8c6",
+        "b1c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. Different defender line: d2d4 c5d4 f3d4 g8f6 b1c3.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+      "explanation": "Sicilian center and transposition: White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange. Main five-ply line d2d4 c5d4 f3d4 b8c6 b1c3. Defensive alternative d2d4 c5d4 f3d4 g8f6 b1c3. Other candidate b1c3 b8c6 d2d4 c5d4 f3d4. Endpoint: Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Wrong-plan diagnosis: Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "White's d4 changes Sicilian pawn contact. Both black knights can develop during the exchange.",
+        "defenderIdea": "d2d4 c5d4 f3d4 g8f6 b1c3",
+        "continuation": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled.",
+        "misconception": "Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "d2d4",
+              "c5d4",
+              "f3d4",
+              "g8f6",
+              "b1c3"
+            ],
+            "explanation": "Black may choose ...Nc6 or ...Nf6 after White recaptures, altering the squares controlled. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "b1c3",
+              "b8c6",
+              "d2d4",
+              "c5d4",
+              "f3d4"
+            ],
+            "explanation": "Treating a thematic Sicilian exchange as proof of a tactical edge ignores Black's active minor pieces. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-47",
+      "title": "Italian piece activity versus early d4 · White queenside resource",
+      "fen": "4kbn1/8/8/4p3/4P3/5N2/P1PP4/1N2KB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1c4",
+      "principalVariation": [
+        "f1c4",
+        "g8f6",
+        "d2d3",
+        "f8c5",
+        "c2c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Both sides can reach similar activity by changing move orders. Different defender line: f1c4 f8c5 d2d3 g8f6 c2c3.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+      "explanation": "Italian piece activity versus early d4: Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6. Main five-ply line f1c4 g8f6 d2d3 f8c5 c2c3. Defensive alternative f1c4 f8c5 d2d3 g8f6 c2c3. Other candidate d2d4 e5d4 f3d4 g8f6 b1c3. Endpoint: Both sides can reach similar activity by changing move orders. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Wrong-plan diagnosis: A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6.",
+        "defenderIdea": "f1c4 f8c5 d2d3 g8f6 c2c3",
+        "continuation": "Both sides can reach similar activity by changing move orders.",
+        "misconception": "A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "f1c4",
+              "f8c5",
+              "d2d3",
+              "g8f6",
+              "c2c3"
+            ],
+            "explanation": "Both sides can reach similar activity by changing move orders. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "f3d4",
+              "g8f6",
+              "b1c3"
+            ],
+            "explanation": "A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-48",
+      "title": "Italian piece activity versus early d4 · Black kingside resource",
+      "fen": "4kbn1/7p/8/4p3/4P3/5N2/2PP4/1N2KB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1c4",
+      "principalVariation": [
+        "f1c4",
+        "g8f6",
+        "d2d3",
+        "f8c5",
+        "c2c3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "Both sides can reach similar activity by changing move orders. Different defender line: f1c4 f8c5 d2d3 g8f6 c2c3.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+      "explanation": "Italian piece activity versus early d4: Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6. Main five-ply line f1c4 g8f6 d2d3 f8c5 c2c3. Defensive alternative f1c4 f8c5 d2d3 g8f6 c2c3. Other candidate d2d4 e5d4 f3d4 g8f6 b1c3. Endpoint: Both sides can reach similar activity by changing move orders. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Wrong-plan diagnosis: A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "Bc4 and d3 develop patiently; the defensive bishop may enter c5 before or after ...Nf6.",
+        "defenderIdea": "f1c4 f8c5 d2d3 g8f6 c2c3",
+        "continuation": "Both sides can reach similar activity by changing move orders.",
+        "misconception": "A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "f1c4",
+              "f8c5",
+              "d2d3",
+              "g8f6",
+              "c2c3"
+            ],
+            "explanation": "Both sides can reach similar activity by changing move orders. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "d2d4",
+              "e5d4",
+              "f3d4",
+              "g8f6",
+              "b1c3"
+            ],
+            "explanation": "A bishop on c4 and knight on f3 do not make an early d4 automatically sound without exchange calculation. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-49",
+      "title": "Queen's gambit accepted and recovered · White queenside resource",
+      "fen": "1n2k1n1/8/8/3p4/3P4/8/P1P1P3/2B1KB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c4",
+      "principalVariation": [
+        "c2c4",
+        "d5c4",
+        "e2e3",
+        "b8c6",
+        "f1c4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "After ...dxc4 Black may develop either knight, and White must choose recovery timing. Different defender line: c2c4 d5c4 e2e3 g8f6 f1c4.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+      "explanation": "Queen's gambit accepted and recovered: C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4. Main five-ply line c2c4 d5c4 e2e3 b8c6 f1c4. Defensive alternative c2c4 d5c4 e2e3 g8f6 f1c4. Other candidate e2e3 b8c6 c2c4 d5c4 f1c4. Endpoint: After ...dxc4 Black may develop either knight, and White must choose recovery timing. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line. Wrong-plan diagnosis: Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4.",
+        "defenderIdea": "c2c4 d5c4 e2e3 g8f6 f1c4",
+        "continuation": "After ...dxc4 Black may develop either knight, and White must choose recovery timing.",
+        "misconception": "Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "c2c4",
+              "d5c4",
+              "e2e3",
+              "g8f6",
+              "f1c4"
+            ],
+            "explanation": "After ...dxc4 Black may develop either knight, and White must choose recovery timing. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "e2e3",
+              "b8c6",
+              "c2c4",
+              "d5c4",
+              "f1c4"
+            ],
+            "explanation": "Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line. White's a-pawn is still available for later queenside play; it is not captured in the five-ply line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p97-50",
+      "title": "Queen's gambit accepted and recovered · Black kingside resource",
+      "fen": "1n2k1n1/7p/8/3p4/3P4/8/2P1P3/2B1KB2 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c2c4",
+      "principalVariation": [
+        "c2c4",
+        "d5c4",
+        "e2e3",
+        "b8c6",
+        "f1c4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.move-order",
+        "calculation.branching",
+        "calculation.evaluation"
+      ],
+      "source": "authored",
+      "sourceLabel": "P97 · Mixed practical transfer",
+      "difficulty": 5,
+      "prompt": "C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Trace the full recapture/response tree to a fifth ply; compare an alternative candidate move.",
+      "replyReason": "After ...dxc4 Black may develop either knight, and White must choose recovery timing. Different defender line: c2c4 d5c4 e2e3 g8f6 f1c4.",
+      "continuationReason": "The fifth-ply material and piece-activity assessment must include Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+      "explanation": "Queen's gambit accepted and recovered: C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4. Main five-ply line c2c4 d5c4 e2e3 b8c6 f1c4. Defensive alternative c2c4 d5c4 e2e3 g8f6 f1c4. Other candidate e2e3 b8c6 c2c4 d5c4 f1c4. Endpoint: After ...dxc4 Black may develop either knight, and White must choose recovery timing. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure. Wrong-plan diagnosis: Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line. Do not infer an engine-unique choice from an original teaching line.",
+      "defensiveStudy": {
+        "keyQuestion": "C4 offers a pawn; e3 later releases the bishop's diagonal to capture on c4.",
+        "defenderIdea": "c2c4 d5c4 e2e3 g8f6 f1c4",
+        "continuation": "After ...dxc4 Black may develop either knight, and White must choose recovery timing.",
+        "misconception": "Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line.",
+        "reflection": "Continue both lines in your head and compare pawn count, exposed pieces and move-order pressure. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure.",
+        "variations": [
+          {
+            "label": "Opponent's different recapture/development",
+            "moves": [
+              "c2c4",
+              "d5c4",
+              "e2e3",
+              "g8f6",
+              "f1c4"
+            ],
+            "explanation": "After ...dxc4 Black may develop either knight, and White must choose recovery timing. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          },
+          {
+            "label": "Alternative initiating move order",
+            "moves": [
+              "e2e3",
+              "b8c6",
+              "c2c4",
+              "d5c4",
+              "f1c4"
+            ],
+            "explanation": "Treating the pawn as recovered immediately after c4 is false; recovery requires opening the bishop's line. Black keeps a kingside h-pawn; any central simplification must account for the resulting pawn structure."
+          }
+        ]
+      }
+    }
+  ]
+}
