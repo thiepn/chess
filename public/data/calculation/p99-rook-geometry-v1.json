@@ -1,0 +1,802 @@
+{
+  "version": 1,
+  "phase": "P99",
+  "section": "Checking distance, king cutoff and rook behind a passer",
+  "positions": [
+    {
+      "id": "calc:p99-16",
+      "title": "The rook must change checking ranks",
+      "fen": "r3k3/8/4p3/8/P7/8/1K6/7R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8h7"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Checking distance and rank changes",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rh8+ forces the king to d7, but the follow-up must check from the seventh rank rather than offering the rook on d8. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Kd7 is an actual king flight; Black's rook on a8 also makes a rook trade on the eighth rank dangerous.",
+      "continuationReason": "Rh7+ reaches the new rank while preserving distance from the opposing king.",
+      "explanation": "The rook must change checking ranks. Rh8+ forces the king to d7, but the follow-up must check from the seventh rank rather than offering the rook on d8. Main illustrative line: h1h8 e8d7 h8h7. Counterline: h1h6 a8a7 h6h7. ...Kd7 is an actual king flight; Black's rook on a8 also makes a rook trade on the eighth rank dangerous. Endpoint: Rh7+ reaches the new rank while preserving distance from the opposing king. Repair this misunderstanding: Shifting to d8 after ...Kd7 would leave White's rook exposed to ...Rxd8; forcing checks require tactical safety. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight.",
+      "defensiveStudy": {
+        "keyQuestion": "Rh8+ forces the king to d7, but the follow-up must check from the seventh rank rather than offering the rook on d8.",
+        "defenderIdea": "...Kd7 is an actual king flight; Black's rook on a8 also makes a rook trade on the eighth rank dangerous.",
+        "continuation": "Rh7+ reaches the new rank while preserving distance from the opposing king.",
+        "misconception": "Shifting to d8 after ...Kd7 would leave White's rook exposed to ...Rxd8; forcing checks require tactical safety.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rh7+ reaches the new rank while preserving distance from the opposing king. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "h1h6",
+              "a8a7",
+              "h6h7"
+            ],
+            "explanation": "Shifting to d8 after ...Kd7 would leave White's rook exposed to ...Rxd8; forcing checks require tactical safety. Compare the alternative h1h6 a8a7 h6h7 with h1h8 e8d7 h8h7, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Checking distance and rank changes",
+        "principle": "Rh8+ forces the king to d7, but the follow-up must check from the seventh rank rather than offering the rook on d8.",
+        "endpoint": "Rh7+ reaches the new rank while preserving distance from the opposing king.",
+        "defense": "...Kd7 is an actual king flight; Black's rook on a8 also makes a rook trade on the eighth rank dangerous.",
+        "misconception": "Shifting to d8 after ...Kd7 would leave White's rook exposed to ...Rxd8; forcing checks require tactical safety.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight."
+      }
+    },
+    {
+      "id": "calc:p99-17",
+      "title": "Rechecking from the seventh rank",
+      "fen": "r3k3/8/8/2p5/1P6/8/5K2/7R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8h7"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Checking distance and rank changes",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "The eighth-rank rook check is not the entire plan; White must follow the defender's king onto a new rank. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Kd7 evades the horizontal check while the black rook remains ready to counterattack the b-pawn.",
+      "continuationReason": "Rh7+ attacks the king from the seventh rank after it leaves e8.",
+      "explanation": "Rechecking from the seventh rank. The eighth-rank rook check is not the entire plan; White must follow the defender's king onto a new rank. Main illustrative line: h1h8 e8d7 h8h7. Counterline: h1h5 a8a7 h5h7. ...Kd7 evades the horizontal check while the black rook remains ready to counterattack the b-pawn. Endpoint: Rh7+ attacks the king from the seventh rank after it leaves e8. Repair this misunderstanding: Repeating Rh8 when the king is no longer on e8 may just waste time and expose the rook. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight.",
+      "defensiveStudy": {
+        "keyQuestion": "The eighth-rank rook check is not the entire plan; White must follow the defender's king onto a new rank.",
+        "defenderIdea": "...Kd7 evades the horizontal check while the black rook remains ready to counterattack the b-pawn.",
+        "continuation": "Rh7+ attacks the king from the seventh rank after it leaves e8.",
+        "misconception": "Repeating Rh8 when the king is no longer on e8 may just waste time and expose the rook.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rh7+ attacks the king from the seventh rank after it leaves e8. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "h1h5",
+              "a8a7",
+              "h5h7"
+            ],
+            "explanation": "Repeating Rh8 when the king is no longer on e8 may just waste time and expose the rook. Compare the alternative h1h5 a8a7 h5h7 with h1h8 e8d7 h8h7, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Checking distance and rank changes",
+        "principle": "The eighth-rank rook check is not the entire plan; White must follow the defender's king onto a new rank.",
+        "endpoint": "Rh7+ attacks the king from the seventh rank after it leaves e8.",
+        "defense": "...Kd7 evades the horizontal check while the black rook remains ready to counterattack the b-pawn.",
+        "misconception": "Repeating Rh8 when the king is no longer on e8 may just waste time and expose the rook.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight."
+      }
+    },
+    {
+      "id": "calc:p99-18",
+      "title": "Cut a king off with the h-rook",
+      "fen": "r3k3/8/6p1/8/5P2/8/6K1/7R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h8",
+      "principalVariation": [
+        "h1h8",
+        "e8d7",
+        "h8h7"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Checking distance and rank changes",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "The rook checks from a long distance, so the black king cannot capture it on the eighth rank. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Kd7 changes the relative geometry; its g6 pawn still creates a queenside-vs-kingside race.",
+      "continuationReason": "Rh7+ continues on a new rank and makes the defender respond once more.",
+      "explanation": "Cut a king off with the h-rook. The rook checks from a long distance, so the black king cannot capture it on the eighth rank. Main illustrative line: h1h8 e8d7 h8h7. Counterline: h1h6 a8a7 h6h7. ...Kd7 changes the relative geometry; its g6 pawn still creates a queenside-vs-kingside race. Endpoint: Rh7+ continues on a new rank and makes the defender respond once more. Repair this misunderstanding: The defender's g6 pawn remains on the board; giving checks does not automatically stop its advance. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight.",
+      "defensiveStudy": {
+        "keyQuestion": "The rook checks from a long distance, so the black king cannot capture it on the eighth rank.",
+        "defenderIdea": "...Kd7 changes the relative geometry; its g6 pawn still creates a queenside-vs-kingside race.",
+        "continuation": "Rh7+ continues on a new rank and makes the defender respond once more.",
+        "misconception": "The defender's g6 pawn remains on the board; giving checks does not automatically stop its advance.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rh7+ continues on a new rank and makes the defender respond once more. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "h1h6",
+              "a8a7",
+              "h6h7"
+            ],
+            "explanation": "The defender's g6 pawn remains on the board; giving checks does not automatically stop its advance. Compare the alternative h1h6 a8a7 h6h7 with h1h8 e8d7 h8h7, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Checking distance and rank changes",
+        "principle": "The rook checks from a long distance, so the black king cannot capture it on the eighth rank.",
+        "endpoint": "Rh7+ continues on a new rank and makes the defender respond once more.",
+        "defense": "...Kd7 changes the relative geometry; its g6 pawn still creates a queenside-vs-kingside race.",
+        "misconception": "The defender's g6 pawn remains on the board; giving checks does not automatically stop its advance.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight."
+      }
+    },
+    {
+      "id": "calc:p99-19",
+      "title": "Keep checks away from the king",
+      "fen": "4k2r/8/8/4p3/7P/8/1K6/R7 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "e8d7",
+        "a8a7"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Checking distance and rank changes",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Ra8+ seeks checking distance from the king while White must also watch Black's e5 pawn. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Kd7 is a legal flight; a check should be followed by an accurate rank change.",
+      "continuationReason": "Ra7+ checks the king at d7 across the seventh rank.",
+      "explanation": "Keep checks away from the king. Ra8+ seeks checking distance from the king while White must also watch Black's e5 pawn. Main illustrative line: a1a8 e8d7 a8a7. Counterline: a1a5 h8h7 a5a7. ...Kd7 is a legal flight; a check should be followed by an accurate rank change. Endpoint: Ra7+ checks the king at d7 across the seventh rank. Repair this misunderstanding: A rook check from the first rank is not a rook-and-pawn conversion without a defensive plan. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight.",
+      "defensiveStudy": {
+        "keyQuestion": "Ra8+ seeks checking distance from the king while White must also watch Black's e5 pawn.",
+        "defenderIdea": "...Kd7 is a legal flight; a check should be followed by an accurate rank change.",
+        "continuation": "Ra7+ checks the king at d7 across the seventh rank.",
+        "misconception": "A rook check from the first rank is not a rook-and-pawn conversion without a defensive plan.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Ra7+ checks the king at d7 across the seventh rank. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "a1a5",
+              "h8h7",
+              "a5a7"
+            ],
+            "explanation": "A rook check from the first rank is not a rook-and-pawn conversion without a defensive plan. Compare the alternative a1a5 h8h7 a5a7 with a1a8 e8d7 a8a7, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Checking distance and rank changes",
+        "principle": "Ra8+ seeks checking distance from the king while White must also watch Black's e5 pawn.",
+        "endpoint": "Ra7+ checks the king at d7 across the seventh rank.",
+        "defense": "...Kd7 is a legal flight; a check should be followed by an accurate rank change.",
+        "misconception": "A rook check from the first rank is not a rook-and-pawn conversion without a defensive plan.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight."
+      }
+    },
+    {
+      "id": "calc:p99-20",
+      "title": "Follow the king after its rank retreat",
+      "fen": "4k2r/8/8/6p1/3P4/8/6K1/R7 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a8",
+      "principalVariation": [
+        "a1a8",
+        "e8d7",
+        "a8a7"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Checking distance and rank changes",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Black's king on e8 can escape Ra8+; White can keep checking from the seventh rank. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Kd7 is a stronger resource than assuming the defender stays on e8.",
+      "continuationReason": "Ra7+ requires the king to react while Black's g-pawn retains counterplay.",
+      "explanation": "Follow the king after its rank retreat. Black's king on e8 can escape Ra8+; White can keep checking from the seventh rank. Main illustrative line: a1a8 e8d7 a8a7. Counterline: a1a6 h8h7 a6a7. ...Kd7 is a stronger resource than assuming the defender stays on e8. Endpoint: Ra7+ requires the king to react while Black's g-pawn retains counterplay. Repair this misunderstanding: If White chases checks without defending d4, Black's rook may attack the pawn from behind. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight.",
+      "defensiveStudy": {
+        "keyQuestion": "Black's king on e8 can escape Ra8+; White can keep checking from the seventh rank.",
+        "defenderIdea": "...Kd7 is a stronger resource than assuming the defender stays on e8.",
+        "continuation": "Ra7+ requires the king to react while Black's g-pawn retains counterplay.",
+        "misconception": "If White chases checks without defending d4, Black's rook may attack the pawn from behind.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Ra7+ requires the king to react while Black's g-pawn retains counterplay. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "a1a6",
+              "h8h7",
+              "a6a7"
+            ],
+            "explanation": "If White chases checks without defending d4, Black's rook may attack the pawn from behind. Compare the alternative a1a6 h8h7 a6a7 with a1a8 e8d7 a8a7, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Checking distance and rank changes",
+        "principle": "Black's king on e8 can escape Ra8+; White can keep checking from the seventh rank.",
+        "endpoint": "Ra7+ requires the king to react while Black's g-pawn retains counterplay.",
+        "defense": "...Kd7 is a stronger resource than assuming the defender stays on e8.",
+        "misconception": "If White chases checks without defending d4, Black's rook may attack the pawn from behind.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Checking distance is a defensive and offensive resource: a rook far from the king can give repeated checks without immediate capture. If the defending king leaves the eighth rank, the attacker must reconstruct checking lanes on the seventh or sixth; rook moves to squares attacked by the opponent's rook may lose material. Always name the defended rook's square and the king's next legal flight."
+      }
+    },
+    {
+      "id": "calc:p99-21",
+      "title": "Prevent a return to the eighth rank",
+      "fen": "k7/8/r7/1p6/7P/8/6K1/4R3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e7",
+      "principalVariation": [
+        "e1e7",
+        "a6a7",
+        "e7e8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Cutting off the opposing king",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Re7 coordinates seventh-rank influence while leaving White's pawn safe for the moment. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Ra7 protects the queenside pawn structure but allows a checking entry on e8.",
+      "continuationReason": "Re8+ checks the distant king on a8 and restricts its travel along the back rank.",
+      "explanation": "Prevent a return to the eighth rank. Re7 coordinates seventh-rank influence while leaving White's pawn safe for the moment. Main illustrative line: e1e7 a6a7 e7e8. Counterline: e1e6 a6a7 e6e8. ...Ra7 protects the queenside pawn structure but allows a checking entry on e8. Endpoint: Re8+ checks the distant king on a8 and restricts its travel along the back rank. Repair this misunderstanding: A rook on the seventh is not a decisive cutoff if a black pawn can advance behind it. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece.",
+      "defensiveStudy": {
+        "keyQuestion": "Re7 coordinates seventh-rank influence while leaving White's pawn safe for the moment.",
+        "defenderIdea": "...Ra7 protects the queenside pawn structure but allows a checking entry on e8.",
+        "continuation": "Re8+ checks the distant king on a8 and restricts its travel along the back rank.",
+        "misconception": "A rook on the seventh is not a decisive cutoff if a black pawn can advance behind it.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Re8+ checks the distant king on a8 and restricts its travel along the back rank. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "e1e6",
+              "a6a7",
+              "e6e8"
+            ],
+            "explanation": "A rook on the seventh is not a decisive cutoff if a black pawn can advance behind it. Compare the alternative e1e6 a6a7 e6e8 with e1e7 a6a7 e7e8, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Cutting off the opposing king",
+        "principle": "Re7 coordinates seventh-rank influence while leaving White's pawn safe for the moment.",
+        "endpoint": "Re8+ checks the distant king on a8 and restricts its travel along the back rank.",
+        "defense": "...Ra7 protects the queenside pawn structure but allows a checking entry on e8.",
+        "misconception": "A rook on the seventh is not a decisive cutoff if a black pawn can advance behind it.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece."
+      }
+    },
+    {
+      "id": "calc:p99-22",
+      "title": "Rook controls the defender's escape file",
+      "fen": "7k/8/7r/6p1/2P5/8/1K6/3R4 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "h6h7",
+        "d7d8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Cutting off the opposing king",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "A seventh-rank rook can work toward a back-rank checking file against the king on h8. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 creates an active horizontal defender, threatening the rook if it remains on d7.",
+      "continuationReason": "Rd8+ steps out of attack and checks on the eighth rank.",
+      "explanation": "Rook controls the defender's escape file. A seventh-rank rook can work toward a back-rank checking file against the king on h8. Main illustrative line: d1d7 h6h7 d7d8. Counterline: d1d6 h6h7 d6d8. ...Rh7 creates an active horizontal defender, threatening the rook if it remains on d7. Endpoint: Rd8+ steps out of attack and checks on the eighth rank. Repair this misunderstanding: Leaving Rd7 permanently exposed to ...Rxd7 would confuse temporary activity with a secure outpost. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece.",
+      "defensiveStudy": {
+        "keyQuestion": "A seventh-rank rook can work toward a back-rank checking file against the king on h8.",
+        "defenderIdea": "...Rh7 creates an active horizontal defender, threatening the rook if it remains on d7.",
+        "continuation": "Rd8+ steps out of attack and checks on the eighth rank.",
+        "misconception": "Leaving Rd7 permanently exposed to ...Rxd7 would confuse temporary activity with a secure outpost.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rd8+ steps out of attack and checks on the eighth rank. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "d1d6",
+              "h6h7",
+              "d6d8"
+            ],
+            "explanation": "Leaving Rd7 permanently exposed to ...Rxd7 would confuse temporary activity with a secure outpost. Compare the alternative d1d6 h6h7 d6d8 with d1d7 h6h7 d7d8, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Cutting off the opposing king",
+        "principle": "A seventh-rank rook can work toward a back-rank checking file against the king on h8.",
+        "endpoint": "Rd8+ steps out of attack and checks on the eighth rank.",
+        "defense": "...Rh7 creates an active horizontal defender, threatening the rook if it remains on d7.",
+        "misconception": "Leaving Rd7 permanently exposed to ...Rxd7 would confuse temporary activity with a secure outpost.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece."
+      }
+    },
+    {
+      "id": "calc:p99-23",
+      "title": "Rook enters the eighth rank from c-file",
+      "fen": "6k1/8/r7/7p/3P4/8/4K3/2R5 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c7",
+      "principalVariation": [
+        "c1c7",
+        "a6a7",
+        "c7c8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Cutting off the opposing king",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rc7 uses a clear file to pressure the defending king and limit rank-eight escapes. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Ra7 counters the seventh-rank rook directly; a rook cannot sit there indefinitely.",
+      "continuationReason": "Rc8+ uses the escape from a7-rook pressure while checking g8.",
+      "explanation": "Rook enters the eighth rank from c-file. Rc7 uses a clear file to pressure the defending king and limit rank-eight escapes. Main illustrative line: c1c7 a6a7 c7c8. Counterline: c1c5 a6a7 c5c8. ...Ra7 counters the seventh-rank rook directly; a rook cannot sit there indefinitely. Endpoint: Rc8+ uses the escape from a7-rook pressure while checking g8. Repair this misunderstanding: A cut-off king may still have a rook able to challenge your infiltration squares. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece.",
+      "defensiveStudy": {
+        "keyQuestion": "Rc7 uses a clear file to pressure the defending king and limit rank-eight escapes.",
+        "defenderIdea": "...Ra7 counters the seventh-rank rook directly; a rook cannot sit there indefinitely.",
+        "continuation": "Rc8+ uses the escape from a7-rook pressure while checking g8.",
+        "misconception": "A cut-off king may still have a rook able to challenge your infiltration squares.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rc8+ uses the escape from a7-rook pressure while checking g8. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "c1c5",
+              "a6a7",
+              "c5c8"
+            ],
+            "explanation": "A cut-off king may still have a rook able to challenge your infiltration squares. Compare the alternative c1c5 a6a7 c5c8 with c1c7 a6a7 c7c8, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Cutting off the opposing king",
+        "principle": "Rc7 uses a clear file to pressure the defending king and limit rank-eight escapes.",
+        "endpoint": "Rc8+ uses the escape from a7-rook pressure while checking g8.",
+        "defense": "...Ra7 counters the seventh-rank rook directly; a rook cannot sit there indefinitely.",
+        "misconception": "A cut-off king may still have a rook able to challenge your infiltration squares.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece."
+      }
+    },
+    {
+      "id": "calc:p99-24",
+      "title": "Back-rank check from the b-file",
+      "fen": "5k2/8/7r/p7/4P3/8/6K1/1R6 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1b7",
+      "principalVariation": [
+        "b1b7",
+        "h6h7",
+        "b7b8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Cutting off the opposing king",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rb7 restricts black king mobility but must account for the rook on h6. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 attacks a seventh-rank rook along the rank, requiring a move.",
+      "continuationReason": "Rb8+ changes rank and checks across c8–e8, while Black still has an outside a-pawn.",
+      "explanation": "Back-rank check from the b-file. Rb7 restricts black king mobility but must account for the rook on h6. Main illustrative line: b1b7 h6h7 b7b8. Counterline: b1b5 h6h7 b5b8. ...Rh7 attacks a seventh-rank rook along the rank, requiring a move. Endpoint: Rb8+ changes rank and checks across c8–e8, while Black still has an outside a-pawn. Repair this misunderstanding: The black rook's counterattack on b7 prevents treating the seventh rank as a permanent base. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece.",
+      "defensiveStudy": {
+        "keyQuestion": "Rb7 restricts black king mobility but must account for the rook on h6.",
+        "defenderIdea": "...Rh7 attacks a seventh-rank rook along the rank, requiring a move.",
+        "continuation": "Rb8+ changes rank and checks across c8–e8, while Black still has an outside a-pawn.",
+        "misconception": "The black rook's counterattack on b7 prevents treating the seventh rank as a permanent base.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rb8+ changes rank and checks across c8–e8, while Black still has an outside a-pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "b1b5",
+              "h6h7",
+              "b5b8"
+            ],
+            "explanation": "The black rook's counterattack on b7 prevents treating the seventh rank as a permanent base. Compare the alternative b1b5 h6h7 b5b8 with b1b7 h6h7 b7b8, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Cutting off the opposing king",
+        "principle": "Rb7 restricts black king mobility but must account for the rook on h6.",
+        "endpoint": "Rb8+ changes rank and checks across c8–e8, while Black still has an outside a-pawn.",
+        "defense": "...Rh7 attacks a seventh-rank rook along the rank, requiring a move.",
+        "misconception": "The black rook's counterattack on b7 prevents treating the seventh rank as a permanent base.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece."
+      }
+    },
+    {
+      "id": "calc:p99-25",
+      "title": "Lateral cutoff of the b-file king",
+      "fen": "1k6/8/p1r5/8/6P1/8/5K2/7R w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1h7",
+      "principalVariation": [
+        "h1h7",
+        "c6c7",
+        "h7h8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Cutting off the opposing king",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "endgames.rook-checks",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rh7 threatens Rh8+ to drive the king from b8, but the black c-rook remains active. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rc7 gives Black a rook on the seventh rank for counterplay against pawns.",
+      "continuationReason": "Rh8+ checks along the eighth; forcing the king away is only one step of conversion.",
+      "explanation": "Lateral cutoff of the b-file king. Rh7 threatens Rh8+ to drive the king from b8, but the black c-rook remains active. Main illustrative line: h1h7 c6c7 h7h8. Counterline: h1h5 c6c7 h5h8. ...Rc7 gives Black a rook on the seventh rank for counterplay against pawns. Endpoint: Rh8+ checks along the eighth; forcing the king away is only one step of conversion. Repair this misunderstanding: The white rook cannot checkmate a supported king solely by occupying h8. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece.",
+      "defensiveStudy": {
+        "keyQuestion": "Rh7 threatens Rh8+ to drive the king from b8, but the black c-rook remains active.",
+        "defenderIdea": "...Rc7 gives Black a rook on the seventh rank for counterplay against pawns.",
+        "continuation": "Rh8+ checks along the eighth; forcing the king away is only one step of conversion.",
+        "misconception": "The white rook cannot checkmate a supported king solely by occupying h8.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Rh8+ checks along the eighth; forcing the king away is only one step of conversion. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "h1h5",
+              "c6c7",
+              "h5h8"
+            ],
+            "explanation": "The white rook cannot checkmate a supported king solely by occupying h8. Compare the alternative h1h5 c6c7 h5h8 with h1h7 c6c7 h7h8, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Cutting off the opposing king",
+        "principle": "Rh7 threatens Rh8+ to drive the king from b8, but the black c-rook remains active.",
+        "endpoint": "Rh8+ checks along the eighth; forcing the king away is only one step of conversion.",
+        "defense": "...Rc7 gives Black a rook on the seventh rank for counterplay against pawns.",
+        "misconception": "The white rook cannot checkmate a supported king solely by occupying h8.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Rook cutoff restricts a king to one side of a rank or file and can improve conversion prospects, but an opposing rook may contest the same line. A rank-seven infiltration is sometimes attacked immediately from a rook on the other side of the seventh rank. Recheck the line of attack after every reply, including whether a pawn advance creates a blocking piece."
+      }
+    },
+    {
+      "id": "calc:p99-26",
+      "title": "Put rook behind a5",
+      "fen": "6kr/8/7p/P7/8/8/6K1/R7 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g2f3",
+      "principalVariation": [
+        "g2f3",
+        "h8h7",
+        "a1a4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Rook behind passed pawns",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "pawns.passed",
+        "endgames.rook-activity"
+      ],
+      "prompt": "A rook placed behind an a5 passed pawn on a4 can support later pawn advances and keep attacking its promotion lane. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 activates the black rook and prepares h-file harassment, so White cannot simply race blindly.",
+      "continuationReason": "Ra4 stays behind a5 while the king heads to f3; judge the defender's checking options.",
+      "explanation": "Put rook behind a5. A rook placed behind an a5 passed pawn on a4 can support later pawn advances and keep attacking its promotion lane. Main illustrative line: g2f3 h8h7 a1a4. Counterline: a1a4 h8h7 g2f3. ...Rh7 activates the black rook and prepares h-file harassment, so White cannot simply race blindly. Endpoint: Ra4 stays behind a5 while the king heads to f3; judge the defender's checking options. Repair this misunderstanding: A rook directly behind its own pawn may be useful, but it cannot jump over that pawn to promote it. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together.",
+      "defensiveStudy": {
+        "keyQuestion": "A rook placed behind an a5 passed pawn on a4 can support later pawn advances and keep attacking its promotion lane.",
+        "defenderIdea": "...Rh7 activates the black rook and prepares h-file harassment, so White cannot simply race blindly.",
+        "continuation": "Ra4 stays behind a5 while the king heads to f3; judge the defender's checking options.",
+        "misconception": "A rook directly behind its own pawn may be useful, but it cannot jump over that pawn to promote it.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Ra4 stays behind a5 while the king heads to f3; judge the defender's checking options. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "a1a4",
+              "h8h7",
+              "g2f3"
+            ],
+            "explanation": "A rook directly behind its own pawn may be useful, but it cannot jump over that pawn to promote it. Compare the alternative a1a4 h8h7 g2f3 with g2f3 h8h7 a1a4, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Rook behind passed pawns",
+        "principle": "A rook placed behind an a5 passed pawn on a4 can support later pawn advances and keep attacking its promotion lane.",
+        "endpoint": "Ra4 stays behind a5 while the king heads to f3; judge the defender's checking options.",
+        "defense": "...Rh7 activates the black rook and prepares h-file harassment, so White cannot simply race blindly.",
+        "misconception": "A rook directly behind its own pawn may be useful, but it cannot jump over that pawn to promote it.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together."
+      }
+    },
+    {
+      "id": "calc:p99-27",
+      "title": "Support b5 without blocking b6",
+      "fen": "k6r/8/7p/1P6/8/8/6K1/1R6 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b1b4",
+      "principalVariation": [
+        "b1b4",
+        "h8h7",
+        "g2f3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Rook behind passed pawns",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "pawns.passed",
+        "endgames.rook-activity"
+      ],
+      "prompt": "The b5 pawn needs a rook behind it; Rb4 supports it from the fourth rank. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 may later check sideways, so the white king must remain active.",
+      "continuationReason": "Kf3 improves escorting potential without moving the rook in front of the pawn.",
+      "explanation": "Support b5 without blocking b6. The b5 pawn needs a rook behind it; Rb4 supports it from the fourth rank. Main illustrative line: b1b4 h8h7 g2f3. Counterline: g2f3 h8h7 b1b4. ...Rh7 may later check sideways, so the white king must remain active. Endpoint: Kf3 improves escorting potential without moving the rook in front of the pawn. Repair this misunderstanding: A rook in front of b5 would block b6, unlike the rook safely placed on b4. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together.",
+      "defensiveStudy": {
+        "keyQuestion": "The b5 pawn needs a rook behind it; Rb4 supports it from the fourth rank.",
+        "defenderIdea": "...Rh7 may later check sideways, so the white king must remain active.",
+        "continuation": "Kf3 improves escorting potential without moving the rook in front of the pawn.",
+        "misconception": "A rook in front of b5 would block b6, unlike the rook safely placed on b4.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Kf3 improves escorting potential without moving the rook in front of the pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "g2f3",
+              "h8h7",
+              "b1b4"
+            ],
+            "explanation": "A rook in front of b5 would block b6, unlike the rook safely placed on b4. Compare the alternative g2f3 h8h7 b1b4 with b1b4 h8h7 g2f3, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Rook behind passed pawns",
+        "principle": "The b5 pawn needs a rook behind it; Rb4 supports it from the fourth rank.",
+        "endpoint": "Kf3 improves escorting potential without moving the rook in front of the pawn.",
+        "defense": "...Rh7 may later check sideways, so the white king must remain active.",
+        "misconception": "A rook in front of b5 would block b6, unlike the rook safely placed on b4.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together."
+      }
+    },
+    {
+      "id": "calc:p99-28",
+      "title": "Keep c5 shielded by Rc4",
+      "fen": "r6k/8/8/p1P5/8/8/5K2/2R5 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c4",
+      "principalVariation": [
+        "c1c4",
+        "a8a7",
+        "f2e3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Rook behind passed pawns",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "pawns.passed",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rc4 keeps the rook behind a c5 passer and permits a king approach. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win. Name the active rook's next square and the defender's outside pawn resource.",
+      "replyReason": "...Ra7 contests the seventh rank and threatens lateral activity against c5.",
+      "continuationReason": "Ke3 improves the king's route toward c5, but Black's outside a-pawn may demand attention.",
+      "explanation": "Keep c5 shielded by Rc4. Rc4 keeps the rook behind a c5 passer and permits a king approach. Main illustrative line: c1c4 a8a7 f2e3. Counterline: f2e3 a8a7 c1c4. ...Ra7 contests the seventh rank and threatens lateral activity against c5. Endpoint: Ke3 improves the king's route toward c5, but Black's outside a-pawn may demand attention. Repair this misunderstanding: A passer can be dangerous while still tactically vulnerable to a rook attacking from its side. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together.",
+      "defensiveStudy": {
+        "keyQuestion": "Rc4 keeps the rook behind a c5 passer and permits a king approach.",
+        "defenderIdea": "...Ra7 contests the seventh rank and threatens lateral activity against c5.",
+        "continuation": "Ke3 improves the king's route toward c5, but Black's outside a-pawn may demand attention.",
+        "misconception": "A passer can be dangerous while still tactically vulnerable to a rook attacking from its side.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Ke3 improves the king's route toward c5, but Black's outside a-pawn may demand attention. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "f2e3",
+              "a8a7",
+              "c1c4"
+            ],
+            "explanation": "A passer can be dangerous while still tactically vulnerable to a rook attacking from its side. Compare the alternative f2e3 a8a7 c1c4 with c1c4 a8a7 f2e3, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Rook behind passed pawns",
+        "principle": "Rc4 keeps the rook behind a c5 passer and permits a king approach.",
+        "endpoint": "Ke3 improves the king's route toward c5, but Black's outside a-pawn may demand attention.",
+        "defense": "...Ra7 contests the seventh rank and threatens lateral activity against c5.",
+        "misconception": "A passer can be dangerous while still tactically vulnerable to a rook attacking from its side.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together."
+      }
+    },
+    {
+      "id": "calc:p99-29",
+      "title": "The rook belongs behind d5",
+      "fen": "k6r/8/8/3P3p/8/8/6K1/3R4 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d4",
+      "principalVariation": [
+        "d1d4",
+        "h8h7",
+        "g2f3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Rook behind passed pawns",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "pawns.passed",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rd4 supports d5 from behind and leaves the pawn's advance route unobstructed. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 prepares side checks, so White's king must avoid walking into a battery.",
+      "continuationReason": "Kf3 brings the king toward the central pawn while keeping rook support on d4.",
+      "explanation": "The rook belongs behind d5. Rd4 supports d5 from behind and leaves the pawn's advance route unobstructed. Main illustrative line: d1d4 h8h7 g2f3. Counterline: g2f3 h8h7 d1d4. ...Rh7 prepares side checks, so White's king must avoid walking into a battery. Endpoint: Kf3 brings the king toward the central pawn while keeping rook support on d4. Repair this misunderstanding: Do not race d6 while the pawn is undefended by king or rook against a lateral check. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together.",
+      "defensiveStudy": {
+        "keyQuestion": "Rd4 supports d5 from behind and leaves the pawn's advance route unobstructed.",
+        "defenderIdea": "...Rh7 prepares side checks, so White's king must avoid walking into a battery.",
+        "continuation": "Kf3 brings the king toward the central pawn while keeping rook support on d4.",
+        "misconception": "Do not race d6 while the pawn is undefended by king or rook against a lateral check.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Kf3 brings the king toward the central pawn while keeping rook support on d4. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "g2f3",
+              "h8h7",
+              "d1d4"
+            ],
+            "explanation": "Do not race d6 while the pawn is undefended by king or rook against a lateral check. Compare the alternative g2f3 h8h7 d1d4 with d1d4 h8h7 g2f3, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Rook behind passed pawns",
+        "principle": "Rd4 supports d5 from behind and leaves the pawn's advance route unobstructed.",
+        "endpoint": "Kf3 brings the king toward the central pawn while keeping rook support on d4.",
+        "defense": "...Rh7 prepares side checks, so White's king must avoid walking into a battery.",
+        "misconception": "Do not race d6 while the pawn is undefended by king or rook against a lateral check.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together."
+      }
+    },
+    {
+      "id": "calc:p99-30",
+      "title": "Back the e5 passer before f-file pressure",
+      "fen": "k6r/8/8/p3P3/8/8/6K1/4R3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e4",
+      "principalVariation": [
+        "e1e4",
+        "h8h7",
+        "g2f3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Rook behind passed pawns",
+      "difficulty": 4,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.evaluation",
+        "pawns.passed",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Re4 keeps White's rook behind the e5 passer and protects the pawn's route toward e6. Trace the defender's reply exactly; compare the second legal plan rather than assuming a forced win.",
+      "replyReason": "...Rh7 keeps Black's rook active while its a5 passer advances on another wing.",
+      "continuationReason": "Kf3 follows the pawn so future checks do not strand the e-pawn.",
+      "explanation": "Back the e5 passer before f-file pressure. Re4 keeps White's rook behind the e5 passer and protects the pawn's route toward e6. Main illustrative line: e1e4 h8h7 g2f3. Counterline: g2f3 h8h7 e1e4. ...Rh7 keeps Black's rook active while its a5 passer advances on another wing. Endpoint: Kf3 follows the pawn so future checks do not strand the e-pawn. Repair this misunderstanding: Playing e6 before checking whether the king can support it may donate a pawn to the enemy rook. This is not a tablebase-certified winning line or proof of unique best play. Technique study: Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together.",
+      "defensiveStudy": {
+        "keyQuestion": "Re4 keeps White's rook behind the e5 passer and protects the pawn's route toward e6.",
+        "defenderIdea": "...Rh7 keeps Black's rook active while its a5 passer advances on another wing.",
+        "continuation": "Kf3 follows the pawn so future checks do not strand the e-pawn.",
+        "misconception": "Playing e6 before checking whether the king can support it may donate a pawn to the enemy rook.",
+        "reflection": "From the final position, name the safest king square and which rook can check next. Evaluate every passed pawn still remaining. Kf3 follows the pawn so future checks do not strand the e-pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative checking or conversion route",
+            "moves": [
+              "g2f3",
+              "h8h7",
+              "e1e4"
+            ],
+            "explanation": "Playing e6 before checking whether the king can support it may donate a pawn to the enemy rook. Compare the alternative g2f3 h8h7 e1e4 with e1e4 h8h7 g2f3, including the rook's remaining checking distance."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Rook behind passed pawns",
+        "principle": "Re4 keeps White's rook behind the e5 passer and protects the pawn's route toward e6.",
+        "endpoint": "Kf3 follows the pawn so future checks do not strand the e-pawn.",
+        "defense": "...Rh7 keeps Black's rook active while its a5 passer advances on another wing.",
+        "misconception": "Playing e6 before checking whether the king can support it may donate a pawn to the enemy rook.",
+        "authority": "original illustrative lines; no tablebase WDL",
+        "outcome": "undetermined from three plies",
+        "method": "Place a rook behind an advancing passed pawn when possible: the pawn's movement does not normally shorten the rook's supporting line, whereas a rook in front can block promotion. That general rule admits exceptions, especially if an opponent's active rook can attack the pawn laterally. Calculate king escort, promotion tempos, rook checking distance and opposite-wing counterplay together."
+      }
+    }
+  ]
+}

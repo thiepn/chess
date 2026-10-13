@@ -1,0 +1,802 @@
+{
+  "version": 1,
+  "phase": "P99",
+  "section": "Lateral checks, rook conversion, and defensive resistance",
+  "positions": [
+    {
+      "id": "calc:p99-31",
+      "title": "Defensive check along the fifth",
+      "fen": "7k/8/6r1/2K5/2P5/8/8/R7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "g6g5",
+      "principalVariation": [
+        "g6g5",
+        "c5d4",
+        "g5g6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Lateral checking",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-checks"
+      ],
+      "prompt": "A rook on g6 can descend to g5 to check the c5 king from the flank. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rg5+ forces Kd4, giving Black a tempo to relocate its rook. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "The defender can restore ...Rg6 but may need a better plan against the c-pawn.",
+      "explanation": "Defensive check along the fifth. A rook on g6 can descend to g5 to check the c5 king from the flank. Principal continuation g6g5 c5d4 g5g6 contrasts with g6f6 a1a2 f6g6. Defender: ...Rg5+ forces Kd4, giving Black a tempo to relocate its rook. Endpoint: The defender can restore ...Rg6 but may need a better plan against the c-pawn. Misconception: Repeated lateral checks matter only if the defender keeps sufficient rook distance. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw.",
+      "defensiveStudy": {
+        "keyQuestion": "A rook on g6 can descend to g5 to check the c5 king from the flank.",
+        "defenderIdea": "...Rg5+ forces Kd4, giving Black a tempo to relocate its rook.",
+        "continuation": "The defender can restore ...Rg6 but may need a better plan against the c-pawn.",
+        "misconception": "Repeated lateral checks matter only if the defender keeps sufficient rook distance.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. The defender can restore ...Rg6 but may need a better plan against the c-pawn. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "g6f6",
+              "a1a2",
+              "f6g6"
+            ],
+            "explanation": "Compare g6f6 a1a2 f6g6 with g6g5 c5d4 g5g6. Repeated lateral checks matter only if the defender keeps sufficient rook distance. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Lateral checking",
+        "principle": "A rook on g6 can descend to g5 to check the c5 king from the flank.",
+        "defense": "...Rg5+ forces Kd4, giving Black a tempo to relocate its rook.",
+        "endpoint": "The defender can restore ...Rg6 but may need a better plan against the c-pawn.",
+        "misconception": "Repeated lateral checks matter only if the defender keeps sufficient rook distance.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw."
+      }
+    },
+    {
+      "id": "calc:p99-32",
+      "title": "Check then return to the sixth rank",
+      "fen": "1k6/8/7r/3K4/3P4/8/8/R7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h6h5",
+      "principalVariation": [
+        "h6h5",
+        "d5e4",
+        "h5h6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Lateral checking",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-checks"
+      ],
+      "prompt": "The rook from h6 can check the attacking king along the fifth rank. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh5+ drives the king from d5 to e4, away from the sixth rank. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "Black returns to h6 but still must evaluate the advanced d-pawn and its king's position.",
+      "explanation": "Check then return to the sixth rank. The rook from h6 can check the attacking king along the fifth rank. Principal continuation h6h5 d5e4 h5h6 contrasts with h6g6 a1a2 g6h6. Defender: ...Rh5+ drives the king from d5 to e4, away from the sixth rank. Endpoint: Black returns to h6 but still must evaluate the advanced d-pawn and its king's position. Misconception: A check that moves the king is not automatically a draw if the pawn retains full support. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw.",
+      "defensiveStudy": {
+        "keyQuestion": "The rook from h6 can check the attacking king along the fifth rank.",
+        "defenderIdea": "...Rh5+ drives the king from d5 to e4, away from the sixth rank.",
+        "continuation": "Black returns to h6 but still must evaluate the advanced d-pawn and its king's position.",
+        "misconception": "A check that moves the king is not automatically a draw if the pawn retains full support.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Black returns to h6 but still must evaluate the advanced d-pawn and its king's position. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "h6g6",
+              "a1a2",
+              "g6h6"
+            ],
+            "explanation": "Compare h6g6 a1a2 g6h6 with h6h5 d5e4 h5h6. A check that moves the king is not automatically a draw if the pawn retains full support. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Lateral checking",
+        "principle": "The rook from h6 can check the attacking king along the fifth rank.",
+        "defense": "...Rh5+ drives the king from d5 to e4, away from the sixth rank.",
+        "endpoint": "Black returns to h6 but still must evaluate the advanced d-pawn and its king's position.",
+        "misconception": "A check that moves the king is not automatically a draw if the pawn retains full support.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw."
+      }
+    },
+    {
+      "id": "calc:p99-33",
+      "title": "Check the e-pawn's supporting king",
+      "fen": "k7/8/7r/4K3/4P3/8/8/1R6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "h6h5",
+      "principalVariation": [
+        "h6h5",
+        "e5f4",
+        "h5h6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Lateral checking",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-checks"
+      ],
+      "prompt": "The e4 pawn needs its king on nearby squares; a rook on h5 may check the fifth-rank king. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh5+ forces Kf4 while Black's king remains far from the pawn. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "Black restores ...Rh6 and hopes to build a recurring sequence of safe side checks.",
+      "explanation": "Check the e-pawn's supporting king. The e4 pawn needs its king on nearby squares; a rook on h5 may check the fifth-rank king. Principal continuation h6h5 e5f4 h5h6 contrasts with h6g6 b1b2 g6h6. Defender: ...Rh5+ forces Kf4 while Black's king remains far from the pawn. Endpoint: Black restores ...Rh6 and hopes to build a recurring sequence of safe side checks. Misconception: The defender should not equate one successful check with a forced perpetual. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw.",
+      "defensiveStudy": {
+        "keyQuestion": "The e4 pawn needs its king on nearby squares; a rook on h5 may check the fifth-rank king.",
+        "defenderIdea": "...Rh5+ forces Kf4 while Black's king remains far from the pawn.",
+        "continuation": "Black restores ...Rh6 and hopes to build a recurring sequence of safe side checks.",
+        "misconception": "The defender should not equate one successful check with a forced perpetual.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Black restores ...Rh6 and hopes to build a recurring sequence of safe side checks. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "h6g6",
+              "b1b2",
+              "g6h6"
+            ],
+            "explanation": "Compare h6g6 b1b2 g6h6 with h6h5 e5f4 h5h6. The defender should not equate one successful check with a forced perpetual. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Lateral checking",
+        "principle": "The e4 pawn needs its king on nearby squares; a rook on h5 may check the fifth-rank king.",
+        "defense": "...Rh5+ forces Kf4 while Black's king remains far from the pawn.",
+        "endpoint": "Black restores ...Rh6 and hopes to build a recurring sequence of safe side checks.",
+        "misconception": "The defender should not equate one successful check with a forced perpetual.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw."
+      }
+    },
+    {
+      "id": "calc:p99-34",
+      "title": "Distance on the b-file",
+      "fen": "7k/8/1r6/5K2/5P2/8/8/R7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "b6b5",
+      "principalVariation": [
+        "b6b5",
+        "f5g4",
+        "b5b6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Lateral checking",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-checks"
+      ],
+      "prompt": "A rook on b6 can check across the fifth rank without entering the enemy king's reach. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rb5+ drives Kg4, and the defender may retreat to b6 to keep checking distance.",
+      "continuationReason": "An alternate ...Rc6 maintains sixth-rank coverage instead of checking immediately.",
+      "explanation": "Distance on the b-file. A rook on b6 can check across the fifth rank without entering the enemy king's reach. Principal continuation b6b5 f5g4 b5b6 contrasts with b6c6 a1a3 c6b6. Defender: ...Rb5+ drives Kg4, and the defender may retreat to b6 to keep checking distance. Endpoint: An alternate ...Rc6 maintains sixth-rank coverage instead of checking immediately. Misconception: Checks that land too close to the king can be answered by a direct king approach. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw.",
+      "defensiveStudy": {
+        "keyQuestion": "A rook on b6 can check across the fifth rank without entering the enemy king's reach.",
+        "defenderIdea": "...Rb5+ drives Kg4, and the defender may retreat to b6 to keep checking distance.",
+        "continuation": "An alternate ...Rc6 maintains sixth-rank coverage instead of checking immediately.",
+        "misconception": "Checks that land too close to the king can be answered by a direct king approach.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. An alternate ...Rc6 maintains sixth-rank coverage instead of checking immediately. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "b6c6",
+              "a1a3",
+              "c6b6"
+            ],
+            "explanation": "Compare b6c6 a1a3 c6b6 with b6b5 f5g4 b5b6. Checks that land too close to the king can be answered by a direct king approach. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Lateral checking",
+        "principle": "A rook on b6 can check across the fifth rank without entering the enemy king's reach.",
+        "defense": "...Rb5+ drives Kg4, and the defender may retreat to b6 to keep checking distance.",
+        "endpoint": "An alternate ...Rc6 maintains sixth-rank coverage instead of checking immediately.",
+        "misconception": "Checks that land too close to the king can be answered by a direct king approach.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw."
+      }
+    },
+    {
+      "id": "calc:p99-35",
+      "title": "Side checks and king route choices",
+      "fen": "2k5/8/1r6/6K1/6P1/8/8/R7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "b6b5",
+      "principalVariation": [
+        "b6b5",
+        "g5f4",
+        "b5b6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Lateral checking",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-checks"
+      ],
+      "prompt": "...Rb5+ checks across c5–f5 at the attacking king on g5. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "The white king escapes to f4 but the rook can retreat to b6. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "Black's rook must weigh lateral checks against retaining an adequate barrier.",
+      "explanation": "Side checks and king route choices. ...Rb5+ checks across c5–f5 at the attacking king on g5. Principal continuation b6b5 g5f4 b5b6 contrasts with b6c6 a1a3 c6b6. Defender: The white king escapes to f4 but the rook can retreat to b6. Endpoint: Black's rook must weigh lateral checks against retaining an adequate barrier. Misconception: A side-checking rook may fail if the king finds a shelter behind its own pawn. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw.",
+      "defensiveStudy": {
+        "keyQuestion": "...Rb5+ checks across c5–f5 at the attacking king on g5.",
+        "defenderIdea": "The white king escapes to f4 but the rook can retreat to b6.",
+        "continuation": "Black's rook must weigh lateral checks against retaining an adequate barrier.",
+        "misconception": "A side-checking rook may fail if the king finds a shelter behind its own pawn.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Black's rook must weigh lateral checks against retaining an adequate barrier. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "b6c6",
+              "a1a3",
+              "c6b6"
+            ],
+            "explanation": "Compare b6c6 a1a3 c6b6 with b6b5 g5f4 b5b6. A side-checking rook may fail if the king finds a shelter behind its own pawn. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Lateral checking",
+        "principle": "...Rb5+ checks across c5–f5 at the attacking king on g5.",
+        "defense": "The white king escapes to f4 but the rook can retreat to b6.",
+        "endpoint": "Black's rook must weigh lateral checks against retaining an adequate barrier.",
+        "misconception": "A side-checking rook may fail if the king finds a shelter behind its own pawn.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "Lateral checks can drive an attacking king sideways or backward without taking the pawn. The defender needs enough checking distance and a king safe from the attacker’s rook; when the attacking king finds shelter from the pawn or rook, the check series can end. A single lateral check is a legal tactical fact, not by itself a certificate of Philidor defense or an exact draw."
+      }
+    },
+    {
+      "id": "calc:p99-36",
+      "title": "Take the invading e2 rook",
+      "fen": "k7/8/8/8/7p/8/4r3/4R1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e2",
+      "principalVariation": [
+        "e1e2",
+        "a8b7",
+        "g1f2"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Conversion and simplification",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rxe2 removes an active second-rank attacker rather than accepting a passive defense. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Kb7 heads toward the pawn ending but Black has lost its only rook.",
+      "continuationReason": "Kf2 improves the king in a materially advantageous rook-against-pawn conversion.",
+      "explanation": "Take the invading e2 rook. Rxe2 removes an active second-rank attacker rather than accepting a passive defense. Principal continuation e1e2 a8b7 g1f2 contrasts with g1h1 e2e1 h1h2. Defender: ...Kb7 heads toward the pawn ending but Black has lost its only rook. Endpoint: Kf2 improves the king in a materially advantageous rook-against-pawn conversion. Misconception: Kh1? permits ...Rxe1+ and loses the white rook, so the move order matters. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxe2 removes an active second-rank attacker rather than accepting a passive defense.",
+        "defenderIdea": "...Kb7 heads toward the pawn ending but Black has lost its only rook.",
+        "continuation": "Kf2 improves the king in a materially advantageous rook-against-pawn conversion.",
+        "misconception": "Kh1? permits ...Rxe1+ and loses the white rook, so the move order matters.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Kf2 improves the king in a materially advantageous rook-against-pawn conversion. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "g1h1",
+              "e2e1",
+              "h1h2"
+            ],
+            "explanation": "Compare g1h1 e2e1 h1h2 with e1e2 a8b7 g1f2. Kh1? permits ...Rxe1+ and loses the white rook, so the move order matters. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Conversion and simplification",
+        "principle": "Rxe2 removes an active second-rank attacker rather than accepting a passive defense.",
+        "defense": "...Kb7 heads toward the pawn ending but Black has lost its only rook.",
+        "endpoint": "Kf2 improves the king in a materially advantageous rook-against-pawn conversion.",
+        "misconception": "Kh1? permits ...Rxe1+ and loses the white rook, so the move order matters.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked."
+      }
+    },
+    {
+      "id": "calc:p99-37",
+      "title": "Take the invading c2 rook",
+      "fen": "k7/8/8/7p/8/8/2r5/2R3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1c2",
+      "principalVariation": [
+        "c1c2",
+        "a8b7",
+        "g1f2"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Conversion and simplification",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Rxc2 captures an undefended rook on c2 and changes the material balance immediately. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Kb7 approaches the center, but Black's only remaining material is a distant pawn.",
+      "continuationReason": "Kf2 centralizes while the white rook remains available for conversion.",
+      "explanation": "Take the invading c2 rook. Rxc2 captures an undefended rook on c2 and changes the material balance immediately. Principal continuation c1c2 a8b7 g1f2 contrasts with g1h1 c2c1 h1h2. Defender: ...Kb7 approaches the center, but Black's only remaining material is a distant pawn. Endpoint: Kf2 centralizes while the white rook remains available for conversion. Misconception: Kh1? allows ...Rxc1+; the subsequent king move does not restore the lost rook. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked.",
+      "defensiveStudy": {
+        "keyQuestion": "Rxc2 captures an undefended rook on c2 and changes the material balance immediately.",
+        "defenderIdea": "...Kb7 approaches the center, but Black's only remaining material is a distant pawn.",
+        "continuation": "Kf2 centralizes while the white rook remains available for conversion.",
+        "misconception": "Kh1? allows ...Rxc1+; the subsequent king move does not restore the lost rook.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Kf2 centralizes while the white rook remains available for conversion. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "g1h1",
+              "c2c1",
+              "h1h2"
+            ],
+            "explanation": "Compare g1h1 c2c1 h1h2 with c1c2 a8b7 g1f2. Kh1? allows ...Rxc1+; the subsequent king move does not restore the lost rook. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Conversion and simplification",
+        "principle": "Rxc2 captures an undefended rook on c2 and changes the material balance immediately.",
+        "defense": "...Kb7 approaches the center, but Black's only remaining material is a distant pawn.",
+        "endpoint": "Kf2 centralizes while the white rook remains available for conversion.",
+        "misconception": "Kh1? allows ...Rxc1+; the subsequent king move does not restore the lost rook.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked."
+      }
+    },
+    {
+      "id": "calc:p99-38",
+      "title": "Extra connected queenside pawns",
+      "fen": "6kr/8/8/P6p/1P6/8/6K1/R7 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "g2f3",
+      "principalVariation": [
+        "g2f3",
+        "h8h7",
+        "a1a4"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Conversion and simplification",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-activity"
+      ],
+      "prompt": "Two connected queenside pawns give White practical chances if the rook stays behind the advanced pawn. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh7 gives Black useful lateral activity rather than passively guarding h5.",
+      "continuationReason": "Ra4 coordinates the rook with a5 and b4; accurate king moves remain essential.",
+      "explanation": "Extra connected queenside pawns. Two connected queenside pawns give White practical chances if the rook stays behind the advanced pawn. Principal continuation g2f3 h8h7 a1a4 contrasts with a1a4 h8h7 g2f3. Defender: ...Rh7 gives Black useful lateral activity rather than passively guarding h5. Endpoint: Ra4 coordinates the rook with a5 and b4; accurate king moves remain essential. Misconception: Counting an extra pawn as an automatic win ignores lateral checks and exchanges. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked.",
+      "defensiveStudy": {
+        "keyQuestion": "Two connected queenside pawns give White practical chances if the rook stays behind the advanced pawn.",
+        "defenderIdea": "...Rh7 gives Black useful lateral activity rather than passively guarding h5.",
+        "continuation": "Ra4 coordinates the rook with a5 and b4; accurate king moves remain essential.",
+        "misconception": "Counting an extra pawn as an automatic win ignores lateral checks and exchanges.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Ra4 coordinates the rook with a5 and b4; accurate king moves remain essential. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "a1a4",
+              "h8h7",
+              "g2f3"
+            ],
+            "explanation": "Compare a1a4 h8h7 g2f3 with g2f3 h8h7 a1a4. Counting an extra pawn as an automatic win ignores lateral checks and exchanges. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Conversion and simplification",
+        "principle": "Two connected queenside pawns give White practical chances if the rook stays behind the advanced pawn.",
+        "defense": "...Rh7 gives Black useful lateral activity rather than passively guarding h5.",
+        "endpoint": "Ra4 coordinates the rook with a5 and b4; accurate king moves remain essential.",
+        "misconception": "Counting an extra pawn as an automatic win ignores lateral checks and exchanges.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked."
+      }
+    },
+    {
+      "id": "calc:p99-39",
+      "title": "King coordinates the central majority",
+      "fen": "k6r/8/8/3P3p/4P3/8/5K2/3R4 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d4",
+      "principalVariation": [
+        "d1d4",
+        "h8h7",
+        "f2e3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Conversion and simplification",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-activity"
+      ],
+      "prompt": "The d5/e4 center can make progress if the rook is placed behind d5 and the king steps closer. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh7 gives Black time for lateral checking threats. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "Ke3 improves king activity while d4 remains a useful support square.",
+      "explanation": "King coordinates the central majority. The d5/e4 center can make progress if the rook is placed behind d5 and the king steps closer. Principal continuation d1d4 h8h7 f2e3 contrasts with f2e3 h8h7 d1d4. Defender: ...Rh7 gives Black time for lateral checking threats. Endpoint: Ke3 improves king activity while d4 remains a useful support square. Misconception: The majority is not a guaranteed win if its most advanced pawn can be attacked. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked.",
+      "defensiveStudy": {
+        "keyQuestion": "The d5/e4 center can make progress if the rook is placed behind d5 and the king steps closer.",
+        "defenderIdea": "...Rh7 gives Black time for lateral checking threats.",
+        "continuation": "Ke3 improves king activity while d4 remains a useful support square.",
+        "misconception": "The majority is not a guaranteed win if its most advanced pawn can be attacked.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Ke3 improves king activity while d4 remains a useful support square. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "f2e3",
+              "h8h7",
+              "d1d4"
+            ],
+            "explanation": "Compare f2e3 h8h7 d1d4 with d1d4 h8h7 f2e3. The majority is not a guaranteed win if its most advanced pawn can be attacked. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Conversion and simplification",
+        "principle": "The d5/e4 center can make progress if the rook is placed behind d5 and the king steps closer.",
+        "defense": "...Rh7 gives Black time for lateral checking threats.",
+        "endpoint": "Ke3 improves king activity while d4 remains a useful support square.",
+        "misconception": "The majority is not a guaranteed win if its most advanced pawn can be attacked.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked."
+      }
+    },
+    {
+      "id": "calc:p99-40",
+      "title": "Support an e5 passer with f4",
+      "fen": "k6r/8/8/p3P3/5P2/8/6K1/4R3 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e4",
+      "principalVariation": [
+        "e1e4",
+        "h8h7",
+        "g2f3"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Conversion and simplification",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.rook-activity"
+      ],
+      "prompt": "The e4 rook supports the e5 pawn from behind, with the f4 pawn providing an additional lever. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh7 remains active and Black's outside a5 pawn can divert the king.",
+      "continuationReason": "Kf3 helps White approach while checking that the e-pawn remains secure.",
+      "explanation": "Support an e5 passer with f4. The e4 rook supports the e5 pawn from behind, with the f4 pawn providing an additional lever. Principal continuation e1e4 h8h7 g2f3 contrasts with g2f3 h8h7 e1e4. Defender: ...Rh7 remains active and Black's outside a5 pawn can divert the king. Endpoint: Kf3 helps White approach while checking that the e-pawn remains secure. Misconception: A reflexive e6 advance can leave the advanced pawn unable to survive side checks. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked.",
+      "defensiveStudy": {
+        "keyQuestion": "The e4 rook supports the e5 pawn from behind, with the f4 pawn providing an additional lever.",
+        "defenderIdea": "...Rh7 remains active and Black's outside a5 pawn can divert the king.",
+        "continuation": "Kf3 helps White approach while checking that the e-pawn remains secure.",
+        "misconception": "A reflexive e6 advance can leave the advanced pawn unable to survive side checks.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Kf3 helps White approach while checking that the e-pawn remains secure. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "g2f3",
+              "h8h7",
+              "e1e4"
+            ],
+            "explanation": "Compare g2f3 h8h7 e1e4 with e1e4 h8h7 g2f3. A reflexive e6 advance can leave the advanced pawn unable to survive side checks. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Conversion and simplification",
+        "principle": "The e4 rook supports the e5 pawn from behind, with the f4 pawn providing an additional lever.",
+        "defense": "...Rh7 remains active and Black's outside a5 pawn can divert the king.",
+        "endpoint": "Kf3 helps White approach while checking that the e-pawn remains secure.",
+        "misconception": "A reflexive e6 advance can leave the advanced pawn unable to survive side checks.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "When an invading rook is undefended, capturing it may be more important than improving king position: reevaluate the material after both rooks have had their turn. When the conversion instead depends on two connected pawns, avoid surrendering them to checks from the flank. Material imbalance, king activity and pawn support must be considered together; these demonstrations are not engine-ranked."
+      }
+    },
+    {
+      "id": "calc:p99-41",
+      "title": "A b-pawn changes a Philidor-shaped hold",
+      "fen": "4k3/1p6/r7/4K3/4P3/8/8/7R b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "a6b6",
+      "principalVariation": [
+        "a6b6",
+        "h1h7",
+        "b6a6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Defensive resistance",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.philidor"
+      ],
+      "prompt": "The rook can patrol the sixth rank but its side owns an additional b7 pawn. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rb6 keeps e6 inaccessible; White meanwhile tries an active Rh7.",
+      "continuationReason": "Returning to a6 maintains the barrier, but the outside b-pawn makes exact WDL uncertain.",
+      "explanation": "A b-pawn changes a Philidor-shaped hold. The rook can patrol the sixth rank but its side owns an additional b7 pawn. Principal continuation a6b6 h1h7 b6a6 contrasts with a6a5 e5d4 a5a6. Defender: ...Rb6 keeps e6 inaccessible; White meanwhile tries an active Rh7. Endpoint: Returning to a6 maintains the barrier, but the outside b-pawn makes exact WDL uncertain. Misconception: A Philidor-shaped position with extra pawns must not be labelled an unconditional draw. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win.",
+      "defensiveStudy": {
+        "keyQuestion": "The rook can patrol the sixth rank but its side owns an additional b7 pawn.",
+        "defenderIdea": "...Rb6 keeps e6 inaccessible; White meanwhile tries an active Rh7.",
+        "continuation": "Returning to a6 maintains the barrier, but the outside b-pawn makes exact WDL uncertain.",
+        "misconception": "A Philidor-shaped position with extra pawns must not be labelled an unconditional draw.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Returning to a6 maintains the barrier, but the outside b-pawn makes exact WDL uncertain. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "a6a5",
+              "e5d4",
+              "a5a6"
+            ],
+            "explanation": "Compare a6a5 e5d4 a5a6 with a6b6 h1h7 b6a6. A Philidor-shaped position with extra pawns must not be labelled an unconditional draw. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Defensive resistance",
+        "principle": "The rook can patrol the sixth rank but its side owns an additional b7 pawn.",
+        "defense": "...Rb6 keeps e6 inaccessible; White meanwhile tries an active Rh7.",
+        "endpoint": "Returning to a6 maintains the barrier, but the outside b-pawn makes exact WDL uncertain.",
+        "misconception": "A Philidor-shaped position with extra pawns must not be labelled an unconditional draw.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win."
+      }
+    },
+    {
+      "id": "calc:p99-42",
+      "title": "An outside g-pawn changes the defense",
+      "fen": "3k4/8/r7/3K2p1/3P4/8/8/7R b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "a6b6",
+      "principalVariation": [
+        "a6b6",
+        "h1h7",
+        "b6a6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Defensive resistance",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.philidor"
+      ],
+      "prompt": "The sixth-rank rook defends d6 while a black g5 pawn creates a separate wing issue. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rb6 preserves the king barrier and White's rook can become active on h7.",
+      "continuationReason": "Returning to a6 controls the sixth rank but does not decide the pawn race.",
+      "explanation": "An outside g-pawn changes the defense. The sixth-rank rook defends d6 while a black g5 pawn creates a separate wing issue. Principal continuation a6b6 h1h7 b6a6 contrasts with a6a5 d5c4 a5a6. Defender: ...Rb6 preserves the king barrier and White's rook can become active on h7. Endpoint: Returning to a6 controls the sixth rank but does not decide the pawn race. Misconception: Do not transfer Philidor's textbook verdict to a position with an extra g5 passer. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win.",
+      "defensiveStudy": {
+        "keyQuestion": "The sixth-rank rook defends d6 while a black g5 pawn creates a separate wing issue.",
+        "defenderIdea": "...Rb6 preserves the king barrier and White's rook can become active on h7.",
+        "continuation": "Returning to a6 controls the sixth rank but does not decide the pawn race.",
+        "misconception": "Do not transfer Philidor's textbook verdict to a position with an extra g5 passer.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Returning to a6 controls the sixth rank but does not decide the pawn race. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "a6a5",
+              "d5c4",
+              "a5a6"
+            ],
+            "explanation": "Compare a6a5 d5c4 a5a6 with a6b6 h1h7 b6a6. Do not transfer Philidor's textbook verdict to a position with an extra g5 passer. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Defensive resistance",
+        "principle": "The sixth-rank rook defends d6 while a black g5 pawn creates a separate wing issue.",
+        "defense": "...Rb6 preserves the king barrier and White's rook can become active on h7.",
+        "endpoint": "Returning to a6 controls the sixth rank but does not decide the pawn race.",
+        "misconception": "Do not transfer Philidor's textbook verdict to a position with an extra g5 passer.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win."
+      }
+    },
+    {
+      "id": "calc:p99-43",
+      "title": "A d-pawn changes the sixth-rank patrol",
+      "fen": "5k2/3p4/1r6/5K2/5P2/8/8/R7 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "b6c6",
+      "principalVariation": [
+        "b6c6",
+        "a1a7",
+        "c6b6"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Defensive resistance",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.philidor"
+      ],
+      "prompt": "The black d7 pawn survives and the rook must still deny White's king access to f6. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rc6 guards f6 as White's rook explores the seventh rank. The defender must recalculate the checking file, not assume a passive move.",
+      "continuationReason": "...Rb6 can restore the original defensive line while the distant d-pawn remains.",
+      "explanation": "A d-pawn changes the sixth-rank patrol. The black d7 pawn survives and the rook must still deny White's king access to f6. Principal continuation b6c6 a1a7 c6b6 contrasts with b6b5 f5g4 b5b6. Defender: ...Rc6 guards f6 as White's rook explores the seventh rank. Endpoint: ...Rb6 can restore the original defensive line while the distant d-pawn remains. Misconception: A promising outside pawn cannot replace the precise sixth-rank defense of the king. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win.",
+      "defensiveStudy": {
+        "keyQuestion": "The black d7 pawn survives and the rook must still deny White's king access to f6.",
+        "defenderIdea": "...Rc6 guards f6 as White's rook explores the seventh rank.",
+        "continuation": "...Rb6 can restore the original defensive line while the distant d-pawn remains.",
+        "misconception": "A promising outside pawn cannot replace the precise sixth-rank defense of the king.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. ...Rb6 can restore the original defensive line while the distant d-pawn remains. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "b6b5",
+              "f5g4",
+              "b5b6"
+            ],
+            "explanation": "Compare b6b5 f5g4 b5b6 with b6c6 a1a7 c6b6. A promising outside pawn cannot replace the precise sixth-rank defense of the king. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Defensive resistance",
+        "principle": "The black d7 pawn survives and the rook must still deny White's king access to f6.",
+        "defense": "...Rc6 guards f6 as White's rook explores the seventh rank.",
+        "endpoint": "...Rb6 can restore the original defensive line while the distant d-pawn remains.",
+        "misconception": "A promising outside pawn cannot replace the precise sixth-rank defense of the king.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win."
+      }
+    },
+    {
+      "id": "calc:p99-44",
+      "title": "Outside a-pawn versus rook entry",
+      "fen": "7k/8/p6r/8/2P5/8/1K6/3R4 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1d7",
+      "principalVariation": [
+        "d1d7",
+        "h6h7",
+        "d7d8"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Defensive resistance",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.philidor"
+      ],
+      "prompt": "A rook on d7 can attack the king but the defender owns a dangerous outside a6 pawn. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Rh7 meets seventh-rank pressure and threatens the checking rook.",
+      "continuationReason": "Rd8+ shifts away from that attack, gaining one more tempo against the black king.",
+      "explanation": "Outside a-pawn versus rook entry. A rook on d7 can attack the king but the defender owns a dangerous outside a6 pawn. Principal continuation d1d7 h6h7 d7d8 contrasts with d1d6 h6h7 d6d8. Defender: ...Rh7 meets seventh-rank pressure and threatens the checking rook. Endpoint: Rd8+ shifts away from that attack, gaining one more tempo against the black king. Misconception: Repeated checks are no guarantee that the opposing a-pawn will stop. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win.",
+      "defensiveStudy": {
+        "keyQuestion": "A rook on d7 can attack the king but the defender owns a dangerous outside a6 pawn.",
+        "defenderIdea": "...Rh7 meets seventh-rank pressure and threatens the checking rook.",
+        "continuation": "Rd8+ shifts away from that attack, gaining one more tempo against the black king.",
+        "misconception": "Repeated checks are no guarantee that the opposing a-pawn will stop.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Rd8+ shifts away from that attack, gaining one more tempo against the black king. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "d1d6",
+              "h6h7",
+              "d6d8"
+            ],
+            "explanation": "Compare d1d6 h6h7 d6d8 with d1d7 h6h7 d7d8. Repeated checks are no guarantee that the opposing a-pawn will stop. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Defensive resistance",
+        "principle": "A rook on d7 can attack the king but the defender owns a dangerous outside a6 pawn.",
+        "defense": "...Rh7 meets seventh-rank pressure and threatens the checking rook.",
+        "endpoint": "Rd8+ shifts away from that attack, gaining one more tempo against the black king.",
+        "misconception": "Repeated checks are no guarantee that the opposing a-pawn will stop.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win."
+      }
+    },
+    {
+      "id": "calc:p99-45",
+      "title": "Recapture rook on f2",
+      "fen": "4k3/8/8/7p/8/8/5r2/5RK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1f2",
+      "principalVariation": [
+        "f1f2",
+        "e8d7",
+        "g1h2"
+      ],
+      "source": "authored",
+      "sourceLabel": "P99 · Defensive resistance",
+      "difficulty": 5,
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "endgames.philidor"
+      ],
+      "prompt": "White should capture the rook on f2 while it is undefended rather than permit ...Rxf1. Calculate a defender's strongest plausible reply rather than assuming cooperation. Compare two legal plans and explain which king square matters.",
+      "replyReason": "...Kd7 heads toward the center, but after Rxf2 Black has lost its only rook.",
+      "continuationReason": "Kh2 keeps White's king out of a back-rank check while White converts the material advantage.",
+      "explanation": "Recapture rook on f2. White should capture the rook on f2 while it is undefended rather than permit ...Rxf1. Principal continuation f1f2 e8d7 g1h2 contrasts with g1h1 f2f1 h1h2. Defender: ...Kd7 heads toward the center, but after Rxf2 Black has lost its only rook. Endpoint: Kh2 keeps White's king out of a back-rank check while White converts the material advantage. Misconception: Kh1? permits ...Rxf1+ and leaves a rookless ending with the black h-pawn. This source is original instruction, not a tablebase-verified result or unique-best-move claim. Technique study: The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win.",
+      "defensiveStudy": {
+        "keyQuestion": "White should capture the rook on f2 while it is undefended rather than permit ...Rxf1.",
+        "defenderIdea": "...Kd7 heads toward the center, but after Rxf2 Black has lost its only rook.",
+        "continuation": "Kh2 keeps White's king out of a back-rank check while White converts the material advantage.",
+        "misconception": "Kh1? permits ...Rxf1+ and leaves a rookless ending with the black h-pawn.",
+        "reflection": "From the reconstructed position identify both rooks' checking distance, any rook that can be captured and the surviving pawn count. Kh2 keeps White's king out of a back-rank check while White converts the material advantage. Independent recall: give the two best plausible rook responses, say if the recorded rook check is legally protected, then identify which king and pawn square would be critical one move later.",
+        "variations": [
+          {
+            "label": "Alternative defense or move-order choice",
+            "moves": [
+              "g1h1",
+              "f2f1",
+              "h1h2"
+            ],
+            "explanation": "Compare g1h1 f2f1 h1h2 with f1f2 e8d7 g1h2. Kh1? permits ...Rxf1+ and leaves a rookless ending with the black h-pawn. Explain whether the active rook is defended on the final square."
+          }
+        ]
+      },
+      "rookEndgameStudy": {
+        "theme": "Defensive resistance",
+        "principle": "White should capture the rook on f2 while it is undefended rather than permit ...Rxf1.",
+        "defense": "...Kd7 heads toward the center, but after Rxf2 Black has lost its only rook.",
+        "endpoint": "Kh2 keeps White's king out of a back-rank check while White converts the material advantage.",
+        "misconception": "Kh1? permits ...Rxf1+ and leaves a rookless ending with the black h-pawn.",
+        "outcome": "not independently tablebase verified",
+        "authority": "original source teaching",
+        "method": "The defender may have an extra outside pawn as well as a rook: the standard Lucena/Philidor diagram no longer automatically determines the game-theoretic result. Look for active side checks, sixth-rank restrictions, king flight squares and threats on both wings. An accurate practical decision includes what can happen after the demonstrated three plies rather than silently asserting a universal draw or win."
+      }
+    }
+  ]
+}
