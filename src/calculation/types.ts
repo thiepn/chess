@@ -10,6 +10,15 @@ export interface CalculationPosition {
   bestMove: string;
   principalVariation: string[];
   explanation: string;
+  /** Optional learner-facing defensive alternatives, all source-lines legally replayed. */
+  defensiveStudy?: {
+    keyQuestion: string;
+    defenderIdea: string;
+    continuation: string;
+    misconception: string;
+    reflection: string;
+    variations: { label: string; moves: string[]; explanation: string }[];
+  };
   /** Explanations of the legal authored reply and the next move; never engine-unique claims. */
   replyReason?: string;
   continuationReason?: string;
