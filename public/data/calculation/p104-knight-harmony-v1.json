@@ -60,7 +60,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight outpost versus bishop",
-        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. On this specific board, Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender's counterplan is ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "planContrast": "Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation.",
         "defenderPlan": "...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "misconception": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7.",
@@ -69,7 +69,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. Apply that principle to this board: Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender has this resource: ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
             "correction": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7."
           },
           {
@@ -142,7 +142,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight outpost versus bishop",
-        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. On this specific board, Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender's counterplan is ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "planContrast": "Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation.",
         "defenderPlan": "...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "misconception": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7.",
@@ -151,7 +151,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. Apply that principle to this board: Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender has this resource: ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
             "correction": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7."
           },
           {
@@ -224,7 +224,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight outpost versus bishop",
-        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+        "principle": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. On this specific board, Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender's counterplan is ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "planContrast": "Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation.",
         "defenderPlan": "...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
         "misconception": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7.",
@@ -233,7 +233,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares.",
+            "model": "Choose an outpost supported by d4, then check the bishop's diagonal and the black king's attack on advanced knight squares. Apply that principle to this board: Ne5–d3–c5 keeps the knight's pressure on the queenside and accepts tempi for better squares; Ng5–f3–e5 is slower but can avoid direct bishop confrontation. The defender has this resource: ...Bd7 and ...Bb5 develop Black's light bishop while White maneuvers via d3 toward c5. The strong knight must still be compared with Black's fixed d5/e6 chain.",
             "correction": "Jumping to f7 early from e5 brings the knight close to the black king and may invite ...Kxf7 if other pieces do not cover f7."
           },
           {
@@ -306,7 +306,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight blockades and king coordination",
-        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. On this specific board, Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender's counterplan is ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "planContrast": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
         "defenderPlan": "...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "misconception": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square.",
@@ -315,7 +315,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           },
           {
@@ -325,7 +325,7 @@
           },
           {
             "question": "Explain how the two competing routes affect pawn structure and piece activity.",
-            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
+            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           }
         ]
@@ -388,7 +388,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight blockades and king coordination",
-        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. On this specific board, Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender's counterplan is ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "planContrast": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
         "defenderPlan": "...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "misconception": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square.",
@@ -397,7 +397,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           },
           {
@@ -407,7 +407,7 @@
           },
           {
             "question": "Explain how the two competing routes affect pawn structure and piece activity.",
-            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
+            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           }
         ]
@@ -470,7 +470,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Knight blockades and king coordination",
-        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+        "principle": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. On this specific board, Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender's counterplan is ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "planContrast": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
         "defenderPlan": "...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
         "misconception": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square.",
@@ -479,7 +479,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump.",
+            "model": "Test whether the knight's destination is defended by a pawn or king and which black bishop move controls its next jump. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           },
           {
@@ -489,7 +489,7 @@
           },
           {
             "question": "Explain how the two competing routes affect pawn structure and piece activity.",
-            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight.",
+            "model": "Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. Apply that principle to this board: Nb5–c7–b5 preserves knight options while the e2–f4 route trades time for better coverage of d3/e6; the apparent direct Nd6 can lose a knight. The defender has this resource: ...Be7 retains Black's bishop for future ...Bxd6 against a poorly supported knight on d6. The defender can continue developing while White spends knight tempi.",
             "correction": "Nd6 while Black's bishop stands on e7 can simply invite ...Bxd6 if White has not secured that square."
           }
         ]
@@ -552,7 +552,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Two-knight harmony",
-        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. On this specific board, With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender's counterplan is ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "planContrast": "With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure.",
         "defenderPlan": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "misconception": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation.",
@@ -561,12 +561,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
+            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
@@ -634,7 +634,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Two-knight harmony",
-        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. On this specific board, With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender's counterplan is ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "planContrast": "With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure.",
         "defenderPlan": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "misconception": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation.",
@@ -643,12 +643,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
+            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
@@ -716,7 +716,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Two-knight harmony",
-        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+        "principle": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. On this specific board, With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender's counterplan is ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "planContrast": "With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure.",
         "defenderPlan": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
         "misconception": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation.",
@@ -725,12 +725,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3.",
+            "model": "Reconstruct both knight locations after the first exchange and decide whether Black's knight on a5 threatens c4 or b3. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
+            "model": "...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn. Apply that principle to this board: With both knights on the board, b5–c7 keeps coordination tension; choosing Ne5 offers immediate exchanges and pawn recapture, favoring a different structure. The defender has this resource: ...Na5 attacks the b5 knight's route from c6, whereas ...Nxe5 trades a black knight for the f3 knight and reshapes the central d4 pawn.",
             "correction": "Jumping immediately to d6 can be premature if Black gains a counterattacking tempo against other white pieces; a nominally advanced post is not a winning tactic without calculation."
           },
           {
@@ -798,7 +798,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Improving the least active piece",
-        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. On this specific board, Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender's counterplan is ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "planContrast": "Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost.",
         "defenderPlan": "...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "misconception": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities.",
@@ -807,7 +807,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. Apply that principle to this board: Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender has this resource: ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
             "correction": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities."
           },
           {
@@ -880,7 +880,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Improving the least active piece",
-        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. On this specific board, Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender's counterplan is ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "planContrast": "Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost.",
         "defenderPlan": "...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "misconception": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities.",
@@ -889,7 +889,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. Apply that principle to this board: Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender has this resource: ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
             "correction": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities."
           },
           {
@@ -962,7 +962,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Improving the least active piece",
-        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+        "principle": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. On this specific board, Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender's counterplan is ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "planContrast": "Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost.",
         "defenderPlan": "...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
         "misconception": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities.",
@@ -971,7 +971,7 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns.",
+            "model": "The worst-placed piece is not always the least advanced pawn; identify the knight's actual safe route before launching wing pawns. Apply that principle to this board: Nf3–e5–d3 uses the d4 pawn's support before retreating to improve mobility; Ng4–e3–f5 uses a more ambitious flank route with a different defensive cost. The defender has this resource: ...Bd7 followed by ...Bb5 develops a bishop and challenges the queenside; an unsupported knight excursion must be tested against the central pawn chain.",
             "correction": "Heading to e5 directly from g4 may look stronger but the knight's support differs: d4 attacks e5, while ...Bb5 can change queenside priorities."
           },
           {
@@ -1044,7 +1044,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook and knight harmony",
-        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. On this specific board, Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender's counterplan is ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "planContrast": "Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces.",
         "defenderPlan": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "misconception": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks.",
@@ -1053,12 +1053,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
+            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
@@ -1126,7 +1126,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook and knight harmony",
-        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. On this specific board, Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender's counterplan is ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "planContrast": "Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces.",
         "defenderPlan": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "misconception": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks.",
@@ -1135,12 +1135,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
+            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
@@ -1208,7 +1208,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook and knight harmony",
-        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+        "principle": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. On this specific board, Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender's counterplan is ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "planContrast": "Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces.",
         "defenderPlan": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
         "misconception": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks.",
@@ -1217,12 +1217,12 @@
         "practice": [
           {
             "question": "Name the least effective piece and its useful supported square.",
-            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6.",
+            "model": "Explain why the rook belongs behind the a-pawn, and whether Nc5 or Ra4 should happen first against ...Rh6. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
             "question": "What is Black's most active move in the recorded response?",
-            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
+            "model": "...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion. Apply that principle to this board: Both orders eventually bring rook to b4 and knight to c5, but Ra4 secures a flexible fourth-rank route before Black's ...Rh6; a6 locks the front pawns before coordinating the pieces. The defender has this resource: ...Rh6–h5 creates lateral checking prospects as White's knight occupies c5. The black a7 pawn blocks an uncomplicated white a-pawn promotion.",
             "correction": "Pushing the a-pawn to a6 too early can lock it immediately in front of Black's a7 pawn while exposing White's rook to side checks."
           },
           {
