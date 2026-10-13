@@ -58,7 +58,7 @@ const authoredPositions: CalculationPosition[] = [
     ],
     title: "Checks before comfort",
     prompt:
-      "Generate candidates first; the forcing move creates two threats.",
+      "Find a forcing move that creates two threats.",
     fen: "2q1k3/8/8/5N2/8/8/8/4K3 w - - 0 1",
     playerColor: "w",
     bestMove: "f5d6",
@@ -68,7 +68,7 @@ const authoredPositions: CalculationPosition[] = [
       "d6c8",
     ],
     explanation:
-      "Nd6+ forks king and queen. After ...Kd8 Nxc8 Kxc8, bare kings remain: a draw, not a material win.",
+      "Nd6+ forks king and queen; ...Kd8 Nxc8 Kxc8 leaves bare kings: drawn.",
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 4,
@@ -82,7 +82,7 @@ const authoredPositions: CalculationPosition[] = [
     ],
     title: "Calculate a quiet improvement",
     prompt:
-      "No tactic is forced. Generate quiet moves and calculate Black's best response.",
+      "Find quiet candidates and calculate Black's best reply.",
     fen: "rnbqkbnr/pppp1ppp/8/4p3/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     playerColor: "w",
     bestMove: "g1f3",
@@ -92,7 +92,7 @@ const authoredPositions: CalculationPosition[] = [
       "b1c3",
     ],
     explanation:
-      "Nf3 develops and attacks e5. After ...Nc6, Nc3 develops again. Compare quiet continuations without inventing a tactic.",
+      "Nf3 attacks e5; after ...Nc6, Nc3 develops. Compare quiet plans, not invented tactics.",
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 3,
@@ -106,7 +106,7 @@ const authoredPositions: CalculationPosition[] = [
     ],
     title: "Move order before execution",
     prompt:
-      "A pawn is available. Calculate the reply and your next move before capturing.",
+      "Calculate the reply and continuation before taking the pawn.",
     fen: "4k3/8/8/8/8/3p4/4Q3/4K3 w - - 0 1",
     playerColor: "w",
     bestMove: "e2d3",
@@ -116,7 +116,7 @@ const authoredPositions: CalculationPosition[] = [
       "d3d7",
     ],
     explanation:
-      "Qxd3 takes the pawn; ...Kf7 Qd7+ checks with tempo. Look beyond the first attractive capture.",
+      "Qxd3 takes the pawn; ...Kf7 Qd7+ checks. Calculate beyond the capture.",
     source: "authored",
     sourceLabel: "Calculation course",
     difficulty: 3,
@@ -128,7 +128,7 @@ const authoredPositions: CalculationPosition[] = [
     prompt:"Calculate the rook entry, a king reply and your next check.",
     fen:"4k3/8/8/8/8/8/2R5/4K3 w - - 0 1",
     playerColor:"w",bestMove:"c2c8",principalVariation:["c2c8","e8f7","c8c7"],
-    explanation:"Rc8+ checks along the eighth rank; after ...Kf7, Rc7+ checks on the seventh. This is activity, not forced mate.",
+    explanation:"Rc8+ Kf7 Rc7+ keeps checking distance, not forced mate.",
     replyReason:"The king must respond to Rc8+; ...Kf7 leaves the checking rank without approaching the rook.",
     continuationReason:"Rc7+ uses the seventh rank and preserves checking distance.",
     source:"authored",sourceLabel:"Original P90 calculation study",difficulty:3,
@@ -140,7 +140,7 @@ const authoredPositions: CalculationPosition[] = [
     prompt:"Calculate two king moves with the pawn still on e3.",
     fen:"4k3/8/8/8/4K3/4P3/8/8 w - - 0 1",
     playerColor:"w",bestMove:"e4e5",principalVariation:["e4e5","e8d7","e5f6"],
-    explanation:"Ke5 improves king activity with the e3 pawn fixed. After ...Kd7, Kf6 gains ground; this is a legal study line, not a tablebase win claim.",
+    explanation:"Ke5 Kd7 Kf6 gains ground behind e3; no tablebase win is claimed.",
     replyReason:"...Kd7 heads toward the pawn's file instead of retreating passively.",
     continuationReason:"Kf6 improves king activity without sacrificing the supporting pawn.",
     source:"authored",sourceLabel:"Original P90 calculation study",difficulty:4,
@@ -152,7 +152,7 @@ const authoredPositions: CalculationPosition[] = [
     prompt:"Calculate promotion with check and the next queen check.",
     fen:"4k3/1P6/8/8/8/8/8/4K3 w - - 0 1",
     playerColor:"w",bestMove:"b7b8q",principalVariation:["b7b8q","e8f7","b8b7"],
-    explanation:"b8=Q+ promotes with check; ...Kf7 Qb7+ continues forcing play. Track each legal king reply.",
+    explanation:"b8=Q+ Kf7 Qb7+ gives two checks; examine each king escape.",
     replyReason:"...Kf7 leaves the eighth rank without stepping onto the promoted queen's attack.",
     continuationReason:"Qb7+ is a second check from the seventh rank.",
     source:"authored",sourceLabel:"Original P90 calculation study",difficulty:3,
@@ -164,7 +164,7 @@ const authoredPositions: CalculationPosition[] = [
     prompt:"Capture the rook, then improve your king with a purpose.",
     fen:"4k3/8/8/8/2r5/8/2R5/4K3 w - - 0 1",
     playerColor:"w",bestMove:"c2c4",principalVariation:["c2c4","e8f7","e1d2"],
-    explanation:"Rxc4 removes Black's only rook. White retains a rook against the lone king, normally a winning material edge. After ...Kf7, Kd2 improves White's king activity.",
+    explanation:"Rxc4 removes Black's rook; ...Kf7 Kd2 activates the king with a rook remaining.",
     replyReason:"After Rxc4, Black has no rook; ...Kf7 is a legal king move.",
     continuationReason:"Kd2 activates the king while White's rook remains on c4.",
     source:"authored",sourceLabel:"Original P90 calculation study",difficulty:4,
@@ -190,7 +190,7 @@ const authoredPositions: CalculationPosition[] = [
       "d8e8",
     ],
     explanation:
-      "Rd8+ forces ...Re8, then Rxe8+ eliminates the attacking rook. Active defense makes the attacker respond.",
+      "Rd8+ Re8 Rxe8+ removes the attacking rook by countercheck.",
     source: "authored",
     sourceLabel: "Advanced calculation course",
     difficulty: 5,
@@ -249,7 +249,7 @@ function personalPositions(
         : ["calculation.candidates", "calculation.reply"],
       title: "Calculate your game again",
       prompt:
-        "This exact position came from one of your games. Generate candidates without looking at the move you played.",
+        "From your game: calculate candidates without recalling your move.",
       fen: mistake.positionFen,
       playerColor:
         mistake.playerColor,
