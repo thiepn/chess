@@ -501,7 +501,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Pawn shelter and poisoned capture",
       "difficulty": 5,
-      "fen": "6k1/5pp1/8/8/8/8/P3B3/3Q2K1 w - - 0 1",
+      "fen": "6k1/5pp1/8/8/8/8/P7/3Q1BK1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -515,12 +515,12 @@
         "g7g6",
         "h5h6",
         "f7f6",
-        "e2b5"
+        "f1b5"
       ],
       "prompt": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Scenario difference: White owns a2, which matters in a queen trade but never makes a loose Qxg6 capture safe against ...fxg6. Reconstruct the defensive pawn, rook or queen resource before claiming king exposure.",
       "replyReason": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Position-specific pawn context: White owns a2, which matters in a queen trade but never makes a loose Qxg6 capture safe against ...fxg6.",
       "continuationReason": "The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Identify the attacker's next safe practical move before saying the attack is decisive.",
-      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 e2b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 e2d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: White owns a2, which matters in a queen trade but never makes a loose Qxg6 capture safe against ...fxg6. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions.",
+      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 f1b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 f1d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: White owns a2, which matters in a queen trade but never makes a loose Qxg6 capture safe against ...fxg6. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions. The bishop starts on f1 instead of e2 so the queen's d1–h5 diagonal is unobstructed. Bishop f1 can legally reach b5 or d3 as an attacking follow-up.",
       "defensiveStudy": {
         "keyQuestion": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn.",
         "defenderIdea": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6.",
@@ -535,7 +535,7 @@
               "g7g6",
               "h5f3",
               "f7f6",
-              "e2d3"
+              "f1d3"
             ],
             "explanation": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. The line d1h5 g7g6 h5f3 f7f6 e2d3 is legal and demonstrates why the defender is not required to cooperate. White owns a2, which matters in a queen trade but never makes a loose Qxg6 capture safe against ...fxg6."
           },
@@ -583,7 +583,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Pawn shelter and poisoned capture",
       "difficulty": 5,
-      "fen": "6k1/5pp1/8/8/8/8/1P2B3/3Q2K1 w - - 0 1",
+      "fen": "6k1/5pp1/8/8/8/8/1P6/3Q1BK1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -597,12 +597,12 @@
         "g7g6",
         "h5h6",
         "f7f6",
-        "e2b5"
+        "f1b5"
       ],
       "prompt": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Scenario difference: An added b2 pawn gives a distant wing resource and should not distract from the f7 pawn's immediate control of g6. Reconstruct the defensive pawn, rook or queen resource before claiming king exposure.",
       "replyReason": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Position-specific pawn context: An added b2 pawn gives a distant wing resource and should not distract from the f7 pawn's immediate control of g6.",
       "continuationReason": "The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Identify the attacker's next safe practical move before saying the attack is decisive.",
-      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 e2b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 e2d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: An added b2 pawn gives a distant wing resource and should not distract from the f7 pawn's immediate control of g6. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions.",
+      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 f1b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 f1d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: An added b2 pawn gives a distant wing resource and should not distract from the f7 pawn's immediate control of g6. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions. The bishop starts on f1 instead of e2 so the queen's d1–h5 diagonal is unobstructed. Bishop f1 can legally reach b5 or d3 as an attacking follow-up.",
       "defensiveStudy": {
         "keyQuestion": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn.",
         "defenderIdea": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6.",
@@ -617,7 +617,7 @@
               "g7g6",
               "h5f3",
               "f7f6",
-              "e2d3"
+              "f1d3"
             ],
             "explanation": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. The line d1h5 g7g6 h5f3 f7f6 e2d3 is legal and demonstrates why the defender is not required to cooperate. An added b2 pawn gives a distant wing resource and should not distract from the f7 pawn's immediate control of g6."
           },
@@ -665,7 +665,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Pawn shelter and poisoned capture",
       "difficulty": 5,
-      "fen": "6k1/2p2pp1/8/8/8/8/4B3/3Q2K1 w - - 0 1",
+      "fen": "6k1/2p2pp1/8/8/8/8/8/3Q1BK1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -679,12 +679,12 @@
         "g7g6",
         "h5h6",
         "f7f6",
-        "e2b5"
+        "f1b5"
       ],
       "prompt": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Scenario difference: Black owns a c7 pawn and can create queenside counterplay if White's Qh5 maneuver fails to break the king shelter. Reconstruct the defensive pawn, rook or queen resource before claiming king exposure.",
       "replyReason": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Position-specific pawn context: Black owns a c7 pawn and can create queenside counterplay if White's Qh5 maneuver fails to break the king shelter.",
       "continuationReason": "The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Identify the attacker's next safe practical move before saying the attack is decisive.",
-      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 e2b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 e2d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: Black owns a c7 pawn and can create queenside counterplay if White's Qh5 maneuver fails to break the king shelter. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions.",
+      "explanation": "Original learner-attacking concept — Pawn shelter and poisoned capture. Planning rule: Mark the diagonal and vertical queen flight squares, and explain how pawn movement changes the defender's king shelter and dark-square vulnerabilities. Exercise setup: Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn. Main five-ply worked variation d1h5 g7g6 h5h6 f7f6 f1b5. Alternative independent five-ply calculation d1h5 g7g6 h5f3 f7f6 f1d3. Tempting inaccurate candidate d1h5 g7g6 h5g6. Opponent's actual resistance: ...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. Board endpoint: The queen remains on h6 while Black has f6/g6 pawns; White's bishop develops to b5 but no pawn-shield breakthrough has been proved. Correct the error: A capture on g6 feels forcing yet Black's f-pawn can take the queen. Calculate pawn recaptures before treating king exposure as compensation. Extra-pawn context: Black owns a c7 pawn and can create queenside counterplay if White's Qh5 maneuver fails to break the king shelter. All lines are original instructional examples with explicit king safety reasoning, not unique best-move, proven perpetual, certified mating or tablebase-WDL assertions. The bishop starts on f1 instead of e2 so the queen's d1–h5 diagonal is unobstructed. Bishop f1 can legally reach b5 or d3 as an attacking follow-up.",
       "defensiveStudy": {
         "keyQuestion": "Qh5 brings the queen against the pawn shield, but ...g6 challenges it. Choosing Qh6 instead of Qxg6 avoids handing the queen to Black's f7 pawn.",
         "defenderIdea": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6.",
@@ -699,7 +699,7 @@
               "g7g6",
               "h5f3",
               "f7f6",
-              "e2d3"
+              "f1d3"
             ],
             "explanation": "...g6 is a genuine defensive pawn move; White's greedy Qxg6? loses a queen to ...fxg6, because f7 guards g6. The line d1h5 g7g6 h5f3 f7f6 e2d3 is legal and demonstrates why the defender is not required to cooperate. Black owns a c7 pawn and can create queenside counterplay if White's Qh5 maneuver fails to break the king shelter."
           },
