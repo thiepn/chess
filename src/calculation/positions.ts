@@ -11,21 +11,22 @@ import type {
 // Original authored calculation content stays in external static assets.
 const externalPositions: CalculationPosition[] = [];
 if (typeof window !== "undefined") {
-  for (const [file, prefix, count] of [
-    ["p94-candidates-v1.json", "calc:p94-", 40],
-    ["p95-defensive-resistance-v1.json", "calc:p95-", 40],
-    ["p96-quiet-positional-v1.json", "calc:p96-", 35],
-    ["p97-forcing-v1.json", "calc:p97-", 10],
-    ["p97-defenses-v1.json", "calc:p97-", 10],
-    ["p97-positional-v1.json", "calc:p97-", 10],
-    ["p97-promotions-v1.json", "calc:p97-", 10],
-    ["p97-mixed-v1.json", "calc:p97-", 10],
-    ["p98-essential-pawn-endgames-v1.json", "calc:p98-", 40],
-    ["p99-rook-foundations-v1.json", "calc:p99-", 15],
-    ["p99-rook-geometry-v1.json", "calc:p99-", 15],
-    ["p99-rook-practical-v1.json", "calc:p99-", 15],
-    ["p100-minor-piece-v1.json", "calc:p100-", 40],
+  for (const [file, count] of [
+    ["p94-candidates-v1.json", 40],
+    ["p95-defensive-resistance-v1.json", 40],
+    ["p96-quiet-positional-v1.json", 35],
+    ["p97-forcing-v1.json", 10],
+    ["p97-defenses-v1.json", 10],
+    ["p97-positional-v1.json", 10],
+    ["p97-promotions-v1.json", 10],
+    ["p97-mixed-v1.json", 10],
+    ["p98-essential-pawn-endgames-v1.json", 40],
+    ["p99-rook-foundations-v1.json", 15],
+    ["p99-rook-geometry-v1.json", 15],
+    ["p99-rook-practical-v1.json", 15],
+    ["p100-minor-piece-v1.json", 40],
   ] as const) {
+    const prefix = `calc:${file.slice(0, file.indexOf("-"))}-`;
     fetch(`${import.meta.env.BASE_URL}data/calculation/${file}`)
       .then(r => r.json())
       .then(({positions}: {positions: CalculationPosition[]}) => {
