@@ -34,7 +34,9 @@ describe("P100 original minor-piece endgames", () => {
       expect(board.split("K"), p.id).toHaveLength(2);
       expect(board.split("k"), p.id).toHaveLength(2);
       expect(board.includes("B") || board.includes("N"), p.id).toBe(true);
-      expect(board.includes("b") || board.includes("n"), p.id).toBe(true);
+      if (groupFor(p) !== "Wrong bishop and rook pawn")
+        expect(board.includes("b") || board.includes("n"), p.id).toBe(true);
+      // A pure wrong-bishop rook-pawn ending is defined by the defender having only a king.
       expect(legalCalculationBranch(p)?.length, p.id).toBe(3);
       for (const line of p.defensiveStudy?.variations ?? []) {
         expect(legalCalculationBranch({
