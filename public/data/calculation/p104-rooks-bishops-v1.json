@@ -60,7 +60,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open-file rook penetration",
-        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. On this specific board, Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender's counterplan is Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "planContrast": "Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo.",
         "defenderPlan": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "misconception": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook.",
@@ -69,11 +69,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. Apply that principle to this board: Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender has this resource: Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
@@ -142,7 +142,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open-file rook penetration",
-        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. On this specific board, Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender's counterplan is Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "planContrast": "Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo.",
         "defenderPlan": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "misconception": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook.",
@@ -151,11 +151,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. Apply that principle to this board: Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender has this resource: Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
@@ -224,7 +224,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open-file rook penetration",
-        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+        "principle": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. On this specific board, Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender's counterplan is Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "planContrast": "Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo.",
         "defenderPlan": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
         "misconception": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook.",
@@ -233,11 +233,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks.",
+            "model": "White has the e-file but needs to reconcile checking the king with protecting c3/d4 and respecting the defending rook's lateral attacks. Apply that principle to this board: Plan comparison: Rook to e7 is active only if White can answer ...Ra7 with a rank-eight check and then reposition. The quieter Re6 keeps the rook off the attacked seventh rank but gives Black another regrouping tempo. The defender has this resource: Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's rook on a7 attacks the white rook along the seventh rank; this makes 2.Re8+ a necessary tactical resource rather than a decorative invasion.",
             "correction": "A rook on the seventh rank can be attacked laterally; remaining on e7 passively instead of responding to ...Ra7 loses the rook."
           },
@@ -306,7 +306,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook lifts and lateral threats",
-        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. On this specific board, One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender's counterplan is Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "planContrast": "One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain.",
         "defenderPlan": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "misconception": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one.",
@@ -315,11 +315,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. Apply that principle to this board: One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender has this resource: Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
@@ -388,7 +388,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook lifts and lateral threats",
-        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. On this specific board, One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender's counterplan is Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "planContrast": "One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain.",
         "defenderPlan": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "misconception": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one.",
@@ -397,11 +397,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. Apply that principle to this board: One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender has this resource: Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
@@ -470,7 +470,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Rook lifts and lateral threats",
-        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+        "principle": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. On this specific board, One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender's counterplan is Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "planContrast": "One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain.",
         "defenderPlan": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
         "misconception": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one.",
@@ -479,11 +479,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter.",
+            "model": "Compare the flexibility of a3–c3 with a4–b4, and state which black pawn the rook can realistically attack without abandoning king shelter. Apply that principle to this board: One rook lift uses the third rank to approach c7; another uses the fourth rank to approach b7. The best plan depends on ...Rh7 and the still-closed central pawn chain. The defender has this resource: Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black develops its rook to h6 and h5, threatening lateral activity. A rook that reaches c7 still has to test ...Rh7 next, since Black can contest the entire seventh rank.",
             "correction": "Pushing the rook to a distant seventh rank without considering a defender's own seventh-rank entry confuses an active square with a protected one."
           },
@@ -552,7 +552,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open file and pawn-conversion timing",
-        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. On this specific board, Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender's counterplan is ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "planContrast": "Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative.",
         "defenderPlan": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "misconception": "A rook lift Rd4–h4 looks active but can neglect the immediately capturable d5 pawn and surrender tempi to ...Rh6.",
@@ -561,11 +561,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. Apply that principle to this board: Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender has this resource: ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
@@ -634,7 +634,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open file and pawn-conversion timing",
-        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. On this specific board, Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender's counterplan is ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "planContrast": "Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative.",
         "defenderPlan": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "misconception": "A rook lift Rd4–h4 looks active but can neglect the immediately capturable d5 pawn and surrender tempi to ...Rh6.",
@@ -643,11 +643,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. Apply that principle to this board: Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender has this resource: ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
@@ -716,7 +716,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Open file and pawn-conversion timing",
-        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+        "principle": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. On this specific board, Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender's counterplan is ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "planContrast": "Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative.",
         "defenderPlan": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
         "misconception": "A rook lift Rd4–h4 looks active but can neglect the immediately capturable d5 pawn and surrender tempi to ...Rh6.",
@@ -725,11 +725,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange.",
+            "model": "A central pawn capture may be worth more than an attractive but premature rook invasion. Trace which rook and pawn remains after each exchange. Apply that principle to this board: Winning d5 immediately changes the material; only then does the rook enter the eighth rank with tempo. Invading the seventh first permits a trade that may surrender initiative. The defender has this resource: ...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "...Rh6 or ...Rh5 gives the defender a lateral defensive rook. Black's king must answer Rd8+ by moving off g8; a seventh-rank rook may then gain checking distance.",
             "correction": "The black rook can challenge a rook on d7 by ...Rh7; continuing Rxh7 can trade the rooks and end the attack, so material balance must be recalculated."
           },
@@ -798,7 +798,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Bishop diagonal coordination",
-        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. On this specific board, A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender's counterplan is Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "planContrast": "A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled.",
         "defenderPlan": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "misconception": "The e6 pawn obstructs Black's c8–f5 diagonal, while White must still decide whether b5 or d3 suits its light bishop.",
@@ -807,11 +807,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. Apply that principle to this board: A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender has this resource: Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
@@ -880,7 +880,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Bishop diagonal coordination",
-        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. On this specific board, A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender's counterplan is Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "planContrast": "A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled.",
         "defenderPlan": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "misconception": "The e6 pawn obstructs Black's c8–f5 diagonal, while White must still decide whether b5 or d3 suits its light bishop.",
@@ -889,11 +889,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. Apply that principle to this board: A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender has this resource: Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
@@ -962,7 +962,7 @@
       },
       "pieceCoordinationStudy": {
         "theme": "Bishop diagonal coordination",
-        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+        "principle": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. On this specific board, A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender's counterplan is Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "planContrast": "A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled.",
         "defenderPlan": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
         "misconception": "The e6 pawn obstructs Black's c8–f5 diagonal, while White must still decide whether b5 or d3 suits its light bishop.",
@@ -971,11 +971,11 @@
         "practice": [
           {
             "question": "Which piece should improve first and on what line or square?",
-            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack.",
+            "model": "Name each bishop's color complex, how e3 and d4 affect diagonals, and whether exchanging bishops makes the fixed pawn chain easier to attack. Apply that principle to this board: A bishop on c4 has more immediate diagonal reach, while b5 can make Black respond ...Bd7. The eventual target and remaining pawn color matter more than raw squares traveled. The defender has this resource: Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black's light bishop can oppose key central squares via f5 or d7. White should identify which bishop trade reduces control of d4 rather than assuming a developed bishop is automatically superior.",
             "correction": "Moving a bishop to b5 without calculating ...Bd7 can permit an exchange; it must be evaluated as a structural simplification rather than as a permanent pin."
           },
@@ -1057,7 +1057,7 @@
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black can choose ...Bd7–b5 or ...Bf5–g6. Each reply uses the opposite color complex: White cannot directly trade its dark bishop for Black's light one.",
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
@@ -1139,7 +1139,7 @@
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black can choose ...Bd7–b5 or ...Bf5–g6. Each reply uses the opposite color complex: White cannot directly trade its dark bishop for Black's light one.",
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
@@ -1221,7 +1221,7 @@
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
           {
-            "question": "What is the defender's first concrete answer?",
+            "question": "What is the defender's first concrete answer? State the precise attacked square, material change, and your plan after the reply.",
             "model": "Black can choose ...Bd7–b5 or ...Bf5–g6. Each reply uses the opposite color complex: White cannot directly trade its dark bishop for Black's light one.",
             "correction": "Playing e4 without calculating ...dxe4 changes the pawn base and may make the supposed bad bishop problem worse rather than solving it."
           },
