@@ -24,7 +24,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Use d4's attack on e5 to bring the knight forward. Compare ...Nd7 with a rook defense of c6. Then calculate why an immediate d5 break can lose the central pawn. Position-specific issue: A white g2 pawn permits a later g-pawn space gain but cannot shield d4; choose whether the knight belongs on e5 or the king should centralize first. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Nd7 permits Nxc6 and makes Black's b-rook respond, while ...Rb6 can recapture the knight after Nxc6. The defenders do not cooperate with a free pawn win. In this version: A white g2 pawn permits a later g-pawn space gain but cannot shield d4; choose whether the knight belongs on e5 or the king should centralize first.",
@@ -85,7 +85,8 @@
             "answer": "A white g2 pawn permits a later g-pawn space gain but cannot shield d4; choose whether the knight belongs on e5 or the king should centralize first.",
             "feedback": "1.d5? cxd5 spends White's only central pawn without proving a lasting passer."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -108,7 +109,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Use d4's attack on e5 to bring the knight forward. Compare ...Nd7 with a rook defense of c6. Then calculate why an immediate d5 break can lose the central pawn. Position-specific issue: Black now has an f7 pawn that can help its king and restrain the knight; evaluate whether a hypothetical f7–f6 pawn push expels an e5 outpost. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Nd7 permits Nxc6 and makes Black's b-rook respond, while ...Rb6 can recapture the knight after Nxc6. The defenders do not cooperate with a free pawn win. In this version: Black now has an f7 pawn that can help its king and restrain the knight; evaluate whether a hypothetical f7–f6 pawn push expels an e5 outpost.",
@@ -169,7 +170,8 @@
             "answer": "Black now has an f7 pawn that can help its king and restrain the knight; evaluate whether a hypothetical f7–f6 pawn push expels an e5 outpost.",
             "feedback": "1.d5? cxd5 spends White's only central pawn without proving a lasting passer."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -192,7 +194,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Use d4's attack on e5 to bring the knight forward. Compare ...Nd7 with a rook defense of c6. Then calculate why an immediate d5 break can lose the central pawn. Position-specific issue: A white pawn on b3 adds a rook-file target when Black plays ...Rb6; calculate if the rook can attack b3 after the knight exchange. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Nd7 permits Nxc6 and makes Black's b-rook respond, while ...Rb6 can recapture the knight after Nxc6. The defenders do not cooperate with a free pawn win. In this version: A white pawn on b3 adds a rook-file target when Black plays ...Rb6; calculate if the rook can attack b3 after the knight exchange.",
@@ -253,7 +255,8 @@
             "answer": "A white pawn on b3 adds a rook-file target when Black plays ...Rb6; calculate if the rook can attack b3 after the knight exchange.",
             "feedback": "1.d5? cxd5 spends White's only central pawn without proving a lasting passer."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -276,7 +279,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Place the light-squared bishop where it can contest d6. Black can challenge the bishop and later attack the isolated d4 pawn; compare a bishop-trading route with a slower positional buildup. Position-specific issue: White retains a g2 pawn while its central d4 pawn is the unique isolated weakness. Decide whether swapping bishops helps Black or White. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Bd6 offers a same-color bishop exchange and ...Rd8 creates pressure down the d-file after the capture. White should move the bishop before it is exchanged without benefit. In this version: White retains a g2 pawn while its central d4 pawn is the unique isolated weakness. Decide whether swapping bishops helps Black or White.",
@@ -337,7 +340,8 @@
             "answer": "White retains a g2 pawn while its central d4 pawn is the unique isolated weakness. Decide whether swapping bishops helps Black or White.",
             "feedback": "Premature d5? exd5 allows Black to destroy White's isolated pawn before the pieces generate compensation."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -360,7 +364,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Place the light-squared bishop where it can contest d6. Black can challenge the bishop and later attack the isolated d4 pawn; compare a bishop-trading route with a slower positional buildup. Position-specific issue: The b7 pawn supports Black's pawn structure while White fights for c5 and d6; d4's central weakness still needs an active piece plan. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Bd6 offers a same-color bishop exchange and ...Rd8 creates pressure down the d-file after the capture. White should move the bishop before it is exchanged without benefit. In this version: The b7 pawn supports Black's pawn structure while White fights for c5 and d6; d4's central weakness still needs an active piece plan.",
@@ -421,7 +425,8 @@
             "answer": "The b7 pawn supports Black's pawn structure while White fights for c5 and d6; d4's central weakness still needs an active piece plan.",
             "feedback": "Premature d5? exd5 allows Black to destroy White's isolated pawn before the pieces generate compensation."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -444,7 +449,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "With c4/d4 as adjacent central pawns, compare cxd5 with the space-gaining c5. Black can recapture with e6 or activate the rook against c5; calculate where the knight belongs after the exchange. Position-specific issue: A white h2 pawn makes the flank race more complex but does not automatically strengthen the c/d pawn duo. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 turns two hanging pawns into a lone d4 pawn, while ...Rb5 targets the advanced c5 pawn and preserves d5. In this version: A white h2 pawn makes the flank race more complex but does not automatically strengthen the c/d pawn duo.",
@@ -505,7 +510,8 @@
             "answer": "A white h2 pawn makes the flank race more complex but does not automatically strengthen the c/d pawn duo.",
             "feedback": "An automatic d5 advance allows ...exd5 and a central exchange whose merits depend on the next pawn recapture."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -528,7 +534,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "With c4/d4 as adjacent central pawns, compare cxd5 with the space-gaining c5. Black can recapture with e6 or activate the rook against c5; calculate where the knight belongs after the exchange. Position-specific issue: Black's b7 pawn blocks the rook's route to b5 in some configurations; check that before assuming ...Rb5 is legal. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 turns two hanging pawns into a lone d4 pawn, while ...Rb5 targets the advanced c5 pawn and preserves d5. In this version: Black's b7 pawn blocks the rook's route to b5 in some configurations; check that before assuming ...Rb5 is legal.",
@@ -589,7 +595,8 @@
             "answer": "Black's b7 pawn blocks the rook's route to b5 in some configurations; check that before assuming ...Rb5 is legal.",
             "feedback": "An automatic d5 advance allows ...exd5 and a central exchange whose merits depend on the next pawn recapture."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -612,7 +619,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "With c4/d4 as adjacent central pawns, compare cxd5 with the space-gaining c5. Black can recapture with e6 or activate the rook against c5; calculate where the knight belongs after the exchange. Position-specific issue: White has a g2 pawn; compare pushing the center with protecting king-side dark squares while the defender attacks c4. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 turns two hanging pawns into a lone d4 pawn, while ...Rb5 targets the advanced c5 pawn and preserves d5. In this version: White has a g2 pawn; compare pushing the center with protecting king-side dark squares while the defender attacks c4.",
@@ -673,7 +680,8 @@
             "answer": "White has a g2 pawn; compare pushing the center with protecting king-side dark squares while the defender attacks c4.",
             "feedback": "An automatic d5 advance allows ...exd5 and a central exchange whose merits depend on the next pawn recapture."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -696,7 +704,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Does bishop exchange justify fixing c4/d4? Compare a bishop trade on e7 with c4–c5, then assess whether d5 becomes a new weakness. Position-specific issue: White has a2 available for later a-file pressure while c4/d4 decide the central breaks. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Be7 permits Bxe7 Rxe7, after which cxd5 removes Black's d5 pawn but allows e6 to recapture on d5 next. In this version: White has a2 available for later a-file pressure while c4/d4 decide the central breaks.",
@@ -757,7 +765,8 @@
             "answer": "White has a2 available for later a-file pressure while c4/d4 decide the central breaks.",
             "feedback": "Pushing d5 before checking ...exd5 can turn an attractive pawn duo into a fixed isolated pawn."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -780,7 +789,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "Does bishop exchange justify fixing c4/d4? Compare a bishop trade on e7 with c4–c5, then assess whether d5 becomes a new weakness. Position-specific issue: Black's extra g7 pawn preserves king-side structure; central pawn exchanges now affect bishop/rook activity differently. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Be7 permits Bxe7 Rxe7, after which cxd5 removes Black's d5 pawn but allows e6 to recapture on d5 next. In this version: Black's extra g7 pawn preserves king-side structure; central pawn exchanges now affect bishop/rook activity differently.",
@@ -841,7 +850,8 @@
             "answer": "Black's extra g7 pawn preserves king-side structure; central pawn exchanges now affect bishop/rook activity differently.",
             "feedback": "Pushing d5 before checking ...exd5 can turn an attractive pawn duo into a fixed isolated pawn."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -864,7 +874,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has doubled c-pawns. Compare cxd5 to a knight reroute, then identify when c3 remains an isolated weakness and when opening the c-file supports pieces. Position-specific issue: White's a2 pawn makes a wing pawn break possible; it does not undo doubled c-pawns. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 contests the center and ...Nd7 challenges Ne5. The rook can develop to a6 without claiming the lead c-pawn is automatically lost. In this version: White's a2 pawn makes a wing pawn break possible; it does not undo doubled c-pawns.",
@@ -925,7 +935,8 @@
             "answer": "White's a2 pawn makes a wing pawn break possible; it does not undo doubled c-pawns.",
             "feedback": "A fixed c5 pawn with no supporting b/d break can give Black a stable attack square while preserving the doubled weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -948,7 +959,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has doubled c-pawns. Compare cxd5 to a knight reroute, then identify when c3 remains an isolated weakness and when opening the c-file supports pieces. Position-specific issue: Black f7 may support a future ...f6 that contests a knight on e5, so calculate the outpost's durability. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 contests the center and ...Nd7 challenges Ne5. The rook can develop to a6 without claiming the lead c-pawn is automatically lost. In this version: Black f7 may support a future ...f6 that contests a knight on e5, so calculate the outpost's durability.",
@@ -1009,7 +1020,8 @@
             "answer": "Black f7 may support a future ...f6 that contests a knight on e5, so calculate the outpost's durability.",
             "feedback": "A fixed c5 pawn with no supporting b/d break can give Black a stable attack square while preserving the doubled weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1032,7 +1044,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has doubled c-pawns. Compare cxd5 to a knight reroute, then identify when c3 remains an isolated weakness and when opening the c-file supports pieces. Position-specific issue: White's b2 pawn helps cover c3 if pushed to b3 but also creates an extra target along the queenside files. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...exd5 contests the center and ...Nd7 challenges Ne5. The rook can develop to a6 without claiming the lead c-pawn is automatically lost. In this version: White's b2 pawn helps cover c3 if pushed to b3 but also creates an extra target along the queenside files.",
@@ -1093,7 +1105,8 @@
             "answer": "White's b2 pawn helps cover c3 if pushed to b3 but also creates an extra target along the queenside files.",
             "feedback": "A fixed c5 pawn with no supporting b/d break can give Black a stable attack square while preserving the doubled weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1116,7 +1129,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "A pawn at c2 is blocked by its sibling c3. Compare bishop activity with c3–c4, then assess whether the c2 pawn becomes backward after the exchange. Position-specific issue: The a-pawn could become a wing lever, but White still has to address c2 and c3 first. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Bd6 contests White's bishop; after c3–c4 Black may accept an exchange on d5 that opens the c-file and leaves c2 to defend. In this version: The a-pawn could become a wing lever, but White still has to address c2 and c3 first.",
@@ -1177,7 +1190,8 @@
             "answer": "The a-pawn could become a wing lever, but White still has to address c2 and c3 first.",
             "feedback": "An unsupported d4–d5 break allows ...exd5; c3–c4 afterwards may not recover enough space to compensate."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1200,7 +1214,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "A pawn at c2 is blocked by its sibling c3. Compare bishop activity with c3–c4, then assess whether the c2 pawn becomes backward after the exchange. Position-specific issue: Extra g7 supports future king shelter, increasing the relevance of a long technical game against c2. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...Bd6 contests White's bishop; after c3–c4 Black may accept an exchange on d5 that opens the c-file and leaves c2 to defend. In this version: Extra g7 supports future king shelter, increasing the relevance of a long technical game against c2.",
@@ -1261,7 +1275,8 @@
             "answer": "Extra g7 supports future king shelter, increasing the relevance of a long technical game against c2.",
             "feedback": "An unsupported d4–d5 break allows ...exd5; c3–c4 afterwards may not recover enough space to compensate."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1284,7 +1299,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "With no central pawns, White's a/b and f/g islands compete for tempi. Compare an f4 advance with a4, and check whether Ne5 exchanges the last central defender. Position-specific issue: The h2 pawn increases the number of kingside tempi and shields g3, but can also become an outside passer. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...f5 fixes a kingside pawn contact; ...Nd7 allows a tactical exchange of knights that changes king-entry squares. In this version: The h2 pawn increases the number of kingside tempi and shields g3, but can also become an outside passer.",
@@ -1345,7 +1360,8 @@
             "answer": "The h2 pawn increases the number of kingside tempi and shields g3, but can also become an outside passer.",
             "feedback": "Closing or weakening the f-pawn structure without considering ...f5 can leave a long-term kingside hook."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1368,7 +1384,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "With no central pawns, White's a/b and f/g islands compete for tempi. Compare an f4 advance with a4, and check whether Ne5 exchanges the last central defender. Position-specific issue: Black's h6 pawn can make h-file tension after exchanges; compare ...h5 opportunities with White's f4. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...f5 fixes a kingside pawn contact; ...Nd7 allows a tactical exchange of knights that changes king-entry squares. In this version: Black's h6 pawn can make h-file tension after exchanges; compare ...h5 opportunities with White's f4.",
@@ -1429,7 +1445,8 @@
             "answer": "Black's h6 pawn can make h-file tension after exchanges; compare ...h5 opportunities with White's f4.",
             "feedback": "Closing or weakening the f-pawn structure without considering ...f5 can leave a long-term kingside hook."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1452,7 +1469,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "With no central pawns, White's a/b and f/g islands compete for tempi. Compare an f4 advance with a4, and check whether Ne5 exchanges the last central defender. Position-specific issue: Adding c2 creates a third white pawn island; the isolated c-pawn might help control d3 while remaining a rook target. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...f5 fixes a kingside pawn contact; ...Nd7 allows a tactical exchange of knights that changes king-entry squares. In this version: Adding c2 creates a third white pawn island; the isolated c-pawn might help control d3 while remaining a rook target.",
@@ -1513,7 +1530,8 @@
             "answer": "Adding c2 creates a third white pawn island; the isolated c-pawn might help control d3 while remaining a rook target.",
             "feedback": "Closing or weakening the f-pawn structure without considering ...f5 can leave a long-term kingside hook."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1536,7 +1554,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "The a/b wing can exchange while both kingside structures stay connected. Follow the exact countercapture: 1.a4 ...b5 2.axb5 ...a6 3.bxa6. Compare a slower f4 plan. Position-specific issue: White's h2 completes its kingside pawn cluster; after exchanges the a-file pawn must be escorted. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "Black may answer the outside expansion with ...b5 and ...a6. Both captures have to be counted, not described abstractly as a pawn majority. In this version: White's h2 completes its kingside pawn cluster; after exchanges the a-file pawn must be escorted.",
@@ -1597,7 +1615,8 @@
             "answer": "White's h2 completes its kingside pawn cluster; after exchanges the a-file pawn must be escorted.",
             "feedback": "A fast b4 may simply invite ...a5 and an unclear trade; it does not automatically manufacture a passed pawn."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1620,7 +1639,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.quiet"
       ],
       "prompt": "The a/b wing can exchange while both kingside structures stay connected. Follow the exact countercapture: 1.a4 ...b5 2.axb5 ...a6 3.bxa6. Compare a slower f4 plan. Position-specific issue: Black has c7 as another queenside defense and pawn island; the a6 pawn's route is less straightforward. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "Black may answer the outside expansion with ...b5 and ...a6. Both captures have to be counted, not described abstractly as a pawn majority. In this version: Black has c7 as another queenside defense and pawn island; the a6 pawn's route is less straightforward.",
@@ -1681,7 +1700,8 @@
             "answer": "Black has c7 as another queenside defense and pawn island; the a6 pawn's route is less straightforward.",
             "feedback": "A fast b4 may simply invite ...a5 and an unclear trade; it does not automatically manufacture a passed pawn."
           }
-        ]
+        ],
+        "learningFocus": "calculation.quiet"
       }
     },
     {
@@ -1704,7 +1724,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has two queenside pawns against a7/b7/c6, the minority attack. Calculate ...a6 and ...axb5, then discuss whether c6 or b5 becomes a target for the rooks. Position-specific issue: White's h-pawn reduces king-safety concerns while the rook moves toward the queenside. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...a6 and ...axb5 can leave a black pawn on b5 while White tries a4, inviting structural contact. Black's c6 pawn may become weak after later exchanges. In this version: White's h-pawn reduces king-safety concerns while the rook moves toward the queenside.",
@@ -1765,7 +1785,8 @@
             "answer": "White's h-pawn reduces king-safety concerns while the rook moves toward the queenside.",
             "feedback": "d5? exd5 shifts the struggle to a central pawn exchange before b4–b5 creates the intended weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1788,7 +1809,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has two queenside pawns against a7/b7/c6, the minority attack. Calculate ...a6 and ...axb5, then discuss whether c6 or b5 becomes a target for the rooks. Position-specific issue: Black owns g7 and can prepare ...e5 or ...g6 while the minority attack unfolds. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...a6 and ...axb5 can leave a black pawn on b5 while White tries a4, inviting structural contact. Black's c6 pawn may become weak after later exchanges. In this version: Black owns g7 and can prepare ...e5 or ...g6 while the minority attack unfolds.",
@@ -1849,7 +1870,8 @@
             "answer": "Black owns g7 and can prepare ...e5 or ...g6 while the minority attack unfolds.",
             "feedback": "d5? exd5 shifts the struggle to a central pawn exchange before b4–b5 creates the intended weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1872,7 +1894,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "White has two queenside pawns against a7/b7/c6, the minority attack. Calculate ...a6 and ...axb5, then discuss whether c6 or b5 becomes a target for the rooks. Position-specific issue: An extra white c2 pawn makes White's queenside count equal rather than a true minority; evaluate whether b4 still creates c6 pressure. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...a6 and ...axb5 can leave a black pawn on b5 while White tries a4, inviting structural contact. Black's c6 pawn may become weak after later exchanges. In this version: An extra white c2 pawn makes White's queenside count equal rather than a true minority; evaluate whether b4 still creates c6 pressure.",
@@ -1933,7 +1955,8 @@
             "answer": "An extra white c2 pawn makes White's queenside count equal rather than a true minority; evaluate whether b4 still creates c6 pressure.",
             "feedback": "d5? exd5 shifts the struggle to a central pawn exchange before b4–b5 creates the intended weakness."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -1956,7 +1979,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "After 1.b4 ...a5 2.b5 ...cxb5 3.a4, the black pawn is on b5 and White attacks it next. Compare this precise contact with slow a4 and b4. Position-specific issue: White can focus a rook on b-file pressure with fewer kingside distractions. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...cxb5 can trade the c6 pawn for White's b-pawn, creating a black b5 pawn that a4 pressures. The defender can also keep c6 fixed and use ...b6. In this version: White can focus a rook on b-file pressure with fewer kingside distractions.",
@@ -2017,7 +2040,8 @@
             "answer": "White can focus a rook on b-file pressure with fewer kingside distractions.",
             "feedback": "Pushing d5 while Black retains e6 creates an immediate ...exd5 and distracts from the b-file structural objective."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     },
     {
@@ -2040,7 +2064,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "pawns.structure"
+        "calculation.move-order"
       ],
       "prompt": "After 1.b4 ...a5 2.b5 ...cxb5 3.a4, the black pawn is on b5 and White attacks it next. Compare this precise contact with slow a4 and b4. Position-specific issue: Black's g7 reserve makes ...e5 ideas more credible in a long game, so minority play must be timed. Without moving, name the primary pawn weakness, the square where a piece belongs, and calculate at least five plies.",
       "replyReason": "...cxb5 can trade the c6 pawn for White's b-pawn, creating a black b5 pawn that a4 pressures. The defender can also keep c6 fixed and use ...b6. In this version: Black's g7 reserve makes ...e5 ideas more credible in a long game, so minority play must be timed.",
@@ -2101,7 +2125,8 @@
             "answer": "Black's g7 reserve makes ...e5 ideas more credible in a long game, so minority play must be timed.",
             "feedback": "Pushing d5 while Black retains e6 creates an immediate ...exd5 and distracts from the b-file structural objective."
           }
-        ]
+        ],
+        "learningFocus": "calculation.move-order"
       }
     }
   ]
