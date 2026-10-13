@@ -15,7 +15,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "e1e8",
       "principalVariation": [
@@ -99,7 +99,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "e1e8",
       "principalVariation": [
@@ -183,7 +183,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "e1e8",
       "principalVariation": [
@@ -267,7 +267,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d8",
       "principalVariation": [
@@ -351,7 +351,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d8",
       "principalVariation": [
@@ -435,7 +435,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d8",
       "principalVariation": [
@@ -519,7 +519,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "c1c8",
       "principalVariation": [
@@ -603,7 +603,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "c1c8",
       "principalVariation": [
@@ -687,7 +687,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "c1c8",
       "principalVariation": [
@@ -771,7 +771,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "b1b8",
       "principalVariation": [
@@ -855,7 +855,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "b1b8",
       "principalVariation": [
@@ -939,7 +939,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "b1b8",
       "principalVariation": [
@@ -1023,7 +1023,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d7",
       "principalVariation": [
@@ -1107,7 +1107,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d7",
       "principalVariation": [
@@ -1191,7 +1191,7 @@
         "calculation.candidates",
         "calculation.reply",
         "calculation.evaluation",
-        "calculation.defense"
+        "calculation.forcing-lines"
       ],
       "bestMove": "d1d7",
       "principalVariation": [
