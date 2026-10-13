@@ -3168,6 +3168,7 @@ export default function App() {
             />
           ) : learnSection === "model-games" ? (
             <ModelGamesView
+              owner={activeOwner}
               progress={state.modelGameProgress ?? {}}
               onStartGame={startModelGame}
               onBack={() => navigate("/learn")}
