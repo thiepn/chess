@@ -1262,6 +1262,257 @@
           }
         ]
       }
+    },
+    {
+      "id": "calc:p106-16",
+      "title": "Wrong-bishop corner fortress — Pure wrong-bishop fortress",
+      "source": "authored",
+      "sourceLabel": "P106 · Fortress, stalemate and material surrender",
+      "difficulty": 6,
+      "fen": "5b2/8/8/8/8/5k1p/8/7K w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1g1",
+      "principalVariation": [
+        "h1g1",
+        "h3h2",
+        "g1h1",
+        "f3e3",
+        "h1h2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.quiet"
+      ],
+      "prompt": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative. Independently count all king escapes and possible pawn moves after four plies.",
+      "replyReason": "The black pawn h3–h2+ attacks g1, forcing White's king back to h1. If Black's king leaves to e3, Kxh2 removes the last pawn and leaves Black with insufficient mating material against a lone king. If Black instead plays ...Kg3, the pawn remains protected and White's available pawn moves determine whether the result is immediate stalemate.",
+      "continuationReason": "After 1.Kg1 h2+ 2.Kh1 Ke3 3.Kxh2, the black pawn has disappeared. In the pure position Black has only a bishop against a king, which is a theoretical draw by insufficient mating material. Added white pawns change that material assessment.",
+      "explanation": "Original drawing-resource fortress: Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. Five-ply pawn-capture line: h1g1 h3h2 g1h1 f3e3 h1h2. Opponent's stronger king-cover test: h1g1 h3h2 g1h1 f3g3. Tempting unproved alternative: h1g1 h3h2 g1f1 (the king yields the h1 promotion corner and Black may promote). No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative. The black bishop from f8 cannot control the light-square h1 promotion corner. The king on g3 covers h2, so Black's fourth move ...Kg3 either yields stalemate when the white side has no other piece/pawn moves, or preserves play when White has a pawn move. Correct outcome depends on full material; this lesson asserts an exact result only for the explicitly shown bare-king/bishop case, not an engine-certified winning line.",
+      "defensiveStudy": {
+        "keyQuestion": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise.",
+        "defenderIdea": "Black tests ...h2+ and whether its king can protect h2 from g3. White defends by occupying h1; Kxh2 only works when Black's king retreats to e3.",
+        "continuation": "The five-ply main line removes the threatening rook pawn and leaves bishop versus king (plus any White variant pawn).",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "reflection": "Reconstruct the board without pieces. Identify whether White can leave h1 safely, whether ...Kg3 protects h2, and whether White's pawn still has a legal move. No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative. Then explain why bishop-only material cannot force mate in the pure case.",
+        "variations": [
+          {
+            "label": "Most stubborn pawn escort or stalemate",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1h1",
+              "f3g3"
+            ],
+            "explanation": "No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative. The branch ends at the exact king/pawn decision point. White must count its remaining legal moves instead of assuming all wrong-bishop endings are equal."
+          },
+          {
+            "label": "King abandons the corner prematurely",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1f1"
+            ],
+            "explanation": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect. After King f1, the h1 promotion square is unoccupied and Black can try ...h1=Q on its next turn; this is a legal but dangerous escape."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Fortress, stalemate and material surrender",
+        "principle": "In a wrong-bishop rook-pawn ending the defender can deny the promotion square. When the attacker's king leaves the pawn behind, White may capture it and force a draw by insufficient material. When the escort stays on g3, the pure case can become stalemate; extra pawns change the calculation.",
+        "attackerThreat": "Black threatens ...h2+ and escorting the last pawn to h1 under king cover.",
+        "modelLine": "h1g1 h3h2 g1h1 f3e3 h1h2",
+        "opponentResistance": "h1g1 h3h2 g1h1 f3g3",
+        "failedPlan": "h1g1 h3h2 g1f1",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "context": "No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative.",
+        "practicalEvaluation": "Exact K+B versus K draw in the pure reference, with variant-specific caveats; no tablebase evidence for positions with extra White pawns.",
+        "exercises": [
+          {
+            "prompt": "After 1.Kg1 h2+ 2.Kh1, which king move protects the black pawn and what material remains if Black retreats instead?",
+            "answer": "...Kg3 protects h2, while ...Ke3 permits Kxh2. Black then has just a bishop against a king in the pure case.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Is the position stalemate after ...Kg3? Explain for each material variant.",
+            "answer": "No white pawns exist: after ...Kg3 the king on h1 has no legal king moves, cannot take h2 because Kg3 protects it, and cannot enter g1 because the h2 pawn attacks g1. Black's bishop on f8 controls dark squares, not the light h1 corner; this is a true stalemate in the four-ply alternative.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-17",
+      "title": "Wrong-bishop corner fortress — Extra a-pawn changes stalemate",
+      "source": "authored",
+      "sourceLabel": "P106 · Fortress, stalemate and material surrender",
+      "difficulty": 6,
+      "fen": "5b2/8/8/8/8/5k1p/P7/7K w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1g1",
+      "principalVariation": [
+        "h1g1",
+        "h3h2",
+        "g1h1",
+        "f3e3",
+        "h1h2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.quiet"
+      ],
+      "prompt": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone. Independently count all king escapes and possible pawn moves after four plies.",
+      "replyReason": "The black pawn h3–h2+ attacks g1, forcing White's king back to h1. If Black's king leaves to e3, Kxh2 removes the last pawn and leaves Black with insufficient mating material against a lone king. If Black instead plays ...Kg3, the pawn remains protected and White's available pawn moves determine whether the result is immediate stalemate.",
+      "continuationReason": "After 1.Kg1 h2+ 2.Kh1 Ke3 3.Kxh2, the black pawn has disappeared. In the pure position Black has only a bishop against a king, which is a theoretical draw by insufficient mating material. Added white pawns change that material assessment.",
+      "explanation": "Original drawing-resource fortress: Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. Five-ply pawn-capture line: h1g1 h3h2 g1h1 f3e3 h1h2. Opponent's stronger king-cover test: h1g1 h3h2 g1h1 f3g3 a2a3. Tempting unproved alternative: h1g1 h3h2 g1f1 (the king yields the h1 promotion corner and Black may promote). The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone. The black bishop from f8 cannot control the light-square h1 promotion corner. The king on g3 covers h2, so Black's fourth move ...Kg3 either yields stalemate when the white side has no other piece/pawn moves, or preserves play when White has a pawn move. Correct outcome depends on full material; this lesson asserts an exact result only for the explicitly shown bare-king/bishop case, not an engine-certified winning line.",
+      "defensiveStudy": {
+        "keyQuestion": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise.",
+        "defenderIdea": "Black tests ...h2+ and whether its king can protect h2 from g3. White defends by occupying h1; Kxh2 only works when Black's king retreats to e3.",
+        "continuation": "The five-ply main line removes the threatening rook pawn and leaves bishop versus king (plus any White variant pawn).",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "reflection": "Reconstruct the board without pieces. Identify whether White can leave h1 safely, whether ...Kg3 protects h2, and whether White's pawn still has a legal move. The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone. Then explain why bishop-only material cannot force mate in the pure case.",
+        "variations": [
+          {
+            "label": "Most stubborn pawn escort or stalemate",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1h1",
+              "f3g3",
+              "a2a3"
+            ],
+            "explanation": "The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone. The branch ends at the exact king/pawn decision point. White must count its remaining legal moves instead of assuming all wrong-bishop endings are equal."
+          },
+          {
+            "label": "King abandons the corner prematurely",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1f1"
+            ],
+            "explanation": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect. After King f1, the h1 promotion square is unoccupied and Black can try ...h1=Q on its next turn; this is a legal but dangerous escape."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Fortress, stalemate and material surrender",
+        "principle": "In a wrong-bishop rook-pawn ending the defender can deny the promotion square. When the attacker's king leaves the pawn behind, White may capture it and force a draw by insufficient material. When the escort stays on g3, the pure case can become stalemate; extra pawns change the calculation.",
+        "attackerThreat": "Black threatens ...h2+ and escorting the last pawn to h1 under king cover.",
+        "modelLine": "h1g1 h3h2 g1h1 f3e3 h1h2",
+        "opponentResistance": "h1g1 h3h2 g1h1 f3g3 a2a3",
+        "failedPlan": "h1g1 h3h2 g1f1",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "context": "The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone.",
+        "practicalEvaluation": "Exact K+B versus K draw in the pure reference, with variant-specific caveats; no tablebase evidence for positions with extra White pawns.",
+        "exercises": [
+          {
+            "prompt": "After 1.Kg1 h2+ 2.Kh1, which king move protects the black pawn and what material remains if Black retreats instead?",
+            "answer": "...Kg3 protects h2, while ...Ke3 permits Kxh2. Black then has just a bishop against a king in the pure case.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Is the position stalemate after ...Kg3? Explain for each material variant.",
+            "answer": "The a2 pawn remains able to advance after ...Kg3, so the exact four-ply stalemate of the pure case no longer occurs. Black's f8 bishop may attack a3 later; do not claim a theoretical draw from the wrong-bishop slogan alone.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p106-18",
+      "title": "Wrong-bishop corner fortress — Extra b-pawn permits a waiting move",
+      "source": "authored",
+      "sourceLabel": "P106 · Fortress, stalemate and material surrender",
+      "difficulty": 6,
+      "fen": "5b2/8/8/8/8/5k1p/1P6/7K w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h1g1",
+      "principalVariation": [
+        "h1g1",
+        "h3h2",
+        "g1h1",
+        "f3e3",
+        "h1h2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.evaluation",
+        "calculation.quiet"
+      ],
+      "prompt": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn. Independently count all king escapes and possible pawn moves after four plies.",
+      "replyReason": "The black pawn h3–h2+ attacks g1, forcing White's king back to h1. If Black's king leaves to e3, Kxh2 removes the last pawn and leaves Black with insufficient mating material against a lone king. If Black instead plays ...Kg3, the pawn remains protected and White's available pawn moves determine whether the result is immediate stalemate.",
+      "continuationReason": "After 1.Kg1 h2+ 2.Kh1 Ke3 3.Kxh2, the black pawn has disappeared. In the pure position Black has only a bishop against a king, which is a theoretical draw by insufficient mating material. Added white pawns change that material assessment.",
+      "explanation": "Original drawing-resource fortress: Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise. Five-ply pawn-capture line: h1g1 h3h2 g1h1 f3e3 h1h2. Opponent's stronger king-cover test: h1g1 h3h2 g1h1 f3g3 b2b3. Tempting unproved alternative: h1g1 h3h2 g1f1 (the king yields the h1 promotion corner and Black may promote). The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn. The black bishop from f8 cannot control the light-square h1 promotion corner. The king on g3 covers h2, so Black's fourth move ...Kg3 either yields stalemate when the white side has no other piece/pawn moves, or preserves play when White has a pawn move. Correct outcome depends on full material; this lesson asserts an exact result only for the explicitly shown bare-king/bishop case, not an engine-certified winning line.",
+      "defensiveStudy": {
+        "keyQuestion": "Black owns a dark-squared bishop, king on f3 and h3 rook pawn. White's king starts on the light-colored h1 promotion corner. Test the check ...h2+, the difference between ...Ke3 and ...Kg3, and whether White has any legal move when Black keeps supporting h2. This is a concrete fortress/drawing-resource calculation, not a pattern-identification exercise.",
+        "defenderIdea": "Black tests ...h2+ and whether its king can protect h2 from g3. White defends by occupying h1; Kxh2 only works when Black's king retreats to e3.",
+        "continuation": "The five-ply main line removes the threatening rook pawn and leaves bishop versus king (plus any White variant pawn).",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "reflection": "Reconstruct the board without pieces. Identify whether White can leave h1 safely, whether ...Kg3 protects h2, and whether White's pawn still has a legal move. The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn. Then explain why bishop-only material cannot force mate in the pure case.",
+        "variations": [
+          {
+            "label": "Most stubborn pawn escort or stalemate",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1h1",
+              "f3g3",
+              "b2b3"
+            ],
+            "explanation": "The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn. The branch ends at the exact king/pawn decision point. White must count its remaining legal moves instead of assuming all wrong-bishop endings are equal."
+          },
+          {
+            "label": "King abandons the corner prematurely",
+            "moves": [
+              "h1g1",
+              "h3h2",
+              "g1f1"
+            ],
+            "explanation": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect. After King f1, the h1 promotion square is unoccupied and Black can try ...h1=Q on its next turn; this is a legal but dangerous escape."
+          }
+        ]
+      },
+      "defensiveTechniqueStudy": {
+        "theme": "Fortress, stalemate and material surrender",
+        "principle": "In a wrong-bishop rook-pawn ending the defender can deny the promotion square. When the attacker's king leaves the pawn behind, White may capture it and force a draw by insufficient material. When the escort stays on g3, the pure case can become stalemate; extra pawns change the calculation.",
+        "attackerThreat": "Black threatens ...h2+ and escorting the last pawn to h1 under king cover.",
+        "modelLine": "h1g1 h3h2 g1h1 f3e3 h1h2",
+        "opponentResistance": "h1g1 h3h2 g1h1 f3g3 b2b3",
+        "failedPlan": "h1g1 h3h2 g1f1",
+        "misconception": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect.",
+        "context": "The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn.",
+        "practicalEvaluation": "Exact K+B versus K draw in the pure reference, with variant-specific caveats; no tablebase evidence for positions with extra White pawns.",
+        "exercises": [
+          {
+            "prompt": "After 1.Kg1 h2+ 2.Kh1, which king move protects the black pawn and what material remains if Black retreats instead?",
+            "answer": "...Kg3 protects h2, while ...Ke3 permits Kxh2. Black then has just a bishop against a king in the pure case.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Is the position stalemate after ...Kg3? Explain for each material variant.",
+            "answer": "The b2 pawn can move after Black's king reaches g3. This prevents immediate stalemate and changes the technical verdict; a wrong-colored bishop does not prove all positions with extra pawns are drawn.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          },
+          {
+            "prompt": "Why is 3.Kf1 much less secure than returning to h1 against the h-pawn?",
+            "answer": "It releases the promotion square h1. Black can attempt h1=Q instead of accepting the fortress, so White must calculate the next pawn move.",
+            "repair": "Moving away from the h1 promotion corner without calculating h2+ and a black-king escort can lose. But assuming stalemate also persists with extra white pawns is equally incorrect."
+          }
+        ]
+      }
     }
   ]
 }
