@@ -47,3 +47,19 @@
 .deep-lab-branches small,.deep-lab-timeline small{display:block}
 .deep-lab-footer .primary{margin-left:auto}
 @media(max-width:650px){.deep-lab-board{grid-template-columns:1fr}.deep-lab-heading{flex-direction:column}.deep-lab-footer .primary{margin-left:0;width:100%}}
+
+/* P109: source-backed strategy chooser and unscored worked comparison. */
+.strategic-library{border-top:1px solid var(--chess-color-separator,var(--line));padding-top:16px;margin-top:12px;display:grid;gap:9px;min-width:0}
+.strategic-library h2{font-size:1.02rem;margin:0}
+.strategic-library p{margin:0;line-height:1.5;font-size:.84rem}
+.strategic-library label{font-weight:700;font-size:.87rem}
+.strategic-library select{width:100%;min-height:44px;padding:8px;background:var(--chess-color-surface,var(--surface));border:1px solid var(--chess-color-separator,var(--line));color:inherit;border-radius:4px}
+.strategic-library-list{display:grid;gap:7px;max-height:280px;overflow-y:auto}
+.strategic-library-list button{display:grid;gap:4px;padding:10px;text-align:start;min-height:54px;background:transparent;color:inherit;border:1px solid var(--chess-color-separator,var(--line));border-radius:4px;cursor:pointer}
+.strategic-library-list span,.strategic-library-list small,.strategic-library-count{font-size:.75rem;opacity:.83}
+.strategic-library-list strong{font-size:.88rem}
+.calculation-instructional-review{display:grid;gap:12px}
+.calculation-instructional-review p{margin:0;line-height:1.6}
+.calculation-instructional-note{border-left:2px solid currentColor;padding-left:10px}
+.strategic-library button:focus-visible,.strategic-library select:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media(max-width:650px){.strategic-library-list{max-height:230px}.calculation-instructional-review .primary{width:100%}}

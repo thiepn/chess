@@ -36,6 +36,7 @@ import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./acco
 import { chessAccountSso, chessAccountLoginError } from "./account/chessSession";
 
 import { ChessBoard } from "./components/ChessBoard";
+import { StrategicStudyLibrary } from "./components/StrategicStudyLibrary";
 
 
 
@@ -53,7 +54,7 @@ import { openingDeviationsForGame } from "./openings/match";
 
 import { StockfishBrowserEngine } from "./engine/stockfish";
 import {
-  calculationPositionFor, resolveCalculationPosition,
+  calculationCatalog, calculationPositionFor, resolveCalculationPosition,
   subscribeCalculationSources, calculationSourceRevision, calculationSourceStatus,
   retryFailedCalculationSources,
 } from "./calculation/positions";
@@ -487,6 +488,9 @@ export default function App() {
   const catalogRevision = useSyncExternalStore(
     subscribeCalculationSources, calculationSourceRevision, calculationSourceRevision);
   const catalogStatus = useMemo(() => calculationSourceStatus(), [catalogRevision]);
+  const strategicPositions = useMemo(() => calculationCatalog(state).filter(
+    item => item.assessmentStatus === "instructional-only" &&
+      Boolean(item.strategicImbalanceStudy)), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition>;
   } | null>(null);
@@ -670,6 +674,29 @@ export default function App() {
     setAssessmentSession(null);
     setManualActivity(activity);
     navigate(trainingPath(activity.id));
+  }
+
+  function openStrategicStudy(position: import("./calculation/types").CalculationPosition) {
+    if (position.assessmentStatus !== "instructional-only" ||
+        !strategicPositions.some(item => item.id === position.id)) return;
+    const skillId = position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
+    const skill = skillId ? skillById[skillId] : null;
+    if (!skill || !skillId) return;
+    openManualActivity({
+      id: `p109:${position.id}`,
+      source: "focus",
+      skillIds: [skillId],
+      activityType: "calculation",
+      calculationPositionId: position.id,
+      estimatedMinutes: 12,
+      priority: 1,
+      difficulty: skill.difficulty,
+      novelty: 0,
+      urgency: .4,
+      reason: "P109 · Independent positional decision (unscored)",
+      title: position.title,
+      subtitle: position.strategicImbalanceStudy?.theme ?? "Strategic decision",
+    });
   }
 
   useEffect(() => {
@@ -978,7 +1005,8 @@ export default function App() {
     if(active.activityType==="calculation") {
       if(!activeCalculationPosition || incoming.calculationPositionId!==activeCalculationPosition.id ||
         incoming.calculationEvidence?.positionId!==activeCalculationPosition.id ||
-        !legalCalculationBranch(activeCalculationPosition))return;
+        !legalCalculationBranch(activeCalculationPosition) ||
+        activeCalculationPosition.assessmentStatus === "instructional-only")return;
     }
     if(active.activityType==="endgameDrill" || active.activityType==="conversionChallenge") {
       const p=incoming.endgamePractice,e=incoming.endgameEvidence;
@@ -2845,6 +2873,11 @@ export default function App() {
                           skill={activeSkill}
                           position={activeCalculationPosition}
                           storageOwner={activeOwner}
+                          onInstructionalExit={() => {
+                            if (repo.getProfileId() !== activeOwner ||
+                              activeCalculationPosition.assessmentStatus !== "instructional-only") return;
+                            closeTrainingRuntime("/train");
+                          }}
                           onComplete={completeActivity}
                         />
                       ) : (active.activityType === "endgameDrill" ||
@@ -3033,6 +3066,12 @@ export default function App() {
                   Study concept
                 </button>
               </div>
+
+              <StrategicStudyLibrary
+                positions={strategicPositions}
+                loading={catalogStatus.pending > 0}
+                onStart={openStrategicStudy}
+              />
 
               <dl className="train-session-facts">
                 <div>

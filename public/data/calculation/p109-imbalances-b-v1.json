@@ -1,0 +1,1568 @@
+{
+  "version": 1,
+  "phase": "P109",
+  "part": "B",
+  "rights": "Original new educational writing; chess positions transformed from the repository's own authored example positions, with an additional legal contextual pawn; unscored instructional scenarios.",
+  "positions": [
+    {
+      "id": "calc:p109-21",
+      "title": "King shelter and initiative: the defender has a vote",
+      "source": "authored",
+      "sourceLabel": "P109 · King shelter and initiative · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1kb1q3/p6p/8/8/8/8/1PP5/1K6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8a4",
+      "principalVariation": [
+        "e8a4",
+        "b2b3",
+        "a4a3",
+        "c2c3",
+        "c8g4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3.",
+      "continuationReason": "The shown Black third ply is a4–a3. After the reply, how many safe flight squares does each king keep?",
+      "explanation": "King shelter and initiative: An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Main illustration: e8–a4 b2–b3 a4–a3 c2–c3 c8–g4. Alternative: e8–a4 b2–b3 a4–c6 c2–c3 c8–e6. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After e8–a4, what does b2–b3 change?",
+        "defenderIdea": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3.",
+        "continuation": "After the reply, how many safe flight squares does each king keep? Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative b2–b3 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "e8a4",
+              "b2b3",
+              "a4c6",
+              "c2c3",
+              "c8e6"
+            ],
+            "explanation": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Compare e8–a4 b2–b3 a4–c6 c2–c3 c8–e6 to e8–a4 b2–b3 a4–a3 c2–c3 c8–g4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "King shelter and initiative",
+        "focus": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "planContrast": "Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3.",
+        "defenderPlan": "A pawn move or block may refute the expected forcing line without winning material outright.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "After the reply, how many safe flight squares does each king keep?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "modelLine": "e8a4 b2b3 a4a3 c2c3 c8g4",
+        "alternativeLine": "e8a4 b2b3 a4c6 c2c3 c8e6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider e8–a4 with a king on b8 and another pawn on a7?",
+            "answer": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers b2–b3 after e8–a4. Reconstruct Black's a4–a3, and explain what still needs verification.",
+            "answer": "The example continues e8–a4 b2–b3 a4–a3. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. After the reply, how many safe flight squares does each king keep? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Which asset survives and which weakness changes?",
+            "answer": "Main line: e8–a4 b2–b3 a4–a3 c2–c3 c8–g4. Alternative: e8–a4 b2–b3 a4–c6 c2–c3 c8–e6. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. A pawn move or block may refute the expected forcing line without winning material outright. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-22",
+      "title": "King shelter and initiative: conversion is not automatic",
+      "source": "authored",
+      "sourceLabel": "P109 · King shelter and initiative · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "6k1/5pp1/8/8/8/8/1P5P/3Q1BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "d1h5",
+      "principalVariation": [
+        "d1h5",
+        "g7g6",
+        "h5h6",
+        "f7f6",
+        "f1b5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is g7–g6; the independent response in the counterplan is g7–g6.",
+      "continuationReason": "The shown White third ply is h5–h6. After the reply, how many safe flight squares does each king keep?",
+      "explanation": "King shelter and initiative: An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6. Main illustration: d1–h5 g7–g6 h5–h6 f7–f6 f1–b5. Alternative: d1–h5 g7–g6 h5–f3 f7–f6 f1–d3. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is g7–g6; the independent response in the counterplan is g7–g6. Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After d1–h5, what does g7–g6 change?",
+        "defenderIdea": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is g7–g6; the independent response in the counterplan is g7–g6.",
+        "continuation": "After the reply, how many safe flight squares does each king keep? White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative g7–g6 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "d1h5",
+              "g7g6",
+              "h5f3",
+              "f7f6",
+              "f1d3"
+            ],
+            "explanation": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is g7–g6; the independent response in the counterplan is g7–g6. White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6. Compare d1–h5 g7–g6 h5–f3 f7–f6 f1–d3 to d1–h5 g7–g6 h5–h6 f7–f6 f1–b5 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "King shelter and initiative",
+        "focus": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "planContrast": "White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6.",
+        "defenderPlan": "A pawn move or block may refute the expected forcing line without winning material outright.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "After the reply, how many safe flight squares does each king keep?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "modelLine": "d1h5 g7g6 h5h6 f7f6 f1b5",
+        "alternativeLine": "d1h5 g7g6 h5f3 f7f6 f1d3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider d1–h5 with a king on g1 and another pawn on h2?",
+            "answer": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers g7–g6 after d1–h5. Reconstruct White's h5–h6, and explain what still needs verification.",
+            "answer": "The example continues d1–h5 g7–g6 h5–h6. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is g7–g6; the independent response in the counterplan is g7–g6. After the reply, how many safe flight squares does each king keep? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White begins d1–h5 in both examples, but Black replies g7–g6 or g7–g6. Which asset survives and which weakness changes?",
+            "answer": "Main line: d1–h5 g7–g6 h5–h6 f7–f6 f1–b5. Alternative: d1–h5 g7–g6 h5–f3 f7–f6 f1–d3. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. A pawn move or block may refute the expected forcing line without winning material outright. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-23",
+      "title": "King shelter and initiative: pieces versus pawn assets",
+      "source": "authored",
+      "sourceLabel": "P109 · King shelter and initiative · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1kb1q3/p7/8/8/8/8/1PP2P2/1K6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "e8a4",
+      "principalVariation": [
+        "e8a4",
+        "b2b3",
+        "a4a3",
+        "c2c3",
+        "c8g4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are e8–a4 b2–b3 a4–a3; evaluate the resulting board rather than naming a forced win. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3.",
+      "continuationReason": "The shown Black third ply is a4–a3. After the reply, how many safe flight squares does each king keep?",
+      "explanation": "King shelter and initiative: An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are e8–a4 b2–b3 a4–a3; evaluate the resulting board rather than naming a forced win. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Main illustration: e8–a4 b2–b3 a4–a3 c2–c3 c8–g4. Alternative: e8–a4 b2–b3 a4–c6 c2–c3 c8–e6. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After e8–a4, what does b2–b3 change?",
+        "defenderIdea": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3.",
+        "continuation": "After the reply, how many safe flight squares does each king keep? Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative b2–b3 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "e8a4",
+              "b2b3",
+              "a4c6",
+              "c2c3",
+              "c8e6"
+            ],
+            "explanation": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Compare e8–a4 b2–b3 a4–c6 c2–c3 c8–e6 to e8–a4 b2–b3 a4–a3 c2–c3 c8–g4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "King shelter and initiative",
+        "focus": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are e8–a4 b2–b3 a4–a3; evaluate the resulting board rather than naming a forced win.",
+        "planContrast": "Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3.",
+        "defenderPlan": "A pawn move or block may refute the expected forcing line without winning material outright.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "After the reply, how many safe flight squares does each king keep?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are e8–a4 b2–b3 a4–a3; evaluate the resulting board rather than naming a forced win.",
+        "modelLine": "e8a4 b2b3 a4a3 c2c3 c8g4",
+        "alternativeLine": "e8a4 b2b3 a4c6 c2c3 c8e6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider e8–a4 with a king on b8 and another pawn on a7?",
+            "answer": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are e8–a4 b2–b3 a4–a3; evaluate the resulting board rather than naming a forced win. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers b2–b3 after e8–a4. Reconstruct Black's a4–a3, and explain what still needs verification.",
+            "answer": "The example continues e8–a4 b2–b3 a4–a3. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is b2–b3; the independent response in the counterplan is b2–b3. After the reply, how many safe flight squares does each king keep? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black begins e8–a4 in both examples, but White replies b2–b3 or b2–b3. Which asset survives and which weakness changes?",
+            "answer": "Main line: e8–a4 b2–b3 a4–a3 c2–c3 c8–g4. Alternative: e8–a4 b2–b3 a4–c6 c2–c3 c8–e6. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. A pawn move or block may refute the expected forcing line without winning material outright. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-24",
+      "title": "King shelter and initiative: recalculate after resistance",
+      "source": "authored",
+      "sourceLabel": "P109 · King shelter and initiative · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "2b3k1/8/4p3/3p4/8/8/PP4PP/5BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "h2h3",
+      "principalVariation": [
+        "h2h3",
+        "c8d7",
+        "g2g3",
+        "d7b5",
+        "f1g2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on b2 creates an extra wing resource. Black's c8–d7 reply calls for a different second decision from White. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7.",
+      "continuationReason": "The shown White third ply is g2–g3. After the reply, how many safe flight squares does each king keep?",
+      "explanation": "King shelter and initiative: An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on b2 creates an extra wing resource. Black's c8–d7 reply calls for a different second decision from White. White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7. Main illustration: h2–h3 c8–d7 g2–g3 d7–b5 f1–g2. Alternative: g2–g3 c8–d7 f1–g2 d7–b5 h2–h3. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After h2–h3, what does c8–d7 change?",
+        "defenderIdea": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7.",
+        "continuation": "After the reply, how many safe flight squares does each king keep? White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on b2, what the kings on g1 and g8 permit, and why the defender's alternative c8–d7 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "g2g3",
+              "c8d7",
+              "f1g2",
+              "d7b5",
+              "h2h3"
+            ],
+            "explanation": "A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7. Compare g2–g3 c8–d7 f1–g2 d7–b5 h2–h3 to h2–h3 c8–d7 g2–g3 d7–b5 f1–g2 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "King shelter and initiative",
+        "focus": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on b2 creates an extra wing resource. Black's c8–d7 reply calls for a different second decision from White.",
+        "planContrast": "White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7.",
+        "defenderPlan": "A pawn move or block may refute the expected forcing line without winning material outright.",
+        "misconception": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "After the reply, how many safe flight squares does each king keep?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on b2 creates an extra wing resource. Black's c8–d7 reply calls for a different second decision from White.",
+        "modelLine": "h2h3 c8d7 g2g3 d7b5 f1g2",
+        "alternativeLine": "g2g3 c8d7 f1g2 d7b5 h2h3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider h2–h3 with a king on g1 and another pawn on b2?",
+            "answer": "An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on b2 creates an extra wing resource. Black's c8–d7 reply calls for a different second decision from White. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers c8–d7 after h2–h3. Reconstruct White's g2–g3, and explain what still needs verification.",
+            "answer": "The example continues h2–h3 c8–d7 g2–g3. A pawn move or block may refute the expected forcing line without winning material outright. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. After the reply, how many safe flight squares does each king keep? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers h2–h3 and g2–g3; the respective Black answers are c8–d7 and c8–d7. Which asset survives and which weakness changes?",
+            "answer": "Main line: h2–h3 c8–d7 g2–g3 d7–b5 f1–g2. Alternative: g2–g3 c8–d7 f1–g2 d7–b5 h2–h3. An apparently active attack needs a safe king and concrete checks; shelter can outweigh a tempo. A pawn move or block may refute the expected forcing line without winning material outright. The extra b2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Do not declare mate or a sacrifice sound from a short attractive sequence. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-25",
+      "title": "Coordination and revising a plan: the defender has a vote",
+      "source": "authored",
+      "sourceLabel": "P109 · Coordination and revising a plan · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "1k3b1r/p5p1/8/3p4/3P4/4P3/8/RK6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8d6",
+      "principalVariation": [
+        "f8d6",
+        "a1a3",
+        "d6e7",
+        "a3a4",
+        "h8h5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3.",
+      "continuationReason": "The shown Black third ply is d6–e7. Which planned move should change once the defender contests your file?",
+      "explanation": "Coordination and revising a plan: A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Main illustration: f8–d6 a1–a3 d6–e7 a3–a4 h8–h5. Alternative: h8–h6 a1–a3 f8–d6 a3–a4 h6–f6. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After f8–d6, what does a1–a3 change?",
+        "defenderIdea": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3.",
+        "continuation": "Which planned move should change once the defender contests your file? Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative a1–a3 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "h8h6",
+              "a1a3",
+              "f8d6",
+              "a3a4",
+              "h6f6"
+            ],
+            "explanation": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Compare h8–h6 a1–a3 f8–d6 a3–a4 h6–f6 to f8–d6 a1–a3 d6–e7 a3–a4 h8–h5 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Coordination and revising a plan",
+        "focus": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "planContrast": "Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3.",
+        "defenderPlan": "A lateral rook transfer or a knight hop forces you to revise the second move.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which planned move should change once the defender contests your file?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "modelLine": "f8d6 a1a3 d6e7 a3a4 h8h5",
+        "alternativeLine": "h8h6 a1a3 f8d6 a3a4 h6f6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider f8–d6 with a king on b8 and another pawn on a7?",
+            "answer": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers a1–a3 after f8–d6. Reconstruct Black's d6–e7, and explain what still needs verification.",
+            "answer": "The example continues f8–d6 a1–a3 d6–e7. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. Which planned move should change once the defender contests your file? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Which asset survives and which weakness changes?",
+            "answer": "Main line: f8–d6 a1–a3 d6–e7 a3–a4 h8–h5. Alternative: h8–h6 a1–a3 f8–d6 a3–a4 h6–f6. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. A lateral rook transfer or a knight hop forces you to revise the second move. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-26",
+      "title": "Coordination and revising a plan: conversion is not automatic",
+      "source": "authored",
+      "sourceLabel": "P109 · Coordination and revising a plan · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "6kr/8/3p4/4p3/4P3/8/6PP/R1B3K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1e3",
+      "principalVariation": [
+        "c1e3",
+        "h8h6",
+        "e3d2",
+        "h6h5",
+        "a1a4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+      "continuationReason": "The shown White third ply is e3–d2. Which planned move should change once the defender contests your file?",
+      "explanation": "Coordination and revising a plan: A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Main illustration: c1–e3 h8–h6 e3–d2 h6–h5 a1–a4. Alternative: a1–a3 h8–h6 c1–e3 h6–h5 a3–c3. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c1–e3, what does h8–h6 change?",
+        "defenderIdea": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+        "continuation": "Which planned move should change once the defender contests your file? White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative h8–h6 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "a1a3",
+              "h8h6",
+              "c1e3",
+              "h6h5",
+              "a3c3"
+            ],
+            "explanation": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Compare a1–a3 h8–h6 c1–e3 h6–h5 a3–c3 to c1–e3 h8–h6 e3–d2 h6–h5 a1–a4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Coordination and revising a plan",
+        "focus": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "planContrast": "White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6.",
+        "defenderPlan": "A lateral rook transfer or a knight hop forces you to revise the second move.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which planned move should change once the defender contests your file?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "modelLine": "c1e3 h8h6 e3d2 h6h5 a1a4",
+        "alternativeLine": "a1a3 h8h6 c1e3 h6h5 a3c3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider c1–e3 with a king on g1 and another pawn on h2?",
+            "answer": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers h8–h6 after c1–e3. Reconstruct White's e3–d2, and explain what still needs verification.",
+            "answer": "The example continues c1–e3 h8–h6 e3–d2. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. Which planned move should change once the defender contests your file? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers c1–e3 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Which asset survives and which weakness changes?",
+            "answer": "Main line: c1–e3 h8–h6 e3–d2 h6–h5 a1–a4. Alternative: a1–a3 h8–h6 c1–e3 h6–h5 a3–c3. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. A lateral rook transfer or a knight hop forces you to revise the second move. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-27",
+      "title": "Coordination and revising a plan: pieces versus pawn assets",
+      "source": "authored",
+      "sourceLabel": "P109 · Coordination and revising a plan · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "1k3b1r/p7/8/3p4/3P4/4P3/2P5/RK6 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f8d6",
+      "principalVariation": [
+        "f8d6",
+        "a1a3",
+        "d6e7",
+        "a3a4",
+        "h8h5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are f8–d6 a1–a3 d6–e7; evaluate the resulting board rather than naming a forced win. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3.",
+      "continuationReason": "The shown Black third ply is d6–e7. Which planned move should change once the defender contests your file?",
+      "explanation": "Coordination and revising a plan: A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are f8–d6 a1–a3 d6–e7; evaluate the resulting board rather than naming a forced win. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Main illustration: f8–d6 a1–a3 d6–e7 a3–a4 h8–h5. Alternative: h8–h6 a1–a3 f8–d6 a3–a4 h6–f6. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After f8–d6, what does a1–a3 change?",
+        "defenderIdea": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3.",
+        "continuation": "Which planned move should change once the defender contests your file? Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative a1–a3 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "h8h6",
+              "a1a3",
+              "f8d6",
+              "a3a4",
+              "h6f6"
+            ],
+            "explanation": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Compare h8–h6 a1–a3 f8–d6 a3–a4 h6–f6 to f8–d6 a1–a3 d6–e7 a3–a4 h8–h5 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Coordination and revising a plan",
+        "focus": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are f8–d6 a1–a3 d6–e7; evaluate the resulting board rather than naming a forced win.",
+        "planContrast": "Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3.",
+        "defenderPlan": "A lateral rook transfer or a knight hop forces you to revise the second move.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which planned move should change once the defender contests your file?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are f8–d6 a1–a3 d6–e7; evaluate the resulting board rather than naming a forced win.",
+        "modelLine": "f8d6 a1a3 d6e7 a3a4 h8h5",
+        "alternativeLine": "h8h6 a1a3 f8d6 a3a4 h6f6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider f8–d6 with a king on b8 and another pawn on a7?",
+            "answer": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are f8–d6 a1–a3 d6–e7; evaluate the resulting board rather than naming a forced win. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers a1–a3 after f8–d6. Reconstruct Black's d6–e7, and explain what still needs verification.",
+            "answer": "The example continues f8–d6 a1–a3 d6–e7. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is a1–a3; the independent response in the counterplan is a1–a3. Which planned move should change once the defender contests your file? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers f8–d6 and h8–h6; the respective White answers are a1–a3 and a1–a3. Which asset survives and which weakness changes?",
+            "answer": "Main line: f8–d6 a1–a3 d6–e7 a3–a4 h8–h5. Alternative: h8–h6 a1–a3 f8–d6 a3–a4 h6–f6. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. A lateral rook transfer or a knight hop forces you to revise the second move. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-28",
+      "title": "Coordination and revising a plan: recalculate after resistance",
+      "source": "authored",
+      "sourceLabel": "P109 · Coordination and revising a plan · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "6kr/8/2n5/3p4/3P4/2N5/1P5P/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c3b5",
+      "principalVariation": [
+        "c3b5",
+        "h8h6",
+        "a1a4",
+        "h6h5",
+        "a4b4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+      "continuationReason": "The shown White third ply is a1–a4. Which planned move should change once the defender contests your file?",
+      "explanation": "Coordination and revising a plan: A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Main illustration: c3–b5 h8–h6 a1–a4 h6–h5 a4–b4. Alternative: a1–a3 h8–h6 c3–b5 h6–h5 a3–c3. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c3–b5, what does h8–h6 change?",
+        "defenderIdea": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+        "continuation": "Which planned move should change once the defender contests your file? White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative h8–h6 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "a1a3",
+              "h8h6",
+              "c3b5",
+              "h6h5",
+              "a3c3"
+            ],
+            "explanation": "A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Compare a1–a3 h8–h6 c3–b5 h6–h5 a3–c3 to c3–b5 h8–h6 a1–a4 h6–h5 a4–b4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Coordination and revising a plan",
+        "focus": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White.",
+        "planContrast": "White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6.",
+        "defenderPlan": "A lateral rook transfer or a knight hop forces you to revise the second move.",
+        "misconception": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which planned move should change once the defender contests your file?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White.",
+        "modelLine": "c3b5 h8h6 a1a4 h6h5 a4b4",
+        "alternativeLine": "a1a3 h8h6 c3b5 h6h5 a3c3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider c3–b5 with a king on g1 and another pawn on h2?",
+            "answer": "A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers h8–h6 after c3–b5. Reconstruct White's a1–a4, and explain what still needs verification.",
+            "answer": "The example continues c3–b5 h8–h6 a1–a4. A lateral rook transfer or a knight hop forces you to revise the second move. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. Which planned move should change once the defender contests your file? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers c3–b5 and a1–a3; the respective Black answers are h8–h6 and h8–h6. Which asset survives and which weakness changes?",
+            "answer": "Main line: c3–b5 h8–h6 a1–a4 h6–h5 a4–b4. Alternative: a1–a3 h8–h6 c3–b5 h6–h5 a3–c3. A piece improvement should preserve the defensive duties of the remaining rook, bishop or knight. A lateral rook transfer or a knight hop forces you to revise the second move. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "An active piece does not repair a loose supporting pawn automatically. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-29",
+      "title": "Favorable exchanges: the defender has a vote",
+      "source": "authored",
+      "sourceLabel": "P109 · Favorable exchanges · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1kb5/p5p1/3p4/4p3/4P3/3P4/8/1K3B2 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c8f5",
+      "principalVariation": [
+        "c8f5",
+        "f1e2",
+        "f5e6",
+        "e2h5",
+        "e6g4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2.",
+      "continuationReason": "The shown Black third ply is f5–e6. Which surviving piece becomes better and which pawn newly needs defense?",
+      "explanation": "Favorable exchanges: Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Main illustration: c8–f5 f1–e2 f5–e6 e2–h5 e6–g4. Alternative: c8–g4 f1–e2 g4–e2 b1–c1 e2–f3. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c8–f5, what does f1–e2 change?",
+        "defenderIdea": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2.",
+        "continuation": "Which surviving piece becomes better and which pawn newly needs defense? Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative f1–e2 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "c8g4",
+              "f1e2",
+              "g4e2",
+              "b1c1",
+              "e2f3"
+            ],
+            "explanation": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Compare c8–g4 f1–e2 g4–e2 b1–c1 e2–f3 to c8–f5 f1–e2 f5–e6 e2–h5 e6–g4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Favorable exchanges",
+        "focus": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "planContrast": "Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2.",
+        "defenderPlan": "The opponent may occupy a file on the very next move after you trade.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which surviving piece becomes better and which pawn newly needs defense?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "modelLine": "c8f5 f1e2 f5e6 e2h5 e6g4",
+        "alternativeLine": "c8g4 f1e2 g4e2 b1c1 e2f3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider c8–f5 with a king on b8 and another pawn on a7?",
+            "answer": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers f1–e2 after c8–f5. Reconstruct Black's f5–e6, and explain what still needs verification.",
+            "answer": "The example continues c8–f5 f1–e2 f5–e6. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Which surviving piece becomes better and which pawn newly needs defense? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Which asset survives and which weakness changes?",
+            "answer": "Main line: c8–f5 f1–e2 f5–e6 e2–h5 e6–g4. Alternative: c8–g4 f1–e2 g4–e2 b1–c1 e2–f3. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. The opponent may occupy a file on the very next move after you trade. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-30",
+      "title": "Favorable exchanges: conversion is not automatic",
+      "source": "authored",
+      "sourceLabel": "P109 · Favorable exchanges · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "2b3k1/8/4p3/3p4/3P4/4P3/6PP/5BK1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "f1c4",
+      "principalVariation": [
+        "f1c4",
+        "c8d7",
+        "c4d3",
+        "d7a4",
+        "d3b5"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7.",
+      "continuationReason": "The shown White third ply is c4–d3. Which surviving piece becomes better and which pawn newly needs defense?",
+      "explanation": "Favorable exchanges: Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7. Main illustration: f1–c4 c8–d7 c4–d3 d7–a4 d3–b5. Alternative: f1–b5 c8–d7 b5–d7 g8–f8 d7–c6. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After f1–c4, what does c8–d7 change?",
+        "defenderIdea": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7.",
+        "continuation": "Which surviving piece becomes better and which pawn newly needs defense? White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative c8–d7 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "f1b5",
+              "c8d7",
+              "b5d7",
+              "g8f8",
+              "d7c6"
+            ],
+            "explanation": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7. Compare f1–b5 c8–d7 b5–d7 g8–f8 d7–c6 to f1–c4 c8–d7 c4–d3 d7–a4 d3–b5 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Favorable exchanges",
+        "focus": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "planContrast": "White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7.",
+        "defenderPlan": "The opponent may occupy a file on the very next move after you trade.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which surviving piece becomes better and which pawn newly needs defense?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "modelLine": "f1c4 c8d7 c4d3 d7a4 d3b5",
+        "alternativeLine": "f1b5 c8d7 b5d7 g8f8 d7c6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider f1–c4 with a king on g1 and another pawn on h2?",
+            "answer": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers c8–d7 after f1–c4. Reconstruct White's c4–d3, and explain what still needs verification.",
+            "answer": "The example continues f1–c4 c8–d7 c4–d3. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is c8–d7; the independent response in the counterplan is c8–d7. Which surviving piece becomes better and which pawn newly needs defense? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers f1–c4 and f1–b5; the respective Black answers are c8–d7 and c8–d7. Which asset survives and which weakness changes?",
+            "answer": "Main line: f1–c4 c8–d7 c4–d3 d7–a4 d3–b5. Alternative: f1–b5 c8–d7 b5–d7 g8–f8 d7–c6. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. The opponent may occupy a file on the very next move after you trade. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-31",
+      "title": "Favorable exchanges: pieces versus pawn assets",
+      "source": "authored",
+      "sourceLabel": "P109 · Favorable exchanges · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1kb5/p7/3p4/4p3/4P3/3P4/2P5/1K3B2 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "c8f5",
+      "principalVariation": [
+        "c8f5",
+        "f1e2",
+        "f5e6",
+        "e2h5",
+        "e6g4"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are c8–f5 f1–e2 f5–e6; evaluate the resulting board rather than naming a forced win. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2.",
+      "continuationReason": "The shown Black third ply is f5–e6. Which surviving piece becomes better and which pawn newly needs defense?",
+      "explanation": "Favorable exchanges: Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are c8–f5 f1–e2 f5–e6; evaluate the resulting board rather than naming a forced win. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Main illustration: c8–f5 f1–e2 f5–e6 e2–h5 e6–g4. Alternative: c8–g4 f1–e2 g4–e2 b1–c1 e2–f3. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c8–f5, what does f1–e2 change?",
+        "defenderIdea": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2.",
+        "continuation": "Which surviving piece becomes better and which pawn newly needs defense? Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative f1–e2 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "c8g4",
+              "f1e2",
+              "g4e2",
+              "b1c1",
+              "e2f3"
+            ],
+            "explanation": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Compare c8–g4 f1–e2 g4–e2 b1–c1 e2–f3 to c8–f5 f1–e2 f5–e6 e2–h5 e6–g4 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Favorable exchanges",
+        "focus": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are c8–f5 f1–e2 f5–e6; evaluate the resulting board rather than naming a forced win.",
+        "planContrast": "Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2.",
+        "defenderPlan": "The opponent may occupy a file on the very next move after you trade.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which surviving piece becomes better and which pawn newly needs defense?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are c8–f5 f1–e2 f5–e6; evaluate the resulting board rather than naming a forced win.",
+        "modelLine": "c8f5 f1e2 f5e6 e2h5 e6g4",
+        "alternativeLine": "c8g4 f1e2 g4e2 b1c1 e2f3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider c8–f5 with a king on b8 and another pawn on a7?",
+            "answer": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are c8–f5 f1–e2 f5–e6; evaluate the resulting board rather than naming a forced win. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers f1–e2 after c8–f5. Reconstruct Black's f5–e6, and explain what still needs verification.",
+            "answer": "The example continues c8–f5 f1–e2 f5–e6. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f1–e2; the independent response in the counterplan is f1–e2. Which surviving piece becomes better and which pawn newly needs defense? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers c8–f5 and c8–g4; the respective White answers are f1–e2 and f1–e2. Which asset survives and which weakness changes?",
+            "answer": "Main line: c8–f5 f1–e2 f5–e6 e2–h5 e6–g4. Alternative: c8–g4 f1–e2 g4–e2 b1–c1 e2–f3. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. The opponent may occupy a file on the very next move after you trade. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-32",
+      "title": "Favorable exchanges: recalculate after resistance",
+      "source": "authored",
+      "sourceLabel": "P109 · Favorable exchanges · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "r4bk1/8/4p3/3p4/4P3/2N5/6PP/2B1R1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c1g5",
+      "principalVariation": [
+        "c1g5",
+        "f8e7",
+        "g5e7",
+        "a8a7",
+        "e7d6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's f8–d6 reply calls for a different second decision from White. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f8–e7; the independent response in the counterplan is f8–d6.",
+      "continuationReason": "The shown White third ply is g5–e7. Which surviving piece becomes better and which pawn newly needs defense?",
+      "explanation": "Favorable exchanges: Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's f8–d6 reply calls for a different second decision from White. White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6. Main illustration: c1–g5 f8–e7 g5–e7 a8–a7 e7–d6. Alternative: c1–f4 f8–d6 f4–d6 a8–a7 d6–b4. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f8–e7; the independent response in the counterplan is f8–d6. Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c1–g5, what does f8–e7 change?",
+        "defenderIdea": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f8–e7; the independent response in the counterplan is f8–d6.",
+        "continuation": "Which surviving piece becomes better and which pawn newly needs defense? White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative f8–d6 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "c1f4",
+              "f8d6",
+              "f4d6",
+              "a8a7",
+              "d6b4"
+            ],
+            "explanation": "The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f8–e7; the independent response in the counterplan is f8–d6. White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6. Compare c1–f4 f8–d6 f4–d6 a8–a7 d6–b4 to c1–g5 f8–e7 g5–e7 a8–a7 e7–d6 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Favorable exchanges",
+        "focus": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's f8–d6 reply calls for a different second decision from White.",
+        "planContrast": "White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6.",
+        "defenderPlan": "The opponent may occupy a file on the very next move after you trade.",
+        "misconception": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Which surviving piece becomes better and which pawn newly needs defense?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's f8–d6 reply calls for a different second decision from White.",
+        "modelLine": "c1g5 f8e7 g5e7 a8a7 e7d6",
+        "alternativeLine": "c1f4 f8d6 f4d6 a8a7 d6b4",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider c1–g5 with a king on g1 and another pawn on h2?",
+            "answer": "Judge a trade by the remaining minor pieces, pawn weaknesses and available files. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's f8–d6 reply calls for a different second decision from White. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers f8–e7 after c1–g5. Reconstruct White's g5–e7, and explain what still needs verification.",
+            "answer": "The example continues c1–g5 f8–e7 g5–e7. The opponent may occupy a file on the very next move after you trade. Specifically, the documented main response is f8–e7; the independent response in the counterplan is f8–d6. Which surviving piece becomes better and which pawn newly needs defense? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers c1–g5 and c1–f4; the respective Black answers are f8–e7 and f8–d6. Which asset survives and which weakness changes?",
+            "answer": "Main line: c1–g5 f8–e7 g5–e7 a8–a7 e7–d6. Alternative: c1–f4 f8–d6 f4–d6 a8–a7 d6–b4. Judge a trade by the remaining minor pieces, pawn weaknesses and available files. The opponent may occupy a file on the very next move after you trade. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "Equal material exchanged need not imply equal practical prospects. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-33",
+      "title": "Open files and rook access: the defender has a vote",
+      "source": "authored",
+      "sourceLabel": "P109 · Open files and rook access · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "1k1r4/p5p1/5p2/4p3/4P3/5P2/8/1K5R b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "d8d2",
+      "principalVariation": [
+        "d8d2",
+        "h1h2",
+        "d2d1",
+        "b1a2",
+        "d1d3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. A rook's invasion succeeds only if it can survive lateral checks and attacks. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2.",
+      "continuationReason": "The shown Black third ply is d2–d1. Find a safe retreat before the opponent attacks your invading rook.",
+      "explanation": "Open files and rook access: A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Main illustration: d8–d2 h1–h2 d2–d1 b1–a2 d1–d3. Alternative: d8–d3 h1–h2 d3–d1 b1–a2 d1–d3. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After d8–d2, what does h1–h2 change?",
+        "defenderIdea": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2.",
+        "continuation": "Find a safe retreat before the opponent attacks your invading rook. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative h1–h2 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "d8d3",
+              "h1h2",
+              "d3d1",
+              "b1a2",
+              "d1d3"
+            ],
+            "explanation": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Compare d8–d3 h1–h2 d3–d1 b1–a2 d1–d3 to d8–d2 h1–h2 d2–d1 b1–a2 d1–d3 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Open files and rook access",
+        "focus": "A rook's invasion succeeds only if it can survive lateral checks and attacks.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "planContrast": "Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2.",
+        "defenderPlan": "The defender can challenge the seventh rank from another file or threaten a rook exchange.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Find a safe retreat before the opponent attacks your invading rook.",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "modelLine": "d8d2 h1h2 d2d1 b1a2 d1d3",
+        "alternativeLine": "d8d3 h1h2 d3d1 b1a2 d1d3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider d8–d2 with a king on b8 and another pawn on a7?",
+            "answer": "A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers h1–h2 after d8–d2. Reconstruct Black's d2–d1, and explain what still needs verification.",
+            "answer": "The example continues d8–d2 h1–h2 d2–d1. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. Find a safe retreat before the opponent attacks your invading rook. No automatic material or king-safety verdict follows from three plies.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Which asset survives and which weakness changes?",
+            "answer": "Main line: d8–d2 h1–h2 d2–d1 b1–a2 d1–d3. Alternative: d8–d3 h1–h2 d3–d1 b1–a2 d1–d3. A rook's invasion succeeds only if it can survive lateral checks and attacks. The defender can challenge the seventh rank from another file or threaten a rook exchange. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-34",
+      "title": "Open files and rook access: conversion is not automatic",
+      "source": "authored",
+      "sourceLabel": "P109 · Open files and rook access · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "r5k1/8/2p5/3p4/3P4/2P5/6PP/4R1K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "e1e7",
+      "principalVariation": [
+        "e1e7",
+        "a8a7",
+        "e7e8",
+        "g8h7",
+        "e8e6"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. A rook's invasion succeeds only if it can survive lateral checks and attacks. White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is a8–a7; the independent response in the counterplan is a8–a7.",
+      "continuationReason": "The shown White third ply is e7–e8. Find a safe retreat before the opponent attacks your invading rook.",
+      "explanation": "Open files and rook access: A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7. Main illustration: e1–e7 a8–a7 e7–e8 g8–h7 e8–e6. Alternative: e1–e6 a8–a7 e6–e8 g8–h7 e8–e6. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is a8–a7; the independent response in the counterplan is a8–a7. The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After e1–e7, what does a8–a7 change?",
+        "defenderIdea": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is a8–a7; the independent response in the counterplan is a8–a7.",
+        "continuation": "Find a safe retreat before the opponent attacks your invading rook. White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative a8–a7 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "e1e6",
+              "a8a7",
+              "e6e8",
+              "g8h7",
+              "e8e6"
+            ],
+            "explanation": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is a8–a7; the independent response in the counterplan is a8–a7. White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7. Compare e1–e6 a8–a7 e6–e8 g8–h7 e8–e6 to e1–e7 a8–a7 e7–e8 g8–h7 e8–e6 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Open files and rook access",
+        "focus": "A rook's invasion succeeds only if it can survive lateral checks and attacks.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "planContrast": "White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7.",
+        "defenderPlan": "The defender can challenge the seventh rank from another file or threaten a rook exchange.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Find a safe retreat before the opponent attacks your invading rook.",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "modelLine": "e1e7 a8a7 e7e8 g8h7 e8e6",
+        "alternativeLine": "e1e6 a8a7 e6e8 g8h7 e8e6",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider e1–e7 with a king on g1 and another pawn on h2?",
+            "answer": "A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers a8–a7 after e1–e7. Reconstruct White's e7–e8, and explain what still needs verification.",
+            "answer": "The example continues e1–e7 a8–a7 e7–e8. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is a8–a7; the independent response in the counterplan is a8–a7. Find a safe retreat before the opponent attacks your invading rook. No automatic material or king-safety verdict follows from three plies.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers e1–e7 and e1–e6; the respective Black answers are a8–a7 and a8–a7. Which asset survives and which weakness changes?",
+            "answer": "Main line: e1–e7 a8–a7 e7–e8 g8–h7 e8–e6. Alternative: e1–e6 a8–a7 e6–e8 g8–h7 e8–e6. A rook's invasion succeeds only if it can survive lateral checks and attacks. The defender can challenge the seventh rank from another file or threaten a rook exchange. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-35",
+      "title": "Open files and rook access: pieces versus pawn assets",
+      "source": "authored",
+      "sourceLabel": "P109 · Open files and rook access · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "1k1r4/p7/5p2/4p3/4P3/5P2/2P5/1K5R b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "d8d2",
+      "principalVariation": [
+        "d8d2",
+        "h1h2",
+        "d2d1",
+        "b1a2",
+        "d1d3"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are d8–d2 h1–h2 d2–d1; evaluate the resulting board rather than naming a forced win. A rook's invasion succeeds only if it can survive lateral checks and attacks. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2.",
+      "continuationReason": "The shown Black third ply is d2–d1. Find a safe retreat before the opponent attacks your invading rook.",
+      "explanation": "Open files and rook access: A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are d8–d2 h1–h2 d2–d1; evaluate the resulting board rather than naming a forced win. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Main illustration: d8–d2 h1–h2 d2–d1 b1–a2 d1–d3. Alternative: d8–d3 h1–h2 d3–d1 b1–a2 d1–d3. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After d8–d2, what does h1–h2 change?",
+        "defenderIdea": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2.",
+        "continuation": "Find a safe retreat before the opponent attacks your invading rook. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative h1–h2 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "d8d3",
+              "h1h2",
+              "d3d1",
+              "b1a2",
+              "d1d3"
+            ],
+            "explanation": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Compare d8–d3 h1–h2 d3–d1 b1–a2 d1–d3 to d8–d2 h1–h2 d2–d1 b1–a2 d1–d3 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Open files and rook access",
+        "focus": "A rook's invasion succeeds only if it can survive lateral checks and attacks.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are d8–d2 h1–h2 d2–d1; evaluate the resulting board rather than naming a forced win.",
+        "planContrast": "Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2.",
+        "defenderPlan": "The defender can challenge the seventh rank from another file or threaten a rook exchange.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Find a safe retreat before the opponent attacks your invading rook.",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are d8–d2 h1–h2 d2–d1; evaluate the resulting board rather than naming a forced win.",
+        "modelLine": "d8d2 h1h2 d2d1 b1a2 d1d3",
+        "alternativeLine": "d8d3 h1h2 d3d1 b1a2 d1d3",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider d8–d2 with a king on b8 and another pawn on a7?",
+            "answer": "A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The first three recorded plies are d8–d2 h1–h2 d2–d1; evaluate the resulting board rather than naming a forced win. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers h1–h2 after d8–d2. Reconstruct Black's d2–d1, and explain what still needs verification.",
+            "answer": "The example continues d8–d2 h1–h2 d2–d1. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h1–h2; the independent response in the counterplan is h1–h2. Find a safe retreat before the opponent attacks your invading rook. No automatic material or king-safety verdict follows from three plies.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers d8–d2 and d8–d3; the respective White answers are h1–h2 and h1–h2. Which asset survives and which weakness changes?",
+            "answer": "Main line: d8–d2 h1–h2 d2–d1 b1–a2 d1–d3. Alternative: d8–d3 h1–h2 d3–d1 b1–a2 d1–d3. A rook's invasion succeeds only if it can survive lateral checks and attacks. The defender can challenge the seventh rank from another file or threaten a rook exchange. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-36",
+      "title": "Open files and rook access: recalculate after resistance",
+      "source": "authored",
+      "sourceLabel": "P109 · Open files and rook access · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 4,
+      "fen": "6kr/8/4p3/3p4/3P4/4P3/1P5P/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "a1a3",
+      "principalVariation": [
+        "a1a3",
+        "h8h6",
+        "a3c3",
+        "h6h5",
+        "c3c7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "strategy.piece-activity"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. A rook's invasion succeeds only if it can survive lateral checks and attacks. White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+      "continuationReason": "The shown White third ply is a3–c3. Find a safe retreat before the opponent attacks your invading rook.",
+      "explanation": "Open files and rook access: A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6. Main illustration: a1–a3 h8–h6 a3–c3 h6–h5 c3–c7. Alternative: a1–a4 h8–h6 a4–b4 h6–h5 b4–b7. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After a1–a3, what does h8–h6 change?",
+        "defenderIdea": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6.",
+        "continuation": "Find a safe retreat before the opponent attacks your invading rook. White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative h8–h6 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "a1a4",
+              "h8h6",
+              "a4b4",
+              "h6h5",
+              "b4b7"
+            ],
+            "explanation": "The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6. Compare a1–a4 h8–h6 a4–b4 h6–h5 b4–b7 to a1–a3 h8–h6 a3–c3 h6–h5 c3–c7 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Open files and rook access",
+        "focus": "A rook's invasion succeeds only if it can survive lateral checks and attacks.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White.",
+        "planContrast": "White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6.",
+        "defenderPlan": "The defender can challenge the seventh rank from another file or threaten a rook exchange.",
+        "misconception": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Find a safe retreat before the opponent attacks your invading rook.",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White.",
+        "modelLine": "a1a3 h8h6 a3c3 h6h5 c3c7",
+        "alternativeLine": "a1a4 h8h6 a4b4 h6h5 b4b7",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider a1–a3 with a king on g1 and another pawn on h2?",
+            "answer": "A rook's invasion succeeds only if it can survive lateral checks and attacks. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's h8–h6 reply calls for a different second decision from White. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers h8–h6 after a1–a3. Reconstruct White's a3–c3, and explain what still needs verification.",
+            "answer": "The example continues a1–a3 h8–h6 a3–c3. The defender can challenge the seventh rank from another file or threaten a rook exchange. Specifically, the documented main response is h8–h6; the independent response in the counterplan is h8–h6. Find a safe retreat before the opponent attacks your invading rook. No automatic material or king-safety verdict follows from three plies.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers a1–a3 and a1–a4; the respective Black answers are h8–h6 and h8–h6. Which asset survives and which weakness changes?",
+            "answer": "Main line: a1–a3 h8–h6 a3–c3 h6–h5 c3–c7. Alternative: a1–a4 h8–h6 a4–b4 h6–h5 b4–b7. A rook's invasion succeeds only if it can survive lateral checks and attacks. The defender can challenge the seventh rank from another file or threaten a rook exchange. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "The seventh rank is not a permanent outpost just because a rook reaches it. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-37",
+      "title": "Passed pawns and resistance: the defender has a vote",
+      "source": "authored",
+      "sourceLabel": "P109 · Passed pawns and resistance · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1k5r/p7/8/4pp2/4PP2/8/P7/1K5R b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "f5e4",
+      "principalVariation": [
+        "f5e4",
+        "f4e5",
+        "e4e3",
+        "h1h2",
+        "e3e2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Creating a passer is useful only if king support and checking distance permit progress. Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is f4–e5; the independent response in the counterplan is e4–f5.",
+      "continuationReason": "The shown Black third ply is e4–e3. Who can get behind the passer after the pawn exchanges?",
+      "explanation": "Passed pawns and resistance: Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5. Main illustration: f5–e4 f4–e5 e4–e3 h1–h2 e3–e2. Alternative: e5–f4 e4–f5 f4–f3 h1–h2 f3–f2. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is f4–e5; the independent response in the counterplan is e4–f5. A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After f5–e4, what does f4–e5 change?",
+        "defenderIdea": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is f4–e5; the independent response in the counterplan is e4–f5.",
+        "continuation": "Who can get behind the passer after the pawn exchanges? Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on a7, what the kings on b8 and b1 permit, and why the defender's alternative e4–f5 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "e5f4",
+              "e4f5",
+              "f4f3",
+              "h1h2",
+              "f3f2"
+            ],
+            "explanation": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is f4–e5; the independent response in the counterplan is e4–f5. Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5. Compare e5–f4 e4–f5 f4–f3 h1–h2 f3–f2 to f5–e4 f4–e5 e4–e3 h1–h2 e3–e2 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Passed pawns and resistance",
+        "focus": "Creating a passer is useful only if king support and checking distance permit progress.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "planContrast": "Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5.",
+        "defenderPlan": "A rook behind the pawn can force an exchange or freeze its next step.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Who can get behind the passer after the pawn exchanges?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute.",
+        "modelLine": "f5e4 f4e5 e4e3 h1h2 e3e2",
+        "alternativeLine": "e5f4 e4f5 f4f3 h1h2 f3f2",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider f5–e4 with a king on b8 and another pawn on a7?",
+            "answer": "Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on a7 creates an extra wing resource. The extra black a7 pawn offers an additional flank tempo but does not settle the central dispute. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers f4–e5 after f5–e4. Reconstruct Black's e4–e3, and explain what still needs verification.",
+            "answer": "The example continues f5–e4 f4–e5 e4–e3. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is f4–e5; the independent response in the counterplan is e4–f5. Who can get behind the passer after the pawn exchanges? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers f5–e4 and e5–f4; the respective White answers are f4–e5 and e4–f5. Which asset survives and which weakness changes?",
+            "answer": "Main line: f5–e4 f4–e5 e4–e3 h1–h2 e3–e2. Alternative: e5–f4 e4–f5 f4–f3 h1–h2 f3–f2. Creating a passer is useful only if king support and checking distance permit progress. A rook behind the pawn can force an exchange or freeze its next step. The extra a7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-38",
+      "title": "Passed pawns and resistance: conversion is not automatic",
+      "source": "authored",
+      "sourceLabel": "P109 · Passed pawns and resistance · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "r5k1/8/8/2pp4/2PP4/8/1P5P/R5K1 w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "c4d5",
+      "principalVariation": [
+        "c4d5",
+        "c5d4",
+        "d5d6",
+        "a8a7",
+        "d6d7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Creating a passer is useful only if king support and checking distance permit progress. White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is c5–d4; the independent response in the counterplan is d5–c4.",
+      "continuationReason": "The shown White third ply is d5–d6. Who can get behind the passer after the pawn exchanges?",
+      "explanation": "Passed pawns and resistance: Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4. Main illustration: c4–d5 c5–d4 d5–d6 a8–a7 d6–d7. Alternative: d4–c5 d5–c4 c5–c6 a8–a7 c6–c7. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is c5–d4; the independent response in the counterplan is d5–c4. A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After c4–d5, what does c5–d4 change?",
+        "defenderIdea": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is c5–d4; the independent response in the counterplan is d5–c4.",
+        "continuation": "Who can get behind the passer after the pawn exchanges? White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative d5–c4 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "d4c5",
+              "d5c4",
+              "c5c6",
+              "a8a7",
+              "c6c7"
+            ],
+            "explanation": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is c5–d4; the independent response in the counterplan is d5–c4. White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4. Compare d4–c5 d5–c4 c5–c6 a8–a7 c6–c7 to c4–d5 c5–d4 d5–d6 a8–a7 d6–d7 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Passed pawns and resistance",
+        "focus": "Creating a passer is useful only if king support and checking distance permit progress.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "planContrast": "White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4.",
+        "defenderPlan": "A rook behind the pawn can force an exchange or freeze its next step.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Who can get behind the passer after the pawn exchanges?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line.",
+        "modelLine": "c4d5 c5d4 d5d6 a8a7 d6d7",
+        "alternativeLine": "d4c5 d5c4 c5c6 a8a7 c6c7",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider c4–d5 with a king on g1 and another pawn on h2?",
+            "answer": "Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. White's king on g1 and Black's on g8 change the practical cost of opening a line. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers c5–d4 after c4–d5. Reconstruct White's d5–d6, and explain what still needs verification.",
+            "answer": "The example continues c4–d5 c5–d4 d5–d6. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is c5–d4; the independent response in the counterplan is d5–c4. Who can get behind the passer after the pawn exchanges? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers c4–d5 and d4–c5; the respective Black answers are c5–d4 and d5–c4. Which asset survives and which weakness changes?",
+            "answer": "Main line: c4–d5 c5–d4 d5–d6 a8–a7 d6–d7. Alternative: d4–c5 d5–c4 c5–c6 a8–a7 c6–c7. Creating a passer is useful only if king support and checking distance permit progress. A rook behind the pawn can force an exchange or freeze its next step. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-39",
+      "title": "Passed pawns and resistance: pieces versus pawn assets",
+      "source": "authored",
+      "sourceLabel": "P109 · Passed pawns and resistance · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "rk6/p6p/8/6p1/7p/6PP/8/1K4R1 b - - 0 1",
+      "playerColor": "b",
+      "bestMove": "g5g4",
+      "principalVariation": [
+        "g5g4",
+        "h3g4",
+        "h4g3",
+        "g1g3",
+        "b8c7"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on h7 creates an extra wing resource. The first three recorded plies are g5–g4 h3–g4 h4–g3; evaluate the resulting board rather than naming a forced win. Creating a passer is useful only if king support and checking distance permit progress. Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is h3–g4; the independent response in the counterplan is h3–h4.",
+      "continuationReason": "The shown Black third ply is h4–g3. Who can get behind the passer after the pawn exchanges?",
+      "explanation": "Passed pawns and resistance: Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on h7 creates an extra wing resource. The first three recorded plies are g5–g4 h3–g4 h4–g3; evaluate the resulting board rather than naming a forced win. Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4. Main illustration: g5–g4 h3–g4 h4–g3 g1–g3 b8–c7. Alternative: h4–g3 h3–h4 g5–g4 h4–h5 g3–g2. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is h3–g4; the independent response in the counterplan is h3–h4. A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After g5–g4, what does h3–g4 change?",
+        "defenderIdea": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is h3–g4; the independent response in the counterplan is h3–h4.",
+        "continuation": "Who can get behind the passer after the pawn exchanges? Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h7, what the kings on b8 and b1 permit, and why the defender's alternative h3–h4 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "h4g3",
+              "h3h4",
+              "g5g4",
+              "h4h5",
+              "g3g2"
+            ],
+            "explanation": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is h3–g4; the independent response in the counterplan is h3–h4. Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4. Compare h4–g3 h3–h4 g5–g4 h4–h5 g3–g2 to g5–g4 h3–g4 h4–g3 g1–g3 b8–c7 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Passed pawns and resistance",
+        "focus": "Creating a passer is useful only if king support and checking distance permit progress.",
+        "positionIssue": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on h7 creates an extra wing resource. The first three recorded plies are g5–g4 h3–g4 h4–g3; evaluate the resulting board rather than naming a forced win.",
+        "planContrast": "Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4.",
+        "defenderPlan": "A rook behind the pawn can force an exchange or freeze its next step.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Who can get behind the passer after the pawn exchanges?",
+        "context": "In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on h7 creates an extra wing resource. The first three recorded plies are g5–g4 h3–g4 h4–g3; evaluate the resulting board rather than naming a forced win.",
+        "modelLine": "g5g4 h3g4 h4g3 g1g3 b8c7",
+        "alternativeLine": "h4g3 h3h4 g5g4 h4h5 g3g2",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could Black consider g5–g4 with a king on b8 and another pawn on h7?",
+            "answer": "Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, Black plays. Its king occupies b8; White's king occupies b1. The added black pawn on h7 creates an extra wing resource. The first three recorded plies are g5–g4 h3–g4 h4–g3; evaluate the resulting board rather than naming a forced win. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "White answers h3–g4 after g5–g4. Reconstruct Black's h4–g3, and explain what still needs verification.",
+            "answer": "The example continues g5–g4 h3–g4 h4–g3. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is h3–g4; the independent response in the counterplan is h3–h4. Who can get behind the passer after the pawn exchanges? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. Black considers g5–g4 and h4–g3; the respective White answers are h3–g4 and h3–h4. Which asset survives and which weakness changes?",
+            "answer": "Main line: g5–g4 h3–g4 h4–g3 g1–g3 b8–c7. Alternative: h4–g3 h3–h4 g5–g4 h4–h5 g3–g2. Creating a passer is useful only if king support and checking distance permit progress. A rook behind the pawn can force an exchange or freeze its next step. The extra h7 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calc:p109-40",
+      "title": "Passed pawns and resistance: recalculate after resistance",
+      "source": "authored",
+      "sourceLabel": "P109 · Passed pawns and resistance · unscored",
+      "assessmentStatus": "instructional-only",
+      "difficulty": 5,
+      "fen": "1r4k1/6p1/pp6/P7/1P6/8/7P/6KR w - - 0 1",
+      "playerColor": "w",
+      "bestMove": "b4b5",
+      "principalVariation": [
+        "b4b5",
+        "a6b5",
+        "a5b6",
+        "b8b6",
+        "g1f2"
+      ],
+      "skillIds": [
+        "calculation.candidates",
+        "calculation.reply",
+        "calculation.quiet",
+        "calculation.move-order",
+        "pawns.weaknesses"
+      ],
+      "prompt": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's a6–a5 reply calls for a different second decision from White. Creating a passer is useful only if king support and checking distance permit progress. White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5. Calculate five legal plies before comparing plans. Do not assume that either authored variation is objectively best.",
+      "replyReason": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is a6–b5; the independent response in the counterplan is a6–a5.",
+      "continuationReason": "The shown White third ply is a5–b6. Who can get behind the passer after the pawn exchanges?",
+      "explanation": "Passed pawns and resistance: Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's a6–a5 reply calls for a different second decision from White. White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5. Main illustration: b4–b5 a6–b5 a5–b6 b8–b6 g1–f2. Alternative: a5–b6 a6–a5 b4–b5 a5–a4 b6–b7. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is a6–b5; the independent response in the counterplan is a6–a5. A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result. This is unscored instructional practice, not an engine certification.",
+      "defensiveStudy": {
+        "keyQuestion": "After b4–b5, what does a6–b5 change?",
+        "defenderIdea": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is a6–b5; the independent response in the counterplan is a6–a5.",
+        "continuation": "Who can get behind the passer after the pawn exchanges? White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "reflection": "Without the board, explain which pawn is on h2, what the kings on g1 and g8 permit, and why the defender's alternative a6–a5 changes the evaluation.",
+        "variations": [
+          {
+            "label": "Non-cooperative alternative",
+            "moves": [
+              "a5b6",
+              "a6a5",
+              "b4b5",
+              "a5a4",
+              "b6b7"
+            ],
+            "explanation": "A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is a6–b5; the independent response in the counterplan is a6–a5. White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5. Compare a5–b6 a6–a5 b4–b5 a5–a4 b6–b7 to b4–b5 a6–b5 a5–b6 b8–b6 g1–f2 without asserting either is uniquely best."
+          }
+        ]
+      },
+      "strategicImbalanceStudy": {
+        "theme": "Passed pawns and resistance",
+        "focus": "Creating a passer is useful only if king support and checking distance permit progress.",
+        "positionIssue": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's a6–a5 reply calls for a different second decision from White.",
+        "planContrast": "White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5.",
+        "defenderPlan": "A rook behind the pawn can force an exchange or freeze its next step.",
+        "misconception": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result.",
+        "transferQuestion": "Who can get behind the passer after the pawn exchanges?",
+        "context": "In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's a6–a5 reply calls for a different second decision from White.",
+        "modelLine": "b4b5 a6b5 a5b6 b8b6 g1f2",
+        "alternativeLine": "a5b6 a6a5 b4b5 a5a4 b6b7",
+        "exercises": [
+          {
+            "prompt": "Identify the main imbalance before calculating. Why could White consider b4–b5 with a king on g1 and another pawn on h2?",
+            "answer": "Creating a passer is useful only if king support and checking distance permit progress. In this constructed position, White plays. Its king occupies g1; Black's king occupies g8. The added white pawn on h2 creates an extra wing resource. Black's a6–a5 reply calls for a different second decision from White. Name a concrete improving square or pawn target and the next defender resource before judging compensation.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Black answers a6–b5 after b4–b5. Reconstruct White's a5–b6, and explain what still needs verification.",
+            "answer": "The example continues b4–b5 a6–b5 a5–b6. A rook behind the pawn can force an exchange or freeze its next step. Specifically, the documented main response is a6–b5; the independent response in the counterplan is a6–a5. Who can get behind the passer after the pawn exchanges? No automatic material or king-safety verdict follows from three plies.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          },
+          {
+            "prompt": "Compare the five-ply main example with independent resistance. White considers b4–b5 and a5–b6; the respective Black answers are a6–b5 and a6–a5. Which asset survives and which weakness changes?",
+            "answer": "Main line: b4–b5 a6–b5 a5–b6 b8–b6 g1–f2. Alternative: a5–b6 a6–a5 b4–b5 a5–a4 b6–b7. Creating a passer is useful only if king support and checking distance permit progress. A rook behind the pawn can force an exchange or freeze its next step. The extra h2 pawn affects the wing count, but not by itself a guaranteed conversion.",
+            "repair": "A distant passer in the diagram is not automatically a win. An authored legal continuation is not a proof of a unique best move or a forced result."
+          }
+        ]
+      }
+    }
+  ]
+}
