@@ -1,11 +1,8 @@
-import { readFileSync } from "node:fs";
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
 import { hydrateMasterGames } from "./masterGames";
+import asset from "../../public/data/model-games/p113-master-games-v1.json";
 
-const asset = JSON.parse(readFileSync(
-  new URL("../../public/data/model-games/p113-master-games-v1.json", import.meta.url), "utf8",
-)) as unknown;
 
 describe("P113 source-qualified master-game journeys", () => {
   it("contains eight complete replayable historical games and 32 independent decision points", () => {
