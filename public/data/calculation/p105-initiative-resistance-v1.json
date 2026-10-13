@@ -993,7 +993,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Poisoned blocking rook",
       "difficulty": 5,
-      "fen": "6k1/5r2/8/8/8/8/P7/4Q1K1 w - - 0 1",
+      "fen": "6k1/5r2/8/8/8/8/P7/2B1Q1K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -1012,13 +1012,13 @@
       "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. Determine where the defender's king can actually go and which check or capture comes next.",
       "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook.",
       "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
-      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
       "defensiveStudy": {
         "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
         "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
         "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
-        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
         "variations": [
           {
             "label": "Strong defensive king escape",
@@ -1049,7 +1049,7 @@
         "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
         "variant": "White a-pawn",
-        "context": "The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook.",
+        "context": "The extra a2 pawn remains after the defender interposes on f8; it cannot justify sacrificing a queen for a defended rook. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
         "independentExercises": [
           {
             "question": "Identify the correct forcing move and every plausible king escape or interposition.",
@@ -1075,7 +1075,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Poisoned blocking rook",
       "difficulty": 5,
-      "fen": "6k1/5r2/8/8/8/8/1P6/4Q1K1 w - - 0 1",
+      "fen": "6k1/5r2/8/8/8/8/1P6/2B1Q1K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -1094,13 +1094,13 @@
       "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. Determine where the defender's king can actually go and which check or capture comes next.",
       "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged.",
       "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
-      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
       "defensiveStudy": {
         "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
         "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
         "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
-        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
         "variations": [
           {
             "label": "Strong defensive king escape",
@@ -1131,7 +1131,7 @@
         "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
         "variant": "White b-pawn",
-        "context": "The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged.",
+        "context": "The b2 pawn could matter in a simplified queen versus rook ending, but Black's direct ...Kxf8 after Qxf8+ is unchanged. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
         "independentExercises": [
           {
             "question": "Identify the correct forcing move and every plausible king escape or interposition.",
@@ -1157,7 +1157,7 @@
       "source": "authored",
       "sourceLabel": "P105 · Poisoned blocking rook",
       "difficulty": 5,
-      "fen": "6k1/5r2/8/8/8/8/2P5/4Q1K1 w - - 0 1",
+      "fen": "6k1/5r2/8/8/8/8/2P5/2B1Q1K1 w - - 0 1",
       "playerColor": "w",
       "skillIds": [
         "calculation.candidates",
@@ -1176,13 +1176,13 @@
       "prompt": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Material-specific variant: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. Determine where the defender's king can actually go and which check or capture comes next.",
       "replyReason": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Variance in the position: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture.",
       "continuationReason": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Count real captured material before making an advantage claim.",
-      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line.",
+      "explanation": "Original attack and resistance concept — Poisoned blocking rook. Attacking principle: Distinguish a defender's desperate sacrifice from a protected interposition. Count king recaptures before selecting the visually forcing move. Independent exercise setup: Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook. Main legal five-ply candidate: e1e8 f7f8 e8e6 g8h8 e6f6. Defender's separate five-ply reply: e1e8 f7f8 e8d8 g8h7 d8d5. Tempting contrasting plan: e1e8 f7f8 e8f8. Specific defensive answer: ...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances. Evaluation after five plies: The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate. Repair the misconception: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Variant: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. No unproven mate, insufficiently calculated sacrifice, or engine-unique best move is treated as a verified result; the reference is a teaching line. White also has a light-squared bishop on c1, with a potential diagonal toward h6; that piece does not defend f8 and therefore does not rescue Qxf8+?? Kxf8.",
       "defensiveStudy": {
         "keyQuestion": "Qe8+ permits ...Rf8, a defensive interposition that Black's king on g8 supports. The attacking queen should preserve its long-range checks instead of capturing a protected rook.",
         "defenderIdea": "...Rf8 blocks the check. Qxf8+? Kxf8 sacrifices a queen for a rook; a queen move to e6 or d8 keeps better practical chances.",
         "continuation": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "misconception": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
-        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture.",
+        "reflection": "Rehearse the king's escape squares, whether a rook blocks the queen, and the next check after five plies. Correct the tempting idea explicitly: Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook. Pawn/material context: White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. Remember the white c1 bishop: check its diagonal before claiming a rook capture is defended.",
         "variations": [
           {
             "label": "Strong defensive king escape",
@@ -1213,7 +1213,7 @@
         "materialAndKingSafety": "The queen continues checking on f6 without throwing away the material advantage. The short excerpt does not establish a forced mate.",
         "badPlan": "Qxf8+ is a textbook example of a forcing capture that fails to ...Kxf8 because the king protects the rook.",
         "variant": "White c-pawn",
-        "context": "White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture.",
+        "context": "White owns c2 as a future counterpasser; the player must still avoid the immediate rook-supported ...Kxf8 recapture. A white bishop on c1 can influence the h6 diagonal later but cannot shield the poisoned f8 capture.",
         "independentExercises": [
           {
             "question": "Identify the correct forcing move and every plausible king escape or interposition.",
