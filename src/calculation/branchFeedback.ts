@@ -30,5 +30,14 @@ export function calculationMisconceptions(position:CalculationPosition,evidence:
     details.push(`Opponent reply: do not assume the opponent helps your plan. ${position.replyReason ?? "Rebuild the position and find the strongest legal response."}`);
   if(!evidence.continuationScore)
     details.push(`Continuation: calculate another full ply after the response. ${position.continuationReason ?? "Compare the resulting pieces and king safety."}`);
+  if(position.defensiveStudy){
+    details.push(`Defensive misconception: ${position.defensiveStudy.misconception}`);
+    for(const branch of position.defensiveStudy.variations){
+      const line=legalCalculationBranch({...position,
+        bestMove:branch.moves[0],principalVariation:branch.moves});
+      if(line)details.push(`Alternative: ${line.map(move=>move.san).join(" ")} — ${branch.explanation}`);
+    }
+    details.push(position.defensiveStudy.reflection);
+  }
   return details.length?details:["The recorded three-ply line was reconstructed. Retention still requires a later independent attempt."];
 }
