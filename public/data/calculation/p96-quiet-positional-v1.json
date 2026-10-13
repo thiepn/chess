@@ -100,8 +100,8 @@
         "calculation.reply"
       ],
       "prompt": "A knight on f3 can visit g5 unless Black controls it. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
-      "fen": "6k1/3p1ppp/5n2/8/8/5N2/3PP3/6K1 w - - 0 1",
-      "playerColor": "w",
+      "fen": "6k1/3p1ppp/5n2/8/8/5N2/3PP3/6K1 b - - 0 1",
+      "playerColor": "b",
       "bestMove": "h7h6",
       "principalVariation": [
         "h7h6",
@@ -143,7 +143,7 @@
         "calculation.reply"
       ],
       "prompt": "Kh1 adjusts king safety while preserving the f2 pawn shield. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
-      "fen": "3q2k1/3p4/8/2b1p3/2B1P3/8/5PPP/3Q1RK1 w - - 0 1",
+      "fen": "3q2k1/3p1p2/8/2b1p3/2B1P3/8/5PPP/3Q1RK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "g1h1",
       "principalVariation": [
@@ -470,9 +470,9 @@
             "moves": [
               "d1e2",
               "b8c6",
-              "f1c4"
+              "g1h1"
             ],
-            "explanation": "Immediate pawn advances may leave the center loose. Compare the different move order or defender's choice with d1e2 b8c6 b1c3; neither line is claimed unique."
+            "explanation": "After Qe2 and ...Nc6, Kh1 makes a quiet king-safety move instead of immediately developing the bishop. The queen on e2 temporarily blocks the original f1–c4 diagonal."
           }
         ]
       }
@@ -487,7 +487,7 @@
         "calculation.visualization"
       ],
       "prompt": "Re1 works behind e4 and prepares supported central expansion. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
-      "fen": "5nk1/8/2n5/4p3/2B1P3/3P1N2/2P5/3Q1RK1 w - - 0 1",
+      "fen": "5nk1/5p2/2n5/4p3/2B1P3/3P1N2/2P5/3Q1RK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "f1e1",
       "principalVariation": [
@@ -745,7 +745,7 @@
         "calculation.visualization"
       ],
       "prompt": "g3 is necessary to vacate the bishop's destination square. Before moving, compare at least two candidates and calculate Black's or White's most active sensible response.",
-      "fen": "1n4k1/8/5n2/3p4/3P4/8/2P3P1/5BK1 w - - 0 1",
+      "fen": "1n2p1k1/8/5n2/3p4/3P4/8/2P3P1/5BK1 w - - 0 1",
       "playerColor": "w",
       "bestMove": "g2g3",
       "principalVariation": [
@@ -1414,11 +1414,11 @@
           {
             "label": "Alternative plan",
             "moves": [
-              "c1e3",
+              "c1d2",
               "c8d7",
-              "e3d2"
+              "d2c3"
             ],
-            "explanation": "The longest diagonal is not necessarily the strongest plan. Compare the different move order or defender's choice with c1d2 c8d7 d2a5; neither line is claimed unique."
+            "explanation": "Bd2 ...Bd7 Bc3 points along the c3–g7 diagonal, while the principal continuation Ba5 reaches the a5 diagonal. The e3 square is occupied by White's own pawn."
           }
         ]
       }
