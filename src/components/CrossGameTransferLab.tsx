@@ -128,14 +128,21 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       [active.source.id]: { ...(previous[active.source.id] ?? emptyMasterDraft()), ...patch },
     }));
   }
+  function confirmLeavingPortable() {
+    return !portableText.trim() ||
+      window.confirm("Leave this untransferred portable note? Copy it privately before switching pairs.");
+  }
   function choose(id: string) {
-    if (id !== currentId && portableText.trim() &&
-      !window.confirm("Leave this untransferred portable note? Copy it privately before switching pairs.")) return;
+    if (id !== currentId && !confirmLeavingPortable()) return;
     setSelectedId(id);
     setShowHint(0);
     setShownMoves([false, false]);
     setPortableText("");
     setPortableStatus("");
+  }
+  function openSource(gameId: string, checkpointId: string) {
+    if (!confirmLeavingPortable()) return;
+    onOpenPosition(gameId, checkpointId);
   }
   function restorePortable() {
     try {
@@ -250,7 +257,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                     {shownMoves[index] ? "Before historical move" : "After historical move"}
                   </button>
                   <button type="button" className="secondary"
-                    onClick={() => onOpenPosition(source.gameId, source.checkpointId)}>
+                    onClick={() => openSource(source.gameId, source.checkpointId)}>
                     Open complete game <ChevronRight size={15} />
                   </button>
                 </div>}
@@ -259,7 +266,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           </div>}
           {counterfactualOpen && <Suspense fallback={<p role="status">Opening the chess variation workshop…</p>}>
             <CounterfactualLab studies={cases} active={active} draft={draft}
-              onChange={edit} onOpenPosition={onOpenPosition}/>
+              onChange={edit} onOpenPosition={openSource}/>
           </Suspense>}
           <div className="p114-writing">
             <h4>{copy.firstHeading}</h4>

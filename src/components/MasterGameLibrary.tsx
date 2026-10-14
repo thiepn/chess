@@ -117,7 +117,8 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
     setTransferOpen(false);
   }
   function selectDecision(index: number) {
-    if (!current || (index !== decisionIndex && !confirmLeavingVariation())) return;
+    if (!current || ((index !== decisionIndex ||
+      viewPly !== current.game.checkpoints[index]?.ply) && !confirmLeavingVariation())) return;
     setDecisionIndex(index);
     setViewPly(current.game.checkpoints[index].ply);
   }
