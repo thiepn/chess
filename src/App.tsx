@@ -281,6 +281,7 @@ export default function App() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => repo.getStatus());
   const [mode, setMode] = useState<SessionMode>("standard");
   const [previewIndex, setPreviewIndex] = useState(0);
+  const [optionalStudiesOpen, setOptionalStudiesOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
@@ -2995,6 +2996,7 @@ export default function App() {
               </div>
             </section>
           ) : (
+          <>
           <section className="train-room" aria-labelledby="train-room-title">
             <aside className="train-room-rail" aria-label="Training session">
               <div className="train-room-rail-heading">
@@ -3129,16 +3131,6 @@ export default function App() {
                 </button>
               </div>
 
-              <Suspense fallback={<p role="status">Loading strategic studies…</p>}>
-                <StrategicStudyLibrary
-                  positions={[...strategicPositions, ...endgameDecisionPositions]}
-                  loading={catalogStatus.pending > 0}
-                  failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
-                  onRetry={retryFailedCalculationSources}
-                  onStart={openStrategicStudy}
-                />
-              </Suspense>
-
               <dl className="train-session-facts">
                 <div>
                   <dt>Course</dt>
@@ -3175,6 +3167,25 @@ export default function App() {
               </div>
             </aside>
           </section>
+          <section className="train-optional-studies" aria-label="Optional positional studies">
+            <button type="button" className="secondary" aria-expanded={optionalStudiesOpen}
+              aria-controls={optionalStudiesOpen ? "train-optional-study-content" : undefined}
+              onClick={() => setOptionalStudiesOpen((opened) => !opened)}>
+              {optionalStudiesOpen ? "Close positional studies" : "Explore optional positional studies"}
+            </button>
+            {optionalStudiesOpen && <div id="train-optional-study-content">
+              <Suspense fallback={<p role="status">Loading strategic studies…</p>}>
+                <StrategicStudyLibrary
+                  positions={[...strategicPositions, ...endgameDecisionPositions]}
+                  loading={catalogStatus.pending > 0}
+                  failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
+                  onRetry={retryFailedCalculationSources}
+                  onStart={openStrategicStudy}
+                />
+              </Suspense>
+            </div>}
+          </section>
+          </>
           )
         ) : page === "learn" ? (
           learnSection === "openings" ? (

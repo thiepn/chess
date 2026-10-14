@@ -270,16 +270,6 @@ export function GameStoryView({
         </div>
       </header>
 
-      {onRefreshAnalysis && (
-        <div className="review-v2-refresh">
-          <button className="secondary" type="button" disabled={refreshingAnalysis}
-            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
-            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
-          </button>
-          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
-        </div>
-      )}
-
       <div className="review-phase-strip" aria-label="Game phases">
         {story.phases.map((phase) => (
           <button
@@ -308,7 +298,7 @@ export function GameStoryView({
       <section className="review-workspace-v2">
         <div className="review-board-v2">
           <ChessBoard
-            key={`${selectedPly}-${preview}-${boardFen}`}
+            key={game.id}
             fen={boardFen}
             orientation={game.playerColor}
             disabled
@@ -483,6 +473,16 @@ export function GameStoryView({
           </div>
         </aside>
       </section>
+
+      {onRefreshAnalysis && (
+        <div className="review-v2-refresh">
+          <button className="secondary" type="button" disabled={refreshingAnalysis}
+            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
+            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
+          </button>
+          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
+        </div>
+      )}
 
       <section className="review-eval-strip" aria-label="Critical moment evaluation trace">
         <div className="review-eval-label">

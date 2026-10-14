@@ -920,3 +920,33 @@ test("P91 endgame instructional content remains original, available on demand, a
  await expect(page.getByRole("button",{name:"Keep the rook safely out of the enemy king"})).toBeVisible();
  await assertNoHorizontalOverflow(page,"P91 retained endgame instruction");
 });
+
+// P124: focused source-layout acceptance, independent of approved screenshot pixels.
+test("P124 optional positional study opens without displacing the training preview", async ({ page }) => {
+  await open(page, "/train", ".train-room");
+  const trigger = page.getByRole("button", { name: "Explore optional positional studies" });
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator(".train-room-coach .strategic-library")).toHaveCount(0);
+  await expect(page.locator(".train-optional-studies .strategic-library")).toHaveCount(0);
+  await trigger.click();
+  await expect(page.locator(".train-optional-studies .strategic-library")).toBeVisible();
+  await expect(page.locator(".train-room-coach .strategic-library")).toHaveCount(0);
+  await page.getByRole("button", { name: "Close positional studies" }).click();
+  await expect(page.locator(".train-optional-studies .strategic-library")).toHaveCount(0);
+});
+
+test("P124 Review reanalysis remains available after the primary board workspace", async ({ page }) => {
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  const summary = page.locator(".review-phase-strip");
+  const board = page.locator(".review-workspace-v2");
+  const refresh = page.getByRole("button", { name: "Refresh engine review" });
+  await expect(summary).toBeVisible();
+  await expect(board).toBeVisible();
+  await expect(refresh).toHaveCount(1);
+  const ordering = await refresh.evaluate((node) => {
+    const workspace = document.querySelector(".review-workspace-v2");
+    return Boolean(workspace && (workspace.compareDocumentPosition(node) &
+      Node.DOCUMENT_POSITION_FOLLOWING));
+  });
+  expect(ordering).toBe(true);
+});
