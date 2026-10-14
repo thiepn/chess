@@ -22,6 +22,7 @@ const CounterfactualLab = lazy(() => import("./CounterfactualLab").then((mod) =>
 const LENGTH = 1200;
 export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [cases, setCases] = useState<TransferCaseStudy[] | null>(null);
+  const [copy, setCopy] = useState<Record<string,string>>({});
   const [rejected, setRejected] = useState(0);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("");
@@ -45,7 +46,15 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       })
       .then((payload) => {
         if (abort.signal.aborted) return;
+        const original = (payload as {ui?: Record<string,string>}).ui;
+        if (!original || ["intro","portable","rehearsal","historical","session",
+          "comparePlaceholder","defensePlaceholder","transferPlaceholder",
+          "portablePlaceholder","related","relatedCaveat","firstHeading",
+          "secondHeading","thirdHeading","comparisonHeading","sourceRepairHeading"]
+          .some((key) => typeof original[key] !== "string" || !original[key].trim()))
+          throw new Error("Original study guidance incomplete");
         const result = hydrateTransferCases(payload, games);
+        setCopy(original);
         setCases(result.accepted);
         setRejected(result.rejected);
         setError(result.accepted.length ? "" : "No paired positions have two valid, complete source games.");
@@ -144,8 +153,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       <header className="p114-title">
         <div>
           <p className="eyebrow">P114 · COMPARATIVE STRATEGIC DECISIONS</p>
-          <h2>One principle. Two positions. Different decisions.</h2>
-          <p>Compare real historical positions, justify your plan and the opponent's resistance, then explain what transfers. All responses are unscored and remain local to this browser session.</p>
+          <h2>{copy.comparisonHeading}</h2>
+          <p>{copy.intro}</p>
         </div>
         <span role="status">{reviewed}/{cases?.length ?? 24} self-assessed</span>
       </header>
@@ -176,7 +185,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
         {active && <div className="p114-session" key={active.source.id}>
           <details className="p117-portable">
             <summary>Carry this pair into another session</summary>
-            <p>Export an explicit, user-controlled text note; paste it back for the same historical source pair within 30 days. This contains your answers and candidate lines, but no account identifier. It is not automatic cloud sync.</p>
+            <p>{copy.portable}</p>
             <div className="p115-actions">
               <button type="button" className="secondary" disabled={!owner || restoredOwner !== owner}
                 onClick={() => { setPortableText(exportPairNotes(active, draft)); setPortableStatus("Portable note prepared. Copy its text to a private place you control."); }}>
@@ -187,14 +196,14 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
             </div>
             <label htmlFor="p117-portable-text">Portable study note (copy or paste)</label>
             <textarea id="p117-portable-text" rows={4} maxLength={16000}
-              placeholder="Use Prepare to export, or paste a previously saved note for this pair."
+              placeholder={copy.portablePlaceholder}
               value={restoredOwner === owner ? portableText : ""} onChange={(event) => { setPortableText(event.target.value); setPortableStatus(""); }} />
             <p role="status">{portableStatus}</p>
           </details>
-          {related && <p className="p114-integrity">Apply the idea in another verified original game:
+          {related && <p className="p114-integrity">{copy.related}
             {" "}<button type="button" className="secondary" onClick={() => choose(related.source.id)}>
               {related.source.title}
-            </button>. Shared historical source does not mean the same best move.
+            </button>. {copy.relatedCaveat}
           </p>}
           <header className="p114-session-head">
             <p className="eyebrow">STUDY {activeIndex + 1} / {cases.length} · {active.source.theme}</p>
@@ -203,7 +212,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           </header>
           <div className="p115-entry">
             <div><strong>P115 · Independent candidate and defender rehearsal</strong>
-              <p>Play both sides of an original strategic problem, inspect actual legal consequences, and compare with the recorded continuation only after revealing the P114 model.</p></div>
+              <p>{copy.rehearsal}</p></div>
             <button type="button" className="secondary" aria-expanded={counterfactualOpen}
               onClick={() => setCounterfactualOpen((open) => !open)}>
               {counterfactualOpen ? "Return to side-by-side sources" : "Rehearse legal candidates"}
@@ -242,15 +251,15 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
               onChange={edit} onOpenPosition={onOpenPosition}/>
           </Suspense>}
           <div className="p114-writing">
-            <h4>1 · Decide independently</h4>
+            <h4>{copy.firstHeading}</h4>
             <label htmlFor="p114-compare">Which details require a different plan?</label>
             <textarea id="p114-compare" rows={4} maxLength={LENGTH} value={draft.plan}
-              placeholder="Compare pawn structure, development, king safety and a legal candidate for each board."
+              placeholder={copy.comparePlaceholder}
               onChange={(event) => edit({ plan: event.target.value, revealed: false, mark: null })} />
             <label htmlFor="p114-resist">What can the opponent do to resist each plan?</label>
             <p>{active.source.resistancePrompt}</p>
             <textarea id="p114-resist" rows={3} maxLength={LENGTH} value={draft.defense}
-              placeholder="One concrete defender reply or forcing resource per position."
+              placeholder={copy.defensePlaceholder}
               onChange={(event) => edit({ defense: event.target.value, revealed: false, mark: null })} />
             {!draft.revealed && <div className="p114-hints">
               {active.source.hints.slice(0, showHint).map((hint, i) => <p key={i}><strong>Hint {i + 1}:</strong> {hint}</p>)}
@@ -260,15 +269,15 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                 onClick={() => edit({ revealed: true })}><Eye size={15} /> Compare with source</button>
             </div>}
             {draft.revealed && <section className="p114-model" aria-live="polite">
-              <h4>2 · Verify against the recorded games</h4>
+              <h4>{copy.secondHeading}</h4>
               <p>{active.source.model}</p>
-              <h5>Specific misconception and repair</h5><p>{active.source.misconception}</p>
-              <p className="p114-integrity">The displayed moves are factual PGN continuations; their objective evaluation and unique optimality are not certified.</p>
-              <h4>3 · Transfer without copying the move</h4>
+              <h5>{copy.sourceRepairHeading}</h5><p>{active.source.misconception}</p>
+              <p className="p114-integrity">{copy.historical}</p>
+              <h4>{copy.thirdHeading}</h4>
               <p>{active.source.transferPrompt}</p>
               <label htmlFor="p114-transfer">My revised transferable principle</label>
               <textarea id="p114-transfer" rows={3} maxLength={LENGTH} value={draft.transfer}
-                placeholder="Describe the decision criterion and a possible failure case in your own game."
+                placeholder={copy.transferPlaceholder}
                 onChange={(event) => edit({ transfer: event.target.value, mark: null })} />
               <div className="p114-marks" role="group" aria-label="Unscored comparison self-check">
                 <button type="button" className={draft.mark === "retry" ? "selected" : ""}
@@ -288,7 +297,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                 <RotateCcw size={14}/> Clear this draft
               </button>
             </footer>
-            <p className="p114-integrity">Original text is visible only after your first responses. Drafts use the existing P113 owner-scoped session mechanism (not Account mastery, grades, or synchronized progress).</p>
+            <p className="p114-integrity">{copy.session}</p>
           </div>
         </div>}
       </>}
