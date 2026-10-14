@@ -409,3 +409,9 @@
     overscroll-behavior: contain;
   }
 }
+
+/* P124: optional, independently authored positions follow the main training room;
+   the original first-viewport coach and board remain dedicated to today's plan. */
+.train-optional-studies{width:min(100%,1120px);margin:28px auto 36px;padding:18px 0;border-top:1px solid var(--chess-color-separator)}
+.train-optional-studies>button{max-width:100%;white-space:normal;text-align:left}
+.train-optional-studies>div{margin-top:16px}
