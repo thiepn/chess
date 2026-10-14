@@ -374,6 +374,378 @@
         "Write down each game's observed three-ply sequence only after comparing the two board structures."
       ],
       "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "piece-invasion-versus-file-control",
+      "theme": "Invasion squares",
+      "title": "A knight in the center, or a rook on the c-file?",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-1",
+        "ply": 14,
+        "move": "Nd4",
+        "reply": "O-O-O",
+        "continuation": "Be3"
+      },
+      "second": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-3",
+        "ply": 43,
+        "move": "Rc8",
+        "reply": "Na5",
+        "continuation": "Ba8"
+      },
+      "comparePrompt": "Compare Black's knight move ...Nd4 to Black's ...Rc8: whose next move challenges the newly occupied square or file, and which side gets time to coordinate?",
+      "model": "Lasker–Janowski records ...Nd4, O-O-O, ...Be3. The first move claims a central knight square while White chooses long castling. Steinitz–Sellman records ...Rc8, Na5, ...Ba8: Black chooses a rook file while White redirects a knight and Black repositions a bishop. Central occupation and file pressure are distinct priorities; ask what the opponent can attack immediately.",
+      "resistancePrompt": "Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it?",
+      "transferPrompt": "Write an opponent reply to each plan, then decide whether to defend, trade, or switch targets. A piece's active square is useful only when supported by the position.",
+      "misconception": "Mistaking an impressive central landing square or open file for a completed plan. Identify the defender's best accessible square and the actual recorded response.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "two-bishop-directions",
+      "theme": "Minor-piece threats",
+      "title": "Bishop activity can aim at a king or at development",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-2",
+        "ply": 33,
+        "move": "Bg4",
+        "reply": "Bg2",
+        "continuation": "Bh3"
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-1",
+        "ply": 9,
+        "move": "Be7",
+        "reply": "Nc3",
+        "continuation": "O-O"
+      },
+      "comparePrompt": "Compare ...Bg4 in Réti–Alekhine with ...Be7 in Sämisch–Nimzowitsch: which bishop move makes an immediate question for the opponent and which supports safe king development?",
+      "model": "Réti–Alekhine records ...Bg4, Bg2, ...Bh3. Black's bishop visits aggressive diagonals while White develops. Sämisch–Nimzowitsch records ...Be7, Nc3, ...O-O: Black completes a safe castling route and White develops a knight. There is no universal instruction to develop a bishop to its most advanced legal square.",
+      "resistancePrompt": "How does White contest a developed bishop in each game, and does the bishop need to retreat or exchange to remain useful?",
+      "transferPrompt": "Try a quiet developing alternative in each position and compare what it does to the central pawns and castling route.",
+      "misconception": "Assuming bishop advancement creates a threat by itself. Look for a concrete target and White's available reply.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "knight-defense-under-pressure",
+      "theme": "Defensive tempo",
+      "title": "Knights can meet pawn tension or build shelter",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-3",
+        "ply": 52,
+        "move": "Nf3",
+        "reply": "cxb5",
+        "continuation": "Qxb5"
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-1",
+        "ply": 11,
+        "move": "Nbd7",
+        "reply": "h3",
+        "continuation": "Ne4"
+      },
+      "comparePrompt": "Why can a knight on f3 and a knight on d7 represent very different kinds of development? What pawn or bishop response changes their tasks?",
+      "model": "Réti–Alekhine records Nf3, ...cxb5, Qxb5: White improves a knight while Black opens the queenside by capturing, followed by White's queen recapture. Tarrasch–Von Scheve records ...Nbd7, h3, ...Ne4: Black develops behind the pawn chain, then advances a knight into the center after White makes a kingside pawn move. The follow-up reveals different defensive obligations.",
+      "resistancePrompt": "After each knight move, which pawn capture or advancing knight could demand immediate calculation?",
+      "transferPrompt": "Replace the historical knight move with one legal candidate and explicitly list the pawn reply that would make it unsafe or slow.",
+      "misconception": "Treating every 'develop a knight' recommendation as interchangeable. Knight squares must be evaluated against immediate pawn contact and the opponent's next tempo.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "queen-takes-versus-queen-repositions",
+      "theme": "Queen responsibility",
+      "title": "Capture a flank pawn or prepare for a central break?",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-4",
+        "ply": 46,
+        "move": "Qxb5",
+        "reply": "Ne6",
+        "continuation": "Nc3"
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-3",
+        "ply": 32,
+        "move": "Qd2",
+        "reply": "c5",
+        "continuation": "dxe5"
+      },
+      "comparePrompt": "What changes when White's queen captures on b5 compared with White's quiet Qd2? Check the opponent's first central or minor-piece response.",
+      "model": "Capablanca–Golombek records Qxb5, ...Ne6, Nc3: White captures a pawn while Black brings a knight toward the center and White develops a knight. Alekhine–Marshall records Qd2, ...c5, dxe5: White repositions the queen but Black creates immediate central pawn tension. A move's immediate material result does not settle the safety of its future route.",
+      "resistancePrompt": "Can Black gain time by attacking the queen after Qxb5, and what does ...c5 demand after Qd2?",
+      "transferPrompt": "For both positions record the queen's escape squares and one forcing black pawn or piece reply before selecting a future plan.",
+      "misconception": "Counting an extra pawn or an orderly queen square without checking whether the next opposing move activates a more important piece.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "capturing-before-defending",
+      "theme": "Forcing move order",
+      "title": "Pawn captures and bishop captures don't end the calculation",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-4",
+        "ply": 61,
+        "move": "hxg6",
+        "reply": "Rg6",
+        "continuation": "Ref8"
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-3",
+        "ply": 43,
+        "move": "Bxf6",
+        "reply": "Rg4+",
+        "continuation": "Bg7"
+      },
+      "comparePrompt": "Both historical moves capture something. What piece becomes active in the next reply, and is there a forcing sequence worth checking first?",
+      "model": "Lasker–Janowski records ...hxg6, Rg6, ...Ref8: a pawn capture is followed by rook activity and a defensive rook move. Euwe–Maróczy records ...Bxf6, Rg4+, ...Bg7: a bishop capture precedes a rook check and a bishop retreat. Neither capture can be judged independently of the defender's initiative.",
+      "resistancePrompt": "What check or rook infiltration could change the priorities immediately after each capture?",
+      "transferPrompt": "Before capturing, list the opponent's checks and rook-entry squares; replay the historical reply only as observed evidence, not as a forced answer.",
+      "misconception": "Equating a material capture with having neutralized the opponent's threats. A check after the exchange changes the task.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "f-pawn-concessions",
+      "theme": "Pawn commitments",
+      "title": "The same flank advance can weaken different squares",
+      "first": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-3",
+        "ply": 31,
+        "move": "f5",
+        "reply": "Qd1",
+        "continuation": "b4"
+      },
+      "second": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-2",
+        "ply": 30,
+        "move": "f4",
+        "reply": "Nd7",
+        "continuation": "Rhd1"
+      },
+      "comparePrompt": "Compare ...f5 with White's f4: whose king faces a new diagonal, and how does each opponent exploit the time required for the push?",
+      "model": "Sämisch–Nimzowitsch records ...f5, Qd1, ...b4: Black gains kingside pawn space while White retreats the queen and Black follows with queenside expansion. Lasker–Janowski records f4, ...Nd7, Rhd1: White expands while Black reroutes a knight and White brings a rook to the center. F-pawn advances expose different kings and square complexes depending on castling and minor-piece coverage.",
+      "resistancePrompt": "Which enemy checks and newly weakened dark or light squares would you inspect after the f-pawn advances?",
+      "transferPrompt": "Describe the exact king positions and f-file access, then choose a more restrained legal alternative and compare the opponent's opportunities.",
+      "misconception": "A pawn push being active is not evidence of safety; identify the king it loosens and the pieces that can enter behind it.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "rook-then-pawn-or-pawn-then-rook",
+      "theme": "Move order",
+      "title": "When should rook coordination precede a pawn advance?",
+      "first": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-2",
+        "ply": 20,
+        "move": "Rc1",
+        "reply": "b5",
+        "continuation": "Qb3"
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-2",
+        "ply": 27,
+        "move": "c4",
+        "reply": "Bb1",
+        "continuation": "Re8"
+      },
+      "comparePrompt": "Compare ...Rc1 in Sämisch–Nimzowitsch with ...c4 in Euwe–Maróczy. What does each choice ask the opponent to do immediately?",
+      "model": "Sämisch–Nimzowitsch records ...Rc1, b5, Qb3: Black activates a rook while the queenside advances and White's queen relocates. Euwe–Maróczy records ...c4, Bb1, ...Re8: Black gains pawn space, White retreats a bishop and Black next activates a rook. The recorded continuation illustrates two different move-order commitments.",
+      "resistancePrompt": "Could White seize a central file or challenge the pawn chain during either plan?",
+      "transferPrompt": "For each sequence construct a legal alternative that reverses the order of rook and pawn moves; explain the opponent's answer.",
+      "misconception": "Treating rook development and space acquisition as independent tasks. Their order can change which pieces have protected squares.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "pin-versus-sacrifice-pressure",
+      "theme": "Bishop decisions",
+      "title": "A bishop's activity can be restrained or forcing",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-2",
+        "ply": 33,
+        "move": "Bg4",
+        "reply": "Bg2",
+        "continuation": "Bh3"
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-4",
+        "ply": 48,
+        "move": "Bd6",
+        "reply": "Qxd6",
+        "continuation": "Rxg7+"
+      },
+      "comparePrompt": "Both scores include bishop maneuvers, but only one recorded sequence promptly involves a queen capture and rook check. How should that change calculation depth?",
+      "model": "Réti–Alekhine records ...Bg4, Bg2, ...Bh3: the bishop moves through a developing phase while White coordinates. Tarrasch–Von Scheve records Bd6, ...Qxd6, Rxg7+: White's bishop move is met by a queen capture and a rook check. These are observed sequences, not a license to assume the bishop is sacrificed for a forced win.",
+      "resistancePrompt": "Which actual capture or check can interrupt the plan, and does it force the opponent to respond?",
+      "transferPrompt": "Play one legal alternative bishop move from each board, checking all available capture and check replies before using an attacking label.",
+      "misconception": "Seeing a bishop near the king is not enough to infer mate. Prove the available checks and captures from the actual board.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "checks-and-counterattack",
+      "theme": "King survival",
+      "title": "Retreating the king or occupying the second rank?",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-4",
+        "ply": 68,
+        "move": "Kh3",
+        "reply": "Ne5+",
+        "continuation": "Kh2"
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-4",
+        "ply": 41,
+        "move": "Rxf2",
+        "reply": "Qg5",
+        "continuation": "Raf8"
+      },
+      "comparePrompt": "Contrast the importance of checks when White moves its king in Réti–Alekhine and Black captures on f2 in Sämisch–Nimzowitsch.",
+      "model": "Réti–Alekhine records Kh3, ...Ne5+, Kh2: White responds to pressure with a king move, Black checks and White moves again. Sämisch–Nimzowitsch records ...Rxf2, Qg5, ...Raf8: Black occupies f2 with a rook, White counters with its queen and Black reinforces rook pressure. Checks and rook invasions need exact board calculation.",
+      "resistancePrompt": "After each first move, who possesses a forcing check and what reply prevents a quick conclusion?",
+      "transferPrompt": "Find one additional legal defensive candidate for the player under pressure; compare actual king escape squares, not broad claims of initiative.",
+      "misconception": "An active rook may still allow queen counterplay, and a king retreat may still allow a knight check. Calculate both colors' forcing options.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "a-pawn-tempo-tradeoff",
+      "theme": "Prophylaxis",
+      "title": "Opposite-color a-pawn moves, opposite tasks",
+      "first": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-1",
+        "ply": 13,
+        "move": "a6",
+        "reply": "Bd3",
+        "continuation": "Nc6"
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-2",
+        "ply": 20,
+        "move": "a3",
+        "reply": "Be7",
+        "continuation": "O-O"
+      },
+      "comparePrompt": "Black's ...a6 and White's a3 look symmetric in notation. What different immediate piece or pawn problem might each solve?",
+      "model": "Steinitz–Sellman records ...a6, Bd3, ...Nc6: Black develops queenside space while White brings a bishop toward the king and Black develops a knight. Alekhine–Marshall records a3, ...Be7, O-O: White contests a bishop's position and then castles. The color of the mover, central tension and castling readiness alter the practical purpose.",
+      "resistancePrompt": "Could the opponent turn the pawn move into a target or improve a piece while you spend a tempo on the flank?",
+      "transferPrompt": "Identify the precise bishop, knight and king squares involved; make one legal alternative to the pawn move and allow the opponent to develop.",
+      "misconception": "Copying a3/a6 as a universal 'useful waiting move' overlooks that one player may urgently need to castle or develop.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "queen-invasion-versus-pawn-gain",
+      "theme": "Queen coordination",
+      "title": "Two queens advance toward different weaknesses",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-4",
+        "ply": 46,
+        "move": "Qxb5",
+        "reply": "Ne6",
+        "continuation": "Nc3"
+      },
+      "second": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-4",
+        "ply": 56,
+        "move": "Qc7",
+        "reply": "Qb8",
+        "continuation": "Bf2"
+      },
+      "comparePrompt": "Compare White Qxb5 with White Qc7: what is the queen trying to occupy, and how do the first recorded black replies oppose it?",
+      "model": "Capablanca–Golombek records Qxb5, ...Ne6, Nc3: a queen capture brings a knight into the game. Steinitz–Sellman records Qc7, ...Qb8, Bf2: White enters on the seventh rank and Black challenges with its queen. Both forward queen moves demand immediate retreat-square and counter-threat calculation.",
+      "resistancePrompt": "What if Black attacks the queen with tempo after the advance? Does White still own the useful file or captured pawn?",
+      "transferPrompt": "Contrast an alternative queen destination in both boards and explain how it fares against ...Ne6 or ...Qb8 if those replies remain legal.",
+      "misconception": "An advanced queen is not inherently well placed. The next opposing move determines whether the queen has won time or must retreat.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
+    },
+    {
+      "id": "minor-piece-threat-and-rook-shelter",
+      "theme": "Defensive structure",
+      "title": "Central knight pressure versus defensive rook placement",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-1",
+        "ply": 14,
+        "move": "Nd4",
+        "reply": "O-O-O",
+        "continuation": "Be3"
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-3",
+        "ply": 37,
+        "move": "Rf7",
+        "reply": "Rdg2",
+        "continuation": "a5"
+      },
+      "comparePrompt": "Compare ...Nd4 to ...Rf7. Which move creates immediate threats and which must also prevent an opponent's useful file entry?",
+      "model": "Lasker–Janowski records ...Nd4, O-O-O, ...Be3: Black's knight advances and White castles long before Black's bishop maneuver. Tarrasch–Von Scheve records ...Rf7, Rdg2, ...a5: Black's rook is placed on f7 while White aligns rooks on the g-file. One comparison concerns an attacking piece's landing square; the other asks whether a rook can defend under opposing file pressure.",
+      "resistancePrompt": "Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square?",
+      "transferPrompt": "State the threat against the king or weak pawn that makes each move urgent, then examine a quieter legal candidate for Black.",
+      "misconception": "Mistaking 'centralization' or 'rook lift' for a self-sufficient justification. Each needs a concrete task and an opponent reply.",
+      "hints": [
+        "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
+        "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
+      ],
+      "integrity": "source-linked-instructional-only"
     }
   ]
 }

@@ -230,6 +230,234 @@
       "defenderPrompt": "After making a candidate for the side to move, switch perspective: enter an actual legal opponent response and assess its immediate threats. The app does not play or assess the opponent for you.",
       "misconception": "An alternative line is legal exploration, not proof that it is best. If a defender's reply differs from the historic record, compare positions rather than transplanting the next historical SAN move.",
       "factsNote": "Check, mate, draw, capture and whose turn it is are chess.js board facts. Initiative, strategic superiority and expected result remain learner interpretations."
+    },
+    {
+      "id": "piece-invasion-versus-file-control",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-1",
+        "ply": 14
+      },
+      "second": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-3",
+        "ply": 43
+      },
+      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE Nd4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare Black's knight move ...Nd4 to Black's ...Rc8: whose next move challenges the newly occupied square or file, and which side gets time to coordinate?",
+      "secondChallenge": "On Steinitz, W — Sellman, A.G., choose a legal move in the recorded position BEFORE Rc8. After your candidate, play a concrete legal opponent response yourself. Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Write an opponent reply to each plan, then decide whether to defend, trade, or switch targets. A piece's active square is useful only when supported by the position. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Mistaking an impressive central landing square or open file for a completed plan. Identify the defender's best accessible square and the actual recorded response. The historical sequences Nd4 O-O-O Be3 and Rc8 Na5 Ba8 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "two-bishop-directions",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-2",
+        "ply": 33
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-1",
+        "ply": 9
+      },
+      "firstChallenge": "On Reti — Alekhine, choose a legal move in the recorded position BEFORE Bg4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare ...Bg4 in Réti–Alekhine with ...Be7 in Sämisch–Nimzowitsch: which bishop move makes an immediate question for the opponent and which supports safe king development?",
+      "secondChallenge": "On Saemisch — Nimzowitsch, choose a legal move in the recorded position BEFORE Be7. After your candidate, play a concrete legal opponent response yourself. How does White contest a developed bishop in each game, and does the bishop need to retreat or exchange to remain useful?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. How does White contest a developed bishop in each game, and does the bishop need to retreat or exchange to remain useful? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Try a quiet developing alternative in each position and compare what it does to the central pawns and castling route. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Assuming bishop advancement creates a threat by itself. Look for a concrete target and White's available reply. The historical sequences Bg4 Bg2 Bh3 and Be7 Nc3 O-O are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "knight-defense-under-pressure",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-3",
+        "ply": 52
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-1",
+        "ply": 11
+      },
+      "firstChallenge": "On Reti — Alekhine, choose a legal move in the recorded position BEFORE Nf3. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Why can a knight on f3 and a knight on d7 represent very different kinds of development? What pawn or bishop response changes their tasks?",
+      "secondChallenge": "On Tarrasch, S — Von Scheve, T, choose a legal move in the recorded position BEFORE Nbd7. After your candidate, play a concrete legal opponent response yourself. After each knight move, which pawn capture or advancing knight could demand immediate calculation?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. After each knight move, which pawn capture or advancing knight could demand immediate calculation? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Replace the historical knight move with one legal candidate and explicitly list the pawn reply that would make it unsafe or slow. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Treating every 'develop a knight' recommendation as interchangeable. Knight squares must be evaluated against immediate pawn contact and the opponent's next tempo. The historical sequences Nf3 cxb5 Qxb5 and Nbd7 h3 Ne4 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "queen-takes-versus-queen-repositions",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-4",
+        "ply": 46
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-3",
+        "ply": 32
+      },
+      "firstChallenge": "On Capablanca — Golombek, H, choose a legal move in the recorded position BEFORE Qxb5. Then play the opponent's most inconvenient legal answer yourself and revise your plan. What changes when White's queen captures on b5 compared with White's quiet Qd2? Check the opponent's first central or minor-piece response.",
+      "secondChallenge": "On Alekhine — Marshall, F.J., choose a legal move in the recorded position BEFORE Qd2. After your candidate, play a concrete legal opponent response yourself. Can Black gain time by attacking the queen after Qxb5, and what does ...c5 demand after Qd2?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Can Black gain time by attacking the queen after Qxb5, and what does ...c5 demand after Qd2? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. For both positions record the queen's escape squares and one forcing black pawn or piece reply before selecting a future plan. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Counting an extra pawn or an orderly queen square without checking whether the next opposing move activates a more important piece. The historical sequences Qxb5 Ne6 Nc3 and Qd2 c5 dxe5 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "capturing-before-defending",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-4",
+        "ply": 61
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-3",
+        "ply": 43
+      },
+      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE hxg6. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Both historical moves capture something. What piece becomes active in the next reply, and is there a forcing sequence worth checking first?",
+      "secondChallenge": "On Euwe — Maroczy, choose a legal move in the recorded position BEFORE Bxf6. After your candidate, play a concrete legal opponent response yourself. What check or rook infiltration could change the priorities immediately after each capture?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. What check or rook infiltration could change the priorities immediately after each capture? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Before capturing, list the opponent's checks and rook-entry squares; replay the historical reply only as observed evidence, not as a forced answer. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Equating a material capture with having neutralized the opponent's threats. A check after the exchange changes the task. The historical sequences hxg6 Rg6 Ref8 and Bxf6 Rg4+ Bg7 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "f-pawn-concessions",
+      "first": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-3",
+        "ply": 31
+      },
+      "second": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-2",
+        "ply": 30
+      },
+      "firstChallenge": "On Saemisch — Nimzowitsch, choose a legal move in the recorded position BEFORE f5. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare ...f5 with White's f4: whose king faces a new diagonal, and how does each opponent exploit the time required for the push?",
+      "secondChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE f4. After your candidate, play a concrete legal opponent response yourself. Which enemy checks and newly weakened dark or light squares would you inspect after the f-pawn advances?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Which enemy checks and newly weakened dark or light squares would you inspect after the f-pawn advances? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Describe the exact king positions and f-file access, then choose a more restrained legal alternative and compare the opponent's opportunities. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "A pawn push being active is not evidence of safety; identify the king it loosens and the pieces that can enter behind it. The historical sequences f5 Qd1 b4 and f4 Nd7 Rhd1 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "rook-then-pawn-or-pawn-then-rook",
+      "first": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-2",
+        "ply": 20
+      },
+      "second": {
+        "gameId": "euwe-maroczy-1936",
+        "checkpointId": "euwe-maroczy-1936-decision-2",
+        "ply": 27
+      },
+      "firstChallenge": "On Saemisch — Nimzowitsch, choose a legal move in the recorded position BEFORE Rc1. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare ...Rc1 in Sämisch–Nimzowitsch with ...c4 in Euwe–Maróczy. What does each choice ask the opponent to do immediately?",
+      "secondChallenge": "On Euwe — Maroczy, choose a legal move in the recorded position BEFORE c4. After your candidate, play a concrete legal opponent response yourself. Could White seize a central file or challenge the pawn chain during either plan?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Could White seize a central file or challenge the pawn chain during either plan? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. For each sequence construct a legal alternative that reverses the order of rook and pawn moves; explain the opponent's answer. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Treating rook development and space acquisition as independent tasks. Their order can change which pieces have protected squares. The historical sequences Rc1 b5 Qb3 and c4 Bb1 Re8 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "pin-versus-sacrifice-pressure",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-2",
+        "ply": 33
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-4",
+        "ply": 48
+      },
+      "firstChallenge": "On Reti — Alekhine, choose a legal move in the recorded position BEFORE Bg4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Both scores include bishop maneuvers, but only one recorded sequence promptly involves a queen capture and rook check. How should that change calculation depth?",
+      "secondChallenge": "On Tarrasch, S — Von Scheve, T, choose a legal move in the recorded position BEFORE Bd6. After your candidate, play a concrete legal opponent response yourself. Which actual capture or check can interrupt the plan, and does it force the opponent to respond?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Which actual capture or check can interrupt the plan, and does it force the opponent to respond? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Play one legal alternative bishop move from each board, checking all available capture and check replies before using an attacking label. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Seeing a bishop near the king is not enough to infer mate. Prove the available checks and captures from the actual board. The historical sequences Bg4 Bg2 Bh3 and Bd6 Qxd6 Rxg7+ are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "checks-and-counterattack",
+      "first": {
+        "gameId": "reti-alekhine-1925",
+        "checkpointId": "reti-alekhine-1925-decision-4",
+        "ply": 68
+      },
+      "second": {
+        "gameId": "saemisch-nimzowitsch-1923",
+        "checkpointId": "saemisch-nimzowitsch-1923-decision-4",
+        "ply": 41
+      },
+      "firstChallenge": "On Reti — Alekhine, choose a legal move in the recorded position BEFORE Kh3. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Contrast the importance of checks when White moves its king in Réti–Alekhine and Black captures on f2 in Sämisch–Nimzowitsch.",
+      "secondChallenge": "On Saemisch — Nimzowitsch, choose a legal move in the recorded position BEFORE Rxf2. After your candidate, play a concrete legal opponent response yourself. After each first move, who possesses a forcing check and what reply prevents a quick conclusion?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. After each first move, who possesses a forcing check and what reply prevents a quick conclusion? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Find one additional legal defensive candidate for the player under pressure; compare actual king escape squares, not broad claims of initiative. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "An active rook may still allow queen counterplay, and a king retreat may still allow a knight check. Calculate both colors' forcing options. The historical sequences Kh3 Ne5+ Kh2 and Rxf2 Qg5 Raf8 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "a-pawn-tempo-tradeoff",
+      "first": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-1",
+        "ply": 13
+      },
+      "second": {
+        "gameId": "alekhine-marshall-1927",
+        "checkpointId": "alekhine-marshall-1927-decision-2",
+        "ply": 20
+      },
+      "firstChallenge": "On Steinitz, W — Sellman, A.G., choose a legal move in the recorded position BEFORE a6. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Black's ...a6 and White's a3 look symmetric in notation. What different immediate piece or pawn problem might each solve?",
+      "secondChallenge": "On Alekhine — Marshall, F.J., choose a legal move in the recorded position BEFORE a3. After your candidate, play a concrete legal opponent response yourself. Could the opponent turn the pawn move into a target or improve a piece while you spend a tempo on the flank?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Could the opponent turn the pawn move into a target or improve a piece while you spend a tempo on the flank? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Identify the precise bishop, knight and king squares involved; make one legal alternative to the pawn move and allow the opponent to develop. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Copying a3/a6 as a universal 'useful waiting move' overlooks that one player may urgently need to castle or develop. The historical sequences a6 Bd3 Nc6 and a3 Be7 O-O are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "queen-invasion-versus-pawn-gain",
+      "first": {
+        "gameId": "capablanca-golombek-1939",
+        "checkpointId": "capablanca-golombek-1939-decision-4",
+        "ply": 46
+      },
+      "second": {
+        "gameId": "steinitz-sellman-1885",
+        "checkpointId": "steinitz-sellman-1885-decision-4",
+        "ply": 56
+      },
+      "firstChallenge": "On Capablanca — Golombek, H, choose a legal move in the recorded position BEFORE Qxb5. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare White Qxb5 with White Qc7: what is the queen trying to occupy, and how do the first recorded black replies oppose it?",
+      "secondChallenge": "On Steinitz, W — Sellman, A.G., choose a legal move in the recorded position BEFORE Qc7. After your candidate, play a concrete legal opponent response yourself. What if Black attacks the queen with tempo after the advance? Does White still own the useful file or captured pawn?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. What if Black attacks the queen with tempo after the advance? Does White still own the useful file or captured pawn? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. Contrast an alternative queen destination in both boards and explain how it fares against ...Ne6 or ...Qb8 if those replies remain legal. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "An advanced queen is not inherently well placed. The next opposing move determines whether the queen has won time or must retreat. The historical sequences Qxb5 Ne6 Nc3 and Qc7 Qb8 Bf2 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
+    },
+    {
+      "id": "minor-piece-threat-and-rook-shelter",
+      "first": {
+        "gameId": "lasker-janowski-1909",
+        "checkpointId": "lasker-janowski-1909-decision-1",
+        "ply": 14
+      },
+      "second": {
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-3",
+        "ply": 37
+      },
+      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE Nd4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare ...Nd4 to ...Rf7. Which move creates immediate threats and which must also prevent an opponent's useful file entry?",
+      "secondChallenge": "On Tarrasch, S — Von Scheve, T, choose a legal move in the recorded position BEFORE Rf7. After your candidate, play a concrete legal opponent response yourself. Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square?",
+      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square? Check the resulting board for forcing responses before interpreting any strategic advantage.",
+      "revision": "Compare your two independently played positions, not just historical notation. State the threat against the king or weak pawn that makes each move urgent, then examine a quieter legal candidate for Black. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
+      "misconception": "Mistaking 'centralization' or 'rook lift' for a self-sufficient justification. Each needs a concrete task and an opponent reply. The historical sequences Nd4 O-O-O Be3 and Rf7 Rdg2 a5 are observed source lines, not engine-proven optimal moves or tactics.",
+      "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
     }
   ]
 }

@@ -42,3 +42,10 @@
 .p114-transfer button:focus-visible,.p114-handoff-nav button:focus-visible,.p114-transfer textarea:focus-visible{outline:3px solid var(--accent,#ad5d34);outline-offset:2px}
 @media(max-width:940px){.p114-picker{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.p114-board-pair,.p114-picker{grid-template-columns:minmax(0,1fr)}.p114-source-position{max-width:34rem;margin:auto;width:100%}.p114-model{padding:.75rem}.p114-handoff-nav button{flex:1}}
+
+.p117-portable{border:1px solid var(--border,#777);border-radius:.25rem;padding:.8rem;margin:1rem 0}
+.p117-portable summary{cursor:pointer;font-weight:650;min-height:2rem}
+.p117-portable p{line-height:1.5;font-size:.88rem}
+.p117-portable label{display:block;font-weight:600;margin:.55rem 0}
+.p117-portable textarea{box-sizing:border-box;width:100%;font:inherit;resize:vertical;background:var(--surface,#fff);color:var(--text,#111);border:1px solid var(--border,#777);padding:.65rem;border-radius:.25rem}
+.p117-portable summary:focus-visible{outline:3px solid var(--accent,#ad5d34);outline-offset:2px}

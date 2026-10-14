@@ -8,6 +8,7 @@ import {
 import {
   crossGameTransferAsset, hydrateTransferCases, type TransferCaseStudy,
 } from "../model-games/crossGameTransfer";
+import { exportPairNotes, importPairNotes } from "../model-games/transferCapsule";
 import "../styles/p114-cross-game-transfer.css";
 
 interface Props {
@@ -29,6 +30,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [showHint, setShowHint] = useState(0);
   const [shownMoves, setShownMoves] = useState<[boolean, boolean]>([false, false]);
   const [counterfactualOpen, setCounterfactualOpen] = useState(false);
+  const [portableText, setPortableText] = useState("");
+  const [portableStatus, setPortableStatus] = useState("");
 
   useEffect(() => {
     const abort = new AbortController();
@@ -65,6 +68,10 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const currentId = active?.source.id ?? "";
   // An Account switch cannot momentarily display another owner's restored answers.
   const visibleDrafts = restoredOwner === owner ? drafts : {};
+  useEffect(() => {
+    setPortableText("");
+    setPortableStatus("");
+  }, [owner]);
   const draft = active ? visibleDrafts[active.source.id] ?? emptyMasterDraft() : emptyMasterDraft();
   const reviewed = useMemo(() => cases?.filter((item) => visibleDrafts[item.source.id]?.mark).length ?? 0, [cases, visibleDrafts]);
 
@@ -88,6 +95,21 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
     setSelectedId(id);
     setShowHint(0);
     setShownMoves([false, false]);
+    setPortableText("");
+    setPortableStatus("");
+  }
+  function restorePortable() {
+    try {
+      if (!active || !owner || restoredOwner !== owner) throw new Error("Sign in to restore this pair.");
+      const restored = importPairNotes(portableText, active);
+      if (Object.values(draft).some((value) =>
+        typeof value === "string" && value.trim()) &&
+        !window.confirm("Replace this pair's current unsent writing and variations?")) return;
+      setDrafts((before) => ({ ...before, [active.source.id]: restored }));
+      setPortableStatus("Restored this source-verified pair in your current session.");
+    } catch (error) {
+      setPortableStatus(error instanceof Error ? error.message : "Study note could not be restored.");
+    }
   }
   const canCompare = draft.plan.trim().length >= 18 && draft.defense.trim().length >= 18;
   const activeIndex = active ? cases?.findIndex((item) => item.source.id === currentId) ?? 0 : 0;
@@ -100,12 +122,17 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           <h2>One principle. Two positions. Different decisions.</h2>
           <p>Compare real historical positions, justify your plan and the opponent's resistance, then explain what transfers. All responses are unscored and remain local to this browser session.</p>
         </div>
-        <span role="status">{reviewed}/{cases?.length ?? 12} self-assessed</span>
+        <span role="status">{reviewed}/{cases?.length ?? 24} self-assessed</span>
       </header>
       {!cases && !error && <p role="status">Loading the paired, source-checked positions…</p>}
       {error && <p role="alert">{error}</p>}
       {rejected > 0 && <p role="alert">{rejected} comparisons were excluded because a source game, checkpoint, or recorded continuation could not be verified.</p>}
       {cases && cases.length > 0 && <>
+        <button type="button" className="secondary" onClick={() => {
+          const next = cases.find((item) => visibleDrafts[item.source.id]?.mark === "retry") ??
+            cases.find((item) => !visibleDrafts[item.source.id]?.mark);
+          if (next) choose(next.source.id);
+        }}>Resume an unfinished or self-marked review</button>
         <nav className="p114-picker" aria-label="Choose a comparative strategic study">
           {cases.map((item, index) => (
             <button type="button" key={item.source.id}
@@ -119,6 +146,23 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           ))}
         </nav>
         {active && <div className="p114-session" key={active.source.id}>
+          <details className="p117-portable">
+            <summary>Carry this pair into another session</summary>
+            <p>Export an explicit, user-controlled text note; paste it back for the same historical source pair within 30 days. This contains your answers and candidate lines, but no account identifier. It is not automatic cloud sync.</p>
+            <div className="p115-actions">
+              <button type="button" className="secondary" disabled={!owner || restoredOwner !== owner}
+                onClick={() => { setPortableText(exportPairNotes(active, draft)); setPortableStatus("Portable note prepared. Copy its text to a private place you control."); }}>
+                Prepare my study note
+              </button>
+              <button type="button" className="secondary" disabled={!portableText.trim() || !owner}
+                onClick={restorePortable}>Restore this pair</button>
+            </div>
+            <label htmlFor="p117-portable-text">Portable study note (copy or paste)</label>
+            <textarea id="p117-portable-text" rows={4} maxLength={16000}
+              placeholder="Use Prepare to export, or paste a previously saved note for this pair."
+              value={restoredOwner === owner ? portableText : ""} onChange={(event) => { setPortableText(event.target.value); setPortableStatus(""); }} />
+            <p role="status">{portableStatus}</p>
+          </details>
           <header className="p114-session-head">
             <p className="eyebrow">STUDY {activeIndex + 1} / {cases.length} · {active.source.theme}</p>
             <h3>{active.source.title}</h3>

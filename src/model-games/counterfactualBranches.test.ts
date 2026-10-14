@@ -14,13 +14,13 @@ const source = hydrateMasterGames(originals);
 const paired = hydrateTransferCases(pairs, source.accepted);
 
 describe("P115 independent, original-identity counterfactuals", () => {
-  it("accepts 12 unique source-pinned cases and 24 authored challenges", () => {
+  it("accepts 24 source-pinned cases and 48 original position challenges", () => {
     expect(source.rejected).toBe(0);
     expect(paired.rejected).toBe(0);
     const result = hydrateCounterfactuals(probes, paired.accepted);
     expect(result.rejected).toBe(0);
-    expect(result.accepted).toHaveLength(12);
-    expect(new Set(result.accepted.map((item) => item.id)).size).toBe(12);
+    expect(result.accepted).toHaveLength(24);
+    expect(new Set(result.accepted.map((item) => item.id)).size).toBe(24);
   });
   it("does not accept source drift, duplicate identities or fabricated game links", () => {
     const broken = structuredClone(probes);
@@ -29,7 +29,7 @@ describe("P115 independent, original-identity counterfactuals", () => {
     broken.challenges[2].id = broken.challenges[3].id;
     const checked = hydrateCounterfactuals(broken, paired.accepted);
     expect(checked.rejected).toBeGreaterThanOrEqual(3);
-    expect(checked.accepted.length).toBeLessThan(12);
+    expect(checked.accepted.length).toBeLessThan(24);
     expect(hydrateCounterfactuals({ version: 3, challenges: probes.challenges }, paired.accepted).accepted).toHaveLength(0);
   });
   it("replays original move and defender reply legally without claiming their optimality", () => {

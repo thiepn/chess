@@ -6,12 +6,12 @@ import { hydrateMasterGames } from "./masterGames";
 import { hydrateTransferCases } from "./crossGameTransfer";
 
 describe("P114 source-bound cross-game transfer", () => {
-  it("pins twelve pairs to complete P113 legal PGNs and distinct source checkpoints", () => {
+  it("pins twenty-four pairs to complete P113 legal PGNs and distinct source checkpoints", () => {
     const source = hydrateMasterGames(games);
     expect(source.rejected).toBe(0);
     const result = hydrateTransferCases(pairs, source.accepted);
     expect(result.rejected).toBe(0);
-    expect(result.accepted).toHaveLength(12);
+    expect(result.accepted).toHaveLength(24);
     for (const study of result.accepted) {
       for (const pinned of [study.first, study.second]) {
         const original = pinned.game.game.checkpoints.find(
@@ -35,7 +35,7 @@ describe("P114 source-bound cross-game transfer", () => {
     broken.cases[2].id = broken.cases[3].id;
     const result = hydrateTransferCases(broken, source.accepted);
     expect(result.rejected).toBeGreaterThanOrEqual(3);
-    expect(result.accepted.length).toBeLessThan(12);
+    expect(result.accepted.length).toBeLessThan(24);
     expect(hydrateTransferCases({ version: 2, cases: pairs.cases }, source.accepted).accepted).toHaveLength(0);
   });
 });
