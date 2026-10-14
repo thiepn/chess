@@ -13,6 +13,7 @@ export interface CounterfactualChallenge {
   revision: string;
   misconception: string;
   factsNote: string;
+  reconstruction: { first: string; second: string; after: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
@@ -40,7 +41,10 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
         }) ||
         ["firstChallenge", "secondChallenge", "defenderPrompt", "revision", "misconception", "factsNote"]
           .some((key) => typeof item[key as keyof CounterfactualChallenge] !== "string" ||
-            (item[key as keyof CounterfactualChallenge] as string).trim().length < 60)) {
+            (item[key as keyof CounterfactualChallenge] as string).trim().length < 60) ||
+        !item.reconstruction || ["first", "second", "after"].some((part) =>
+          typeof item.reconstruction[part as keyof typeof item.reconstruction] !== "string" ||
+          item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
@@ -101,6 +105,12 @@ export function advanceCounterfactual(
     });
     return [...current.sans, result.san];
   } catch { return null; }
+}
+/** An exhaustive rule-legal menu, never a ranking of replies. */
+export function legalReplyResources(fen: string) {
+  const moves = new Chess(fen).moves({ verbose: true });
+  return { all: moves, forcing: moves.filter((move) =>
+    Boolean(move.captured) || /[+#]$/.test(move.san)) };
 }
 /** Exact PGN history, never a hypothetical continuation or an engine verdict. */
 export function observedCounterfactual(
