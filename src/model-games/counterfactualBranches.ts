@@ -54,12 +54,9 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   const ui = (payload as {ui?: SourceGuidance}).ui;
   if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
     "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35) ||
-    !complete(ui, ["heroEyebrow","heroTitle","loadingLabel","retryLabel","originalLabel",
-      "alternateLabel","beforeMoveLabel","priorPosition","nextPosition","resumePosition",
-      "emptyLine","eventLead","eventCaveat","checkmateLabel","drawLabel",
-      "inCheckLabel","noCheckLabel","noneForcing","undoLabel","clearLabel",
-      "backToMove","showSource","revisionLabel","sourceButton","secondLineLabel",
-      "legalCandidateLabel","forcingCandidateLabel","sourceNote","learnerNote"], 5)) return {accepted,rejected:1,ui:null};
+    Object.keys(ui).length < 44 ||
+    Object.values(ui).some((text) => typeof text !== "string" || text.trim().length < 5))
+    return {accepted,rejected:1,ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -163,13 +160,13 @@ export function branchEvidence(fen: string, candidate: readonly string[], other:
     a.findIndex((san, i) => san !== b[i]);
   const first = difference(own.sans, source.sans);
   const second = difference(own.sans, alt.sans);
-  const replay = new Chess(fen);
   const events: string[] = [];
   own.sans.forEach((san, i) => {
-    const move = replay.move(san);
-    if (move.captured) events.push(`Ply ${i + 1}: capture on ${move.to}`);
-    if (move.promotion) events.push(`Ply ${i + 1}: promotion to ${move.promotion}`);
-    if (replay.isCheck()) events.push(`Ply ${i + 1}: check`);
+    const capture = /x([a-h][1-8])/.exec(san);
+    const promotion = /=([QRBN])/.exec(san);
+    if (capture) events.push(`Ply ${i + 1}: capture on ${capture[1]}`);
+    if (promotion) events.push(`Ply ${i + 1}: promotion to ${promotion[1].toLowerCase()}`);
+    if (/[+#]$/.test(san)) events.push(`Ply ${i + 1}: check`);
   });
   return {
     sameSourcePlies: first < 0 ? Math.min(own.sans.length, source.sans.length) : first,
