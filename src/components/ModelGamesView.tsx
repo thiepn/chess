@@ -34,6 +34,9 @@ export function ModelGamesView({
   onBack,
 }: ModelGamesViewProps) {
   const [openMaster, setOpenMaster] = useState(false);
+  // Once opened, keep the original workspace mounted across simple collapse.
+  // The owner-keyed subtree still discards all in-memory private work on Account change.
+  const [masterMounted, setMasterMounted] = useState(false);
   const completed = modelGames.filter(
     (game) =>
       (progress[game.id]?.completions ?? 0) > 0,
@@ -183,13 +186,20 @@ export function ModelGamesView({
         <h2>Study complete master games</h2>
         <p>Eight additional source-grounded historical scores, 32 independent decision points, move-by-move replay, local legal variations and unscored writing. The four existing scored model games above remain unchanged.</p>
         <button className="secondary" type="button" aria-expanded={openMaster}
-          onClick={() => setOpenMaster(value => !value)}>
+          aria-controls={openMaster ? "historical-master-workspace" : undefined}
+          onClick={() => {
+            if (!openMaster) setMasterMounted(true);
+            setOpenMaster(!openMaster);
+          }}>
           {openMaster ? "Hide master-game workspace" : "Open master-game workspace"}
         </button>
       </section>
-      {openMaster && <Suspense fallback={<p role="status">Opening master-game workspace…</p>}>
-        <MasterGameLibrary owner={owner} />
-      </Suspense>}
+      {masterMounted && <div id="historical-master-workspace" hidden={!openMaster}
+        style={{ display: openMaster ? "block" : "none" }}>
+        <Suspense fallback={<p role="status">Opening master-game workspace…</p>}>
+          <MasterGameLibrary key={owner} owner={owner} />
+        </Suspense>
+      </div>}
     </section>
   );
 }
