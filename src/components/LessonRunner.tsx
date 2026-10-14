@@ -323,9 +323,12 @@ export function LessonRunner({
   }
   return (
     <div className="lesson-runner lesson-runner-v2">
-      <div className="lesson-progress-rail">
-        {lesson.steps.map(
-          (item, index) => (
+      <div className="lesson-progress-rail" role="group"
+        aria-label={`Lesson progress: step ${stepIndex + 1} of ${lesson.steps.length}`}>
+        {lesson.steps.map((item, index) => ({ item, index }))
+          .filter(({ index }) => lesson.steps.length <= 12 ||
+            Math.floor(index / 8) === Math.floor(stepIndex / 8)).map(
+          ({ item, index }) => (
             <div
               key={item.id}
               className={[
