@@ -950,3 +950,34 @@ test("P124 Review reanalysis remains available after the primary board workspace
   });
   expect(ordering).toBe(true);
 });
+
+
+test("P125 reselecting the active historical comparison preserves a prepared portable note", async ({ page }) => {
+  await open(page, "/learn/model-games", ".model-games-view");
+  await page.getByRole("button", { name: "Open master-game workspace" }).click();
+  const master = page.locator(".p113-master");
+  await expect(master).toBeVisible();
+  await master.getByRole("button", { name: /Compare strategic decisions/ }).click();
+  const comparison = page.locator(".p114-transfer");
+  await expect(comparison.locator(".p114-picker button").first()).toBeVisible();
+  await comparison.locator(".p117-portable summary").click();
+  await comparison.getByRole("button", { name: "Prepare my study note" }).click();
+  const note = comparison.locator("#p117-portable-text");
+  await expect(note).not.toBeEmpty();
+  const savedText = await note.inputValue();
+  await comparison.locator(".p114-picker button").first().click();
+  await expect(note).toHaveValue(savedText);
+});
+
+test("P125 review board remains mounted under same-game move selection", async ({ page }) => {
+  await open(page, `/review/${encodeURIComponent(visualGameId)}`, ".review-workstation");
+  const board = page.locator(".review-board-v2 .chess-board-wrap").first();
+  await expect(board).toBeVisible();
+  await board.evaluate((el) => { (el as HTMLElement).dataset.p125MountMarker = "preserve"; });
+  const timeline = page.locator(".review-notation-list button[data-review-ply]");
+  expect(await timeline.count()).toBeGreaterThan(1);
+  const selected = await page.locator(".review-notation-list button[data-review-ply][aria-current='step']").first().getAttribute("data-review-ply");
+  const first = await timeline.first().getAttribute("data-review-ply");
+  await timeline.nth(selected === first ? 1 : 0).click();
+  await expect(board).toHaveAttribute("data-p125-mount-marker", "preserve");
+});

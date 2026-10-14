@@ -33,6 +33,9 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
   useEffect(() => {
     const abort = new AbortController();
     setError("");
+    setChallenges([]);
+    setGuidance(null);
+    setRejected(0);
     fetch(counterfactualAsset, { signal: abort.signal })
       .then((response) => {
         if (!response.ok) throw new Error("P115 source unavailable");
