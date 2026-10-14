@@ -1,0 +1,26 @@
+# THIEPN Chess G1 — Genuine Beginner Practice in the Original Course
+
+## Ancestry and non-production scope
+- Exact direct parent: G0 [stacked draft PR #115](https://github.com/thiepn/chess/pull/115), branch `g0-curriculum-source-alignment-and-transfer-depth`, SHA `75c1323e2ac07a022b828e5e125c950b1df4917d`.
+- Development child: `g1-original-beginner-fundamentals-depth`; no main, historical PR, paid resources, migration, deployment or production operations.
+- Preserved: 86 historical curriculum IDs, 86 P116 eight-step scripts, the original P88 49 transfer records and G0's 26 deeper challenges, all historic scoring/lesson review writers, puzzle IDs and source rights, private THIEPN Account and original approved visual snapshots.
+
+## Original content authored, not synthetic puzzles
+- `public/data/learning/g1-beginner-practice-v1.json`: **64 original position-specific tasks**, **4 per each of all 16 Learn/Safety skills**. All tasks use different source FENs, prompt, source-specific reason, explicit misconception, three progressively more specific hints and a known legal source answer; one demonstrated incorrect or off-task *legal* move per skill has separate feedback. No fabricated historical games, grade, engine optimality, tablebase proof or synthetic Lichess puzzle rating.
+- All nine Learn skills (board, pieces, capture, check, check responses, mate, castling, promotion, draw rules) and all seven Safety skills (values, attacked, defended, hanging, trades, final blunder check, opponent threats). White/Black castling and promotion; queen/rook/bishop/knight movements; captures versus recaptures; insufficient material versus a mere capture; attacks and defensively sensible alternatives are taught separately.
+- These are *curricular* correct moves in explicitly described contexts; a different legal move may also be playable in a complete game. The on-board move feedback distinguishes an allowed but off-task answer from an objectively unsafe move. The original native trainer, not a copied practice engine, delivers all tasks.
+
+## Native learner integration
+- `src/learning/beginnerPractice.ts`: validates exact 16-source authority, complete four-position sets, board/FEN identities, Chess.js legal moves, promotion/castling/check/mate/draw outcomes and legal alternative-move feedback; fails closed on missing or tampered content. Uses a bounded lazy fetched local asset, not a new store, writer or API.
+- `src/components/LessonRunner.tsx`: loads the G1 asset for the original 16 beginner skills regardless of whether the core lesson gets transfer data from P116 or P88. Inserts the four native lesson `move` steps after the existing original transfer sequence. Three are independently attempted retrieval; the fourth adds separate unfamiliar-board transfer evidence under original `summarizeLessonMastery` and original `applyEvidence` scheduling. Assisted/wrong G1 transfer never becomes clean mastery; there is no automatic claim of delayed retention until the existing scheduled reviews verify it.
+- The original P116 and P88 content files remain byte-for-byte unchanged. Original historical step identities and keys preserved. No standalone G1 course tab, parallel engine, puzzle grader or duplicate account persistence.
+
+## Source checks and qualification
+- Read-only G1 source inspection: 16 exact skill IDs, 64 distinct G1 FENs, four exercises per skill, all required descriptions/reasons/repairs/hints and 16 legal-alternative feedback entries exist. No missing schema fields.
+- Independently authored board-geometry sanity checker checked all 64 expected moves, 16 feedback alternatives, 4 rook-mate patterns, 4 check outcomes, 4 insufficiency-material outcomes and the initial check boundaries with **zero failures**. This is *not* executing Chess.js; the actual app validator and targeted Vitest/Playwright are still **NOT_TESTED**.
+- `src/learning/g1BeginnerPractice.test.ts` authors focused Chess.js validation, historical script preservation, nonoverlap with original positions, fail-closed tamper rejection and native transfer mastery regressions; tests **NOT_RUN**. Retains unchanged 260 KiB initial / 321 KiB total gzip requirements; P126 exact-head build checkout problem remains unresolved, so exact-head TypeScript, Vite, bundle sizes, real browser, screen-reader and device tests are **NOT_TESTED/NOT_MEASURED**.
+- No user account or personal game data is read or sent by this asset; provenance, FEN and accepted moves remain static educational data.
+
+## Remaining depth work
+- G1 adds four authentic positions to each beginner lesson on top of its already authored worked and transfer exercises. This is substantial, but **does not yet satisfy** the earlier target of eight to twelve *new* diverse positions per beginner skill, nor does it prove success in true learner sessions.
+- Next targeted phase: deeper 0–600 repetition by error type (safe capture, pawn threat, check interposition, draw avoidance), source review across difficulty, and genuine executed Chess.js/Chromium accessibility plus real delayed review after actual elapsed time. Keep using original LessonRunner/PuzzleRunner/Review authority, and repair runtime failures before release.

@@ -18,6 +18,7 @@ import type {
 } from "../domain/types";
 import { deepTransferSkillIds, lessonForSkill } from "../learning/lessons";
 import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../learning/transferCompletion";
+import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
 import { summarizeLessonMastery } from "../learning/mastery";
 import type {
   BoardArrow,
@@ -63,6 +64,7 @@ export function LessonRunner({
     [activity.activityType,skill.description,skill.id,skill.title],
   );
   const missingTransfer = !deepTransferSkillIds.includes(skill.id);
+  const beginner = beginnerSkillIds.some(id => id === skill.id);
   const [transferEntry,setTransferEntry] = useState<{skillId:string;entry:TransferExercise}|null>(null);
   const [transferError,setTransferError] = useState<string|null>(null);
   const [transferRetry,setTransferRetry] = useState(0);
@@ -80,9 +82,32 @@ export function LessonRunner({
     });
     return ()=>{cancelled=true;};
   },[skill.id,missingTransfer,transferRetry]);
-  const lesson = useMemo(()=>missingTransfer && transferEntry?.skillId === skill.id
-    ? checkedTransfer(baseLesson,transferEntry.entry) : baseLesson,
-    [baseLesson,missingTransfer,skill.id,transferEntry]);
+  const [beginnerEntry, setBeginnerEntry] = useState<{ skillId: string; entry: BeginnerPracticeEntry } | null>(null);
+  const [beginnerError, setBeginnerError] = useState<string | null>(null);
+  const [beginnerRetry, setBeginnerRetry] = useState(0);
+  useEffect(() => {
+    if (!beginner) return;
+    let cancelled = false;
+    setBeginnerError(null);
+    void loadBeginnerPractice().then(catalog => {
+      if (cancelled) return;
+      const entry = catalog.get(skill.id);
+      if (!entry) { setBeginnerError("The original beginner source is incomplete."); return; }
+      setBeginnerEntry({ skillId: skill.id, entry });
+    }).catch(() => {
+      if (!cancelled) setBeginnerError("Beginner practice is unavailable or unverified. No lesson credit has been written.");
+    });
+    return () => { cancelled = true; };
+  }, [beginner, skill.id, beginnerRetry]);
+
+  const transferLesson = useMemo(() =>
+    missingTransfer && transferEntry?.skillId === skill.id
+      ? checkedTransfer(baseLesson, transferEntry.entry) : baseLesson,
+    [baseLesson, missingTransfer, skill.id, transferEntry]);
+  const lesson = useMemo(() =>
+    beginner && beginnerEntry?.skillId === skill.id
+      ? withBeginnerPractice(transferLesson, beginnerEntry.entry) : transferLesson,
+    [beginner, beginnerEntry, skill.id, transferLesson]);
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -283,11 +308,17 @@ export function LessonRunner({
     summarizeLessonMastery(results);
 
   // Never fall through to the same-position fallback: that is retrieval, not transfer.
-  if (missingTransfer && transferEntry?.skillId !== skill.id) {
+  if ((missingTransfer && transferEntry?.skillId !== skill.id) ||
+      (beginner && beginnerEntry?.skillId !== skill.id)) {
+    const error = (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
+      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null);
     return <div className="lesson-runner lesson-runner-v2" role="status">
-      <h2>{transferError ? "Transfer position unavailable" : "Preparing independent practice"}</h2>
-      <p>{transferError ?? "Loading the authored position needed to assess this concept."}</p>
-      {transferError && <button type="button" onClick={()=>setTransferRetry(x=>x+1)}>Retry transfer data</button>}
+      <h2>{error ? "Lesson source unavailable" : "Preparing original practice"}</h2>
+      <p>{error ?? "Loading and validating the independent board positions for this lesson."}</p>
+      {error && <button type="button" onClick={() => {
+        setTransferRetry(value => value + 1);
+        setBeginnerRetry(value => value + 1);
+      }}>Retry lesson content</button>}
     </div>;
   }
   return (

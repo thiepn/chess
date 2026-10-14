@@ -1,0 +1,1223 @@
+{
+  "schema": "thiepn.chess.beginner-practice.v1",
+  "authority": "Original authored unscored source positions used in the native lesson transfer workflow. Historical lesson and transfer identities unchanged.",
+  "version": 1,
+  "items": [
+    {
+      "skillId": "defense.threats",
+      "exercises": [
+        {
+          "fen": "k3r3/p7/8/8/8/8/P7/4KB2 w - - 0 1",
+          "acceptedMoves": [
+            "f1e2"
+          ],
+          "prompt": "The rook on e8 checks the white king. Interpose before pursuing plans.",
+          "success": "Be2 blocks the checking file, making White's king safe from that rook.",
+          "misconception": "When in check, dealing with the check is compulsory; an unrelated attack is illegal.",
+          "successByMove": {
+            "f1e2": "Be2 blocks the checking file, making White's king safe from that rook."
+          },
+          "hints": [
+            "Identify the immediate threat first. The rook on e8 checks the white king. Interpose before pursuing plans.",
+            "Avoid the mistaken reasoning: When in check, dealing with the check is compulsory; an unrelated attack is illegal.",
+            "If stuck, inspect the concrete move from f1 to e2."
+          ],
+          "wrongMoveFeedback": {
+            "e1f2": "Kf2 can legally answer the rook check, but the exercise specifically asks for the bishop interposition Be2. It is not claiming Kf2 loses."
+          }
+        },
+        {
+          "fen": "8/7k/2n5/8/3Q4/8/7P/K7 w - - 0 1",
+          "acceptedMoves": [
+            "d4f4"
+          ],
+          "prompt": "The knight on c6 attacks your queen at d4. Move the queen off the attacked square.",
+          "success": "Qf4 avoids the knight's c6-d4 fork target and leaves the queen intact.",
+          "misconception": "Do not assume an opponent has no threat because its last move was quiet.",
+          "successByMove": {
+            "d4f4": "Qf4 avoids the knight's c6-d4 fork target and leaves the queen intact."
+          },
+          "hints": [
+            "Identify the immediate threat first. The knight on c6 attacks your queen at d4. Move the queen off the attacked square.",
+            "Avoid the mistaken reasoning: Do not assume an opponent has no threat because its last move was quiet.",
+            "If stuck, inspect the concrete move from d4 to f4."
+          ]
+        },
+        {
+          "fen": "7k/8/8/8/8/8/4q3/4KB2 w - - 0 1",
+          "acceptedMoves": [
+            "f1e2"
+          ],
+          "prompt": "The black queen on e2 checks your king on e1. Capture it with the bishop.",
+          "success": "Bxe2 removes the queen delivering check and resolves the immediate king attack.",
+          "misconception": "A capture of the checking piece must be legal and must actually end the king threat.",
+          "successByMove": {
+            "f1e2": "Bxe2 removes the queen delivering check and resolves the immediate king attack."
+          },
+          "hints": [
+            "Identify the immediate threat first. The black queen on e2 checks your king on e1. Capture it with the bishop.",
+            "Avoid the mistaken reasoning: A capture of the checking piece must be legal and must actually end the king threat.",
+            "If stuck, inspect the concrete move from f1 to e2."
+          ]
+        },
+        {
+          "fen": "7k/8/8/2q5/8/8/2R5/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c2c5"
+          ],
+          "prompt": "The queen on c5 attacks your rook on c2. Capture the queen along the file.",
+          "success": "Rxc5 uses the open c-file to take the queen before it can win the rook.",
+          "misconception": "A threat can sometimes be met by directly capturing the attacker instead of retreating.",
+          "successByMove": {
+            "c2c5": "Rxc5 uses the open c-file to take the queen before it can win the rook."
+          },
+          "hints": [
+            "Identify the immediate threat first. The queen on c5 attacks your rook on c2. Capture the queen along the file.",
+            "Avoid the mistaken reasoning: A threat can sometimes be met by directly capturing the attacker instead of retreating.",
+            "If stuck, inspect the concrete move from c2 to c5."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.attacked",
+      "exercises": [
+        {
+          "fen": "8/7k/2n5/8/3Q4/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "d4e3"
+          ],
+          "prompt": "A black knight on c6 attacks the queen on d4. Move the queen off d4.",
+          "success": "Qe3 removes the queen from the knight's c6-d4 attack square while keeping the queen in play.",
+          "misconception": "Do not carry out an unrelated plan while the queen is directly attacked by a knight.",
+          "successByMove": {
+            "d4e3": "Qe3 removes the queen from the knight's c6-d4 attack square while keeping the queen in play."
+          },
+          "hints": [
+            "Identify the immediate threat first. A black knight on c6 attacks the queen on d4. Move the queen off d4.",
+            "Avoid the mistaken reasoning: Do not carry out an unrelated plan while the queen is directly attacked by a knight.",
+            "If stuck, inspect the concrete move from d4 to e3."
+          ],
+          "wrongMoveFeedback": {
+            "d4b4": "Qb4 is legal but the knight on c6 also attacks b4. This relocation still exposes the queen to an immediate knight capture."
+          }
+        },
+        {
+          "fen": "7k/8/8/1b6/8/8/4R3/K7 w - - 0 1",
+          "acceptedMoves": [
+            "e2e1"
+          ],
+          "prompt": "Black's bishop on b5 attacks your rook on e2 along a diagonal. Retreat.",
+          "success": "Re1 gets the rook away from the b5-c4-d3-e2 diagonal that contains the attack.",
+          "misconception": "Long diagonals can threaten a piece several squares away. Trace them before moving.",
+          "successByMove": {
+            "e2e1": "Re1 gets the rook away from the b5-c4-d3-e2 diagonal that contains the attack."
+          },
+          "hints": [
+            "Identify the immediate threat first. Black's bishop on b5 attacks your rook on e2 along a diagonal. Retreat.",
+            "Avoid the mistaken reasoning: Long diagonals can threaten a piece several squares away. Trace them before moving.",
+            "If stuck, inspect the concrete move from e2 to e1."
+          ]
+        },
+        {
+          "fen": "7k/8/8/3p4/2B5/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c4b3"
+          ],
+          "prompt": "The pawn on d5 attacks your bishop on c4. Find a safe retreat.",
+          "success": "Bb3 escapes the pawn's diagonal capture square and preserves the bishop for later use.",
+          "misconception": "Pawns attack one file diagonally, not straight ahead. A pawn can force a bishop back.",
+          "successByMove": {
+            "c4b3": "Bb3 escapes the pawn's diagonal capture square and preserves the bishop for later use."
+          },
+          "hints": [
+            "Identify the immediate threat first. The pawn on d5 attacks your bishop on c4. Find a safe retreat.",
+            "Avoid the mistaken reasoning: Pawns attack one file diagonally, not straight ahead. A pawn can force a bishop back.",
+            "If stuck, inspect the concrete move from c4 to b3."
+          ]
+        },
+        {
+          "fen": "7k/8/8/8/4p3/5N2/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "f3d2"
+          ],
+          "prompt": "Black's pawn on e4 attacks your knight on f3. Move the knight to d2.",
+          "success": "Nd2 leaves the black pawn's e4-f3 attack without giving up the knight.",
+          "misconception": "A pawn on e4 attacks d3 and f3; it does not need to reach f3 by moving straight.",
+          "successByMove": {
+            "f3d2": "Nd2 leaves the black pawn's e4-f3 attack without giving up the knight."
+          },
+          "hints": [
+            "Identify the immediate threat first. Black's pawn on e4 attacks your knight on f3. Move the knight to d2.",
+            "Avoid the mistaken reasoning: A pawn on e4 attacks d3 and f3; it does not need to reach f3 by moving straight.",
+            "If stuck, inspect the concrete move from f3 to d2."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.blunder-check",
+      "exercises": [
+        {
+          "fen": "8/7k/2n3p1/8/3Q4/8/4P3/K7 w - - 0 1",
+          "acceptedMoves": [
+            "d4e3"
+          ],
+          "prompt": "Before following your plan, check whether the queen on d4 is attacked.",
+          "success": "Qe3 saves the queen from the knight on c6 and keeps the king safe.",
+          "misconception": "A final blunder check must look for the opponent's immediate captures, not only your threats.",
+          "successByMove": {
+            "d4e3": "Qe3 saves the queen from the knight on c6 and keeps the king safe."
+          },
+          "hints": [
+            "Identify the immediate threat first. Before following your plan, check whether the queen on d4 is attacked.",
+            "Avoid the mistaken reasoning: A final blunder check must look for the opponent's immediate captures, not only your threats.",
+            "If stuck, inspect the concrete move from d4 to e3."
+          ],
+          "wrongMoveFeedback": {
+            "d4b4": "Qb4 is legal but still lies on a square attacked by the knight on c6. A true blunder check must also test the destination."
+          }
+        },
+        {
+          "fen": "7k/8/4b3/8/8/8/R7/7K w - - 0 1",
+          "acceptedMoves": [
+            "a2a1"
+          ],
+          "prompt": "The bishop on e6 aims at your rook on a2. Make a safe rook move.",
+          "success": "Ra1 moves the rook away from the e6-d5-c4-b3-a2 diagonal.",
+          "misconception": "Do not overlook diagonal attacks on rooks while thinking about material elsewhere.",
+          "successByMove": {
+            "a2a1": "Ra1 moves the rook away from the e6-d5-c4-b3-a2 diagonal."
+          },
+          "hints": [
+            "Identify the immediate threat first. The bishop on e6 aims at your rook on a2. Make a safe rook move.",
+            "Avoid the mistaken reasoning: Do not overlook diagonal attacks on rooks while thinking about material elsewhere.",
+            "If stuck, inspect the concrete move from a2 to a1."
+          ]
+        },
+        {
+          "fen": "7k/8/8/1p6/2B5/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c4d3"
+          ],
+          "prompt": "The pawn on b5 attacks your bishop on c4. Protect it before moving.",
+          "success": "Bd3 removes the bishop from the pawn's b5-c4 capture threat.",
+          "misconception": "Check pawn captures before committing a bishop to a square, especially near the board edge.",
+          "successByMove": {
+            "c4d3": "Bd3 removes the bishop from the pawn's b5-c4 capture threat."
+          },
+          "hints": [
+            "Identify the immediate threat first. The pawn on b5 attacks your bishop on c4. Protect it before moving.",
+            "Avoid the mistaken reasoning: Check pawn captures before committing a bishop to a square, especially near the board edge.",
+            "If stuck, inspect the concrete move from c4 to d3."
+          ]
+        },
+        {
+          "fen": "7k/8/5p2/4N3/8/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "e5f3"
+          ],
+          "prompt": "The pawn on f6 attacks your knight on e5. Avoid leaving it en prise.",
+          "success": "Nf3 gets the knight off e5, where the black pawn could capture it.",
+          "misconception": "Your move must survive the opponent's next capture, not merely look active.",
+          "successByMove": {
+            "e5f3": "Nf3 gets the knight off e5, where the black pawn could capture it."
+          },
+          "hints": [
+            "Identify the immediate threat first. The pawn on f6 attacks your knight on e5. Avoid leaving it en prise.",
+            "Avoid the mistaken reasoning: Your move must survive the opponent's next capture, not merely look active.",
+            "If stuck, inspect the concrete move from e5 to f3."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.defended",
+      "exercises": [
+        {
+          "fen": "k4r2/8/8/8/8/5N2/8/K6R w - - 0 1",
+          "acceptedMoves": [
+            "h1f1"
+          ],
+          "prompt": "The rook on f8 targets your knight on f3. Use your rook to support it.",
+          "success": "Rf1 defends f3 along the clear f1-f2-f3 file, allowing a possible rook recapture.",
+          "misconception": "Defending a square needs a real legal path and does not guarantee that every trade is favorable.",
+          "successByMove": {
+            "h1f1": "Rf1 defends f3 along the clear f1-f2-f3 file, allowing a possible rook recapture."
+          },
+          "hints": [
+            "Identify the immediate threat first. The rook on f8 targets your knight on f3. Use your rook to support it.",
+            "Avoid the mistaken reasoning: Defending a square needs a real legal path and does not guarantee that every trade is favorable.",
+            "If stuck, inspect the concrete move from h1 to f1."
+          ],
+          "wrongMoveFeedback": {
+            "h1g1": "Rg1 is legal but does not protect the knight on f3. The rook needs the open f-file so it can recapture on f3."
+          }
+        },
+        {
+          "fen": "7k/8/8/4n3/2B5/8/8/K2Q4 w - - 0 1",
+          "acceptedMoves": [
+            "d1b3"
+          ],
+          "prompt": "Black's knight on e5 attacks your bishop on c4. Reinforce it with the queen.",
+          "success": "Qb3 defends c4 along b3-c4; an opposing knight capture can then be answered.",
+          "misconception": "A piece is not protected merely because a friendly queen is nearby; verify its exact line.",
+          "successByMove": {
+            "d1b3": "Qb3 defends c4 along b3-c4; an opposing knight capture can then be answered."
+          },
+          "hints": [
+            "Identify the immediate threat first. Black's knight on e5 attacks your bishop on c4. Reinforce it with the queen.",
+            "Avoid the mistaken reasoning: A piece is not protected merely because a friendly queen is nearby; verify its exact line.",
+            "If stuck, inspect the concrete move from d1 to b3."
+          ]
+        },
+        {
+          "fen": "7k/4b3/8/8/8/R7/8/K1Q5 w - - 0 1",
+          "acceptedMoves": [
+            "c1c3"
+          ],
+          "prompt": "The bishop on e7 attacks your rook on a3. Add a queen defender.",
+          "success": "Qc3 guards a3 along c3-b3-a3 and gives White a recapture if the bishop takes the rook.",
+          "misconception": "A defended rook can still be exchanged; compare attackers, defenders and material after capture.",
+          "successByMove": {
+            "c1c3": "Qc3 guards a3 along c3-b3-a3 and gives White a recapture if the bishop takes the rook."
+          },
+          "hints": [
+            "Identify the immediate threat first. The bishop on e7 attacks your rook on a3. Add a queen defender.",
+            "Avoid the mistaken reasoning: A defended rook can still be exchanged; compare attackers, defenders and material after capture.",
+            "If stuck, inspect the concrete move from c1 to c3."
+          ]
+        },
+        {
+          "fen": "7k/6b1/8/8/3N4/8/2Q5/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c2d3"
+          ],
+          "prompt": "The bishop on g7 attacks your knight on d4. Protect the knight with the queen.",
+          "success": "Qd3 defends the knight along the clear d3-d4 line and directly answers a possible capture.",
+          "misconception": "A queen on a nearby square does not help unless it really attacks the threatened square.",
+          "successByMove": {
+            "c2d3": "Qd3 defends the knight along the clear d3-d4 line and directly answers a possible capture."
+          },
+          "hints": [
+            "Identify the immediate threat first. The bishop on g7 attacks your knight on d4. Protect the knight with the queen.",
+            "Avoid the mistaken reasoning: A queen on a nearby square does not help unless it really attacks the threatened square.",
+            "If stuck, inspect the concrete move from c2 to d3."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.hanging",
+      "exercises": [
+        {
+          "fen": "7k/8/8/3n4/8/8/8/K2Q4 w - - 0 1",
+          "acceptedMoves": [
+            "d1d5"
+          ],
+          "prompt": "Spot the loose black knight on d5 and capture it along the open d-file.",
+          "success": "Qxd5 takes an undefended knight in this exercise, increasing White's material.",
+          "misconception": "Before grabbing loose material, still check for an opposing capture or discovered attack.",
+          "successByMove": {
+            "d1d5": "Qxd5 takes an undefended knight in this exercise, increasing White's material."
+          },
+          "hints": [
+            "Identify the immediate threat first. Spot the loose black knight on d5 and capture it along the open d-file.",
+            "Avoid the mistaken reasoning: Before grabbing loose material, still check for an opposing capture or discovered attack.",
+            "If stuck, inspect the concrete move from d1 to d5."
+          ],
+          "wrongMoveFeedback": {
+            "d1d3": "Qd3 does not capture the loose knight on d5. The open d-file lets the queen take the undefended target directly."
+          }
+        },
+        {
+          "fen": "7k/8/8/b7/8/8/8/R5K1 w - - 0 1",
+          "acceptedMoves": [
+            "a1a5"
+          ],
+          "prompt": "The enemy bishop on a5 hangs on the open file. Capture it with your rook.",
+          "success": "Rxa5 removes the undefended bishop using the unobstructed a-file.",
+          "misconception": "A hanging piece has insufficient support; do not overlook line blockers when taking it.",
+          "successByMove": {
+            "a1a5": "Rxa5 removes the undefended bishop using the unobstructed a-file."
+          },
+          "hints": [
+            "Identify the immediate threat first. The enemy bishop on a5 hangs on the open file. Capture it with your rook.",
+            "Avoid the mistaken reasoning: A hanging piece has insufficient support; do not overlook line blockers when taking it.",
+            "If stuck, inspect the concrete move from a1 to a5."
+          ]
+        },
+        {
+          "fen": "7k/8/8/3n4/8/8/6B1/K7 w - - 0 1",
+          "acceptedMoves": [
+            "g2d5"
+          ],
+          "prompt": "A black knight is loose on d5. Use the bishop on g2 to take it.",
+          "success": "Bxd5 crosses f3 and e4 before capturing the knight. The diagonal is clear.",
+          "misconception": "Even a completely undefended target cannot be captured if a piece blocks the attacking line.",
+          "successByMove": {
+            "g2d5": "Bxd5 crosses f3 and e4 before capturing the knight. The diagonal is clear."
+          },
+          "hints": [
+            "Identify the immediate threat first. A black knight is loose on d5. Use the bishop on g2 to take it.",
+            "Avoid the mistaken reasoning: Even a completely undefended target cannot be captured if a piece blocks the attacking line.",
+            "If stuck, inspect the concrete move from g2 to d5."
+          ]
+        },
+        {
+          "fen": "7k/8/8/8/4b3/2N5/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c3e4"
+          ],
+          "prompt": "Look for the loose bishop on e4 and capture it with the knight.",
+          "success": "Nxe4 removes the bishop through a legal L-shaped jump with no defender on this board.",
+          "misconception": "A knight cannot slide onto a target like a bishop; verify the jump before claiming material.",
+          "successByMove": {
+            "c3e4": "Nxe4 removes the bishop through a legal L-shaped jump with no defender on this board."
+          },
+          "hints": [
+            "Identify the immediate threat first. Look for the loose bishop on e4 and capture it with the knight.",
+            "Avoid the mistaken reasoning: A knight cannot slide onto a target like a bishop; verify the jump before claiming material.",
+            "If stuck, inspect the concrete move from c3 to e4."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.trades",
+      "exercises": [
+        {
+          "fen": "7k/8/1p6/2r5/8/8/8/K1R5 w - - 0 1",
+          "acceptedMoves": [
+            "c1c5"
+          ],
+          "prompt": "Capture the opposing rook on c5 and identify Black's pawn recapture.",
+          "success": "Rxc5 bxc5 trades rook for rook after the black b6 pawn recaptures on c5.",
+          "misconception": "Do not count the first capture alone. The black pawn has a real reply on c5.",
+          "successByMove": {
+            "c1c5": "Rxc5 bxc5 trades rook for rook after the black b6 pawn recaptures on c5."
+          },
+          "hints": [
+            "Identify the immediate threat first. Capture the opposing rook on c5 and identify Black's pawn recapture.",
+            "Avoid the mistaken reasoning: Do not count the first capture alone. The black pawn has a real reply on c5.",
+            "If stuck, inspect the concrete move from c1 to c5."
+          ],
+          "wrongMoveFeedback": {
+            "c1c3": "Rc3 leaves the rook exposed to Black's rook on c5 along the open c-file, rather than calculating the Rxc5 bxc5 exchange."
+          }
+        },
+        {
+          "fen": "7k/5p2/4b3/8/2B5/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c4e6"
+          ],
+          "prompt": "Trade your bishop for the bishop on e6, accounting for Black's f7 pawn.",
+          "success": "Bxe6 fxe6 is a bishop exchange after the defending black pawn recaptures.",
+          "misconception": "A same-value trade is not a free bishop; the pawn on f7 supports the exchange.",
+          "successByMove": {
+            "c4e6": "Bxe6 fxe6 is a bishop exchange after the defending black pawn recaptures."
+          },
+          "hints": [
+            "Identify the immediate threat first. Trade your bishop for the bishop on e6, accounting for Black's f7 pawn.",
+            "Avoid the mistaken reasoning: A same-value trade is not a free bishop; the pawn on f7 supports the exchange.",
+            "If stuck, inspect the concrete move from c4 to e6."
+          ]
+        },
+        {
+          "fen": "7k/8/5p2/4n3/8/5N2/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "f3e5"
+          ],
+          "prompt": "Exchange knights on e5 and calculate the opponent's pawn recapture.",
+          "success": "Nxe5 fxe5 trades one knight for another when the f6 pawn recaptures.",
+          "misconception": "Taking a knight is not a free gain when an opposing pawn can capture your knight next.",
+          "successByMove": {
+            "f3e5": "Nxe5 fxe5 trades one knight for another when the f6 pawn recaptures."
+          },
+          "hints": [
+            "Identify the immediate threat first. Exchange knights on e5 and calculate the opponent's pawn recapture.",
+            "Avoid the mistaken reasoning: Taking a knight is not a free gain when an opposing pawn can capture your knight next.",
+            "If stuck, inspect the concrete move from f3 to e5."
+          ]
+        },
+        {
+          "fen": "7k/1p6/r7/8/8/8/8/R3K3 w - - 0 1",
+          "acceptedMoves": [
+            "a1a6"
+          ],
+          "prompt": "Capture the opposing rook on a6 and include the b7 pawn's reply.",
+          "success": "Rxa6 bxa6 removes both rooks after the pawn recaptures, not simply Black's rook.",
+          "misconception": "Evaluate exchanges after the recapture; a pawn defender changes the trade completely.",
+          "successByMove": {
+            "a1a6": "Rxa6 bxa6 removes both rooks after the pawn recaptures, not simply Black's rook."
+          },
+          "hints": [
+            "Identify the immediate threat first. Capture the opposing rook on a6 and include the b7 pawn's reply.",
+            "Avoid the mistaken reasoning: Evaluate exchanges after the recapture; a pawn defender changes the trade completely.",
+            "If stuck, inspect the concrete move from a1 to a6."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "fundamentals.values",
+      "exercises": [
+        {
+          "fen": "7k/8/8/3p4/8/8/8/K2Q4 w - - 0 1",
+          "acceptedMoves": [
+            "d1d5"
+          ],
+          "prompt": "Capture the d5 pawn using your queen and identify the material removed.",
+          "success": "Qxd5 removes a pawn; the queen remains a highly valuable piece that must be kept safe afterward.",
+          "misconception": "Taking a pawn with a queen does not make the queen worth one point. Count what remains after any reply.",
+          "successByMove": {
+            "d1d5": "Qxd5 removes a pawn; the queen remains a highly valuable piece that must be kept safe afterward."
+          },
+          "hints": [
+            "Identify the immediate threat first. Capture the d5 pawn using your queen and identify the material removed.",
+            "Avoid the mistaken reasoning: Taking a pawn with a queen does not make the queen worth one point. Count what remains after any reply.",
+            "If stuck, inspect the concrete move from d1 to d5."
+          ],
+          "wrongMoveFeedback": {
+            "d1d4": "Qd4 is legal but leaves the enemy pawn on d5; the exercise asks you to capture and identify its material value."
+          }
+        },
+        {
+          "fen": "7k/8/8/8/4q3/2N5/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c3e4"
+          ],
+          "prompt": "Your knight can capture the opposing queen on e4. Assess the material.",
+          "success": "Nxe4 takes a queen with a knight; the opponent loses its most valuable ordinary piece here.",
+          "misconception": "Material values are guides, not proof the knight is safe. Always examine a possible recapture.",
+          "successByMove": {
+            "c3e4": "Nxe4 takes a queen with a knight; the opponent loses its most valuable ordinary piece here."
+          },
+          "hints": [
+            "Identify the immediate threat first. Your knight can capture the opposing queen on e4. Assess the material.",
+            "Avoid the mistaken reasoning: Material values are guides, not proof the knight is safe. Always examine a possible recapture.",
+            "If stuck, inspect the concrete move from c3 to e4."
+          ]
+        },
+        {
+          "fen": "7k/8/8/6r1/8/8/8/K1B5 w - - 0 1",
+          "acceptedMoves": [
+            "c1g5"
+          ],
+          "prompt": "Capture the opposing rook with your bishop along the clear diagonal.",
+          "success": "Bxg5 uses the open c1-d2-e3-f4-g5 diagonal to remove the more valuable rook.",
+          "misconception": "A rook is normally worth more than a bishop, but the next recapture still matters.",
+          "successByMove": {
+            "c1g5": "Bxg5 uses the open c1-d2-e3-f4-g5 diagonal to remove the more valuable rook."
+          },
+          "hints": [
+            "Identify the immediate threat first. Capture the opposing rook with your bishop along the clear diagonal.",
+            "Avoid the mistaken reasoning: A rook is normally worth more than a bishop, but the next recapture still matters.",
+            "If stuck, inspect the concrete move from c1 to g5."
+          ]
+        },
+        {
+          "fen": "7k/b7/8/8/8/8/8/R3K3 w - - 0 1",
+          "acceptedMoves": [
+            "a1a7"
+          ],
+          "prompt": "Take the enemy bishop on a7 with your rook using the open file.",
+          "success": "Rxa7 captures the bishop; the rook stays on a7 and should be checked for counterattacks.",
+          "misconception": "Capturing a piece is not automatically an equal trade; count both the captured piece and any reply.",
+          "successByMove": {
+            "a1a7": "Rxa7 captures the bishop; the rook stays on a7 and should be checked for counterattacks."
+          },
+          "hints": [
+            "Identify the immediate threat first. Take the enemy bishop on a7 with your rook using the open file.",
+            "Avoid the mistaken reasoning: Capturing a piece is not automatically an equal trade; count both the captured piece and any reply.",
+            "If stuck, inspect the concrete move from a1 to a7."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.board",
+      "exercises": [
+        {
+          "fen": "4k3/8/8/3p4/3P4/8/8/4K1N1 w - - 0 1",
+          "acceptedMoves": [
+            "g1f3"
+          ],
+          "prompt": "Move the g1 knight to f3 in this pawn-center position.",
+          "success": "The knight starts on file g, rank 1 and finishes on file f, rank 3; pawn placement does not rename the square.",
+          "misconception": "A square uses a letter for the file and a digit for the rank. Never count files from Black's view.",
+          "successByMove": {
+            "g1f3": "The knight starts on file g, rank 1 and finishes on file f, rank 3; pawn placement does not rename the square."
+          },
+          "hints": [
+            "Read the board carefully. Move the g1 knight to f3 in this pawn-center position.",
+            "Look for this misconception: A square uses a letter for the file and a digit for the rank. Never count files from Black's view.",
+            "If needed, check the route from g1 to f3 and explain it."
+          ],
+          "wrongMoveFeedback": {
+            "g1h3": "Nh3 is a legal knight jump, but it reaches h3 rather than the requested f3 coordinate. Name the destination before moving."
+          }
+        },
+        {
+          "fen": "4k3/8/8/4p3/4P3/8/8/1N2K3 w - - 0 1",
+          "acceptedMoves": [
+            "b1c3"
+          ],
+          "prompt": "Locate the knight on b1 and move it to c3 on the fixed board grid.",
+          "success": "The b-file is one file from the left and c3 is on the third rank. The position of the e-pawns changes nothing.",
+          "misconception": "Changing the pawns cannot change the coordinates. Do not read the letter as a rank or reverse the directions.",
+          "successByMove": {
+            "b1c3": "The b-file is one file from the left and c3 is on the third rank. The position of the e-pawns changes nothing."
+          },
+          "hints": [
+            "Read the board carefully. Locate the knight on b1 and move it to c3 on the fixed board grid.",
+            "Look for this misconception: Changing the pawns cannot change the coordinates. Do not read the letter as a rank or reverse the directions.",
+            "If needed, check the route from b1 to c3 and explain it."
+          ]
+        },
+        {
+          "fen": "4k3/p7/8/8/8/8/7P/4K1N1 w - - 0 1",
+          "acceptedMoves": [
+            "g1h3"
+          ],
+          "prompt": "Find h3 near the board edge and move the white knight there.",
+          "success": "Nh3 moves the knight to the h-file on rank three; square names remain absolute at the edge.",
+          "misconception": "The right edge is still the h-file from White's view. Do not count inward from the closest corner.",
+          "successByMove": {
+            "g1h3": "Nh3 moves the knight to the h-file on rank three; square names remain absolute at the edge."
+          },
+          "hints": [
+            "Read the board carefully. Find h3 near the board edge and move the white knight there.",
+            "Look for this misconception: The right edge is still the h-file from White's view. Do not count inward from the closest corner.",
+            "If needed, check the route from g1 to h3 and explain it."
+          ]
+        },
+        {
+          "fen": "4k3/4p3/8/8/8/8/5P2/1N2K3 w - - 0 1",
+          "acceptedMoves": [
+            "b1a3"
+          ],
+          "prompt": "Identify the knight's b1 origin and its a3 destination on the left side.",
+          "success": "Na3 reaches the a-file and third rank from b1. This is a square-reading exercise, not a move preference.",
+          "misconception": "The a-file is fixed. File names do not rotate with a nearby pawn or an alternative viewpoint.",
+          "successByMove": {
+            "b1a3": "Na3 reaches the a-file and third rank from b1. This is a square-reading exercise, not a move preference."
+          },
+          "hints": [
+            "Read the board carefully. Identify the knight's b1 origin and its a3 destination on the left side.",
+            "Look for this misconception: The a-file is fixed. File names do not rotate with a nearby pawn or an alternative viewpoint.",
+            "If needed, check the route from b1 to a3 and explain it."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.capture",
+      "exercises": [
+        {
+          "fen": "7k/5p2/8/8/2B5/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c4f7"
+          ],
+          "prompt": "Use the bishop on c4 to capture the opposing pawn on f7.",
+          "success": "Bxf7 follows the clear diagonal through d5 and e6 and takes the pawn on the landing square.",
+          "misconception": "The bishop must reach an enemy-occupied square along an open diagonal to capture.",
+          "successByMove": {
+            "c4f7": "Bxf7 follows the clear diagonal through d5 and e6 and takes the pawn on the landing square."
+          },
+          "hints": [
+            "Read the board carefully. Use the bishop on c4 to capture the opposing pawn on f7.",
+            "Look for this misconception: The bishop must reach an enemy-occupied square along an open diagonal to capture.",
+            "If needed, check the route from c4 to f7 and explain it."
+          ],
+          "wrongMoveFeedback": {
+            "c4e6": "Be6 is a legal diagonal move but it does not capture the pawn on f7. Follow the diagonal one more step to the occupied target."
+          }
+        },
+        {
+          "fen": "7k/8/5p2/8/4N3/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "e4f6"
+          ],
+          "prompt": "Capture the black pawn on f6 using the knight on e4.",
+          "success": "Nxf6 is a knight jump one file and two ranks away; no path squares are relevant.",
+          "misconception": "Knight captures still obey the L-shape. The target must occupy its final landing square.",
+          "successByMove": {
+            "e4f6": "Nxf6 is a knight jump one file and two ranks away; no path squares are relevant."
+          },
+          "hints": [
+            "Read the board carefully. Capture the black pawn on f6 using the knight on e4.",
+            "Look for this misconception: Knight captures still obey the L-shape. The target must occupy its final landing square.",
+            "If needed, check the route from e4 to f6 and explain it."
+          ]
+        },
+        {
+          "fen": "7k/8/8/3p4/8/8/8/K2R4 w - - 0 1",
+          "acceptedMoves": [
+            "d1d5"
+          ],
+          "prompt": "Capture the d5 pawn with the rook on d1 after inspecting the file.",
+          "success": "Rxd5 passes empty d2, d3 and d4, then captures the black pawn at d5.",
+          "misconception": "An intervening piece would prevent this rook capture; do not jump or turn a corner.",
+          "successByMove": {
+            "d1d5": "Rxd5 passes empty d2, d3 and d4, then captures the black pawn at d5."
+          },
+          "hints": [
+            "Read the board carefully. Capture the d5 pawn with the rook on d1 after inspecting the file.",
+            "Look for this misconception: An intervening piece would prevent this rook capture; do not jump or turn a corner.",
+            "If needed, check the route from d1 to d5 and explain it."
+          ]
+        },
+        {
+          "fen": "7k/8/2p5/8/8/8/2Q5/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c2c6"
+          ],
+          "prompt": "Move the queen up the open c-file to capture the opposing pawn.",
+          "success": "Qxc6 travels along c3, c4 and c5 to the enemy pawn on c6, removing it.",
+          "misconception": "Even queens require a clear file, rank or diagonal to capture.",
+          "successByMove": {
+            "c2c6": "Qxc6 travels along c3, c4 and c5 to the enemy pawn on c6, removing it."
+          },
+          "hints": [
+            "Read the board carefully. Move the queen up the open c-file to capture the opposing pawn.",
+            "Look for this misconception: Even queens require a clear file, rank or diagonal to capture.",
+            "If needed, check the route from c2 to c6 and explain it."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.castling",
+      "exercises": [
+        {
+          "fen": "4k3/8/8/8/8/8/8/4K2R w K - 0 1",
+          "acceptedMoves": [
+            "e1g1"
+          ],
+          "prompt": "Castle kingside with White's original e1 king and h1 rook.",
+          "success": "O-O moves the king to g1 and rook to f1 after the king crosses safe f1.",
+          "misconception": "King safety, castling rights and a clear path all matter for this unusual two-piece move.",
+          "successByMove": {
+            "e1g1": "O-O moves the king to g1 and rook to f1 after the king crosses safe f1."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Castle kingside with White's original e1 king and h1 rook.",
+            "Avoid this misconception: King safety, castling rights and a clear path all matter for this unusual two-piece move.",
+            "Check the square-to-square move from e1 to g1 if you need a final hint."
+          ],
+          "wrongMoveFeedback": {
+            "e1f1": "Kf1 is a legal ordinary king move, but it is not castling. The castling move also transfers the rook to f1 and the king to g1."
+          }
+        },
+        {
+          "fen": "4k3/8/8/8/8/8/8/R3K3 w Q - 0 1",
+          "acceptedMoves": [
+            "e1c1"
+          ],
+          "prompt": "Castle queenside with the rook on a1 and the king on e1.",
+          "success": "O-O-O moves the king to c1 and rook to d1 across the empty queenside.",
+          "misconception": "The king cannot cross check; the rook arrives on d1, not on the king's destination.",
+          "successByMove": {
+            "e1c1": "O-O-O moves the king to c1 and rook to d1 across the empty queenside."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Castle queenside with the rook on a1 and the king on e1.",
+            "Avoid this misconception: The king cannot cross check; the rook arrives on d1, not on the king's destination.",
+            "Check the square-to-square move from e1 to c1 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "4k2r/8/8/8/8/8/8/K7 b k - 0 1",
+          "acceptedMoves": [
+            "e8g8"
+          ],
+          "prompt": "Black to move: castle kingside using the original rook on h8.",
+          "success": "Black O-O ends with the king on g8 and rook on f8 with safe transit squares.",
+          "misconception": "Black follows the same castling requirements as White, including a safe king route.",
+          "successByMove": {
+            "e8g8": "Black O-O ends with the king on g8 and rook on f8 with safe transit squares."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Black to move: castle kingside using the original rook on h8.",
+            "Avoid this misconception: Black follows the same castling requirements as White, including a safe king route.",
+            "Check the square-to-square move from e8 to g8 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "r3k3/8/8/8/8/8/8/7K b q - 0 1",
+          "acceptedMoves": [
+            "e8c8"
+          ],
+          "prompt": "Black to move: castle queenside from e8 using the rook on a8.",
+          "success": "Black O-O-O ends with the king on c8 and rook on d8 via a clear path.",
+          "misconception": "No castling is legal through check or when the necessary castling rights are absent.",
+          "successByMove": {
+            "e8c8": "Black O-O-O ends with the king on c8 and rook on d8 via a clear path."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Black to move: castle queenside from e8 using the rook on a8.",
+            "Avoid this misconception: No castling is legal through check or when the necessary castling rights are absent.",
+            "Check the square-to-square move from e8 to c8 if you need a final hint."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.check",
+      "exercises": [
+        {
+          "fen": "4k3/8/8/8/8/8/8/R6K w - - 0 1",
+          "acceptedMoves": [
+            "a1a8"
+          ],
+          "prompt": "Put the rook on a8 to check the black king on e8.",
+          "success": "Ra8+ attacks e8 across the eighth rank through the open squares b8, c8 and d8.",
+          "misconception": "A check requires an actual king attack, not simply an aggressive move. Check is not automatically mate.",
+          "successByMove": {
+            "a1a8": "Ra8+ attacks e8 across the eighth rank through the open squares b8, c8 and d8."
+          },
+          "hints": [
+            "Read the board carefully. Put the rook on a8 to check the black king on e8.",
+            "Look for this misconception: A check requires an actual king attack, not simply an aggressive move. Check is not automatically mate.",
+            "If needed, check the route from a1 to a8 and explain it."
+          ],
+          "wrongMoveFeedback": {
+            "a1a7": "Ra7 is a legal rook move but it does not create the specified check on the king at e8. From a8 the rook attacks across the eighth rank."
+          }
+        },
+        {
+          "fen": "4k3/8/8/8/8/8/8/5BK1 w - - 0 1",
+          "acceptedMoves": [
+            "f1b5"
+          ],
+          "prompt": "Move the bishop to b5 and point out the diagonal checking the king.",
+          "success": "Bb5+ attacks along b5-c6-d7-e8, ending at Black's king on e8.",
+          "misconception": "Bishops give check through clear diagonals. You must trace the attacked king square.",
+          "successByMove": {
+            "f1b5": "Bb5+ attacks along b5-c6-d7-e8, ending at Black's king on e8."
+          },
+          "hints": [
+            "Read the board carefully. Move the bishop to b5 and point out the diagonal checking the king.",
+            "Look for this misconception: Bishops give check through clear diagonals. You must trace the attacked king square.",
+            "If needed, check the route from f1 to b5 and explain it."
+          ]
+        },
+        {
+          "fen": "8/8/8/4k3/8/8/8/K5N1 w - - 0 1",
+          "acceptedMoves": [
+            "g1f3"
+          ],
+          "prompt": "Jump the knight to f3 and examine its attack on the king on e5.",
+          "success": "Nf3+ threatens the king on e5 through a knight's L-shaped reach, not a sliding line.",
+          "misconception": "Do not look for an open diagonal from a knight. Its check comes from one of eight jump squares.",
+          "successByMove": {
+            "g1f3": "Nf3+ threatens the king on e5 through a knight's L-shaped reach, not a sliding line."
+          },
+          "hints": [
+            "Read the board carefully. Jump the knight to f3 and examine its attack on the king on e5.",
+            "Look for this misconception: Do not look for an open diagonal from a knight. Its check comes from one of eight jump squares.",
+            "If needed, check the route from g1 to f3 and explain it."
+          ]
+        },
+        {
+          "fen": "4k3/8/8/8/8/8/3R4/7K w - - 0 1",
+          "acceptedMoves": [
+            "d2d8"
+          ],
+          "prompt": "Move the rook to d8 and find the new check along the eighth rank.",
+          "success": "Rd8+ attacks the king on e8 immediately across the eighth rank from d8.",
+          "misconception": "A rook checks only when the king lies on an unobstructed rank or file after the move.",
+          "successByMove": {
+            "d2d8": "Rd8+ attacks the king on e8 immediately across the eighth rank from d8."
+          },
+          "hints": [
+            "Read the board carefully. Move the rook to d8 and find the new check along the eighth rank.",
+            "Look for this misconception: A rook checks only when the king lies on an unobstructed rank or file after the move.",
+            "If needed, check the route from d2 to d8 and explain it."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.check-responses",
+      "exercises": [
+        {
+          "fen": "k3r3/8/8/8/8/8/P7/4KB2 w - - 0 1",
+          "acceptedMoves": [
+            "f1e2"
+          ],
+          "prompt": "The black rook checks down the e-file. Block with the white bishop.",
+          "success": "Be2 interposes on the rook's line between e8 and the king e1, ending this specific check.",
+          "misconception": "Blocking check works only if the blocking move is legal and occupies the actual attacking line.",
+          "successByMove": {
+            "f1e2": "Be2 interposes on the rook's line between e8 and the king e1, ending this specific check."
+          },
+          "hints": [
+            "Read the board carefully. The black rook checks down the e-file. Block with the white bishop.",
+            "Look for this misconception: Blocking check works only if the blocking move is legal and occupies the actual attacking line.",
+            "If needed, check the route from f1 to e2 and explain it."
+          ],
+          "wrongMoveFeedback": {
+            "e1f2": "Kf2 is another legal way to evade this rook check, but this task asks you to interpose the bishop on e2. Both are legal responses."
+          }
+        },
+        {
+          "fen": "k3r3/8/8/8/8/8/8/4K3 w - - 0 1",
+          "acceptedMoves": [
+            "e1f2"
+          ],
+          "prompt": "Leave the attacked e-file by moving the king from e1 to f2.",
+          "success": "Kf2 escapes the rook's direct attack and lands outside the rook's file.",
+          "misconception": "A legal king escape must end on a square not attacked by any opposing piece.",
+          "successByMove": {
+            "e1f2": "Kf2 escapes the rook's direct attack and lands outside the rook's file."
+          },
+          "hints": [
+            "Read the board carefully. Leave the attacked e-file by moving the king from e1 to f2.",
+            "Look for this misconception: A legal king escape must end on a square not attacked by any opposing piece.",
+            "If needed, check the route from e1 to f2 and explain it."
+          ]
+        },
+        {
+          "fen": "7k/8/8/8/8/8/R3r3/4K3 w - - 0 1",
+          "acceptedMoves": [
+            "a2e2"
+          ],
+          "prompt": "A rook on e2 gives check. Capture it with your rook from a2.",
+          "success": "Rxe2 travels across the open second rank and removes the checking rook.",
+          "misconception": "Capturing a checking piece is useful only if the capturing move is legal and the king becomes safe.",
+          "successByMove": {
+            "a2e2": "Rxe2 travels across the open second rank and removes the checking rook."
+          },
+          "hints": [
+            "Read the board carefully. A rook on e2 gives check. Capture it with your rook from a2.",
+            "Look for this misconception: Capturing a checking piece is useful only if the capturing move is legal and the king becomes safe.",
+            "If needed, check the route from a2 to e2 and explain it."
+          ]
+        },
+        {
+          "fen": "k3r3/8/8/8/8/8/8/4K1N1 w - - 0 1",
+          "acceptedMoves": [
+            "g1e2"
+          ],
+          "prompt": "Use the knight to interpose on e2 against the rook's e-file check.",
+          "success": "Ne2 is an L-shaped jump that ends on the checking line e8-e1, stopping the rook.",
+          "misconception": "A knight can block a sliding rook check, but not an attack delivered by another knight.",
+          "successByMove": {
+            "g1e2": "Ne2 is an L-shaped jump that ends on the checking line e8-e1, stopping the rook."
+          },
+          "hints": [
+            "Read the board carefully. Use the knight to interpose on e2 against the rook's e-file check.",
+            "Look for this misconception: A knight can block a sliding rook check, but not an attack delivered by another knight.",
+            "If needed, check the route from g1 to e2 and explain it."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.draws",
+      "exercises": [
+        {
+          "fen": "7k/8/8/8/8/8/4n3/K5N1 w - - 0 1",
+          "acceptedMoves": [
+            "g1e2"
+          ],
+          "prompt": "Capture the last black knight and evaluate whether mate is still possible.",
+          "success": "Nxe2 leaves king plus a single knight versus bare king, an insufficient-material draw.",
+          "misconception": "Capturing the opponent's last piece is not a victory if neither side can mate.",
+          "successByMove": {
+            "g1e2": "Nxe2 leaves king plus a single knight versus bare king, an insufficient-material draw."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Capture the last black knight and evaluate whether mate is still possible.",
+            "Avoid this misconception: Capturing the opponent's last piece is not a victory if neither side can mate.",
+            "Check the square-to-square move from g1 to e2 if you need a final hint."
+          ],
+          "wrongMoveFeedback": {
+            "g1h3": "Nh3 does not capture the last black knight, so it does not reach the king-and-knight-versus-king material situation requested."
+          }
+        },
+        {
+          "fen": "7k/8/8/8/8/5b2/4B3/K7 w - - 0 1",
+          "acceptedMoves": [
+            "e2f3"
+          ],
+          "prompt": "Capture the final black bishop from e2 and inspect the resulting material.",
+          "success": "Bxf3 leaves king plus a single bishop against bare king, which cannot mate.",
+          "misconception": "An extra bishop does not automatically mean a win; calculate what pieces remain.",
+          "successByMove": {
+            "e2f3": "Bxf3 leaves king plus a single bishop against bare king, which cannot mate."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Capture the final black bishop from e2 and inspect the resulting material.",
+            "Avoid this misconception: An extra bishop does not automatically mean a win; calculate what pieces remain.",
+            "Check the square-to-square move from e2 to f3 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "k7/8/8/4b3/8/5N2/8/7K w - - 0 1",
+          "acceptedMoves": [
+            "f3e5"
+          ],
+          "prompt": "Capture Black's bishop on e5 using the white knight from f3.",
+          "success": "Nxe5 removes the last enemy piece, leaving a lone knight and king versus king.",
+          "misconception": "A decisive capture in material terms may still leave a drawn insufficient-material ending.",
+          "successByMove": {
+            "f3e5": "Nxe5 removes the last enemy piece, leaving a lone knight and king versus king."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Capture Black's bishop on e5 using the white knight from f3.",
+            "Avoid this misconception: A decisive capture in material terms may still leave a drawn insufficient-material ending.",
+            "Check the square-to-square move from f3 to e5 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "7k/8/4b3/8/2B5/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c4e6"
+          ],
+          "prompt": "Take the enemy bishop on e6 with your bishop and classify the ending.",
+          "success": "Bxe6 leaves bishop and king against a bare king; no legal checkmate can result.",
+          "misconception": "One bishop and a king cannot mate a lone king even after a successful capture.",
+          "successByMove": {
+            "c4e6": "Bxe6 leaves bishop and king against a bare king; no legal checkmate can result."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Take the enemy bishop on e6 with your bishop and classify the ending.",
+            "Avoid this misconception: One bishop and a king cannot mate a lone king even after a successful capture.",
+            "Check the square-to-square move from c4 to e6 if you need a final hint."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.mate",
+      "exercises": [
+        {
+          "fen": "6k1/5ppp/8/8/8/8/R7/6K1 w - - 0 1",
+          "acceptedMoves": [
+            "a2a8"
+          ],
+          "prompt": "Bring the rook from a2 to a8 and test whether the king can escape.",
+          "success": "Ra8# checks across the eighth rank, while f7/g7/h7 pawns prevent king escapes.",
+          "misconception": "A back-rank check is mate only if no king move, capture or interposition is possible.",
+          "successByMove": {
+            "a2a8": "Ra8# checks across the eighth rank, while f7/g7/h7 pawns prevent king escapes."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Bring the rook from a2 to a8 and test whether the king can escape.",
+            "Avoid this misconception: A back-rank check is mate only if no king move, capture or interposition is possible.",
+            "Check the square-to-square move from a2 to a8 if you need a final hint."
+          ],
+          "wrongMoveFeedback": {
+            "a2a7": "Ra7 places the rook on the seventh rank without delivering the required back-rank mate. Check the king's escape squares after Ra8."
+          }
+        },
+        {
+          "fen": "6k1/5ppp/8/8/8/8/8/1R4K1 w - - 0 1",
+          "acceptedMoves": [
+            "b1b8"
+          ],
+          "prompt": "Black's pawns trap its king on g8. Play the checking rook move on b8.",
+          "success": "Rb8# attacks along the eighth rank and the boxed king cannot escape the rook.",
+          "misconception": "The file is not what makes mate: prove all legal responses are unavailable.",
+          "successByMove": {
+            "b1b8": "Rb8# attacks along the eighth rank and the boxed king cannot escape the rook."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Black's pawns trap its king on g8. Play the checking rook move on b8.",
+            "Avoid this misconception: The file is not what makes mate: prove all legal responses are unavailable.",
+            "Check the square-to-square move from b1 to b8 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "7k/6pp/8/8/8/8/2R5/K7 w - - 0 1",
+          "acceptedMoves": [
+            "c2c8"
+          ],
+          "prompt": "Play Rc8 against the king on h8, checking all possible escape squares.",
+          "success": "Rc8# checks h8 and guards g8, while the black pawns occupy g7 and h7.",
+          "misconception": "A rook merely giving check is not enough; test whether the king can run or block.",
+          "successByMove": {
+            "c2c8": "Rc8# checks h8 and guards g8, while the black pawns occupy g7 and h7."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Play Rc8 against the king on h8, checking all possible escape squares.",
+            "Avoid this misconception: A rook merely giving check is not enough; test whether the king can run or block.",
+            "Check the square-to-square move from c2 to c8 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "7k/6pp/8/8/8/8/8/3R2K1 w - - 0 1",
+          "acceptedMoves": [
+            "d1d8"
+          ],
+          "prompt": "Move the rook to d8 and determine whether Black has a legal reply.",
+          "success": "Rd8# checks along d8–h8, covers g8 and leaves no lower pawn escape.",
+          "misconception": "A correct mate requires checking king flights, captures and possible blocks.",
+          "successByMove": {
+            "d1d8": "Rd8# checks along d8–h8, covers g8 and leaves no lower pawn escape."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Move the rook to d8 and determine whether Black has a legal reply.",
+            "Avoid this misconception: A correct mate requires checking king flights, captures and possible blocks.",
+            "Check the square-to-square move from d1 to d8 if you need a final hint."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.pieces",
+      "exercises": [
+        {
+          "fen": "4k3/p7/8/8/8/8/8/R3K3 w - - 0 1",
+          "acceptedMoves": [
+            "a1a4"
+          ],
+          "prompt": "Use the open a-file to move the rook from a1 to a4.",
+          "success": "Ra4 passes through empty a2 and a3, then stops on a4. The rook travels on a single file.",
+          "misconception": "A rook does not move diagonally or jump over pieces; check the entire straight route.",
+          "successByMove": {
+            "a1a4": "Ra4 passes through empty a2 and a3, then stops on a4. The rook travels on a single file."
+          },
+          "hints": [
+            "Read the board carefully. Use the open a-file to move the rook from a1 to a4.",
+            "Look for this misconception: A rook does not move diagonally or jump over pieces; check the entire straight route.",
+            "If needed, check the route from a1 to a4 and explain it."
+          ],
+          "wrongMoveFeedback": {
+            "a1a3": "Ra3 is a legal rook move along the a-file, but this task requires continuing to a4. Trace the full unobstructed route."
+          }
+        },
+        {
+          "fen": "4k3/8/8/4p3/8/8/8/2B1K3 w - - 0 1",
+          "acceptedMoves": [
+            "c1f4"
+          ],
+          "prompt": "Develop the bishop from c1 to f4 along the clear diagonal.",
+          "success": "Bf4 crosses d2 and e3. Diagonal travel changes file and rank by one square each step.",
+          "misconception": "A bishop does not slide along a file like a rook and cannot cross an intervening piece.",
+          "successByMove": {
+            "c1f4": "Bf4 crosses d2 and e3. Diagonal travel changes file and rank by one square each step."
+          },
+          "hints": [
+            "Read the board carefully. Develop the bishop from c1 to f4 along the clear diagonal.",
+            "Look for this misconception: A bishop does not slide along a file like a rook and cannot cross an intervening piece.",
+            "If needed, check the route from c1 to f4 and explain it."
+          ]
+        },
+        {
+          "fen": "4k3/8/8/8/8/8/5P2/1N2K3 w - - 0 1",
+          "acceptedMoves": [
+            "b1d2"
+          ],
+          "prompt": "Move the b1 knight to d2 using its two-plus-one jump.",
+          "success": "Nd2 changes two files and one rank, which is a legal knight move regardless of intervening squares.",
+          "misconception": "Knights jump, rather than slide. A visible diagonal path is not what makes their move legal.",
+          "successByMove": {
+            "b1d2": "Nd2 changes two files and one rank, which is a legal knight move regardless of intervening squares."
+          },
+          "hints": [
+            "Read the board carefully. Move the b1 knight to d2 using its two-plus-one jump.",
+            "Look for this misconception: Knights jump, rather than slide. A visible diagonal path is not what makes their move legal.",
+            "If needed, check the route from b1 to d2 and explain it."
+          ]
+        },
+        {
+          "fen": "4k3/p7/8/8/8/8/8/3QK3 w - - 0 1",
+          "acceptedMoves": [
+            "d1d3"
+          ],
+          "prompt": "Place the queen from d1 on d3 using an open file.",
+          "success": "Qd3 is a legal straight queen move since the square d2 between origin and destination is clear.",
+          "misconception": "The queen combines rook and bishop movement but still cannot jump blockers.",
+          "successByMove": {
+            "d1d3": "Qd3 is a legal straight queen move since the square d2 between origin and destination is clear."
+          },
+          "hints": [
+            "Read the board carefully. Place the queen from d1 on d3 using an open file.",
+            "Look for this misconception: The queen combines rook and bishop movement but still cannot jump blockers.",
+            "If needed, check the route from d1 to d3 and explain it."
+          ]
+        }
+      ]
+    },
+    {
+      "skillId": "rules.promotion",
+      "exercises": [
+        {
+          "fen": "4k3/P7/8/8/8/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "a7a8q"
+          ],
+          "prompt": "Push the white a7 pawn to a8 and immediately choose queen promotion.",
+          "success": "a8=Q replaces the pawn on a8 with a new white queen on the same move.",
+          "misconception": "The pawn cannot remain a pawn on its final rank or postpone the promotion choice.",
+          "successByMove": {
+            "a7a8q": "a8=Q replaces the pawn on a8 with a new white queen on the same move."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Push the white a7 pawn to a8 and immediately choose queen promotion.",
+            "Avoid this misconception: The pawn cannot remain a pawn on its final rank or postpone the promotion choice.",
+            "Check the square-to-square move from a7 to a8 if you need a final hint."
+          ],
+          "wrongMoveFeedback": {
+            "a7a8n": "a8=N is a legal underpromotion, but this task asks for a queen. Do not confuse a legal alternative with the requested promotion."
+          }
+        },
+        {
+          "fen": "4k3/1P6/8/8/8/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "b7b8q"
+          ],
+          "prompt": "Advance the white b7 pawn one square to b8 and promote to a queen.",
+          "success": "b8=Q makes the new queen appear on b8 as part of the pawn's last-rank move.",
+          "misconception": "White promotes on the eighth rank even when the pawn is not making a capture.",
+          "successByMove": {
+            "b7b8q": "b8=Q makes the new queen appear on b8 as part of the pawn's last-rank move."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Advance the white b7 pawn one square to b8 and promote to a queen.",
+            "Avoid this misconception: White promotes on the eighth rank even when the pawn is not making a capture.",
+            "Check the square-to-square move from b7 to b8 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "4k3/8/8/8/8/8/7p/K7 b - - 0 1",
+          "acceptedMoves": [
+            "h2h1q"
+          ],
+          "prompt": "Black to move: promote the h2 pawn on h1 by choosing a queen.",
+          "success": "...h1=Q promotes on the first rank because Black's pawns move toward rank one.",
+          "misconception": "White and Black promote on opposite ends; a black pawn does not advance beyond h1.",
+          "successByMove": {
+            "h2h1q": "...h1=Q promotes on the first rank because Black's pawns move toward rank one."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Black to move: promote the h2 pawn on h1 by choosing a queen.",
+            "Avoid this misconception: White and Black promote on opposite ends; a black pawn does not advance beyond h1.",
+            "Check the square-to-square move from h2 to h1 if you need a final hint."
+          ]
+        },
+        {
+          "fen": "7k/3P4/8/8/8/8/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "d7d8q"
+          ],
+          "prompt": "Move the d7 pawn onto d8 and perform its queen promotion immediately.",
+          "success": "d8=Q replaces the arriving white pawn with a queen at the end of the move.",
+          "misconception": "Promotion changes the moving piece; it does not add a queen while retaining the pawn.",
+          "successByMove": {
+            "d7d8q": "d8=Q replaces the arriving white pawn with a queen at the end of the move."
+          },
+          "hints": [
+            "Inspect the board and the specific task. Move the d7 pawn onto d8 and perform its queen promotion immediately.",
+            "Avoid this misconception: Promotion changes the moving piece; it does not add a queen while retaining the pawn.",
+            "Check the square-to-square move from d7 to d8 if you need a final hint."
+          ]
+        }
+      ]
+    }
+  ]
+}
