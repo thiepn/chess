@@ -24,6 +24,7 @@ interface LessonCorpus {
   version: number;
   seeds: Record<string, LessonSeed>;
   transferSeeds: Record<string, LessonTransferSeed>;
+  templates: string[];
 }
 const LESSON_ASSET = `${import.meta.env.BASE_URL}data/lessons/p116-lesson-content-v1.json`;
 // Keep the original fully-authored corpus available to isolated Vitest source
@@ -37,10 +38,11 @@ const lessonPayload: unknown = import.meta.env.MODE === "test"
 if (!lessonPayload || typeof lessonPayload !== "object" ||
     (lessonPayload as LessonCorpus).version !== 1 ||
     !(lessonPayload as LessonCorpus).seeds ||
-    !(lessonPayload as LessonCorpus).transferSeeds) {
+    !(lessonPayload as LessonCorpus).transferSeeds ||
+    !Array.isArray((lessonPayload as LessonCorpus).templates)) {
   throw new Error("Authored lesson source is incomplete or outdated.");
 }
-const { seeds, transferSeeds } = lessonPayload as LessonCorpus;
+const { seeds, transferSeeds, templates: lessonText } = lessonPayload as LessonCorpus;
 
 export const deepTransferSkillIds = Object.freeze(
   Object.keys(transferSeeds),
@@ -93,12 +95,12 @@ function transferHints(
     {
       text:
         transfer.hints[0] ??
-        "Name the concept before calculating moves.",
+        lessonText[0],
     },
     {
       text:
         transfer.hints[1] ??
-        "Compare the strongest candidate with the opponent's best reply.",
+        lessonText[1],
       highlights: [{ square: from, tone: "hint" as const }],
     },
     {
@@ -126,21 +128,21 @@ function misconceptionOptions(seed: LessonSeed) {
       id: "principle",
       text: seed.summary,
       feedback:
-        "Correct. That is the reusable idea; the board move is only one example of it.",
+        lessonText[2],
     },
     {
       id: "automatic",
       text:
-        "Once you recognize the pattern, the same move should be played automatically in every similar position.",
+        lessonText[3],
       feedback:
-        "Pattern recognition starts the search, but legality, tactics and the opponent's best reply still decide whether the move works.",
+        lessonText[4],
     },
     {
       id: "hope",
       text:
-        "If the idea looks attractive, you can ignore the opponent's strongest response and calculate only your own plan.",
+        lessonText[5],
       feedback:
-        "That is hope, not chess calculation. A concept is useful only when it survives the opponent's best response.",
+        lessonText[6],
     },
   ];
 }
@@ -150,18 +152,18 @@ function retrievalOptions(seed: LessonSeed) {
   return [
     {
       id: "principle",
-      text: seed.summary + " Verify legality and the opponent's best reply first.",
-      feedback: "Correct. You must recognize when the principle applies, not copy the model move.",
+      text: seed.summary + lessonText[7],
+      feedback: lessonText[8],
     },
     {
       id: "automatic",
-      text: "Remember the exact squares from the example, then copy that move whenever the board looks similar.",
-      feedback: "A recalled coordinate is not an explanation. The pieces and opponent's threats can change.",
+      text: lessonText[9],
+      feedback: lessonText[10],
     },
     {
       id: "hope",
-      text: "Once you remember a useful principle, the opponent's strongest response no longer matters.",
-      feedback: "A principle guides candidate generation, but a concrete reply can refute the move.",
+      text: lessonText[11],
+      feedback: lessonText[12],
     },
   ];
 }
@@ -180,7 +182,7 @@ function makeScript(
       success:
         seed.success ?? seed.summary,
       hints: [
-        "Name the concept and the opponent's strongest reply before touching a piece.",
+        lessonText[13],
         seed.hint,
         `The key move runs from ${from} to ${to}.`,
       ],
@@ -210,7 +212,7 @@ function makeScript(
         type: "explain",
         stage: "example",
         eyebrow: "WORKED EXAMPLE",
-        title: "See the idea before you have to find it.",
+        title: lessonText[14],
         body:
           `${seed.prompt} The reusable lesson is: ${seed.summary} First understand why the move works; memorizing the coordinates is not the goal.`,
         fen: seed.fen,
@@ -232,15 +234,15 @@ function makeScript(
         stage: "contrast",
         support: "retrieval",
         eyebrow: "CONTRAST",
-        title: "Which rule should you carry to another position?",
+        title: lessonText[15],
         prompt:
-          "Choose the statement that captures the chess idea rather than the memorized move.",
+          lessonText[16],
         fen: seed.fen,
         options: misconceptionOptions(seed),
         correctOptionId: "principle",
-        successTitle: "Concept separated from coordinates",
+        successTitle: lessonText[17],
         successBody:
-          "Good. You identified the transferable principle instead of treating one board position as a recipe.",
+          lessonText[18],
       },
       {
         id: "guided",
@@ -263,15 +265,15 @@ function makeScript(
         stage: "retrieval",
         support: "retrieval",
         eyebrow: "RETRIEVAL",
-        title: "Rebuild the idea from memory.",
+        title: lessonText[19],
         prompt:
-          "Before moving again, which statement should guide your search?",
+          lessonText[20],
         fen: seed.fen,
         options: retrievalOptions(seed),
         correctOptionId: "principle",
-        successTitle: "You retrieved the principle",
+        successTitle: lessonText[21],
         successBody:
-          "Now use that principle without relying on the worked-example arrow.",
+          lessonText[22],
       },
       {
         id: "independent",
@@ -279,17 +281,17 @@ function makeScript(
         stage: "retrieval",
         support: "retrieval",
         eyebrow: "INDEPENDENT",
-        title: "Find it without the demonstration.",
+        title: lessonText[23],
         prompt: seed.prompt,
         fen: seed.fen,
         acceptedMoves: [seed.move],
         successTitle: "Independent retrieval",
         successBody:
-          "You reproduced the idea after the visual support was removed.",
+          lessonText[24],
         hints: moveHints(
           seed,
           seed.move,
-          "Name the concept first. Only then compare candidate moves.",
+          lessonText[25],
         ),
       },
       {
@@ -301,8 +303,8 @@ function makeScript(
         eyebrow: "TRANSFER",
         title:
           transfer.fen === seed.fen
-            ? "Prove you can retrieve it again."
-            : "Use the idea in a different position.",
+            ? lessonText[26]
+            : lessonText[27],
         prompt: transfer.prompt,
         fen: transfer.fen,
         acceptedMoves:
@@ -316,7 +318,7 @@ function makeScript(
         type: "explain",
         stage: "takeaway",
         eyebrow: "TAKEAWAY",
-        title: "Keep the rule, not the coordinates.",
+        title: lessonText[28],
         body:
           `${seed.summary} In a real game, recognize the condition first, check the opponent's strongest reply, and only then commit to the move.`,
         fen: transfer.fen,
