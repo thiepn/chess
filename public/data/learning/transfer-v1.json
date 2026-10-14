@@ -8,7 +8,24 @@
       "acceptedMove": "g1f3",
       "prompt": "Find g1 and f3, then move the knight by its coordinates.",
       "success": "A file and rank uniquely identify the origin and destination.",
-      "misconception": "Do not count files from Black’s perspective."
+      "misconception": "Do not count files from Black’s perspective.",
+      "challenge": {
+        "fen": "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2",
+        "acceptedMoves": [
+          "g1f3"
+        ],
+        "prompt": "Find the g1 knight in a d4/d5 pawn center. Name its start file and rank and move it to f3, independently of the earlier e4/e5 example.",
+        "success": "The coordinates g1 and f3 still identify the same two squares even though the pawn structure and move number have changed.",
+        "misconception": "The central pawns have changed, not the coordinate grid. Do not swap file and rank or count files from Black's perspective.",
+        "successByMove": {
+          "g1f3": "The coordinates g1 and f3 still identify the same two squares even though the pawn structure and move number have changed."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Find g1 and f3, then move the knight by its coordinates.",
+          "The central pawns have changed, not the coordinate grid. Do not swap file and rank or count files from Black's perspective.",
+          "Check the candidate from g1 to f3 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.pieces",
@@ -16,7 +33,24 @@
       "acceptedMove": "g1f3",
       "prompt": "Move the knight from g1 to f3 even though the board is nearly empty.",
       "success": "A knight changes two files and one rank and does not need a clear path.",
-      "misconception": "A knight cannot move straight like a rook."
+      "misconception": "A knight cannot move straight like a rook.",
+      "challenge": {
+        "fen": "4k3/8/8/8/3N4/8/8/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "d4f5"
+        ],
+        "prompt": "From a new central location, move the knight on d4 to f5 without tracing a straight or diagonal path.",
+        "success": "The knight legally travels two files and one rank; its destination is defined by an L-shaped jump, not a clear sliding lane.",
+        "misconception": "Knights do not move like bishops or rooks. Count two squares in one direction and one perpendicular; intervening squares do not matter.",
+        "successByMove": {
+          "d4f5": "The knight legally travels two files and one rank; its destination is defined by an L-shaped jump, not a clear sliding lane."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Move the knight from g1 to f3 even though the board is nearly empty.",
+          "Knights do not move like bishops or rooks. Count two squares in one direction and one perpendicular; intervening squares do not matter.",
+          "Check the candidate from d4 to f5 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.capture",
@@ -24,7 +58,24 @@
       "acceptedMove": "c3d4",
       "prompt": "Use the bishop to capture the unprotected pawn on d4.",
       "success": "The bishop moves diagonally and replaces the pawn on its square.",
-      "misconception": "Moving beside a target does not capture it."
+      "misconception": "Moving beside a target does not capture it.",
+      "challenge": {
+        "fen": "4k3/8/2n5/8/8/8/6B1/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "g2c6"
+        ],
+        "prompt": "The bishop on g2 has an opposing knight on c6. Follow its diagonal and make the legal capture.",
+        "success": "The diagonal g2–f3–e4–d5–c6 is clear, so Bxc6 captures the knight on its destination rather than stopping short.",
+        "misconception": "A bishop only captures along an unobstructed diagonal. It cannot jump over a piece, move like a rook or capture on an empty square.",
+        "successByMove": {
+          "g2c6": "The diagonal g2–f3–e4–d5–c6 is clear, so Bxc6 captures the knight on its destination rather than stopping short."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Use the bishop to capture the unprotected pawn on d4.",
+          "A bishop only captures along an unobstructed diagonal. It cannot jump over a piece, move like a rook or capture on an empty square.",
+          "Check the candidate from g2 to c6 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.check",
@@ -32,7 +83,24 @@
       "acceptedMove": "d1c1",
       "prompt": "Your king is checked on the d-file. Move it to safety.",
       "success": "Leaving the rook’s checking file is compulsory before pursuing a plan.",
-      "misconception": "A move that leaves the king on the d-file does not answer check."
+      "misconception": "A move that leaves the king on the d-file does not answer check.",
+      "challenge": {
+        "fen": "4k3/8/8/8/8/8/R7/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "a2e2"
+        ],
+        "prompt": "Move the rook from a2 to e2 and identify why Black must respond to the rook's attack along the open e-file.",
+        "success": "Re2+ places the rook on Black's king file with no intervening piece: it is a legal check, not a capture or checkmate claim.",
+        "misconception": "Giving check means directly attacking the king. The move does not automatically end the game; Black must make a legal response.",
+        "successByMove": {
+          "a2e2": "Re2+ places the rook on Black's king file with no intervening piece: it is a legal check, not a capture or checkmate claim."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Your king is checked on the d-file. Move it to safety.",
+          "Giving check means directly attacking the king. The move does not automatically end the game; Black must make a legal response.",
+          "Check the candidate from a2 to e2 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.check-responses",
@@ -40,7 +108,24 @@
       "acceptedMove": "e2d3",
       "prompt": "Block the long rook check with the bishop.",
       "success": "A sliding check can be stopped by occupying the line between attacker and king.",
-      "misconception": "Blocking on a square outside the d-file does not stop the check."
+      "misconception": "Blocking on a square outside the d-file does not stop the check.",
+      "challenge": {
+        "fen": "k3r3/8/8/8/8/8/8/4KB2 w - - 0 1",
+        "acceptedMoves": [
+          "f1e2"
+        ],
+        "prompt": "Your king on e1 is checked by the rook on e8. Use the bishop from f1 to interpose on e2.",
+        "success": "Be2 blocks the open e-file and removes the immediate rook check; a check can sometimes be answered by interposing a piece.",
+        "misconception": "An illegal move that ignores an active king attack cannot solve check. Check the entire rook line from e8 to e1 before choosing.",
+        "successByMove": {
+          "f1e2": "Be2 blocks the open e-file and removes the immediate rook check; a check can sometimes be answered by interposing a piece."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Block the long rook check with the bishop.",
+          "An illegal move that ignores an active king attack cannot solve check. Check the entire rook line from e8 to e1 before choosing.",
+          "Check the candidate from f1 to e2 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.mate",
@@ -48,7 +133,24 @@
       "acceptedMove": "a1a8",
       "prompt": "Find the rook move that leaves Black’s boxed king no flight square.",
       "success": "A distant rank check works because Black’s own pawns close the escape squares.",
-      "misconception": "Checkmate requires checking every capture, block and flight square."
+      "misconception": "Checkmate requires checking every capture, block and flight square.",
+      "challenge": {
+        "fen": "6k1/5ppp/8/8/8/8/2P5/R5K1 w - - 0 1",
+        "acceptedMoves": [
+          "a1a8"
+        ],
+        "prompt": "The king on g8 is trapped behind its own f7, g7 and h7 pawns. Use the rook from a1 to occupy the open eighth rank.",
+        "success": "Ra8# attacks g8 along the eighth rank and covers f8 and h8, while Black's own pawns remove the king's lower escape squares.",
+        "misconception": "A check is only mate if no legal reply remains. Verify escape squares and possible blockers rather than assuming every back-rank check wins.",
+        "successByMove": {
+          "a1a8": "Ra8# attacks g8 along the eighth rank and covers f8 and h8, while Black's own pawns remove the king's lower escape squares."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Find the rook move that leaves Black’s boxed king no flight square.",
+          "A check is only mate if no legal reply remains. Verify escape squares and possible blockers rather than assuming every back-rank check wins.",
+          "Check the candidate from a1 to a8 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.castling",
@@ -56,7 +158,24 @@
       "acceptedMove": "e1g1",
       "prompt": "Castle kingside after both bishops and knights have developed.",
       "success": "The king travels two squares and the rook is repositioned only when the corridor is legal.",
-      "misconception": "Do not castle through an attacked square or occupied corridor."
+      "misconception": "Do not castle through an attacked square or occupied corridor.",
+      "challenge": {
+        "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+        "acceptedMoves": [
+          "e1g1"
+        ],
+        "prompt": "White developed the knight to f3 and bishop to c4. Castle kingside from this different, legally clear opening position.",
+        "success": "O-O moves the king e1 to g1 and the rook h1 to f1 in one move, provided the path is clear and the king's transit squares are safe.",
+        "misconception": "Castling is not a normal two-square king move: it is forbidden if the king is checked or crosses an attacked square, even with castling rights.",
+        "successByMove": {
+          "e1g1": "O-O moves the king e1 to g1 and the rook h1 to f1 in one move, provided the path is clear and the king's transit squares are safe."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Castle kingside after both bishops and knights have developed.",
+          "Castling is not a normal two-square king move: it is forbidden if the king is checked or crosses an attacked square, even with castling rights.",
+          "Check the candidate from e1 to g1 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.promotion",
@@ -64,7 +183,24 @@
       "acceptedMove": "b7b8q",
       "prompt": "Choose a queen when the b-pawn reaches the last rank.",
       "success": "Promotion is specified by the new piece, not just the pawn’s destination.",
-      "misconception": "Ending the move on b8 without specifying the promotion piece is incomplete."
+      "misconception": "Ending the move on b8 without specifying the promotion piece is incomplete.",
+      "challenge": {
+        "fen": "4k3/P6p/8/8/8/8/8/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "a7a8q"
+        ],
+        "prompt": "A white pawn has reached a7 while Black has a distant h-pawn. Promote the a-pawn legally to a queen.",
+        "success": "a8=Q transforms the pawn immediately when it reaches the eighth rank. Promotion is not delayed until the queen moves again.",
+        "misconception": "A pawn cannot remain a pawn on the last rank, and promotion does not depend on capturing or on the opponent's distant pawn.",
+        "successByMove": {
+          "a7a8q": "a8=Q transforms the pawn immediately when it reaches the eighth rank. Promotion is not delayed until the queen moves again."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Choose a queen when the b-pawn reaches the last rank.",
+          "A pawn cannot remain a pawn on the last rank, and promotion does not depend on capturing or on the opponent's distant pawn.",
+          "Check the candidate from a7 to a8 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "rules.draws",
@@ -80,7 +216,24 @@
       "acceptedMove": "d1d3",
       "prompt": "Capture the free pawn without sacrificing the queen.",
       "success": "Collect material only after confirming the capturing piece remains safe.",
-      "misconception": "A pawn is worth far less than the queen; do not trade the queen for a pawn."
+      "misconception": "A pawn is worth far less than the queen; do not trade the queen for a pawn.",
+      "challenge": {
+        "fen": "4k3/8/8/8/8/8/4r3/4R1K1 w - - 0 1",
+        "acceptedMoves": [
+          "e1e2"
+        ],
+        "prompt": "White's rook on e1 is attacked by an opposing rook on e2. Capture it and describe the material trade precisely.",
+        "success": "Rxe2 removes a rook with another rook. The capture removes an immediate threat; equal rook exchange alone does not prove a material gain.",
+        "misconception": "A capture of a valuable piece is not automatically a net win: count the capturing piece and check the material remaining after the trade.",
+        "successByMove": {
+          "e1e2": "Rxe2 removes a rook with another rook. The capture removes an immediate threat; equal rook exchange alone does not prove a material gain."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Capture the free pawn without sacrificing the queen.",
+          "A capture of a valuable piece is not automatically a net win: count the capturing piece and check the material remaining after the trade.",
+          "Check the candidate from e1 to e2 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "fundamentals.defended",
@@ -88,7 +241,24 @@
       "acceptedMove": "f3e5",
       "prompt": "Capture the pawn that supports Black’s centralized knight.",
       "success": "The pawn on e5 helps maintain the knight’s square; removing support changes the exchange.",
-      "misconception": "Count the defender and the squares it controls before exchanging."
+      "misconception": "Count the defender and the squares it controls before exchanging.",
+      "challenge": {
+        "fen": "k4r2/8/8/8/8/5N2/4Q3/4K3 w - - 0 1",
+        "acceptedMoves": [
+          "e2f1"
+        ],
+        "prompt": "The rook on f8 attacks your knight on f3 along an open file. Move the queen from e2 to f1 to give the knight a direct defender.",
+        "success": "Qf1 adds protection along f1–f2–f3. If Black captures the knight with the rook, the queen can recapture; verify the line before judging the exchange.",
+        "misconception": "Having a defender does not make the knight invulnerable or turn every exchange into a win. Count attackers and defenders and consider alternative safe retreats.",
+        "successByMove": {
+          "e2f1": "Qf1 adds protection along f1–f2–f3. If Black captures the knight with the rook, the queen can recapture; verify the line before judging the exchange."
+        },
+        "hints": [
+          "Identify the king safety, line geometry and concrete piece locations before you move. Then recall: Capture the pawn that supports Black’s centralized knight.",
+          "Having a defender does not make the knight invulnerable or turn every exchange into a win. Count attackers and defenders and consider alternative safe retreats.",
+          "Check the candidate from e2 to f1 on this exact board before deciding."
+        ]
+      }
     },
     {
       "skillId": "fundamentals.trades",

@@ -1,4 +1,5 @@
 import { legalCalculationBranch } from "./branchFeedback";
+import { alignSourceStudySkills } from "./studySkillAlignment";
 import { hydrateOpeningTransition } from "../openings/transitionStudy";
 import { hydrateEndgameDecision } from "../endgames/decisionStudy";
 import type {
@@ -92,7 +93,7 @@ function loadCalculationSource(file: string, count: number): void {
       }
       const maybePositions = (data.positions as CalculationPosition[]).map(hydrateOpeningTransition).map(p => p ? hydrateEndgameDecision(p) : null);
       if (maybePositions.some(p => !p)) throw new Error("Missing legal opening transition source");
-      const positions = maybePositions as CalculationPosition[];
+      const positions = (maybePositions as CalculationPosition[]).map(alignSourceStudySkills);
       const ids = new Set<string>(), fens = new Set<string>();
       if (!positions.every(position => {
         if (!position || typeof position.id !== "string" ||

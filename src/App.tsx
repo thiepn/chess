@@ -58,6 +58,7 @@ import {
   subscribeCalculationSources, calculationSourceRevision, calculationSourceStatus,
   retryFailedCalculationSources,
 } from "./calculation/positions";
+import { sourceStudyKind } from "./calculation/studySkillAlignment";
 import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
 
 import { timeControlWeight } from "./games/practical";
@@ -495,15 +496,16 @@ export default function App() {
   const catalogRevision = useSyncExternalStore(
     subscribeCalculationSources, calculationSourceRevision, calculationSourceRevision);
   const catalogStatus = useMemo(() => calculationSourceStatus(), [catalogRevision]);
-  const strategicPositions = useMemo(() => calculationCatalog(state).filter(
-    item => item.assessmentStatus === "instructional-only" &&
-      Boolean(item.strategicImbalanceStudy || item.prophylaxisStudy)), [state, catalogRevision]);
   const endgameDecisionPositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.endgameDecisionStudy)), [state, catalogRevision]);
   const openingBridgePositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.openingTransitionStudy)), [state, catalogRevision]);
+  // G0: Surface the existing P103–P112 subject-qualified study corpus using
+  // its original unscored authority, not a second practice or grading engine.
+  const sourceLinkedStudies = useMemo(() => calculationCatalog(state).filter(
+    item => sourceStudyKind(item) !== null), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
@@ -705,10 +707,12 @@ export default function App() {
     navigate(trainingPath(activity.id));
   }
 
-  function openStrategicStudy(position: import("./calculation/types").CalculationPosition) {
+  function openStrategicStudy(position: import("./calculation/types").CalculationPosition, preferredSkillId?: string) {
     if (position.assessmentStatus !== "instructional-only" ||
-        ![...strategicPositions, ...openingBridgePositions, ...endgameDecisionPositions].some(item => item.id === position.id)) return;
-    const skillId = position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
+        !sourceLinkedStudies.some(item => item.id === position.id)) return;
+    const skillId = preferredSkillId && position.skillIds.includes(preferredSkillId) &&
+      !!skillById[preferredSkillId] ? preferredSkillId :
+      position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
     const skill = skillId ? skillById[skillId] : null;
     if (!skill || !skillId) return;
     openManualActivity({
@@ -3176,9 +3180,9 @@ export default function App() {
             {optionalStudiesOpen && <div id="train-optional-study-content">
               <Suspense fallback={<p role="status">Loading strategic studies…</p>}>
                 <StrategicStudyLibrary
-                  positions={[...strategicPositions, ...endgameDecisionPositions]}
+                  positions={sourceLinkedStudies}
                   loading={catalogStatus.pending > 0}
-                  failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
+                  failedCount={catalogStatus.failedFiles.filter(file => /^p(103|104|105|106|109|110|111|112)-/.test(file)).length}
                   onRetry={retryFailedCalculationSources}
                   onStart={openStrategicStudy}
                 />
