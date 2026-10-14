@@ -378,14 +378,14 @@
     {
       "id": "piece-invasion-versus-file-control",
       "theme": "Invasion squares",
-      "title": "A knight in the center, or a rook on the c-file?",
+      "title": "Knight rerouting or rook-file pressure?",
       "first": {
         "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-1",
-        "ply": 14,
-        "move": "Nd4",
-        "reply": "O-O-O",
-        "continuation": "Be3"
+        "checkpointId": "lasker-janowski-1909-decision-3",
+        "ply": 47,
+        "move": "Na5",
+        "reply": "h4",
+        "continuation": "Nc4"
       },
       "second": {
         "gameId": "steinitz-sellman-1885",
@@ -395,11 +395,11 @@
         "reply": "Na5",
         "continuation": "Ba8"
       },
-      "comparePrompt": "Compare Black's knight move ...Nd4 to Black's ...Rc8: whose next move challenges the newly occupied square or file, and which side gets time to coordinate?",
-      "model": "Lasker–Janowski records ...Nd4, O-O-O, ...Be3. The first move claims a central knight square while White chooses long castling. Steinitz–Sellman records ...Rc8, Na5, ...Ba8: Black chooses a rook file while White redirects a knight and Black repositions a bishop. Central occupation and file pressure are distinct priorities; ask what the opponent can attack immediately.",
-      "resistancePrompt": "Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it?",
-      "transferPrompt": "Write an opponent reply to each plan, then decide whether to defend, trade, or switch targets. A piece's active square is useful only when supported by the position.",
-      "misconception": "Mistaking an impressive central landing square or open file for a completed plan. Identify the defender's best accessible square and the actual recorded response.",
+      "comparePrompt": "Compare Black's ...Na5 in Lasker–Janowski with Black's ...Rc8 in Steinitz–Sellman: which square or file is the investment meant to improve, and what does White do meanwhile?",
+      "model": "Lasker–Janowski records ...Na5, h4, ...Nc4: Black uses two knight moves to approach c4 while White gains kingside space. Steinitz–Sellman records ...Rc8, Na5, ...Ba8: Black mobilizes a rook on the c-file, White reroutes a knight and Black retreats a bishop. Both moves claim long-term squares but invite different immediate white opportunities.",
+      "resistancePrompt": "Can White challenge the knight's c4 destination after ...Na5, or seize a tempo while Black occupies the c-file with ...Rc8?",
+      "transferPrompt": "For each real board, enter a legal white resistance move and ask whether the knight route or rook file still produces a useful new threat.",
+      "misconception": "Calling ...Na5 or ...Rc8 an active move is not enough. Identify the destination c4 or c-file target and calculate one legal white counter-plan.",
       "hints": [
         "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
         "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
@@ -502,14 +502,14 @@
     {
       "id": "capturing-before-defending",
       "theme": "Forcing move order",
-      "title": "Pawn captures and bishop captures don't end the calculation",
+      "title": "A bishop offer and bishop capture: calculate the rook check",
       "first": {
-        "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-4",
-        "ply": 61,
-        "move": "hxg6",
-        "reply": "Rg6",
-        "continuation": "Ref8"
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-4",
+        "ply": 48,
+        "move": "Bd6",
+        "reply": "Qxd6",
+        "continuation": "Rxg7+"
       },
       "second": {
         "gameId": "euwe-maroczy-1936",
@@ -519,11 +519,11 @@
         "reply": "Rg4+",
         "continuation": "Bg7"
       },
-      "comparePrompt": "Both historical moves capture something. What piece becomes active in the next reply, and is there a forcing sequence worth checking first?",
-      "model": "Lasker–Janowski records ...hxg6, Rg6, ...Ref8: a pawn capture is followed by rook activity and a defensive rook move. Euwe–Maróczy records ...Bxf6, Rg4+, ...Bg7: a bishop capture precedes a rook check and a bishop retreat. Neither capture can be judged independently of the defender's initiative.",
-      "resistancePrompt": "What check or rook infiltration could change the priorities immediately after each capture?",
-      "transferPrompt": "Before capturing, list the opponent's checks and rook-entry squares; replay the historical reply only as observed evidence, not as a forced answer.",
-      "misconception": "Equating a material capture with having neutralized the opponent's threats. A check after the exchange changes the task.",
+      "comparePrompt": "Contrast Tarrasch–Von Scheve's Bd6 with Euwe–Maróczy's ...Bxf6: where does the defender capture or check, and which rook becomes active next?",
+      "model": "Tarrasch–Von Scheve records Bd6, ...Qxd6, Rxg7+: after Black's queen captures the bishop, White's rook enters with check. Euwe–Maróczy records ...Bxf6, Rg4+, ...Bg7: a bishop capture is answered immediately by a rook check and bishop retreat. These recorded sequences demand calculation of checks, captures and legal defenses rather than generic simplification labels.",
+      "resistancePrompt": "If Black captures the bishop on d6 or White gives Rg4+ after ...Bxf6, what is the immediate forcing reply that must be evaluated?",
+      "transferPrompt": "Before choosing a capture or bishop investment, list the legal rook checks and defender squares in both source positions.",
+      "misconception": "An exchange or bishop offer can give the opponent a forcing tempo. Evaluate the concrete queen capture or rook check before calling the position safer.",
       "hints": [
         "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
         "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."
@@ -719,14 +719,14 @@
     {
       "id": "minor-piece-threat-and-rook-shelter",
       "theme": "Defensive structure",
-      "title": "Central knight pressure versus defensive rook placement",
+      "title": "Knight route to c4 or a rook's shelter on f7?",
       "first": {
         "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-1",
-        "ply": 14,
-        "move": "Nd4",
-        "reply": "O-O-O",
-        "continuation": "Be3"
+        "checkpointId": "lasker-janowski-1909-decision-3",
+        "ply": 47,
+        "move": "Na5",
+        "reply": "h4",
+        "continuation": "Nc4"
       },
       "second": {
         "gameId": "tarrasch-von-scheve-1894",
@@ -736,11 +736,11 @@
         "reply": "Rdg2",
         "continuation": "a5"
       },
-      "comparePrompt": "Compare ...Nd4 to ...Rf7. Which move creates immediate threats and which must also prevent an opponent's useful file entry?",
-      "model": "Lasker–Janowski records ...Nd4, O-O-O, ...Be3: Black's knight advances and White castles long before Black's bishop maneuver. Tarrasch–Von Scheve records ...Rf7, Rdg2, ...a5: Black's rook is placed on f7 while White aligns rooks on the g-file. One comparison concerns an attacking piece's landing square; the other asks whether a rook can defend under opposing file pressure.",
-      "resistancePrompt": "Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square?",
-      "transferPrompt": "State the threat against the king or weak pawn that makes each move urgent, then examine a quieter legal candidate for Black.",
-      "misconception": "Mistaking 'centralization' or 'rook lift' for a self-sufficient justification. Each needs a concrete task and an opponent reply.",
+      "comparePrompt": "Black can pursue ...Na5 and ...Nc4 in Lasker–Janowski or station its rook on f7 in Tarrasch–Von Scheve. How do those tasks differ when White gains a tempo?",
+      "model": "Lasker–Janowski records ...Na5, h4, ...Nc4: Black invests tempi to reach c4 while White expands its kingside. Tarrasch–Von Scheve records ...Rf7, Rdg2, ...a5: Black places a rook on f7 while White coordinates rooks on the g-file. A knight outpost and a rook's defensive position each need a concrete role, not simply an attractive piece square.",
+      "resistancePrompt": "Can White contest the c4 knight route while preparing h4, or challenge a rook on f7 by coordinating on the g-file?",
+      "transferPrompt": "State which pawn or rook reply makes the planned destination unsafe; explore one alternate legal black plan in each original board.",
+      "misconception": "The words centralize and activate are not sufficient evidence. Confirm whether c4 and f7 are tactically supported and what White does next.",
       "hints": [
         "Before looking ahead, compare both kings, central pawn contacts and every forcing response to the proposed first move.",
         "After recording your independent comparison, replay the exact three plies in each historic source; state what the defender actually did before explaining what could transfer."

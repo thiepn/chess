@@ -235,19 +235,19 @@
       "id": "piece-invasion-versus-file-control",
       "first": {
         "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-1",
-        "ply": 14
+        "checkpointId": "lasker-janowski-1909-decision-3",
+        "ply": 47
       },
       "second": {
         "gameId": "steinitz-sellman-1885",
         "checkpointId": "steinitz-sellman-1885-decision-3",
         "ply": 43
       },
-      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE Nd4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare Black's knight move ...Nd4 to Black's ...Rc8: whose next move challenges the newly occupied square or file, and which side gets time to coordinate?",
-      "secondChallenge": "On Steinitz, W — Sellman, A.G., choose a legal move in the recorded position BEFORE Rc8. After your candidate, play a concrete legal opponent response yourself. Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it?",
-      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Can White use a tempo against the new knight or rook, or gain freedom elsewhere while Black spends time improving it? Check the resulting board for forcing responses before interpreting any strategic advantage.",
-      "revision": "Compare your two independently played positions, not just historical notation. Write an opponent reply to each plan, then decide whether to defend, trade, or switch targets. A piece's active square is useful only when supported by the position. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
-      "misconception": "Mistaking an impressive central landing square or open file for a completed plan. Identify the defender's best accessible square and the actual recorded response. The historical sequences Nd4 O-O-O Be3 and Rc8 Na5 Ba8 are observed source lines, not engine-proven optimal moves or tactics.",
+      "firstChallenge": "In lasker-janowski-1909, at the verified checkpoint before Na5, choose your own legal candidate, enter White's or Black's actual opponent reply and reconstruct the plan. Compare Black's ...Na5 in Lasker–Janowski with Black's ...Rc8 in Steinitz–Sellman: which square or file is the investment meant to improve, and what does White do meanwhile?",
+      "secondChallenge": "In steinitz-sellman-1885, at the verified checkpoint before Rc8, choose a second independent legal candidate and enter the opponent's reply. Can White challenge the knight's c4 destination after ...Na5, or seize a tempo while Black occupies the c-file with ...Rc8?",
+      "defenderPrompt": "On both legally replayed boards, consider the opponent's most inconvenient actual move. Can White challenge the knight's c4 destination after ...Na5, or seize a tempo while Black occupies the c-file with ...Rc8? Do not claim your chosen defense is engine-best.",
+      "revision": "Compare the resulting positions after your opponent responses: For each real board, enter a legal white resistance move and ask whether the knight route or rook file still produces a useful new threat. Separate observed historical SAN from your own counterfactual branch.",
+      "misconception": "Calling ...Na5 or ...Rc8 an active move is not enough. Identify the destination c4 or c-file target and calculate one legal white counter-plan. Recorded lines: Na5 h4 Nc4 versus Rc8 Na5 Ba8. Their objective optimality is not certified.",
       "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
     },
     {
@@ -310,20 +310,20 @@
     {
       "id": "capturing-before-defending",
       "first": {
-        "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-4",
-        "ply": 61
+        "gameId": "tarrasch-von-scheve-1894",
+        "checkpointId": "tarrasch-von-scheve-1894-decision-4",
+        "ply": 48
       },
       "second": {
         "gameId": "euwe-maroczy-1936",
         "checkpointId": "euwe-maroczy-1936-decision-3",
         "ply": 43
       },
-      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE hxg6. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Both historical moves capture something. What piece becomes active in the next reply, and is there a forcing sequence worth checking first?",
-      "secondChallenge": "On Euwe — Maroczy, choose a legal move in the recorded position BEFORE Bxf6. After your candidate, play a concrete legal opponent response yourself. What check or rook infiltration could change the priorities immediately after each capture?",
-      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. What check or rook infiltration could change the priorities immediately after each capture? Check the resulting board for forcing responses before interpreting any strategic advantage.",
-      "revision": "Compare your two independently played positions, not just historical notation. Before capturing, list the opponent's checks and rook-entry squares; replay the historical reply only as observed evidence, not as a forced answer. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
-      "misconception": "Equating a material capture with having neutralized the opponent's threats. A check after the exchange changes the task. The historical sequences hxg6 Rg6 Ref8 and Bxf6 Rg4+ Bg7 are observed source lines, not engine-proven optimal moves or tactics.",
+      "firstChallenge": "In tarrasch-von-scheve-1894, at the verified checkpoint before Bd6, choose your own legal candidate, enter White's or Black's actual opponent reply and reconstruct the plan. Contrast Tarrasch–Von Scheve's Bd6 with Euwe–Maróczy's ...Bxf6: where does the defender capture or check, and which rook becomes active next?",
+      "secondChallenge": "In euwe-maroczy-1936, at the verified checkpoint before Bxf6, choose a second independent legal candidate and enter the opponent's reply. If Black captures the bishop on d6 or White gives Rg4+ after ...Bxf6, what is the immediate forcing reply that must be evaluated?",
+      "defenderPrompt": "On both legally replayed boards, consider the opponent's most inconvenient actual move. If Black captures the bishop on d6 or White gives Rg4+ after ...Bxf6, what is the immediate forcing reply that must be evaluated? Do not claim your chosen defense is engine-best.",
+      "revision": "Compare the resulting positions after your opponent responses: Before choosing a capture or bishop investment, list the legal rook checks and defender squares in both source positions. Separate observed historical SAN from your own counterfactual branch.",
+      "misconception": "An exchange or bishop offer can give the opponent a forcing tempo. Evaluate the concrete queen capture or rook check before calling the position safer. Recorded lines: Bd6 Qxd6 Rxg7+ versus Bxf6 Rg4+ Bg7. Their objective optimality is not certified.",
       "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
     },
     {
@@ -444,19 +444,19 @@
       "id": "minor-piece-threat-and-rook-shelter",
       "first": {
         "gameId": "lasker-janowski-1909",
-        "checkpointId": "lasker-janowski-1909-decision-1",
-        "ply": 14
+        "checkpointId": "lasker-janowski-1909-decision-3",
+        "ply": 47
       },
       "second": {
         "gameId": "tarrasch-von-scheve-1894",
         "checkpointId": "tarrasch-von-scheve-1894-decision-3",
         "ply": 37
       },
-      "firstChallenge": "On Lasker — Janowski, choose a legal move in the recorded position BEFORE Nd4. Then play the opponent's most inconvenient legal answer yourself and revise your plan. Compare ...Nd4 to ...Rf7. Which move creates immediate threats and which must also prevent an opponent's useful file entry?",
-      "secondChallenge": "On Tarrasch, S — Von Scheve, T, choose a legal move in the recorded position BEFORE Rf7. After your candidate, play a concrete legal opponent response yourself. Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square?",
-      "defenderPrompt": "For BOTH historic positions, enter your own legal candidate and at least one legal opponent reply. Can White improve a rook while Black advances a piece, or use an open file while Black adopts a defensive rook square? Check the resulting board for forcing responses before interpreting any strategic advantage.",
-      "revision": "Compare your two independently played positions, not just historical notation. State the threat against the king or weak pawn that makes each move urgent, then examine a quieter legal candidate for Black. Write which strategic feature changed after resistance and under what condition your decision would be transferable.",
-      "misconception": "Mistaking 'centralization' or 'rook lift' for a self-sufficient justification. Each needs a concrete task and an opponent reply. The historical sequences Nd4 O-O-O Be3 and Rf7 Rdg2 a5 are observed source lines, not engine-proven optimal moves or tactics.",
+      "firstChallenge": "In lasker-janowski-1909, at the verified checkpoint before Na5, choose your own legal candidate, enter White's or Black's actual opponent reply and reconstruct the plan. Black can pursue ...Na5 and ...Nc4 in Lasker–Janowski or station its rook on f7 in Tarrasch–Von Scheve. How do those tasks differ when White gains a tempo?",
+      "secondChallenge": "In tarrasch-von-scheve-1894, at the verified checkpoint before Rf7, choose a second independent legal candidate and enter the opponent's reply. Can White contest the c4 knight route while preparing h4, or challenge a rook on f7 by coordinating on the g-file?",
+      "defenderPrompt": "On both legally replayed boards, consider the opponent's most inconvenient actual move. Can White contest the c4 knight route while preparing h4, or challenge a rook on f7 by coordinating on the g-file? Do not claim your chosen defense is engine-best.",
+      "revision": "Compare the resulting positions after your opponent responses: State which pawn or rook reply makes the planned destination unsafe; explore one alternate legal black plan in each original board. Separate observed historical SAN from your own counterfactual branch.",
+      "misconception": "The words centralize and activate are not sufficient evidence. Confirm whether c4 and f7 are tactically supported and what White does next. Recorded lines: Na5 h4 Nc4 versus Rf7 Rdg2 a5. Their objective optimality is not certified.",
       "factsNote": "Actual legal moves, side to move, captures, checks and game termination come from the existing Chess.js board. Strategic evaluation, best defense, and winning chances are neither generated nor certified."
     }
   ]
