@@ -15,9 +15,21 @@ export interface CounterfactualChallenge {
   factsNote: string;
   reconstruction: { first: string; second: string; after: string };
   repair: { first: string; second: string; rebuild: string; transfer: string };
+  decision: { first: string; second: string; repair: string; transfer: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
+export interface SourceGuidance {
+  intro: string; sourceError: string; badLine: string; lookAhead: string;
+  repairBefore: string; repairAfter: string; moveDisclaimer: string;
+  note: string; portability: string;
+}
+
+const complete = (value: unknown, keys: string[], minimum: number) =>
+  !!value && typeof value === "object" && keys.every((key) => {
+    const text = (value as Record<string, unknown>)[key];
+    return typeof text === "string" && text.trim().length >= minimum;
+  });
 
 /** A P115 prompt is usable only for the exact legal and source-pinned P114 pair. */
 export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseStudy[]) {
@@ -27,6 +39,9 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
     (payload as { version?: unknown }).version !== 1) return { accepted, rejected: 1 };
   const raw = (payload as { challenges?: unknown }).challenges;
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
+  const ui = (payload as {ui?: SourceGuidance}).ui;
+  if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
+    "moveDisclaimer","note","portability"], 35)) return {accepted, rejected:1, ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -40,22 +55,17 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
           return anchor && anchor.gameId === match.gameId &&
             anchor.checkpointId === match.checkpointId && anchor.ply === match.ply;
         }) ||
-        ["firstChallenge", "secondChallenge", "defenderPrompt", "revision", "misconception", "factsNote"]
-          .some((key) => typeof item[key as keyof CounterfactualChallenge] !== "string" ||
-            (item[key as keyof CounterfactualChallenge] as string).trim().length < 60) ||
-        !item.reconstruction || ["first", "second", "after"].some((part) =>
-          typeof item.reconstruction[part as keyof typeof item.reconstruction] !== "string" ||
-          item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80) ||
-        !item.repair || ["first", "second", "rebuild", "transfer"].some((part) =>
-          typeof item.repair[part as keyof typeof item.repair] !== "string" ||
-          item.repair[part as keyof typeof item.repair].trim().length < 80)) {
+        !complete(item, ["firstChallenge","secondChallenge","defenderPrompt","revision","misconception","factsNote"], 60) ||
+        !complete(item.reconstruction, ["first","second","after"], 80) ||
+        !complete(item.repair, ["first","second","rebuild","transfer"], 80) ||
+        !complete(item.decision, ["first","second","repair","transfer"], 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
       accepted.push(item);
     } catch { rejected++; }
   }
-  return { accepted, rejected };
+  return { accepted, rejected, ui };
 }
 export interface BranchReplay {
   fen: string;

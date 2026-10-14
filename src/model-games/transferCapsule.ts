@@ -2,7 +2,7 @@ import type { MasterDraft } from "./masterGames";
 import type { TransferCaseStudy } from "./crossGameTransfer";
 import { replayCounterfactual } from "./counterfactualBranches";
 
-const fields = ["plan", "defense", "transfer", "branchNoteA", "branchNoteB", "branchPlanA", "branchPlanB"] as const;
+const fields = ["plan", "defense", "transfer", "branchNoteA", "branchNoteB", "branchPlanA", "branchPlanB", "branchThreatA", "branchThreatB"] as const;
 const lines = ["branchA", "branchB", "branchAltA", "branchAltB"] as const;
 const identity = (study: TransferCaseStudy) => [study.first, study.second].map((side) =>
   [side.game.game.id, side.game.game.checkpoints.find((entry) =>
@@ -36,7 +36,7 @@ export function importPairNotes(text: string, study: TransferCaseStudy): MasterD
   }
   const values: Record<string, string> = {};
   for (const key of fields) {
-    const item = payload.notes[key] ?? (key === "branchPlanA" || key === "branchPlanB" ? "" : undefined);
+    const item = payload.notes[key] ?? (["branchPlanA", "branchPlanB", "branchThreatA", "branchThreatB"].includes(key) ? "" : undefined);
     if (typeof item !== "string" || item.length > 1200) throw new Error("Invalid writing field.");
     values[key] = item;
   }
