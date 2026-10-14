@@ -25,6 +25,12 @@ export interface SourceGuidance {
   note: string; portability: string;
 }
 
+const complete = (value: unknown, keys: string[], minimum: number) =>
+  !!value && typeof value === "object" && keys.every((key) => {
+    const text = (value as Record<string, unknown>)[key];
+    return typeof text === "string" && text.trim().length >= minimum;
+  });
+
 /** A P115 prompt is usable only for the exact legal and source-pinned P114 pair. */
 export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseStudy[]) {
   const accepted: CounterfactualChallenge[] = [];
@@ -34,10 +40,8 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   const raw = (payload as { challenges?: unknown }).challenges;
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
   const ui = (payload as {ui?: SourceGuidance}).ui;
-  if (!ui || ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
-    "moveDisclaimer","note","portability"].some((key) =>
-    typeof ui[key as keyof SourceGuidance] !== "string" ||
-    ui[key as keyof SourceGuidance].trim().length < 35)) return {accepted, rejected:1, ui:null};
+  if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
+    "moveDisclaimer","note","portability"], 35)) return {accepted, rejected:1, ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -51,18 +55,10 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
           return anchor && anchor.gameId === match.gameId &&
             anchor.checkpointId === match.checkpointId && anchor.ply === match.ply;
         }) ||
-        ["firstChallenge", "secondChallenge", "defenderPrompt", "revision", "misconception", "factsNote"]
-          .some((key) => typeof item[key as keyof CounterfactualChallenge] !== "string" ||
-            (item[key as keyof CounterfactualChallenge] as string).trim().length < 60) ||
-        !item.reconstruction || ["first", "second", "after"].some((part) =>
-          typeof item.reconstruction[part as keyof typeof item.reconstruction] !== "string" ||
-          item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80) ||
-        !item.repair || ["first", "second", "rebuild", "transfer"].some((part) =>
-          typeof item.repair[part as keyof typeof item.repair] !== "string" ||
-          item.repair[part as keyof typeof item.repair].trim().length < 80) ||
-        !item.decision || ["first","second","repair","transfer"].some((part) =>
-          typeof item.decision[part as keyof typeof item.decision] !== "string" ||
-          item.decision[part as keyof typeof item.decision].trim().length < 80)) {
+        !complete(item, ["firstChallenge","secondChallenge","defenderPrompt","revision","misconception","factsNote"], 60) ||
+        !complete(item.reconstruction, ["first","second","after"], 80) ||
+        !complete(item.repair, ["first","second","rebuild","transfer"], 80) ||
+        !complete(item.decision, ["first","second","repair","transfer"], 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
