@@ -15,6 +15,8 @@ const initial = {
   revealed: false, mark: "retry" as const,
   branchA: [], branchB: [], branchAltA: [], branchAltB: [],
   branchNoteA: "The first defender move changes the pawn chain.",
+  branchPlanA: "Before moving, identify White’s immediate check and central pawn contact.",
+  branchPlanB: "Before moving, identify which rook could seize the open file.",
   branchNoteB: "The second defender can activate a rook.",
 };
 describe("P117 explicit portable historical study notes", () => {
@@ -25,8 +27,19 @@ describe("P117 explicit portable historical study notes", () => {
     expect(capsule).not.toMatch(/accountId|owner|email|password/);
     const imported = importPairNotes(capsule, first);
     expect(imported.plan).toBe(initial.plan);
+    expect(imported.branchPlanA).toBe(initial.branchPlanA);
+    expect(imported.branchPlanB).toBe(initial.branchPlanB);
     expect(imported.branchAltA).toEqual([]);
     expect(imported.mark).toBe("retry");
+  });
+  it("restores unchanged P117 portable notes without new optional reconstruction fields", () => {
+    const prior = JSON.parse(exportPairNotes(first, initial));
+    delete prior.notes.branchPlanA;
+    delete prior.notes.branchPlanB;
+    const restored = importPairNotes(JSON.stringify(prior), first);
+    expect(restored.branchPlanA).toBe("");
+    expect(restored.branchPlanB).toBe("");
+    expect(restored.plan).toBe(initial.plan);
   });
   it("refuses unknown source identities, stale date, arbitrary strings and illegal moves", () => {
     const capsule = exportPairNotes(first, initial);

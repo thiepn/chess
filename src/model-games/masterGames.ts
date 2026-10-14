@@ -43,6 +43,8 @@ export interface MasterDraft {
   branchAltB?: string[];
   branchNoteA?: string;
   branchNoteB?: string;
+  branchPlanA?: string;
+  branchPlanB?: string;
 }
 const EMPTY: MasterDraft = { plan: "", defense: "", transfer: "", revealed: false, mark: null };
 export const emptyMasterDraft = (): MasterDraft => ({ ...EMPTY });
@@ -126,6 +128,8 @@ export function restoreMasterDrafts(owner: string, gameId: string): Record<strin
           typeof move === "string" && move.length <= 12) : [],
         branchNoteA: typeof draft?.branchNoteA === "string" ? draft.branchNoteA.slice(0, 1200) : "",
         branchNoteB: typeof draft?.branchNoteB === "string" ? draft.branchNoteB.slice(0, 1200) : "",
+        branchPlanA: typeof draft?.branchPlanA === "string" ? draft.branchPlanA.slice(0, 1200) : "",
+        branchPlanB: typeof draft?.branchPlanB === "string" ? draft.branchPlanB.slice(0, 1200) : "",
       },
     ]));
   } catch { return {}; }

@@ -19,3 +19,12 @@
 .p115-reflection small{display:block;opacity:.85;line-height:1.5}
 .p115-lab button:focus-visible,.p115-entry button:focus-visible,.p115-lab textarea:focus-visible{outline:3px solid var(--accent,#a55c35);outline-offset:2px}
 @media(max-width:700px){.p115-two-boards{grid-template-columns:minmax(0,1fr)}.p115-position{max-width:36rem;width:100%;box-sizing:border-box;margin-inline:auto}.p115-source-task{min-height:0}.p115-entry>button{width:100%}}
+
+.p118-resource{margin:.65rem 0;padding:.65rem;border:1px solid var(--border,#888)}
+.p118-resource p{font-size:.85rem;line-height:1.5;margin:.2rem 0}
+.p118-moves{display:flex;flex-wrap:wrap;gap:.3rem;max-height:9rem;overflow:auto}
+.p118-moves button{min-height:2.6rem;min-width:3.3rem;font:inherit;font-size:.89rem;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid var(--border,#888);cursor:pointer}
+.p118-moves button:focus-visible{outline:3px solid var(--accent,#a55c35);outline-offset:2px}
+.p118-resource small{display:block;line-height:1.5}
+.p115-position .p115-actions span{align-self:center;font-size:.85rem}
+@media(max-width:700px){.p118-moves button{min-height:2.8rem}}

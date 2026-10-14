@@ -32,9 +32,11 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [counterfactualOpen, setCounterfactualOpen] = useState(false);
   const [portableText, setPortableText] = useState("");
   const [portableStatus, setPortableStatus] = useState("");
+  const [sourceRetry, setSourceRetry] = useState(0);
 
   useEffect(() => {
     const abort = new AbortController();
+    setError("");
     fetch(crossGameTransferAsset, { signal: abort.signal })
       .then((response) => {
         if (!response.ok) throw new Error("Source archive could not be retrieved");
@@ -51,7 +53,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
         if (!abort.signal.aborted) setError("Comparison source is unavailable. No positions have been invented.");
       });
     return () => abort.abort();
-  }, [games]);
+  }, [games, sourceRetry]);
 
   useEffect(() => {
     setRestoredOwner("");
@@ -61,6 +63,15 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       return stored ? [[item.source.id, stored]] : [];
     }));
     setDrafts(recovered);
+    // Reopen a self-identified retry or the earliest partially written pair.
+    // This does not count a lesson as complete or create a mastery signal.
+    const resume = cases.find((item) => recovered[item.source.id]?.mark === "retry") ??
+      cases.find((item) => {
+        const entry = recovered[item.source.id];
+        return entry && !entry.mark && (entry.plan || entry.defense || entry.transfer ||
+          entry.branchA?.length || entry.branchAltA?.length || entry.branchB?.length || entry.branchAltB?.length);
+      });
+    setSelectedId(resume?.source.id ?? "");
     setRestoredOwner(owner);
   }, [owner, cases]);
 
@@ -103,8 +114,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       if (!active || !owner || restoredOwner !== owner) throw new Error("Sign in to restore this pair.");
       const restored = importPairNotes(portableText, active);
       if (Object.values(draft).some((value) =>
-        typeof value === "string" && value.trim()) &&
-        !window.confirm("Replace this pair's current unsent writing and variations?")) return;
+        typeof value === "string" ? value.trim() : Array.isArray(value) ? value.length : Boolean(value)) &&
+        !window.confirm("Replace this pair's current unsent writing, review state and variations?")) return;
       setDrafts((before) => ({ ...before, [active.source.id]: restored }));
       setPortableStatus("Restored this source-verified pair in your current session.");
     } catch (error) {
@@ -125,7 +136,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
         <span role="status">{reviewed}/{cases?.length ?? 24} self-assessed</span>
       </header>
       {!cases && !error && <p role="status">Loading the paired, source-checked positions…</p>}
-      {error && <p role="alert">{error}</p>}
+      {error && <div role="alert"><p>{error}</p><button type="button" className="secondary"
+        onClick={() => { setCases(null); setSourceRetry((n) => n + 1); }}>Retry verified source archive</button></div>}
       {rejected > 0 && <p role="alert">{rejected} comparisons were excluded because a source game, checkpoint, or recorded continuation could not be verified.</p>}
       {cases && cases.length > 0 && <>
         <button type="button" className="secondary" onClick={() => {
@@ -141,7 +153,9 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
               onClick={() => choose(item.source.id)}>
               <span>{index + 1}. {item.source.theme}</span>
               <strong>{item.source.title}</strong>
-              {visibleDrafts[item.source.id]?.mark && <small>{visibleDrafts[item.source.id].mark === "retry" ? "Review again" : "Self-checked"}</small>}
+              {visibleDrafts[item.source.id]?.mark
+                ? <small>{visibleDrafts[item.source.id].mark === "retry" ? "Review again" : "Self-checked"}</small>
+                : visibleDrafts[item.source.id] && <small>Draft in progress</small>}
             </button>
           ))}
         </nav>

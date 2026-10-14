@@ -5,7 +5,7 @@ import type { TransferCaseStudy } from "../model-games/crossGameTransfer";
 import {
   BRANCH_LIMIT, advanceCounterfactual, counterfactualAsset,
   hydrateCounterfactuals, observedCounterfactual,
-  replayCounterfactual, type CounterfactualChallenge,
+  replayCounterfactual, legalReplyResources, type CounterfactualChallenge,
 } from "../model-games/counterfactualBranches";
 import "../styles/p115-counterfactual.css";
 
@@ -22,9 +22,13 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
   const [rejected, setRejected] = useState(0);
   const [reference, setReference] = useState<[boolean, boolean]>([false, false]);
   const [slots, setSlots] = useState<[number, number]>([0, 0]);
+  const [cursors, setCursors] = useState<[number, number]>([0, 0]);
+  const [allLegal, setAllLegal] = useState<[boolean, boolean]>([false, false]);
+  const [loadAttempt, setLoadAttempt] = useState(0);
 
   useEffect(() => {
     const abort = new AbortController();
+    setError("");
     fetch(counterfactualAsset, { signal: abort.signal })
       .then((response) => {
         if (!response.ok) throw new Error("P115 source unavailable");
@@ -41,15 +45,25 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
         if (!abort.signal.aborted) setError("Could not load the original P115 exercises. P114 comparison remains available.");
       });
     return () => abort.abort();
-  }, [studies]);
+  }, [studies, loadAttempt]);
 
-  useEffect(() => { setReference([false, false]); setSlots([0, 0]); }, [active.source.id]);
+  useEffect(() => { setReference([false, false]); setSlots([0, 0]); setAllLegal([false, false]); }, [active.source.id]);
+  // Recover the end of each surviving canonical branch on returning to this study.
+  // Manual timeline scrubbing does not rewrite the branch or cause a new grade.
+  useEffect(() => {
+    setCursors([
+      slots[0] === 0 ? draft.branchA?.length ?? 0 : draft.branchAltA?.length ?? 0,
+      slots[1] === 0 ? draft.branchB?.length ?? 0 : draft.branchAltB?.length ?? 0,
+    ]);
+  }, [active.source.id, slots, draft.branchA, draft.branchB, draft.branchAltA, draft.branchAltB]);
   const challenge = challenges.find((item) => item.id === active.source.id);
   function setLine(index: number, line: string[]) {
     const key = index === 0
       ? slots[index] === 0 ? "branchA" : "branchAltA"
       : slots[index] === 0 ? "branchB" : "branchAltB";
     onChange({ [key]: line, mark: null });
+    setCursors((previous) => previous.map((value, position) =>
+      position === index ? line.length : value) as [number, number]);
   }
 
   return <section className="p115-lab" aria-label="P115 independent counterfactual branches">
@@ -59,7 +73,9 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
       <p>Make moves for both players on each board. No opponent is simulated, and the app makes no engine-best or strategic-strength claims. Six legal plies per side of the comparison.</p>
     </header>
     {!challenge && !error && <p role="status">Verifying source-linked variation challenges…</p>}
-    {error && <p role="alert">{error}</p>}
+    {error && <div role="alert"><p>{error}</p>
+      <button type="button" className="secondary" onClick={() => setLoadAttempt((n) => n + 1)}>Retry original prompts</button>
+    </div>}
     {rejected > 0 && <p role="status">{rejected} source-inconsistent challenge records excluded.</p>}
     {challenge && <>
       <div className="p115-two-boards">
@@ -70,15 +86,24 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const line = slots[index] === 0 ? main : alternate;
           const other = replayCounterfactual(pin.fen, slots[index] === 0 ? alternate : main);
           const result = replayCounterfactual(pin.fen, line);
+          const last = result.sans.length;
           const historical = observedCounterfactual(pin.game, source.ply);
           const referenceReplay = replayCounterfactual(pin.fen, historical);
           const isReference = draft.revealed && reference[index];
+          const cursor = Math.min(cursors[index], line.length);
+          const examined = replayCounterfactual(pin.fen, line.slice(0, cursor));
+          const browseHistory = cursor < line.length;
+          const resources = !result.invalid && !isReference && !browseHistory && !result.gameOver &&
+            last < BRANCH_LIMIT ? legalReplyResources(result.fen) : { all: [], forcing: [] };
+          const candidates = resources.all;
+          const forcing = resources.forcing;
+          const offered = (allLegal[index] ? candidates : forcing).slice(0, 24);
+          const reconstruction = index === 0 ? challenge.reconstruction.first : challenge.reconstruction.second;
           const name = index === 0 ? "A" : "B";
-          const last = result.sans.length;
           const currentFen = isReference && !referenceReplay.invalid
-            ? referenceReplay.fen : result.invalid ? pin.fen : result.fen;
+            ? referenceReplay.fen : examined.invalid ? pin.fen : examined.fen;
           function play(move: { from: string; to: string; promotion?: string }) {
-            if (isReference) return false;
+            if (isReference || browseHistory) return false;
             const next = advanceCounterfactual(pin.fen, line, move);
             if (!next) return false;
             setLine(index, next);
@@ -92,17 +117,37 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               {[0, 1].map((slot) => <button key={slot} type="button" className="secondary"
                 aria-pressed={slots[index] === slot}
                 onClick={() => { setSlots((old) => old.map((n, i) => i === index ? slot : n) as [number, number]);
+                  setCursors((old) => old.map((n, i) => i === index ? (slot === 0 ? main.length : alternate.length) : n) as [number, number]);
                   setReference((old) => old.map((n, i) => i === index ? false : n) as [boolean, boolean]); }}>
                 {slot === 0 ? "Original candidate" : "Alternative candidate"}
               </button>)}
             </div>
+            <label htmlFor={"p118-plan-" + index}>Before moving: reconstruct the threats and name a candidate</label>
+            <p className="p115-source-task">{reconstruction}</p>
+            <textarea id={"p118-plan-" + index} rows={2} maxLength={1200}
+              placeholder="Which squares matter, which replies concern you, and why?"
+              value={index === 0 ? draft.branchPlanA ?? "" : draft.branchPlanB ?? ""}
+              onChange={(event) => onChange(index === 0
+                ? { branchPlanA: event.target.value, mark: null } : { branchPlanB: event.target.value, mark: null })}/>
+            <p className="p115-facts">{last === 0 ? "Stage 1 · Choose your own move" : last === 1 ?
+              "Stage 2 · Play the opponent's legal resistance" :
+              "Stage 3 · Reconstruct the position and reconsider your plan"}</p>
             <ChessBoard
               key={source.gameId + ":" + currentFen + ":" + isReference}
               fen={currentFen}
               orientation={pin.game.game.orientation}
-              disabled={isReference || result.invalid || result.gameOver || last >= BRANCH_LIMIT}
+              disabled={isReference || result.invalid || browseHistory || result.gameOver || last >= BRANCH_LIMIT}
               onMove={isReference ? undefined : play}
             />
+            {last > 0 && !result.invalid && !isReference && <div className="p115-actions" role="group" aria-label={"Explore previously played moves in position " + name}>
+              <button className="secondary" type="button" disabled={cursor === 0}
+                onClick={() => setCursors((old) => old.map((v,i) => i === index ? Math.max(0, v - 1) : v) as [number,number])}>Previous position</button>
+              <span role="status">Ply {cursor} of {last}</span>
+              <button className="secondary" type="button" disabled={cursor >= last}
+                onClick={() => setCursors((old) => old.map((v,i) => i === index ? Math.min(last, v + 1) : v) as [number,number])}>Next position</button>
+              {browseHistory && <button className="secondary" type="button"
+                onClick={() => setLine(index, line.slice(0,cursor))}>Continue from this position</button>}
+            </div>}
             {result.invalid && <p role="alert">The saved variation contains a move that is not legal from this source board. Clear it to resume; no line was silently rewritten.</p>}
             {(main.length > 0 || alternate.length > 0) && <p className="p115-notation">
               <strong>Two candidate lines:</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
@@ -123,6 +168,22 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               {" · "}{result.gameOver ? "Game finished" : last >= BRANCH_LIMIT ? "Six-ply limit" :
                 "Next: " + (result.turn === "w" ? "White" : "Black")}
             </p>}
+            {candidates.length > 0 && <div className="p118-resource">
+              <p>Legal moves from this board: {candidates.length}; checks or captures: {forcing.length}. These are possibilities, not a best-move ranking.</p>
+              <div className="p115-actions">
+                <button type="button" className="secondary" aria-pressed={allLegal[index]}
+                  onClick={() => setAllLegal((old) => old.map((value,i) => i === index ? !value : value) as [boolean,boolean])}>
+                  {allLegal[index] ? "Show checks and captures" : "Show all legal moves"}
+                </button>
+              </div>
+              <div className="p118-moves" role="group" aria-label={"Play a legal move for " + (result.turn === "w" ? "White" : "Black")}>
+                {offered.map((move) => <button type="button" key={move.san}
+                  onClick={() => play({ from: move.from, to: move.to, promotion: move.promotion })}>
+                  {move.san}</button>)}
+              </div>
+              {offered.length === 0 && <small>No legal check or capture is currently available. You can still make a quiet move on the board.</small>}
+              {(allLegal[index] ? candidates : forcing).length > 24 && <small>Showing 24 moves; use the board for other legal choices.</small>}
+            </div>}
             <div className="p115-actions">
               <button className="secondary" type="button" disabled={!last || isReference}
                 onClick={() => setLine(index, line.slice(0, -1))}>Undo move</button>
@@ -151,6 +212,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
         })}
       </div>
       <section className="p115-reflection">
+        <strong>P118 · Independent historical reconstruction</strong>
+        <p>{challenge.reconstruction.after}</p>
         <strong>Opponent-resistance protocol</strong>
         <p>{challenge.defenderPrompt}</p>
         <strong>Reconstruct a transferable decision</strong>
