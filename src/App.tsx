@@ -3169,7 +3169,7 @@ export default function App() {
           </section>
           <section className="train-optional-studies" aria-label="Optional positional studies">
             <button type="button" className="secondary" aria-expanded={optionalStudiesOpen}
-              aria-controls="train-optional-study-content"
+              aria-controls={optionalStudiesOpen ? "train-optional-study-content" : undefined}
               onClick={() => setOptionalStudiesOpen((opened) => !opened)}>
               {optionalStudiesOpen ? "Close positional studies" : "Explore optional positional studies"}
             </button>
