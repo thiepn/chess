@@ -149,7 +149,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               onChange={(event) => onChange(index === 0
                 ? { branchPlanA: event.target.value, mark: null } : { branchPlanB: event.target.value, mark: null })}/>
             <ChessBoard
-              key={source.gameId + ":" + currentFen + ":" + isReference}
+              // Keep the native board mounted across plies for keyboard focus continuity.
+              key={source.gameId + ":" + slots[index]}
               fen={currentFen}
               orientation={pin.game.game.orientation}
               disabled={isReference || result.invalid || browseHistory || result.gameOver || last >= BRANCH_LIMIT}
@@ -169,7 +170,10 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               <button className="secondary" type="button" disabled={cursor >= last}
                 onClick={() => setCursors((old) => at(old,index,Math.min(last,old[index]+1)))}>{guidance?.nextPosition}</button>
               {browseHistory && <button className="secondary" type="button"
-                onClick={() => setLine(index, line.slice(0,cursor))}>{guidance?.resumePosition}</button>}
+                onClick={() => {
+                  if (!window.confirm("Replace all moves after this ply in the selected candidate?")) return;
+                  setLine(index, line.slice(0,cursor));
+                }}>{guidance?.resumePosition}</button>}
             </div>}
             {!isReference && <div className="p115-actions">
               <button type="button" className="secondary" disabled={!forked}
@@ -235,7 +239,12 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               <button className="secondary" type="button" disabled={!last || isReference}
                 onClick={() => setLine(index, line.slice(0, -1))}>{guidance?.undoLabel}</button>
               <button className="secondary" type="button" disabled={!last && !result.invalid}
-                onClick={() => { setLine(index, []); setReference((old) => old.map((value, i) => i === index ? false : value) as [boolean, boolean]); }}>
+                onClick={() => {
+                  if ((line.length || result.invalid) &&
+                    !window.confirm("Clear this candidate's saved moves? The other line remains unchanged.")) return;
+                  setLine(index, []);
+                  setReference((old) => at(old,index,false));
+                }}>
                 {guidance?.clearLabel}
               </button>
               {draft.revealed && <button type="button" className="secondary" aria-pressed={isReference}
@@ -267,17 +276,18 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
         })}
       </div>
       <section className="p115-reflection">
-        <strong>P121 · Compare alternative defenses and transfer carefully</strong>
-        <p>{challenge.fork.carry}</p>
-        <strong>P120 · Defend, repair, then transfer</strong>
-        <p>{challenge.decision.transfer}</p>
-        <strong>P118 · Independent historical reconstruction</strong>
-        <p>{challenge.reconstruction.after}</p>
         <strong>Opponent-resistance protocol</strong>
         <p>{challenge.defenderPrompt}</p>
-        <strong>Reconstruct a transferable decision</strong>
-        <p>{challenge.revision}</p>
+        {!draft.revealed && <small>Record your own candidate, defender response and comparison before revealing the original historical continuations.</small>}
         {draft.revealed && <>
+          <strong>P121 · Compare alternative defenses and transfer carefully</strong>
+          <p>{challenge.fork.carry}</p>
+          <strong>P120 · Defend, repair, then transfer</strong>
+          <p>{challenge.decision.transfer}</p>
+          <strong>P118 · Independent historical reconstruction</strong>
+          <p>{challenge.reconstruction.after}</p>
+          <strong>Reconstruct a transferable decision</strong>
+          <p>{challenge.revision}</p>
           <strong>Specific misconception to avoid</strong>
           <p>{challenge.misconception}</p>
           <p>{challenge.factsNote}</p>

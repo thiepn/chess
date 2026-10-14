@@ -25,6 +25,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
   const [viewPly, setViewPly] = useState(0);
   const [drafts, setDrafts] = useState<Record<string, MasterDraft>>({});
   const [draftOwner, setDraftOwner] = useState("");
+  const [storageError, setStorageError] = useState(false);
   const [exploreFen, setExploreFen] = useState<string | null>(null);
   const [exploreLine, setExploreLine] = useState<string[]>([]);
 
@@ -51,7 +52,10 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
 
   const current = collection?.find((item) => item.game.id === selectedId);
   const decision = current?.game.checkpoints[decisionIndex];
-  const currentDraft = decision ? drafts[decision.id] ?? emptyMasterDraft() : emptyMasterDraft();
+  // Never expose the previous Account's draft while the restoration effect runs.
+  const ownerDraftKey = owner && selectedId ? masterDraftKey(owner, selectedId) : "";
+  const visibleDrafts = ownerDraftKey && draftOwner === ownerDraftKey ? drafts : {};
+  const currentDraft = decision ? visibleDrafts[decision.id] ?? emptyMasterDraft() : emptyMasterDraft();
   const fen = current?.fens[viewPly] ?? "";
   const plyCount = current?.sans.length ?? 0;
   const moveShown = viewPly > 0 ? current?.sans[viewPly - 1] : undefined;
@@ -65,22 +69,27 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
 
   useEffect(() => {
     setDraftOwner("");
-    setDrafts(selectedId ? restoreMasterDrafts(owner, selectedId) : {});
-    if (owner && selectedId) setDraftOwner(owner + ":" + selectedId);
+    setDrafts(owner && selectedId ? restoreMasterDrafts(owner, selectedId) : {});
+    setStorageError(false);
+    if (owner && selectedId) setDraftOwner(masterDraftKey(owner, selectedId));
   }, [owner, selectedId]);
 
   useEffect(() => {
-    if (!owner || !selectedId || draftOwner !== owner + ":" + selectedId) return;
+    if (!ownerDraftKey || draftOwner !== ownerDraftKey) return;
     try {
-      sessionStorage.setItem(masterDraftKey(owner, selectedId), JSON.stringify({
+      sessionStorage.setItem(ownerDraftKey, JSON.stringify({
         version: 1, saved: Date.now(), drafts,
       }));
-    } catch { /* Session quota/private browsing does not block study. */ }
-  }, [owner, selectedId, draftOwner, drafts]);
+      setStorageError(false);
+    } catch {
+      // Keep unsaved text on screen and tell the learner recovery is unavailable.
+      setStorageError(true);
+    }
+  }, [ownerDraftKey, draftOwner, drafts]);
 
   const completed = useMemo(() => current
-    ? current.game.checkpoints.filter((item) => drafts[item.id]?.mark).length
-    : 0, [current, drafts]);
+    ? current.game.checkpoints.filter((item) => visibleDrafts[item.id]?.mark).length
+    : 0, [current, visibleDrafts]);
 
   function choose(item: MasterTimeline) {
     setSelectedId(item.game.id);
@@ -103,7 +112,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
     setViewPly(current.game.checkpoints[index].ply);
   }
   function edit(patch: Partial<MasterDraft>) {
-    if (!decision) return;
+    if (!decision || !ownerDraftKey || draftOwner !== ownerDraftKey) return;
     setDrafts((existing) => ({
       ...existing,
       [decision.id]: { ...(existing[decision.id] ?? emptyMasterDraft()), ...patch },
@@ -121,6 +130,9 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
   }
   function resetDraft() {
     if (!decision) return;
+    if ((currentDraft.plan || currentDraft.defense || currentDraft.transfer ||
+      currentDraft.mark || currentDraft.revealed) &&
+      !window.confirm("Discard this decision's unsent writing and self-check?")) return;
     edit(emptyMasterDraft());
   }
   return (
@@ -136,6 +148,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
           {expanded ? "Close archive" : "Explore master games"}
         </button>
       </header>
+      {storageError && current && <p role="alert">This browser could not save your master-game draft. Copy your answers before leaving this tab.</p>}
       {expanded && !collection && !error && <p role="status">Loading legal PGN game records…</p>}
       {expanded && error && <div role="alert">
         <p>{error}</p><button className="secondary" type="button" onClick={() => { setError(""); setCollection(null); }}>Retry source</button>
@@ -235,7 +248,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
                   <button key={item.id} type="button" className={decisionIndex === index ? "selected" : ""}
                     aria-current={decisionIndex === index ? "step" : undefined}
                     onClick={() => selectDecision(index)}>
-                    {index + 1}. {item.lens} {drafts[item.id]?.mark ? "✓" : ""}
+                    {index + 1}. {item.lens} {visibleDrafts[item.id]?.mark ? "✓" : ""}
                   </button>
                 ))}
               </nav>

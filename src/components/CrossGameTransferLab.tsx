@@ -33,6 +33,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [counterfactualOpen, setCounterfactualOpen] = useState(false);
   const [portableText, setPortableText] = useState("");
   const [portableStatus, setPortableStatus] = useState("");
+  const [storageError, setStorageError] = useState(false);
   const [sourceRetry, setSourceRetry] = useState(0);
   const lastSaved = useRef<Record<string, MasterDraft>>({});
 
@@ -67,6 +68,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
 
   useEffect(() => {
     lastSaved.current = {};
+    setStorageError(false);
     setRestoredOwner("");
     if (!owner || !cases) { setDrafts({}); return; }
     const recovered = Object.fromEntries(cases.flatMap((item) => {
@@ -101,6 +103,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   // selected one. A per-render reference prevents unnecessary storage writes.
   useEffect(() => {
     if (!owner || restoredOwner !== owner || !cases) return;
+    let failed = false;
     for (const study of cases) {
       const id = study.source.id;
       const entry = drafts[id];
@@ -110,8 +113,9 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           version: 1, saved: Date.now(), drafts: { [id]: entry },
         }));
         lastSaved.current[id] = entry;
-      } catch { /* Unsent notes remain editable when storage is unavailable. */ }
+      } catch { failed = true; }
     }
+    setStorageError(failed);
   }, [owner, restoredOwner, cases, drafts]);
 
   function edit(patch: Partial<MasterDraft>) {
@@ -183,6 +187,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           ))}
         </nav>
         {active && <div className="p114-session" key={active.source.id}>
+          {storageError && <p role="alert">This browser cannot save your comparison draft. Prepare and copy a private portable note before leaving this session.</p>}
           <details className="p117-portable">
             <summary>Carry this pair into another session</summary>
             <p>{copy.portable}</p>
@@ -293,7 +298,12 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                 onClick={() => choose(cases[activeIndex - 1].source.id)}><ChevronLeft size={15}/> Previous pair</button>
               <button className="secondary" type="button" disabled={activeIndex === cases.length - 1}
                 onClick={() => choose(cases[activeIndex + 1].source.id)}>Next pair <ChevronRight size={15}/></button>
-              <button className="p114-reset" type="button" onClick={() => edit(emptyMasterDraft())}>
+              <button className="p114-reset" type="button" onClick={() => {
+                if (Object.values(draft).some((value) =>
+                  typeof value === "string" ? value.trim() : Array.isArray(value) ? value.length : Boolean(value)) &&
+                  !window.confirm("Discard this pair's unsent writing, variations and self-check?")) return;
+                edit(emptyMasterDraft());
+              }}>
                 <RotateCcw size={14}/> Clear this draft
               </button>
             </footer>

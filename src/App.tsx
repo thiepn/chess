@@ -36,7 +36,7 @@ import { CHESS_ACCOUNT_ORIGIN, currentChessAccountClientReadiness } from "./acco
 import { chessAccountSso, chessAccountLoginError } from "./account/chessSession";
 
 import { ChessBoard } from "./components/ChessBoard";
-import { StrategicStudyLibrary } from "./components/StrategicStudyLibrary";
+
 
 
 
@@ -125,6 +125,12 @@ import { useAppRouter } from "./routing/appRouter";
 import "./styles/p47-train-native.css";
 import "./styles/p51-train-large.css";
 
+// Advanced, unscored study catalog is not needed to initialize the first screen.
+const StrategicStudyLibrary = lazy(() =>
+  import("./components/StrategicStudyLibrary").then((module) => ({
+    default: module.StrategicStudyLibrary,
+  })),
+);
 const LearnView = lazy(() =>
   import("./components/LearnView").then((module) => ({
     default: module.LearnView,
@@ -3119,13 +3125,15 @@ export default function App() {
                 </button>
               </div>
 
-              <StrategicStudyLibrary
-                positions={[...strategicPositions, ...endgameDecisionPositions]}
-                loading={catalogStatus.pending > 0}
-                failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
-                onRetry={retryFailedCalculationSources}
-                onStart={openStrategicStudy}
-              />
+              <Suspense fallback={<p role="status">Loading strategic studies…</p>}>
+                <StrategicStudyLibrary
+                  positions={[...strategicPositions, ...endgameDecisionPositions]}
+                  loading={catalogStatus.pending > 0}
+                  failedCount={catalogStatus.failedFiles.filter(file => file.startsWith("p109-") || file.startsWith("p110-") || file.startsWith("p112-")).length}
+                  onRetry={retryFailedCalculationSources}
+                  onStart={openStrategicStudy}
+                />
+              </Suspense>
 
               <dl className="train-session-facts">
                 <div>
