@@ -149,7 +149,6 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               onChange={(event) => onChange(index === 0
                 ? { branchPlanA: event.target.value, mark: null } : { branchPlanB: event.target.value, mark: null })}/>
             <ChessBoard
-              // Keep the native board mounted across plies for keyboard focus continuity.
               key={source.gameId + ":" + slots[index]}
               fen={currentFen}
               orientation={pin.game.game.orientation}
