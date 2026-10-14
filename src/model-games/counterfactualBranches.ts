@@ -52,7 +52,7 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   const raw = (payload as { challenges?: unknown }).challenges;
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
   const ui = (payload as {ui?: SourceGuidance}).ui;
-  if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
+  if (!ui || !complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
     "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35) ||
     Object.keys(ui).length < 44 ||
     Object.values(ui).some((text) => typeof text !== "string" || text.trim().length < 5))
