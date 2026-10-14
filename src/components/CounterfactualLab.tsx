@@ -177,7 +177,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               </button>
               <small>{forked ? guidance?.forkHint : guidance?.forkEarly}</small>
             </div>}
-            {result.invalid && <p role="alert">{guidance?.badLine ?? "Saved variation is not legal; clear only this candidate."}</p>
+            {result.invalid && <p role="alert">{guidance?.badLine ?? "Saved variation is not legal; clear only this candidate."}</p>}
             {(main.length > 0 || alternate.length > 0) && <p className="p115-notation">
               <strong>Two candidate lines:</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
             </p>}
