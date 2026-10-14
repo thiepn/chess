@@ -5,7 +5,7 @@ import type { TransferCaseStudy } from "../model-games/crossGameTransfer";
 import {
   BRANCH_LIMIT, advanceCounterfactual, counterfactualAsset,
   hydrateCounterfactuals, observedCounterfactual,
-  replayCounterfactual, legalReplyResources, type CounterfactualChallenge,
+  replayCounterfactual, legalReplyResources, branchEvidence, type CounterfactualChallenge,
 } from "../model-games/counterfactualBranches";
 import "../styles/p115-counterfactual.css";
 
@@ -88,6 +88,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const result = replayCounterfactual(pin.fen, line);
           const last = result.sans.length;
           const historical = observedCounterfactual(pin.game, source.ply);
+          const evidence = branchEvidence(pin.fen, line, slots[index] === 0 ? alternate : main, historical);
           const referenceReplay = replayCounterfactual(pin.fen, historical);
           const isReference = draft.revealed && reference[index];
           const cursor = Math.min(cursors[index], line.length);
@@ -156,9 +157,25 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               <strong>{isReference ? "Observed PGN:" : "Your legal branch:"}</strong>
               <span>{isReference ? historical.join(" ") : last ? result.sans.join(" ") : "No moves played"}</span>
             </div>
-            {main.length > 0 && alternate.length > 0 && !result.invalid && !other.invalid && <p className="p115-facts">
-              Compare your branches: which defender reply made you change the plan? Different legal continuations do not prove a best move.
-            </p>}
+            {evidence && !isReference && <section className="p115-reflection" aria-label={"Source and defender evidence for " + name}>
+              <strong>{evidence.needsDefense ? "Now play the defender" :
+                evidence.replyPlayed ? "Reconstruct after resistance" : "Candidate rehearsal"}</strong>
+              {evidence.needsDefense && <p>Your move is legal, but no opponent reply has been played. Choose a defender move yourself before assessing whether the plan survives.</p>}
+              {evidence.replyPlayed && <p>{draft.revealed ?
+                (index === 0 ? challenge.repair.first : challenge.repair.second) :
+                "Identify the defender's actual threat and revise your next move before consulting the recorded PGN."}</p>}
+              {line.length >= 4 && <p>{draft.revealed ? challenge.repair.rebuild :
+                "After a second exchange of moves, test whether your original reason still holds. Name one check, capture or counter-threat."}</p>}
+              {evidence.events.length > 0 && <p>Legal board events: {evidence.events.join("; ")}. These facts do not assign strategic value.</p>}
+              {main.length && alternate.length && !other.invalid && <p>
+                Both variants share {evidence.sameAlternativePlies} opening plies;
+                {evidence.differsFromAlternative ? " the played choices diverge." : " this line is a prefix of the other."}
+                {" "}Compare the defender's replies, not just the first moves.
+              </p>}
+              {draft.revealed && <p>Your line shares {evidence.sameSourcePlies} opening plies with the actual PGN;
+                {evidence.divergesFromSource ? " then follows a different legal continuation." : " no different move has been played yet."}
+                {" "}The historical continuation is observed, not a best-move verdict.</p>}
+            </section>}
             {!result.invalid && !isReference && <p className="p115-facts" role="status">
               {result.checkmate ? "Checkmate in this legal board position" :
                 result.drawn ? "Draw reported by chess.js rules" :
@@ -212,6 +229,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
         })}
       </div>
       <section className="p115-reflection">
+        <strong>P119 · Transfer only after testing resistance</strong>
+        <p>{challenge.repair.transfer}</p>
         <strong>P118 · Independent historical reconstruction</strong>
         <p>{challenge.reconstruction.after}</p>
         <strong>Opponent-resistance protocol</strong>
