@@ -23,7 +23,7 @@ export const beginnerSkillIds = [
   "fundamentals.blunder-check", "defense.threats",
 ] as const;
 const skillSet: ReadonlySet<string> = new Set(beginnerSkillIds);
-const requiredPositionsPerSkill = 4;
+const requiredPositionsPerSkill = 8;
 let cached: Promise<ReadonlyMap<string, BeginnerPracticeEntry>> | undefined;
 
 function legalMove(fen: string, uci: string) {
@@ -43,7 +43,7 @@ export function validateBeginnerPractice(raw: unknown): ReadonlyMap<string, Begi
   if (!raw || typeof raw !== "object") throw Error("Invalid beginner source");
   const data = raw as { schema?: unknown; version?: unknown; items?: unknown };
   if (data.schema !== "thiepn.chess.beginner-practice.v1" ||
-      data.version !== 1 || !Array.isArray(data.items) ||
+      data.version !== 2 || !Array.isArray(data.items) ||
       data.items.length !== beginnerSkillIds.length) throw Error("Missing beginner source");
   const result = new Map<string, BeginnerPracticeEntry>();
   const seenFens = new Set<string>();
@@ -96,10 +96,11 @@ export function withBeginnerPractice(lesson: LessonScript, entry: BeginnerPracti
     id: `g1-practice-${i + 1}`,
     stage: "transfer",
     type: "move",
-    // The final unfamiliar board contributes additional original transfer
-    // evidence; preceding independent rounds train with the native writer.
-    support: i === entry.exercises.length - 1 ? "transfer" : "retrieval",
-    eyebrow: i === entry.exercises.length - 1 ? "INDEPENDENT NEW POSITION" : "PRACTICE IN A NEW POSITION",
+    // Preserve G1's historic fourth transfer and add a second transfer
+    // at the eighth case. Never downgrade previously recorded transfer work.
+    support: i === 3 || i === entry.exercises.length - 1 ? "transfer" : "retrieval",
+    eyebrow: i === 3 ? "ORIGINAL TRANSFER CHECK" :
+      i === entry.exercises.length - 1 ? "ADDITIONAL NEW TRANSFER" : "INDEPENDENT PRACTICE",
     title: `Recognize and apply · ${i + 1} of ${entry.exercises.length}`,
     prompt: item.prompt,
     fen: item.fen,
