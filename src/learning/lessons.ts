@@ -70,7 +70,7 @@ function moveHints(
       highlights: [{ square: from, tone: "hint" as const }],
     },
     {
-      text: `The move starts on ${from} and finishes on ${to}.`,
+      text: `${lessonText[40]}${from}${lessonText[41]}${to}.`,
       highlights: [
         { square: from, tone: "hint" as const },
         { square: to, tone: "good" as const },
@@ -106,7 +106,7 @@ function transferHints(
     {
       text:
         transfer.hints[2] ??
-        `Consider the move from ${from} to ${to}.`,
+        `${lessonText[42]}${from} to ${to}.`,
       highlights: [
         { square: from, tone: "hint" as const },
         { square: to, tone: "good" as const },
@@ -178,13 +178,13 @@ function makeScript(
       fen: seed.fen,
       acceptedMoves: [seed.move],
       prompt:
-        `Solve the position again without the demonstration. ${seed.prompt}`,
+        `${lessonText[36]}${seed.prompt}`,
       success:
         seed.success ?? seed.summary,
       hints: [
         lessonText[13],
         seed.hint,
-        `The key move runs from ${from} to ${to}.`,
+        `${lessonText[43]}${from} to ${to}.`,
       ],
     };
 
@@ -208,13 +208,13 @@ function makeScript(
         ],
       },
       {
-        id: "worked-example",
+        id: lessonText[29],
         type: "explain",
         stage: "example",
-        eyebrow: "WORKED EXAMPLE",
+        eyebrow: lessonText[30],
         title: lessonText[14],
         body:
-          `${seed.prompt} The reusable lesson is: ${seed.summary} First understand why the move works; memorizing the coordinates is not the goal.`,
+          `${seed.prompt}${lessonText[37]}${seed.summary}${lessonText[38]}`,
         fen: seed.fen,
         highlights: [
           { square: from, tone: "focus" },
@@ -249,8 +249,8 @@ function makeScript(
         type: "move",
         stage: "guided",
         support: "guided",
-        eyebrow: "GUIDED PRACTICE",
-        title: "Apply it with support.",
+        eyebrow: lessonText[31],
+        title: lessonText[32],
         prompt: seed.prompt,
         fen: seed.fen,
         acceptedMoves: [seed.move],
@@ -260,7 +260,7 @@ function makeScript(
         hints: moveHints(seed, seed.move),
       },
       {
-        id: "retrieval-check",
+        id: lessonText[33],
         type: "choice",
         stage: "retrieval",
         support: "retrieval",
@@ -285,7 +285,7 @@ function makeScript(
         prompt: seed.prompt,
         fen: seed.fen,
         acceptedMoves: [seed.move],
-        successTitle: "Independent retrieval",
+        successTitle: lessonText[34],
         successBody:
           lessonText[24],
         hints: moveHints(
@@ -309,7 +309,7 @@ function makeScript(
         fen: transfer.fen,
         acceptedMoves:
           transfer.acceptedMoves,
-        successTitle: "Transfer complete",
+        successTitle: lessonText[35],
         successBody: transfer.success,
         hints: transferHints(transfer),
       },
@@ -320,7 +320,7 @@ function makeScript(
         eyebrow: "TAKEAWAY",
         title: lessonText[28],
         body:
-          `${seed.summary} In a real game, recognize the condition first, check the opponent's strongest reply, and only then commit to the move.`,
+          `${seed.summary}${lessonText[39]}`,
         fen: transfer.fen,
       },
     ],
@@ -348,7 +348,7 @@ export function lessonForSkill(
   const lesson = lessonScripts[skillId];
   if (!lesson) {
     throw new Error(
-      `Missing authored lesson for curriculum skill: ${skillId}`,
+      `${lessonText[44]}${skillId}`,
     );
   }
   return lesson;
@@ -391,7 +391,7 @@ export function lessonCatalogIssues() {
     for (const step of lesson.steps) {
       if (stepIds.has(step.id)) {
         issues.push(
-          `${skillId}:${step.id}: duplicate step id`,
+          `${skillId}:${step.id}${lessonText[45]}`,
         );
       }
       stepIds.add(step.id);
@@ -413,7 +413,7 @@ export function lessonCatalogIssues() {
         );
         if (optionIds.size !== step.options.length) {
           issues.push(
-            `${skillId}:${step.id}: duplicate option ids`,
+            `${skillId}:${step.id}${lessonText[46]}`,
           );
         }
         if (
@@ -422,12 +422,12 @@ export function lessonCatalogIssues() {
           )
         ) {
           issues.push(
-            `${skillId}:${step.id}: missing correct option`,
+            `${skillId}:${step.id}${lessonText[47]}`,
           );
         }
         if (step.options.length < 3) {
           issues.push(
-            `${skillId}:${step.id}: too few misconception options`,
+            `${skillId}:${step.id}${lessonText[48]}`,
           );
         }
         continue;
@@ -439,7 +439,7 @@ export function lessonCatalogIssues() {
 
       if (step.hints.length < 2) {
         issues.push(
-          `${skillId}:${step.id}: needs escalating hints`,
+          `${skillId}:${step.id}${lessonText[49]}`,
         );
       }
 
@@ -460,12 +460,12 @@ export function lessonCatalogIssues() {
           });
           if (!move) {
             issues.push(
-              `${skillId}:${step.id}: illegal move ${encoded}`,
+              `${skillId}:${step.id}${lessonText[50]}${encoded}`,
             );
           }
         } catch {
           issues.push(
-            `${skillId}:${step.id}: illegal move ${encoded}`,
+            `${skillId}:${step.id}${lessonText[50]}${encoded}`,
           );
         }
       }
@@ -492,7 +492,7 @@ export function lessonCatalogIssues() {
         transferStep.fen === modelStep.fen
       ) {
         issues.push(
-          `${skillId}: deep lesson requires a distinct transfer position`,
+          `${skillId}${lessonText[51]}`,
         );
       }
     }
