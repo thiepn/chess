@@ -1,0 +1,14 @@
+import { skills } from "../domain/curriculum";
+// Exact original primary study board and move in canonical curriculum order.
+// Both arrays correspond one-to-one to the existing 86 original ChessSkill IDs;
+// no second assessment curriculum, score or alternative grading source.
+const fenTable = ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","4k3/8/8/8/8/3p4/4Q3/4K3 w - - 0 1","4k3/8/8/8/8/8/4r3/4K3 w - - 0 1","6k1/5ppp/8/8/8/8/8/4R1K1 w - - 0 1","r1bqk1nr/ppppbppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4","4k3/P7/8/8/8/8/8/4K3 w - - 0 1","7k/8/8/8/8/8/5K2/7R w - - 0 1","4k3/8/8/8/3n4/8/4Q3/4K3 w - - 0 1","4k3/8/8/4p3/3n4/5N2/8/4K3 w - - 0 1","4k3/8/8/8/3r4/8/3R4/4K3 w - - 0 1","3q3k/8/3N4/8/8/8/8/4K3 w - - 0 1","r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3","q5k1/8/8/8/8/2B5/8/4K2R w - - 0 1","4k3/8/8/8/8/8/4B3/4R1K1 w - - 0 1","6k1/5ppp/7n/6B1/8/8/8/6K1 w - - 0 1","3qr1k1/5ppp/8/8/8/3B4/5PPP/4R1K1 w - - 0 1","4k3/8/8/8/8/8/8/R3K3 w Q - 0 1","4k3/8/8/3N4/8/8/8/4K3 w - - 0 1","4k3/8/3pp3/3P4/4P3/8/8/4K3 w - - 0 1","4k3/8/3p4/8/8/8/4K3/8 w - - 0 1","4k3/8/8/8/3r4/3R4/8/4K3 w - - 0 1","6k1/8/8/8/8/8/5Q2/6K1 w - - 0 1","7k/8/8/8/8/8/6K1/5Q2 w - - 0 1","4k3/8/8/4K3/4P3/8/8/8 w - - 0 1","8/8/8/P7/7p/8/4K2k/8 w - - 0 1","4k3/8/8/4P3/8/8/4K3/8 w - - 0 1","2K5/2P1k3/8/8/8/8/r7/3R4 w - - 0 1","8/8/r3k3/4P3/4K3/8/8/7R b - - 0 1","3q2k1/5ppp/8/8/8/3B4/5PPP/4R1K1 w - - 0 1","6k1/5ppp/8/8/8/8/4rPPP/3R2K1 w - - 0 1","4k3/8/8/3n4/3P4/2B5/8/4K3 w - - 0 1","4k3/8/3p4/3n4/2B1P3/8/8/4K3 w - - 0 1","4k3/8/3n4/8/4P3/2B5/8/4K3 w - - 0 1","4k3/8/8/8/8/8/3Q4/R3K3 w Q - 0 1","4k3/8/8/3P4/8/8/8/4K3 w - - 0 1","4k3/8/8/8/2PP4/8/8/4K3 w - - 0 1","4k3/ppp5/8/8/1PP5/8/8/4K3 w - - 0 1","r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 4 5","8/5k2/4P3/8/8/8/6R1/6K1 w - - 0 1","4k3/8/8/4p3/3P4/2B5/8/4Kb2 w - - 0 1","4k3/8/8/3p4/3P4/3N4/8/4K3 w - - 0 1","4k3/p6p/8/8/8/8/P6P/R3K3 w Q - 0 1"] as const;
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+const squares = "AABCCDEFGBHIHJHCAAAEAAAAKKLMNOPPDPNDKDAKAQRSTDQODMAUVWDXXYZQabJAAECHcdcBefJghijklmnopJ";
+const moves = "e2e4 g1f3 e2d3 e1d1 e1d1 e1e8 e1g1 a7a8q f2g2 e2d3 e2e4 f3e5 e2e4 d2d4 e2e4 e1d1 e2e4 g1f3 d2d4 e1g1 b1c3 g1f3 b1c3 b1c3 d6f7 d6f7 f1b5 h1h8 e2f3 g5h6 e1e8 e1e8 e1e8 e1e8 e2f3 e1e8 d6f7 e1e8 e2e4 d6f7 b1c3 a1a8 d5c7 e4e5 e2d3 e1e8 a1a8 g5h6 e1e8 h1h8 h2h3 d3d4 f2f7 f1f6 e1e8 e5e6 e5e6 a5a6 e5e6 a1a8 d1d4 a6d6 d2d4 g1f3 b1c3 e1g1 e1d1 e2e4 e1e8 d1d8 e1e8 e2d3 c3a5 c4d5 d2d4 e4e5 a1d1 d5d6 c4c5 b4b5 d2d3 g2g7 d4d5 d3e5 a1d1 d2d4".split(" ");
+const projections = Object.fromEntries(skills.map((skill, i) =>
+  [skill.id, { fen: fenTable[alphabet.indexOf(squares[i])], move: moves[i] }],
+)) as Record<string, { fen: string; move: string }>;
+export function originalPrimaryAssessmentPosition(skillId: string) {
+  return projections[skillId];
+}

@@ -12,7 +12,7 @@ import type {
 } from "../domain/types";
 import { applyEvidence, emptyMastery } from "../domain/mastery";
 import { appendEvidenceAnalytics } from "../analytics/record";
-import { lessonScripts } from "../learning/lessons";
+import { originalPrimaryAssessmentPosition } from "./primaryLessonMoves";
 import type {
   AssessmentAttempt,
   AssessmentItem,
@@ -65,21 +65,17 @@ export const baseStageRequirements: Omit<StageGateRequirements, "transfer"> = {
   checkpoint: 80,
 };
 
-function moveStepForSkill(skillId: string) {
-  const lesson = lessonScripts[skillId];
-  return lesson?.steps.find((step) => step.type === "move");
-}
 
 function assessmentItem(skillId: string, suffix: string): AssessmentItem {
   const skill = skillById[skillId];
-  const step = moveStepForSkill(skillId);
+  const step = originalPrimaryAssessmentPosition(skillId);
 
-  if (!skill || !step || step.type !== "move") {
+  if (!skill || !step) {
     throw new Error(`Cannot build assessment item for ${skillId}`);
   }
 
   const chess = new Chess(step.fen);
-  const encoded = step.acceptedMoves[0];
+  const encoded = step.move;
   const move = chess.move({
     from: encoded.slice(0, 2),
     to: encoded.slice(2, 4),
@@ -95,7 +91,7 @@ function assessmentItem(skillId: string, suffix: string): AssessmentItem {
     skillId,
     stageId: skill.stage,
     fen: step.fen,
-    acceptedMoves: [...step.acceptedMoves],
+    acceptedMoves: [step.move],
     answerSan: move.san,
   };
 }

@@ -117,7 +117,7 @@ import {
 } from "./planning/periodization";
 import { recoveryUntil } from "./planning/load";
 import { defaultCompetitionPlan } from "./planning/cycle";
-import { lessonForSkill } from "./learning/lessons";
+
 import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { reviewGamePath } from "./review/reviewRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
@@ -636,18 +636,28 @@ export default function App() {
   const previewSkill = previewActivity
     ? skillById[previewActivity.skillIds[0]]
     : null;
-  const previewLesson = useMemo(
-    () =>
-      previewActivity && previewSkill
-        ? lessonForSkill(
-            previewSkill.id,
-            previewSkill.title,
-            previewSkill.description,
-            previewActivity.activityType,
-          )
-        : null,
-    [previewActivity, previewSkill],
-  );
+  // The full authored lesson archive is only requested when lesson material
+  // is actually previewed. This keeps unrelated app entry routes responsive.
+  const [previewLesson, setPreviewLesson] = useState<import("./learning/types").LessonScript | null>(null);
+  useEffect(() => {
+    const skill = previewSkill;
+    const activity = previewActivity;
+    if (!skill || !activity || page !== "train" || trainingSessionOpen) {
+      setPreviewLesson(null);
+      return;
+    }
+    let active = true;
+    setPreviewLesson(null);
+    void import("./learning/lessons")
+      .then(({ lessonForSkill }) => {
+        if (active) setPreviewLesson(lessonForSkill(skill.id, skill.title,
+          skill.description, activity.activityType));
+      })
+      .catch(() => {
+        if (active) setPreviewLesson(null);
+      });
+    return () => { active = false; };
+  }, [previewActivity, previewSkill, page, trainingSessionOpen]);
   const previewFen = previewLesson?.steps[0]?.fen;
 
   useEffect(() => {
