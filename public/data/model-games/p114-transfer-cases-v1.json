@@ -747,5 +747,23 @@
       ],
       "integrity": "source-linked-instructional-only"
     }
-  ]
+  ],
+  "ui": {
+    "intro": "Compare real historical positions, justify your plan and the opponent's resistance, then explain what transfers. All responses are unscored and remain local to this browser session.",
+    "portable": "Export an explicit, user-controlled text note; paste it back for the same historical source pair within 30 days. This contains your answers and candidate lines, but no account identifier. It is not automatic cloud sync.",
+    "rehearsal": "Play both sides of an original strategic problem, inspect actual legal consequences, and compare with the recorded continuation only after revealing the P114 model.",
+    "historical": "The displayed moves are factual PGN continuations; their objective evaluation and unique optimality are not certified.",
+    "session": "Original text is visible only after your first responses. Drafts use the existing P113 owner-scoped session mechanism (not Account mastery, grades, or synchronized progress).",
+    "comparePlaceholder": "Compare pawn structure, development, king safety and a legal candidate for each board.",
+    "defensePlaceholder": "One concrete defender reply or forcing resource per position.",
+    "transferPlaceholder": "Describe the decision criterion and a possible failure case in your own game.",
+    "portablePlaceholder": "Use Prepare to export, or paste a previously saved note for this pair.",
+    "related": "Apply the idea in another verified original game:",
+    "relatedCaveat": "Shared historical source does not mean the same best move.",
+    "firstHeading": "1 · Decide independently",
+    "secondHeading": "2 · Verify against the recorded games",
+    "thirdHeading": "3 · Transfer without copying the move",
+    "comparisonHeading": "One principle. Two positions. Different decisions.",
+    "sourceRepairHeading": "Specific misconception and repair"
+  }
 }

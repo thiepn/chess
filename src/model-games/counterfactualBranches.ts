@@ -16,6 +16,7 @@ export interface CounterfactualChallenge {
   reconstruction: { first: string; second: string; after: string };
   repair: { first: string; second: string; rebuild: string; transfer: string };
   decision: { first: string; second: string; repair: string; transfer: string };
+  fork: { before: string; reply: string; revise: string; carry: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
@@ -23,6 +24,17 @@ export interface SourceGuidance {
   intro: string; sourceError: string; badLine: string; lookAhead: string;
   repairBefore: string; repairAfter: string; moveDisclaimer: string;
   note: string; portability: string;
+  fork: string; forkReplace: string; forkHint: string;
+  forkEarly: string; forkActive: string; forkSource: string;
+  heroEyebrow: string; heroTitle: string; loadingLabel: string; retryLabel: string;
+  originalLabel: string; alternateLabel: string; beforeMoveLabel: string;
+  priorPosition: string; nextPosition: string; resumePosition: string;
+  emptyLine: string; eventLead: string; eventCaveat: string;
+  checkmateLabel: string; drawLabel: string; inCheckLabel: string; noCheckLabel: string;
+  noneForcing: string; undoLabel: string; clearLabel: string;
+  backToMove: string; showSource: string; revisionLabel: string; sourceButton: string;
+  secondLineLabel: string; legalCandidateLabel: string; forcingCandidateLabel: string;
+  sourceNote: string; learnerNote: string;
 }
 
 const complete = (value: unknown, keys: string[], minimum: number) =>
@@ -40,8 +52,11 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   const raw = (payload as { challenges?: unknown }).challenges;
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
   const ui = (payload as {ui?: SourceGuidance}).ui;
-  if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
-    "moveDisclaimer","note","portability"], 35)) return {accepted, rejected:1, ui:null};
+  if (!ui || !complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
+    "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35) ||
+    Object.keys(ui).length < 44 ||
+    Object.values(ui).some((text) => typeof text !== "string" || text.trim().length < 5))
+    return {accepted,rejected:1,ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -58,7 +73,8 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
         !complete(item, ["firstChallenge","secondChallenge","defenderPrompt","revision","misconception","factsNote"], 60) ||
         !complete(item.reconstruction, ["first","second","after"], 80) ||
         !complete(item.repair, ["first","second","rebuild","transfer"], 80) ||
-        !complete(item.decision, ["first","second","repair","transfer"], 80)) {
+        !complete(item.decision, ["first","second","repair","transfer"], 80) ||
+        !complete(item.fork, ["before","reply","revise","carry"], 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
@@ -120,6 +136,13 @@ export function advanceCounterfactual(
     return [...current.sans, result.san];
   } catch { return null; }
 }
+/** Copy only a verified original-position SAN prefix. No engine-generated move, no writer. */
+export function forkCounterfactual(fen: string, line: readonly string[], cursor: number): string[] | null {
+  if (!Number.isInteger(cursor) || cursor < 1 || cursor > line.length ||
+      cursor > BRANCH_LIMIT) return null;
+  const result = replayCounterfactual(fen, line);
+  return result.invalid ? null : result.sans.slice(0, cursor);
+}
 /** An exhaustive rule-legal menu, never a ranking of replies. */
 export function legalReplyResources(fen: string) {
   const moves = new Chess(fen).moves({ verbose: true });
@@ -137,13 +160,13 @@ export function branchEvidence(fen: string, candidate: readonly string[], other:
     a.findIndex((san, i) => san !== b[i]);
   const first = difference(own.sans, source.sans);
   const second = difference(own.sans, alt.sans);
-  const replay = new Chess(fen);
   const events: string[] = [];
   own.sans.forEach((san, i) => {
-    const move = replay.move(san);
-    if (move.captured) events.push(`Ply ${i + 1}: capture on ${move.to}`);
-    if (move.promotion) events.push(`Ply ${i + 1}: promotion to ${move.promotion}`);
-    if (replay.isCheck()) events.push(`Ply ${i + 1}: check`);
+    const capture = /x([a-h][1-8])/.exec(san);
+    const promotion = /=([QRBN])/.exec(san);
+    if (capture) events.push(`Ply ${i + 1}: capture on ${capture[1]}`);
+    if (promotion) events.push(`Ply ${i + 1}: promotion to ${promotion[1].toLowerCase()}`);
+    if (/[+#]$/.test(san)) events.push(`Ply ${i + 1}: check`);
   });
   return {
     sameSourcePlies: first < 0 ? Math.min(own.sans.length, source.sans.length) : first,
