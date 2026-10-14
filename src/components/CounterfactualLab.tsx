@@ -86,6 +86,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const line = slots[index] === 0 ? main : alternate;
           const other = replayCounterfactual(pin.fen, slots[index] === 0 ? alternate : main);
           const result = replayCounterfactual(pin.fen, line);
+          const last = result.sans.length;
           const historical = observedCounterfactual(pin.game, source.ply);
           const referenceReplay = replayCounterfactual(pin.fen, historical);
           const isReference = draft.revealed && reference[index];
@@ -99,7 +100,6 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const offered = (allLegal[index] ? candidates : forcing).slice(0, 24);
           const reconstruction = index === 0 ? challenge.reconstruction.first : challenge.reconstruction.second;
           const name = index === 0 ? "A" : "B";
-          const last = result.sans.length;
           const currentFen = isReference && !referenceReplay.invalid
             ? referenceReplay.fen : examined.invalid ? pin.fen : examined.fen;
           function play(move: { from: string; to: string; promotion?: string }) {
