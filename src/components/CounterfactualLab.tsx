@@ -88,16 +88,14 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const main = (index === 0 ? draft.branchA : draft.branchB) ?? [];
           const alternate = (index === 0 ? draft.branchAltA : draft.branchAltB) ?? [];
           const line = slots[index] === 0 ? main : alternate;
-          const other = replayCounterfactual(pin.fen, slots[index] === 0 ? alternate : main);
           const result = replayCounterfactual(pin.fen, line);
           const last = result.sans.length;
           const historical = observedCounterfactual(pin.game, source.ply);
           const evidence = branchEvidence(pin.fen, line, slots[index] === 0 ? alternate : main, historical);
-          const referenceReplay = replayCounterfactual(pin.fen, historical);
           const isReference = draft.revealed && reference[index];
           const cursor = Math.min(cursors[index], line.length);
-          const examined = replayCounterfactual(pin.fen, line.slice(0, cursor));
           const browseHistory = cursor < line.length;
+          const examined = browseHistory ? replayCounterfactual(pin.fen, line.slice(0, cursor)) : result;
           const resources = !result.invalid && !isReference && !browseHistory && !result.gameOver &&
             last < BRANCH_LIMIT ? legalReplyResources(result.fen) : { all: [], forcing: [] };
           const candidates = resources.all;
@@ -107,8 +105,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const offered = pool.slice(page * 12, page * 12 + 12);
           const reconstruction = index === 0 ? challenge.reconstruction.first : challenge.reconstruction.second;
           const name = index === 0 ? "A" : "B";
-          const currentFen = isReference && !referenceReplay.invalid
-            ? referenceReplay.fen : examined.invalid ? pin.fen : examined.fen;
+          const currentFen = isReference ? pin.game.fens[source.ply + 3] :
+            examined.invalid ? pin.fen : examined.fen;
           function play(move: { from: string; to: string; promotion?: string }) {
             if (isReference || browseHistory) return false;
             const next = advanceCounterfactual(pin.fen, line, move);
@@ -124,7 +122,6 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               {[0, 1].map((slot) => <button key={slot} type="button" className="secondary"
                 aria-pressed={slots[index] === slot}
                 onClick={() => { setSlots((old) => old.map((n, i) => i === index ? slot : n) as [number, number]);
-                  setCursors((old) => old.map((n, i) => i === index ? (slot === 0 ? main.length : alternate.length) : n) as [number, number]);
                   setReference((old) => old.map((n, i) => i === index ? false : n) as [boolean, boolean]);
                   setMovePages((old) => old.map((n,i) => i === index ? 0 : n) as [number,number]); }}>
                 {slot === 0 ? "Original candidate" : "Alternative candidate"}
@@ -180,13 +177,13 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                 guidance?.repairBefore}</p>}
               {line.length >= 4 && <p>{draft.revealed ? challenge.decision.repair : guidance?.repairAfter}</p>}
               {evidence.events.length > 0 && <p>Legal board events: {evidence.events.join("; ")}. These facts do not assign strategic value.</p>}
-              {main.length && alternate.length && !other.invalid && <p>
-                Both variants share {evidence.sameAlternativePlies} opening plies;
-                {evidence.differsFromAlternative ? " the played choices diverge." : " this line is a prefix of the other."}
-                {" "}Compare the defender's replies, not just the first moves.
+              {main.length && alternate.length && <p>
+                Shared candidate plies: {evidence.sameAlternativePlies}.
+                {evidence.differsFromAlternative ? " Lines diverge." : " This line is a prefix."}
+                {" "}Compare the defender replies.
               </p>}
-              {draft.revealed && <p>Your line shares {evidence.sameSourcePlies} opening plies with the actual PGN;
-                {evidence.divergesFromSource ? " then follows a different legal continuation." : " no different move has been played yet."}
+              {draft.revealed && <p>Shared PGN plies: {evidence.sameSourcePlies}.
+                {evidence.divergesFromSource ? " Different continuation." : " No divergence yet."}
                 {" "}{guidance?.lookAhead}</p>}
             </section>}
             {!result.invalid && !isReference && <p className="p115-facts" role="status">
@@ -211,7 +208,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                   onClick={() => play({ from: move.from, to: move.to, promotion: move.promotion })}>
                   {move.san}</button>)}
               </div>
-              {offered.length === 0 && <small>No legal check or capture is currently available. You can still make a quiet move on the board.</small>}
+              {offered.length === 0 && <small>No checks or captures here. Consider a legal quiet move.</small>}
               {pool.length > 12 && <div className="p115-actions" role="group" aria-label={"More legal moves for " + name}>
                 <button type="button" className="secondary" disabled={page === 0}
                   onClick={() => setMovePages((old) => old.map((n,i) => i === index ? Math.max(0,page - 1) : n) as [number,number])}>Previous moves</button>
