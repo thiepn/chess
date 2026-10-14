@@ -642,7 +642,10 @@ export default function App() {
   useEffect(() => {
     const skill = previewSkill;
     const activity = previewActivity;
-    if (!skill || !activity) { setPreviewLesson(null); return; }
+    if (!skill || !activity || page !== "train" || trainingSessionOpen) {
+      setPreviewLesson(null);
+      return;
+    }
     let active = true;
     setPreviewLesson(null);
     void import("./learning/lessons")
@@ -654,7 +657,7 @@ export default function App() {
         if (active) setPreviewLesson(null);
       });
     return () => { active = false; };
-  }, [previewActivity, previewSkill]);
+  }, [previewActivity, previewSkill, page, trainingSessionOpen]);
   const previewFen = previewLesson?.steps[0]?.fen;
 
   useEffect(() => {
