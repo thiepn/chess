@@ -26,3 +26,8 @@ No manually triggered tests, builds, typechecks, CI, audits, migrations, merges,
 - `src/components/CounterfactualLab.tsx`
 - `src/model-games/p121Fork.test.ts`
 - `docs/P121_DEFENDER_FORKS.md`
+
+## Targeted package recovery
+The initial P121 automatic run reported 464/464 tests passing but a JSX delimiter error in the newly added variation button (corrected at a follow-up commit). The next automatic build passed TypeScript and Vite but failed the exact original **321 KiB** total JS/CSS budget, measuring **321.2 KiB** (initial **230.9 KiB**). No cap or test was changed.
+
+The original P115 external instruction asset now also owns the existing master-study interface's long instructional/control labels. Its full expected field inventory is validated before presenting source-pinned exercises, instead of duplicating the text in startup JavaScript. Repeated two-board state updates share one small tuple update helper; legal SAN fork validation reuses one authoritative Chess.js replay rather than a second redundant replay. No historical source data, lesson meaning, owner-scoped writer, legal board behavior or historical source integrity has been removed. Exact final-head automatic Quality and bundle measurements are required to establish compliance. Source JSON is a real network transfer and is not included in the JS/CSS cap.

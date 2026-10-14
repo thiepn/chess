@@ -16,6 +16,8 @@ interface Props {
   onChange: (changes: Partial<MasterDraft>) => void;
   onOpenPosition: (gameId: string, checkpointId: string) => void;
 }
+const at = <T,>(pair: [T,T], index: number, next: T): [T,T] =>
+  index === 0 ? [next, pair[1]] : [pair[0], next];
 export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosition }: Props) {
   const [challenges, setChallenges] = useState<CounterfactualChallenge[]>([]);
   const [guidance, setGuidance] = useState<SourceGuidance | null>(null);
@@ -65,20 +67,19 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
       ? slots[index] === 0 ? "branchA" : "branchAltA"
       : slots[index] === 0 ? "branchB" : "branchAltB";
     onChange({ [key]: line, mark: null });
-    setMovePages((pages) => pages.map((n,i) => i === index ? 0 : n) as [number,number]);
-    setCursors((previous) => previous.map((value, position) =>
-      position === index ? line.length : value) as [number, number]);
+    setMovePages((old) => at(old,index,0));
+    setCursors((old) => at(old,index,line.length));
   }
 
   return <section className="p115-lab" aria-label="P115 independent counterfactual branches">
     <header>
-      <p className="eyebrow">P115 · PLAY THE PLAN, THEN DEFEND AGAINST YOURSELF</p>
-      <h3>Legal candidate → opponent resistance → revised plan</h3>
+      <p className="eyebrow">{guidance?.heroEyebrow}</p>
+      <h3>{guidance?.heroTitle}</h3>
       <p>{guidance?.intro ?? "Reconstruct the source-linked move and opponent reply. No engine or simulated defender."}</p>
     </header>
-    {!challenge && !error && <p role="status">Verifying source-linked variation challenges…</p>}
+    {!challenge && !error && <p role="status">{guidance?.loadingLabel ?? "Verifying original source…"}</p>}
     {error && <div role="alert"><p>{error}</p>
-      <button type="button" className="secondary" onClick={() => setLoadAttempt((n) => n + 1)}>Retry original prompts</button>
+      <button type="button" className="secondary" onClick={() => setLoadAttempt((n) => n + 1)}>{guidance?.retryLabel ?? "Retry"}</button>
     </div>}
     {rejected > 0 && <p role="status">{rejected} source-inconsistent challenge records excluded.</p>}
     {challenge && <>
@@ -117,8 +118,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               ? slots[index] === 0 ? "branchAltA" : "branchA"
               : slots[index] === 0 ? "branchAltB" : "branchB";
             onChange({ [target]: forked, mark: null });
-            setSlots((old) => old.map((value, i) => i === index ? 1 - value : value) as [number, number]);
-            setReference((old) => old.map((value, i) => i === index ? false : value) as [boolean, boolean]);
+            setSlots((old) => at(old,index,1-old[index]));
+            setReference((old) => at(old,index,false));
           }
           function play(move: { from: string; to: string; promotion?: string }) {
             if (isReference || browseHistory) return false;
@@ -134,13 +135,13 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             <div className="p115-actions" role="group" aria-label={"Candidate variations for position " + name}>
               {[0, 1].map((slot) => <button key={slot} type="button" className="secondary"
                 aria-pressed={slots[index] === slot}
-                onClick={() => { setSlots((old) => old.map((n, i) => i === index ? slot : n) as [number, number]);
-                  setReference((old) => old.map((n, i) => i === index ? false : n) as [boolean, boolean]);
-                  setMovePages((old) => old.map((n,i) => i === index ? 0 : n) as [number,number]); }}>
-                {slot === 0 ? "Original candidate" : "Alternative candidate"}
+                onClick={() => { setSlots((old) => at(old,index,slot));
+                  setReference((old) => at(old,index,false));
+                  setMovePages((old) => at(old,index,0)); }}>
+                {slot === 0 ? guidance?.originalLabel : guidance?.alternateLabel}
               </button>)}
             </div>
-            <label htmlFor={"p118-plan-" + index}>Before moving: reconstruct the threats and name a candidate</label>
+            <label htmlFor={"p118-plan-" + index}>{guidance?.beforeMoveLabel}</label>
             <p className="p115-source-task">{reconstruction}</p>
             <textarea id={"p118-plan-" + index} rows={2} maxLength={1200}
               placeholder="Which squares matter, which replies concern you, and why?"
@@ -156,19 +157,19 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             />
             {last > 0 && !result.invalid && !isReference && <div className="p115-actions" role="group" aria-label={"Explore previously played moves in position " + name}>
               <button className="secondary" type="button" disabled={cursor === 0}
-                onClick={() => setCursors((old) => old.map((v,i) => i === index ? Math.max(0, v - 1) : v) as [number,number])}>Previous position</button>
+                onClick={() => setCursors((old) => at(old,index,Math.max(0,old[index]-1)))}>{guidance?.priorPosition}</button>
               <span role="status">Ply {cursor} of {last}</span>
               <div className="p120-ply-list" role="group" aria-label={"Replay plies in position " + name}>
                 <button type="button" aria-pressed={cursor === 0}
-                  onClick={() => setCursors((old) => old.map((v,i) => i === index ? 0 : v) as [number,number])}>Start</button>
+                  onClick={() => setCursors((old) => at(old,index,0))}>Start</button>
                 {line.map((san, ply) => <button type="button" key={ply} aria-pressed={cursor === ply + 1}
-                  onClick={() => setCursors((old) => old.map((v,i) => i === index ? ply + 1 : v) as [number,number])}>
+                  onClick={() => setCursors((old) => at(old,index,ply+1))}>
                   {ply + 1}. {san}</button>)}
               </div>
               <button className="secondary" type="button" disabled={cursor >= last}
-                onClick={() => setCursors((old) => old.map((v,i) => i === index ? Math.min(last, v + 1) : v) as [number,number])}>Next position</button>
+                onClick={() => setCursors((old) => at(old,index,Math.min(last,old[index]+1)))}>{guidance?.nextPosition}</button>
               {browseHistory && <button className="secondary" type="button"
-                onClick={() => setLine(index, line.slice(0,cursor))}>Continue from this position</button>}
+                onClick={() => setLine(index, line.slice(0,cursor))}>{guidance?.resumePosition}</button>}
             </div>}
             {!isReference && <div className="p115-actions">
               <button type="button" className="secondary" disabled={!forked}
@@ -179,11 +180,11 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             </div>}
             {result.invalid && <p role="alert">{guidance?.badLine ?? "Saved variation is not legal; clear only this candidate."}</p>}
             {(main.length > 0 || alternate.length > 0) && <p className="p115-notation">
-              <strong>Two candidate lines:</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
+              <strong>{guidance?.secondLineLabel}</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
             </p>}
             <div className="p115-notation" aria-live="polite">
-              <strong>{isReference ? "Observed PGN:" : "Your legal branch:"}</strong>
-              <span>{isReference ? historical.join(" ") : last ? result.sans.join(" ") : "No moves played"}</span>
+              <strong>{isReference ? guidance?.sourceNote : guidance?.learnerNote}</strong>
+              <span>{isReference ? historical.join(" ") : last ? result.sans.join(" ") : guidance?.emptyLine}</span>
             </div>
             {evidence && !isReference && <section className="p115-reflection" aria-label={"Source and defender evidence for " + name}>
               <strong>{evidence.needsDefense ? "Now play the defender" :
@@ -194,15 +195,15 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                 (index === 0 ? challenge.decision.first : challenge.decision.second) :
                 guidance?.repairBefore}</p>}
               {line.length >= 4 && <p>{draft.revealed ? challenge.fork.revise : guidance?.repairAfter}</p>}
-              {evidence.events.length > 0 && <p>Legal board events: {evidence.events.join("; ")}. These facts do not assign strategic value.</p>}
+              {evidence.events.length > 0 && <p>{guidance?.eventLead} {evidence.events.join("; ")}. {guidance?.eventCaveat}</p>}
               {draft.revealed && <p>Shared PGN plies: {evidence.sameSourcePlies}.
                 {evidence.divergesFromSource ? " Different continuation." : " No divergence yet."}
                 {" "}{guidance?.lookAhead}</p>}
             </section>}
             {!result.invalid && !isReference && <p className="p115-facts" role="status">
-              {result.checkmate ? "Checkmate in this legal board position" :
-                result.drawn ? "Draw reported by chess.js rules" :
-                result.inCheck ? "King of side to move is in check" : "No check"}
+              {result.checkmate ? guidance?.checkmateLabel :
+                result.drawn ? guidance?.drawLabel :
+                result.inCheck ? guidance?.inCheckLabel : guidance?.noCheckLabel}
               {result.lastCapture ? " · Last move captured: " + result.lastCapture : ""}
               {result.lastPromotion ? " · Promoted to " + result.lastPromotion : ""}
               {" · "}{result.gameOver ? "Game finished" : last >= BRANCH_LIMIT ? "Six-ply limit" :
@@ -212,8 +213,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               <p>Legal moves: {candidates.length}; checks/captures: {forcing.length}. {guidance?.moveDisclaimer}</p>
               <div className="p115-actions">
                 <button type="button" className="secondary" aria-pressed={allLegal[index]}
-                  onClick={() => { setAllLegal((old) => old.map((value,i) => i === index ? !value : value) as [boolean,boolean]); setMovePages((old) => old.map((n,i) => i === index ? 0 : n) as [number,number]); }}>
-                  {allLegal[index] ? "Show checks and captures" : "Show all legal moves"}
+                  onClick={() => { setAllLegal((old) => at(old,index,!old[index])); setMovePages((old) => old.map((n,i) => i === index ? 0 : n) as [number,number]); }}>
+                  {allLegal[index] ? guidance?.forcingCandidateLabel : guidance?.legalCandidateLabel}
                 </button>
               </div>
               <div className="p118-moves" role="group" aria-label={"Play a legal move for " + (result.turn === "w" ? "White" : "Black")}>
@@ -221,25 +222,25 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                   onClick={() => play({ from: move.from, to: move.to, promotion: move.promotion })}>
                   {move.san}</button>)}
               </div>
-              {offered.length === 0 && <small>No checks or captures here. Consider a legal quiet move.</small>}
+              {offered.length === 0 && <small>{guidance?.noneForcing}</small>}
               {pool.length > 12 && <div className="p115-actions" role="group" aria-label={"More legal moves for " + name}>
                 <button type="button" className="secondary" disabled={page === 0}
-                  onClick={() => setMovePages((old) => old.map((n,i) => i === index ? Math.max(0,page - 1) : n) as [number,number])}>Previous moves</button>
+                  onClick={() => setMovePages((old) => at(old,index,Math.max(0,page-1)))}>Previous moves</button>
                 <span role="status">Moves {page * 12 + 1}–{Math.min(pool.length,(page + 1) * 12)} / {pool.length}</span>
                 <button type="button" className="secondary" disabled={(page + 1) * 12 >= pool.length}
-                  onClick={() => setMovePages((old) => old.map((n,i) => i === index ? page + 1 : n) as [number,number])}>Next moves</button>
+                  onClick={() => setMovePages((old) => at(old,index,page+1))}>Next moves</button>
               </div>}
             </div>}
             <div className="p115-actions">
               <button className="secondary" type="button" disabled={!last || isReference}
-                onClick={() => setLine(index, line.slice(0, -1))}>Undo move</button>
+                onClick={() => setLine(index, line.slice(0, -1))}>{guidance?.undoLabel}</button>
               <button className="secondary" type="button" disabled={!last && !result.invalid}
                 onClick={() => { setLine(index, []); setReference((old) => old.map((value, i) => i === index ? false : value) as [boolean, boolean]); }}>
-                Clear branch
+                {guidance?.clearLabel}
               </button>
               {draft.revealed && <button type="button" className="secondary" aria-pressed={isReference}
-                onClick={() => setReference((old) => old.map((value, i) => i === index ? !value : value) as [boolean, boolean])}>
-                {isReference ? "Back to my moves" : "View historical three plies"}
+                onClick={() => setReference((old) => at(old,index,!old[index]))}>
+                {isReference ? guidance?.backToMove : guidance?.showSource}
               </button>}
             </div>
             {last > 1 && draft.revealed && !result.invalid && <p className="p115-facts">{challenge.fork.reply}</p>}
@@ -251,7 +252,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                 onChange={(event) => onChange(index === 0 ?
                   { branchThreatA: event.target.value, mark: null } :
                   { branchThreatB: event.target.value, mark: null })}/>
-              <label htmlFor={"p115-note-" + index}>What changed after the opponent's response?</label>
+              <label htmlFor={"p115-note-" + index}>{guidance?.revisionLabel}</label>
               <textarea rows={3} id={"p115-note-" + index} maxLength={1200}
                 placeholder="Name the changed squares, actual threats and a plan you would revise."
                 value={index === 0 ? draft.branchNoteA ?? "" : draft.branchNoteB ?? ""}
@@ -260,7 +261,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             </>}
             {draft.revealed && <button type="button" className="p115-open-source"
               onClick={() => onOpenPosition(source.gameId, source.checkpointId)}>
-              Open this original game at its decision
+              {guidance?.sourceButton}
             </button>}
           </article>;
         })}

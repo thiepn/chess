@@ -26,6 +26,15 @@ export interface SourceGuidance {
   note: string; portability: string;
   fork: string; forkReplace: string; forkHint: string;
   forkEarly: string; forkActive: string; forkSource: string;
+  heroEyebrow: string; heroTitle: string; loadingLabel: string; retryLabel: string;
+  originalLabel: string; alternateLabel: string; beforeMoveLabel: string;
+  priorPosition: string; nextPosition: string; resumePosition: string;
+  emptyLine: string; eventLead: string; eventCaveat: string;
+  checkmateLabel: string; drawLabel: string; inCheckLabel: string; noCheckLabel: string;
+  noneForcing: string; undoLabel: string; clearLabel: string;
+  backToMove: string; showSource: string; revisionLabel: string; sourceButton: string;
+  secondLineLabel: string; legalCandidateLabel: string; forcingCandidateLabel: string;
+  sourceNote: string; learnerNote: string;
 }
 
 const complete = (value: unknown, keys: string[], minimum: number) =>
@@ -44,7 +53,13 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
   const ui = (payload as {ui?: SourceGuidance}).ui;
   if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
-    "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35)) return {accepted, rejected:1, ui:null};
+    "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35) ||
+    !complete(ui, ["heroEyebrow","heroTitle","loadingLabel","retryLabel","originalLabel",
+      "alternateLabel","beforeMoveLabel","priorPosition","nextPosition","resumePosition",
+      "emptyLine","eventLead","eventCaveat","checkmateLabel","drawLabel",
+      "inCheckLabel","noCheckLabel","noneForcing","undoLabel","clearLabel",
+      "backToMove","showSource","revisionLabel","sourceButton","secondLineLabel",
+      "legalCandidateLabel","forcingCandidateLabel","sourceNote","learnerNote"], 5)) return {accepted,rejected:1,ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -127,8 +142,9 @@ export function advanceCounterfactual(
 /** Copy only a verified original-position SAN prefix. No engine-generated move, no writer. */
 export function forkCounterfactual(fen: string, line: readonly string[], cursor: number): string[] | null {
   if (!Number.isInteger(cursor) || cursor < 1 || cursor > line.length ||
-      cursor > BRANCH_LIMIT || replayCounterfactual(fen, line).invalid) return null;
-  return replayCounterfactual(fen, line.slice(0, cursor)).sans;
+      cursor > BRANCH_LIMIT) return null;
+  const result = replayCounterfactual(fen, line);
+  return result.invalid ? null : result.sans.slice(0, cursor);
 }
 /** An exhaustive rule-legal menu, never a ranking of replies. */
 export function legalReplyResources(fen: string) {
