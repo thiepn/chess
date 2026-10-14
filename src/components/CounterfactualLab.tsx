@@ -5,7 +5,7 @@ import type { TransferCaseStudy } from "../model-games/crossGameTransfer";
 import {
   BRANCH_LIMIT, advanceCounterfactual, counterfactualAsset,
   hydrateCounterfactuals, observedCounterfactual,
-  replayCounterfactual, legalReplyResources, branchEvidence, type CounterfactualChallenge, type SourceGuidance,
+  replayCounterfactual, legalReplyResources, branchEvidence, forkCounterfactual, type CounterfactualChallenge, type SourceGuidance,
 } from "../model-games/counterfactualBranches";
 import "../styles/p115-counterfactual.css";
 
@@ -88,12 +88,14 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const main = (index === 0 ? draft.branchA : draft.branchB) ?? [];
           const alternate = (index === 0 ? draft.branchAltA : draft.branchAltB) ?? [];
           const line = slots[index] === 0 ? main : alternate;
+          const otherLine = slots[index] === 0 ? alternate : main;
           const result = replayCounterfactual(pin.fen, line);
           const last = result.sans.length;
           const historical = observedCounterfactual(pin.game, source.ply);
           const evidence = branchEvidence(pin.fen, line, slots[index] === 0 ? alternate : main, historical);
           const isReference = draft.revealed && reference[index];
           const cursor = Math.min(cursors[index], line.length);
+          const forked = cursor > 0 ? forkCounterfactual(pin.fen, line, cursor) : null;
           const browseHistory = cursor < line.length;
           const examined = browseHistory ? replayCounterfactual(pin.fen, line.slice(0, cursor)) : result;
           const resources = !result.invalid && !isReference && !browseHistory && !result.gameOver &&
@@ -107,6 +109,17 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
           const name = index === 0 ? "A" : "B";
           const currentFen = isReference ? pin.game.fens[source.ply + 3] :
             examined.invalid ? pin.fen : examined.fen;
+          function fork() {
+            if (!forked || isReference) return;
+            if (otherLine.length && !window.confirm(guidance?.forkReplace ??
+              "Replace the other candidate with this legal prefix?")) return;
+            const target = index === 0
+              ? slots[index] === 0 ? "branchAltA" : "branchA"
+              : slots[index] === 0 ? "branchAltB" : "branchB";
+            onChange({ [target]: forked, mark: null });
+            setSlots((old) => old.map((value, i) => i === index ? 1 - value : value) as [number, number]);
+            setReference((old) => old.map((value, i) => i === index ? false : value) as [boolean, boolean]);
+          }
           function play(move: { from: string; to: string; promotion?: string }) {
             if (isReference || browseHistory) return false;
             const next = advanceCounterfactual(pin.fen, line, move);
@@ -157,7 +170,14 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               {browseHistory && <button className="secondary" type="button"
                 onClick={() => setLine(index, line.slice(0,cursor))}>Continue from this position</button>}
             </div>}
-            {result.invalid && <p role="alert">{guidance?.badLine ?? "Saved variation is not legal; clear only this candidate."}</p>}
+            {!isReference && <div className="p115-actions">
+              <button type="button" className="secondary" disabled={!forked}
+                onClick={fork}>
+                Fork selected ply into {slots[index] === 0 ? "alternative" : "original"} line
+              </button>
+              <small>{forked ? guidance?.forkHint : guidance?.forkEarly}</small>
+            </div>}
+            {result.invalid && <p role="alert">{guidance?.badLine ?? "Saved variation is not legal; clear only this candidate."}</p>
             {(main.length > 0 || alternate.length > 0) && <p className="p115-notation">
               <strong>Two candidate lines:</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
             </p>}
@@ -168,11 +188,12 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             {evidence && !isReference && <section className="p115-reflection" aria-label={"Source and defender evidence for " + name}>
               <strong>{evidence.needsDefense ? "Now play the defender" :
                 evidence.replyPlayed ? "Reconstruct after resistance" : "Candidate rehearsal"}</strong>
-              {evidence.needsDefense && <p>{guidance?.repairBefore}</p>}
+              {evidence.needsDefense && <p>{challenge.fork.before}</p>}
+              {evidence.replyPlayed && !draft.revealed && <p>{guidance?.repairBefore}</p>}
               {evidence.replyPlayed && <p>{draft.revealed ?
                 (index === 0 ? challenge.decision.first : challenge.decision.second) :
                 guidance?.repairBefore}</p>}
-              {line.length >= 4 && <p>{draft.revealed ? challenge.decision.repair : guidance?.repairAfter}</p>}
+              {line.length >= 4 && <p>{draft.revealed ? challenge.fork.revise : guidance?.repairAfter}</p>}
               {evidence.events.length > 0 && <p>Legal board events: {evidence.events.join("; ")}. These facts do not assign strategic value.</p>}
               {draft.revealed && <p>Shared PGN plies: {evidence.sameSourcePlies}.
                 {evidence.divergesFromSource ? " Different continuation." : " No divergence yet."}
@@ -221,6 +242,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                 {isReference ? "Back to my moves" : "View historical three plies"}
               </button>}
             </div>
+            {last > 1 && draft.revealed && !result.invalid && <p className="p115-facts">{challenge.fork.reply}</p>}
             {last > 0 && !result.invalid && <>
               <label htmlFor={"p120-defense-" + index}>Defender analysis — which legal check, capture or quiet response concerns you?</label>
               <textarea id={"p120-defense-" + index} rows={2} maxLength={1200}
@@ -244,6 +266,8 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
         })}
       </div>
       <section className="p115-reflection">
+        <strong>P121 · Compare alternative defenses and transfer carefully</strong>
+        <p>{challenge.fork.carry}</p>
         <strong>P120 · Defend, repair, then transfer</strong>
         <p>{challenge.decision.transfer}</p>
         <strong>P118 · Independent historical reconstruction</strong>

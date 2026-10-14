@@ -16,6 +16,7 @@ export interface CounterfactualChallenge {
   reconstruction: { first: string; second: string; after: string };
   repair: { first: string; second: string; rebuild: string; transfer: string };
   decision: { first: string; second: string; repair: string; transfer: string };
+  fork: { before: string; reply: string; revise: string; carry: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
@@ -23,6 +24,8 @@ export interface SourceGuidance {
   intro: string; sourceError: string; badLine: string; lookAhead: string;
   repairBefore: string; repairAfter: string; moveDisclaimer: string;
   note: string; portability: string;
+  fork: string; forkReplace: string; forkHint: string;
+  forkEarly: string; forkActive: string; forkSource: string;
 }
 
 const complete = (value: unknown, keys: string[], minimum: number) =>
@@ -41,7 +44,7 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
   const ui = (payload as {ui?: SourceGuidance}).ui;
   if (!complete(ui, ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
-    "moveDisclaimer","note","portability"], 35)) return {accepted, rejected:1, ui:null};
+    "moveDisclaimer","note","portability","fork","forkReplace","forkHint","forkEarly","forkActive","forkSource"], 35)) return {accepted, rejected:1, ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -58,7 +61,8 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
         !complete(item, ["firstChallenge","secondChallenge","defenderPrompt","revision","misconception","factsNote"], 60) ||
         !complete(item.reconstruction, ["first","second","after"], 80) ||
         !complete(item.repair, ["first","second","rebuild","transfer"], 80) ||
-        !complete(item.decision, ["first","second","repair","transfer"], 80)) {
+        !complete(item.decision, ["first","second","repair","transfer"], 80) ||
+        !complete(item.fork, ["before","reply","revise","carry"], 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
@@ -119,6 +123,12 @@ export function advanceCounterfactual(
     });
     return [...current.sans, result.san];
   } catch { return null; }
+}
+/** Copy only a verified original-position SAN prefix. No engine-generated move, no writer. */
+export function forkCounterfactual(fen: string, line: readonly string[], cursor: number): string[] | null {
+  if (!Number.isInteger(cursor) || cursor < 1 || cursor > line.length ||
+      cursor > BRANCH_LIMIT || replayCounterfactual(fen, line).invalid) return null;
+  return replayCounterfactual(fen, line.slice(0, cursor)).sans;
 }
 /** An exhaustive rule-legal menu, never a ranking of replies. */
 export function legalReplyResources(fen: string) {
