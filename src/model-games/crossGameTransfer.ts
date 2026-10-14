@@ -31,6 +31,7 @@ export interface TransferCaseStudy {
 export function hydrateTransferCases(payload: unknown, sourceGames: MasterTimeline[]) {
   const accepted: TransferCaseStudy[] = [];
   let rejected = 0;
+  const issues: string[] = [];
   if (!payload || typeof payload !== "object" ||
       (payload as { version?: unknown }).version !== 1) return { accepted, rejected: 1 };
   const records = (payload as { cases?: unknown }).cases;
@@ -68,11 +69,13 @@ export function hydrateTransferCases(payload: unknown, sourceGames: MasterTimeli
           first.fen === second.fen) throw new Error("Unverified or duplicate source");
       ids.add(item.id);
       accepted.push({ source: item, first, second });
-    } catch {
+    } catch (error) {
       rejected++;
+      issues.push(String((entry as {id?: string})?.id ?? "unknown") + ": " +
+        (error instanceof Error ? error.message : "invalid source"));
     }
   }
-  return { accepted, rejected };
+  return { accepted, rejected, issues };
 }
 export const crossGameTransferAsset =
   `${import.meta.env.BASE_URL}data/model-games/p114-transfer-cases-v1.json`;

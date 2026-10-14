@@ -10,7 +10,7 @@ describe("P114 source-bound cross-game transfer", () => {
     const source = hydrateMasterGames(games);
     expect(source.rejected).toBe(0);
     const result = hydrateTransferCases(pairs, source.accepted);
-    expect(result.rejected).toBe(0);
+    expect(result.rejected, "Rejected source identities: " + ("issues" in result ? result.issues?.join("; ") : "")).toBe(0);
     expect(result.accepted).toHaveLength(24);
     for (const study of result.accepted) {
       for (const pinned of [study.first, study.second]) {
