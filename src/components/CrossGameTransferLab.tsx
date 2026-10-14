@@ -133,7 +133,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
       window.confirm("Leave this untransferred portable note? Copy it privately before switching pairs.");
   }
   function choose(id: string) {
-    if (id !== currentId && !confirmLeavingPortable()) return;
+    if (id === currentId) return;
+    if (!confirmLeavingPortable()) return;
     setSelectedId(id);
     setShowHint(0);
     setShownMoves([false, false]);

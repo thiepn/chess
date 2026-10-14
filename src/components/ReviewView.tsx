@@ -322,6 +322,7 @@ export function ReviewView({
 
     return (
       <GameStoryView
+        key={selectedGame.id}
         game={selectedGame}
         mistakes={mistakes.filter((mistake) => mistake.gameId === selectedGame.id)}
         onBack={() => onNavigate("/review")}

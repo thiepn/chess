@@ -168,12 +168,20 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
         <nav className="p114-handoff-nav" aria-label="Master-game learning mode">
           <button type="button" className={!transferOpen ? "selected" : ""}
             aria-current={!transferOpen ? "page" : undefined}
-            onClick={() => { setTransferOpen(false); setSelectedId(""); }}>
+            onClick={() => {
+              if (!confirmLeavingVariation()) return;
+              setTransferOpen(false);
+              setSelectedId("");
+            }}>
             Complete games
           </button>
           <button type="button" className={transferOpen ? "selected" : ""}
             aria-current={transferOpen ? "page" : undefined}
-            onClick={() => { setTransferOpen(true); setSelectedId(""); }}>
+            onClick={() => {
+              if (!confirmLeavingVariation()) return;
+              setTransferOpen(true);
+              setSelectedId("");
+            }}>
             P114 · Compare strategic decisions
           </button>
         </nav>
@@ -249,7 +257,11 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
                 </button>
                 {exploreFen !== null && <>
                   <p><strong>Unscored local exploration:</strong> {exploreLine.length ? exploreLine.join(" ") : "Move a piece on the board. Up to eight legal plies."}</p>
-                  <button className="secondary" type="button" onClick={() => { setExploreFen(null); setExploreLine([]); }}>
+                  <button className="secondary" type="button" onClick={() => {
+                    if (!confirmLeavingVariation()) return;
+                    setExploreFen(null);
+                    setExploreLine([]);
+                  }}>
                     Reset to historical position
                   </button>
                 </>}
