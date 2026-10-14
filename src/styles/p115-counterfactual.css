@@ -28,3 +28,9 @@
 .p118-resource small{display:block;line-height:1.5}
 .p115-position .p115-actions span{align-self:center;font-size:.85rem}
 @media(max-width:700px){.p118-moves button{min-height:2.8rem}}
+
+.p120-ply-list{display:flex;flex-wrap:wrap;gap:.3rem;width:100%;max-width:100%;min-width:0}
+.p120-ply-list button{padding:.35rem .5rem;min-height:2.6rem;border:1px solid var(--border,#888);background:transparent;color:inherit;font:inherit;font-size:.83rem;cursor:pointer}
+.p120-ply-list button[aria-pressed="true"]{border-color:var(--accent,#a55c35);font-weight:700;background:var(--surface-alt,rgba(128,128,128,.08))}
+.p120-ply-list button:focus-visible{outline:3px solid var(--accent,#a55c35);outline-offset:2px}
+@media(max-width:700px){.p120-ply-list button{min-height:2.85rem}}

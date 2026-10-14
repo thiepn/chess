@@ -15,9 +15,15 @@ export interface CounterfactualChallenge {
   factsNote: string;
   reconstruction: { first: string; second: string; after: string };
   repair: { first: string; second: string; rebuild: string; transfer: string };
+  decision: { first: string; second: string; repair: string; transfer: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
+export interface SourceGuidance {
+  intro: string; sourceError: string; badLine: string; lookAhead: string;
+  repairBefore: string; repairAfter: string; moveDisclaimer: string;
+  note: string; portability: string;
+}
 
 /** A P115 prompt is usable only for the exact legal and source-pinned P114 pair. */
 export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseStudy[]) {
@@ -27,6 +33,11 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
     (payload as { version?: unknown }).version !== 1) return { accepted, rejected: 1 };
   const raw = (payload as { challenges?: unknown }).challenges;
   if (!Array.isArray(raw)) return { accepted, rejected: 1 };
+  const ui = (payload as {ui?: SourceGuidance}).ui;
+  if (!ui || ["intro","sourceError","badLine","lookAhead","repairBefore","repairAfter",
+    "moveDisclaimer","note","portability"].some((key) =>
+    typeof ui[key as keyof SourceGuidance] !== "string" ||
+    ui[key as keyof SourceGuidance].trim().length < 35)) return {accepted, rejected:1, ui:null};
   const sources = new Map(studies.map((study) => [study.source.id, study]));
   const ids = new Set<string>();
   for (const record of raw) {
@@ -48,14 +59,17 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
           item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80) ||
         !item.repair || ["first", "second", "rebuild", "transfer"].some((part) =>
           typeof item.repair[part as keyof typeof item.repair] !== "string" ||
-          item.repair[part as keyof typeof item.repair].trim().length < 80)) {
+          item.repair[part as keyof typeof item.repair].trim().length < 80) ||
+        !item.decision || ["first","second","repair","transfer"].some((part) =>
+          typeof item.decision[part as keyof typeof item.decision] !== "string" ||
+          item.decision[part as keyof typeof item.decision].trim().length < 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
       accepted.push(item);
     } catch { rejected++; }
   }
-  return { accepted, rejected };
+  return { accepted, rejected, ui };
 }
 export interface BranchReplay {
   fen: string;
