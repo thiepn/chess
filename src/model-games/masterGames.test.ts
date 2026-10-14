@@ -1,6 +1,6 @@
 import { Chess } from "chess.js";
-import { describe, expect, it } from "vitest";
-import { hydrateMasterGames } from "./masterGames";
+import { describe, expect, it, vi } from "vitest";
+import { hydrateMasterGames, masterDraftKey, restoreMasterDrafts } from "./masterGames";
 import asset from "../../public/data/model-games/p113-master-games-v1.json";
 
 
@@ -45,5 +45,31 @@ describe("P113 source-qualified master-game journeys", () => {
     expect(checked.rejected).toBe(2);
     bad.version = 2;
     expect(hydrateMasterGames(bad).accepted).toHaveLength(0);
+  });
+});
+
+// P123: regression against cross-profile draft disclosure and stale recovery.
+describe("P123 owner-scoped historical draft recovery", () => {
+  it("recovers only the exact owner/game combination and refuses stale storage", () => {
+    const records = new Map<string, string>();
+    vi.stubGlobal("sessionStorage", { getItem: (key: string) => records.get(key) ?? null });
+    try {
+      const a = masterDraftKey("account:A", "source-one");
+      const b = masterDraftKey("account:B", "source-one");
+      const other = masterDraftKey("account:A", "source-two");
+      expect(a).not.toBe(b);
+      expect(a).not.toBe(other);
+      const drafts = { decision: { plan: "private A answer", defense: "private A threat",
+        transfer: "", revealed: false, mark: null } };
+      records.set(a, JSON.stringify({ version: 1, saved: Date.now(), drafts }));
+      expect(restoreMasterDrafts("account:A", "source-one").decision.plan).toBe("private A answer");
+      expect(restoreMasterDrafts("account:B", "source-one")).toEqual({});
+      expect(restoreMasterDrafts("account:A", "source-two")).toEqual({});
+      expect(restoreMasterDrafts("", "source-one")).toEqual({});
+      records.set(a, JSON.stringify({ version: 1, saved: Date.now() - 86400001, drafts }));
+      expect(restoreMasterDrafts("account:A", "source-one")).toEqual({});
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

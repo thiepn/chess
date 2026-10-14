@@ -142,14 +142,14 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               </button>)}
             </div>
             <label htmlFor={"p118-plan-" + index}>{guidance?.beforeMoveLabel}</label>
-            <p className="p115-source-task">{reconstruction}</p>
+            {draft.revealed && <p className="p115-source-task">{reconstruction}</p>}
             <textarea id={"p118-plan-" + index} rows={2} maxLength={1200}
               placeholder="Which squares matter, which replies concern you, and why?"
               value={index === 0 ? draft.branchPlanA ?? "" : draft.branchPlanB ?? ""}
               onChange={(event) => onChange(index === 0
                 ? { branchPlanA: event.target.value, mark: null } : { branchPlanB: event.target.value, mark: null })}/>
             <ChessBoard
-              key={source.gameId + ":" + slots[index]}
+              key={source.gameId}
               fen={currentFen}
               orientation={pin.game.game.orientation}
               disabled={isReference || result.invalid || browseHistory || result.gameOver || last >= BRANCH_LIMIT}
@@ -192,8 +192,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             {evidence && !isReference && <section className="p115-reflection" aria-label={"Source and defender evidence for " + name}>
               <strong>{evidence.needsDefense ? "Now play the defender" :
                 evidence.replyPlayed ? "Reconstruct after resistance" : "Candidate rehearsal"}</strong>
-              {evidence.needsDefense && <p>{challenge.fork.before}</p>}
-              {evidence.replyPlayed && !draft.revealed && <p>{guidance?.repairBefore}</p>}
+              {evidence.needsDefense && <p>{draft.revealed ? challenge.fork.before : guidance?.repairBefore}</p>}
               {evidence.replyPlayed && <p>{draft.revealed ?
                 (index === 0 ? challenge.decision.first : challenge.decision.second) :
                 guidance?.repairBefore}</p>}

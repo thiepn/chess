@@ -91,12 +91,22 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
     ? current.game.checkpoints.filter((item) => visibleDrafts[item.id]?.mark).length
     : 0, [current, visibleDrafts]);
 
+  function confirmLeavingVariation() {
+    return !exploreLine.length ||
+      window.confirm("Leave this unsaved legal variation? Its moves are not included in your written draft.");
+  }
+  function visitPly(ply: number) {
+    if (!current || ply === viewPly || !confirmLeavingVariation()) return;
+    setViewPly(Math.max(0, Math.min(current.sans.length, ply)));
+  }
   function choose(item: MasterTimeline) {
+    if (!confirmLeavingVariation()) return;
     setSelectedId(item.game.id);
     setDecisionIndex(0);
     setViewPly(item.game.checkpoints[0].ply);
   }
   function openPairSource(gameId: string, checkpointId: string) {
+    if (!confirmLeavingVariation()) return;
     const game = collection?.find((entry) => entry.game.id === gameId);
     if (!game) return;
     const index = game.game.checkpoints.findIndex((checkpoint) => checkpoint.id === checkpointId);
@@ -107,7 +117,8 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
     setTransferOpen(false);
   }
   function selectDecision(index: number) {
-    if (!current) return;
+    if (!current || ((index !== decisionIndex ||
+      viewPly !== current.game.checkpoints[index]?.ply) && !confirmLeavingVariation())) return;
     setDecisionIndex(index);
     setViewPly(current.game.checkpoints[index].ply);
   }
@@ -197,7 +208,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
       {expanded && !transferOpen && current && decision && (
         <section className="p113-study" aria-label={current.game.title}>
           <header className="p113-study-head">
-            <button className="secondary" type="button" onClick={() => setSelectedId("")}>
+            <button className="secondary" type="button" onClick={() => { if (confirmLeavingVariation()) setSelectedId(""); }}>
               <ChevronLeft size={15} /> All games
             </button>
             <div>
@@ -210,28 +221,30 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
           <div className="p113-grid">
             <div className="p113-board-panel">
               <ChessBoard
-                key={current.game.id + ":" + viewPly + ":" + Boolean(exploreFen)}
+                key={current.game.id}
                 fen={exploreFen || fen}
                 orientation={current.game.orientation}
                 disabled={exploreFen === null}
                 onMove={exploreFen !== null ? exploreMove : undefined}
               />
               <div className="p113-move-controls" role="group" aria-label="Historical move navigation">
-                <button type="button" aria-label="Beginning of game" onClick={() => setViewPly(0)} disabled={viewPly === 0}>|←</button>
-                <button type="button" aria-label="Previous historical move" onClick={() => setViewPly((ply) => Math.max(0, ply - 1))} disabled={viewPly === 0}><ChevronLeft size={16}/></button>
+                <button type="button" aria-label="Beginning of game" onClick={() => visitPly(0)} disabled={viewPly === 0}>|←</button>
+                <button type="button" aria-label="Previous historical move" onClick={() => visitPly(viewPly - 1)} disabled={viewPly === 0}><ChevronLeft size={16}/></button>
                 <span aria-live="polite">{viewPly === 0 ? "Starting position" : "Ply " + viewPly + "/" + plyCount + " · " + moveShown}</span>
-                <button type="button" aria-label="Next historical move" onClick={() => setViewPly((ply) => Math.min(plyCount, ply + 1))} disabled={viewPly === plyCount}><ChevronRight size={16}/></button>
-                <button type="button" aria-label="End of game" onClick={() => setViewPly(plyCount)} disabled={viewPly === plyCount}>→|</button>
+                <button type="button" aria-label="Next historical move" onClick={() => visitPly(viewPly + 1)} disabled={viewPly === plyCount}><ChevronRight size={16}/></button>
+                <button type="button" aria-label="End of game" onClick={() => visitPly(plyCount)} disabled={viewPly === plyCount}>→|</button>
               </div>
               <div className="p113-movelist" aria-label="Historical moves seen so far">
                 {current.sans.slice(Math.max(0, viewPly - 16), viewPly).map((move, offset) => {
                   const ply = Math.max(0, viewPly - 16) + offset;
-                  return <button key={ply} type="button" onClick={() => setViewPly(ply + 1)}
+                  return <button key={ply} type="button" onClick={() => visitPly(ply + 1)}
                     aria-label={"Return to ply " + (ply + 1)}>{ply % 2 === 0 ? Math.floor(ply / 2) + 1 + ". " : ""}{move}</button>;
                 })}
               </div>
               <div className="p113-explore">
-                <button className="secondary" type="button" onClick={() => { setExploreFen(fen); setExploreLine([]); }}>
+                <button className="secondary" type="button" onClick={() => {
+                  if (confirmLeavingVariation()) { setExploreFen(fen); setExploreLine([]); }
+                }}>
                   Try a legal alternative
                 </button>
                 {exploreFen !== null && <>

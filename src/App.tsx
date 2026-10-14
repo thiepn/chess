@@ -52,14 +52,14 @@ import { openingNodes, repertoireById } from "./openings/repertoire";
 import { applyOpeningAttempt, createOpeningProgress } from "./openings/progress";
 import { openingDeviationsForGame } from "./openings/match";
 
-import { StockfishBrowserEngine } from "./engine/stockfish";
+import type { StockfishBrowserEngine } from "./engine/stockfish";
 import {
   calculationCatalog, calculationPositionFor, resolveCalculationPosition,
   subscribeCalculationSources, calculationSourceRevision, calculationSourceStatus,
   retryFailedCalculationSources,
 } from "./calculation/positions";
 import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
-import { analyzeImportedGame } from "./games/analyze";
+
 import { timeControlWeight } from "./games/practical";
 import {
   mergeReanalyzedDeviations,
@@ -1716,6 +1716,10 @@ export default function App() {
 
     let engine: StockfishBrowserEngine | null = null;
     try {
+      // A completed game is already stored. Load analysis only when requested.
+      const [{ StockfishBrowserEngine }, { analyzeImportedGame }] = await Promise.all([
+        import("./engine/stockfish"), import("./games/analyze"),
+      ]);
       engine = await StockfishBrowserEngine.create();
       const analyzed = await analyzeImportedGame(result.importedGame, engine, {
         depth: 10,

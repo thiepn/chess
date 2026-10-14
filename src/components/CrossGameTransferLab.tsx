@@ -95,6 +95,9 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   useEffect(() => {
     setPortableText("");
     setPortableStatus("");
+    setShowHint(0);
+    setShownMoves([false, false]);
+    setCounterfactualOpen(false);
   }, [owner]);
   const draft = active ? visibleDrafts[active.source.id] ?? emptyMasterDraft() : emptyMasterDraft();
   const reviewed = useMemo(() => cases?.filter((item) => visibleDrafts[item.source.id]?.mark).length ?? 0, [cases, visibleDrafts]);
@@ -119,22 +122,31 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   }, [owner, restoredOwner, cases, drafts]);
 
   function edit(patch: Partial<MasterDraft>) {
-    if (!active) return;
+    if (!active || !owner || restoredOwner !== owner) return;
     setDrafts((previous) => ({
       ...previous,
       [active.source.id]: { ...(previous[active.source.id] ?? emptyMasterDraft()), ...patch },
     }));
   }
+  function confirmLeavingPortable() {
+    return !portableText.trim() ||
+      window.confirm("Leave this untransferred portable note? Copy it privately before switching pairs.");
+  }
   function choose(id: string) {
+    if (id !== currentId && !confirmLeavingPortable()) return;
     setSelectedId(id);
     setShowHint(0);
     setShownMoves([false, false]);
     setPortableText("");
     setPortableStatus("");
   }
+  function openSource(gameId: string, checkpointId: string) {
+    if (!confirmLeavingPortable()) return;
+    onOpenPosition(gameId, checkpointId);
+  }
   function restorePortable() {
     try {
-      if (!active || !owner || restoredOwner !== owner) throw new Error("Sign in to restore this pair.");
+      if (!active || !owner || restoredOwner !== owner) throw new Error("Wait until this study profile is ready.");
       const restored = importPairNotes(portableText, active);
       if (Object.values(draft).some((value) =>
         typeof value === "string" ? value.trim() : Array.isArray(value) ? value.length : Boolean(value)) &&
@@ -186,7 +198,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
             </button>
           ))}
         </nav>
-        {active && <div className="p114-session" key={active.source.id}>
+        {active && restoredOwner !== owner && <p role="status">Restoring this profile's study drafts…</p>}
+        {active && owner && restoredOwner === owner && <div className="p114-session" key={active.source.id}>
           {storageError && <p role="alert">This browser cannot save your comparison draft. Prepare and copy a private portable note before leaving this session.</p>}
           <details className="p117-portable">
             <summary>Carry this pair into another session</summary>
@@ -244,7 +257,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
                     {shownMoves[index] ? "Before historical move" : "After historical move"}
                   </button>
                   <button type="button" className="secondary"
-                    onClick={() => onOpenPosition(source.gameId, source.checkpointId)}>
+                    onClick={() => openSource(source.gameId, source.checkpointId)}>
                     Open complete game <ChevronRight size={15} />
                   </button>
                 </div>}
@@ -253,7 +266,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           </div>}
           {counterfactualOpen && <Suspense fallback={<p role="status">Opening the chess variation workshop…</p>}>
             <CounterfactualLab studies={cases} active={active} draft={draft}
-              onChange={edit} onOpenPosition={onOpenPosition}/>
+              onChange={edit} onOpenPosition={openSource}/>
           </Suspense>}
           <div className="p114-writing">
             <h4>{copy.firstHeading}</h4>
