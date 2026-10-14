@@ -1,7 +1,6 @@
 {
   "fork": [
-    "tactics.double-attack",
-    "tactics.knight-fork"
+    "tactics.double-attack"
   ],
   "pin": [
     "tactics.pin"
@@ -15,8 +14,6 @@
   ],
   "defensiveMove": [
     "defense.threats",
-    "defense.prophylaxis",
-    "defense.exchange-attackers",
     "tactics.defensive-resources"
   ],
   "mate": [
@@ -70,9 +67,7 @@
     "tactics.combinations"
   ],
   "quietMove": [
-    "calculation.quiet",
-    "strategy.worst-piece",
-    "defense.prophylaxis"
+    "calculation.quiet"
   ],
   "advancedPawn": [
     "pawns.passed",
@@ -90,42 +85,18 @@
   "queensideAttack": [
     "attack.open-lines"
   ],
-  "endgame": [
-    "endgames.opposition",
-    "endgames.key-squares",
-    "endgames.pawn-races",
-    "endgames.rook-activity"
-  ],
+  "endgame": [],
   "pawnEndgame": [
-    "endgames.opposition",
-    "endgames.key-squares",
     "endgames.pawn-races",
     "pawns.passed"
   ],
   "rookEndgame": [
-    "endgames.rook-activity",
-    "endgames.lucena",
-    "endgames.philidor"
+    "endgames.rook-activity"
   ],
-  "opening": [
-    "openings.principles",
-    "openings.development",
-    "openings.center",
-    "openings.king-safety",
-    "openings.tempo"
-  ],
-  "middlegame": [
-    "strategy.piece-activity",
-    "strategy.worst-piece",
-    "strategy.open-files",
-    "strategy.outposts"
-  ],
-  "crushing": [
-    "conversion.simplify"
-  ],
-  "equality": [
-    "defense.counterplay"
-  ],
+  "opening": [],
+  "middlegame": [],
+  "crushing": [],
+  "equality": [],
   "exposedKing": [
     "attack.king-safety",
     "defense.threats"
