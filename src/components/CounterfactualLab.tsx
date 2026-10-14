@@ -134,9 +134,6 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               value={index === 0 ? draft.branchPlanA ?? "" : draft.branchPlanB ?? ""}
               onChange={(event) => onChange(index === 0
                 ? { branchPlanA: event.target.value, mark: null } : { branchPlanB: event.target.value, mark: null })}/>
-            <p className="p115-facts">{last === 0 ? "Stage 1 · Choose your own move" : last === 1 ?
-              "Stage 2 · Play the opponent's legal resistance" :
-              "Stage 3 · Reconstruct the position and reconsider your plan"}</p>
             <ChessBoard
               key={source.gameId + ":" + currentFen + ":" + isReference}
               fen={currentFen}
@@ -177,11 +174,6 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
                 guidance?.repairBefore}</p>}
               {line.length >= 4 && <p>{draft.revealed ? challenge.decision.repair : guidance?.repairAfter}</p>}
               {evidence.events.length > 0 && <p>Legal board events: {evidence.events.join("; ")}. These facts do not assign strategic value.</p>}
-              {main.length && alternate.length && <p>
-                Shared candidate plies: {evidence.sameAlternativePlies}.
-                {evidence.differsFromAlternative ? " Lines diverge." : " This line is a prefix."}
-                {" "}Compare the defender replies.
-              </p>}
               {draft.revealed && <p>Shared PGN plies: {evidence.sameSourcePlies}.
                 {evidence.divergesFromSource ? " Different continuation." : " No divergence yet."}
                 {" "}{guidance?.lookAhead}</p>}
