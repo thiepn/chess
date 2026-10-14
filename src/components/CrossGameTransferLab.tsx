@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Eye, RotateCcw } from "lucide-react";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { ChessBoard } from "./ChessBoard";
 import {
   emptyMasterDraft, masterDraftKey, restoreMasterDrafts,
@@ -33,6 +33,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [portableText, setPortableText] = useState("");
   const [portableStatus, setPortableStatus] = useState("");
   const [sourceRetry, setSourceRetry] = useState(0);
+  const lastSaved = useRef<Record<string, MasterDraft>>({});
 
   useEffect(() => {
     const abort = new AbortController();
@@ -56,6 +57,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   }, [games, sourceRetry]);
 
   useEffect(() => {
+    lastSaved.current = {};
     setRestoredOwner("");
     if (!owner || !cases) { setDrafts({}); return; }
     const recovered = Object.fromEntries(cases.flatMap((item) => {
@@ -86,14 +88,22 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const draft = active ? visibleDrafts[active.source.id] ?? emptyMasterDraft() : emptyMasterDraft();
   const reviewed = useMemo(() => cases?.filter((item) => visibleDrafts[item.source.id]?.mark).length ?? 0, [cases, visibleDrafts]);
 
+  // Preserve edits from every visited source pair, not just the currently
+  // selected one. A per-render reference prevents unnecessary storage writes.
   useEffect(() => {
-    if (!owner || restoredOwner !== owner || !active || !drafts[active.source.id]) return;
-    try {
-      sessionStorage.setItem(masterDraftKey(owner, "p114:" + active.source.id), JSON.stringify({
-        version: 1, saved: Date.now(), drafts: { [active.source.id]: drafts[active.source.id] },
-      }));
-    } catch { /* The writing activity remains usable without session storage. */ }
-  }, [owner, restoredOwner, active, drafts]);
+    if (!owner || restoredOwner !== owner || !cases) return;
+    for (const study of cases) {
+      const id = study.source.id;
+      const entry = drafts[id];
+      if (!entry || lastSaved.current[id] === entry) continue;
+      try {
+        sessionStorage.setItem(masterDraftKey(owner, "p114:" + id), JSON.stringify({
+          version: 1, saved: Date.now(), drafts: { [id]: entry },
+        }));
+        lastSaved.current[id] = entry;
+      } catch { /* Unsent notes remain editable when storage is unavailable. */ }
+    }
+  }, [owner, restoredOwner, cases, drafts]);
 
   function edit(patch: Partial<MasterDraft>) {
     if (!active) return;
@@ -124,6 +134,10 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   }
   const canCompare = draft.plan.trim().length >= 18 && draft.defense.trim().length >= 18;
   const activeIndex = active ? cases?.findIndex((item) => item.source.id === currentId) ?? 0 : 0;
+  const related = active && cases?.find((item) => item.source.id !== currentId &&
+    !visibleDrafts[item.source.id]?.mark &&
+    [item.source.first.gameId, item.source.second.gameId].some((id) =>
+      id === active.source.first.gameId || id === active.source.second.gameId));
 
   return (
     <section className="p114-transfer" aria-label="Cross-game strategic transfer">
@@ -177,6 +191,11 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
               value={restoredOwner === owner ? portableText : ""} onChange={(event) => { setPortableText(event.target.value); setPortableStatus(""); }} />
             <p role="status">{portableStatus}</p>
           </details>
+          {related && <p className="p114-integrity">Apply the idea in another verified original game:
+            {" "}<button type="button" className="secondary" onClick={() => choose(related.source.id)}>
+              {related.source.title}
+            </button>. Shared historical source does not mean the same best move.
+          </p>}
           <header className="p114-session-head">
             <p className="eyebrow">STUDY {activeIndex + 1} / {cases.length} · {active.source.theme}</p>
             <h3>{active.source.title}</h3>

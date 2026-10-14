@@ -25,6 +25,12 @@
         "first": "Independently reconstruct the position before f5: Locate the white e5 pawn in the French center and compare the second center's pawn contacts before touching Black's f-pawn. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before f5: What central pawn is each ...f5 advance challenging, and which new weaknesses might matter? Do not infer the same evaluation just because the notation matches. Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (f5 Rc1 Bb7) and (f5 Bd6 Re8). Against an alternative legal White reply, compare Black's e6-pawn, control of e5 and king exposure before advocating ...f5 again. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in steinitz-sellman-1885, inspect the opponent's checks and captures. The observed opponent answered Rc1 after f5; this is historical evidence, not a forced reply. If Black expects ...f5 to solve both centers automatically, which concrete white response in each recorded sequence disproves that shortcut?",
+        "second": "After your first candidate in tarrasch-von-scheve-1894, reconstruct the defender's resources from the resulting board. The historical sequence started f5, Bd6, Re8. What central pawn is each ...f5 advance challenging, and which new weaknesses might matter? Do not infer the same evaluation just because the notation matches.",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Treating identical SAN as identical strategic instruction. Repair: name the pawn chain and the first recorded reply in both games, then identify one square newly controlled and one concession. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Against an alternative legal White reply, compare Black's e6-pawn, control of e5 and king exposure before advocating ...f5 again. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -49,6 +55,12 @@
         "first": "Independently reconstruct the position before O-O: Identify the castling right and the squares protected by Black's king and rook before evaluating queenside pawn space. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before a6: Both sides to move are Black. Which position most urgently needs a king move, and what does the alternative queenside pawn move commit Black to? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (O-O c4 Na6) and (a6 Bd3 Nc6). In your own opening, examine the position of the king and center before copying ...a6 or ...O-O from a master score. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in reti-alekhine-1925, inspect the opponent's checks and captures. The observed opponent answered c4 after O-O; this is historical evidence, not a forced reply. If you tried the other game's plan here, where would the king stand after two moves and what central contact could become relevant?",
+        "second": "After your first candidate in steinitz-sellman-1885, reconstruct the defender's resources from the resulting board. The historical sequence started a6, Bd3, Nc6. Both sides to move are Black. Which position most urgently needs a king move, and what does the alternative queenside pawn move commit Black to?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. The misconception is to call every preparatory move 'development.' Repair: distinguish a king-safety gain from a pawn-space commitment with specific squares. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: In your own opening, examine the position of the king and center before copying ...a6 or ...O-O from a master score. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -73,6 +85,12 @@
         "first": "Independently reconstruct the position before Bg3: Trace the bishop's remaining diagonal in one board and the knight's route in the other; are either of them targets on the next move? First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Na5: At these decision points, which piece is being redirected, and how does the opponent's next move change its prospects? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bg3 Nf8 h3) and (Na5 h4 Nc4). Name the destination square and defender resources for each piece, then look for one more efficient legal candidate on each board. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in capablanca-golombek-1939, inspect the opponent's checks and captures. The observed opponent answered Nf8 after Bg3; this is historical evidence, not a forced reply. What would make a bishop retreat too slow in the first board, or ...Na5 an empty detour in the second?",
+        "second": "After your first candidate in lasker-janowski-1909, reconstruct the defender's resources from the resulting board. The historical sequence started Na5, h4, Nc4. At these decision points, which piece is being redirected, and how does the opponent's next move change its prospects?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Assuming all backward-looking moves lose time. Repair: identify what each repositioned piece gains at Bg3 or Nc4 and what the opponent does meanwhile. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Name the destination square and defender resources for each piece, then look for one more efficient legal candidate on each board. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -97,6 +115,12 @@
         "first": "Independently reconstruct the position before Bxd3: Count the attackers and recaptures on the exchanged square, then check whether a rook has a forcing entry. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Bxf6: Both historical moves are bishop captures. What actually remains on the board after the recapture or countercheck? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bxd3 Qxd3 Nd7) and (Bxf6 Rg4+ Bg7). Compare one legal alternative to each capture. State the exact piece that would occupy d3 or f6 and whose turn follows. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in capablanca-golombek-1939, inspect the opponent's checks and captures. The observed opponent answered Qxd3 after Bxd3; this is historical evidence, not a forced reply. Could either side insert a check, attack on the queen or counter-threat before completing an expected exchange?",
+        "second": "After your first candidate in euwe-maroczy-1936, reconstruct the defender's resources from the resulting board. The historical sequence started Bxf6, Rg4+, Bg7. Both historical moves are bishop captures. What actually remains on the board after the recapture or countercheck?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Equating every bishop capture with simplification. Repair: replay the complete recorded three-ply segment and note whether a forcing move interrupts the expected trade. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Compare one legal alternative to each capture. State the exact piece that would occupy d3 or f6 and whose turn follows. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -121,6 +145,12 @@
         "first": "Independently reconstruct the position before d5: Inspect who controls each central pawn contact and whether the break opens a bishop's line toward either king. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before c6: Which Black pawn move creates immediate central tension and which builds a structure first? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (d5 Nc3 f5) and (c6 a3 h6). Look for a legal break after each original sequence. Explain why the same follow-up cannot be assumed in both pawn structures. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in alekhine-marshall-1927, inspect the opponent's checks and captures. The observed opponent answered Nc3 after d5; this is historical evidence, not a forced reply. Why does the opponent respond Nc3 in one score but a3 in the other? What central square deserves a second look?",
+        "second": "After your first candidate in euwe-maroczy-1936, reconstruct the defender's resources from the resulting board. The historical sequence started c6, a3, h6. Which Black pawn move creates immediate central tension and which builds a structure first?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Thinking both ...d5 and ...c6 are generic solidifying moves. Repair: identify the exact pawn's starting square and which diagonal or file opens. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Look for a legal break after each original sequence. Explain why the same follow-up cannot be assumed in both pawn structures. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -145,6 +175,12 @@
         "first": "Independently reconstruct the position before a3: Mark the bishop squares provoked by a3 and compare the c4 pawn's effect on central and queenside lanes. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before c4: Compare White's a3 and Black's ...c4. What squares do they influence, and whose piece or pawn must make a decision? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (a3 Be7 O-O) and (c4 Bb1 Re8). Name one concrete long-term pawn weakness resulting from advancing a- or c-pawn; do not label it decisive without calculation. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in alekhine-marshall-1927, inspect the opponent's checks and captures. The observed opponent answered Be7 after a3; this is historical evidence, not a forced reply. What alternative bishop move or pawn exchange could challenge each plan?",
+        "second": "After your first candidate in euwe-maroczy-1936, reconstruct the defender's resources from the resulting board. The historical sequence started c4, Bb1, Re8. Compare White's a3 and Black's ...c4. What squares do they influence, and whose piece or pawn must make a decision?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. More space is not a sufficient evaluation. Repair: state the induced reply and how one active piece changes squares. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Name one concrete long-term pawn weakness resulting from advancing a- or c-pawn; do not label it decisive without calculation. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -169,6 +205,12 @@
         "first": "Independently reconstruct the position before Qh5: Identify legal checks and queen defenses before claiming that a checking threat or king retreat has solved the danger. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Kh3: Why does one side advance a queen while the other moves its king? Determine whether either side can force the next decision. Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Qh5 Qf7 h4) and (Kh3 Ne5+ Kh2). Try an alternative legal queen defense after Qh5 and an alternative legal continuation around ...Ne5+; record which squares matter before claiming safety. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in euwe-maroczy-1936, inspect the opponent's checks and captures. The observed opponent answered Qf7 after Qh5; this is historical evidence, not a forced reply. If the defender has a check, can a planned attack be postponed or reversed?",
+        "second": "After your first candidate in reti-alekhine-1925, reconstruct the defender's resources from the resulting board. The historical sequence started Kh3, Ne5+, Kh2. Why does one side advance a queen while the other moves its king? Determine whether either side can force the next decision.",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. The fallacy is to judge all active queen moves as attacks and all king moves as passive. Repair: count concrete checks and candidate replies in both positions. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Try an alternative legal queen defense after Qh5 and an alternative legal continuation around ...Ne5+; record which squares matter before claiming safety. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -193,6 +235,12 @@
         "first": "Independently reconstruct the position before Rc8: Name the actual open file or attacked pawn before deciding whether the rook's new rank increases its usefulness. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Rf7: Both records show a Black rook move. Which file or rank changes, and where can White reply most actively? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Rc8 Na5 Ba8) and (Rf7 Rdg2 a5). For each board identify one legal rook alternative, its prospective target, and the opponent's strongest next check or pawn break. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in steinitz-sellman-1885, inspect the opponent's checks and captures. The observed opponent answered Na5 after Rc8; this is historical evidence, not a forced reply. Which squares would make ...Rc8 or ...Rf7 vulnerable to invasion, and what can White force immediately?",
+        "second": "After your first candidate in tarrasch-von-scheve-1894, reconstruct the defender's resources from the resulting board. The historical sequence started Rf7, Rdg2, a5. Both records show a Black rook move. Which file or rank changes, and where can White reply most actively?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Equating rook mobility with rook usefulness. Repair: identify actual occupied/open files, defended pieces and the opponent's reply in the source. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: For each board identify one legal rook alternative, its prospective target, and the opponent's strongest next check or pawn break. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -217,6 +265,12 @@
         "first": "Independently reconstruct the position before Qc7: Find how the opponent can challenge the queen's destination and what retreat squares remain accessible. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Qg8: Contrast White's Qc7 with Black's ...Qg8. What concrete threat does each queen have to answer or generate? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Qc7 Qb8 Bf2) and (Qg8 Qe7 h6). Compare an alternative queen square in each position and justify it using defended squares and king safety. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in steinitz-sellman-1885, inspect the opponent's checks and captures. The observed opponent answered Qb8 after Qc7; this is historical evidence, not a forced reply. Does the opposing queen gain tempo against a king, rook or weak square after each historical move?",
+        "second": "After your first candidate in alekhine-marshall-1927, reconstruct the defender's resources from the resulting board. The historical sequence started Qg8, Qe7, h6. Contrast White's Qc7 with Black's ...Qg8. What concrete threat does each queen have to answer or generate?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Queen advancement is not automatically aggressive nor retreat automatically wrong. Repair: identify the concrete follow-up Qb8 or Qe7. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Compare an alternative queen square in each position and justify it using defended squares and king safety. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -241,6 +295,12 @@
         "first": "Independently reconstruct the position before f4: Examine f-pawn king exposure and queen coordination before committing to either a pawn advance or a quiet setup. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Qd2: Compare White's f4 and Qd2. What does each move change immediately, and which Black move shows a different defensive resource? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (f4 Nd7 Rhd1) and (Qd2 c5 dxe5). Recalculate one candidate move in each game after the first Black reply, focusing on pawn contact and remaining development. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in lasker-janowski-1909, inspect the opponent's checks and captures. The observed opponent answered Nd7 after f4; this is historical evidence, not a forced reply. How could ...c5 challenge a slow queen move, and what Black square becomes easier after White plays f4?",
+        "second": "After your first candidate in alekhine-marshall-1927, reconstruct the defender's resources from the resulting board. The historical sequence started Qd2, c5, dxe5. Compare White's f4 and Qd2. What does each move change immediately, and which Black move shows a different defensive resource?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. The shortcut is to treat 'prepare first' as universally safe. Repair: account for ...Nd7 and ...c5, which show what Black actually gained. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Recalculate one candidate move in each game after the first Black reply, focusing on pawn contact and remaining development. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -265,6 +325,12 @@
         "first": "Independently reconstruct the position before Bg5: List the exact bishop diagonals opened or blocked by the historical developing move and one response that changes them. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Be7: Compare White Bg5 and Black ...Be7. Are they increasing pressure, unpinning pieces, or preparing king safety? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bg5 c6 e3) and (Be7 Nc3 O-O). Identify the attacked/defended squares of each bishop after the recorded move, then find the opponent's best candidate tempo-gaining reply. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in capablanca-golombek-1939, inspect the opponent's checks and captures. The observed opponent answered c6 after Bg5; this is historical evidence, not a forced reply. What if the opponent immediately attacks the developed bishop or pushes a central pawn?",
+        "second": "After your first candidate in saemisch-nimzowitsch-1923, reconstruct the defender's resources from the resulting board. The historical sequence started Be7, Nc3, O-O. Compare White Bg5 and Black ...Be7. Are they increasing pressure, unpinning pieces, or preparing king safety?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Categorizing all bishop moves as identical development. Repair: name the diagonal, central pawn contact and resulting castling route in each case. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Identify the attacked/defended squares of each bishop after the recorded move, then find the opponent's best candidate tempo-gaining reply. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -289,6 +355,12 @@
         "first": "Independently reconstruct the position before Bd6: Before using an attacking label, locate the checks, captures, and queen recaptures actually legal in the position. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Rxf2: These records show a White bishop move followed by a queen capture, and a Black rook capture followed by a queen move. How should you prioritize forcing replies? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bd6 Qxd6 Rxg7+) and (Rxf2 Qg5 Raf8). For both boards write the first two legal checks or captures you would inspect, and explain why playing an attractive sacrifice without the defender's response is unsafe. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in tarrasch-von-scheve-1894, inspect the opponent's checks and captures. The observed opponent answered Qxd6 after Bd6; this is historical evidence, not a forced reply. What other capture or check may interrupt the expected sequence before the next recorded move?",
+        "second": "After your first candidate in saemisch-nimzowitsch-1923, reconstruct the defender's resources from the resulting board. The historical sequence started Rxf2, Qg5, Raf8. These records show a White bishop move followed by a queen capture, and a Black rook capture followed by a queen move. How should you prioritize forcing replies?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Accepting a dramatic notation as tactical proof. Repair: verify every line legally and describe the next player's concrete alternatives. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: For both boards write the first two legal checks or captures you would inspect, and explain why playing an attractive sacrifice without the defender's response is unsafe. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -313,6 +385,12 @@
         "first": "Independently reconstruct the position before Na5: Compare a knight route toward c4 with a rook occupying the c-file; identify the opponent's gain of tempo. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Rc8: Compare Black's ...Na5 in Lasker–Janowski with Black's ...Rc8 in Steinitz–Sellman: which square or file is the investment meant to improve, and what does White do meanwhile? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Na5 h4 Nc4) and (Rc8 Na5 Ba8). For each real board, enter a legal white resistance move and ask whether the knight route or rook file still produces a useful new threat. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in lasker-janowski-1909, inspect the opponent's checks and captures. The observed opponent answered h4 after Na5; this is historical evidence, not a forced reply. Can White challenge the knight's c4 destination after ...Na5, or seize a tempo while Black occupies the c-file with ...Rc8?",
+        "second": "After your first candidate in steinitz-sellman-1885, reconstruct the defender's resources from the resulting board. The historical sequence started Rc8, Na5, Ba8. Compare Black's ...Na5 in Lasker–Janowski with Black's ...Rc8 in Steinitz–Sellman: which square or file is the investment meant to improve, and what does White do meanwhile?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Calling ...Na5 or ...Rc8 an active move is not enough. Identify the destination c4 or c-file target and calculate one legal white counter-plan. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: For each real board, enter a legal white resistance move and ask whether the knight route or rook file still produces a useful new threat. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -337,6 +415,12 @@
         "first": "Independently reconstruct the position before Bg4: Contrast a bishop that questions a developing piece with a bishop move that prepares castling. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Be7: Compare ...Bg4 in Réti–Alekhine with ...Be7 in Sämisch–Nimzowitsch: which bishop move makes an immediate question for the opponent and which supports safe king development? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bg4 Bg2 Bh3) and (Be7 Nc3 O-O). Try a quiet developing alternative in each position and compare what it does to the central pawns and castling route. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in reti-alekhine-1925, inspect the opponent's checks and captures. The observed opponent answered Bg2 after Bg4; this is historical evidence, not a forced reply. How does White contest a developed bishop in each game, and does the bishop need to retreat or exchange to remain useful?",
+        "second": "After your first candidate in saemisch-nimzowitsch-1923, reconstruct the defender's resources from the resulting board. The historical sequence started Be7, Nc3, O-O. Compare ...Bg4 in Réti–Alekhine with ...Be7 in Sämisch–Nimzowitsch: which bishop move makes an immediate question for the opponent and which supports safe king development?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Assuming bishop advancement creates a threat by itself. Look for a concrete target and White's available reply. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Try a quiet developing alternative in each position and compare what it does to the central pawns and castling route. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -361,6 +445,12 @@
         "first": "Independently reconstruct the position before Nf3: Look for the pawn capture available against an improving knight before relying on an abstract development rule. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Nbd7: Why can a knight on f3 and a knight on d7 represent very different kinds of development? What pawn or bishop response changes their tasks? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Nf3 cxb5 Qxb5) and (Nbd7 h3 Ne4). Replace the historical knight move with one legal candidate and explicitly list the pawn reply that would make it unsafe or slow. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in reti-alekhine-1925, inspect the opponent's checks and captures. The observed opponent answered cxb5 after Nf3; this is historical evidence, not a forced reply. After each knight move, which pawn capture or advancing knight could demand immediate calculation?",
+        "second": "After your first candidate in tarrasch-von-scheve-1894, reconstruct the defender's resources from the resulting board. The historical sequence started Nbd7, h3, Ne4. Why can a knight on f3 and a knight on d7 represent very different kinds of development? What pawn or bishop response changes their tasks?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Treating every 'develop a knight' recommendation as interchangeable. Knight squares must be evaluated against immediate pawn contact and the opponent's next tempo. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Replace the historical knight move with one legal candidate and explicitly list the pawn reply that would make it unsafe or slow. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -385,6 +475,12 @@
         "first": "Independently reconstruct the position before Qxb5: Check queen safety after a pawn capture and contrast a quiet queen repositioning with the opponent's central break. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Qd2: What changes when White's queen captures on b5 compared with White's quiet Qd2? Check the opponent's first central or minor-piece response. Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Qxb5 Ne6 Nc3) and (Qd2 c5 dxe5). For both positions record the queen's escape squares and one forcing black pawn or piece reply before selecting a future plan. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in capablanca-golombek-1939, inspect the opponent's checks and captures. The observed opponent answered Ne6 after Qxb5; this is historical evidence, not a forced reply. Can Black gain time by attacking the queen after Qxb5, and what does ...c5 demand after Qd2?",
+        "second": "After your first candidate in alekhine-marshall-1927, reconstruct the defender's resources from the resulting board. The historical sequence started Qd2, c5, dxe5. What changes when White's queen captures on b5 compared with White's quiet Qd2? Check the opponent's first central or minor-piece response.",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Counting an extra pawn or an orderly queen square without checking whether the next opposing move activates a more important piece. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: For both positions record the queen's escape squares and one forcing black pawn or piece reply before selecting a future plan. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -409,6 +505,12 @@
         "first": "Independently reconstruct the position before Bd6: Trace the queen capture or rook check that follows the bishop investment; move order changes the defensive task. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Bxf6: Contrast Tarrasch–Von Scheve's Bd6 with Euwe–Maróczy's ...Bxf6: where does the defender capture or check, and which rook becomes active next? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bd6 Qxd6 Rxg7+) and (Bxf6 Rg4+ Bg7). Before choosing a capture or bishop investment, list the legal rook checks and defender squares in both source positions. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in tarrasch-von-scheve-1894, inspect the opponent's checks and captures. The observed opponent answered Qxd6 after Bd6; this is historical evidence, not a forced reply. If Black captures the bishop on d6 or White gives Rg4+ after ...Bxf6, what is the immediate forcing reply that must be evaluated?",
+        "second": "After your first candidate in euwe-maroczy-1936, reconstruct the defender's resources from the resulting board. The historical sequence started Bxf6, Rg4+, Bg7. Contrast Tarrasch–Von Scheve's Bd6 with Euwe–Maróczy's ...Bxf6: where does the defender capture or check, and which rook becomes active next?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. An exchange or bishop offer can give the opponent a forcing tempo. Evaluate the concrete queen capture or rook check before calling the position safer. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Before choosing a capture or bishop investment, list the legal rook checks and defender squares in both source positions. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -433,6 +535,12 @@
         "first": "Independently reconstruct the position before f5: Mark each king's escape squares and the diagonals exposed after the respective f-pawn advance. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before f4: Compare ...f5 with White's f4: whose king faces a new diagonal, and how does each opponent exploit the time required for the push? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (f5 Qd1 b4) and (f4 Nd7 Rhd1). Describe the exact king positions and f-file access, then choose a more restrained legal alternative and compare the opponent's opportunities. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in saemisch-nimzowitsch-1923, inspect the opponent's checks and captures. The observed opponent answered Qd1 after f5; this is historical evidence, not a forced reply. Which enemy checks and newly weakened dark or light squares would you inspect after the f-pawn advances?",
+        "second": "After your first candidate in lasker-janowski-1909, reconstruct the defender's resources from the resulting board. The historical sequence started f4, Nd7, Rhd1. Compare ...f5 with White's f4: whose king faces a new diagonal, and how does each opponent exploit the time required for the push?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. A pawn push being active is not evidence of safety; identify the king it loosens and the pieces that can enter behind it. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Describe the exact king positions and f-file access, then choose a more restrained legal alternative and compare the opponent's opportunities. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -457,6 +565,12 @@
         "first": "Independently reconstruct the position before Rc1: Inspect whether moving the rook first frees or blocks the pawn break, and where White's bishop can retreat. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before c4: Compare ...Rc1 in Sämisch–Nimzowitsch with ...c4 in Euwe–Maróczy. What does each choice ask the opponent to do immediately? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Rc1 b5 Qb3) and (c4 Bb1 Re8). For each sequence construct a legal alternative that reverses the order of rook and pawn moves; explain the opponent's answer. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in saemisch-nimzowitsch-1923, inspect the opponent's checks and captures. The observed opponent answered b5 after Rc1; this is historical evidence, not a forced reply. Could White seize a central file or challenge the pawn chain during either plan?",
+        "second": "After your first candidate in euwe-maroczy-1936, reconstruct the defender's resources from the resulting board. The historical sequence started c4, Bb1, Re8. Compare ...Rc1 in Sämisch–Nimzowitsch with ...c4 in Euwe–Maróczy. What does each choice ask the opponent to do immediately?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Treating rook development and space acquisition as independent tasks. Their order can change which pieces have protected squares. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: For each sequence construct a legal alternative that reverses the order of rook and pawn moves; explain the opponent's answer. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -481,6 +595,12 @@
         "first": "Independently reconstruct the position before Bg4: Distinguish a positional bishop maneuver from a source line involving queen capture and rook check. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Bd6: Both scores include bishop maneuvers, but only one recorded sequence promptly involves a queen capture and rook check. How should that change calculation depth? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Bg4 Bg2 Bh3) and (Bd6 Qxd6 Rxg7+). Play one legal alternative bishop move from each board, checking all available capture and check replies before using an attacking label. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in reti-alekhine-1925, inspect the opponent's checks and captures. The observed opponent answered Bg2 after Bg4; this is historical evidence, not a forced reply. Which actual capture or check can interrupt the plan, and does it force the opponent to respond?",
+        "second": "After your first candidate in tarrasch-von-scheve-1894, reconstruct the defender's resources from the resulting board. The historical sequence started Bd6, Qxd6, Rxg7+. Both scores include bishop maneuvers, but only one recorded sequence promptly involves a queen capture and rook check. How should that change calculation depth?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Seeing a bishop near the king is not enough to infer mate. Prove the available checks and captures from the actual board. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Play one legal alternative bishop move from each board, checking all available capture and check replies before using an attacking label. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -505,6 +625,12 @@
         "first": "Independently reconstruct the position before Kh3: Evaluate a defensive king step against a rook invasion and the next check available to the attacker. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Rxf2: Contrast the importance of checks when White moves its king in Réti–Alekhine and Black captures on f2 in Sämisch–Nimzowitsch. Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Kh3 Ne5+ Kh2) and (Rxf2 Qg5 Raf8). Find one additional legal defensive candidate for the player under pressure; compare actual king escape squares, not broad claims of initiative. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in reti-alekhine-1925, inspect the opponent's checks and captures. The observed opponent answered Ne5+ after Kh3; this is historical evidence, not a forced reply. After each first move, who possesses a forcing check and what reply prevents a quick conclusion?",
+        "second": "After your first candidate in saemisch-nimzowitsch-1923, reconstruct the defender's resources from the resulting board. The historical sequence started Rxf2, Qg5, Raf8. Contrast the importance of checks when White moves its king in Réti–Alekhine and Black captures on f2 in Sämisch–Nimzowitsch.",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. An active rook may still allow queen counterplay, and a king retreat may still allow a knight check. Calculate both colors' forcing options. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Find one additional legal defensive candidate for the player under pressure; compare actual king escape squares, not broad claims of initiative. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -529,6 +655,12 @@
         "first": "Independently reconstruct the position before a6: Ask whether the side advancing a flank pawn could have used that tempo to complete development or castle. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before a3: Black's ...a6 and White's a3 look symmetric in notation. What different immediate piece or pawn problem might each solve? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (a6 Bd3 Nc6) and (a3 Be7 O-O). Identify the precise bishop, knight and king squares involved; make one legal alternative to the pawn move and allow the opponent to develop. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in steinitz-sellman-1885, inspect the opponent's checks and captures. The observed opponent answered Bd3 after a6; this is historical evidence, not a forced reply. Could the opponent turn the pawn move into a target or improve a piece while you spend a tempo on the flank?",
+        "second": "After your first candidate in alekhine-marshall-1927, reconstruct the defender's resources from the resulting board. The historical sequence started a3, Be7, O-O. Black's ...a6 and White's a3 look symmetric in notation. What different immediate piece or pawn problem might each solve?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. Copying a3/a6 as a universal 'useful waiting move' overlooks that one player may urgently need to castle or develop. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Identify the precise bishop, knight and king squares involved; make one legal alternative to the pawn move and allow the opponent to develop. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -553,6 +685,12 @@
         "first": "Independently reconstruct the position before Qxb5: Contrast a queen capturing material with a queen seeking entry on the seventh rank and the opponent's queen reply. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Qc7: Compare White Qxb5 with White Qc7: what is the queen trying to occupy, and how do the first recorded black replies oppose it? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Qxb5 Ne6 Nc3) and (Qc7 Qb8 Bf2). Contrast an alternative queen destination in both boards and explain how it fares against ...Ne6 or ...Qb8 if those replies remain legal. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in capablanca-golombek-1939, inspect the opponent's checks and captures. The observed opponent answered Ne6 after Qxb5; this is historical evidence, not a forced reply. What if Black attacks the queen with tempo after the advance? Does White still own the useful file or captured pawn?",
+        "second": "After your first candidate in steinitz-sellman-1885, reconstruct the defender's resources from the resulting board. The historical sequence started Qc7, Qb8, Bf2. Compare White Qxb5 with White Qc7: what is the queen trying to occupy, and how do the first recorded black replies oppose it?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. An advanced queen is not inherently well placed. The next opposing move determines whether the queen has won time or must retreat. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: Contrast an alternative queen destination in both boards and explain how it fares against ...Ne6 or ...Qb8 if those replies remain legal. Explain a concrete reason why the idea may fail in the other board."
       }
     },
     {
@@ -577,6 +715,12 @@
         "first": "Independently reconstruct the position before Na5: Check if White can challenge c4 during a knight maneuver or coordinate rooks against f7. First record your candidate and the resulting actual board facts, then respond to a legal defender move. Do not assume the historical move is best.",
         "second": "Independently reconstruct the other position before Rf7: Black can pursue ...Na5 and ...Nc4 in Lasker–Janowski or station its rook on f7 in Tarrasch–Von Scheve. How do those tasks differ when White gains a tempo? Play both colors to examine a concrete alternative, including the legal opponent response.",
         "after": "Now compare the source records (Na5 h4 Nc4) and (Rf7 Rdg2 a5). State which pawn or rook reply makes the planned destination unsafe; explore one alternate legal black plan in each original board. Describe precisely where the counterfactual and observed continuations differ; the records do not certify optimality."
+      },
+      "repair": {
+        "first": "After your first candidate in lasker-janowski-1909, inspect the opponent's checks and captures. The observed opponent answered h4 after Na5; this is historical evidence, not a forced reply. Can White contest the c4 knight route while preparing h4, or challenge a rook on f7 by coordinating on the g-file?",
+        "second": "After your first candidate in tarrasch-von-scheve-1894, reconstruct the defender's resources from the resulting board. The historical sequence started Rf7, Rdg2, a5. Black can pursue ...Na5 and ...Nc4 in Lasker–Janowski or station its rook on f7 in Tarrasch–Von Scheve. How do those tasks differ when White gains a tempo?",
+        "rebuild": "Compare both of your branches with the actual original three-ply records. The words centralize and activate are not sufficient evidence. Confirm whether c4 and f7 are tactically supported and what White does next. Revise your move-order reasoning and name a legal alternative that survives a specific defender response.",
+        "transfer": "Transfer only a reasoned condition, never copied coordinates: State which pawn or rook reply makes the planned destination unsafe; explore one alternate legal black plan in each original board. Explain a concrete reason why the idea may fail in the other board."
       }
     }
   ]

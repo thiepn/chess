@@ -14,6 +14,7 @@ export interface CounterfactualChallenge {
   misconception: string;
   factsNote: string;
   reconstruction: { first: string; second: string; after: string };
+  repair: { first: string; second: string; rebuild: string; transfer: string };
 }
 export const counterfactualAsset = `${import.meta.env.BASE_URL}data/model-games/p115-counterfactual-v1.json`;
 export const BRANCH_LIMIT = 6;
@@ -44,7 +45,10 @@ export function hydrateCounterfactuals(payload: unknown, studies: TransferCaseSt
             (item[key as keyof CounterfactualChallenge] as string).trim().length < 60) ||
         !item.reconstruction || ["first", "second", "after"].some((part) =>
           typeof item.reconstruction[part as keyof typeof item.reconstruction] !== "string" ||
-          item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80)) {
+          item.reconstruction[part as keyof typeof item.reconstruction].trim().length < 80) ||
+        !item.repair || ["first", "second", "rebuild", "transfer"].some((part) =>
+          typeof item.repair[part as keyof typeof item.repair] !== "string" ||
+          item.repair[part as keyof typeof item.repair].trim().length < 80)) {
         throw new Error("Unqualified counterfactual prompt");
       }
       ids.add(item.id);
@@ -111,6 +115,35 @@ export function legalReplyResources(fen: string) {
   const moves = new Chess(fen).moves({ verbose: true });
   return { all: moves, forcing: moves.filter((move) =>
     Boolean(move.captured) || /[+#]$/.test(move.san)) };
+}
+/** Deterministic differences between legal SAN branches and an observed PGN, never an evaluation. */
+export function branchEvidence(fen: string, candidate: readonly string[], other: readonly string[],
+  observed: readonly string[]) {
+  const own = replayCounterfactual(fen, candidate);
+  const alt = replayCounterfactual(fen, other);
+  const source = replayCounterfactual(fen, observed);
+  if (own.invalid || alt.invalid || source.invalid) return null;
+  const difference = (a: readonly string[], b: readonly string[]) =>
+    a.findIndex((san, i) => san !== b[i]);
+  const first = difference(own.sans, source.sans);
+  const second = difference(own.sans, alt.sans);
+  const replay = new Chess(fen);
+  const events: string[] = [];
+  own.sans.forEach((san, i) => {
+    const move = replay.move(san);
+    if (move.captured) events.push(`Ply ${i + 1}: capture on ${move.to}`);
+    if (move.promotion) events.push(`Ply ${i + 1}: promotion to ${move.promotion}`);
+    if (replay.isCheck()) events.push(`Ply ${i + 1}: check`);
+  });
+  return {
+    sameSourcePlies: first < 0 ? Math.min(own.sans.length, source.sans.length) : first,
+    divergesFromSource: first < 0 ? own.sans.length > source.sans.length : true,
+    sameAlternativePlies: second < 0 ? Math.min(own.sans.length, alt.sans.length) : second,
+    differsFromAlternative: second < 0 ? own.sans.length > alt.sans.length : true,
+    needsDefense: own.sans.length === 1 && !own.gameOver,
+    replyPlayed: own.sans.length >= 2,
+    events,
+  };
 }
 /** Exact PGN history, never a hypothetical continuation or an engine verdict. */
 export function observedCounterfactual(
