@@ -981,3 +981,40 @@ test("P125 review board remains mounted under same-game move selection", async (
   await timeline.nth(selected === first ? 1 : 0).click();
   await expect(board).toHaveAttribute("data-p125-mount-marker", "preserve");
 });
+
+
+test("P126 master-game collapse keeps original unsent writing without duplicating authority", async ({ page }) => {
+  await open(page, "/learn/model-games", ".model-games-view");
+  await page.getByRole("button", { name: "Open master-game workspace" }).click();
+  const master = page.locator(".p113-master");
+  await expect(master).toBeVisible();
+  await master.locator(".model-game-grid .model-game-start").first().click();
+  const writing = master.locator("#p113-plan");
+  await expect(writing).toBeEnabled();
+  const answer = "My provisional plan depends on a legal defender reply.";
+  await writing.fill(answer);
+  await page.getByRole("button", { name: "Hide master-game workspace" }).click();
+  await expect(master).toBeHidden();
+  await page.getByRole("button", { name: "Open master-game workspace" }).click();
+  await expect(master).toBeVisible();
+  await expect(master.locator("#p113-plan")).toHaveValue(answer);
+});
+
+test("P126 collapsible paired-game study retains manually prepared private portable note", async ({ page }) => {
+  await open(page, "/learn/model-games", ".model-games-view");
+  await page.getByRole("button", { name: "Open master-game workspace" }).click();
+  const master = page.locator(".p113-master");
+  await expect(master).toBeVisible();
+  await master.getByRole("button", { name: /Compare strategic decisions/ }).click();
+  const transfer = page.locator(".p114-transfer");
+  await expect(transfer.locator(".p114-picker button").first()).toBeVisible();
+  await transfer.locator(".p117-portable summary").click();
+  await transfer.getByRole("button", { name: "Prepare my study note" }).click();
+  const note = transfer.locator("#p117-portable-text");
+  const carried = await note.inputValue();
+  expect(carried).toContain("chess-p117-pair");
+  await page.getByRole("button", { name: "Hide master-game workspace" }).click();
+  await expect(master).toBeHidden();
+  await page.getByRole("button", { name: "Open master-game workspace" }).click();
+  await expect(note).toHaveValue(carried);
+});
