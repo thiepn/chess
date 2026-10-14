@@ -54,7 +54,8 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
   const decision = current?.game.checkpoints[decisionIndex];
   // Never expose the previous Account's draft while the restoration effect runs.
   const ownerDraftKey = owner && selectedId ? masterDraftKey(owner, selectedId) : "";
-  const visibleDrafts = ownerDraftKey && draftOwner === ownerDraftKey ? drafts : {};
+  const draftReady = Boolean(ownerDraftKey && draftOwner === ownerDraftKey);
+  const visibleDrafts = draftReady ? drafts : {};
   const currentDraft = decision ? visibleDrafts[decision.id] ?? emptyMasterDraft() : emptyMasterDraft();
   const fen = current?.fens[viewPly] ?? "";
   const plyCount = current?.sans.length ?? 0;
@@ -280,16 +281,17 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
               <p className="eyebrow">DECISION {decisionIndex + 1} / 4 · {decision.focus}</p>
               <h3>Think before looking ahead</h3>
               <p>{decision.prompt}</p>
+              {!draftReady && <p role="status">Restoring this Account's historical study drafts…</p>}
               <label htmlFor="p113-plan">Candidate move and strategic reasoning</label>
-              <textarea id="p113-plan" maxLength={MAX_WRITING} rows={3} value={currentDraft.plan}
+              <textarea id="p113-plan" maxLength={MAX_WRITING} rows={3} disabled={!draftReady} value={currentDraft.plan}
                 onChange={(event) => edit({ plan: event.target.value, revealed: false, mark: null })}
                 placeholder="Name a legal candidate, target square, plan and concrete reason." />
               <label htmlFor="p113-defense">Opponent's strongest practical objection</label>
-              <textarea id="p113-defense" maxLength={MAX_WRITING} rows={3} value={currentDraft.defense}
+              <textarea id="p113-defense" maxLength={MAX_WRITING} rows={3} disabled={!draftReady} value={currentDraft.defense}
                 onChange={(event) => edit({ defense: event.target.value, revealed: false, mark: null })}
                 placeholder="What could the other side actually play?"/>
               {!currentDraft.revealed && <button type="button" className="primary"
-                disabled={!comparisonReady} onClick={() => edit({ revealed: true })}>
+                disabled={!draftReady || !comparisonReady} onClick={() => edit({ revealed: true })}>
                 <Eye size={15}/> Compare with historical continuation
               </button>}
               {currentDraft.revealed && (
@@ -298,14 +300,16 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
                   <strong>Misconception and repair</strong><p>{decision.misconception}</p>
                   <strong>Independent transfer</strong><p>{decision.transfer}</p>
                   <label htmlFor="p113-transfer">Your revised plan for alternative resistance</label>
-                  <textarea id="p113-transfer" maxLength={MAX_WRITING} rows={3} value={currentDraft.transfer}
+                  <textarea id="p113-transfer" maxLength={MAX_WRITING} rows={3} disabled={!draftReady} value={currentDraft.transfer}
                     onChange={(event) => edit({ transfer: event.target.value, mark: null })} />
                   <p className="p113-source-caption">{decision.observed}</p>
                   <div className="p113-mark" role="group" aria-label="Unscored self-assessment">
                     <button type="button" className={currentDraft.mark === "retry" ? "selected" : ""}
-                      aria-pressed={currentDraft.mark === "retry"} onClick={() => edit({ mark: "retry" })}>Retry this decision</button>
+                      aria-pressed={currentDraft.mark === "retry"} disabled={!draftReady}
+                      onClick={() => edit({ mark: "retry" })}>Retry this decision</button>
                     <button type="button" className={currentDraft.mark === "understood" ? "selected" : ""}
-                      aria-pressed={currentDraft.mark === "understood"} onClick={() => edit({ mark: "understood" })}>Understood</button>
+                      aria-pressed={currentDraft.mark === "understood"} disabled={!draftReady}
+                      onClick={() => edit({ mark: "understood" })}>Understood</button>
                   </div>
                 </section>
               )}
@@ -313,7 +317,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
                 <button type="button" className="secondary" disabled={decisionIndex === 0} onClick={() => selectDecision(decisionIndex - 1)}><ChevronLeft size={15}/> Previous decision</button>
                 <button type="button" className="secondary" disabled={decisionIndex === 3} onClick={() => selectDecision(decisionIndex + 1)}>Next decision <ChevronRight size={15}/></button>
               </div>
-              <button type="button" className="p113-reset" onClick={resetDraft}><RotateCcw size={14}/> Restart this decision</button>
+              <button type="button" className="p113-reset" disabled={!draftReady} onClick={resetDraft}><RotateCcw size={14}/> Restart this decision</button>
               <p className="p113-source-caption">This short-lived draft is scoped to the current Account profile and session; it is not submitted, scored or synced. Move navigation is free and can reveal later moves.</p>
               <a href={current.game.source} target="_blank" rel="noreferrer">Historical PGN source</a>
               <p className="p113-source-caption">{current.game.sourceNote}</p>

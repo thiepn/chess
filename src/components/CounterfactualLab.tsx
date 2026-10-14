@@ -237,7 +237,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               </div>}
             </div>}
             <div className="p115-actions">
-              <button className="secondary" type="button" disabled={!last || isReference}
+              <button className="secondary" type="button" disabled={!last || isReference || browseHistory}
                 onClick={() => setLine(index, line.slice(0, -1))}>{guidance?.undoLabel}</button>
               <button className="secondary" type="button" disabled={!last && !result.invalid}
                 onClick={() => {
