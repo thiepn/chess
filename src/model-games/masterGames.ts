@@ -39,6 +39,8 @@ export interface MasterDraft {
   /** P115 candidate branches reuse the same owner/session draft; not verified grading. */
   branchA?: string[];
   branchB?: string[];
+  branchAltA?: string[];
+  branchAltB?: string[];
   branchNoteA?: string;
   branchNoteB?: string;
 }
@@ -117,6 +119,10 @@ export function restoreMasterDrafts(owner: string, gameId: string): Record<strin
         branchA: Array.isArray(draft?.branchA) ? draft.branchA.slice(0, 6).filter((move) =>
           typeof move === "string" && move.length <= 12) : [],
         branchB: Array.isArray(draft?.branchB) ? draft.branchB.slice(0, 6).filter((move) =>
+          typeof move === "string" && move.length <= 12) : [],
+        branchAltA: Array.isArray(draft?.branchAltA) ? draft.branchAltA.slice(0, 6).filter((move) =>
+          typeof move === "string" && move.length <= 12) : [],
+        branchAltB: Array.isArray(draft?.branchAltB) ? draft.branchAltB.slice(0, 6).filter((move) =>
           typeof move === "string" && move.length <= 12) : [],
         branchNoteA: typeof draft?.branchNoteA === "string" ? draft.branchNoteA.slice(0, 1200) : "",
         branchNoteB: typeof draft?.branchNoteB === "string" ? draft.branchNoteB.slice(0, 1200) : "",

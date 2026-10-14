@@ -21,6 +21,7 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
   const [error, setError] = useState("");
   const [rejected, setRejected] = useState(0);
   const [reference, setReference] = useState<[boolean, boolean]>([false, false]);
+  const [slots, setSlots] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -42,10 +43,13 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
     return () => abort.abort();
   }, [studies]);
 
-  useEffect(() => { setReference([false, false]); }, [active.source.id]);
+  useEffect(() => { setReference([false, false]); setSlots([0, 0]); }, [active.source.id]);
   const challenge = challenges.find((item) => item.id === active.source.id);
   function setLine(index: number, line: string[]) {
-    onChange(index === 0 ? { branchA: line, mark: null } : { branchB: line, mark: null });
+    const key = index === 0
+      ? slots[index] === 0 ? "branchA" : "branchAltA"
+      : slots[index] === 0 ? "branchB" : "branchAltB";
+    onChange({ [key]: line, mark: null });
   }
 
   return <section className="p115-lab" aria-label="P115 independent counterfactual branches">
@@ -61,7 +65,10 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
       <div className="p115-two-boards">
         {([active.first, active.second] as const).map((pin, index) => {
           const source = index === 0 ? active.source.first : active.source.second;
-          const line = (index === 0 ? draft.branchA : draft.branchB) ?? [];
+          const main = (index === 0 ? draft.branchA : draft.branchB) ?? [];
+          const alternate = (index === 0 ? draft.branchAltA : draft.branchAltB) ?? [];
+          const line = slots[index] === 0 ? main : alternate;
+          const other = replayCounterfactual(pin.fen, slots[index] === 0 ? alternate : main);
           const result = replayCounterfactual(pin.fen, line);
           const historical = observedCounterfactual(pin.game, source.ply);
           const referenceReplay = replayCounterfactual(pin.fen, historical);
@@ -81,6 +88,14 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
             <header><strong>Position {name} · {pin.game.game.players}</strong>
               <span>{pin.game.game.year} · {pin.game.game.event}</span></header>
             <p className="p115-source-task">{index === 0 ? challenge.firstChallenge : challenge.secondChallenge}</p>
+            <div className="p115-actions" role="group" aria-label={"Candidate variations for position " + name}>
+              {[0, 1].map((slot) => <button key={slot} type="button" className="secondary"
+                aria-pressed={slots[index] === slot}
+                onClick={() => { setSlots((old) => old.map((n, i) => i === index ? slot : n) as [number, number]);
+                  setReference((old) => old.map((n, i) => i === index ? false : n) as [boolean, boolean]); }}>
+                {slot === 0 ? "Original candidate" : "Alternative candidate"}
+              </button>)}
+            </div>
             <ChessBoard
               key={source.gameId + ":" + currentFen + ":" + isReference}
               fen={currentFen}
@@ -89,10 +104,16 @@ export function CounterfactualLab({ studies, active, draft, onChange, onOpenPosi
               onMove={isReference ? undefined : play}
             />
             {result.invalid && <p role="alert">The saved variation contains a move that is not legal from this source board. Clear it to resume; no line was silently rewritten.</p>}
+            {(main.length > 0 || alternate.length > 0) && <p className="p115-notation">
+              <strong>Two candidate lines:</strong> First: {main.join(" ") || "not entered"} · Alternative: {alternate.join(" ") || "not entered"}
+            </p>}
             <div className="p115-notation" aria-live="polite">
               <strong>{isReference ? "Observed PGN:" : "Your legal branch:"}</strong>
               <span>{isReference ? historical.join(" ") : last ? result.sans.join(" ") : "No moves played"}</span>
             </div>
+            {main.length > 0 && alternate.length > 0 && !result.invalid && !other.invalid && <p className="p115-facts">
+              Compare your branches: which defender reply made you change the plan? Different legal continuations do not prove a best move.
+            </p>}
             {!result.invalid && !isReference && <p className="p115-facts" role="status">
               {result.checkmate ? "Checkmate in this legal board position" :
                 result.drawn ? "Draw reported by chess.js rules" :

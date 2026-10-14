@@ -28,6 +28,10 @@ export default defineConfig({
             "p47-learn-native.css", "p51-learn-large.css",
             "p47-play-native.css", "p51-play-large.css",
           ].indexOf(style) >= 0) return "secondary-page-styles";
+          // All three historical-decision views remain behind the original
+          // Model Games dynamic route; sharing one compressed chunk removes
+          // redundant transport overhead while keeping initial JS unchanged.
+          if (/\/src\/components\/(MasterGameLibrary|CrossGameTransferLab|CounterfactualLab)\.tsx$/.test(id)) return "master-study";
           if (id.indexOf("/node_modules/lucide-react/dist/esm/icons/") !== -1) return "chess-icons";
         },
       },
