@@ -32,3 +32,8 @@ P116 automated Device UX Prequalification **passed**; its Visual Regression work
 - Modified `src/model-games/counterfactualBranches.test.ts`
 - Modified `src/styles/p114-cross-game-transfer.css`
 - New `docs/P117_STRATEGIC_TRANSFER_CONTINUITY.md`
+
+## Exact-head automatic results and packaging response
+After correcting the three source-ID-rejected historic comparisons, the automatic P117 Quality run passed **448/448 tests**, the TypeScript/Vite build, and the unchanged initial bundle **216.8/260 KiB**, but total JS/CSS was **322.7/321 KiB**. The P117 build therefore was **not budget-qualified** at that head.
+
+The original Vite configuration now packs only the three related `MasterGameLibrary`, `CrossGameTransferLab`, and `CounterfactualLab` dynamic modules into one deferred `master-study` chunk. The original Model Games page remains lazily opened from the main App; no new initial import or baseline adjustment is introduced. The tradeoff is that entering the master-game workspace now downloads all three interaction views rather than downloading them separately on first use. Source data remains external and fetched on demand. Actual total gzip compliance must be verified on the latest exact SHA, not inferred from the source change.
