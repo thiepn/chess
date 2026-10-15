@@ -26,6 +26,7 @@ import type {
   BoardHighlight,
   LessonStep,
   LessonStepResult,
+  LessonScript,
 } from "../learning/types";
 import { emitExperienceEvent } from "../interaction/events";
 import { ChessBoard } from "./ChessBoard";
