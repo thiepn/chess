@@ -20,28 +20,41 @@ const defenseSkills = new Set([
   "defense.prophylaxis", "defense.exchange-attackers", "defense.counterplay",
 ]);
 
+/** Only original study families/themes are eligible for *contextual* course
+ * discovery. They retain their own source IDs and cannot inherit target-skill
+ * grading when used in a different course. */
 function contextual(skillId:string, position:CalculationPosition) {
   const kind=sourceStudyKind(position);
   const theme=sourceStudyTheme(position).toLowerCase();
-  if (attackSkills.has(skillId) && kind === "kingAttackStudy") {
-    if(skillId==="attack.open-lines")return /file|diagonal|line|check/.test(theme);
-    if(skillId==="attack.defenders")return /block|interpos|shelter|defend|escape/.test(theme);
-    if(skillId==="attack.mating-net")return /net|check|flight|king|shelter/.test(theme);
-    if(skillId==="attack.sacrifice")return /material|capture|poison|cost|trade|initiative/.test(theme);
-    return true;
+  if(!kind||!theme)return false;
+  switch(skillId){
+    case "strategy.open-files":
+      return (kind==="pieceCoordinationStudy" && /open.file rook penetration|open file and pawn.conversion timing/.test(theme)) ||
+        (kind==="strategicImbalanceStudy" && /open files and rook access/.test(theme));
+    case "strategy.outposts":
+      return kind==="pieceCoordinationStudy" && /knight outpost versus bishop|knight blockades and king coordination/.test(theme);
+    case "pawns.breaks":
+      return (kind==="pawnStructureStudy" && /central pawn chains and levers|practical middlegame pawn breaks/.test(theme)) ||
+        (kind==="openingTransitionStudy" && /central tension|d4 break/.test(theme));
+    case "pawns.weaknesses":
+      return (kind==="pawnStructureStudy" && /doubled and backward pawns|pawn islands and wing targets|fixed color complexes/.test(theme)) ||
+        (kind==="strategicImbalanceStudy" && /pawn weaknesses and compensation/.test(theme));
   }
-  if (defenseSkills.has(skillId) && kind === "defensiveTechniqueStudy") {
-    if(skillId==="defense.prophylaxis")return /flight|fortress|shield|interpos|block|king/.test(theme);
-    if(skillId==="defense.exchange-attackers")return /exchange|trade|material|recapture/.test(theme);
-    return true;
+  if(attackSkills.has(skillId) && kind==="kingAttackStudy"){
+    if(skillId==="attack.king-safety")return true;
+    if(skillId==="attack.open-lines")return /open.file|open a.file|long diagonal|a.file pressure/.test(theme);
+    if(skillId==="attack.defenders")return /interposition|blocks|shelter|escape squares|flight squares|defensive/.test(theme);
+    if(skillId==="attack.mating-net")return /rook net|checks|flights|escape squares|corner/.test(theme);
+    if(skillId==="attack.sacrifice")return /initiative at material cost|poisoned|material cost/.test(theme);
   }
-  if (skillId === "strategy.open-files" && kind === "pieceCoordinationStudy")
-    return /rook|file|coordination/.test(theme);
-  if (skillId === "strategy.outposts" && kind === "pieceCoordinationStudy")
-    return /knight|outpost|blockade/.test(theme);
-  if (skillId === "pawns.breaks" && kind === "pawnStructureStudy")
-    return /break|lever|pawn/.test(theme);
-  if (skillId === "pawns.weaknesses" && kind === "pawnStructureStudy") return true;
+  if(defenseSkills.has(skillId)){
+    if(kind==="defensiveTechniqueStudy"){
+      if(skillId==="defense.prophylaxis")return /king flight|fortress|material.first active rook|shield|interposition/.test(theme);
+      if(skillId==="defense.exchange-attackers")return /rook trade|knight trade|queen trade|exchange|recapture/.test(theme);
+      return true;
+    }
+    if(skillId==="defense.prophylaxis" && kind==="prophylaxisStudy")return true;
+  }
   return false;
 }
 
