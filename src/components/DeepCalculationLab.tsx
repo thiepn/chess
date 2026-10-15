@@ -50,7 +50,6 @@ export function DeepCalculationLab({
   const game = new Chess(fen);
   const maxed = cursor >= 8 || game.isGameOver();
   const reference = comparisonFor(branch, draft.played.slice(0, cursor));
-  const next = branch.plies[cursor];
   const originalReplies = !maxed
     ? recordedDefenderChoices(position, branches, draft.played.slice(0,cursor))
     : [];
@@ -186,7 +185,7 @@ export function DeepCalculationLab({
         {canUseAuthoredOpponent && showSourceReply && (
           <div className="deep-lab-defender-choices" role="group"
             aria-label="Legally verified original defender responses">
-            <p>{originalReplies.length} distinct recorded reply{originalReplies.length===1?"":"ies"}
+            <p>{originalReplies.length} distinct recorded {originalReplies.length===1?"reply":"replies"}
               from the original source. Select a legal illustration, not a certified
               objectively best defense.</p>
             {originalReplies.map(reply=><button key={reply.uci}

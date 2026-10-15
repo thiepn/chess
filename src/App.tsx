@@ -740,7 +740,7 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: position.assessmentStatus !== "instructional-only"
+      reason: position.assessmentStatus !== "instructional-only" && !(preferredSkillId && !position.skillIds.includes(preferredSkillId))
         ? "Original scored calculation and positional study"
         : position.endgameDecisionStudy
         ? "P112 · Endgame decision lab (unscored)"
@@ -2287,7 +2287,9 @@ export default function App() {
       courseContextOnly: !source.skillIds.includes(focusSkillId),
       activityType:"calculation",calculationPositionId:source.id,
       estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
-      reason:"Original source-qualified calculation",title:source.title,subtitle:"Calculate the opponent's reply",
+      reason:source.skillIds.includes(focusSkillId)
+        ? "Original source-qualified calculation"
+        : "Contextual unscored source exercise",title:source.title,subtitle:"Calculate the opponent's reply",
     });
   }
 

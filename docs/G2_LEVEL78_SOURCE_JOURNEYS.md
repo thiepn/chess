@@ -64,3 +64,23 @@ GitHub source-only connector.
   `replyReason`, and P95 also shows its source-owned defensive misconception.
   Other legal defenses are described as departures, **not** objectively wrong.
   The focused 80-case regression checks that these source feedback fields exist.
+
+## G2D: original advanced source-depth and verified defender options
+- Audited all 39 original P94–P112 calculation JSON files: **684** source positions,
+  **558 historical scored**, **126 original instructional-only**. Counts are from
+  connected-source inspection, not a run of Chess.js across all 684.
+- Original P103 scored studies include five *isolated queen's pawn*, five
+  *hanging c/d-pawn*, and five *Carlsbad minority attack* boards. The Advanced
+  skill pages now discover these by the source's exact theme. Every contextual
+  drill stays **unscored** even if its original calculation problem is historically
+  scored; native P103–P106 direct calculation remains scored.
+- Source matching now relies on author-assigned category and theme, not a broad
+  accidental match on a generic position title. Contextual studies are labelled
+  as such; the original source skill IDs and model move remain unchanged.
+- P103 and P105 both have verified source records that share a legal candidate
+  move but document *multiple distinct opponent replies*. The existing P108
+  board now presents those verified defender choices on demand and offers
+  an in-place switch to a matching original alternative branch.
+- `npm run source:qualification` is the focused executable 39-file/684-position
+  Chess.js legality and 51 original Level 4–8 skill coverage test. It is **not
+  executed** until a full, exact-head repo checkout with dependencies exists.

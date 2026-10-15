@@ -356,7 +356,7 @@ export function CalculationRunner({
       <div className="calculation-stage-rail">
         {[
           ["candidates", "Candidates"],
-          ["reply", "Best reply"],
+          ["reply", instructionalOnly ? "Defender response" : "Best reply"],
           [
             "continuation",
             "Continuation",
@@ -668,7 +668,8 @@ export function CalculationRunner({
                     }
                   </strong>
                   . Switch sides mentally:
-                  what is the strongest reply?
+                  {instructionalOnly ? "which legal defensive resource changes your position?"
+                      : "what is the strongest reply?"}
                 </p>
                 <div className="calculation-rule">
                   <Target size={17} />
