@@ -158,19 +158,21 @@ function LessonPage({
     [skill],
   );
   const depthCases = useMemo(
-    () => level456Pathways(skill.id,level456Positions,endgamePositions,6),
+    () => level456Pathways(skill.id,level456Positions,endgamePositions,12),
     [skill.id,level456Positions],
   );
   const depthLens = level456Lens(skill.id);
   const journey=level78Guide(skill.id);
-  const advancedCases=useMemo(()=>level78AdvancedCases(skill.id,level456Positions,endgamePositions,6),
+  const advancedCases=useMemo(()=>level78AdvancedCases(skill.id,level456Positions,endgamePositions,12),
     [skill.id,level456Positions]);
   const gameMissions=useMemo(()=>level78GameMissions(skill.id,personalGameMissions,3),
     [skill.id,personalGameMissions]);
   const [stepIndex, setStepIndex] = useState(0);
+  const [visibleDepth,setVisibleDepth] = useState(6);
 
   useEffect(() => {
     setStepIndex(0);
+    setVisibleDepth(6);
   }, [skill.id]);
 
   const step = lesson.steps[Math.min(stepIndex, lesson.steps.length - 1)];
@@ -268,7 +270,7 @@ function LessonPage({
             </details>}
             {depthCases.length ? (
               <div className="learn-v2-depth-cases">
-                {depthCases.map(item => (
+                {depthCases.slice(0,visibleDepth).map(item => (
                   <button key={item.id} type="button" className="secondary"
                     onClick={() => item.kind==="calculation"
                       ? onOpenCalculationSource(item.position,skill.id)
@@ -298,7 +300,7 @@ function LessonPage({
             <button type="button" className="secondary" onClick={()=>onStartLesson(skill.id)}>
               <strong>1 · Learn or revisit this skill</strong><small>Original lesson and existing mastery evidence</small>
             </button>
-            {advancedCases.map(item=><button type="button" className="secondary" key={item.id}
+            {advancedCases.slice(0,visibleDepth).map(item=><button type="button" className="secondary" key={item.id}
               onClick={()=>item.kind==="calculation"
                 ? onOpenCalculationSource(item.position,skill.id) : onOpenEndgameSource(item.position)}>
               <strong>{item.title}</strong>

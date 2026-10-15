@@ -34,7 +34,7 @@ export function verifiedDeepBranches(position: CalculationPosition): DeepBranch[
   ];
   const seen = new Set<string>();
   return list.flatMap(item => {
-    if (!Array.isArray(item.moves) || item.moves.length < 4 ||
+    if (!Array.isArray(item.moves) || item.moves.length < 3 ||
         item.moves.length > MAX_PLIES) return [];
     const rows = legalCalculationBranch({
       fen: position.fen, playerColor: position.playerColor,

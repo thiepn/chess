@@ -52,12 +52,17 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       .toBeNull();
   });
 
-  it("does not manufacture deeper work for a three-ply-only source", () => {
+  it("now replays genuinely source-legal three-ply cases without fabricating a fourth move", () => {
     const entry = older.positions[0] as CalculationPosition;
-    if (entry.principalVariation.length === 3 &&
-        !entry.defensiveStudy?.variations?.some(v => v.moves.length >= 4)) {
-      expect(verifiedDeepBranches(entry)).toEqual([]);
-    }
+    expect(entry.principalVariation).toHaveLength(3);
+    const branches=verifiedDeepBranches(entry);
+    expect(branches.length).toBeGreaterThanOrEqual(1);
+    expect(branches[0].plies).toHaveLength(3);
+    const played=branches[0].plies.map(row=>({uci:row.uci,origin:"learner" as const}));
+    expect(deepFrames(entry,played)).toHaveLength(4);
+    expect(comparisonFor(branches[0],played).matched).toBe(3);
+    expect(branches[0].plies[2].afterFen).toBe(deepFrames(entry,played)![3].fen);
+    expect(branches[0].plies[3]).toBeUndefined();
   });
 
   it("revalidates resumable line navigation, owner and tampering", () => {

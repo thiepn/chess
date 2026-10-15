@@ -30,6 +30,9 @@ export function DeepCalculationLab({
   const [busy, setBusy] = useState(false);
   const [local, setLocal] = useState<{ fen: string; move: string; depth: number } | null>(null);
   const [error, setError] = useState("");
+  // Keep the actual defender move hidden until the learner chooses to reveal it.
+  // The source is an illustrative recorded line, never an engine-optimality claim.
+  const [showSourceReply,setShowSourceReply]=useState(false);
   const epoch = useRef(0);
 
   useEffect(() => {
@@ -37,7 +40,8 @@ export function DeepCalculationLab({
   }, [storageOwner, position, draft]);
   useEffect(() => () => { epoch.current++; }, []);
 
-  // App mounts the lab only for positions with legal 4+ ply material.
+  // Original legal 3–8 ply cases now share the same optional deep board.
+  // No new move/grade engine or fabricated continuation.
   if (!branches.length) return null;
   const branch = branches.find(item => item.id === draft.branchId) ?? branches[0];
   const frames = deepFrames(position, draft.played);
@@ -58,6 +62,7 @@ export function DeepCalculationLab({
     epoch.current++;
     setLocal(null);
     setError("");
+    setShowSourceReply(false);
     setBusy(false);
   }
   function setBranch(id: string) {
@@ -117,8 +122,9 @@ export function DeepCalculationLab({
         <div>
           <p className="eyebrow">P108 · DEEP CALCULATION LAB</p>
           <h3>Calculate, resist, revise</h3>
-          <p>Play both sides on the board, or make the defender follow an authored reply.
-            Authored continuations are legal examples, not proof of the best move.</p>
+          <p>Rehearse each move and the concrete reply on this original board.
+            Three-ply cases stop at their actual source boundary; longer branches continue
+            as authored. They are legal examples, not proof of unique best moves.</p>
         </div>
         <span className="deep-lab-count">{cursor}/8 plies</span>
       </header>
@@ -139,6 +145,10 @@ export function DeepCalculationLab({
           fen={fen} orientation={position.playerColor} disabled={maxed || busy}
           onMove={item => move(`${item.from}${item.to}${item.promotion ?? ""}`, "learner")} />
         <div className="deep-lab-board-details" role="status" aria-live="polite">
+          {canUseAuthoredOpponent && <p>
+            Play the defender independently before revealing its source response.
+            What check, capture, block or counter-threat creates the most resistance?
+          </p>}
           <strong>{maxed ? game.isGameOver() ? "Position ended" : "Eight-ply practice limit"
             : game.turn() === position.playerColor ? "Your side to move" : "Defender to move"}</strong>
           <span>{reference.deviated
@@ -167,10 +177,16 @@ export function DeepCalculationLab({
           onClick={() => navigate(cursor - 1)}><ChevronLeft size={16}/> Back</button>
         <button type="button" className="secondary" disabled={busy || cursor === draft.played.length}
           onClick={() => navigate(cursor + 1)}>Forward <ChevronRight size={16}/></button>
-        {canUseAuthoredOpponent && (
+        {canUseAuthoredOpponent && !showSourceReply && (
+          <button type="button" className="secondary"
+            onClick={() => setShowSourceReply(true)}>
+            Reveal the recorded defender response
+          </button>
+        )}
+        {canUseAuthoredOpponent && showSourceReply && (
           <button type="button" className="secondary"
             onClick={() => move(next.uci, "authored-response")}>
-            Play documented defender reply
+            Play source defender move · {next.san}
           </button>
         )}
         <button type="button" className="secondary" disabled={busy || maxed}
@@ -190,10 +206,12 @@ export function DeepCalculationLab({
 
       <div className="deep-lab-feedback">
         <strong>Branch comparison</strong>
+        {cursor>=2 && <p>After the opponent's reply, inspect the resulting board.
+          If you entered a different legal defense, compare without labeling it objectively worse.</p>}
         <p>{reference.deviated
           ? `The entered sequence departed from ${branch.label} after ${reference.matched} matching plies. Continue calculating legally, examine another branch, or use the local engine explicitly.`
           : `Matched ${reference.matched} of ${counter} authored plies. Continue beyond the recorded sequence only as unguided exploration.`}</p>
-        {cursor >= 4 &&
+        {cursor >= Math.min(4, branch.plies.length) &&
           <button type="button" className="secondary"
             onClick={() => setDraft(previous => ({ ...previous, reveal: !previous.reveal }))}>
             {draft.reveal ? "Hide authored line" : "Reveal authored comparison"}
@@ -210,7 +228,7 @@ export function DeepCalculationLab({
           <RotateCcw size={15}/> Discard branch draft
         </button>
         <button type="button" className="secondary" onClick={onComplete}>Skip optional depth lab</button>
-        <button type="button" className="primary" disabled={cursor < 4}
+        <button type="button" className="primary" disabled={cursor < Math.min(4, branch.plies.length)}
           onClick={onComplete}>
           Continue to independent study <ChevronRight size={16}/>
         </button>

@@ -53,7 +53,7 @@ export function level456Pathways(
   skillId:string,
   positions:readonly CalculationPosition[],
   endgames:readonly EndgamePosition[],
-  maximum=6,
+  maximum=12,
 ):DeepSource[] {
   const stage=skillById[skillId]?.stage;
   if (!["thinking","fight","finish"].includes(stage??"")) return [];

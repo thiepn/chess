@@ -293,7 +293,7 @@ const studyFocus:Readonly<Record<string,RegExp>> = {
 };
 export function level78AdvancedCases(
  skillId:string,positions:readonly CalculationPosition[],
- endings:readonly EndgamePosition[],limit=6,
+ endings:readonly EndgamePosition[],limit=12,
 ):AdvancedCase[] {
   if(skillById[skillId]?.stage!=="advanced")return [];
   const max=Math.min(12,Math.max(0,Math.floor(limit)));
