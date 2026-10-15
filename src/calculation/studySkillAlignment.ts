@@ -1,9 +1,9 @@
 import type { CalculationPosition } from "./types";
 
 /**
- * G0 content routing only. These already-authored studies are unscored:
- * their legal reference lines do not certify an engine-unique best move.
- * Never change a historical source identity, personal-game position or graded item.
+ * Content discovery only. P103–P106 are historical scored calculation sources;
+ * P109–P112 are instructional-only. Neither category may be silently
+ * regraded, reidentified or rewritten when made discoverable.
  */
 type StudyKind =
   | "pawnStructureStudy" | "pieceCoordinationStudy" | "kingAttackStudy"
@@ -22,9 +22,12 @@ const kinds: ReadonlyArray<{ prefix: string; kind: StudyKind }> = [
 ];
 
 export function sourceStudyKind(position: CalculationPosition): StudyKind | null {
-  if (position.assessmentStatus !== "instructional-only") return null;
   const pair = kinds.find(({ prefix }) => position.id.startsWith(`calc:${prefix}-`));
   if (!pair) return null;
+  const historicalScored = ["p103","p104","p105","p106"].includes(pair.prefix);
+  if (historicalScored) {
+    if (position.assessmentStatus !== undefined || position.source !== "authored") return null;
+  } else if (position.assessmentStatus !== "instructional-only") return null;
   const data = position as unknown as Record<string, unknown>;
   const study = data[pair.kind];
   return study && typeof study === "object" ? pair.kind : null;
@@ -40,7 +43,7 @@ export function sourceStudyTheme(position: CalculationPosition): string {
 
 export function alignSourceStudySkills(position: CalculationPosition): CalculationPosition {
   const kind = sourceStudyKind(position);
-  if (!kind) return position;
+  if (!kind || position.assessmentStatus !== "instructional-only") return position;
   const theme = sourceStudyTheme(position).toLowerCase();
   const add: string[] = [];
   switch (kind) {

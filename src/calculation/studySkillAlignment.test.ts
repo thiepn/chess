@@ -12,49 +12,47 @@ import { skillById } from "../domain/curriculum";
 import type { CalculationPosition } from "./types";
 import { alignSourceStudySkills, sourceStudyKind, sourceStudyTheme } from "./studySkillAlignment";
 
-const samples = [a103, a104, a105, a106, a109, a110, a111, a112]
-  .flatMap(asset => asset.positions) as unknown as CalculationPosition[];
+const scored = [a103,a104,a105,a106].flatMap(a=>a.positions) as CalculationPosition[];
+const unscored = [a109,a110,a111,a112].flatMap(a=>a.positions) as CalculationPosition[];
 
-describe("G0 source-qualified, unscored study routing", () => {
-  it("routes actual authored themes, not generic tactical or unrelated stages", () => {
-    const expected = [
-      ["calc:p103-01", "pawns.iqp"],
-      ["calc:p104-01", "strategy.coordination"],
-      ["calc:p105-01", "attack.open-lines"],
-      ["calc:p106-01", "defense.counterplay"],
-      ["calc:p109-01", "strategy.imbalances"],
-      ["calc:p110-01", "defense.prophylaxis"],
-      ["calc:p111-01", "strategy.repertoire-middlegames"],
-      ["calc:p112-01", "endgames.rook-activity"],
-    ] as const;
-    for (const [id,skillId] of expected) {
-      const source = samples.find(item=>item.id===id);
-      expect(source, id).toBeDefined();
-      const aligned = alignSourceStudySkills(source!);
-      expect(aligned.skillIds).toContain(skillId);
-      expect(source!.id).toBe(aligned.id);
-      expect(source!.fen).toBe(aligned.fen);
-      expect(source!.bestMove).toBe(aligned.bestMove);
-      expect(aligned.assessmentStatus).toBe("instructional-only");
+describe("P103–P106 historical scores and P109–P112 unscored discovery", () => {
+  it("discovers original scored case families without rewriting grade, skills, ID or board", () => {
+    const kinds=["pawnStructureStudy","pieceCoordinationStudy","kingAttackStudy","defensiveTechniqueStudy"];
+    for (const [index, asset] of [a103,a104,a105,a106].entries()) {
+      const p=asset.positions[0] as CalculationPosition;
+      expect(sourceStudyKind(p)).toBe(kinds[index]);
+      expect(sourceStudyTheme(p).length).toBeGreaterThan(3);
+      expect(p.assessmentStatus).toBeUndefined();
+      expect(alignSourceStudySkills(p)).toBe(p);
+      const original=new Chess(p.fen).fen();
+      expect(new Chess(alignSourceStudySkills(p).fen).fen()).toBe(original);
     }
+    expect(scored.every(p=>alignSourceStudySkills(p)===p)).toBe(true);
   });
-  it("retains lawful authored source IDs and never creates non-existent skills", () => {
-    for (const source of samples) {
-      expect(sourceStudyKind(source)).not.toBeNull();
-      expect(sourceStudyTheme(source).length).toBeGreaterThan(3);
-      const aligned = alignSourceStudySkills(source);
-      expect(new Set(aligned.skillIds).size).toBe(aligned.skillIds.length);
+  it("adds only subject-justified discovery tags to already-unscored sources", () => {
+    const cases:[string,string][]=[["calc:p109-01","strategy.imbalances"],
+      ["calc:p110-01","defense.prophylaxis"],
+      ["calc:p111-01","strategy.repertoire-middlegames"],
+      ["calc:p112-01","endgames.rook-activity"]];
+    for (const [id,target] of cases){
+      const source=unscored.find(p=>p.id===id)!;
+      const found=alignSourceStudySkills(source);
+      expect(found.skillIds).toContain(target);
+      expect(found.assessmentStatus).toBe("instructional-only");
+      expect(found.id).toBe(source.id);
+      expect(found.fen).toBe(source.fen);
+      expect(found.bestMove).toBe(source.bestMove);
+    }
+    for (const p of unscored){
+      const aligned=alignSourceStudySkills(p);
       expect(aligned.skillIds.every(id=>Boolean(skillById[id]))).toBe(true);
-      expect(aligned.principalVariation).toEqual(source.principalVariation);
-      expect(new Chess(aligned.fen).fen()).toBe(new Chess(source.fen).fen());
     }
   });
-  it("does not change scored/personal-game sources or invent a study category", () => {
-    const sample = samples[0];
-    const unqualified = { ...sample, assessmentStatus: undefined };
-    expect(alignSourceStudySkills(unqualified)).toBe(unqualified);
-    expect(sourceStudyKind(unqualified)).toBeNull();
-    const privateSource = { ...sample, source: "personal-game" as const, id: "calc:mistake:owned" };
-    expect(alignSourceStudySkills(privateSource)).toBe(privateSource);
+  it("rejects counterfeit personal games and unauthorized scored metadata", () => {
+    const s=scored[0];
+    expect(sourceStudyKind({...s,source:"personal-game",id:"calc:mistake:owned"})).toBeNull();
+    expect(sourceStudyKind({...s,assessmentStatus:"instructional-only"})).toBeNull();
+    const p=unscored[0];
+    expect(sourceStudyKind({...p,assessmentStatus:undefined})).toBeNull();
   });
 });

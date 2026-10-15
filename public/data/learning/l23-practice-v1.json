@@ -1,0 +1,247 @@
+{
+  "schema": "thiepn.chess.level23-practice.v1",
+  "version": 1,
+  "authority": "Original repertoire source moves and CC0 Lichess puzzle continuations; legal-source instructional targets, not universal engine-unique moves.",
+  "items": [
+    {
+      "skillId": "openings.principles",
+      "kind": "repertoire",
+      "sourceIds": [
+        "white-e4",
+        "italian-nf3",
+        "italian-bc4",
+        "caro-d4",
+        "french-d4",
+        "black-caro-d5",
+        "black-qgd-d5",
+        "black-qgd-nf6",
+        "sicilian-alapin",
+        "italian-d3-bc5"
+      ],
+      "goal": "Compare central control, development, and king safety before choosing a principled opening move.",
+      "misconception": "A familiar opening move is not an automatic rule. First check the pawn structure and whose king needs safety.",
+      "hint": "Identify the move that improves the position for a concrete reason, not because its notation is familiar."
+    },
+    {
+      "skillId": "openings.development",
+      "kind": "repertoire",
+      "sourceIds": [
+        "italian-nf3",
+        "italian-bc4",
+        "black-qgd-nc3",
+        "black-qgd-nf6",
+        "black-qgd-nf3",
+        "black-qgd-be7",
+        "black-caro-nc3",
+        "black-caro-bf5",
+        "italian-bc5",
+        "black-caro-nxe4"
+      ],
+      "goal": "Find a productive development move that adds influence without surrendering material.",
+      "misconception": "Moving a developed piece a second time can waste a tempo when an untouched minor piece needs work.",
+      "hint": "Which undeveloped piece has the clearest useful square in this exact position?"
+    },
+    {
+      "skillId": "openings.center",
+      "kind": "repertoire",
+      "sourceIds": [
+        "white-e4",
+        "caro-d4",
+        "french-d4",
+        "sicilian-alapin",
+        "black-qgd-d5",
+        "black-caro-d5",
+        "french-c5",
+        "french-e5",
+        "alapin-d4",
+        "black-qgd-c4"
+      ],
+      "goal": "Find a legal move that contests or supports the center in this pawn structure.",
+      "misconception": "Do not push a central pawn without checking its support and the opponent's pawn contacts.",
+      "hint": "Count e4, d4, e5, and d5 attackers and pawn breaks before acting."
+    },
+    {
+      "skillId": "openings.king-safety",
+      "kind": "repertoire",
+      "sourceIds": [
+        "black-qgd-be7",
+        "italian-d3-bc5",
+        "italian-bc4",
+        "black-qgd-nf6",
+        "black-caro-bf5",
+        "black-qgd-e6",
+        "italian-nf3",
+        "italian-c3",
+        "italian-d6",
+        "black-caro-nxe4"
+      ],
+      "goal": "Improve king safety or prepare a sound castling setup with natural development.",
+      "misconception": "A kingside attacking plan is premature when the king and development lag behind.",
+      "hint": "Which move helps secure your king while keeping the center defensible?"
+    },
+    {
+      "skillId": "openings.queen-timing",
+      "kind": "repertoire",
+      "sourceIds": [
+        "italian-nf3",
+        "italian-bc4",
+        "italian-c3",
+        "black-caro-bf5",
+        "black-qgd-nf6",
+        "black-qgd-nc3",
+        "black-qgd-be7",
+        "french-d4",
+        "sicilian-alapin",
+        "black-caro-nxe4"
+      ],
+      "goal": "Choose a useful developing or central move while the queen need not come out early.",
+      "misconception": "Bringing the queen out before the minor pieces can donate tempi to attacks on the queen.",
+      "hint": "Can a minor piece or pawn make the intended improvement without early queen exposure?"
+    },
+    {
+      "skillId": "openings.tempo",
+      "kind": "repertoire",
+      "sourceIds": [
+        "italian-nf3",
+        "italian-bc4",
+        "black-caro-d5",
+        "black-qgd-nf6",
+        "black-caro-bf5",
+        "french-c5",
+        "italian-c3",
+        "black-qgd-be7",
+        "alapin-d5",
+        "black-caro-nxe4"
+      ],
+      "goal": "Make progress with a move whose immediate purpose responds to the present position.",
+      "misconception": "Do not confuse a forcing-looking move with a genuinely productive tempo.",
+      "hint": "What does your move improve, threaten, or prevent—and what answer might your opponent have?"
+    },
+    {
+      "skillId": "strategy.piece-activity",
+      "kind": "repertoire",
+      "sourceIds": [
+        "italian-bc4",
+        "italian-nf3",
+        "black-qgd-nf6",
+        "black-qgd-nc3",
+        "black-qgd-be7",
+        "black-caro-bf5",
+        "black-caro-nxe4",
+        "italian-bc5",
+        "black-qgd-nf3",
+        "italian-c3"
+      ],
+      "goal": "Activate a piece on a useful square rather than making a purposeless move.",
+      "misconception": "Activity is measured by influence and coordination, not by how far a piece travels.",
+      "hint": "Which piece gains a useful file, diagonal, or central square after this move?"
+    },
+    {
+      "skillId": "strategy.worst-piece",
+      "kind": "repertoire",
+      "sourceIds": [
+        "black-qgd-be7",
+        "black-caro-bf5",
+        "italian-bc4",
+        "italian-nf3",
+        "black-qgd-nf6",
+        "black-qgd-nc3",
+        "black-qgd-nf3",
+        "black-caro-nc3",
+        "italian-bc5",
+        "black-caro-nxe4"
+      ],
+      "goal": "Improve the currently least useful piece without creating a new weakness.",
+      "misconception": "Repeatedly improving an already active piece leaves undeveloped teammates out of play.",
+      "hint": "Find the least effective piece and name its next useful role before moving."
+    },
+    {
+      "skillId": "tactics.double-attack",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Locate the move that threatens two vulnerable targets in the recorded puzzle line.",
+      "misconception": "A move attacking only one piece may give the defender time to save everything.",
+      "hint": "Identify two targets and calculate the defender's immediate resource."
+    },
+    {
+      "skillId": "tactics.knight-fork",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Look for a knight jump that attacks multiple valuable targets at once.",
+      "misconception": "A geometrical fork is not a win if the knight can simply be taken or the targets can escape.",
+      "hint": "Trace the knight's landing square and each target before committing."
+    },
+    {
+      "skillId": "tactics.pin",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Find the source move that exploits a piece constrained by something behind it.",
+      "misconception": "A pinned piece is not automatically immobile; check which moves are legal and what lies behind.",
+      "hint": "Inspect the attacking ray and the higher-value piece behind the target."
+    },
+    {
+      "skillId": "tactics.skewer",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Force a valuable piece to move so a target behind it becomes available.",
+      "misconception": "A skewer requires a genuine line of attack through the front piece.",
+      "hint": "Find the line, the first target and what becomes exposed if it moves."
+    },
+    {
+      "skillId": "tactics.discovered",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Reveal an existing piece's line by moving its blocker with purpose.",
+      "misconception": "Moving a blocker is not enough unless the revealed line creates a useful threat.",
+      "hint": "Identify the rear attacker, the blocking piece and its destination."
+    },
+    {
+      "skillId": "tactics.removing-defender",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Remove or distract the unit that guards a critical target.",
+      "misconception": "Capturing any available piece may leave the decisive defender intact.",
+      "hint": "Find the defender's exact duty and the target that becomes vulnerable."
+    },
+    {
+      "skillId": "tactics.deflection",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Force a defender away from a square or piece it must protect.",
+      "misconception": "A threat does not work if the defender can remain on its key square without consequence.",
+      "hint": "Locate the defender's duty and a forcing reason it must abandon that duty."
+    },
+    {
+      "skillId": "tactics.decoy",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Lure an opponent's piece onto an unfavorable square before the follow-up.",
+      "misconception": "The destination square matters: not every tempting sacrifice creates a tactical gain.",
+      "hint": "Identify where the opposing piece is induced to go and what follows."
+    },
+    {
+      "skillId": "tactics.back-rank",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Check the king's escape squares before choosing a back-rank attack.",
+      "misconception": "An apparently trapped king may have a flight square or a timely defensive interposition.",
+      "hint": "Verify escape squares and all forcing defenses before claiming mate."
+    },
+    {
+      "skillId": "tactics.overload",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Expose a defender with two incompatible defensive responsibilities.",
+      "misconception": "Two attacked targets are not enough if different pieces can defend each one.",
+      "hint": "List both duties of the same defender and test whether one can be abandoned."
+    },
+    {
+      "skillId": "tactics.clearance",
+      "kind": "puzzle",
+      "sourceIds": [],
+      "goal": "Clear a square or line so another piece can execute the decisive follow-up.",
+      "misconception": "The clearing move must actually release the needed square or line; moving randomly does not.",
+      "hint": "Identify the piece blocking the tactic and the route it should vacate."
+    }
+  ]
+}

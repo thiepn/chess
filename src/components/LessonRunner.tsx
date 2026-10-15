@@ -20,6 +20,7 @@ import { deepTransferSkillIds, lessonForSkill } from "../learning/lessons";
 import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../learning/transferCompletion";
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
 import { summarizeLessonMastery } from "../learning/mastery";
+import { isLevel23Skill, prepareLevel23Practice } from "../learning/level23Practice";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -65,6 +66,7 @@ export function LessonRunner({
   );
   const missingTransfer = !deepTransferSkillIds.includes(skill.id);
   const beginner = beginnerSkillIds.some(id => id === skill.id);
+  const level23 = isLevel23Skill(skill.id);
   const [transferEntry,setTransferEntry] = useState<{skillId:string;entry:TransferExercise}|null>(null);
   const [transferError,setTransferError] = useState<string|null>(null);
   const [transferRetry,setTransferRetry] = useState(0);
@@ -106,8 +108,25 @@ export function LessonRunner({
     [baseLesson, missingTransfer, skill.id, transferEntry]);
   const lesson = useMemo(() =>
     beginner && beginnerEntry?.skillId === skill.id
-      ? withBeginnerPractice(transferLesson, beginnerEntry.entry) : transferLesson,
-    [beginner, beginnerEntry, skill.id, transferLesson]);
+      ? withBeginnerPractice(transferLesson, beginnerEntry.entry)
+      : level23 && level23Ready?.skillId === skill.id && level23Ready.base === transferLesson
+        ? level23Ready.lesson : transferLesson,
+    [beginner, beginnerEntry, level23, level23Ready, skill.id, transferLesson]);
+
+  const [level23Ready, setLevel23Ready] = useState<{base:LessonScript;skillId:string;lesson:LessonScript}|null>(null);
+  const [level23Error, setLevel23Error] = useState<string|null>(null);
+  const [level23Retry, setLevel23Retry] = useState(0);
+  useEffect(() => {
+    if (!level23 || (missingTransfer && transferEntry?.skillId !== skill.id)) return;
+    let cancelled = false;
+    setLevel23Error(null);
+    void prepareLevel23Practice(transferLesson).then(expanded => {
+      if (!cancelled) setLevel23Ready({base:transferLesson,skillId:skill.id,lesson:expanded});
+    }).catch(() => {
+      if (!cancelled) setLevel23Error("Level 2–3 practice is missing or has too few verified source positions. No credit was awarded.");
+    });
+    return () => { cancelled = true; };
+  }, [level23, missingTransfer, transferEntry, transferLesson, skill.id, level23Retry]);
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -309,15 +328,18 @@ export function LessonRunner({
 
   // Never fall through to the same-position fallback: that is retrieval, not transfer.
   if ((missingTransfer && transferEntry?.skillId !== skill.id) ||
-      (beginner && beginnerEntry?.skillId !== skill.id)) {
+      (beginner && beginnerEntry?.skillId !== skill.id) ||
+      (level23 && (level23Ready?.skillId !== skill.id || level23Ready.base !== transferLesson))) {
     const error = (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
-      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null);
+      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null) ??
+      (level23 ? level23Error : null);
     return <div className="lesson-runner lesson-runner-v2" role="status">
       <h2>{error ? "Lesson source unavailable" : "Preparing original practice"}</h2>
       <p>{error ?? "Loading and validating the independent board positions for this lesson."}</p>
       {error && <button type="button" onClick={() => {
         setTransferRetry(value => value + 1);
         setBeginnerRetry(value => value + 1);
+        setLevel23Retry(value => value + 1);
       }}>Retry lesson content</button>}
     </div>;
   }

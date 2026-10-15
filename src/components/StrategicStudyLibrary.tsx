@@ -35,10 +35,13 @@ export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry
   const focusSkill = skills.includes(requestedSkill) ? requestedSkill : "";
   const visible = focusSkill ? topical.filter(p => p.skillIds.includes(focusSkill)) : topical;
 
-  return <section className="strategic-library" aria-label="Unscored chess studies">
-    <p className="eyebrow">POSITION STUDY · UNSCORED</p>
+  const scoredOriginal = ["pawnStructureStudy","pieceCoordinationStudy","kingAttackStudy","defensiveTechniqueStudy"].includes(choice);
+  return <section className="strategic-library" aria-label="Chess position study library">
+    <p className="eyebrow">{scoredOriginal ? "ORIGINAL CALCULATION · SCORED" : "POSITION STUDY · UNSCORED"}</p>
     <h2>Calculate, defend, and compare the plan</h2>
-    <p>Original legal teaching lines and independent questions; not scored or engine-certified best moves.</p>
+    <p>{scoredOriginal
+      ? "P103–P106 keep their existing native calculation grading and historical skill links. Authored reference lines are not independent engine proof."
+      : "Original legal teaching lines and independent questions; not scored or engine-certified best moves."}</p>
     <label htmlFor="study-family">Study subject</label>
     <select id="study-family" value={choice}
       onChange={event => { setChoice(event.target.value); setTopic(""); setRequestedSkill(""); }}>
@@ -60,11 +63,11 @@ export function StrategicStudyLibrary({ positions, loading, failedCount, onRetry
           {skills.map(id => <option value={id} key={id}>{skillById[id].title}</option>)}
         </select>
       </>}
-      <p role="status">{visible.length} original, unscored studies for this selection</p>
+      <p role="status">{visible.length} original {scoredOriginal ? "historically scored calculation positions" : "unscored studies"} for this selection</p>
       <div className="strategic-library-list">
         {visible.map((p, i) =>
           <button type="button" key={p.id} onClick={() => onStart(p, focusSkill || undefined)}
-            aria-label={`Open unscored study ${p.title}`}>
+            aria-label={`Open ${scoredOriginal ? "historically scored calculation" : "unscored study"} ${p.title}`}>
             <span>{p.endgameDecisionStudy
               ? `Stage ${p.endgameDecisionStudy.stage}/${p.endgameDecisionStudy.stageCount}`
               : `Position ${i + 1}`}</span>

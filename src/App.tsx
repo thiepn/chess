@@ -502,8 +502,8 @@ export default function App() {
   const openingBridgePositions = useMemo(() => calculationCatalog(state).filter(
     item => item.assessmentStatus === "instructional-only" &&
       Boolean(item.openingTransitionStudy)), [state, catalogRevision]);
-  // G0: Surface the existing P103–P112 subject-qualified study corpus using
-  // its original unscored authority, not a second practice or grading engine.
+  // Discover original P103–P106 scored cases AND P109–P112 unscored studies.
+  // Keep each source's native completion and grading authority unchanged.
   const sourceLinkedStudies = useMemo(() => calculationCatalog(state).filter(
     item => sourceStudyKind(item) !== null), [state, catalogRevision]);
   const pinnedCalculation = useRef<{
@@ -708,8 +708,11 @@ export default function App() {
   }
 
   function openStrategicStudy(position: import("./calculation/types").CalculationPosition, preferredSkillId?: string) {
-    if (position.assessmentStatus !== "instructional-only" ||
+    if (!sourceStudyKind(position) ||
         !sourceLinkedStudies.some(item => item.id === position.id)) return;
+    // Historical P103–P106 calculation keeps original scoring; later studies stay unscored.
+    if (position.assessmentStatus !== "instructional-only" &&
+        !/^calc:p10[3-6]-/.test(position.id)) return;
     const skillId = preferredSkillId && position.skillIds.includes(preferredSkillId) &&
       !!skillById[preferredSkillId] ? preferredSkillId :
       position.skillIds.find(id => id.startsWith("calculation.") && !!skillById[id]);
@@ -726,7 +729,9 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: position.endgameDecisionStudy
+      reason: position.assessmentStatus !== "instructional-only"
+        ? "Original scored calculation and positional study"
+        : position.endgameDecisionStudy
         ? "P112 · Endgame decision lab (unscored)"
         : position.openingTransitionStudy
         ? "P111 · Opening-to-middlegame transition (unscored)"
