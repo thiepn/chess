@@ -1,0 +1,577 @@
+{
+  "schema": "thiepn.chess.g2-tactical-transfer.v1",
+  "version": 1,
+  "provenance": "Original authored G2 teaching cases; no engine/tablebase scores, historic game claims or changes to P88.",
+  "items": [
+    {
+      "skillId": "tactics.clearance",
+      "cases": [
+        {
+          "fen": "3k4/8/8/8/8/3B4/8/3R2K1 w - - 0 1",
+          "acceptedMoves": [
+            "d3f5"
+          ],
+          "prompt": "Your bishop on d3 blocks the rook on d1 from checking the black king on d8. Move the bishop off that file.",
+          "success": "Bf5 clears d3 so the rook on d1 gives a discovered file check against the king on d8.",
+          "misconception": "Clearance is about the newly open rook line, not necessarily a capture by the bishop that moves.",
+          "successByMove": {
+            "d3f5": "Bf5 clears d3 so the rook on d1 gives a discovered file check against the king on d8."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. Your bishop on d3 blocks the rook on d1 from checking the black king on d8. Move the bishop off that file.",
+            "Do not assume Black must make a particular recapture. Clearance is about the newly open rook line, not necessarily a capture by the bishop that moves.",
+            "Trace d3 to f5 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "d8c7",
+              "explanation": "After ...Kc7 the king steps off the d-file, so the rook's line no longer directly checks it."
+            },
+            {
+              "uci": "d8e7",
+              "explanation": "After ...Ke7 the king also leaves the rook's file; the bishop and rook must find a fresh continuation."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "d1d2": "Rd2 leaves your bishop on d3 directly in the rook's line to the king on d8; the intended discovered check does not occur."
+          }
+        },
+        {
+          "fen": "k7/8/8/8/8/N7/8/Q5K1 w - - 0 1",
+          "acceptedMoves": [
+            "a3b5"
+          ],
+          "prompt": "The knight on a3 blocks the queen on a1 from checking the king on a8. Which jump opens that file?",
+          "success": "Nb5 clears a3 and reveals a queen check along the now-open a-file toward the king on a8.",
+          "misconception": "A clearance move can be a knight jump; the discovered queen line is the important effect, not the knight's target.",
+          "successByMove": {
+            "a3b5": "Nb5 clears a3 and reveals a queen check along the now-open a-file toward the king on a8."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. The knight on a3 blocks the queen on a1 from checking the king on a8. Which jump opens that file?",
+            "Do not assume Black must make a particular recapture. A clearance move can be a knight jump; the discovered queen line is the important effect, not the knight's target.",
+            "Trace a3 to b5 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "a8b7",
+              "explanation": "After ...Kb7 the king escapes the open a-file and White should re-evaluate the queen and knight."
+            },
+            {
+              "uci": "a8b8",
+              "explanation": "After ...Kb8 the king also steps to a square outside the queen's a-file attack."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "a1a2": "Qa2 is legal but the knight on a3 still blocks the a-file. Moving the queen is not the needed knight-clearance step."
+          }
+        },
+        {
+          "fen": "7k/5nb1/8/8/8/7B/8/1K5R w - - 0 1",
+          "acceptedMoves": [
+            "h3e6"
+          ],
+          "prompt": "The bishop on h3 blocks the rook on h1. Clear the rook's h-file and compare two possible blocks.",
+          "success": "Be6 opens the h-file and creates a discovered rook check against h8. Black can meet the line check by interposition.",
+          "misconception": "Not every clearance wins immediately; Black may legally block the new line with a different piece.",
+          "successByMove": {
+            "h3e6": "Be6 opens the h-file and creates a discovered rook check against h8. Black can meet the line check by interposition."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. The bishop on h3 blocks the rook on h1. Clear the rook's h-file and compare two possible blocks.",
+            "Do not assume Black must make a particular recapture. Not every clearance wins immediately; Black may legally block the new line with a different piece.",
+            "Trace h3 to e6 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "g7h6",
+              "explanation": "After ...Bh6 the bishop interposes on h6, preventing the rook from directly attacking h8."
+            },
+            {
+              "uci": "f7h6",
+              "explanation": "After ...Nh6 the knight jumps to h6 and blocks the same checking file; compare the resulting captures."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "h1h2": "Rh2 is legal but your bishop still occupies h3 and blocks the rook from checking the king along the h-file."
+          }
+        }
+      ]
+    },
+    {
+      "skillId": "tactics.decoy",
+      "cases": [
+        {
+          "fen": "3qr1k1/3p4/3N4/8/8/8/8/4R1K1 w - - 0 1",
+          "acceptedMoves": [
+            "e1e8"
+          ],
+          "prompt": "White's knight on d6 attacks e8. Which rook capture invites the queen to occupy that knight's target?",
+          "success": "Rxe8+ offers a forcing target on e8; ...Qxe8 would move the queen to a square attacked by the knight on d6.",
+          "misconception": "A decoy depends on the opponent accepting the target square; a king move may preserve the queen for now.",
+          "successByMove": {
+            "e1e8": "Rxe8+ offers a forcing target on e8; ...Qxe8 would move the queen to a square attacked by the knight on d6."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. White's knight on d6 attacks e8. Which rook capture invites the queen to occupy that knight's target?",
+            "Check the second position rather than assuming a forced recapture. A decoy depends on the opponent accepting the target square; a king move may preserve the queen for now.",
+            "Trace the move e1 to e8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "d8e8",
+              "explanation": "After ...Qxe8 the knight from d6 can capture on e8. This is a concrete square-based decoy, not a generic trade."
+            },
+            {
+              "uci": "g8h7",
+              "explanation": "After ...Kh7 the queen stays on d8 but is attacked by the rook; calculate the changed position."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e1e2": "Re2 is a legal move but invites the black rook from e8 to capture it. No forcing queen destination on e8 has been created."
+          }
+        },
+        {
+          "fen": "1qr3k1/8/8/5B2/8/8/8/2R3K1 w - - 0 1",
+          "acceptedMoves": [
+            "c1c8"
+          ],
+          "prompt": "A bishop from f5 controls c8. Which rook capture offers Black's queen the poisoned destination c8?",
+          "success": "Rxc8+ invites ...Qxc8; that move puts the queen on c8, where the white bishop from f5 can capture it.",
+          "misconception": "Do not call the sacrifice forced. Declining with a king move avoids immediate bishop capture of the queen.",
+          "successByMove": {
+            "c1c8": "Rxc8+ invites ...Qxc8; that move puts the queen on c8, where the white bishop from f5 can capture it."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. A bishop from f5 controls c8. Which rook capture offers Black's queen the poisoned destination c8?",
+            "Check the second position rather than assuming a forced recapture. Do not call the sacrifice forced. Declining with a king move avoids immediate bishop capture of the queen.",
+            "Trace the move c1 to c8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "b8c8",
+              "explanation": "After ...Qxc8 the bishop's open f5–e6–d7–c8 diagonal reaches the queen."
+            },
+            {
+              "uci": "g8f7",
+              "explanation": "After ...Kf7 Black avoids accepting the rook with the queen, leaving different threats to calculate."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "c1c2": "Rc2 places your rook on the c-file still attacked by the black rook on c8, without enticing the queen onto the bishop's c8 square."
+          }
+        },
+        {
+          "fen": "2rq2k1/8/1N6/8/8/8/8/2R3K1 w - - 0 1",
+          "acceptedMoves": [
+            "c1c8"
+          ],
+          "prompt": "Your knight on b6 attacks c8. Can a rook capture lure the black queen onto that square?",
+          "success": "Rxc8 captures the rook and attacks the queen on d8; ...Qxc8 would place the queen on a knight-attacked c8.",
+          "misconception": "This is an invitation, not a forced queen sacrifice: Black can withdraw the queen instead.",
+          "successByMove": {
+            "c1c8": "Rxc8 captures the rook and attacks the queen on d8; ...Qxc8 would place the queen on a knight-attacked c8."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. Your knight on b6 attacks c8. Can a rook capture lure the black queen onto that square?",
+            "Check the second position rather than assuming a forced recapture. This is an invitation, not a forced queen sacrifice: Black can withdraw the queen instead.",
+            "Trace the move c1 to c8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "d8c8",
+              "explanation": "After ...Qxc8 the knight on b6 can capture the queen at c8 with a legal L-shaped move."
+            },
+            {
+              "uci": "g8f7",
+              "explanation": "After ...Kf7 Black declines the queen recapture and keeps the queen on d8, but the rook on c8 still attacks that queen. Recalculate the continuation."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "c1c2": "Rc2 is legal, but the black rook continues to control the c-file while Black's queen stays on d8. The knight's decoy square remains empty."
+          }
+        }
+      ]
+    },
+    {
+      "skillId": "tactics.deflection",
+      "cases": [
+        {
+          "fen": "3qr1k1/8/8/p7/8/8/8/R3R1K1 w - - 0 1",
+          "acceptedMoves": [
+            "e1e8"
+          ],
+          "prompt": "The queen on d8 guards the rook on e8 and pawn a5. Use a forcing rook capture to change the queen's duty.",
+          "success": "Rxe8+ confronts the rook on e8; ...Qxe8 moves the queen away from the diagonal guarding a5, changing the defense of that pawn.",
+          "misconception": "Deflection is about a defender leaving a responsibility; Black may choose a king response instead of accepting the exchange.",
+          "successByMove": {
+            "e1e8": "Rxe8+ confronts the rook on e8; ...Qxe8 moves the queen away from the diagonal guarding a5, changing the defense of that pawn."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. The queen on d8 guards the rook on e8 and pawn a5. Use a forcing rook capture to change the queen's duty.",
+            "Check the second position rather than assuming a forced recapture. Deflection is about a defender leaving a responsibility; Black may choose a king response instead of accepting the exchange.",
+            "Trace the move e1 to e8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "d8e8",
+              "explanation": "After ...Qxe8 the queen no longer guards a5 along its original d8–c7–b6–a5 diagonal; examine Rxa5."
+            },
+            {
+              "uci": "g8h7",
+              "explanation": "After ...Kh7 the queen has not been deflected, but the rook on e8 attacks it on d8; re-evaluate."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e1e2": "Re2 is legal but moves directly onto a square attacked down the e-file by the rook on e8. It does not deflect the queen on d8."
+          }
+        },
+        {
+          "fen": "3r2k1/4q3/8/4p3/8/8/8/3RR1K1 w - - 0 1",
+          "acceptedMoves": [
+            "d1d8"
+          ],
+          "prompt": "The queen on e7 protects the rook on d8 and pawn e5. Which forcing trade might relocate it?",
+          "success": "Rxd8+ challenges the defended rook. If the queen recaptures on d8, the pawn on e5 loses its e-file defender.",
+          "misconception": "Do not claim the pawn is automatically won; after the check Black can choose a different legal response.",
+          "successByMove": {
+            "d1d8": "Rxd8+ challenges the defended rook. If the queen recaptures on d8, the pawn on e5 loses its e-file defender."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. The queen on e7 protects the rook on d8 and pawn e5. Which forcing trade might relocate it?",
+            "Check the second position rather than assuming a forced recapture. Do not claim the pawn is automatically won; after the check Black can choose a different legal response.",
+            "Trace the move d1 to d8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "e7d8",
+              "explanation": "After ...Qxd8 the queen is no longer on the e-file guarding pawn e5, so White checks whether Rxe5 works."
+            },
+            {
+              "uci": "g8h7",
+              "explanation": "After ...Kh7 Black declines queen recapture; White must recalculate the active rook and queen threats."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "d1d2": "Rd2 fails to change the queen's job on e7 and leaves the rook exposed to the opposing rook on d8 along the open file."
+          }
+        },
+        {
+          "fen": "5rk1/4b3/8/8/7p/8/8/K4R1R w - - 0 1",
+          "acceptedMoves": [
+            "f1f8"
+          ],
+          "prompt": "The bishop on e7 helps defend Black's rook on f8 and pawn on h4. How might an exchange pull it off the diagonal?",
+          "success": "Rxf8+ invites ...Bxf8, shifting the bishop from e7 and leaving h4 without the previous long-diagonal protection.",
+          "misconception": "A bishop recapture is not the only possible reply. Check the king's capture and whether the defender stays on e7.",
+          "successByMove": {
+            "f1f8": "Rxf8+ invites ...Bxf8, shifting the bishop from e7 and leaving h4 without the previous long-diagonal protection."
+          },
+          "hints": [
+            "Identify the defender's original duty and compare what changes after each reply. The bishop on e7 helps defend Black's rook on f8 and pawn on h4. How might an exchange pull it off the diagonal?",
+            "Check the second position rather than assuming a forced recapture. A bishop recapture is not the only possible reply. Check the king's capture and whether the defender stays on e7.",
+            "Trace the move f1 to f8 and calculate the listed alternative responses."
+          ],
+          "replies": [
+            {
+              "uci": "e7f8",
+              "explanation": "After ...Bxf8 the bishop no longer covers h4 through f6–g5, so the other rook may inspect Rxh4."
+            },
+            {
+              "uci": "g8f8",
+              "explanation": "After ...Kxf8 the bishop remains on e7 and still guards h4; there was no bishop deflection."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "f1f2": "Rf2 neither challenges the rook on f8 nor moves the bishop on e7 away from its h4-pawn defensive diagonal."
+          }
+        }
+      ]
+    },
+    {
+      "skillId": "tactics.overload",
+      "cases": [
+        {
+          "fen": "3qr1k1/8/8/6p1/8/8/7K/4R1R1 w - - 0 1",
+          "acceptedMoves": [
+            "e1e8"
+          ],
+          "prompt": "The queen on d8 protects both rook e8 and pawn g5. Which forcing move asks it to abandon one job?",
+          "success": "Rxe8+ attacks the rook and invites ...Qxe8. After that recapture the queen is no longer defending g5 along d8–e7–f6–g5.",
+          "misconception": "An overloaded defender has competing duties. The queen can decline recapture, so do not present a conditional pawn capture as forced.",
+          "successByMove": {
+            "e1e8": "Rxe8+ attacks the rook and invites ...Qxe8. After that recapture the queen is no longer defending g5 along d8–e7–f6–g5."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. The queen on d8 protects both rook e8 and pawn g5. Which forcing move asks it to abandon one job?",
+            "Do not assume Black must make a particular recapture. An overloaded defender has competing duties. The queen can decline recapture, so do not present a conditional pawn capture as forced.",
+            "Trace e1 to e8 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "d8e8",
+              "explanation": "After ...Qxe8 the queen abandons its diagonal to g5; consider whether the rook on g1 can capture there."
+            },
+            {
+              "uci": "g8h7",
+              "explanation": "After ...Kh7 the queen has not abandoned g5 but the rook on e8 still attacks the queen on d8."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e1e2": "Re2 is legal but can be captured by the rook on e8 without forcing Black's queen to abandon its separate pawn-defense duty."
+          }
+        },
+        {
+          "fen": "1q4k1/4r3/2n5/8/8/8/8/1R2R1K1 w - - 0 1",
+          "acceptedMoves": [
+            "e1e7"
+          ],
+          "prompt": "Black's knight on c6 protects both the rook on e7 and queen on b8. Challenge one of those duties.",
+          "success": "Rxe7 captures the rook; if the knight on c6 recaptures, the queen on b8 loses its knight defender.",
+          "misconception": "An overloaded knight can leave a valuable piece loose, but Black might choose a different reply instead of recapturing.",
+          "successByMove": {
+            "e1e7": "Rxe7 captures the rook; if the knight on c6 recaptures, the queen on b8 loses its knight defender."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. Black's knight on c6 protects both the rook on e7 and queen on b8. Challenge one of those duties.",
+            "Do not assume Black must make a particular recapture. An overloaded knight can leave a valuable piece loose, but Black might choose a different reply instead of recapturing.",
+            "Trace e1 to e7 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "c6e7",
+              "explanation": "After ...Nxe7 the knight has left c6, so the rook on b1 can consider the queen on b8."
+            },
+            {
+              "uci": "b8d8",
+              "explanation": "After ...Qd8 the queen withdraws from the b-file, and White must work with the new position."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e1e2": "Re2 is a legal rook move but it hangs on the e-file to Black's rook at e7. It does not ask the knight on c6 to choose a duty."
+          }
+        },
+        {
+          "fen": "6k1/8/3b4/2qpr3/8/8/8/2R1R2K w - - 0 1",
+          "acceptedMoves": [
+            "e1e5"
+          ],
+          "prompt": "The bishop on d6 guards the queen on c5 and rook on e5. Which rook capture taxes both duties?",
+          "success": "Rxe5 asks the bishop on d6 to recapture on e5; doing so abandons its c5 queen defense.",
+          "misconception": "A bishop's dual defensive role is an opportunity, not a promise of forced material: Black can change the sequence.",
+          "successByMove": {
+            "e1e5": "Rxe5 asks the bishop on d6 to recapture on e5; doing so abandons its c5 queen defense."
+          },
+          "hints": [
+            "Examine which square, file or defender becomes available after the move. The bishop on d6 guards the queen on c5 and rook on e5. Which rook capture taxes both duties?",
+            "Do not assume Black must make a particular recapture. A bishop's dual defensive role is an opportunity, not a promise of forced material: Black can change the sequence.",
+            "Trace e1 to e5 and compare both concrete replies."
+          ],
+          "replies": [
+            {
+              "uci": "d6e5",
+              "explanation": "After ...Bxe5 the bishop no longer guards c5, and the rook on c1 can examine the queen there."
+            },
+            {
+              "uci": "c5c1",
+              "explanation": "After ...Qxc1 Black counterattacks the second rook instead; the original simple recapture plan has changed."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e1e2": "Re2 leaves the rook on a square attacked by Black's rook on e5 and does not draw the bishop away from the queen on c5."
+          }
+        }
+      ]
+    },
+    {
+      "skillId": "tactics.removing-defender",
+      "cases": [
+        {
+          "fen": "6k1/3q2p1/5n2/6B1/8/8/8/3R2K1 w - - 0 1",
+          "acceptedMoves": [
+            "g5f6"
+          ],
+          "prompt": "The knight on f6 protects Black's queen on d7 against your rook. How can you remove that defender?",
+          "success": "Bxf6 takes the knight that defended d7. If the pawn recaptures, the queen on d7 loses that knight's protection.",
+          "misconception": "Capturing the defending knight is not proof the queen must be lost: Black can also decline the recapture or move the queen.",
+          "successByMove": {
+            "g5f6": "Bxf6 takes the knight that defended d7. If the pawn recaptures, the queen on d7 loses that knight's protection."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. The knight on f6 protects Black's queen on d7 against your rook. How can you remove that defender?",
+            "Compare the two possible replies. Capturing the defending knight is not proof the queen must be lost: Black can also decline the recapture or move the queen.",
+            "If necessary, inspect the line or capture ​g5 to f6, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "g7f6",
+              "explanation": "After ...gxf6 the knight is gone, and the rook on d1 can examine the now-loose queen on d7."
+            },
+            {
+              "uci": "d7e6",
+              "explanation": "After ...Qe6 Black chooses to move the queen instead, so White must reassess rather than assume a forced capture."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "g5f4": "Bf4 leaves the knight on f6 defending the queen on d7. The task requires removing that knight instead of repositioning your bishop."
+          }
+        },
+        {
+          "fen": "5q1k/3p4/4n3/8/2B5/8/8/5RK1 w - - 0 1",
+          "acceptedMoves": [
+            "c4e6"
+          ],
+          "prompt": "Black's knight on e6 supports the queen on f8. Which bishop capture removes this protection?",
+          "success": "Bxe6 removes the knight from e6; a pawn recapture would no longer restore the queen's knight defender.",
+          "misconception": "A defender can be exchanged, but the defended queen is not obliged to stand still after that exchange.",
+          "successByMove": {
+            "c4e6": "Bxe6 removes the knight from e6; a pawn recapture would no longer restore the queen's knight defender."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. Black's knight on e6 supports the queen on f8. Which bishop capture removes this protection?",
+            "Compare the two possible replies. A defender can be exchanged, but the defended queen is not obliged to stand still after that exchange.",
+            "If necessary, inspect the line or capture ​c4 to e6, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "d7e6",
+              "explanation": "After ...dxe6 the bishop disappears but the defender has also gone; White's rook still eyes f8."
+            },
+            {
+              "uci": "f8g7",
+              "explanation": "After ...Qg7 the queen avoids the vulnerable f-file instead of accepting a pawn recapture."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "c4d3": "Bd3 is a legal retreat, but the knight on e6 still protects the queen on f8. You have not changed the defensive count."
+          }
+        },
+        {
+          "fen": "3q2k1/1p6/2n5/1B6/8/8/8/3R2K1 w - - 0 1",
+          "acceptedMoves": [
+            "b5c6"
+          ],
+          "prompt": "A knight on c6 is the only knight defender of Black's queen on d8. How can the bishop remove it?",
+          "success": "Bxc6 captures the knight on c6, eliminating its L-shaped protection of the queen on d8.",
+          "misconception": "The valuable queen may retreat before a rook wins it, so distinguish removing a defender from a forced queen capture.",
+          "successByMove": {
+            "b5c6": "Bxc6 captures the knight on c6, eliminating its L-shaped protection of the queen on d8."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. A knight on c6 is the only knight defender of Black's queen on d8. How can the bishop remove it?",
+            "Compare the two possible replies. The valuable queen may retreat before a rook wins it, so distinguish removing a defender from a forced queen capture.",
+            "If necessary, inspect the line or capture ​b5 to c6, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "b7c6",
+              "explanation": "After ...bxc6 the bishop is recaptured, but the knight no longer protects the queen on d8."
+            },
+            {
+              "uci": "d8c7",
+              "explanation": "After ...Qc7 Black moves the queen away from the rook's line rather than accepting the exchange."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "b5a4": "Ba4 leaves the knight on c6 supporting the queen on d8; it does not remove the piece that can defend against Rxd8."
+          }
+        }
+      ]
+    },
+    {
+      "skillId": "tactics.skewer",
+      "cases": [
+        {
+          "fen": "4q3/4k3/8/R7/8/8/8/6K1 w - - 0 1",
+          "acceptedMoves": [
+            "a5e5"
+          ],
+          "prompt": "The king on e7 stands in front of Black's queen on e8. Which rook move makes the king answer first?",
+          "success": "Re5+ attacks the king up the e-file. Once the king steps away, the queen behind it on e8 becomes a capture target.",
+          "misconception": "A skewer attacks the valuable front piece before the piece behind it; this is not a pin of the queen.",
+          "successByMove": {
+            "a5e5": "Re5+ attacks the king up the e-file. Once the king steps away, the queen behind it on e8 becomes a capture target."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. The king on e7 stands in front of Black's queen on e8. Which rook move makes the king answer first?",
+            "Compare the two possible replies. A skewer attacks the valuable front piece before the piece behind it; this is not a pin of the queen.",
+            "If necessary, inspect the line or capture ​a5 to e5, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "e7d6",
+              "explanation": "After ...Kd6 the king leaves the e-file, so the rook can consider Rxe8 against the exposed queen."
+            },
+            {
+              "uci": "e7f6",
+              "explanation": "After ...Kf6 the rook also has an open route toward e8; check Black's next queen move before claiming material."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "a5a4": "Ra4 moves the rook legally but leaves Black's king on e7 shielding the queen on e8. This does not set up the requested checking skewer."
+          }
+        },
+        {
+          "fen": "7q/6k1/8/8/8/6B1/8/K7 w - - 0 1",
+          "acceptedMoves": [
+            "g3e5"
+          ],
+          "prompt": "Look along e5–f6–g7–h8: how can the bishop check the king while revealing the queen behind it?",
+          "success": "Be5+ checks the black king on g7 along a diagonal that continues to the queen at h8.",
+          "misconception": "The queen is not the front target. The checking king is the front piece and must leave the diagonal.",
+          "successByMove": {
+            "g3e5": "Be5+ checks the black king on g7 along a diagonal that continues to the queen at h8."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. Look along e5–f6–g7–h8: how can the bishop check the king while revealing the queen behind it?",
+            "Compare the two possible replies. The queen is not the front target. The checking king is the front piece and must leave the diagonal.",
+            "If necessary, inspect the line or capture ​g3 to e5, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "g7f7",
+              "explanation": "After ...Kf7 the bishop's diagonal toward h8 opens, making the black queen a target."
+            },
+            {
+              "uci": "g7h7",
+              "explanation": "After ...Kh7 the bishop no longer has a king on g7 blocking its route to the queen at h8."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "g3f4": "Bf4 is a legal bishop retreat, but it does not check the king on g7 or expose the queen on h8 along that same diagonal."
+          }
+        },
+        {
+          "fen": "2r5/3k4/8/8/8/8/4Q3/6K1 w - - 0 1",
+          "acceptedMoves": [
+            "e2e6"
+          ],
+          "prompt": "The king on d7 shields its rook on c8. Which queen placement attacks the king first?",
+          "success": "Qe6+ attacks d7 diagonally; beyond that king lies the rook on c8, so the queen creates a skewer.",
+          "misconception": "A queen skewer is a checking line through the king to the piece behind; it is not automatically a forced win.",
+          "successByMove": {
+            "e2e6": "Qe6+ attacks d7 diagonally; beyond that king lies the rook on c8, so the queen creates a skewer."
+          },
+          "hints": [
+            "Identify the valuable front target or defender and the actual attack geometry. The king on d7 shields its rook on c8. Which queen placement attacks the king first?",
+            "Compare the two possible replies. A queen skewer is a checking line through the king to the piece behind; it is not automatically a forced win.",
+            "If necessary, inspect the line or capture ​e2 to e6, then calculate Black's response."
+          ],
+          "replies": [
+            {
+              "uci": "d7c7",
+              "explanation": "After ...Kc7 the diagonal e6–d7–c8 has been cleared, potentially exposing the rook."
+            },
+            {
+              "uci": "d7d8",
+              "explanation": "After ...Kd8 the king leaves d7 but Black still chooses a defense; recalculate before capturing c8."
+            }
+          ],
+          "wrongMoveFeedback": {
+            "e2e5": "Qe5 is legal here but does not create the required diagonal king-first attack from e6 through d7 to the rook on c8."
+          }
+        }
+      ]
+    }
+  ]
+}
