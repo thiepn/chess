@@ -182,6 +182,13 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       });
       expect(readDeepDraft("owner-a", current, branches).cursor).toBe(3);
       expect(readDeepDraft("owner-b", current, branches).played).toEqual([]);
+      // Standalone opponent-side rehearsals never overwrite scored-source drafts.
+      writeDeepDraft("owner-a",current,sourceDefenderSetup(branches[0]),"defender");
+      expect(readDeepDraft("owner-a",current,branches,"defender").cursor).toBe(1);
+      expect(readDeepDraft("owner-a",current,branches).cursor).toBe(3);
+      expect(readDeepDraft("owner-b",current,branches,"defender").played).toEqual([]);
+      discardDeepDraft("owner-a",current,"defender");
+      expect(readDeepDraft("owner-a",current,branches,"defender").cursor).toBe(0);
       const key = [...storage.keys()][0];
       const record = JSON.parse(storage.get(key)!);
       storage.set(key, JSON.stringify({
