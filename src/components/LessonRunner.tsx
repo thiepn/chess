@@ -19,6 +19,7 @@ import type {
 import { deepTransferSkillIds, lessonForSkill } from "../learning/lessons";
 import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../learning/transferCompletion";
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
+import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
 import type {
   BoardArrow,
@@ -65,6 +66,7 @@ export function LessonRunner({
   );
   const missingTransfer = !deepTransferSkillIds.includes(skill.id);
   const beginner = beginnerSkillIds.some(id => id === skill.id);
+  const tacticalDepth = g2TacticalSkillIds.some(id => id === skill.id);
   const [transferEntry,setTransferEntry] = useState<{skillId:string;entry:TransferExercise}|null>(null);
   const [transferError,setTransferError] = useState<string|null>(null);
   const [transferRetry,setTransferRetry] = useState(0);
@@ -100,14 +102,40 @@ export function LessonRunner({
     return () => { cancelled = true; };
   }, [beginner, skill.id, beginnerRetry]);
 
+  const [tacticalEntry, setTacticalEntry] = useState<{ skillId: string; entry: G2Entry } | null>(null);
+  const [tacticalError, setTacticalError] = useState<string | null>(null);
+  const [tacticalRetry, setTacticalRetry] = useState(0);
+  useEffect(() => {
+    if (!tacticalDepth) return;
+    let cancelled = false;
+    setTacticalError(null);
+    void loadG2TacticalTransfer().then(catalog => {
+      if (cancelled) return;
+      const entry = catalog.get(skill.id);
+      if (!entry) {
+        setTacticalError("The original tactical source does not contain this selected skill.");
+        return;
+      }
+      setTacticalEntry({ skillId: skill.id, entry });
+    }).catch(() => {
+      if (!cancelled)
+        setTacticalError("Tactical transfer is unavailable or unverified. No lesson credit has been written.");
+    });
+    return () => { cancelled = true; };
+  }, [tacticalDepth, skill.id, tacticalRetry]);
+
   const transferLesson = useMemo(() =>
     missingTransfer && transferEntry?.skillId === skill.id
       ? checkedTransfer(baseLesson, transferEntry.entry) : baseLesson,
     [baseLesson, missingTransfer, skill.id, transferEntry]);
-  const lesson = useMemo(() =>
+  const beginnerLesson = useMemo(() =>
     beginner && beginnerEntry?.skillId === skill.id
       ? withBeginnerPractice(transferLesson, beginnerEntry.entry) : transferLesson,
     [beginner, beginnerEntry, skill.id, transferLesson]);
+  const lesson = useMemo(() =>
+    tacticalDepth && tacticalEntry?.skillId === skill.id
+      ? withG2TacticalTransfer(beginnerLesson, tacticalEntry.entry) : beginnerLesson,
+    [beginnerLesson, tacticalDepth, tacticalEntry, skill.id]);
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -309,15 +337,18 @@ export function LessonRunner({
 
   // Never fall through to the same-position fallback: that is retrieval, not transfer.
   if ((missingTransfer && transferEntry?.skillId !== skill.id) ||
-      (beginner && beginnerEntry?.skillId !== skill.id)) {
+      (beginner && beginnerEntry?.skillId !== skill.id) ||
+      (tacticalDepth && tacticalEntry?.skillId !== skill.id)) {
     const error = (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
-      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null);
+      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null) ??
+      (tacticalDepth && tacticalEntry?.skillId !== skill.id ? tacticalError : null);
     return <div className="lesson-runner lesson-runner-v2" role="status">
       <h2>{error ? "Lesson source unavailable" : "Preparing original practice"}</h2>
       <p>{error ?? "Loading and validating the independent board positions for this lesson."}</p>
       {error && <button type="button" onClick={() => {
         setTransferRetry(value => value + 1);
         setBeginnerRetry(value => value + 1);
+        setTacticalRetry(value => value + 1);
       }}>Retry lesson content</button>}
     </div>;
   }

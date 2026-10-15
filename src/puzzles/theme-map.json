@@ -47,7 +47,6 @@
   ],
   "deflection": [
     "tactics.deflection",
-    "tactics.overload",
     "tactics.combinations"
   ],
   "clearance": [
