@@ -25,6 +25,7 @@ interface ModelGamesViewProps {
   progress: Record<string, ModelGameProgress>;
   onStartGame: (gameId: string) => void;
   onBack: () => void;
+  focusSkillId?:string;
 }
 
 export function ModelGamesView({
@@ -32,11 +33,12 @@ export function ModelGamesView({
   progress,
   onStartGame,
   onBack,
+  focusSkillId,
 }: ModelGamesViewProps) {
-  const [openMaster, setOpenMaster] = useState(false);
+  const [openMaster, setOpenMaster] = useState(Boolean(focusSkillId));
   // Once opened, keep the original workspace mounted across simple collapse.
   // The owner-keyed subtree still discards all in-memory private work on Account change.
-  const [masterMounted, setMasterMounted] = useState(false);
+  const [masterMounted, setMasterMounted] = useState(Boolean(focusSkillId));
   const completed = modelGames.filter(
     (game) =>
       (progress[game.id]?.completions ?? 0) > 0,
@@ -65,6 +67,7 @@ export function ModelGamesView({
           <p>
             Pause at the critical decisions, name the plan, then find the move.
           </p>
+          {focusSkillId && <p>Course focus: {skillById[focusSkillId]?.title ?? "Advanced decisions"}. Historical comparisons are unscored instruction, not certified skill mastery.</p>}
         </div>
       </header>
 
@@ -197,7 +200,7 @@ export function ModelGamesView({
       {masterMounted && <div id="historical-master-workspace" hidden={!openMaster}
         style={{ display: openMaster ? "block" : "none" }}>
         <Suspense fallback={<p role="status">Opening master-game workspace…</p>}>
-          <MasterGameLibrary key={owner} owner={owner} />
+          <MasterGameLibrary key={owner} owner={owner} focusSkillId={focusSkillId}/>
         </Suspense>
       </div>}
     </section>

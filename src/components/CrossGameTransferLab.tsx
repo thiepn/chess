@@ -9,18 +9,21 @@ import {
   crossGameTransferAsset, hydrateTransferCases, type TransferCaseStudy,
 } from "../model-games/crossGameTransfer";
 import { exportPairNotes, importPairNotes } from "../model-games/transferCapsule";
+import { pairIdsForSkill } from "../learning/level78Pathways";
+import { skillById } from "../domain/curriculum";
 import "../styles/p114-cross-game-transfer.css";
 
 interface Props {
   games: MasterTimeline[];
   owner: string;
   onOpenPosition: (gameId: string, checkpointId: string) => void;
+  focusSkillId?: string;
 }
 const CounterfactualLab = lazy(() => import("./CounterfactualLab").then((mod) => ({
   default: mod.CounterfactualLab,
 })));
 const LENGTH = 1200;
-export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
+export function CrossGameTransferLab({ games, owner, onOpenPosition, focusSkillId }: Props) {
   const [cases, setCases] = useState<TransferCaseStudy[] | null>(null);
   const [copy, setCopy] = useState<Record<string,string>>({});
   const [rejected, setRejected] = useState(0);
@@ -35,6 +38,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
   const [portableStatus, setPortableStatus] = useState("");
   const [storageError, setStorageError] = useState(false);
   const [sourceRetry, setSourceRetry] = useState(0);
+  const [showAll, setShowAll] = useState(false);
+  const allowedPairs=pairIdsForSkill(focusSkillId);
   const lastSaved = useRef<Record<string, MasterDraft>>({});
 
   useEffect(() => {
@@ -88,7 +93,10 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
     setRestoredOwner(owner);
   }, [owner, cases]);
 
-  const active = cases?.find((item) => item.source.id === selectedId) ?? cases?.[0];
+  const visibleCases=useMemo(() => (!focusSkillId || showAll ? cases :
+    cases?.filter(item=>allowedPairs.includes(item.source.id)))??null,
+    [cases,focusSkillId,showAll,allowedPairs.join("|")]);
+  const active = visibleCases?.find((item) => item.source.id === selectedId) ?? visibleCases?.[0];
   const currentId = active?.source.id ?? "";
   // An Account switch cannot momentarily display another owner's restored answers.
   const visibleDrafts = restoredOwner === owner ? drafts : {};
@@ -100,7 +108,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
     setCounterfactualOpen(false);
   }, [owner]);
   const draft = active ? visibleDrafts[active.source.id] ?? emptyMasterDraft() : emptyMasterDraft();
-  const reviewed = useMemo(() => cases?.filter((item) => visibleDrafts[item.source.id]?.mark).length ?? 0, [cases, visibleDrafts]);
+  const reviewed = useMemo(() => visibleCases?.filter((item) => visibleDrafts[item.source.id]?.mark).length ?? 0, [visibleCases, visibleDrafts]);
 
   // Preserve edits from every visited source pair, not just the currently
   // selected one. A per-render reference prevents unnecessary storage writes.
@@ -159,8 +167,8 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
     }
   }
   const canCompare = draft.plan.trim().length >= 18 && draft.defense.trim().length >= 18;
-  const activeIndex = active ? cases?.findIndex((item) => item.source.id === currentId) ?? 0 : 0;
-  const related = active && cases?.find((item) => item.source.id !== currentId &&
+  const activeIndex = active ? visibleCases?.findIndex((item) => item.source.id === currentId) ?? 0 : 0;
+  const related = active && visibleCases?.find((item) => item.source.id !== currentId &&
     !visibleDrafts[item.source.id]?.mark &&
     [item.source.first.gameId, item.source.second.gameId].some((id) =>
       id === active.source.first.gameId || id === active.source.second.gameId));
@@ -173,20 +181,29 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition }: Props) {
           <h2>{copy.comparisonHeading}</h2>
           <p>{copy.intro}</p>
         </div>
-        <span role="status">{reviewed}/{cases?.length ?? 24} self-assessed</span>
+        <span role="status">{reviewed}/{visibleCases?.length ?? 24} self-assessed</span>
       </header>
       {!cases && !error && <p role="status">Loading the paired, source-checked positions…</p>}
       {error && <div role="alert"><p>{error}</p><button type="button" className="secondary"
         onClick={() => { setCases(null); setSourceRetry((n) => n + 1); }}>Retry verified source archive</button></div>}
-      {rejected > 0 && <p role="alert">{rejected} comparisons were excluded because a source game, checkpoint, or recorded continuation could not be verified.</p>}
-      {cases && cases.length > 0 && <>
+      {focusSkillId && cases && <div className="p114-integrity">
+        <strong>Course comparison: {skillById[focusSkillId]?.title ?? "Advanced decision"}</strong>
+        <p>These are original, verified historical pairs chosen for their related themes.
+          Neither pair independently certifies this curriculum skill.</p>
         <button type="button" className="secondary" onClick={() => {
-          const next = cases.find((item) => visibleDrafts[item.source.id]?.mark === "retry") ??
-            cases.find((item) => !visibleDrafts[item.source.id]?.mark);
+          if (!confirmLeavingPortable()) return;
+          setShowAll(value => !value);setSelectedId("");
+        }}>{showAll?"Return to course pairs":"Explore all 24 comparisons"}</button>
+      </div>}
+      {rejected > 0 && <p role="alert">{rejected} comparisons were excluded because a source game, checkpoint, or recorded continuation could not be verified.</p>}
+      {visibleCases && visibleCases.length > 0 && <>
+        <button type="button" className="secondary" onClick={() => {
+          const next = visibleCases?.find((item) => visibleDrafts[item.source.id]?.mark === "retry") ??
+            visibleCases?.find((item) => !visibleDrafts[item.source.id]?.mark);
           if (next) choose(next.source.id);
         }}>Resume an unfinished or self-marked review</button>
         <nav className="p114-picker" aria-label="Choose a comparative strategic study">
-          {cases.map((item, index) => (
+          {visibleCases?.map((item, index) => (
             <button type="button" key={item.source.id}
               className={item.source.id === currentId ? "selected" : ""}
               aria-current={item.source.id === currentId ? "step" : undefined}

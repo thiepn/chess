@@ -1,10 +1,12 @@
 import {Chess} from "chess.js";
-import type {ImportedGame,PersonalMistake} from "../games/types";
+import type {ImportedGame,PersonalMistake,ReviewErrorType} from "../games/types";
 import {legalReviewMistake,verifiedReviewAttempts,type RecordedReviewAttempt} from "./practiceLoop";
 
 export type TransferLane="strategy"|"calculation"|"tactics"|"endgame";
 export interface TransferMission {
   mistakeId:string;gameId:string;gameLabel:string;skillId:string;
+  /** Read-only original engine/analysis tags; not independent mastery authority. */
+  skillIds:string[];errorType?:ReviewErrorType;
   lane:TransferLane;
   moveNumber:number;actualSan:string;
   lineLength:number;due:boolean;
@@ -78,7 +80,7 @@ export function gameTransferMissions(
      Date.parse(m.nextReviewAt)<=now.getTime();
    const priority=(m.severity==="blunder"?3:m.severity==="mistake"?2:1)+
      (due?2:0)+Math.min(2,missed.length*.5)-(independent.length>=2?1:0);
-   return [{mistakeId:m.id,gameId:m.gameId,
+   return [{mistakeId:m.id,gameId:m.gameId,skillIds:[...m.skillIds],errorType:m.errorType,
      gameLabel:`${game.white} — ${game.black}`,skillId:m.skillIds[0]||"fundamentals.attacked",
      lane,
      moveNumber:m.moveNumber,actualSan:m.actualSan,

@@ -14,13 +14,13 @@ const CrossGameTransferLab = lazy(() => import("./CrossGameTransferLab").then((m
 })));
 const MAX_WRITING = 1200;
 
-export function MasterGameLibrary({ owner }: { owner: string }) {
+export function MasterGameLibrary({ owner, focusSkillId }: { owner: string; focusSkillId?: string }) {
   const [expanded, setExpanded] = useState(true);
   const [collection, setCollection] = useState<MasterTimeline[] | null>(null);
   const [rejected, setRejected] = useState(0);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [transferOpen, setTransferOpen] = useState(false);
+  const [transferOpen, setTransferOpen] = useState(Boolean(focusSkillId));
   const [decisionIndex, setDecisionIndex] = useState(0);
   const [viewPly, setViewPly] = useState(0);
   const [drafts, setDrafts] = useState<Record<string, MasterDraft>>({});
@@ -189,7 +189,7 @@ export function MasterGameLibrary({ owner }: { owner: string }) {
       )}
       {expanded && collection && transferOpen && (
         <Suspense fallback={<p role="status">Opening comparative studies…</p>}>
-          <CrossGameTransferLab owner={owner} games={collection} onOpenPosition={openPairSource}/>
+          <CrossGameTransferLab owner={owner} games={collection} onOpenPosition={openPairSource} focusSkillId={focusSkillId}/>
         </Suspense>
       )}
       {expanded && collection && !current && !transferOpen && (
