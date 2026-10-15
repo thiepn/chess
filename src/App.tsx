@@ -740,7 +740,9 @@ export default function App() {
       difficulty: skill.difficulty,
       novelty: 0,
       urgency: .4,
-      reason: position.assessmentStatus !== "instructional-only" && !(preferredSkillId && !position.skillIds.includes(preferredSkillId))
+      reason: preferredSkillId && !position.skillIds.includes(preferredSkillId)
+        ? "Contextual source practice — private and unscored"
+        : position.assessmentStatus !== "instructional-only"
         ? "Original scored calculation and positional study"
         : position.endgameDecisionStudy
         ? "P112 · Endgame decision lab (unscored)"
