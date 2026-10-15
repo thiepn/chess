@@ -106,13 +106,6 @@ export function LessonRunner({
     missingTransfer && transferEntry?.skillId === skill.id
       ? checkedTransfer(baseLesson, transferEntry.entry) : baseLesson,
     [baseLesson, missingTransfer, skill.id, transferEntry]);
-  const lesson = useMemo(() =>
-    beginner && beginnerEntry?.skillId === skill.id
-      ? withBeginnerPractice(transferLesson, beginnerEntry.entry)
-      : level23 && level23Ready?.skillId === skill.id && level23Ready.base === transferLesson
-        ? level23Ready.lesson : transferLesson,
-    [beginner, beginnerEntry, level23, level23Ready, skill.id, transferLesson]);
-
   const [level23Ready, setLevel23Ready] = useState<{base:LessonScript;skillId:string;lesson:LessonScript}|null>(null);
   const [level23Error, setLevel23Error] = useState<string|null>(null);
   const [level23Retry, setLevel23Retry] = useState(0);
@@ -127,6 +120,14 @@ export function LessonRunner({
     });
     return () => { cancelled = true; };
   }, [level23, missingTransfer, transferEntry, transferLesson, skill.id, level23Retry]);
+
+  const lesson = useMemo(() =>
+    beginner && beginnerEntry?.skillId === skill.id
+      ? withBeginnerPractice(transferLesson, beginnerEntry.entry)
+      : level23 && level23Ready?.skillId === skill.id && level23Ready.base === transferLesson
+        ? level23Ready.lesson : transferLesson,
+    [beginner, beginnerEntry, level23, level23Ready, skill.id, transferLesson]);
+
 
   const [stepIndex, setStepIndex] =
     useState(0);
