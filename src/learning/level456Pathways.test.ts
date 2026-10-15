@@ -30,6 +30,11 @@ describe("original Levels 4–6 training paths",()=>{
     expect(cases[0]?.assessed).toBe(true);
     expect(level456Pathways("attack.king-safety",positions,endgamePositions).some(p=>!p.direct)).toBe(true);
   });
+  it("never surfaces private game-derived positions as public-course authored cases",()=>{
+    const reference=positions[0];
+    const privateCase={...reference,id:"calc:mistake:owner",source:"personal-game" as const};
+    expect(level456Pathways("calculation.candidates",[privateCase],[])).toEqual([]);
+  });
   it("leaves other curriculum levels outside this study pathway",()=>{
     expect(level456Pathways("rules.board",positions,endgamePositions)).toEqual([]);
     expect(level456Pathways("tactics.pin",positions,endgamePositions)).toEqual([]);

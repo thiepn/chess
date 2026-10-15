@@ -252,6 +252,8 @@ export interface TrainingCandidate {
   prescriptionId?: string;
   prescriptionActionId?: string;
   calculationPositionId?: string;
+  /** Display-only curriculum lens for native source exercises; never assessment authority. */
+  courseFocusSkillId?: string;
   endgamePositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;

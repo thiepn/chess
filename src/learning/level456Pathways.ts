@@ -23,8 +23,18 @@ const defenseSkills = new Set([
 function contextual(skillId:string, position:CalculationPosition) {
   const kind=sourceStudyKind(position);
   const theme=sourceStudyTheme(position).toLowerCase();
-  if (attackSkills.has(skillId) && kind === "kingAttackStudy") return true;
-  if (defenseSkills.has(skillId) && kind === "defensiveTechniqueStudy") return true;
+  if (attackSkills.has(skillId) && kind === "kingAttackStudy") {
+    if(skillId==="attack.open-lines")return /file|diagonal|line|check/.test(theme);
+    if(skillId==="attack.defenders")return /block|interpos|shelter|defend|escape/.test(theme);
+    if(skillId==="attack.mating-net")return /net|check|flight|king|shelter/.test(theme);
+    if(skillId==="attack.sacrifice")return /material|capture|poison|cost|trade|initiative/.test(theme);
+    return true;
+  }
+  if (defenseSkills.has(skillId) && kind === "defensiveTechniqueStudy") {
+    if(skillId==="defense.prophylaxis")return /flight|fortress|shield|interpos|block|king/.test(theme);
+    if(skillId==="defense.exchange-attackers")return /exchange|trade|material|recapture/.test(theme);
+    return true;
+  }
   if (skillId === "strategy.open-files" && kind === "pieceCoordinationStudy")
     return /rook|file|coordination/.test(theme);
   if (skillId === "strategy.outposts" && kind === "pieceCoordinationStudy")
@@ -55,6 +65,8 @@ export function level456Pathways(
     }))
     : [];
   const positionsFound:DeepSource[]=positions.flatMap(position=>{
+    // Private game-derived calculation remains in owner-scoped Review, not public curriculum.
+    if(position.source!=="authored")return [];
     const direct=position.skillIds.includes(skillId);
     if (!direct && !contextual(skillId,position)) return [];
     const kind=sourceStudyKind(position);

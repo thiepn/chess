@@ -54,7 +54,7 @@ interface LearnViewProps {
   onOpenOpenings: () => void;
   onOpenModelGames: () => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition) => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
 }
 
@@ -129,7 +129,7 @@ function LessonPage({
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition) => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
 }) {
   const lesson = useMemo(
@@ -244,7 +244,7 @@ function LessonPage({
                 {depthCases.map(item => (
                   <button key={item.id} type="button" className="secondary"
                     onClick={() => item.kind==="calculation"
-                      ? onOpenCalculationSource(item.position)
+                      ? onOpenCalculationSource(item.position,skill.id)
                       : onOpenEndgameSource(item.position)}>
                     <strong>{item.title}</strong>
                     <span>{item.kind==="endgame" ? "Endgame technique" :

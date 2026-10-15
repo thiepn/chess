@@ -145,7 +145,7 @@ export function CalculationRunner({
       Promise<StockfishBrowserEngine> | null
     >(null);
 
-  const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position), [position]);
+  const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position,activity.courseFocusSkillId), [position,activity.courseFocusSkillId]);
   const [showWorkedReview, setShowWorkedReview] = useState(!hasIndependentStudy);
   const hasDeepBranches = useMemo(() => verifiedDeepBranches(position).length > 0, [position]);
   const [deepDone, setDeepDone] = useState(false);
@@ -716,8 +716,8 @@ export function CalculationRunner({
 
             {phase === "result" && (!hasDeepBranches || deepDone) && !showWorkedReview && hasIndependentStudy && (
               <div className="calculation-study-gate">
-                <CalculationStudyPanel key={`${storageOwner}:${position.id}`}
-                  position={position} storageOwner={storageOwner} />
+                <CalculationStudyPanel key={`${storageOwner}:${position.id}:${activity.courseFocusSkillId??""}`}
+                  position={position} storageOwner={storageOwner} focusSkillId={activity.courseFocusSkillId} />
                 <button type="button" className="primary"
                   onClick={() => setShowWorkedReview(true)}>
                   Continue to worked calculation review <ChevronRight size={17}/>

@@ -2,23 +2,27 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { studyMaterialFor } from "../calculation/studyDelivery";
 import type { CalculationPosition } from "../calculation/types";
+import { skillById } from "../domain/curriculum";
 
 type SelfMark = "understood" | "needs-review" | null;
 interface Entry { response: string; revealed: boolean; mark: SelfMark }
 interface Draft { step: number; entries: Entry[] }
-interface Props { position: CalculationPosition; storageOwner: string }
+interface Props { position: CalculationPosition; storageOwner: string; focusSkillId?:string }
 const LIMIT = 1200;
 function fresh(count: number): Draft {
   return { step: 0, entries: Array.from({ length: count }, () => ({ response: "", revealed: false, mark: null })) };
 }
-function storageKey(owner: string, id: string) {
-  return "chess:p107:study-draft:" + encodeURIComponent(owner) + ":" + encodeURIComponent(id);
+function storageKey(owner: string, id: string, focusSkillId?:string) {
+  // Preserve the original owner/position key for existing drafts. A focused
+  // course lens uses a separate owner-scoped session-only key.
+  return "chess:p107:study-draft:" + encodeURIComponent(owner) + ":" + encodeURIComponent(id) +
+    (focusSkillId ? ":focus:" + encodeURIComponent(focusSkillId) : "");
 }
-function restore(owner: string, id: string, count: number): Draft {
+function restore(owner: string, id: string, count: number, focusSkillId?:string): Draft {
   const empty = fresh(count);
   if (!owner) return empty;
   try {
-    const raw = sessionStorage.getItem(storageKey(owner, id));
+    const raw = sessionStorage.getItem(storageKey(owner, id, focusSkillId));
     if (!raw || raw.length > 15000) return empty;
     const data: unknown = JSON.parse(raw);
     if (!data || typeof data !== "object") return empty;
@@ -36,18 +40,18 @@ function restore(owner: string, id: string, count: number): Draft {
     };
   } catch { return empty; }
 }
-export function CalculationStudyPanel({ position, storageOwner }: Props) {
-  const material = useMemo(() => studyMaterialFor(position), [position]);
+export function CalculationStudyPanel({ position, storageOwner, focusSkillId }: Props) {
+  const material = useMemo(() => studyMaterialFor(position,focusSkillId), [position,focusSkillId]);
   const count = material?.questions.length ?? 0;
-  const [draft, setDraft] = useState(() => restore(storageOwner, position.id, count));
+  const [draft, setDraft] = useState(() => restore(storageOwner, position.id, count, focusSkillId));
   useEffect(() => {
     if (!storageOwner || !count) return;
     try {
-      sessionStorage.setItem(storageKey(storageOwner, position.id), JSON.stringify({
+      sessionStorage.setItem(storageKey(storageOwner, position.id, focusSkillId), JSON.stringify({
         version: 1, id: position.id, saved: Date.now(), ...draft,
       }));
     } catch { /* Quota/private-mode failures must not block learning. */ }
-  }, [storageOwner, position.id, draft, count]);
+  }, [storageOwner, position.id, focusSkillId, draft, count]);
   if (!material || !count) return null;
   const index = Math.min(draft.step, count - 1);
   const exercise = material.questions[index];
@@ -60,7 +64,7 @@ export function CalculationStudyPanel({ position, storageOwner }: Props) {
   }
   function go(step: number) { setDraft(previous => ({ ...previous, step })); }
   function clear() {
-    try { sessionStorage.removeItem(storageKey(storageOwner, position.id)); } catch { /* ignored */ }
+    try { sessionStorage.removeItem(storageKey(storageOwner, position.id, focusSkillId)); } catch { /* ignored */ }
     setDraft(fresh(count));
   }
   return (
@@ -68,6 +72,7 @@ export function CalculationStudyPanel({ position, storageOwner }: Props) {
       <header className="calculation-study-header">
         <div><p className="eyebrow">INDEPENDENT POSITION STUDY · UNSCORED</p>
           <h3>{material.theme}</h3>
+          {focusSkillId && <p>Course skill: {skillById[focusSkillId]?.title ?? "Original source study"} · Private, ungraded reflection</p>}
           <p>Answer from the board before revealing the authored model. These self-checks
             do not change verified chess mastery or award solved positions.</p></div>
         <span>{compared}/{count} compared</span>

@@ -723,6 +723,8 @@ export default function App() {
       id: `study:${position.id}`,
       source: "focus",
       skillIds: [skillId],
+      courseFocusSkillId: preferredSkillId && skillById[preferredSkillId] &&
+        ["thinking","fight","finish"].includes(skillById[preferredSkillId].stage) ? preferredSkillId : undefined,
       activityType: "calculation",
       calculationPositionId: position.id,
       estimatedMinutes: 12,
@@ -2262,15 +2264,18 @@ export default function App() {
   }
 
   /** Original source routes, not new training engines or progress authorities. */
-  function openCurriculumCalculationSource(position: import("./calculation/types").CalculationPosition) {
+  function openCurriculumCalculationSource(position: import("./calculation/types").CalculationPosition, focusSkillId:string) {
     const source = level456Positions.find(item => item.id===position.id && item.fen===position.fen);
     if (!source) return;
-    if (sourceStudyKind(source)) { openStrategicStudy(source); return; }
-    const skillId = source.skillIds.find(id => !!skillById[id]);
+    if (sourceStudyKind(source)) { openStrategicStudy(source,focusSkillId); return; }
+    const skillId = source.skillIds.includes(focusSkillId) && skillById[focusSkillId]
+      ? focusSkillId : source.skillIds.find(id => !!skillById[id]);
     const skill = skillId ? skillById[skillId] : undefined;
     if (!skill) return;
     openManualActivity({
       id:`course-calculation:${source.id}`,source:"curriculum",skillIds:[skill.id],
+      courseFocusSkillId: skillById[focusSkillId] &&
+        ["thinking","fight","finish"].includes(skillById[focusSkillId].stage) ? focusSkillId : undefined,
       activityType:"calculation",calculationPositionId:source.id,
       estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
       reason:"Original source-qualified calculation",title:source.title,subtitle:"Calculate the opponent's reply",

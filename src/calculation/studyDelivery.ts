@@ -1,8 +1,11 @@
 import type { CalculationPosition } from "./types";
+import { level456FocusedQuestions } from "../learning/level456Inquiry";
 export interface StudyQuestion { prompt: string; answer: string; repair: string; }
 export interface StudyMaterial { theme: string; questions: StudyQuestion[]; reflection?: string; }
-export function studyMaterialFor(position: CalculationPosition): StudyMaterial | null {
+export function studyMaterialFor(position: CalculationPosition, focusSkillId?: string): StudyMaterial | null {
   const source = position as unknown as Record<string, unknown>;
+  const focused=level456FocusedQuestions(position,focusSkillId);
+  let original:StudyMaterial|null=null;
   const groups = ["endgameDecisionStudy", "openingTransitionStudy", "prophylaxisStudy", "strategicImbalanceStudy", "pawnStructureStudy", "pieceCoordinationStudy", "kingAttackStudy", "defensiveTechniqueStudy"];
   for (const name of groups) {
     const group = source[name] as Record<string, unknown> | undefined;
@@ -17,10 +20,16 @@ export function studyMaterialFor(position: CalculationPosition): StudyMaterial |
       const repair = typeof (e.repair ?? e.correction ?? e.feedback) === "string" ? String(e.repair ?? e.correction ?? e.feedback) : "";
       return prompt && answer ? [{ prompt, answer, repair }] : [];
     });
-    if (questions.length) return { theme: String(group.theme ?? position.title), questions: questions.slice(0, 6), reflection: position.defensiveStudy?.reflection };
+    if (questions.length) { original={ theme: String(group.theme ?? position.title), questions:questions.slice(0,6), reflection:position.defensiveStudy?.reflection }; break; }
   }
   const defensive = position.defensiveStudy;
-  return defensive?.keyQuestion && defensive.defenderIdea ? {
+  const material=original ?? (defensive?.keyQuestion && defensive.defenderIdea ? {
     theme: position.title, questions: [{ prompt: defensive.keyQuestion, answer: defensive.defenderIdea, repair: defensive.misconception }], reflection: defensive.reflection,
-  } : null;
+  } : null);
+  if (!focused.length) return material;
+  return {
+    theme: material?.theme ?? position.title,
+    questions: [...focused,...(material?.questions ?? [])].slice(0,6),
+    reflection: material?.reflection,
+  };
 }
