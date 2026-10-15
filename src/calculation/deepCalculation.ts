@@ -102,6 +102,18 @@ export function sharedBranchDraft(branch:DeepBranch, draft:DeepDraft):DeepDraft 
   return {branchId:branch.id,played:played.slice(0,shared),cursor:shared,reveal:false};
 }
 
+/** Start an ungraded opponent-side challenge directly after an authored legal
+ * first move. The setup move is marked authored; it is not learner evidence. */
+export function sourceDefenderSetup(branch:DeepBranch):DeepDraft {
+  const first=branch.plies[0];
+  return first ? {
+    branchId:branch.id,
+    played:[{uci:first.uci,origin:"authored-response"}],
+    cursor:1,
+    reveal:false,
+  } : blankDeepDraft(branch);
+}
+
 export function playDeepMove(fen: string, uci: string): { fen: string; san: string } | null {
   if (!UCI.test(uci)) return null;
   try {

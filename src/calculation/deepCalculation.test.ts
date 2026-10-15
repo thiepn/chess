@@ -4,7 +4,7 @@ import type { CalculationPosition } from "./types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, playDeepMove,
   readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
-  recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,
+  recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,sourceDefenderSetup,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
@@ -30,6 +30,20 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
     }
   });
 
+  it("starts blind opponent-side rehearsal from legal original source setup without credit",()=>{
+    for(const p of [older.positions[0],defensesP95.positions[0],structures.positions[0]] as CalculationPosition[]){
+      const branch=verifiedDeepBranches(p)[0];
+      const setup=sourceDefenderSetup(branch);
+      expect(setup.branchId).toBe(branch.id);
+      expect(setup.cursor).toBe(1);
+      expect(setup.played[0]).toEqual({uci:branch.plies[0].uci,origin:"authored-response"});
+      expect(setup.reveal).toBe(false);
+      const frames=deepFrames(p,setup.played)!;
+      expect(frames[1].fen).toBe(branch.plies[0].afterFen);
+      expect(new Chess(frames[1].fen).turn()).not.toBe(p.playerColor);
+      expect(recordedDefenderChoices(p,verifiedDeepBranches(p),setup.played).length).toBeGreaterThan(0);
+    }
+  });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
     for(const sample of [structures.positions[0],attacks.positions[0]]){
       const p=sample as CalculationPosition;

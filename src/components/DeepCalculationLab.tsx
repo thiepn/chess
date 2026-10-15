@@ -5,7 +5,7 @@ import type { CalculationPosition } from "../calculation/types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
   playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
-  sharedBranchDraft, verifiedDeepBranches, writeDeepDraft,
+  sharedBranchDraft, sourceDefenderSetup, verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
 import { ChessBoard } from "./ChessBoard";
@@ -64,6 +64,10 @@ export function DeepCalculationLab({
   const canUseAuthoredOpponent=originalReplies.length>0;
   const counter = Math.min(8, branch.plies.length);
   const candidate = local?.fen === fen ? playDeepMove(fen, local.move) : null;
+  const defendingTheSource=draft.played[0]?.origin==="authored-response";
+  const viewColor=defendingTheSource && cursor>=1
+    ? position.playerColor==="w" ? "b" : "w"
+    : position.playerColor;
 
   function resetTransient() {
     epoch.current++;
@@ -148,9 +152,19 @@ export function DeepCalculationLab({
         ))}
       </fieldset>
 
+      {cursor===0 && branch.plies.length>=3 && <div className="deep-lab-defender-challenge">
+        <strong>Practice the opponent's side</strong>
+        <p>Set up the source's recorded first move, then find a legal defense yourself.
+          The board turns toward the defender. This is ungraded rehearsal,
+          not an additional scored calculation attempt.</p>
+        <button type="button" className="secondary" onClick={()=>{
+          resetTransient();
+          setDraft(sourceDefenderSetup(branch));
+        }}>Start defender-side challenge</button>
+      </div>}
       <div className="deep-lab-board">
-        <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}`}
-          fen={fen} orientation={position.playerColor} disabled={maxed || busy}
+        <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}:${viewColor}`}
+          fen={fen} orientation={viewColor} disabled={maxed || busy}
           onMove={item => move(`${item.from}${item.to}${item.promotion ?? ""}`, "learner")} />
         <div className="deep-lab-board-details" role="status" aria-live="polite">
           {canUseAuthoredOpponent && <p>
@@ -158,7 +172,9 @@ export function DeepCalculationLab({
             What check, capture, block or counter-threat creates the most resistance?
           </p>}
           <strong>{maxed ? game.isGameOver() ? "Position ended" : "Eight-ply practice limit"
-            : game.turn() === position.playerColor ? "Your side to move" : "Defender to move"}</strong>
+            : defendingTheSource
+              ? game.turn()!==position.playerColor ? "Defend against the source move" : "Source side to move"
+              : game.turn()===position.playerColor ? "Your side to move" : "Defender to move"}</strong>
           <span>{reference.deviated
             ? alternate ? `Legal line also appears in ${alternate.label}; no quality verdict.`
               : "Legal continuation outside this authored line; no best-move verdict."
@@ -175,8 +191,9 @@ export function DeepCalculationLab({
           <button key={i} type="button" className={cursor === i + 1 ? "current" : ""}
             aria-current={cursor === i + 1 ? "step" : undefined}
             onClick={() => navigate(i + 1)}>
-            {i + 1}. {allSan[i]} <small>{ply.origin === "authored-response"
-              ? "Authored" : ply.origin === "local-engine" ? "Local engine" : "Entered"}</small>
+            {i + 1}. {allSan[i]} <small>{defendingTheSource && i===0 ? "Source setup"
+              : ply.origin === "authored-response" ? "Authored"
+              : ply.origin === "local-engine" ? "Local engine" : "Entered"}</small>
           </button>
         ))}
       </nav>
