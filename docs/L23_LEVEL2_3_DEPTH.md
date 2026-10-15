@@ -27,3 +27,13 @@
 - The Levels 4–6 course lesson page now surfaces up to six **existing source-qualified** calculation/study/endgame activities per original skill. Direct matches and contextual cases are clearly distinguished. Scored original cases retain scored authority; P109–P112 studies remain unscored, with the learner's existing private self-check draft.
 - Source selections route into existing CalculationRunner/EndgameTechniqueRunner using original position IDs, original return navigation and existing Account-scoped progress. No new repository, DB migration, skill ID or score authority.
 - This expansion improves access to the actual 684 authored study positions and 18 original endgame technique positions, but **does not** establish that every authored reference is uniquely best or that the six positions in each Stage 2/3 pathway pass runtime until executable verification occurs.
+
+## Focused executable qualification command (not run in this environment)
+`npm run l23:qualification`
+This performs the original P93 corpus generation and runs only the Level 2–3 source,
+generated-manifest 114-case Chess.js replay, Levels 4–6 pathway, and historical
+P103–P106 authority tests. It fails when any skill lacks six source-qualified
+distinct positions or when a stored move is illegal. It does not trigger release,
+deployment, broad CI, privileged credentials, migration or account writes.
+The TypeScript/Vite build and a real learner browser path remain separately
+NOT_TESTED until an executable exact-head checkout/preview is available.
