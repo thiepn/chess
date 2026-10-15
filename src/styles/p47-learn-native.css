@@ -238,3 +238,24 @@
 @media (max-width: 820px) {
   .learn-v2-depth-cases > button { min-height: 48px; }
 }
+
+
+/* Levels 7–8: restrained multi-source course journey in the existing reading column. */
+.learn-v2-depth-prompts {
+  margin-block: 12px;
+  border-top: 1px solid var(--chess-border, currentColor);
+  padding-block: 9px;
+}
+.learn-v2-depth-prompts summary { cursor: pointer; font-weight: 600; }
+.learn-v2-depth-prompts ol { padding-inline-start: 24px; margin-block: 8px; }
+.learn-v2-depth-prompts li { margin-block: 6px; line-height: 1.55; }
+.learn-v2-game-mission { display: grid; gap: 8px; min-width: 0; padding: 12px; border: 1px solid var(--chess-border, currentColor); }
+.learn-v2-game-mission strong, .learn-v2-game-mission small,
+.learn-v2-game-mission span, .learn-v2-game-mission p { overflow-wrap: anywhere; }
+.learn-v2-game-mission-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.learn-v2-game-mission-actions > button { min-height: 46px; flex: 1 1 135px; white-space: normal; text-align: left; }
+@media (max-width: 600px) {
+  .learn-v2-game-mission { padding: 10px; }
+  .learn-v2-game-mission-actions { flex-direction: column; }
+  .learn-v2-game-mission-actions > button { flex: auto; width: 100%; }
+}

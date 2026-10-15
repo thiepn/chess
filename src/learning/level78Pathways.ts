@@ -305,8 +305,9 @@ export function level78AdvancedCases(
   const scored=positions.flatMap(position=>{
     if(position.source!=="authored")return [];
     const direct=position.skillIds.includes(skillId);
+    const original = position as CalculationPosition & {pawnStructureStudy?:{theme?:string}};
     const topic=(position.title+" "+position.prompt+" "+(position.strategicImbalanceStudy?.theme??"")+" "+
-      (position.pawnStructureStudy?.theme??"")+" "+(position.endgameDecisionStudy?.family??""));
+      (original.pawnStructureStudy?.theme??"")+" "+(position.endgameDecisionStudy?.family??""));
     if(!direct && !(studyFocus[skillId]?.test(topic)))return [];
     return [{kind:"calculation" as const,id:position.id,title:position.title,topic,
       assessed:position.assessmentStatus!=="instructional-only",direct,position}];

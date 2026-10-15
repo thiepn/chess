@@ -730,7 +730,7 @@ export default function App() {
       source: "focus",
       skillIds: [skillId],
       courseFocusSkillId: preferredSkillId && skillById[preferredSkillId] &&
-        ["thinking","fight","finish"].includes(skillById[preferredSkillId].stage) ? preferredSkillId : undefined,
+        ["thinking","fight","finish","practical","advanced"].includes(skillById[preferredSkillId].stage) ? preferredSkillId : undefined,
       activityType: "calculation",
       calculationPositionId: position.id,
       estimatedMinutes: 12,
@@ -2281,7 +2281,7 @@ export default function App() {
     openManualActivity({
       id:`course-calculation:${source.id}`,source:"curriculum",skillIds:[skill.id],
       courseFocusSkillId: skillById[focusSkillId] &&
-        ["thinking","fight","finish"].includes(skillById[focusSkillId].stage) ? focusSkillId : undefined,
+        ["thinking","fight","finish","practical","advanced"].includes(skillById[focusSkillId].stage) ? focusSkillId : undefined,
       activityType:"calculation",calculationPositionId:source.id,
       estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
       reason:"Original source-qualified calculation",title:source.title,subtitle:"Calculate the opponent's reply",

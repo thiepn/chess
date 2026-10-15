@@ -8,6 +8,7 @@ import a112 from "../../public/data/calculation/p112-endgame-decisions-a-v1.json
 import {endgamePositions} from "../endgames/positions";
 import type {CalculationPosition} from "../calculation/types";
 import type {TransferMission} from "../review/gameTransfer";
+import {studyMaterialFor} from "../calculation/studyDelivery";
 const cases=[a109,a110,a112].flatMap(x=>x.positions) as CalculationPosition[];
 describe("Levels 7–8 original transfer paths",()=>{
   it("covers 23 original curricula with grounded P114 comparative source IDs",()=>{
@@ -33,6 +34,17 @@ describe("Levels 7–8 original transfer paths",()=>{
     const privatePosition={...cases[0],id:"calc:owner-private",source:"personal-game" as const};
     expect(level78AdvancedCases("strategy.imbalances",[privatePosition],[])).toEqual([]);
     expect(level78AdvancedCases("practical.time",cases,endgamePositions)).toEqual([]);
+  });
+  it("routes three advanced source-based, unscored questions through the original study panel",()=>{
+    const source=cases[0],snapshot=JSON.stringify(source);
+    const advanced=studyMaterialFor(source,"strategy.imbalances");
+    const baseline=studyMaterialFor(source);
+    expect(advanced?.questions[0].prompt).toBe(level78Guide("strategy.imbalances")?.prompts[0]);
+    expect(advanced?.questions[0].answer).toContain(source.explanation);
+    expect(advanced?.questions[0].answer).toContain("other legal moves have not been proved inferior");
+    expect(advanced?.questions.slice(3)).toEqual(baseline?.questions.slice(0,3));
+    expect(JSON.stringify(source)).toBe(snapshot);
+    expect(studyMaterialFor({...source,source:"personal-game"},"strategy.imbalances")).toEqual(studyMaterialFor({...source,source:"personal-game"}));
   });
   it("links only already-qualified owner Review missions and labels indirect associations",()=>{
     const m:TransferMission={mistakeId:"one",gameId:"g",gameLabel:"Player A — Player B",

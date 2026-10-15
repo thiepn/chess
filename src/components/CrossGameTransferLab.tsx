@@ -196,6 +196,10 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition, focusSkillI
         }}>{showAll?"Return to course pairs":"Explore all 24 comparisons"}</button>
       </div>}
       {rejected > 0 && <p role="alert">{rejected} comparisons were excluded because a source game, checkpoint, or recorded continuation could not be verified.</p>}
+      {focusSkillId && cases && visibleCases?.length===0 && <p role="alert">
+        No source-qualified historical comparisons are available for this course focus.
+        Use all comparisons or retry the original archive.
+      </p>}
       {visibleCases && visibleCases.length > 0 && <>
         <button type="button" className="secondary" onClick={() => {
           const next = visibleCases?.find((item) => visibleDrafts[item.source.id]?.mark === "retry") ??
@@ -242,7 +246,7 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition, focusSkillI
             </button>. {copy.relatedCaveat}
           </p>}
           <header className="p114-session-head">
-            <p className="eyebrow">STUDY {activeIndex + 1} / {cases.length} · {active.source.theme}</p>
+            <p className="eyebrow">STUDY {activeIndex + 1} / {visibleCases.length} · {active.source.theme}</p>
             <h3>{active.source.title}</h3>
             <p>{active.source.comparePrompt}</p>
           </header>
@@ -326,9 +330,9 @@ export function CrossGameTransferLab({ games, owner, onOpenPosition, focusSkillI
             </section>}
             <footer className="p114-footer">
               <button className="secondary" type="button" disabled={activeIndex === 0}
-                onClick={() => choose(cases[activeIndex - 1].source.id)}><ChevronLeft size={15}/> Previous pair</button>
-              <button className="secondary" type="button" disabled={activeIndex === cases.length - 1}
-                onClick={() => choose(cases[activeIndex + 1].source.id)}>Next pair <ChevronRight size={15}/></button>
+                onClick={() => choose(visibleCases[activeIndex - 1].source.id)}><ChevronLeft size={15}/> Previous pair</button>
+              <button className="secondary" type="button" disabled={activeIndex === visibleCases.length - 1}
+                onClick={() => choose(visibleCases[activeIndex + 1].source.id)}>Next pair <ChevronRight size={15}/></button>
               <button className="p114-reset" type="button" onClick={() => {
                 if (Object.values(draft).some((value) =>
                   typeof value === "string" ? value.trim() : Array.isArray(value) ? value.length : Boolean(value)) &&
