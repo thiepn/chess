@@ -54,8 +54,9 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
   it("shows genuinely different original two-ply outcomes, without manufacturing lines",()=>{
     for(const p of [structures.positions[0],attacks.positions[0]] as CalculationPosition[]){
       const branches=verifiedDeepBranches(p);
-      const comparisons=documentedDefensiveBoards(branches);
+      const comparisons=documentedDefensiveBoards(branches,3,branches[0].plies[0].uci);
       expect(comparisons.length,p.id).toBeGreaterThanOrEqual(2);
+      expect(comparisons.every(c=>c.firstMove===branches[0].plies[0].san),p.id).toBe(true);
       expect(comparisons.length,p.id).toBeLessThanOrEqual(3);
       for(const original of comparisons){
         const branch=branches.find(b=>b.id===original.id)!;
@@ -91,7 +92,7 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       for(const choice of choices){
         expect(playDeepMove(after,choice.uci)?.san,source.id).toBe(choice.san);
       }
-      const boards=documentedDefensiveBoards(branches);
+      const boards=documentedDefensiveBoards(branches,3,branches[0].plies[0].uci);
       expect(boards.length,source.id).toBeGreaterThanOrEqual(2);
       expect(new Set(boards.map(b=>b.fen)).size,source.id).toBe(boards.length);
     }

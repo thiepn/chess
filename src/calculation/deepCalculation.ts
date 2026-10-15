@@ -73,11 +73,13 @@ export function recordedDefenderChoices(
 }
 /** Original, legally replayed side-by-side two-ply outcomes. Never compare
  * engine strength or invent a move beyond the authored source. */
-export function documentedDefensiveBoards(branches:readonly DeepBranch[], maximum=3) {
+export function documentedDefensiveBoards(
+  branches:readonly DeepBranch[], maximum=3, firstUci?:string,
+) {
   const seen=new Set<string>();
   const limit=Math.min(4,Math.max(0,Math.floor(maximum)));
   return branches.flatMap(branch=>{
-    if(branch.plies.length<2)return [];
+    if(branch.plies.length<2 || (firstUci && branch.plies[0].uci!==firstUci))return [];
     const after=branch.plies[1].afterFen;
     if(seen.has(after))return [];
     seen.add(after);

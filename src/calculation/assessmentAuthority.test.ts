@@ -20,6 +20,7 @@ describe("advanced contextual practice retains original grade and privacy author
    expect(isInstructionalCalculation(context(false),original)).toBe(false);
    expect(isInstructionalCalculation({...context(true),calculationPositionId:"calc:other"},original)).toBe(false);
    expect(isInstructionalCalculation(context(false,unscored),unscored)).toBe(true);
+   expect(isInstructionalCalculation(context(true),unscored)).toBe(true);
  });
  it("cannot mutate any original scored source",()=>{
    const snapshot=JSON.stringify(original);

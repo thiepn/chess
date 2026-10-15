@@ -917,7 +917,7 @@ export function CalculationRunner({
 
             <div className="lesson-button-row">
               {phase === "result" &&
-                position.assessmentStatus !== "instructional-only" &&
+                !instructionalOnly &&
                 !score?.success && (
                   <button
                     type="button"
@@ -933,7 +933,7 @@ export function CalculationRunner({
                   </button>
                 )}
 
-              {phase === "result" && position.assessmentStatus !== "instructional-only" && (
+              {phase === "result" && !instructionalOnly && (
                 <button
                   type="button"
                   className="primary"

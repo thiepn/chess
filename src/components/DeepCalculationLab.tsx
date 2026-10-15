@@ -52,7 +52,12 @@ export function DeepCalculationLab({
   const game = new Chess(fen);
   const maxed = cursor >= 8 || game.isGameOver();
   const reference = comparisonFor(branch, draft.played.slice(0, cursor));
-  const sourceComparisons=useMemo(()=>documentedDefensiveBoards(branches),[branches]);
+  // Compare genuine defender replies to the SAME source candidate, not
+  // unrelated first moves that could create a misleading comparison.
+  const sourceComparisons=useMemo(()=>
+    documentedDefensiveBoards(branches,3,branch.plies[0]?.uci),
+    [branches,branch],
+  );
   const originalReplies = !maxed
     ? recordedDefenderChoices(position, branches, draft.played.slice(0,cursor))
     : [];
