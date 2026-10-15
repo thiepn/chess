@@ -58,3 +58,9 @@ GitHub source-only connector.
 - At the end of a source line with only three plies, the comparison threshold adjusts to three without manufacturing a fourth move. The existing local Stockfish suggestion remains explicitly learner-triggered and not an invented guaranteed evaluation.
 - Original Levels 4–6 and Advanced position lists can now surface up to 12 source-verified cases per skill, six initially then six behind a user-triggered show-more control. Exact available count depends on the asynchronous loaded source catalog and legitimate source tags; do not equate the 12-slot ceiling with 12 verified available boards for every skill.
 - A focused regression test enumerates all 80 P94/P95 cases with legal branch reconstruction and checked SAN/FEN history, plus exact three-ply boundary. Requires real Chess.js and Vitest in a runnable checkout; **NOT_EXECUTED in this connector-only environment**.
+
+- Specific defensive reply feedback is revealed only after the learner makes
+  a defender move on the board: a match shows the original position's authored
+  `replyReason`, and P95 also shows its source-owned defensive misconception.
+  Other legal defenses are described as departures, **not** objectively wrong.
+  The focused 80-case regression checks that these source feedback fields exist.

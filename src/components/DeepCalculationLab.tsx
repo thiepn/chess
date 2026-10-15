@@ -206,8 +206,22 @@ export function DeepCalculationLab({
 
       <div className="deep-lab-feedback">
         <strong>Branch comparison</strong>
-        {cursor>=2 && <p>After the opponent's reply, inspect the resulting board.
-          If you entered a different legal defense, compare without labeling it objectively worse.</p>}
+        {cursor>=2 && <section aria-label="Defender reply analysis" role="status">
+          {reference.matched>=2 ? <>
+            <strong>Recorded defender reply recognized</strong>
+            <p>{position.replyReason?.trim() || branch.explanation}</p>
+            {position.defensiveStudy?.misconception && <p>
+              <strong>Common misread:</strong> {position.defensiveStudy.misconception}
+            </p>}
+          </> : <>
+            <strong>Different legal defender chosen</strong>
+            <p>This continuation is outside the selected authored line. That alone
+              neither proves it inferior nor certifies your chosen move. Explore
+              the branch legally or compare the recorded defender when ready.</p>
+          </>}
+          <p>Reassess the learner's next move after the defender's actual position,
+            rather than assuming an opponent will follow the desired plan.</p>
+        </section>}
         <p>{reference.deviated
           ? `The entered sequence departed from ${branch.label} after ${reference.matched} matching plies. Continue calculating legally, examine another branch, or use the local engine explicitly.`
           : `Matched ${reference.matched} of ${counter} authored plies. Continue beyond the recorded sequence only as unguided exploration.`}</p>

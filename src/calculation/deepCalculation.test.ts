@@ -63,6 +63,9 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(branches[0].plies,p.id).toHaveLength(3);
       const moves=branches[0].plies.map(row=>({uci:row.uci,origin:"learner" as const}));
       expect(deepFrames(p,moves)?.length,p.id).toBe(4);
+      expect(p.replyReason?.trim().length,p.id).toBeGreaterThan(15);
+      if(p.id.startsWith("calc:p95-"))
+        expect(p.defensiveStudy?.misconception?.trim().length,p.id).toBeGreaterThan(15);
     }
   });
   it("now replays genuinely source-legal three-ply cases without fabricating a fourth move", () => {
