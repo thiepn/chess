@@ -51,3 +51,10 @@ exercises per Level 2–3 skill, and `npm run build` for actual TS/Vite.
 The interactive course-to-historical-to-review journey and mobile controls
 require genuine Chromium acceptance. No commands were executed through the
 GitHub source-only connector.
+
+## G2C: independently playable native source cases
+- Verified source file counts: P94 and P95 alone hold 40+40 authored, legally replayable **three-ply reference sequences**. These historically could not open optional P108 DeepCalculationLab, which admitted 4–8 only. P108 now accepts 3–8 legally replayed plies, retaining original source FEN/ID, session-only drafts and score authority.
+- The original board now asks the learner to move for the defender and only reveals the documented defender response on an explicit click. Other legal replies are permitted for exploration and never branded inferior from source presence alone.
+- At the end of a source line with only three plies, the comparison threshold adjusts to three without manufacturing a fourth move. The existing local Stockfish suggestion remains explicitly learner-triggered and not an invented guaranteed evaluation.
+- Original Levels 4–6 and Advanced position lists can now surface up to 12 source-verified cases per skill, six initially then six behind a user-triggered show-more control. Exact available count depends on the asynchronous loaded source catalog and legitimate source tags; do not equate the 12-slot ceiling with 12 verified available boards for every skill.
+- A focused regression test enumerates all 80 P94/P95 cases with legal branch reconstruction and checked SAN/FEN history, plus exact three-ply boundary. Requires real Chess.js and Vitest in a runnable checkout; **NOT_EXECUTED in this connector-only environment**.

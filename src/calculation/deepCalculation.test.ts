@@ -8,6 +8,7 @@ import {
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
 import older from "../../public/data/calculation/p94-candidates-v1.json";
+import defensesP95 from "../../public/data/calculation/p95-defensive-resistance-v1.json";
 
 const current = defense.positions[0] as CalculationPosition;
 
@@ -52,6 +53,18 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       .toBeNull();
   });
 
+  it("makes all 80 existing P94–P95 three-ply authored cases playable on the original board",()=>{
+    const source=[...older.positions,...defensesP95.positions] as CalculationPosition[];
+    expect(source).toHaveLength(80);
+    for(const p of source){
+      expect(p.principalVariation).toHaveLength(3);
+      const branches=verifiedDeepBranches(p);
+      expect(branches.length,p.id).toBeGreaterThanOrEqual(1);
+      expect(branches[0].plies,p.id).toHaveLength(3);
+      const moves=branches[0].plies.map(row=>({uci:row.uci,origin:"learner" as const}));
+      expect(deepFrames(p,moves)?.length,p.id).toBe(4);
+    }
+  });
   it("now replays genuinely source-legal three-ply cases without fabricating a fourth move", () => {
     const entry = older.positions[0] as CalculationPosition;
     expect(entry.principalVariation).toHaveLength(3);

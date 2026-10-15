@@ -282,6 +282,12 @@ function LessonPage({
                     <small>{item.topic}</small>
                   </button>
                 ))}
+                {depthCases.length>visibleDepth && <button type="button" className="secondary"
+                  onClick={()=>setVisibleDepth(n=>Math.min(depthCases.length,n+6))}>
+                  <strong>Show {Math.min(6,depthCases.length-visibleDepth)} more independent positions</strong>
+                  <small>{visibleDepth} / {depthCases.length} verified source-linked cases displayed;
+                    opening the original trainer retains its existing score or unscored authority.</small>
+                </button>}
               </div>
             ) : <p role="status">The original deeper-position sources are still loading or unavailable.
               Begin the lesson or existing practice without claiming unavailable study credit.</p>}
@@ -309,6 +315,11 @@ function LessonPage({
                 {item.direct?" · Direct original skill":" · Related original subject"}</span>
               <small>{item.topic.slice(0,155)}</small>
             </button>)}
+            {advancedCases.length>visibleDepth && <button type="button" className="secondary"
+              onClick={()=>setVisibleDepth(n=>Math.min(advancedCases.length,n+6))}>
+              <strong>Show {Math.min(6,advancedCases.length-visibleDepth)} further source positions</strong>
+              <small>{visibleDepth} / {advancedCases.length} advanced cases displayed</small>
+            </button>}
             <button type="button" className="secondary" onClick={()=>onOpenHistoricalSkill(skill.id)}>
               <strong>2 · Compare real historical decisions</strong>
               <span>{journey.masterPairIds.length} source-pinned master-game pairs</span>
