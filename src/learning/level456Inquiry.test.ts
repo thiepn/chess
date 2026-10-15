@@ -22,6 +22,7 @@ describe("Level 4–6 authentic curriculum reflection within original Calculatio
   });
   it("preserves original written study questions and adds three ungraded focused ones",()=>{
     for(const position of sources){
+      const snapshot=JSON.stringify(position);
       const original=studyMaterialFor(position);
       const focus=position.kingAttackStudy?"attack.king-safety":position.defensiveTechniqueStudy?"defense.counterplay":
         position.endgameDecisionStudy?"endgames.rook-activity":"pawns.weaknesses";
@@ -31,7 +32,7 @@ describe("Level 4–6 authentic curriculum reflection within original Calculatio
       expect(enhanced?.questions[0].answer).toContain(position.explanation.trim());
       expect(enhanced?.questions[0].answer).toContain("does not certify");
       expect(enhanced?.questions.slice(3)).toEqual(original?.questions.slice(0,3));
-      expect(position.assessmentStatus).toBe(position.assessmentStatus); // no mutation
+      expect(JSON.stringify(position)).toBe(snapshot); // no source mutation
     }
   });
   it("does not upgrade private game or unrelated curriculum evidence",()=>{

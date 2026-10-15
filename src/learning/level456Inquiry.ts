@@ -53,7 +53,7 @@ export const level456StudyLenses: Readonly<Record<string, readonly [string,strin
   ],
   "pawns.weaknesses": [
     "Identify a fixed pawn weakness and name the piece that could exert pressure on it.",
-    "How can the defender release or protect the apparent weakness?",
+    "How can the defender release, exchange or protect the apparent pawn weakness before you attack it?",
     "Which target is only temporarily weak, and what would make a long-term attack unjustified?"
   ],
   "attack.king-safety": [
@@ -92,7 +92,7 @@ export const level456StudyLenses: Readonly<Record<string, readonly [string,strin
     "Which trade relieves pressure, and which leaves the king without a necessary defender?"
   ],
   "defense.counterplay": [
-    "Find a forcing counter-threat that makes the attacker respond.",
+    "Find a forcing counter-threat that makes the attacker respond instead of continuing the attack.",
     "Can the attacker ignore your counterplay and continue with checks or threats?",
     "Which slow defensive move would permit the attacker to increase pressure freely?"
   ],
@@ -102,29 +102,29 @@ export const level456StudyLenses: Readonly<Record<string, readonly [string,strin
     "Why is bringing your own king closer necessary before finalizing the mate?"
   ],
   "endgames.rook-mate": [
-    "Find a reliable rook cutoff and the supporting king route.",
+    "Find a reliable rook cutoff and the supporting king route to restrict the defender.",
     "Which king move challenges the cutoff or approaches your exposed rook?",
     "Why do repeated checks without improving the cutoff fail to finish efficiently?"
   ],
   "endgames.opposition": [
     "Count whose move it is and whether the kings have direct or distant opposition.",
     "What king move changes access to key squares after your first choice?",
-    "Would advancing the pawn now surrender the tempo you need later?"
+    "Would advancing the pawn now surrender the key tempo you need for opposition later?"
   ],
   "endgames.key-squares": [
     "Identify which entry squares the stronger king must reach before pushing the pawn.",
-    "Which defensive king route prevents entry to those squares?",
+    "Which concrete defensive king route prevents your entry to those key squares?",
     "How can choosing the wrong king route turn a promising conversion into a draw?"
   ],
   "endgames.pawn-races": [
-    "Count tempi to promotion for both sides and account for checks.",
+    "Count the exact tempi to promotion for both sides, including any forcing checks.",
     "Can the opponent promote with check, sacrifice or intercept your passer?",
     "Which assumed tempo advantage disappears if the opponent promotes first?"
   ],
   "pawns.passed": [
     "Identify the passer's advance square and which piece must support it.",
-    "What blockade, rook check or counterpasser can delay conversion?",
-    "Why can a rushed push lose support or expose a different pawn?"
+    "What concrete blockade, rook check or opposing counterpasser can delay conversion?",
+    "Why can a rushed passed-pawn push lose support or expose a different pawn to attack?"
   ],
   "endgames.rook-activity": [
     "Compare active checking from the side with passive defense of the pawn.",

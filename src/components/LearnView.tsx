@@ -30,6 +30,7 @@ import type {
 } from "../assessment/types";
 import { lessonForSkill } from "../learning/lessons";
 import { level456Pathways } from "../learning/level456Pathways";
+import { level456Lens } from "../learning/level456Inquiry";
 import type { CalculationPosition } from "../calculation/types";
 import type { EndgamePosition } from "../endgames/types";
 import { endgamePositions } from "../endgames/positions";
@@ -146,6 +147,7 @@ function LessonPage({
     () => level456Pathways(skill.id,level456Positions,endgamePositions,6),
     [skill.id,level456Positions],
   );
+  const depthLens = level456Lens(skill.id);
   const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
@@ -239,6 +241,12 @@ function LessonPage({
             <p>Study actual source positions and execute endgame techniques in their existing
               trainers. Contextual studies teach the idea but do not award this skill mastery.
               Authored legal branches are not engine-certified best moves.</p>
+            {depthLens && <details className="learn-v2-depth-prompts">
+              <summary>Three questions before you practice</summary>
+              <ol>{depthLens.map((question,index)=><li key={index}>{question}</li>)}</ol>
+              <p>Consider these on the board before revealing a source line.
+                This is ungraded preparation, not a second mastery test.</p>
+            </details>}
             {depthCases.length ? (
               <div className="learn-v2-depth-cases">
                 {depthCases.map(item => (

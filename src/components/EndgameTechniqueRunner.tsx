@@ -18,6 +18,7 @@ import {
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { scoreEndgameAttempt } from "../endgames/scoring";
 import {endgameRepairPlan} from "../endgames/diagnostics";
+import { level456Lens } from "../learning/level456Inquiry";
 import {loadEndgameGuidance} from "../endgames/guidance";
 import type {
   EndgameEvidence,
@@ -393,6 +394,7 @@ function EndgameTechniqueSession({
     }
   }, [moves.length, stage, thinking]);
 
+  const stageDepthLens=level456Lens(skill.id);
   const visibleCue =
     hintsUsed > 0
       ? position.processCues[
@@ -449,6 +451,13 @@ function EndgameTechniqueSession({
               </div>
             </div>
 
+            {stageDepthLens && <details className="endgame-depth-prompt">
+              <summary>Evaluate the plan and the defender before playing</summary>
+              <p>{stageDepthLens[0]}</p>
+              <p>{stageDepthLens[1]}</p>
+              <small>Ungraded preparation; the original recognition and technique
+                execution determine progress.</small>
+            </details>}
             <h3>
               {position.recognitionPrompt}
             </h3>
@@ -810,6 +819,7 @@ function EndgameTechniqueSession({
                 <strong>Technique review</strong>
                 {endgameRepairPlan(position,recognitionChoice,score.evidence).map(message=>
                   <p key={message}>{message}</p>)}
+                {stageDepthLens && <p><strong>Independent repair question:</strong> {stageDepthLens[2]}</p>}
                 {delayedRetention && <p>{score.success && recognitionCorrect && hintsUsed===0
                   ? "Time-separated unaided technique: eligible for retention evidence."
                   : "This return was due, but assisted or incorrect work cannot certify delayed retention."}</p>}

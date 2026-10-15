@@ -37,3 +37,12 @@ distinct positions or when a stored move is illegal. It does not trigger release
 deployment, broad CI, privileged credentials, migration or account writes.
 The TypeScript/Vite build and a real learner browser path remain separately
 NOT_TESTED until an executable exact-head checkout/preview is available.
+
+## Levels 4–6 original skill depth
+- All 28 original Thinking/Fight/Finish skill IDs have three distinct, authored *ungraded* prompts: candidate choice, concrete defensive response, and the limitation of a tempting alternative.
+- Each original CalculationRunner retains Chess.js source continuations, candidate/reply/continuation and optional original authored study questions. The same existing private CalculationStudyPanel now adds the skill-focused prompts to the authentic source explanation and defensive misconception.
+- Original owner-position session drafts are unchanged. Course-focused written self-checks use the same sessionStorage mechanism with owner + source + curriculum focus keys; no persistent account writer or new mastery authority.
+- Native EndgameTechniqueRunner now surfaces stage-specific pre-move candidate/defender questions and post-result self-repair, without altering the engine-based recognition and execution grade.
+- The original LearnView course page shows the three-question preparation in an optional accessible disclosure alongside six source links. Contextual cases never silently award unrelated skill mastery. Owner-private calculations stay in Review, not public curriculum selection.
+- No new skill IDs, synthetic engine best-move claims, database migrations, new stores, PRs, merges or deployments.
+- Focused Vitest tests were authored for all 28 source lenses and the legal-source/private-write boundaries. They remain **NOT_TESTED** because no complete executable checkout is available.
