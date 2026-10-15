@@ -71,6 +71,35 @@ export function recordedDefenderChoices(
   }
   return result;
 }
+/** Original, legally replayed side-by-side two-ply outcomes. Never compare
+ * engine strength or invent a move beyond the authored source. */
+export function documentedDefensiveBoards(branches:readonly DeepBranch[], maximum=3) {
+  const seen=new Set<string>();
+  const limit=Math.min(4,Math.max(0,Math.floor(maximum)));
+  return branches.flatMap(branch=>{
+    if(branch.plies.length<2)return [];
+    const after=branch.plies[1].afterFen;
+    if(seen.has(after))return [];
+    seen.add(after);
+    return [{
+      id:branch.id,label:branch.label,fen:after,
+      firstMove:branch.plies[0].san,defenderMove:branch.plies[1].san,
+      continuedLine:branch.plies.slice(2).map(p=>p.san),
+      explanation:branch.explanation,
+    }];
+  }).slice(0,limit);
+}
+
+/** Switching an original branch keeps precisely the legal move prefix shared
+ * with that branch; incompatible old decisions remain in the original draft only
+ * until the learner chooses another branch. This never awards mastery. */
+export function sharedBranchDraft(branch:DeepBranch, draft:DeepDraft):DeepDraft {
+  const played=draft.played.slice(0,draft.cursor);
+  let shared=0;
+  for(;shared<played.length&&branch.plies[shared]?.uci===played[shared].uci;shared++){}
+  return {branchId:branch.id,played:played.slice(0,shared),cursor:shared,reveal:false};
+}
+
 export function playDeepMove(fen: string, uci: string): { fen: string; san: string } | null {
   if (!UCI.test(uci)) return null;
   try {

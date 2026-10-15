@@ -65,3 +65,14 @@
 .opening-bridge-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:12px}
 .opening-bridge-list button{display:grid;gap:6px;text-align:left;min-height:44px;padding:12px}
 
+
+/* Source-owned two-ply branch outcomes. Disclosure happens after actual
+ * independent moves, with no engine-best claim or new score authority. */
+.deep-lab-source-comparison{display:grid;gap:10px;margin-top:12px;min-width:0}
+.deep-lab-source-comparison>button{justify-self:start;min-height:44px}
+.deep-lab-source-boards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;min-width:0}
+.deep-lab-source-boards article{display:grid;align-content:start;gap:7px;padding:12px;border:1px solid var(--chess-color-separator,var(--line));min-width:0}
+.deep-lab-source-boards .chess-board-wrap{width:100%;max-width:320px}
+.deep-lab-source-boards article p{overflow-wrap:anywhere;line-height:1.5}
+.deep-lab-source-boards article button{min-height:44px;white-space:normal}
+@media(max-width:600px){.deep-lab-source-boards{grid-template-columns:1fr}.deep-lab-source-boards article{padding:10px}}

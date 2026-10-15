@@ -3,7 +3,8 @@ import { Chess } from "chess.js";
 import type { CalculationPosition } from "./types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, playDeepMove,
-  readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches, recordedDefenderChoices,
+  readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
+  recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
@@ -47,6 +48,31 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(new Set(choices.map(c=>c.uci)).size).toBe(choices.length);
       expect(recordedDefenderChoices(p,branches,[])).toEqual([]);
       expect(recordedDefenderChoices(p,branches,[{uci:"a1a1",origin:"learner"}])).toEqual([]);
+    }
+  });
+  it("shows genuinely different original two-ply outcomes, without manufacturing lines",()=>{
+    for(const p of [structures.positions[0],attacks.positions[0]] as CalculationPosition[]){
+      const branches=verifiedDeepBranches(p);
+      const comparisons=documentedDefensiveBoards(branches);
+      expect(comparisons.length,p.id).toBeGreaterThanOrEqual(2);
+      expect(comparisons.length,p.id).toBeLessThanOrEqual(3);
+      for(const original of comparisons){
+        const branch=branches.find(b=>b.id===original.id)!;
+        expect(original.fen,p.id).toBe(branch.plies[1].afterFen);
+        expect(original.defenderMove,p.id).toBe(branch.plies[1].san);
+        expect(original.continuedLine,p.id).toEqual(branch.plies.slice(2).map(p=>p.san));
+      }
+      const main=branches[0],different=branches.find(b=>
+        b.plies[0].uci===main.plies[0].uci&&b.plies[1].uci!==main.plies[1].uci)!;
+      expect(different,p.id).toBeDefined();
+      const draft={branchId:main.id,played:main.plies.slice(0,2).map(m=>({
+        uci:m.uci,origin:"learner" as const
+      })),cursor:2,reveal:true};
+      const transferred=sharedBranchDraft(different,draft);
+      expect(transferred.branchId,p.id).toBe(different.id);
+      expect(transferred.cursor,p.id).toBe(1);
+      expect(transferred.played.map(m=>m.uci),p.id).toEqual([main.plies[0].uci]);
+      expect(draft.cursor,p.id).toBe(2);
     }
   });
   it("retains chronological FENs, accurate SAN and branch comparison", () => {

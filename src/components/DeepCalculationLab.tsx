@@ -4,7 +4,8 @@ import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import type { CalculationPosition } from "../calculation/types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
-  playDeepMove, readDeepDraft, recordedDefenderChoices, verifiedDeepBranches, writeDeepDraft,
+  playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
+  sharedBranchDraft, verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
 import { ChessBoard } from "./ChessBoard";
@@ -33,6 +34,7 @@ export function DeepCalculationLab({
   // Keep the actual defender move hidden until the learner chooses to reveal it.
   // The source is an illustrative recorded line, never an engine-optimality claim.
   const [showSourceReply,setShowSourceReply]=useState(false);
+  const [showTwoPlyComparisons,setShowTwoPlyComparisons]=useState(false);
   const epoch = useRef(0);
 
   useEffect(() => {
@@ -50,6 +52,7 @@ export function DeepCalculationLab({
   const game = new Chess(fen);
   const maxed = cursor >= 8 || game.isGameOver();
   const reference = comparisonFor(branch, draft.played.slice(0, cursor));
+  const sourceComparisons=useMemo(()=>documentedDefensiveBoards(branches),[branches]);
   const originalReplies = !maxed
     ? recordedDefenderChoices(position, branches, draft.played.slice(0,cursor))
     : [];
@@ -62,13 +65,14 @@ export function DeepCalculationLab({
     setLocal(null);
     setError("");
     setShowSourceReply(false);
+    setShowTwoPlyComparisons(false);
     setBusy(false);
   }
   function setBranch(id: string) {
     const selected = branches.find(item => item.id === id);
     if (!selected) return;
     resetTransient();
-    setDraft(blankDeepDraft(selected));
+    setDraft(previous=>sharedBranchDraft(selected,previous));
   }
   function move(uci: string, origin: PlyOrigin): boolean {
     if (maxed || busy || !playDeepMove(fen, uci)) return false;
@@ -215,7 +219,7 @@ export function DeepCalculationLab({
         {alternate && <button type="button" className="secondary"
           onClick={() => {
             resetTransient();
-            setDraft(previous=>({...previous,branchId:alternate.id,reveal:false}));
+            setDraft(previous=>sharedBranchDraft(alternate,previous));
           }}>
           Compare this exact continuation with {alternate.label}
         </button>}
@@ -236,8 +240,35 @@ export function DeepCalculationLab({
           <p>Reassess the learner's next move after the defender's actual position,
             rather than assuming an opponent will follow the desired plan.</p>
         </section>}
+        {cursor>=2 && sourceComparisons.length>=2 && <section className="deep-lab-source-comparison"
+          aria-label="Compare original opponent responses">
+          <button type="button" className="secondary"
+            aria-expanded={showTwoPlyComparisons}
+            onClick={()=>setShowTwoPlyComparisons(value=>!value)}>
+            {showTwoPlyComparisons?"Hide":"Compare"} {sourceComparisons.length} documented two-ply positions
+          </button>
+          {showTwoPlyComparisons && <>
+            <p>These boards show the exact source positions after the candidate
+              and defender reply. Compare king safety, material, initiative,
+              escape squares and the remaining source line before choosing a plan.
+              No engine or mastery verdict is inferred.</p>
+            <div className="deep-lab-source-boards">
+              {sourceComparisons.map(item=><article key={item.id}>
+                <h4>{item.label}</h4>
+                <ChessBoard fen={item.fen} orientation={position.playerColor} disabled/>
+                <p><strong>Recorded:</strong> {item.firstMove} {item.defenderMove}</p>
+                <p><strong>Continuation:</strong> {item.continuedLine.join(" ")||"No further original moves"}</p>
+                <p>{item.explanation}</p>
+                <button type="button" className="secondary"
+                  onClick={()=>setBranch(item.id)}>
+                  Rehearse this documented branch
+                </button>
+              </article>)}
+            </div>
+          </>}
+        </section>}
         <p>{reference.deviated
-          ? `The entered sequence departed from ${branch.label} after ${reference.matched} matching plies. Continue calculating legally, examine another branch, or use the local engine explicitly.`
+          ? `The entered sequence departed from ${branch.label} after ${reference.matched} matching plies. Continue calculating legally, examine another branch, or use the local engine explicitly.` 
           : `Matched ${reference.matched} of ${counter} authored plies. Continue beyond the recorded sequence only as unguided exploration.`}</p>
         {cursor >= Math.min(4, branch.plies.length) &&
           <button type="button" className="secondary"
