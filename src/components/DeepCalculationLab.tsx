@@ -21,15 +21,16 @@ interface Props {
   onComplete: () => void;
   /** For ungraded standalone defender challenge; optional traditional lab unchanged. */
   exitLabel?: string;
+  draftScope?: "defender";
   /** Existing local Stockfish, only contacted on an explicit learner click. */
   evaluateLocally: (fen: string) => Promise<EngineSuggestion | null>;
 }
 
 export function DeepCalculationLab({
-  position, storageOwner, onComplete, exitLabel, evaluateLocally,
+  position, storageOwner, onComplete, exitLabel, draftScope, evaluateLocally,
 }: Props) {
   const branches = useMemo(() => verifiedDeepBranches(position), [position]);
-  const [draft, setDraft] = useState(() => readDeepDraft(storageOwner, position, branches));
+  const [draft, setDraft] = useState(() => readDeepDraft(storageOwner, position, branches, draftScope));
   const [busy, setBusy] = useState(false);
   const [local, setLocal] = useState<{ fen: string; move: string; depth: number } | null>(null);
   const [error, setError] = useState("");
@@ -40,8 +41,8 @@ export function DeepCalculationLab({
   const epoch = useRef(0);
 
   useEffect(() => {
-    writeDeepDraft(storageOwner, position, draft);
-  }, [storageOwner, position, draft]);
+    writeDeepDraft(storageOwner, position, draft, draftScope);
+  }, [storageOwner, position, draft, draftScope]);
   useEffect(() => () => { epoch.current++; }, []);
 
   // Original legal 3–8 ply cases now share the same optional deep board.
@@ -56,10 +57,7 @@ export function DeepCalculationLab({
   const reference = comparisonFor(branch, draft.played.slice(0, cursor));
   // Compare genuine defender replies to the SAME source candidate, not
   // unrelated first moves that could create a misleading comparison.
-  const sourceComparisons=useMemo(()=>
-    documentedDefensiveBoards(branches,3,branch.plies[0]?.uci),
-    [branches,branch],
-  );
+  const sourceComparisons=documentedDefensiveBoards(branches,3,branch.plies[0]?.uci);
   const originalReplies = !maxed
     ? recordedDefenderChoices(position, branches, draft.played.slice(0,cursor))
     : [];
@@ -123,7 +121,7 @@ export function DeepCalculationLab({
   }
   function clear() {
     resetTransient();
-    discardDeepDraft(storageOwner, position);
+    discardDeepDraft(storageOwner, position, draftScope);
     setDraft(blankDeepDraft(branch));
   }
   const alternate = branches.find(item => item.id !== branch.id &&
@@ -154,7 +152,7 @@ export function DeepCalculationLab({
         ))}
       </fieldset>
 
-      {cursor===0 && branch.plies.length>=3 && <div className="deep-lab-defender-challenge">
+      {(cursor===0 || draftScope==="defender") && branch.plies.length>=3 && <div className="deep-lab-defender-challenge">
         <strong>Practice the opponent's side</strong>
         <p>Set up the source's recorded first move, then find a legal defense yourself.
           The board turns toward the defender. This is ungraded rehearsal,
@@ -162,7 +160,7 @@ export function DeepCalculationLab({
         <button type="button" className="secondary" onClick={()=>{
           resetTransient();
           setDraft(sourceDefenderSetup(branch));
-        }}>Start defender-side challenge</button>
+        }}>{cursor>0 ? "Restart defender-side challenge" : "Start defender-side challenge"}</button>
       </div>}
       <div className="deep-lab-board">
         <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}:${viewColor}`}
