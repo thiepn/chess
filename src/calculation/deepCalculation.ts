@@ -150,17 +150,18 @@ export function comparisonFor(branch: DeepBranch, played: DeepPly[]) {
   };
 }
 
-function key(owner: string, position: CalculationPosition) {
-  return KEY + encodeURIComponent(owner) + ":" + encodeURIComponent(position.id);
+function key(owner: string, position: CalculationPosition, scope?: "defender") {
+  return KEY + encodeURIComponent(owner) + ":" + encodeURIComponent(position.id) +
+    (scope ? ":mode:" + encodeURIComponent(scope) : "");
 }
 export function blankDeepDraft(branch: DeepBranch): DeepDraft {
   return { branchId: branch.id, played: [], cursor: 0, reveal: false };
 }
-export function readDeepDraft(owner: string, position: CalculationPosition, branches: DeepBranch[]): DeepDraft {
+export function readDeepDraft(owner: string, position: CalculationPosition, branches: DeepBranch[], scope?: "defender"): DeepDraft {
   const blank = blankDeepDraft(branches[0]);
   if (!owner || typeof sessionStorage === "undefined") return blank;
   try {
-    const raw = sessionStorage.getItem(key(owner, position));
+    const raw = sessionStorage.getItem(key(owner, position, scope));
     if (!raw || raw.length > 2300) return blank;
     const data: unknown = JSON.parse(raw);
     if (!data || typeof data !== "object") return blank;
@@ -183,15 +184,15 @@ export function readDeepDraft(owner: string, position: CalculationPosition, bran
     return { branchId: v.branchId, played, cursor, reveal: v.reveal === true };
   } catch { return blank; }
 }
-export function writeDeepDraft(owner: string, position: CalculationPosition, draft: DeepDraft) {
+export function writeDeepDraft(owner: string, position: CalculationPosition, draft: DeepDraft, scope?: "defender") {
   if (!owner || typeof sessionStorage === "undefined") return;
   try {
-    sessionStorage.setItem(key(owner, position), JSON.stringify({
+    sessionStorage.setItem(key(owner, position, scope), JSON.stringify({
       version: 1, fen: position.fen, savedAt: Date.now(), ...draft,
     }));
   } catch { /* Session storage may be unavailable. */ }
 }
-export function discardDeepDraft(owner: string, position: CalculationPosition) {
+export function discardDeepDraft(owner: string, position: CalculationPosition, scope?: "defender") {
   if (!owner || typeof sessionStorage === "undefined") return;
-  try { sessionStorage.removeItem(key(owner, position)); } catch { /* no persistence */ }
+  try { sessionStorage.removeItem(key(owner, position, scope)); } catch { /* no persistence */ }
 }
