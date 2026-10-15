@@ -19,7 +19,11 @@ describe("original Levels 4–6 training paths",()=>{
       for(const c of cases){
         expect(c.position.id).toBe(c.id);
         expect(c.position.fen.length).toBeGreaterThan(15);
-        if(c.kind==="calculation")expect(c.assessed).toBe(c.position.assessmentStatus!=="instructional-only");
+        if(c.kind==="calculation") {
+          // Historical scores belong to their original skill, not a related theme.
+          expect(c.assessed).toBe(c.direct && c.position.assessmentStatus!=="instructional-only");
+          if (!c.direct) expect(c.assessed).toBe(false);
+        }
         if(!c.direct)expect(c.kind).toBe("calculation");
       }
     }
