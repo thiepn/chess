@@ -367,6 +367,7 @@ export function CalculationRunner({
         position={position}
         storageOwner={storageOwner}
         exitLabel="Return to course without a grade"
+        draftScope="defender"
         onComplete={onInstructionalExit}
         evaluateLocally={async fen=>{
           const engine=engineRef.current??await enginePromiseRef.current;
