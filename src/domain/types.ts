@@ -254,6 +254,8 @@ export interface TrainingCandidate {
   calculationPositionId?: string;
   /** Display-only curriculum lens for native source exercises; never assessment authority. */
   courseFocusSkillId?: string;
+  /** Contextual course use cannot award the source's historical score. */
+  courseContextOnly?: boolean;
   endgamePositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;

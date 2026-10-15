@@ -29,6 +29,7 @@ import type {
 import { ChessBoard } from "./ChessBoard";
 import { CalculationStudyPanel } from "./CalculationStudyPanel";
 import { studyMaterialFor } from "../calculation/studyDelivery";
+import { isInstructionalCalculation } from "../calculation/assessmentAuthority";
 import { verifiedDeepBranches } from "../calculation/deepCalculation";
 
 import { DeepCalculationLab } from "./DeepCalculationLab";
@@ -145,6 +146,7 @@ export function CalculationRunner({
       Promise<StockfishBrowserEngine> | null
     >(null);
 
+  const instructionalOnly = isInstructionalCalculation(activity,position);
   const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position,activity.courseFocusSkillId), [position,activity.courseFocusSkillId]);
   const [showWorkedReview, setShowWorkedReview] = useState(!hasIndependentStudy);
   const hasDeepBranches = useMemo(() => verifiedDeepBranches(position).length > 0, [position]);
@@ -298,7 +300,7 @@ export function CalculationRunner({
   const score =
     phase === "result" &&
     selectedMove &&
-    position.assessmentStatus !== "instructional-only"
+    !instructionalOnly
       ? scoreCalculationAttempt({
           positionId: position.id,
           source: position.source,
@@ -728,18 +730,20 @@ export function CalculationRunner({
             )}
 
 
-            {phase === "result" && position.assessmentStatus === "instructional-only" &&
+            {phase === "result" && instructionalOnly &&
               (!hasDeepBranches || deepDone) && showWorkedReview && (
               <section className="calculation-instructional-review" aria-label="Authored strategic review">
-                <p className="eyebrow">UNSCORED · AUTHOR-QUALIFIED POSITION</p>
+                <p className="eyebrow">{activity.courseContextOnly
+                  ? "CONTEXTUAL COURSE EXERCISE · UNSCORED"
+                  : "UNSCORED · AUTHOR-QUALIFIED POSITION"}</p>
                 <h3>Compare plans, not a fabricated grade</h3>
                 <p>{position.explanation}</p>
                 <p><strong>Legally replayed sample:</strong> {referenceLine.join(" ")}</p>
                 <p>{position.replyReason}</p>
                 <p>{position.continuationReason}</p>
                 <p className="calculation-instructional-note">These moves are legal learning
-                  illustrations, not verified unique-best chess answers. No three-ply
-                  grade, mastery, review history or training credit is recorded.</p>
+                  illustrations, not verified unique-best chess answers. No calculation
+                  grade, mastery, review history or training credit is recorded for this instructional attempt.</p>
                 <button type="button" className="primary"
                   onClick={onInstructionalExit}>
                   Leave study without writing a score <ChevronRight size={17}/>

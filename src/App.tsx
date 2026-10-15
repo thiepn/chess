@@ -44,6 +44,7 @@ import { ChessBoard } from "./components/ChessBoard";
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import { legalReviewMistake, recordReviewAttempt, scheduleVerifiedReview } from "./review/practiceLoop";
 import { gameTransferMissions } from "./review/gameTransfer";
+import { isInstructionalCalculation } from "./calculation/assessmentAuthority";
 import { legalPuzzleLine, recordPuzzleResult } from "./puzzles/practiceQuality";
 import {legalCalculationBranch} from "./calculation/branchFeedback";
 import {verifyEndgameHistory} from "./endgames/diagnostics";
@@ -731,6 +732,7 @@ export default function App() {
       skillIds: [skillId],
       courseFocusSkillId: preferredSkillId && skillById[preferredSkillId] &&
         ["thinking","fight","finish","practical","advanced"].includes(skillById[preferredSkillId].stage) ? preferredSkillId : undefined,
+      courseContextOnly: Boolean(preferredSkillId && !position.skillIds.includes(preferredSkillId)),
       activityType: "calculation",
       calculationPositionId: position.id,
       estimatedMinutes: 12,
@@ -2282,6 +2284,7 @@ export default function App() {
       id:`course-calculation:${source.id}`,source:"curriculum",skillIds:[skill.id],
       courseFocusSkillId: skillById[focusSkillId] &&
         ["thinking","fight","finish","practical","advanced"].includes(skillById[focusSkillId].stage) ? focusSkillId : undefined,
+      courseContextOnly: !source.skillIds.includes(focusSkillId),
       activityType:"calculation",calculationPositionId:source.id,
       estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
       reason:"Original source-qualified calculation",title:source.title,subtitle:"Calculate the opponent's reply",
@@ -2966,7 +2969,7 @@ export default function App() {
                           storageOwner={activeOwner}
                           onInstructionalExit={() => {
                             if (repo.getProfileId() !== activeOwner ||
-                              activeCalculationPosition.assessmentStatus !== "instructional-only") return;
+                              !isInstructionalCalculation(active,activeCalculationPosition)) return;
                             closeTrainingRuntime(trainingReturnPath);
                           }}
                           onComplete={completeActivity}
