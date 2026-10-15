@@ -88,5 +88,18 @@ describe("G1B eight authentic positions per original beginner skill", () => {
     const oldVersion = structuredClone(source);
     oldVersion.version = 1;
     expect(() => validateBeginnerPractice(oldVersion)).toThrow();
+    const catalog = validateBeginnerPractice(source);
+    const skill = beginnerSkillIds[0];
+    const lesson = lessonForSkill(skill, "Original skill", "Original source");
+    // Missing or ambiguous anchors must fail closed, not silently omit the
+    // four-plus-four independent source exercises from scoring.
+    const missingAnchor = { ...lesson, steps: lesson.steps.filter(step => step.id !== "transfer") };
+    expect(() => withBeginnerPractice(missingAnchor, catalog.get(skill)!)).toThrow();
+    const duplicatedAnchor = { ...lesson,
+      steps: [...lesson.steps, lesson.steps.find(step => step.id === "transfer")!] };
+    expect(() => withBeginnerPractice(duplicatedAnchor, catalog.get(skill)!)).toThrow();
+    const duplicateBoard = structuredClone(catalog.get(skill)!);
+    duplicateBoard.exercises[0].fen = lesson.steps[0].fen;
+    expect(() => withBeginnerPractice(lesson, duplicateBoard)).toThrow();
   });
 });

@@ -2975,9 +2975,17 @@ export default function App() {
                         />
                       ) : (
                         <LessonRunner
+                          // A different activity/skill/Account must never reuse
+                          // a prior lesson's step index, hints or transfer answers.
+                          key={`${activeOwner}:${active.id}:${activeSkill.id}:${active.activityType}`}
                           activity={active}
                           skill={activeSkill}
-                          onComplete={completeActivity}
+                          onComplete={outcome => {
+                            // Prevent a stale, unmounted learner interaction from
+                            // submitting progress under the next Account owner.
+                            if (repo.getProfileId() !== activeOwner) return;
+                            completeActivity(outcome);
+                          }}
                         />
                       )}
                     </div>

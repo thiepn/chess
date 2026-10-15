@@ -92,6 +92,14 @@ export function validateBeginnerPractice(raw: unknown): ReadonlyMap<string, Begi
 
 export function withBeginnerPractice(lesson: LessonScript, entry: BeginnerPracticeEntry): LessonScript {
   if (entry.skillId !== lesson.skillId) throw Error("Different beginner skill");
+  // An incomplete historical script must not quietly omit all of G1B and
+  // still return ordinary completion evidence.
+  const target = lesson.steps.some(step => step.id === "transfer-depth") ? "transfer-depth" : "transfer";
+  if (lesson.steps.filter(step => step.id === target).length !== 1)
+    throw Error("Original independent transfer anchor is missing or ambiguous");
+  const priorBoards = new Set(lesson.steps.map(step => step.fen));
+  if (entry.exercises.some(item => priorBoards.has(item.fen)))
+    throw Error("Beginner independent practice reused the lesson board");
   const steps: LessonStep[] = entry.exercises.map((item, i) => ({
     id: `g1-practice-${i + 1}`,
     stage: "transfer",
@@ -112,8 +120,7 @@ export function withBeginnerPractice(lesson: LessonScript, entry: BeginnerPracti
     wrongMoveFeedback: item.wrongMoveFeedback,
     hints: item.hints.map(text => ({ text })),
   }));
-  const after = lesson.steps.some(step => step.id === "transfer-depth") ? "transfer-depth" : "transfer";
-  return { ...lesson, steps: lesson.steps.flatMap(step => step.id === after ? [step, ...steps] : [step]) };
+  return { ...lesson, steps: lesson.steps.flatMap(step => step.id === target ? [step, ...steps] : [step]) };
 }
 
 export function loadBeginnerPractice(): Promise<ReadonlyMap<string, BeginnerPracticeEntry>> {
