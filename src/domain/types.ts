@@ -256,6 +256,8 @@ export interface TrainingCandidate {
   courseFocusSkillId?: string;
   /** Contextual course use cannot award the source's historical score. */
   courseContextOnly?: boolean;
+  /** Original source defender-only board; never a scored course assessment. */
+  courseDefenderPractice?: boolean;
   endgamePositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;

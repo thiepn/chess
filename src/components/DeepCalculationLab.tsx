@@ -19,12 +19,14 @@ interface Props {
   position: CalculationPosition;
   storageOwner: string;
   onComplete: () => void;
+  /** For ungraded standalone defender challenge; optional traditional lab unchanged. */
+  exitLabel?: string;
   /** Existing local Stockfish, only contacted on an explicit learner click. */
   evaluateLocally: (fen: string) => Promise<EngineSuggestion | null>;
 }
 
 export function DeepCalculationLab({
-  position, storageOwner, onComplete, evaluateLocally,
+  position, storageOwner, onComplete, exitLabel, evaluateLocally,
 }: Props) {
   const branches = useMemo(() => verifiedDeepBranches(position), [position]);
   const [draft, setDraft] = useState(() => readDeepDraft(storageOwner, position, branches));
@@ -308,10 +310,13 @@ export function DeepCalculationLab({
         <button type="button" className="secondary" onClick={clear}>
           <RotateCcw size={15}/> Discard branch draft
         </button>
-        <button type="button" className="secondary" onClick={onComplete}>Skip optional depth lab</button>
-        <button type="button" className="primary" disabled={cursor < Math.min(4, branch.plies.length)}
+        <button type="button" className="secondary" onClick={onComplete}>
+          {exitLabel ? "Leave unscored practice" : "Skip optional depth lab"}
+        </button>
+        <button type="button" className="primary"
+          disabled={cursor < (exitLabel ? 2 : Math.min(4, branch.plies.length))}
           onClick={onComplete}>
-          Continue to independent study <ChevronRight size={16}/>
+          {exitLabel ?? "Continue to independent study"} <ChevronRight size={16}/>
         </button>
       </footer>
     </section>

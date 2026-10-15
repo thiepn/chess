@@ -57,7 +57,7 @@ interface LearnViewProps {
   onOpenOpenings: () => void;
   onOpenModelGames: () => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend") => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
   personalGameMissions: TransferMission[];
   onTrainGameMistake:(mistakeId:string)=>void;
@@ -140,7 +140,7 @@ function LessonPage({
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend") => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
   personalGameMissions: TransferMission[];
   onTrainGameMistake:(mistakeId:string)=>void;
@@ -271,16 +271,22 @@ function LessonPage({
             {depthCases.length ? (
               <div className="learn-v2-depth-cases">
                 {depthCases.slice(0,visibleDepth).map(item => (
-                  <button key={item.id} type="button" className="secondary"
-                    onClick={() => item.kind==="calculation"
-                      ? onOpenCalculationSource(item.position,skill.id)
-                      : onOpenEndgameSource(item.position)}>
-                    <strong>{item.title}</strong>
-                    <span>{item.kind==="endgame" ? "Endgame technique" :
-                      item.assessed ? "Original calculation" : "Unscored position study"}
-                      {item.direct ? " · Original skill" : " · Related subject"}</span>
-                    <small>{item.topic}</small>
-                  </button>
+                  <div key={item.id} className="learn-v2-source-actions">
+                    <button type="button" className="secondary"
+                      onClick={() => item.kind==="calculation"
+                        ? onOpenCalculationSource(item.position,skill.id)
+                        : onOpenEndgameSource(item.position)}>
+                      <strong>{item.title}</strong>
+                      <span>{item.kind==="endgame" ? "Endgame technique" :
+                        item.assessed ? "Original calculation" : "Unscored position study"}
+                        {item.direct ? " · Original skill" : " · Related subject"}</span>
+                      <small>{item.topic}</small>
+                    </button>
+                    {item.kind==="calculation" && <button type="button" className="secondary"
+                      onClick={()=>onOpenCalculationSource(item.position,skill.id,"defend")}>
+                      Defend this source position · unscored
+                    </button>}
+                  </div>
                 ))}
                 {depthCases.length>visibleDepth && <button type="button" className="secondary"
                   onClick={()=>setVisibleDepth(n=>Math.min(depthCases.length,n+6))}>
@@ -306,15 +312,21 @@ function LessonPage({
             <button type="button" className="secondary" onClick={()=>onStartLesson(skill.id)}>
               <strong>1 · Learn or revisit this skill</strong><small>Original lesson and existing mastery evidence</small>
             </button>
-            {advancedCases.slice(0,visibleDepth).map(item=><button type="button" className="secondary" key={item.id}
-              onClick={()=>item.kind==="calculation"
-                ? onOpenCalculationSource(item.position,skill.id) : onOpenEndgameSource(item.position)}>
-              <strong>{item.title}</strong>
-              <span>{item.kind==="endgame"?"Native endgame technique":
-                item.assessed?"Native calculation":"Unscored authored decision"}
-                {item.direct?" · Direct original skill":" · Related original subject"}</span>
-              <small>{item.topic.slice(0,155)}</small>
-            </button>)}
+            {advancedCases.slice(0,visibleDepth).map(item=><div key={item.id} className="learn-v2-source-actions">
+              <button type="button" className="secondary"
+                onClick={()=>item.kind==="calculation"
+                  ? onOpenCalculationSource(item.position,skill.id) : onOpenEndgameSource(item.position)}>
+                <strong>{item.title}</strong>
+                <span>{item.kind==="endgame"?"Native endgame technique":
+                  item.assessed?"Native calculation":"Unscored authored decision"}
+                  {item.direct?" · Direct original skill":" · Related original subject"}</span>
+                <small>{item.topic.slice(0,155)}</small>
+              </button>
+              {item.kind==="calculation" && <button type="button" className="secondary"
+                onClick={()=>onOpenCalculationSource(item.position,skill.id,"defend")}>
+                Defend this original line · unscored
+              </button>}
+            </div>)}
             {advancedCases.length>visibleDepth && <button type="button" className="secondary"
               onClick={()=>setVisibleDepth(n=>Math.min(advancedCases.length,n+6))}>
               <strong>Show {Math.min(6,advancedCases.length-visibleDepth)} further source positions</strong>

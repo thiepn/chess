@@ -351,6 +351,31 @@ export function CalculationRunner({
     <p>This position's recorded continuation is invalid or unavailable. No scored attempt will be written.</p>
   </div>;
 
+  // Standalone defender rehearsal reuses the original 3–8-ply playable board.
+  // No scored stages, fake mastery event, duplicate scheduler or server writes.
+  if (activity.courseDefenderPractice) {
+    if (!instructionalOnly || !onInstructionalExit || !hasDeepBranches) return (
+      <div className="calculation-runner" role="alert">
+        This source does not have an authorized unscored defender exercise.
+      </div>
+    );
+    return <div className="calculation-runner" aria-label="Independent original defender exercise">
+      <h2>Defend against an original candidate</h2>
+      <p>Start the defender-side challenge, make a legal opponent response,
+        then compare recorded alternatives. This is private ungraded study.</p>
+      <DeepCalculationLab
+        position={position}
+        storageOwner={storageOwner}
+        exitLabel="Return to course without a grade"
+        onComplete={onInstructionalExit}
+        evaluateLocally={async fen=>{
+          const engine=engineRef.current??await enginePromiseRef.current;
+          return engine?engine.evaluate(fen,10):null;
+        }}
+      />
+    </div>;
+  }
+
   return (
     <div className="calculation-runner">
       <div className="calculation-stage-rail">

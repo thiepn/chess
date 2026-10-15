@@ -259,3 +259,9 @@
   .learn-v2-game-mission-actions { flex-direction: column; }
   .learn-v2-game-mission-actions > button { flex: auto; width: 100%; }
 }
+
+/* Course calculation and independent defender challenge share one source card. */
+.learn-v2-source-actions{display:grid;gap:6px;min-width:0}
+.learn-v2-source-actions>button{min-width:0;width:100%;text-align:left;white-space:normal;min-height:44px}
+.learn-v2-source-actions>button:last-child:not(:first-child){font-weight:600;border-inline-start:2px solid currentColor}
+@media(max-width:600px){.learn-v2-source-actions{gap:4px}.learn-v2-source-actions>button{min-height:48px}}
