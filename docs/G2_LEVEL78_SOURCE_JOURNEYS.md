@@ -84,3 +84,79 @@ GitHub source-only connector.
 - `npm run source:qualification` is the focused executable 39-file/684-position
   Chess.js legality and 51 original Level 4–8 skill coverage test. It is **not
   executed** until a full, exact-head repo checkout with dependencies exists.
+
+## October 2026: exact original source-depth inventory and genuine branch comparison
+
+All 39 original calculation JSON files were inspected at this branch ancestry
+(684 total source positions, 558 historical scored, 126 instructional-only).
+These are **records**, not additional newly authored chess positions.
+Original IDs/FENs, scores, review histories, Account and rights remain owned
+by their established systems.
+
+### Direct Advanced source-tag coverage BEFORE contextual discovery
+
+These are counts of raw source-authored `skillIds`; one position may have
+multiple skill IDs. **Zero means missing a direct skill tag, not that the
+curriculum lesson, native endgame or related source study is absent.**
+
+| Original Advanced skill | Direct source-tagged positions |
+|---|---:|
+| tactics.combinations | 0 |
+| tactics.defensive-resources | 8 |
+| calculation.branching | 60 |
+| calculation.evaluation | 419 |
+| strategy.imbalances | 0 |
+| strategy.bishop-vs-knight | 0 |
+| strategy.exchanges | 0 |
+| strategy.restriction | 0 |
+| strategy.coordination | 0 |
+| pawns.iqp | 0 |
+| pawns.hanging | 0 |
+| pawns.minority | 0 |
+| strategy.repertoire-middlegames | 0 |
+| endgames.rook-checks | 20 |
+| endgames.opposite-bishops | 5 |
+| endgames.minor-piece | 38 |
+| conversion.two-weaknesses | 0 |
+| practical.complications | 0 |
+
+Of the 18 Advanced skills, 12 have zero **raw direct** calculation tags;
+the source-alignment step also provides some subject-justified tags for
+already-unscored P109–P112 studies. This is why related source material
+must be identified by its author-assigned **family and theme** and must
+not silently become a new graded Advanced skill.
+
+Actual original thematic playable material recovered in the native
+Level 4–8 course includes, among others:
+- P103: 5 IQP, 5 hanging-pawn, 5 Carlsbad-minority positions; plus pawn
+  levers, doubled pawns and wing weaknesses.
+- P104: 3 knight-outpost-versus-bishop and 3 knight-blockade cases;
+  3 piece-harmony/exchange and 3 prophylaxis-before-expansion examples;
+  multiple open-file rook families.
+- P105: 45 original king-attack/forcing-resistance cases.
+- P106: 48 original defensive-technique cases, including original rook,
+  queen and knight exchange plans.
+- P109–P112: 126 original *instructional-only* positional, prophylaxis,
+  opening and endgame cases. They never become graded through related links.
+
+Across the 684 raw source records, 142 have at least two distinct
+documented defender responses after the SAME first move, counted from
+original `principalVariation` and `defensiveStudy.variations` UCI
+metadata. This static metadata count is **not a Chess.js PASS**.
+The native P108 board now lets the learner enter such legal choices,
+replay the matching source continuation, and compare up to three exact
+two-ply resulting FEN positions side by side after playing independently.
+Switching original branches preserves only the common verified move
+prefix, without new grades, engine-best claims or durable writing.
+
+### Executable source and acceptance gates (pending)
+`npm run source:qualification` checks complete source count, original
+legal replay, 51 skill discovery, original source classification,
+side-specific counterplay and grading boundaries. `npm run deep:qualification`
+focuses multi-ply source continuation, defender branches and history.
+`npm run build` triggers the existing original build gates; original
+desktop/phone Chromium paths remain pending, not PASSED.
+
+No complete exact-head checkout/preview was available in this environment.
+Do not equate authored Vitest tests or GitHub metadata inspection with
+actual executable acceptance.

@@ -37,6 +37,7 @@ describe("actual Level 4–8 source coverage and historical grading boundaries",
    expect(files).toHaveLength(39);
    expect(cases).toHaveLength(684);
    expect(new Set(cases.map(p=>p.id)).size).toBe(684);
+   expect(new Set(cases.map(p=>p.fen)).size).toBe(684);
    for(const p of cases){
      expect(p.source,p.id).toBe("authored");
      expect(legalCalculationBranch(p),p.id).not.toBeNull();
