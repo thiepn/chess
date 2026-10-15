@@ -5,7 +5,7 @@ import {
   blankDeepDraft, comparisonFor, deepFrames, playDeepMove,
   readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
   recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,sourceDefenderSetup,
-  matchingSourceBranch,nextRecordedSourceMove,
+  matchingSourceBranch,nextRecordedSourceMove,recordedDefenseFeedback,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
@@ -56,6 +56,10 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       const entered=[...initial.played,{uci:alternate.uci,origin:"learner" as const}];
       const matched=matchingSourceBranch(branches,entered,initial.branchId);
       expect(matched?.id,p.id).toBe(alternate.branchId);
+      const explanation=recordedDefenseFeedback(p,matched!,entered);
+      expect(explanation?.reply,p.id).toBe(matched?.explanation);
+      expect(explanation?.misconception,p.id).toBeUndefined();
+      expect(recordedDefenseFeedback(p,branches[0],entered),p.id).toBeNull();
       const next=nextRecordedSourceMove(p,branches,entered,initial.branchId);
       expect(next?.uci,p.id).toBe(matched?.plies[2].uci);
       expect(next?.san,p.id).toBe(matched?.plies[2].san);
@@ -66,6 +70,29 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(matchingSourceBranch(branches,bad),p.id).toBeNull();
       expect(nextRecordedSourceMove(p,branches,bad),p.id).toBeNull();
     }
+  });
+  it("can rehearse two independent defender replies against recorded P106 attacking continuation",()=>{
+    const p=defense.positions[0] as CalculationPosition;
+    const branch=verifiedDeepBranches(p)[0];
+    expect(branch.plies.length).toBeGreaterThanOrEqual(5);
+    const entered=sourceDefenderSetup(branch);
+    const firstDefense=branch.plies[1];
+    entered.played.push({uci:firstDefense.uci,origin:"learner"});
+    entered.cursor=2;
+    const reply=nextRecordedSourceMove(p,verifiedDeepBranches(p),entered.played,branch.id);
+    expect(reply?.uci).toBe(branch.plies[2].uci);
+    entered.played.push({uci:reply!.uci,origin:"authored-response"});
+    entered.cursor=3;
+    expect(recordedDefenderChoices(p,verifiedDeepBranches(p),entered.played)
+      .some(c=>c.uci===branch.plies[3].uci)).toBe(true);
+    entered.played.push({uci:branch.plies[3].uci,origin:"learner"});
+    entered.cursor=4;
+    const response=nextRecordedSourceMove(p,verifiedDeepBranches(p),entered.played,branch.id);
+    expect(response?.uci).toBe(branch.plies[4].uci);
+    expect(response?.san).toBe(branch.plies[4].san);
+    expect(deepFrames(p,entered.played)?.[4].fen).toBe(branch.plies[3].afterFen);
+    expect(recordedDefenseFeedback(p,branch,entered.played)?.reply)
+      .toBe(p.replyReason?.trim()||branch.explanation);
   });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
     for(const sample of [structures.positions[0],attacks.positions[0]]){

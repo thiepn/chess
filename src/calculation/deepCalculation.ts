@@ -131,6 +131,21 @@ export function nextRecordedSourceMove(
   return {branchId:matching!.id,uci:next.uci,san:next.san,label:matching!.label};
 }
 
+/** Present feedback from the exact source branch whose defender was played.
+ * Never reuse principal-line criticism for a different recorded alternative. */
+export function recordedDefenseFeedback(
+  position:CalculationPosition, branch:DeepBranch, played:readonly DeepPly[],
+):{reply:string;misconception?:string;label:string}|null {
+  if(played.length<2 || branch.plies[0]?.uci!==played[0].uci ||
+      branch.plies[1]?.uci!==played[1].uci)return null;
+  const principal=branch.id==="main";
+  return {
+    reply:principal ? (position.replyReason?.trim()||branch.explanation) : branch.explanation,
+    misconception:principal ? position.defensiveStudy?.misconception?.trim()||undefined : undefined,
+    label:branch.label,
+  };
+}
+
 /** Start an ungraded opponent-side challenge directly after an authored legal
  * first move. The setup move is marked authored; it is not learner evidence. */
 export function sourceDefenderSetup(branch:DeepBranch):DeepDraft {

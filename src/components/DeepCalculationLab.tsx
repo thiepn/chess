@@ -5,7 +5,8 @@ import type { CalculationPosition } from "../calculation/types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
   playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
-  matchingSourceBranch, nextRecordedSourceMove, sharedBranchDraft, sourceDefenderSetup,
+  matchingSourceBranch, nextRecordedSourceMove, recordedDefenseFeedback,
+  sharedBranchDraft, sourceDefenderSetup,
   verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
@@ -72,6 +73,10 @@ export function DeepCalculationLab({
   const sourceReply=defendingTheSource && !maxed
     ? nextRecordedSourceMove(position,branches,draft.played.slice(0,cursor),branch.id)
     : null;
+  const defenseFeedback=recordedDefenseFeedback(position,branch,draft.played.slice(0,cursor));
+  const independentDefenses=defendingTheSource ?
+    draft.played.slice(0,cursor).filter((step,index)=>index%2===1 && step.origin==="learner").length
+    : 0;
 
   function resetTransient() {
     epoch.current++;
@@ -144,7 +149,10 @@ export function DeepCalculationLab({
             Three-ply cases stop at their actual source boundary; longer branches continue
             as authored. They are legal examples, not proof of unique best moves.</p>
         </div>
-        <span className="deep-lab-count">{cursor}/8 plies</span>
+        <span className="deep-lab-count">{cursor}/8 plies
+          {defendingTheSource && <small> · {independentDefenses} independent defender
+            {independentDefenses===1?" reply":" replies"} explored (unscored)</small>}
+        </span>
       </header>
 
       <fieldset className="deep-lab-branches">
@@ -271,11 +279,11 @@ export function DeepCalculationLab({
           Compare this exact continuation with {alternate.label}
         </button>}
         {cursor>=2 && <section aria-label="Defender reply analysis" role="status">
-          {reference.matched>=2 ? <>
-            <strong>Recorded defender reply recognized</strong>
-            <p>{position.replyReason?.trim() || branch.explanation}</p>
-            {position.defensiveStudy?.misconception && <p>
-              <strong>Common misread:</strong> {position.defensiveStudy.misconception}
+          {defenseFeedback ? <>
+            <strong>Recorded defender · {defenseFeedback.label}</strong>
+            <p>{defenseFeedback.reply}</p>
+            {defenseFeedback.misconception && <p>
+              <strong>Common misread in the original principal line:</strong> {defenseFeedback.misconception}
             </p>}
           </> : <>
             <strong>Different legal defender chosen</strong>
