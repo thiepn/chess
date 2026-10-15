@@ -3,10 +3,11 @@ import { Chess } from "chess.js";
 import type { CalculationPosition } from "./types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, playDeepMove,
-  readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
+  readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches, recordedDefenderChoices,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
+import attacks from "../../public/data/calculation/p105-checking-networks-v1.json";
 import older from "../../public/data/calculation/p94-candidates-v1.json";
 import defensesP95 from "../../public/data/calculation/p95-defensive-resistance-v1.json";
 
@@ -27,6 +28,27 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
     }
   });
 
+  it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
+    for(const sample of [structures.positions[0],attacks.positions[0]]){
+      const p=sample as CalculationPosition;
+      const branches=verifiedDeepBranches(p),first=branches[0].plies[0];
+      const input=[{uci:first.uci,origin:"learner" as const}];
+      const choices=recordedDefenderChoices(p,branches,input);
+      expect(choices.length,p.id).toBeGreaterThanOrEqual(2);
+      const fromFen=deepFrames(p,input)![1].fen;
+      const board=new Chess(fromFen);
+      expect(board.turn(),p.id).not.toBe(p.playerColor);
+      for(const choice of choices){
+        const replay=playDeepMove(fromFen,choice.uci);
+        expect(replay?.san,p.id).toBe(choice.san);
+        expect(branches.some(b=>b.id===choice.branchId&&
+          b.plies[0].uci===first.uci&&b.plies[1].uci===choice.uci),p.id).toBe(true);
+      }
+      expect(new Set(choices.map(c=>c.uci)).size).toBe(choices.length);
+      expect(recordedDefenderChoices(p,branches,[])).toEqual([]);
+      expect(recordedDefenderChoices(p,branches,[{uci:"a1a1",origin:"learner"}])).toEqual([]);
+    }
+  });
   it("retains chronological FENs, accurate SAN and branch comparison", () => {
     const branch = verifiedDeepBranches(current)[0];
     const played = branch.plies.slice(0, 5).map(row => ({

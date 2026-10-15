@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import type { CalculationPosition } from "../calculation/types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
-  playDeepMove, readDeepDraft, verifiedDeepBranches, writeDeepDraft,
+  playDeepMove, readDeepDraft, recordedDefenderChoices, verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
 import { ChessBoard } from "./ChessBoard";
@@ -51,10 +51,10 @@ export function DeepCalculationLab({
   const maxed = cursor >= 8 || game.isGameOver();
   const reference = comparisonFor(branch, draft.played.slice(0, cursor));
   const next = branch.plies[cursor];
-  const canUseAuthoredOpponent = !maxed && cursor > 0 &&
-    game.turn() !== position.playerColor && !reference.deviated &&
-    !reference.outsideReference && Boolean(next &&
-      playDeepMove(fen, next.uci));
+  const originalReplies = !maxed
+    ? recordedDefenderChoices(position, branches, draft.played.slice(0,cursor))
+    : [];
+  const canUseAuthoredOpponent=originalReplies.length>0;
   const counter = Math.min(8, branch.plies.length);
   const candidate = local?.fen === fen ? playDeepMove(fen, local.move) : null;
 
@@ -184,10 +184,17 @@ export function DeepCalculationLab({
           </button>
         )}
         {canUseAuthoredOpponent && showSourceReply && (
-          <button type="button" className="secondary"
-            onClick={() => move(next.uci, "authored-response")}>
-            Play source defender move · {next.san}
-          </button>
+          <div className="deep-lab-defender-choices" role="group"
+            aria-label="Legally verified original defender responses">
+            <p>{originalReplies.length} distinct recorded reply{originalReplies.length===1?"":"ies"}
+              from the original source. Select a legal illustration, not a certified
+              objectively best defense.</p>
+            {originalReplies.map(reply=><button key={reply.uci}
+              type="button" className="secondary"
+              onClick={()=>move(reply.uci,"authored-response")}>
+              {reply.san} · {reply.label}
+            </button>)}
+          </div>
         )}
         <button type="button" className="secondary" disabled={busy || maxed}
           onClick={() => void inspectLocal()}>
@@ -206,6 +213,13 @@ export function DeepCalculationLab({
 
       <div className="deep-lab-feedback">
         <strong>Branch comparison</strong>
+        {alternate && <button type="button" className="secondary"
+          onClick={() => {
+            resetTransient();
+            setDraft(previous=>({...previous,branchId:alternate.id,reveal:false}));
+          }}>
+          Compare this exact continuation with {alternate.label}
+        </button>}
         {cursor>=2 && <section aria-label="Defender reply analysis" role="status">
           {reference.matched>=2 ? <>
             <strong>Recorded defender reply recognized</strong>
@@ -216,8 +230,9 @@ export function DeepCalculationLab({
           </> : <>
             <strong>Different legal defender chosen</strong>
             <p>This continuation is outside the selected authored line. That alone
-              neither proves it inferior nor certifies your chosen move. Explore
-              the branch legally or compare the recorded defender when ready.</p>
+              neither proves it inferior nor certifies your chosen move.
+              {alternate ? " It also appears in another original documented branch."
+                : " Explore it legally or compare the recorded defender when ready."}</p>
           </>}
           <p>Reassess the learner's next move after the defender's actual position,
             rather than assuming an opponent will follow the desired plan.</p>

@@ -48,6 +48,29 @@ export function verifiedDeepBranches(position: CalculationPosition): DeepBranch[
   });
 }
 
+/** Distinct opponent replies from verified ORIGINAL legal source branches,
+ * after the exact moves the learner played. No invented defensive rankings. */
+export function recordedDefenderChoices(
+  position: CalculationPosition, branches: DeepBranch[], played: DeepPly[],
+):{uci:string;san:string;branchId:string;label:string}[] {
+  if (!played.length || played.length>=MAX_PLIES) return [];
+  const frames=deepFrames(position,played);
+  const boardFen=frames?.[played.length]?.fen;
+  if (!boardFen) return [];
+  try { if(new Chess(boardFen).turn()===position.playerColor) return []; }
+  catch { return []; }
+  const found=new Set<string>(),result:{uci:string;san:string;branchId:string;label:string}[]=[];
+  for(const branch of branches){
+    if(!played.every((move,i)=>branch.plies[i]?.uci===move.uci))continue;
+    const documented=branch.plies[played.length];
+    if(!documented||found.has(documented.uci))continue;
+    const legal=playDeepMove(boardFen,documented.uci);
+    if(!legal||legal.san!==documented.san)continue;
+    found.add(documented.uci);
+    result.push({uci:documented.uci,san:documented.san,branchId:branch.id,label:branch.label});
+  }
+  return result;
+}
 export function playDeepMove(fen: string, uci: string): { fen: string; san: string } | null {
   if (!UCI.test(uci)) return null;
   try {
