@@ -142,8 +142,11 @@ function puzzleSources(plan: Level23Plan, puzzles: PuzzleRecord[], excluded: Set
   for (const target of targets) {
     const sorted = [...puzzles].filter(p => !usedIds.has(p.id))
       .sort((a,b) => Math.abs(a.rating-target)-Math.abs(b.rating-target) || a.id.localeCompare(b.id));
-    const candidate = sorted.map(p => ({p,item:puzzleSource(p,plan,usedFens)}))
-      .find(x => x.item);
+    let candidate: {p:PuzzleRecord;item:PracticeSource} | undefined;
+    for (const p of sorted) {
+      const item = puzzleSource(p,plan,usedFens);
+      if (item) { candidate = {p,item}; break; }
+    }
     if (!candidate?.item) break;
     usedIds.add(candidate.p.id);
     usedFens.add(candidate.item.fen);
