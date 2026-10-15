@@ -5,7 +5,8 @@ import type { CalculationPosition } from "../calculation/types";
 import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
   playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
-  sharedBranchDraft, sourceDefenderSetup, verifiedDeepBranches, writeDeepDraft,
+  matchingSourceBranch, nextRecordedSourceMove, sharedBranchDraft, sourceDefenderSetup,
+  verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
 import { ChessBoard } from "./ChessBoard";
@@ -68,6 +69,9 @@ export function DeepCalculationLab({
   const viewColor=defendingTheSource && cursor>=1
     ? position.playerColor==="w" ? "b" : "w"
     : position.playerColor;
+  const sourceReply=defendingTheSource && !maxed
+    ? nextRecordedSourceMove(position,branches,draft.played.slice(0,cursor),branch.id)
+    : null;
 
   function resetTransient() {
     epoch.current++;
@@ -86,12 +90,14 @@ export function DeepCalculationLab({
   function move(uci: string, origin: PlyOrigin): boolean {
     if (maxed || busy || !playDeepMove(fen, uci)) return false;
     resetTransient();
-    setDraft(previous => ({
-      ...previous,
-      played: [...previous.played.slice(0, cursor), { uci, origin }],
-      cursor: cursor + 1,
-      reveal: false,
-    }));
+    setDraft(previous => {
+      const played=[...previous.played.slice(0,cursor),{uci,origin}];
+      const matched=matchingSourceBranch(branches,played,previous.branchId);
+      return {
+        ...previous,played,branchId:matched?.id??previous.branchId,
+        cursor:cursor+1,reveal:false,
+      };
+    });
     return true;
   }
   function navigate(to: number) {
@@ -219,6 +225,25 @@ export function DeepCalculationLab({
               onClick={()=>move(reply.uci,"authored-response")}>
               {reply.san} · {reply.label}
             </button>)}
+          </div>
+        )}
+        {defendingTheSource && cursor>=2 && game.turn()===position.playerColor && (
+          <div className="deep-lab-source-turn" role="status">
+            {sourceReply ? <>
+              <strong>Continue against the original source</strong>
+              <p>The defense matches a recorded alternative. Advance the
+                source side's next legally documented move, then defend again.
+                No engine ranking or training grade is inferred.</p>
+              <button type="button" className="secondary" disabled={busy}
+                onClick={()=>move(sourceReply.uci,"authored-response")}>
+                Play next documented source move
+              </button>
+            </> : <>
+              <strong>Legal defense outside recorded continuations</strong>
+              <p>There is no further source-authored reply to this exact line.
+                Continue exploring legally or restart with another defense;
+                no reply has been invented for this branch.</p>
+            </>}
           </div>
         )}
         <button type="button" className="secondary" disabled={busy || maxed}

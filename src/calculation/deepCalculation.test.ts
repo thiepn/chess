@@ -5,6 +5,7 @@ import {
   blankDeepDraft, comparisonFor, deepFrames, playDeepMove,
   readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
   recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,sourceDefenderSetup,
+  matchingSourceBranch,nextRecordedSourceMove,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
@@ -42,6 +43,28 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(frames[1].fen).toBe(branch.plies[0].afterFen);
       expect(new Chess(frames[1].fen).turn()).not.toBe(p.playerColor);
       expect(recordedDefenderChoices(p,verifiedDeepBranches(p),setup.played).length).toBeGreaterThan(0);
+    }
+  });
+  it("continues after a different documented defender response without losing source continuity",()=>{
+    for(const p of [structures.positions[0],attacks.positions[0]] as CalculationPosition[]){
+      const branches=verifiedDeepBranches(p);
+      const initial=sourceDefenderSetup(branches[0]);
+      const options=recordedDefenderChoices(p,branches,initial.played);
+      expect(options.length,p.id).toBeGreaterThanOrEqual(2);
+      const alternate=options.find(choice=>choice.uci!==branches[0].plies[1].uci)!;
+      expect(alternate,p.id).toBeDefined();
+      const entered=[...initial.played,{uci:alternate.uci,origin:"learner" as const}];
+      const matched=matchingSourceBranch(branches,entered,initial.branchId);
+      expect(matched?.id,p.id).toBe(alternate.branchId);
+      const next=nextRecordedSourceMove(p,branches,entered,initial.branchId);
+      expect(next?.uci,p.id).toBe(matched?.plies[2].uci);
+      expect(next?.san,p.id).toBe(matched?.plies[2].san);
+      const sourceReplayed=[...entered,{uci:next!.uci,origin:"authored-response" as const}];
+      expect(matchingSourceBranch(branches,sourceReplayed)?.id,p.id).toBe(matched?.id);
+      expect(nextRecordedSourceMove(p,branches,sourceReplayed,matched?.id),p.id).toBeNull();
+      const bad=[...initial.played,{uci:"a1a1",origin:"learner" as const}];
+      expect(matchingSourceBranch(branches,bad),p.id).toBeNull();
+      expect(nextRecordedSourceMove(p,branches,bad),p.id).toBeNull();
     }
   });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{

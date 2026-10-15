@@ -76,3 +76,9 @@
 .deep-lab-source-boards article p{overflow-wrap:anywhere;line-height:1.5}
 .deep-lab-source-boards article button{min-height:44px;white-space:normal}
 @media(max-width:600px){.deep-lab-source-boards{grid-template-columns:1fr}.deep-lab-source-boards article{padding:10px}}
+
+/* Opponent continuation remains inside the single source-owned P108 workspace. */
+.deep-lab-source-turn{display:grid;gap:7px;padding:10px 12px;border:1px solid var(--chess-color-separator,var(--line));min-width:0}
+.deep-lab-source-turn p{margin:0;line-height:1.5;overflow-wrap:anywhere}
+.deep-lab-source-turn button{min-height:44px;white-space:normal;justify-self:start}
+@media(max-width:600px){.deep-lab-source-turn button{width:100%;justify-self:stretch}}

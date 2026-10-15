@@ -102,6 +102,35 @@ export function sharedBranchDraft(branch:DeepBranch, draft:DeepDraft):DeepDraft 
   return {branchId:branch.id,played:played.slice(0,shared),cursor:shared,reveal:false};
 }
 
+/** A legal entered prefix is allowed to select the corresponding original
+ * authored line. This is source recognition, never a quality judgment. */
+export function matchingSourceBranch(
+  branches:readonly DeepBranch[], entered:readonly DeepPly[], preferredId?:string,
+):DeepBranch|null {
+  const matches=branches.filter(b=>entered.length<=b.plies.length &&
+    entered.every((move,i)=>b.plies[i].uci===move.uci));
+  return matches.find(b=>b.id===preferredId)??matches[0]??null;
+}
+
+/** Reveal/play ONLY the next original source-side continuation after a learner
+ * has defended an authored candidate. Deliberately stop on any unknown move. */
+export function nextRecordedSourceMove(
+  position:CalculationPosition, branches:readonly DeepBranch[],
+  played:readonly DeepPly[], preferredId?:string,
+):{branchId:string;uci:string;san:string;label:string}|null {
+  if(played.length<2 || played.length>=MAX_PLIES || played.length%2!==0)return null;
+  const matching=matchingSourceBranch(branches,played,preferredId);
+  const next=matching?.plies[played.length];
+  if(!next)return null;
+  const frames=deepFrames(position,[...played]);
+  const fen=frames?.[played.length]?.fen;
+  if(!fen || next.beforeFen!==fen)return null;
+  try { if(new Chess(fen).turn()!==position.playerColor)return null; }
+  catch { return null; }
+  if(playDeepMove(fen,next.uci)?.san!==next.san)return null;
+  return {branchId:matching!.id,uci:next.uci,san:next.san,label:matching!.label};
+}
+
 /** Start an ungraded opponent-side challenge directly after an authored legal
  * first move. The setup move is marked authored; it is not learner evidence. */
 export function sourceDefenderSetup(branch:DeepBranch):DeepDraft {
