@@ -9,6 +9,7 @@ import {
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
 import attacks from "../../public/data/calculation/p105-checking-networks-v1.json";
+import originalP110 from "../../public/data/calculation/p110-prophylaxis-a-v1.json";
 import older from "../../public/data/calculation/p94-candidates-v1.json";
 import defensesP95 from "../../public/data/calculation/p95-defensive-resistance-v1.json";
 
@@ -74,6 +75,27 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(transferred.played.map(m=>m.uci),p.id).toEqual([main.plies[0].uci]);
       expect(draft.cursor,p.id).toBe(2);
     }
+  });
+  it("keeps alternate defender evidence source-owned and never predicts a ranking",()=>{
+    const samples=[...structures.positions,...attacks.positions,...originalP110.positions] as CalculationPosition[];
+    let multiReply=0;
+    for(const source of samples){
+      const branches=verifiedDeepBranches(source);
+      expect(branches.length,source.id).toBeGreaterThanOrEqual(2);
+      const first=branches[0].plies[0];
+      const candidate=[{uci:first.uci,origin:"learner" as const}];
+      const choices=recordedDefenderChoices(source,branches,candidate);
+      if(choices.length<2)continue;
+      multiReply++;
+      const after=deepFrames(source,candidate)![1].fen;
+      for(const choice of choices){
+        expect(playDeepMove(after,choice.uci)?.san,source.id).toBe(choice.san);
+      }
+      const boards=documentedDefensiveBoards(branches);
+      expect(boards.length,source.id).toBeGreaterThanOrEqual(2);
+      expect(new Set(boards.map(b=>b.fen)).size,source.id).toBe(boards.length);
+    }
+    expect(multiReply).toBeGreaterThanOrEqual(20);
   });
   it("retains chronological FENs, accurate SAN and branch comparison", () => {
     const branch = verifiedDeepBranches(current)[0];

@@ -11,6 +11,7 @@ import type {TransferMission} from "../review/gameTransfer";
 import {studyMaterialFor} from "../calculation/studyDelivery";
 import p103 from "../../public/data/calculation/p103-structures-a-v1.json";
 import p104 from "../../public/data/calculation/p104-knight-harmony-v1.json";
+import p104Plans from "../../public/data/calculation/p104-practical-plans-v1.json";
 import p105 from "../../public/data/calculation/p105-initiative-resistance-v1.json";
 import {originalAdvancedThemeMatch} from "./advancedThemeMatch";
 const cases=[a109,a110,a112].flatMap(x=>x.positions) as CalculationPosition[];
@@ -65,6 +66,13 @@ describe("Levels 7–8 original transfer paths",()=>{
       expect(new Set(chosen.map(p=>p.position.fen)).size,skill).toBe(5);
     }
     expect(level78AdvancedCases("strategy.bishop-vs-knight",p104.positions as CalculationPosition[],[]).length).toBeGreaterThan(0);
+    const exchanges=level78AdvancedCases("strategy.exchanges",p104Plans.positions as CalculationPosition[],[]);
+    expect(exchanges.length).toBe(3);
+    expect(exchanges.every(c=>!c.direct&&!c.assessed)).toBe(true);
+    const restrictions=level78AdvancedCases("strategy.restriction",
+      [...p104.positions,...p104Plans.positions] as CalculationPosition[],[]);
+    expect(restrictions.length).toBeGreaterThanOrEqual(6);
+    expect(restrictions.every(c=>!c.assessed)).toBe(true);
     expect(level78AdvancedCases("practical.complications",p105.positions as CalculationPosition[],[])).toEqual([]);
     const privateCase={...original[0],source:"personal-game" as const};
     expect(originalAdvancedThemeMatch("pawns.iqp",privateCase)).toBe(false);

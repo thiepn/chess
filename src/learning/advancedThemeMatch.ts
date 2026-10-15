@@ -17,11 +17,13 @@ const originalThemes: Readonly<Record<string, Readonly<Record<string, RegExp>>>>
   "strategy.exchanges": {
     strategicImbalanceStudy: /favorable exchanges/i,
     defensiveTechniqueStudy: /trade|exchange|recapture/i,
+    pieceCoordinationStudy: /piece harmony and exchanges/i,
     endgameDecisionStudy: /exchange or preserve/i,
   },
   "strategy.restriction": {
     prophylaxisStudy: /restriction|weak.square|minor.piece restraint|invasion prevention/i,
     pawnStructureStudy: /fixed color complexes|space and piece placement/i,
+    pieceCoordinationStudy: /prophylaxis before expansion|knight blockades and king coordination/i,
   },
   "strategy.coordination": {
     pieceCoordinationStudy: /harmony|coordination|rook lifts|diagonal|piece|bishop rehabilitation/i,

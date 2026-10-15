@@ -6,6 +6,7 @@ import {hydrateOpeningTransition} from "../openings/transitionStudy";
 import {hydrateEndgameDecision} from "../endgames/decisionStudy";
 import {alignSourceStudySkills} from "../calculation/studySkillAlignment";
 import {legalCalculationBranch} from "../calculation/branchFeedback";
+import {verifiedDeepBranches,recordedDefenderChoices} from "../calculation/deepCalculation";
 import {level78AdvancedCases} from "./level78Pathways";
 import {level456Pathways} from "./level456Pathways";
 import {curriculumStages,skills} from "../domain/curriculum";
@@ -42,6 +43,20 @@ describe("actual Level 4–8 source coverage and historical grading boundaries",
    }
    expect(cases.filter(p=>p.assessmentStatus==="instructional-only")).toHaveLength(126);
    expect(cases.filter(p=>p.assessmentStatus!== "instructional-only")).toHaveLength(558);
+ });
+ it("finds real choices among opponent responses without inventing an extra source",()=>{
+   const {cases}=readOriginal();
+   let originalMultiReply=0;
+   for(const p of cases){
+     const branches=verifiedDeepBranches(p);
+     if(!branches.length)continue;
+     const first=branches[0].plies[0];
+     const legalReplies=recordedDefenderChoices(p,branches,[{uci:first.uci,origin:"learner"}]);
+     if(legalReplies.length>=2)originalMultiReply++;
+   }
+   // Observed 142 raw multi-reply positions; hydrated opening/endgame sources
+   // can change branch lengths, so require a conservative legal minimum.
+   expect(originalMultiReply).toBeGreaterThanOrEqual(125);
  });
  it("turns 15 underserved original scored pawn studies into genuine UNGRADED advanced practice",()=>{
    const {cases}=readOriginal();
