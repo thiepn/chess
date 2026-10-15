@@ -106,29 +106,32 @@ function repertoireSources(plan: Level23Plan, excluded: Set<string>): PracticeSo
   return cases;
 }
 
+/** The native P93 builder has ALREADY replayed the opponent's trigger.
+ * PuzzleRecord.initialFen is the learner-to-move position and
+ * solutionMoves[0] is the solver's first legal move; never skip it. */
 function puzzleSource(puzzle: PuzzleRecord, plan: Level23Plan, excluded: Set<string>): PracticeSource | null {
   if (puzzle.source !== "lichess" || !puzzle.skillIds.includes(plan.skillId) ||
       !Array.isArray(puzzle.solutionMoves) || puzzle.solutionMoves.length < 2 ||
       !Number.isFinite(puzzle.rating) || puzzle.rating < 600 || puzzle.rating > 1800) return null;
   try {
     const board = new Chess(puzzle.initialFen);
-    const trigger = playUci(board,puzzle.solutionMoves[0]);
-    if (!trigger) return null;
     const fen = board.fen();
     if (excluded.has(fen)) return null;
-    const answer = playUci(board,puzzle.solutionMoves[1]);
+    const answer = playUci(board, puzzle.solutionMoves[0]);
     if (!answer) return null;
-    const defender = puzzle.solutionMoves[2] ? playUci(board,puzzle.solutionMoves[2]) : null;
-    if (puzzle.solutionMoves.length >= 3 && !defender) return null;
-    const continuation = puzzle.solutionMoves[3] ? playUci(board,puzzle.solutionMoves[3]) : null;
-    if (puzzle.solutionMoves.length >= 4 && !continuation) return null;
+    const defender = playUci(board, puzzle.solutionMoves[1]);
+    if (!defender) return null;
+    const continuation = puzzle.solutionMoves[2] ? playUci(board, puzzle.solutionMoves[2]) : null;
+    if (puzzle.solutionMoves.length >= 3 && !continuation) return null;
+    // Replay any remaining source continuation before admitting the exercise.
+    for (const next of puzzle.solutionMoves.slice(3)) if (!playUci(board,next)) return null;
     return {
-      id: puzzle.id, fen, move: puzzle.solutionMoves[1],
-      prompt: `After the opponent's ${trigger.san}, ${plan.goal} Verify checks, captures and the opponent's strongest practical resource.`,
-      success: `Lichess source continuation: ${answer.san}${defender ? " " + defender.san : ""}${continuation ? " " + continuation.san : ""}. ${defender ? "The recorded defender reply is " + defender.san + "; reassess the attack after it." : "Check that no defensive escape invalidates your idea."} The recorded line is not proof that every other legal move is inferior.`,
-      misconception: `${plan.misconception} The actual source line starts ${answer.san}${defender ? " " + defender.san : ""}; alternative legal moves have not been judged universally wrong.`,
-      hints: [plan.hint, `Start from the exact board after ${trigger.san}; list checks, captures and threats before selecting a move.`,
-        `Test the move from ${puzzle.solutionMoves[1].slice(0,2)} to ${puzzle.solutionMoves[1].slice(2,4)}.`],
+      id: puzzle.id, fen, move: puzzle.solutionMoves[0],
+      prompt: `On this independent board, ${plan.goal} Consider what the defender will play after your first move.`,
+      success: `Recorded source line: ${answer.san} ${defender.san}${continuation ? " " + continuation.san : ""}. The defender's recorded resistance is ${defender.san}; re-evaluate what your next move achieves. This source line does not prove another legal move is bad.`,
+      misconception: `${plan.misconception} The actual source defender responds ${defender.san} after ${answer.san}; do not assume the opponent cooperates.`,
+      hints: [plan.hint, `From this exact independent board, list forcing checks and captures, then calculate the defender's best practical reply.`,
+        `Inspect the solution move from ${puzzle.solutionMoves[0].slice(0,2)} to ${puzzle.solutionMoves[0].slice(2,4)}.`],
     };
   } catch { return null; }
 }
