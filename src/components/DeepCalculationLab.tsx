@@ -6,6 +6,7 @@ import {
   blankDeepDraft, comparisonFor, deepFrames, discardDeepDraft,
   playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
   matchingSourceBranch, nextRecordedSourceMove, recordedDefenseFeedback,
+  independentDefenderDecisions, documentedDefenderOutcomes,
   sharedBranchDraft, sourceDefenderSetup,
   verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
@@ -32,7 +33,11 @@ export function DeepCalculationLab({
   position, storageOwner, onComplete, exitLabel, draftScope, evaluateLocally,
 }: Props) {
   const branches = useMemo(() => verifiedDeepBranches(position), [position]);
-  const [draft, setDraft] = useState(() => readDeepDraft(storageOwner, position, branches, draftScope));
+  const [draft, setDraft] = useState(() => {
+    const restored=readDeepDraft(storageOwner,position,branches,draftScope);
+    return draftScope==="defender" && !restored.played.length && branches[0]
+      ? sourceDefenderSetup(branches[0]) : restored;
+  });
   const [busy, setBusy] = useState(false);
   const [local, setLocal] = useState<{ fen: string; move: string; depth: number } | null>(null);
   const [error, setError] = useState("");
@@ -74,9 +79,19 @@ export function DeepCalculationLab({
     ? nextRecordedSourceMove(position,branches,draft.played.slice(0,cursor),branch.id)
     : null;
   const defenseFeedback=recordedDefenseFeedback(position,branch,draft.played.slice(0,cursor));
-  const independentDefenses=defendingTheSource ?
-    draft.played.slice(0,cursor).filter((step,index)=>index%2===1 && step.origin==="learner").length
-    : 0;
+  const independentDefensiveChoices=defendingTheSource
+    ? independentDefenderDecisions(position,branches,draft.played.slice(0,cursor))
+    : [];
+  const independentDefenses=independentDefensiveChoices.length;
+  // Compare replies to the CURRENT documented attack, not always the first
+  // candidate. Only disclose these after a learner has already defended.
+  const previousDefenderPly=defendingTheSource && cursor>=2
+    ? [...Array(cursor).keys()].reverse().find(i=>i%2===1 &&
+        draft.played[i]?.origin==="learner")
+    : undefined;
+  const currentDefensiveOutcomes=previousDefenderPly===undefined?[]
+    : documentedDefenderOutcomes(position,branches,
+      draft.played.slice(0,previousDefenderPly),3);
 
   function resetTransient() {
     epoch.current++;
@@ -178,7 +193,8 @@ export function DeepCalculationLab({
       </div>}
       <div className="deep-lab-board">
         <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}:${viewColor}`}
-          fen={fen} orientation={viewColor} disabled={maxed || busy}
+          fen={fen} orientation={viewColor} disabled={maxed || busy ||
+            (draftScope==="defender" && (cursor===0 || game.turn()===position.playerColor))}
           onMove={item => move(`${item.from}${item.to}${item.promotion ?? ""}`, "learner")} />
         <div className="deep-lab-board-details" role="status" aria-live="polite">
           {canUseAuthoredOpponent && <p>
@@ -268,6 +284,20 @@ export function DeepCalculationLab({
         </div>
       )}
       {error && <p role="alert" className="deep-lab-error">{error}</p>}
+      {draftScope==="defender" && independentDefensiveChoices.length>0 && (
+        <section className="deep-lab-decision-log" aria-label="Independent defender decisions">
+          <strong>Your legal defensive decisions · instructional only</strong>
+          <ol>{independentDefensiveChoices.map(choice=>(
+            <li key={choice.ply}>
+              <strong>Ply {choice.ply} · {choice.san}</strong>
+              <span>{choice.documented
+                ? `Matches recorded ${choice.sourceLabel} (not an optimality judgment)`
+                : "Legal exploration beyond the original recorded defenses"}
+              </span>
+            </li>
+          ))}</ol>
+        </section>
+      )}
 
       <div className="deep-lab-feedback">
         <strong>Branch comparison</strong>
@@ -295,12 +325,16 @@ export function DeepCalculationLab({
           <p>Reassess the learner's next move after the defender's actual position,
             rather than assuming an opponent will follow the desired plan.</p>
         </section>}
-        {cursor>=2 && sourceComparisons.length>=2 && <section className="deep-lab-source-comparison"
+        {cursor>=2 && (defendingTheSource?
+          currentDefensiveOutcomes.length>=2 : sourceComparisons.length>=2) && (
+          <section className="deep-lab-source-comparison"
           aria-label="Compare original opponent responses">
           <button type="button" className="secondary"
             aria-expanded={showTwoPlyComparisons}
             onClick={()=>setShowTwoPlyComparisons(value=>!value)}>
-            {showTwoPlyComparisons?"Hide":"Compare"} {sourceComparisons.length} documented two-ply positions
+            {showTwoPlyComparisons?"Hide":"Compare"} {defendingTheSource?
+              currentDefensiveOutcomes.length : sourceComparisons.length}
+              documented defender outcomes
           </button>
           {showTwoPlyComparisons && <>
             <p>These boards show the exact source positions after the candidate
@@ -308,10 +342,16 @@ export function DeepCalculationLab({
               escape squares and the remaining source line before choosing a plan.
               No engine or mastery verdict is inferred.</p>
             <div className="deep-lab-source-boards">
-              {sourceComparisons.map(item=><article key={item.id}>
+              {(defendingTheSource
+                ? currentDefensiveOutcomes.map(item=>({
+                    id:item.branchId,label:item.label,fen:item.fen,
+                    defenderMove:item.replySan,continuedLine:item.continuation,
+                    explanation:item.explanation,
+                  }))
+                : sourceComparisons).map(item=><article key={item.id}>
                 <h4>{item.label}</h4>
-                <ChessBoard fen={item.fen} orientation={position.playerColor} disabled/>
-                <p><strong>Recorded:</strong> {item.firstMove} {item.defenderMove}</p>
+                <ChessBoard fen={item.fen} orientation={viewColor} disabled/>
+                <p><strong>Documented defender:</strong> {item.defenderMove}</p>
                 <p><strong>Continuation:</strong> {item.continuedLine.join(" ")||"No further original moves"}</p>
                 <p>{item.explanation}</p>
                 <button type="button" className="secondary"
@@ -321,7 +361,7 @@ export function DeepCalculationLab({
               </article>)}
             </div>
           </>}
-        </section>}
+        </section>)}
         <p>{reference.deviated
           ? `The entered sequence departed from ${branch.label} after ${reference.matched} matching plies. Continue calculating legally, examine another branch, or use the local engine explicitly.` 
           : `Matched ${reference.matched} of ${counter} authored plies. Continue beyond the recorded sequence only as unguided exploration.`}</p>

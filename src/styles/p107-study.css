@@ -82,3 +82,9 @@
 .deep-lab-source-turn p{margin:0;line-height:1.5;overflow-wrap:anywhere}
 .deep-lab-source-turn button{min-height:44px;white-space:normal;justify-self:start}
 @media(max-width:600px){.deep-lab-source-turn button{width:100%;justify-self:stretch}}
+
+/* Two or more independent defender choices on exact original boards. */
+.deep-lab-decision-log{display:grid;gap:8px;padding:12px;border:1px solid var(--chess-color-separator,var(--line));min-width:0}
+.deep-lab-decision-log ol{display:grid;gap:7px;margin:0;padding-left:24px}
+.deep-lab-decision-log li{line-height:1.5}
+.deep-lab-decision-log li span{display:block;overflow-wrap:anywhere}

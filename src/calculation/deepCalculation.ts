@@ -146,6 +146,57 @@ export function recordedDefenseFeedback(
   };
 }
 
+/** Exact source-linked defender decisions in this single board session.
+ * A legal unrecorded reply is an exploration, not a failed graded answer.
+ * Authored and engine moves are not counted as independent learner choices. */
+export function independentDefenderDecisions(
+  position:CalculationPosition, branches:readonly DeepBranch[], played:readonly DeepPly[],
+):{ply:number;uci:string;san:string;documented:boolean;sourceLabel?:string}[] {
+  if(!played.length || played[0].origin!=="authored-response")return [];
+  const frames=deepFrames(position,[...played]);
+  if(!frames)return [];
+  const decisions:{ply:number;uci:string;san:string;documented:boolean;sourceLabel?:string}[]=[];
+  for(let i=1;i<played.length;i+=2){
+    if(played[i].origin!=="learner")continue;
+    const source=branches.find(branch=>played.slice(0,i+1).every(
+      (step,index)=>branch.plies[index]?.uci===step.uci,
+    ));
+    decisions.push({
+      ply:i+1,uci:played[i].uci,san:frames[i+1].san,
+      documented:Boolean(source),...(source?{sourceLabel:source.label}:{}),
+    });
+  }
+  return decisions;
+}
+
+/** The opposing source's legal, independently authored replies after ANY
+ * shared prefix, including the second or third defensive decision. The
+ * returned FENs are replayed in verifiedDeepBranches, not synthesized. */
+export function documentedDefenderOutcomes(
+  position:CalculationPosition, branches:readonly DeepBranch[],
+  prefix:readonly DeepPly[],limit=3,
+):{branchId:string;label:string;replySan:string;fen:string;continuation:string[];explanation:string}[] {
+  if(!prefix.length || prefix.length>=MAX_PLIES)return [];
+  const frames=deepFrames(position,[...prefix]);
+  const fen=frames?.[prefix.length]?.fen;
+  if(!fen)return [];
+  try{if(new Chess(fen).turn()===position.playerColor)return [];}catch{return [];}
+  const unique=new Set<string>();
+  return branches.flatMap(branch=>{
+    if(!prefix.every((step,i)=>branch.plies[i]?.uci===step.uci))return [];
+    const response=branch.plies[prefix.length];
+    if(!response || response.beforeFen!==fen || unique.has(response.afterFen))return [];
+    if(playDeepMove(fen,response.uci)?.san!==response.san)return [];
+    unique.add(response.afterFen);
+    return [{
+      branchId:branch.id,label:branch.label,replySan:response.san,
+      fen:response.afterFen,
+      continuation:branch.plies.slice(prefix.length+1).map(step=>step.san),
+      explanation:branch.explanation,
+    }];
+  }).slice(0,Math.min(4,Math.max(0,Math.floor(limit))));
+}
+
 /** Start an ungraded opponent-side challenge directly after an authored legal
  * first move. The setup move is marked authored; it is not learner evidence. */
 export function sourceDefenderSetup(branch:DeepBranch):DeepDraft {
