@@ -30,6 +30,8 @@ import type {
 } from "../assessment/types";
 import { lessonForSkill } from "../learning/lessons";
 import { level456Pathways } from "../learning/level456Pathways";
+import { level78AdvancedCases,level78GameMissions,level78Guide } from "../learning/level78Pathways";
+import type { TransferMission } from "../review/gameTransfer";
 import { level456Lens } from "../learning/level456Inquiry";
 import type { CalculationPosition } from "../calculation/types";
 import type { EndgamePosition } from "../endgames/types";
@@ -57,6 +59,10 @@ interface LearnViewProps {
   level456Positions: CalculationPosition[];
   onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
+  personalGameMissions: TransferMission[];
+  onTrainGameMistake:(mistakeId:string)=>void;
+  onOpenReviewGame:(gameId?:string)=>void;
+  onOpenHistoricalSkill:(skillId:string)=>void;
 }
 
 function masteryLabel(value: number) {
@@ -123,6 +129,10 @@ function LessonPage({
   level456Positions,
   onOpenCalculationSource,
   onOpenEndgameSource,
+  personalGameMissions,
+  onTrainGameMistake,
+  onOpenReviewGame,
+  onOpenHistoricalSkill,
 }: {
   skill: ChessSkill;
   mastery: Record<string, SkillMastery>;
@@ -132,6 +142,10 @@ function LessonPage({
   level456Positions: CalculationPosition[];
   onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string) => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
+  personalGameMissions: TransferMission[];
+  onTrainGameMistake:(mistakeId:string)=>void;
+  onOpenReviewGame:(gameId?:string)=>void;
+  onOpenHistoricalSkill:(skillId:string)=>void;
 }) {
   const lesson = useMemo(
     () =>
@@ -148,6 +162,11 @@ function LessonPage({
     [skill.id,level456Positions],
   );
   const depthLens = level456Lens(skill.id);
+  const journey=level78Guide(skill.id);
+  const advancedCases=useMemo(()=>level78AdvancedCases(skill.id,level456Positions,endgamePositions,6),
+    [skill.id,level456Positions]);
+  const gameMissions=useMemo(()=>level78GameMissions(skill.id,personalGameMissions,3),
+    [skill.id,personalGameMissions]);
   const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
@@ -266,6 +285,55 @@ function LessonPage({
               Begin the lesson or existing practice without claiming unavailable study credit.</p>}
           </section>
         )}
+        {journey && <section className="learn-v2-reading-note" aria-label="Practical and advanced chess journey">
+          <span>{skill.stage==="practical"?"Level 7 · Game practice":"Level 8 · Advanced decisions"}</span>
+          <strong>Learn → compare → apply → return</strong>
+          <p>Original course guidance, source-based positions, historical games and
+            verified review attempts. Unscored studies do not award mastery.</p>
+          <details className="learn-v2-depth-prompts" open>
+            <summary>Decisions to investigate in this skill</summary>
+            <ol>{journey.prompts.map((prompt,index)=><li key={index}>{prompt}</li>)}</ol>
+          </details>
+          <div className="learn-v2-depth-cases">
+            <button type="button" className="secondary" onClick={()=>onStartLesson(skill.id)}>
+              <strong>1 · Learn or revisit this skill</strong><small>Original lesson and existing mastery evidence</small>
+            </button>
+            {advancedCases.map(item=><button type="button" className="secondary" key={item.id}
+              onClick={()=>item.kind==="calculation"
+                ? onOpenCalculationSource(item.position,skill.id) : onOpenEndgameSource(item.position)}>
+              <strong>{item.title}</strong>
+              <span>{item.kind==="endgame"?"Native endgame technique":
+                item.assessed?"Native calculation":"Unscored authored decision"}
+                {item.direct?" · Direct original skill":" · Related original subject"}</span>
+              <small>{item.topic.slice(0,155)}</small>
+            </button>)}
+            <button type="button" className="secondary" onClick={()=>onOpenHistoricalSkill(skill.id)}>
+              <strong>2 · Compare real historical decisions</strong>
+              <span>{journey.masterPairIds.length} source-pinned master-game pairs</span>
+              <small>Compare candidate plans, defender replies, counterfactual lines, and write an ungraded revision.</small>
+            </button>
+            {gameMissions.map(({mission,direct})=><div key={mission.mistakeId} className="learn-v2-game-mission">
+              <strong>{mission.gameLabel} · move {mission.moveNumber}</strong>
+              <span>{direct?"Direct original skill":"Contextual game repair"} ·
+                {mission.due?" Due for Review":" Review scheduled"}</span>
+              <p>{mission.question}</p>
+              <small>{mission.cleanReturns} clean attempts · {mission.spacedCleanPairs} verified delayed pairs
+                · {mission.missedReturns} missed attempts. Only clean 24-hour returns count as delayed evidence.</small>
+              <div className="learn-v2-game-mission-actions">
+                <button type="button" className="secondary" onClick={()=>onOpenReviewGame(mission.gameId)}>Inspect original game</button>
+                <button type="button" className="secondary" onClick={()=>onTrainGameMistake(mission.mistakeId)}>Practice original mistake</button>
+              </div>
+            </div>)}
+            {gameMissions.length===0&&<div className="learn-v2-game-mission">
+              <strong>3 · Apply the skill to a real game</strong>
+              <p>No source-qualified personal-game repair for this skill yet.
+                Import and analyze one of your own games in Review, then practice a verified mistake.</p>
+              <button type="button" className="secondary" onClick={()=>onOpenReviewGame()}>Open your game review</button>
+            </div>}
+          </div>
+          <small>4 · Revisit a due position later. Clean returns are counted only by
+            the existing Review history, never by these course links.</small>
+        </section>}
         <div className="learn-v2-reading-nav">
           <button
             type="button"
@@ -311,6 +379,10 @@ export function LearnView({
   level456Positions,
   onOpenCalculationSource,
   onOpenEndgameSource,
+  personalGameMissions,
+  onTrainGameMistake,
+  onOpenReviewGame,
+  onOpenHistoricalSkill,
 }: LearnViewProps) {
   const selectedSkill = selectedSkillId
     ? skillById[selectedSkillId]
@@ -353,6 +425,10 @@ export function LearnView({
         level456Positions={level456Positions}
         onOpenCalculationSource={onOpenCalculationSource}
         onOpenEndgameSource={onOpenEndgameSource}
+        personalGameMissions={personalGameMissions}
+        onTrainGameMistake={onTrainGameMistake}
+        onOpenReviewGame={onOpenReviewGame}
+        onOpenHistoricalSkill={onOpenHistoricalSkill}
       />
     );
   }

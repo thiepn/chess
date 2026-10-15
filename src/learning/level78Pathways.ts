@@ -269,10 +269,9 @@ export function level78Guide(skillId:string) {
 export function pairIdsForSkill(skillId?:string):readonly string[] {
   return skillId ? level78Guide(skillId)?.masterPairIds??[] : [];
 }
-export interface AdvancedCase {
-  kind:"calculation"|"endgame";id:string;title:string;topic:string;
-  assessed:boolean;direct:boolean;position:CalculationPosition|EndgamePosition;
-}
+export type AdvancedCase =
+  | {kind:"calculation";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:CalculationPosition}
+  | {kind:"endgame";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:EndgamePosition};
 const studyFocus:Readonly<Record<string,RegExp>> = {
   "strategy.imbalances":/imbalance|structure|space|piece/i,
   "strategy.bishop-vs-knight":/bishop|knight|minor|outpost/i,

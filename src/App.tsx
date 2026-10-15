@@ -43,6 +43,7 @@ import { ChessBoard } from "./components/ChessBoard";
 
 import { weaknessesFromMistakes } from "./games/weaknesses";
 import { legalReviewMistake, recordReviewAttempt, scheduleVerifiedReview } from "./review/practiceLoop";
+import { gameTransferMissions } from "./review/gameTransfer";
 import { legalPuzzleLine, recordPuzzleResult } from "./puzzles/practiceQuality";
 import {legalCalculationBranch} from "./calculation/branchFeedback";
 import {verifyEndgameHistory} from "./endgames/diagnostics";
@@ -299,6 +300,7 @@ export default function App() {
   const learnSection = learnRoute.section;
   const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
   const [lichessSyncing, setLichessSyncing] = useState(false);
+  const [modelGameFocus,setModelGameFocus]=useState<string|null>(null);
   const lichessSyncInFlight = useRef(false);
   const [lichessSyncMessage, setLichessSyncMessage] = useState<string | null>(null);
   const [lichessSyncError, setLichessSyncError] = useState<string | null>(null);
@@ -320,6 +322,7 @@ export default function App() {
         setActiveModelGameId(null);
         setAssessmentSession(null);
         setTrainingReturnPath("/train");
+        setModelGameFocus(null);
         try { window.sessionStorage.removeItem("chess:training-runtime-v1"); }
         catch { /* Access may be disabled by browser policy. */ }
       }
@@ -507,6 +510,9 @@ export default function App() {
   const sourceLinkedStudies = useMemo(() => calculationCatalog(state).filter(
     item => sourceStudyKind(item) !== null), [state, catalogRevision]);
   const level456Positions = useMemo(() => calculationCatalog(state),[state,catalogRevision]);
+  const ownerGameTransferMissions=useMemo(()=>loaded?
+    gameTransferMissions(state.games??[],state.mistakes??[],state.reviewPracticeHistory??[]):[],
+    [loaded,state.games,state.mistakes,state.reviewPracticeHistory]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
@@ -3255,7 +3261,11 @@ export default function App() {
               owner={activeOwner}
               progress={state.modelGameProgress ?? {}}
               onStartGame={startModelGame}
-              onBack={() => navigate("/learn")}
+              focusSkillId={modelGameFocus??undefined}
+              onBack={() => {
+                const focus=modelGameFocus&&skillById[modelGameFocus];
+                navigate(focus?learnSkillPath(focus):"/learn");
+              }}
             />
           ) : (
             <LearnView
@@ -3275,10 +3285,18 @@ export default function App() {
               onStartPlacement={startPlacementAssessment}
               onStartCheckpoint={startStageCheckpoint}
               onOpenOpenings={() => navigate("/learn/openings")}
-              onOpenModelGames={() => navigate("/learn/model-games")}
+              onOpenModelGames={() => { setModelGameFocus(null); navigate("/learn/model-games"); }}
               level456Positions={level456Positions}
               onOpenCalculationSource={openCurriculumCalculationSource}
               onOpenEndgameSource={openCurriculumEndgameSource}
+              personalGameMissions={ownerGameTransferMissions}
+              onTrainGameMistake={startMistakePractice}
+              onOpenReviewGame={(gameId) => navigate(gameId?reviewGamePath(gameId):"/review")}
+              onOpenHistoricalSkill={(skillId) => {
+                if (!skillById[skillId] || !["practical","advanced"].includes(skillById[skillId].stage)) return;
+                setModelGameFocus(skillId);
+                navigate("/learn/model-games");
+              }}
             />
           )
         ) : page === "play" ? (
