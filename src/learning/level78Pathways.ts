@@ -1,4 +1,5 @@
 import { skillById } from "../domain/curriculum";
+import { originalAdvancedThemeMatch } from "./advancedThemeMatch";
 import type { CalculationPosition } from "../calculation/types";
 import type { EndgamePosition } from "../endgames/types";
 import type { TransferMission } from "../review/gameTransfer";
@@ -272,25 +273,6 @@ export function pairIdsForSkill(skillId?:string):readonly string[] {
 export type AdvancedCase =
   | {kind:"calculation";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:CalculationPosition}
   | {kind:"endgame";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:EndgamePosition};
-const studyFocus:Readonly<Record<string,RegExp>> = {
-  "strategy.imbalances":/imbalance|structure|space|piece/i,
-  "strategy.bishop-vs-knight":/bishop|knight|minor|outpost/i,
-  "strategy.exchanges":/exchange|trade|capture/i,
-  "strategy.restriction":/block|restric|outpost|defend|prophy/i,
-  "strategy.coordination":/coordinat|rook|piece|open-file/i,
-  "pawns.iqp":/isolated queen|iqp/i,
-  "pawns.hanging":/hanging pawn/i,
-  "pawns.minority":/minority attack/i,
-  "strategy.repertoire-middlegames":/opening|repertoire|transition/i,
-  "endgames.rook-checks":/rook|check|cutoff/i,
-  "endgames.opposite-bishops":/bishop|opposite/i,
-  "endgames.minor-piece":/minor|knight|bishop/i,
-  "conversion.two-weaknesses":/imbalance|weak|conversion/i,
-  "calculation.branching":/calculat|forcing|variation|defen/i,
-  "calculation.evaluation":/evaluat|positional|imbalanc|defen/i,
-  "tactics.combinations":/forcing|tactic|attack|calculat/i,
-  "tactics.defensive-resources":/defen|counter|attack|reply/i,
-};
 export function level78AdvancedCases(
  skillId:string,positions:readonly CalculationPosition[],
  endings:readonly EndgamePosition[],limit=12,
@@ -305,12 +287,14 @@ export function level78AdvancedCases(
   const scored=positions.flatMap(position=>{
     if(position.source!=="authored")return [];
     const direct=position.skillIds.includes(skillId);
-    const original = position as CalculationPosition & {pawnStructureStudy?:{theme?:string}};
-    const topic=(position.title+" "+position.prompt+" "+(position.strategicImbalanceStudy?.theme??"")+" "+
-      (original.pawnStructureStudy?.theme??"")+" "+(position.endgameDecisionStudy?.family??""));
-    if(!direct && !(studyFocus[skillId]?.test(topic)))return [];
+    if(!direct && !originalAdvancedThemeMatch(skillId,position))return [];
+    const kind=position.strategicImbalanceStudy?.theme ??
+      position.prophylaxisStudy?.theme ??
+      position.endgameDecisionStudy?.family ??
+      position.openingTransitionStudy?.theme ?? position.title;
+    const topic=kind+" · "+position.prompt;
     return [{kind:"calculation" as const,id:position.id,title:position.title,topic,
-      assessed:position.assessmentStatus!=="instructional-only",direct,position}];
+      assessed:direct && position.assessmentStatus!=="instructional-only",direct,position}];
   });
   // Explicitly source qualified; direct first, endgame technique before related studies.
   const candidates=[...endingsDirect,...scored.filter(p=>p.direct),...scored.filter(p=>!p.direct)];

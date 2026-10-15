@@ -74,7 +74,7 @@ export function level456Pathways(
     return [{
       kind:"calculation" as const,id:position.id,title:position.title,
       topic:kind ? sourceStudyTheme(position) : position.prompt,
-      assessed,direct,position,
+      assessed:direct && assessed,direct,position,
     }];
   });
   // Keep authentic endgame execution first. Then prefer direct skill-matched

@@ -9,6 +9,10 @@ import {endgamePositions} from "../endgames/positions";
 import type {CalculationPosition} from "../calculation/types";
 import type {TransferMission} from "../review/gameTransfer";
 import {studyMaterialFor} from "../calculation/studyDelivery";
+import p103 from "../../public/data/calculation/p103-structures-a-v1.json";
+import p104 from "../../public/data/calculation/p104-knight-harmony-v1.json";
+import p105 from "../../public/data/calculation/p105-initiative-resistance-v1.json";
+import {originalAdvancedThemeMatch} from "./advancedThemeMatch";
 const cases=[a109,a110,a112].flatMap(x=>x.positions) as CalculationPosition[];
 describe("Levels 7–8 original transfer paths",()=>{
   it("covers 23 original curricula with grounded P114 comparative source IDs",()=>{
@@ -45,6 +49,26 @@ describe("Levels 7–8 original transfer paths",()=>{
     expect(advanced?.questions.slice(3)).toEqual(baseline?.questions.slice(0,3));
     expect(JSON.stringify(source)).toBe(snapshot);
     expect(studyMaterialFor({...source,source:"personal-game"},"strategy.imbalances")).toEqual(studyMaterialFor({...source,source:"personal-game"}));
+  });
+  it("qualifies real advanced pawn structures from original P103 author themes",()=>{
+    const original=p103.positions as CalculationPosition[];
+    const expected=[
+      ["pawns.iqp","Isolated queen's pawn"],
+      ["pawns.hanging","Hanging c- and d-pawns"],
+      ["pawns.minority","Carlsbad minority attack"],
+    ] as const;
+    for(const [skill,theme] of expected){
+      const chosen=level78AdvancedCases(skill,original,[]);
+      expect(chosen.length,skill).toBe(5);
+      expect(chosen.every(p=>p.kind==="calculation" && !p.assessed && !p.direct),skill).toBe(true);
+      expect(chosen.every(p=>(p.position as CalculationPosition & {pawnStructureStudy?:{theme?:string}}).pawnStructureStudy?.theme===theme),skill).toBe(true);
+      expect(new Set(chosen.map(p=>p.position.fen)).size,skill).toBe(5);
+    }
+    expect(level78AdvancedCases("strategy.bishop-vs-knight",p104.positions as CalculationPosition[],[]).length).toBeGreaterThan(0);
+    expect(level78AdvancedCases("practical.complications",p105.positions as CalculationPosition[],[])).toEqual([]);
+    const privateCase={...original[0],source:"personal-game" as const};
+    expect(originalAdvancedThemeMatch("pawns.iqp",privateCase)).toBe(false);
+    expect(originalAdvancedThemeMatch("pawns.iqp",original[0])).toBe(true);
   });
   it("links only already-qualified owner Review missions and labels indirect associations",()=>{
     const m:TransferMission={mistakeId:"one",gameId:"g",gameLabel:"Player A — Player B",
