@@ -109,7 +109,7 @@ function repertoireSources(plan: Level23Plan, excluded: Set<string>): PracticeSo
 /** The native P93 builder has ALREADY replayed the opponent's trigger.
  * PuzzleRecord.initialFen is the learner-to-move position and
  * solutionMoves[0] is the solver's first legal move; never skip it. */
-function puzzleSource(puzzle: PuzzleRecord, plan: Level23Plan, excluded: Set<string>): PracticeSource | null {
+export function qualifyLevel23PuzzleSource(puzzle: PuzzleRecord, plan: Level23Plan, excluded: Set<string>): PracticeSource | null {
   if (puzzle.source !== "lichess" || !puzzle.skillIds.includes(plan.skillId) ||
       !Array.isArray(puzzle.solutionMoves) || puzzle.solutionMoves.length < 2 ||
       !Number.isFinite(puzzle.rating) || puzzle.rating < 600 || puzzle.rating > 1800) return null;
@@ -147,7 +147,7 @@ function puzzleSources(plan: Level23Plan, puzzles: PuzzleRecord[], excluded: Set
       .sort((a,b) => Math.abs(a.rating-target)-Math.abs(b.rating-target) || a.id.localeCompare(b.id));
     let candidate: {p:PuzzleRecord;item:PracticeSource} | undefined;
     for (const p of sorted) {
-      const item = puzzleSource(p,plan,usedFens);
+      const item = qualifyLevel23PuzzleSource(p,plan,usedFens);
       if (item) { candidate = {p,item}; break; }
     }
     if (!candidate?.item) break;

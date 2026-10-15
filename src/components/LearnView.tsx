@@ -29,6 +29,10 @@ import type {
   StageGateStatus,
 } from "../assessment/types";
 import { lessonForSkill } from "../learning/lessons";
+import { level456Pathways } from "../learning/level456Pathways";
+import type { CalculationPosition } from "../calculation/types";
+import type { EndgamePosition } from "../endgames/types";
+import { endgamePositions } from "../endgames/positions";
 import type { LessonStep } from "../learning/types";
 import { supportsPuzzlePractice } from "../puzzles/support";
 import { ChessBoard } from "./ChessBoard";
@@ -49,6 +53,9 @@ interface LearnViewProps {
   onStartCheckpoint: (stageId: CurriculumStageId) => void;
   onOpenOpenings: () => void;
   onOpenModelGames: () => void;
+  level456Positions: CalculationPosition[];
+  onOpenCalculationSource: (position: CalculationPosition) => void;
+  onOpenEndgameSource: (position: EndgamePosition) => void;
 }
 
 function masteryLabel(value: number) {
@@ -112,12 +119,18 @@ function LessonPage({
   onBack,
   onStartLesson,
   onStartPractice,
+  level456Positions,
+  onOpenCalculationSource,
+  onOpenEndgameSource,
 }: {
   skill: ChessSkill;
   mastery: Record<string, SkillMastery>;
   onBack: () => void;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
+  level456Positions: CalculationPosition[];
+  onOpenCalculationSource: (position: CalculationPosition) => void;
+  onOpenEndgameSource: (position: EndgamePosition) => void;
 }) {
   const lesson = useMemo(
     () =>
@@ -128,6 +141,10 @@ function LessonPage({
         skill.trainingModes[0] ?? "conceptLesson",
       ),
     [skill],
+  );
+  const depthCases = useMemo(
+    () => level456Pathways(skill.id,level456Positions,endgamePositions,6),
+    [skill.id,level456Positions],
   );
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -215,6 +232,32 @@ function LessonPage({
           <p>{skill.description}</p>
         </div>
 
+        {["thinking","fight","finish"].includes(skill.stage) && (
+          <section className="learn-v2-reading-note" aria-label="Original advanced course practice">
+            <span>Original practice · Levels 4–6</span>
+            <strong>Independent decisions and opponent resistance</strong>
+            <p>Study actual source positions and execute endgame techniques in their existing
+              trainers. Contextual studies teach the idea but do not award this skill mastery.
+              Authored legal branches are not engine-certified best moves.</p>
+            {depthCases.length ? (
+              <div className="learn-v2-depth-cases">
+                {depthCases.map(item => (
+                  <button key={item.id} type="button" className="secondary"
+                    onClick={() => item.kind==="calculation"
+                      ? onOpenCalculationSource(item.position)
+                      : onOpenEndgameSource(item.position)}>
+                    <strong>{item.title}</strong>
+                    <span>{item.kind==="endgame" ? "Endgame technique" :
+                      item.assessed ? "Original calculation" : "Unscored position study"}
+                      {item.direct ? " · Original skill" : " · Related subject"}</span>
+                    <small>{item.topic}</small>
+                  </button>
+                ))}
+              </div>
+            ) : <p role="status">The original deeper-position sources are still loading or unavailable.
+              Begin the lesson or existing practice without claiming unavailable study credit.</p>}
+          </section>
+        )}
         <div className="learn-v2-reading-nav">
           <button
             type="button"
@@ -257,6 +300,9 @@ export function LearnView({
   onStartCheckpoint,
   onOpenOpenings,
   onOpenModelGames,
+  level456Positions,
+  onOpenCalculationSource,
+  onOpenEndgameSource,
 }: LearnViewProps) {
   const selectedSkill = selectedSkillId
     ? skillById[selectedSkillId]
@@ -296,6 +342,9 @@ export function LearnView({
         onBack={onBackToCourse}
         onStartLesson={onStartLesson}
         onStartPractice={onStartPractice}
+        level456Positions={level456Positions}
+        onOpenCalculationSource={onOpenCalculationSource}
+        onOpenEndgameSource={onOpenEndgameSource}
       />
     );
   }

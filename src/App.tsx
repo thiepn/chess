@@ -59,7 +59,7 @@ import {
   retryFailedCalculationSources,
 } from "./calculation/positions";
 import { sourceStudyKind } from "./calculation/studySkillAlignment";
-import { endgamePositionFor, resolveEndgamePosition } from "./endgames/positions";
+import { endgamePositionFor, resolveEndgamePosition, endgamePositions } from "./endgames/positions";
 
 import { timeControlWeight } from "./games/practical";
 import {
@@ -506,6 +506,7 @@ export default function App() {
   // Keep each source's native completion and grading authority unchanged.
   const sourceLinkedStudies = useMemo(() => calculationCatalog(state).filter(
     item => sourceStudyKind(item) !== null), [state, catalogRevision]);
+  const level456Positions = useMemo(() => calculationCatalog(state),[state,catalogRevision]);
   const pinnedCalculation = useRef<{
     key: string; position: ReturnType<typeof resolveCalculationPosition> | undefined;
   } | null>(null);
@@ -2260,6 +2261,34 @@ export default function App() {
     });
   }
 
+  /** Original source routes, not new training engines or progress authorities. */
+  function openCurriculumCalculationSource(position: import("./calculation/types").CalculationPosition) {
+    const source = level456Positions.find(item => item.id===position.id && item.fen===position.fen);
+    if (!source) return;
+    if (sourceStudyKind(source)) { openStrategicStudy(source); return; }
+    const skillId = source.skillIds.find(id => !!skillById[id]);
+    const skill = skillId ? skillById[skillId] : undefined;
+    if (!skill) return;
+    openManualActivity({
+      id:`course-calculation:${source.id}`,source:"curriculum",skillIds:[skill.id],
+      activityType:"calculation",calculationPositionId:source.id,
+      estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
+      reason:"Original source-qualified calculation",title:source.title,subtitle:"Calculate the opponent's reply",
+    });
+  }
+
+  function openCurriculumEndgameSource(position: import("./endgames/types").EndgamePosition) {
+    const source=endgamePositions.find(item=>item.id===position.id && item.fen===position.fen);
+    const skill=source ? skillById[source.skillId] : undefined;
+    if (!source || !skill) return;
+    openManualActivity({
+      id:`course-endgame:${source.id}`,source:"curriculum",skillIds:[skill.id],
+      activityType:"endgameDrill",endgamePositionId:source.id,
+      estimatedMinutes:12,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
+      reason:"Original resistance-tested endgame technique",title:source.title,subtitle:source.subtitle,
+    });
+  }
+
   function startManualLesson(skillId: string) {
     const skill = skillById[skillId];
     if (!skill) return;
@@ -3242,6 +3271,9 @@ export default function App() {
               onStartCheckpoint={startStageCheckpoint}
               onOpenOpenings={() => navigate("/learn/openings")}
               onOpenModelGames={() => navigate("/learn/model-games")}
+              level456Positions={level456Positions}
+              onOpenCalculationSource={openCurriculumCalculationSource}
+              onOpenEndgameSource={openCurriculumEndgameSource}
             />
           )
         ) : page === "play" ? (
