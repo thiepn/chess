@@ -30,7 +30,7 @@ import { ChessBoard } from "./ChessBoard";
 import { CalculationStudyPanel } from "./CalculationStudyPanel";
 import { studyMaterialFor } from "../calculation/studyDelivery";
 import { isInstructionalCalculation } from "../calculation/assessmentAuthority";
-import { verifiedDeepBranches } from "../calculation/deepCalculation";
+import { verifiedDeepBranches, documentedCandidateBoards } from "../calculation/deepCalculation";
 
 import { DeepCalculationLab } from "./DeepCalculationLab";
 
@@ -385,6 +385,31 @@ export function CalculationRunner({
     <h2>Calculation source could not be verified</h2>
     <p>This position's recorded continuation is invalid or unavailable. No scored attempt will be written.</p>
   </div>;
+
+  // Both independent modes reuse original source FENs/branches, but the
+  // training outcome and owner-scoped historical grader are not invoked.
+  if (activity.courseCandidatePractice) {
+    if (!instructionalOnly || !onInstructionalExit ||
+        documentedCandidateBoards(verifiedDeepBranches(position)).length<2) return (
+      <div className="calculation-runner" role="alert">
+        This source has no authorized unscored multiple-candidate study.
+      </div>
+    );
+    return <div className="calculation-runner" aria-label="Original candidate and plan comparison">
+      <h2>Calculate your plan, face the recorded defense</h2>
+      <p>Choose your own candidate first. After a real board attempt, contrast
+        legally documented alternatives and reflect on the original positional question.
+        No calculation or proficiency score is written.</p>
+      <DeepCalculationLab position={position} storageOwner={storageOwner}
+        draftScope="candidate" focusSkillId={activity.courseFocusSkillId}
+        exitLabel="Return to course without a grade"
+        onComplete={onInstructionalExit}
+        evaluateLocally={async fen=>{
+          const engine=engineRef.current??await enginePromiseRef.current;
+          return engine?engine.evaluate(fen,10):null;
+        }} />
+    </div>;
+  }
 
   // Standalone defender rehearsal reuses the original 3–8-ply playable board.
   // No scored stages, fake mastery event, duplicate scheduler or server writes.

@@ -30,6 +30,7 @@ import type {
 } from "../assessment/types";
 import { lessonForSkill } from "../learning/lessons";
 import { level456Pathways } from "../learning/level456Pathways";
+import { documentedCandidateBoards, verifiedDeepBranches } from "../calculation/deepCalculation";
 import { level78AdvancedCases,level78GameMissions,level78Guide } from "../learning/level78Pathways";
 import type { TransferMission } from "../review/gameTransfer";
 import { level456Lens } from "../learning/level456Inquiry";
@@ -57,7 +58,7 @@ interface LearnViewProps {
   onOpenOpenings: () => void;
   onOpenModelGames: () => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend") => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend"|"plan") => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
   personalGameMissions: TransferMission[];
   onTrainGameMistake:(mistakeId:string)=>void;
@@ -140,7 +141,7 @@ function LessonPage({
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
   level456Positions: CalculationPosition[];
-  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend") => void;
+  onOpenCalculationSource: (position: CalculationPosition, focusSkillId:string, practiceMode?:"defend"|"plan") => void;
   onOpenEndgameSource: (position: EndgamePosition) => void;
   personalGameMissions: TransferMission[];
   onTrainGameMistake:(mistakeId:string)=>void;
@@ -334,6 +335,12 @@ function LessonPage({
                   {item.direct?" · Direct original skill":" · Related original subject"}</span>
                 <small>{item.topic.slice(0,155)}</small>
               </button>
+              {item.kind==="calculation" &&
+                documentedCandidateBoards(verifiedDeepBranches(item.position)).length>=2 &&
+                <button type="button" className="secondary"
+                  onClick={()=>onOpenCalculationSource(item.position,skill.id,"plan")}>
+                  Compare your candidate plans on the board · unscored
+                </button>}
               {item.kind==="calculation" && <button type="button" className="secondary"
                 onClick={()=>onOpenCalculationSource(item.position,skill.id,"defend")}>
                 Defend this original line · unscored

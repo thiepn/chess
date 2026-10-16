@@ -61,6 +61,7 @@ import {
   retryFailedCalculationSources,
 } from "./calculation/positions";
 import { sourceStudyKind } from "./calculation/studySkillAlignment";
+import { documentedCandidateBoards, verifiedDeepBranches } from "./calculation/deepCalculation";
 import { endgamePositionFor, resolveEndgamePosition, endgamePositions } from "./endgames/positions";
 
 import { timeControlWeight } from "./games/practical";
@@ -2274,28 +2275,35 @@ export default function App() {
   }
 
   /** Original source routes, not new training engines or progress authorities. */
-  function openCurriculumCalculationSource(position: import("./calculation/types").CalculationPosition, focusSkillId:string, practiceMode?:"defend") {
+  function openCurriculumCalculationSource(position: import("./calculation/types").CalculationPosition, focusSkillId:string, practiceMode?:"defend"|"plan") {
     const source = level456Positions.find(item => item.id===position.id && item.fen===position.fen);
     if (!source) return;
-    if (sourceStudyKind(source) && practiceMode!=="defend") { openStrategicStudy(source,focusSkillId); return; }
+    if (practiceMode==="plan" &&
+        documentedCandidateBoards(verifiedDeepBranches(source)).length<2)return;
+    if (sourceStudyKind(source) && !practiceMode) { openStrategicStudy(source,focusSkillId); return; }
     const skillId = source.skillIds.includes(focusSkillId) && skillById[focusSkillId]
       ? focusSkillId : source.skillIds.find(id => !!skillById[id]);
     const skill = skillId ? skillById[skillId] : undefined;
     if (!skill) return;
     openManualActivity({
-      id:`${practiceMode==="defend"?"course-defense":"course-calculation"}:${source.id}`,source:"curriculum",skillIds:[skill.id],
+      id:`${practiceMode==="defend"?"course-defense":
+        practiceMode==="plan"?"course-plan":"course-calculation"}:${source.id}`,source:"curriculum",skillIds:[skill.id],
       courseFocusSkillId: skillById[focusSkillId] &&
         ["thinking","fight","finish","practical","advanced"].includes(skillById[focusSkillId].stage) ? focusSkillId : undefined,
-      courseContextOnly: practiceMode==="defend" || !source.skillIds.includes(focusSkillId),
+      courseContextOnly: Boolean(practiceMode) || !source.skillIds.includes(focusSkillId),
       courseDefenderPractice: practiceMode==="defend",
+      courseCandidatePractice: practiceMode==="plan",
       activityType:"calculation",calculationPositionId:source.id,
       estimatedMinutes:10,priority:1,difficulty:skill.difficulty,novelty:0,urgency:.5,
       reason:practiceMode==="defend" ? "Independent original defender-side rehearsal, unscored" :
+        practiceMode==="plan" ? "Original first-candidate plan comparison, unscored" :
         source.skillIds.includes(focusSkillId)
         ? "Original source-qualified calculation"
         : "Contextual unscored source exercise",
       title:source.title,subtitle:practiceMode==="defend"?
-        "Find the legal defending response" : "Calculate the opponent's reply",
+        "Find the legal defending response" : practiceMode==="plan"?
+        "Choose a candidate, face the source opponent, revise the plan" :
+        "Calculate the opponent's reply",
     });
   }
 
