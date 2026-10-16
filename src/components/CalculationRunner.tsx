@@ -147,6 +147,40 @@ export function CalculationRunner({
     >(null);
 
   const instructionalOnly = isInstructionalCalculation(activity,position);
+  // A per-visit decision clock for original P94 Level 7 practice only.
+  // Elapsed time stays in component memory and never enters StudyEvents.
+  const practicalTimePractice=instructionalOnly &&
+    activity.courseFocusSkillId==="practical.time" && !activity.courseDefenderPractice;
+  const [decisionBudgetSeconds,setDecisionBudgetSeconds]=useState(60);
+  const [decisionElapsedMs,setDecisionElapsedMs]=useState(0);
+  const [decisionElapsedBase,setDecisionElapsedBase]=useState(0);
+  const [decisionClockStart,setDecisionClockStart]=useState<number|null>(null);
+  useEffect(()=>{
+    if(!practicalTimePractice||decisionClockStart===null||phase==="result")return;
+    const tick=()=>setDecisionElapsedMs(decisionElapsedBase+Math.max(0,Date.now()-decisionClockStart));
+    tick();
+    const interval=window.setInterval(tick,250);
+    return ()=>window.clearInterval(interval);
+  },[practicalTimePractice,decisionClockStart,decisionElapsedBase,phase]);
+  useEffect(()=>{
+    if(phase!=="result" || decisionClockStart===null)return;
+    const elapsed=decisionElapsedBase+Math.max(0,Date.now()-decisionClockStart);
+    setDecisionElapsedMs(elapsed);
+    setDecisionElapsedBase(elapsed);
+    setDecisionClockStart(null);
+  },[phase,decisionClockStart,decisionElapsedBase]);
+  const decisionRemaining=Math.max(0,Math.ceil((decisionBudgetSeconds*1000-decisionElapsedMs)/1000));
+  function toggleDecisionClock(){
+    if(decisionClockStart===null) setDecisionClockStart(Date.now());
+    else{
+      const elapsed=decisionElapsedBase+Math.max(0,Date.now()-decisionClockStart);
+      setDecisionElapsedBase(elapsed);setDecisionElapsedMs(elapsed);
+      setDecisionClockStart(null);
+    }
+  }
+  function resetDecisionClock(){
+    setDecisionClockStart(null);setDecisionElapsedBase(0);setDecisionElapsedMs(0);
+  }
   const hasIndependentStudy = useMemo(() => !!studyMaterialFor(position,activity.courseFocusSkillId), [position,activity.courseFocusSkillId]);
   const [showWorkedReview, setShowWorkedReview] = useState(!hasIndependentStudy);
   const hasDeepBranches = useMemo(() => verifiedDeepBranches(position).length > 0, [position]);
@@ -203,6 +237,7 @@ export function CalculationRunner({
   }
 
   function resetExercise() {
+    resetDecisionClock();
     setShowWorkedReview(!hasIndependentStudy);
     setDeepDone(false);
     setPhase("candidates");
@@ -379,6 +414,35 @@ export function CalculationRunner({
 
   return (
     <div className="calculation-runner">
+      {practicalTimePractice && <section className="calculation-practical-clock"
+        aria-label="Simulated decision-time practice">
+        <strong>Level 7 · Decide within a practice budget</strong>
+        <p>Choose how long to scan candidate moves, checks and opponent replies.
+          This local timer is hypothetical practice, not a reconstructed game
+          clock. It never changes correctness, mastery or review records.</p>
+        <div className="calculation-practical-clock-controls">
+          <label>Decision budget
+            <select value={decisionBudgetSeconds} disabled={decisionClockStart!==null}
+              onChange={event=>setDecisionBudgetSeconds(Number(event.target.value))}>
+              <option value={30}>30 seconds · quick safety scan</option>
+              <option value={60}>60 seconds · compare two candidates</option>
+              <option value={120}>120 seconds · deeper concrete calculation</option>
+            </select>
+          </label>
+          <output aria-label="Decision time remaining" aria-live="off">
+            {decisionRemaining} s remaining
+          </output>
+          <button type="button" className="secondary" disabled={phase==="result"}
+            onClick={toggleDecisionClock}>
+            {decisionClockStart===null?"Start / resume":"Pause"}
+          </button>
+          <button type="button" className="secondary" onClick={resetDecisionClock}>
+            Reset practice clock
+          </button>
+        </div>
+        {decisionRemaining===0 && <p role="status">Practice budget reached.
+          You can continue the legal exercise without a time penalty or grade.</p>}
+      </section>}
       <div className="calculation-stage-rail">
         {[
           ["candidates", "Candidates"],

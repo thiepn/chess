@@ -11,9 +11,9 @@ export const level78Guides: Readonly<Record<string,{prompts:readonly [string,str
 {
   "practical.time": {
     "prompts": [
-      "Identify where the actual clock use made a candidate calculation or plan unusually costly.",
-      "Compare a useful quick safety scan against deeper analysis when the position is critical.",
-      "Explain how you would allocate your next move's time without claiming an invented clock result."
+      "Choose a hypothetical decision-time budget and identify which forcing replies must be checked first.",
+      "Compare a quick safety scan against deeper analysis of two original candidate moves.",
+      "Explain when you would spend more or less time; source positions contain no recorded game-clock evidence."
     ],
     "masterPairIds": [
       "f4-or-queen-preparation",
