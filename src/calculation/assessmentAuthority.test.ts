@@ -19,6 +19,8 @@ describe("advanced contextual practice retains original grade and privacy author
    expect(isInstructionalCalculation(context(true),original)).toBe(true);
    expect(isInstructionalCalculation(context(false),original)).toBe(false);
    expect(isInstructionalCalculation({...context(false),courseDefenderPractice:true},original)).toBe(true);
+   expect(isInstructionalCalculation({...context(false),courseCandidatePractice:true},original)).toBe(true);
+   expect(isInstructionalCalculation({...context(false),courseCandidatePractice:true,calculationPositionId:"calc:unknown"},original)).toBe(false);
    expect(isInstructionalCalculation({...context(true),calculationPositionId:"calc:other"},original)).toBe(false);
    expect(isInstructionalCalculation(context(false,unscored),unscored)).toBe(true);
    expect(isInstructionalCalculation(context(true),unscored)).toBe(true);

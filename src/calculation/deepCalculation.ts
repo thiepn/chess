@@ -197,6 +197,50 @@ export function documentedDefenderOutcomes(
   }).slice(0,Math.min(4,Math.max(0,Math.floor(limit))));
 }
 
+/** Distinct ORIGINAL first candidates, legally replayed through their third
+ * ply. This is an illustrative comparison, never a best-move ranking. */
+export function documentedCandidateBoards(branches:readonly DeepBranch[],maximum=3):{
+  branchId:string;label:string;firstUci:string;firstSan:string;fen:string;
+  sample:string[];explanation:string;
+}[] {
+  const used=new Set<string>(),out:{
+    branchId:string;label:string;firstUci:string;firstSan:string;fen:string;
+    sample:string[];explanation:string;
+  }[]=[];
+  for(const branch of branches){
+    if(branch.plies.length<3 || used.has(branch.plies[0].uci))continue;
+    used.add(branch.plies[0].uci);
+    out.push({
+      branchId:branch.id,label:branch.label,
+      firstUci:branch.plies[0].uci,firstSan:branch.plies[0].san,
+      fen:branch.plies[2].afterFen,
+      sample:branch.plies.slice(0,3).map(p=>p.san),
+      explanation:branch.explanation,
+    });
+    if(out.length>=Math.min(4,Math.max(0,Math.floor(maximum))))break;
+  }
+  return out;
+}
+
+/** Source-side candidate and follow-up choices entered independently by the
+ * learner. Local engine and authored moves are not learner decisions. */
+export function independentSourceDecisions(
+  position:CalculationPosition, branches:readonly DeepBranch[], played:readonly DeepPly[],
+):{ply:number;san:string;documented:boolean;sourceLabel?:string}[] {
+  const frames=deepFrames(position,[...played]);
+  if(!frames)return [];
+  return played.flatMap((move,index)=>{
+    if(index%2!==0 || move.origin!=="learner")return [];
+    const source=branches.find(branch=>played.slice(0,index+1).every(
+      (step,j)=>branch.plies[j]?.uci===step.uci,
+    ));
+    return [{
+      ply:index+1,san:frames[index+1].san,documented:Boolean(source),
+      ...(source?{sourceLabel:source.label}:{}),
+    }];
+  });
+}
+
 /** Start an ungraded opponent-side challenge directly after an authored legal
  * first move. The setup move is marked authored; it is not learner evidence. */
 export function sourceDefenderSetup(branch:DeepBranch):DeepDraft {
@@ -245,14 +289,14 @@ export function comparisonFor(branch: DeepBranch, played: DeepPly[]) {
   };
 }
 
-function key(owner: string, position: CalculationPosition, scope?: "defender") {
+function key(owner: string, position: CalculationPosition, scope?: "defender" | "candidate") {
   return KEY + encodeURIComponent(owner) + ":" + encodeURIComponent(position.id) +
     (scope ? ":mode:" + encodeURIComponent(scope) : "");
 }
 export function blankDeepDraft(branch: DeepBranch): DeepDraft {
   return { branchId: branch.id, played: [], cursor: 0, reveal: false };
 }
-export function readDeepDraft(owner: string, position: CalculationPosition, branches: DeepBranch[], scope?: "defender"): DeepDraft {
+export function readDeepDraft(owner: string, position: CalculationPosition, branches: DeepBranch[], scope?: "defender" | "candidate"): DeepDraft {
   const blank = blankDeepDraft(branches[0]);
   if (!owner || typeof sessionStorage === "undefined") return blank;
   try {
@@ -279,7 +323,7 @@ export function readDeepDraft(owner: string, position: CalculationPosition, bran
     return { branchId: v.branchId, played, cursor, reveal: v.reveal === true };
   } catch { return blank; }
 }
-export function writeDeepDraft(owner: string, position: CalculationPosition, draft: DeepDraft, scope?: "defender") {
+export function writeDeepDraft(owner: string, position: CalculationPosition, draft: DeepDraft, scope?: "defender" | "candidate") {
   if (!owner || typeof sessionStorage === "undefined") return;
   try {
     sessionStorage.setItem(key(owner, position, scope), JSON.stringify({
@@ -287,7 +331,7 @@ export function writeDeepDraft(owner: string, position: CalculationPosition, dra
     }));
   } catch { /* Session storage may be unavailable. */ }
 }
-export function discardDeepDraft(owner: string, position: CalculationPosition, scope?: "defender") {
+export function discardDeepDraft(owner: string, position: CalculationPosition, scope?: "defender" | "candidate") {
   if (!owner || typeof sessionStorage === "undefined") return;
   try { sessionStorage.removeItem(key(owner, position, scope)); } catch { /* no persistence */ }
 }

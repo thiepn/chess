@@ -258,6 +258,8 @@ export interface TrainingCandidate {
   courseContextOnly?: boolean;
   /** Original source defender-only board; never a scored course assessment. */
   courseDefenderPractice?: boolean;
+  /** Original source candidate/plan comparison, always unscored. */
+  courseCandidatePractice?: boolean;
   endgamePositionId?: string;
   adaptivePolicy?: AdaptiveTrainingPolicy;
   periodization?: PeriodizationAdjustment;
