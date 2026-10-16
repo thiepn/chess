@@ -7,11 +7,13 @@ import {
   playDeepMove, readDeepDraft, recordedDefenderChoices, documentedDefensiveBoards,
   matchingSourceBranch, nextRecordedSourceMove, recordedDefenseFeedback,
   independentDefenderDecisions, documentedDefenderOutcomes,
+  independentSourceDecisions, documentedCandidateBoards,
   sharedBranchDraft, sourceDefenderSetup,
   verifiedDeepBranches, writeDeepDraft,
   type DeepPly, type PlyOrigin,
 } from "../calculation/deepCalculation";
 import { ChessBoard } from "./ChessBoard";
+import { CalculationStudyPanel } from "./CalculationStudyPanel";
 
 interface EngineSuggestion {
   bestMove: string;
@@ -24,13 +26,14 @@ interface Props {
   onComplete: () => void;
   /** For ungraded standalone defender challenge; optional traditional lab unchanged. */
   exitLabel?: string;
-  draftScope?: "defender";
+  draftScope?: "defender" | "candidate";
+  focusSkillId?: string;
   /** Existing local Stockfish, only contacted on an explicit learner click. */
   evaluateLocally: (fen: string) => Promise<EngineSuggestion | null>;
 }
 
 export function DeepCalculationLab({
-  position, storageOwner, onComplete, exitLabel, draftScope, evaluateLocally,
+  position, storageOwner, onComplete, exitLabel, draftScope, focusSkillId, evaluateLocally,
 }: Props) {
   const branches = useMemo(() => verifiedDeepBranches(position), [position]);
   const [draft, setDraft] = useState(() => {
@@ -45,6 +48,7 @@ export function DeepCalculationLab({
   // The source is an illustrative recorded line, never an engine-optimality claim.
   const [showSourceReply,setShowSourceReply]=useState(false);
   const [showTwoPlyComparisons,setShowTwoPlyComparisons]=useState(false);
+  const [showCandidateAlternatives,setShowCandidateAlternatives]=useState(false);
   const epoch = useRef(0);
 
   useEffect(() => {
@@ -72,6 +76,10 @@ export function DeepCalculationLab({
   const counter = Math.min(8, branch.plies.length);
   const candidate = local?.fen === fen ? playDeepMove(fen, local.move) : null;
   const defendingTheSource=draft.played[0]?.origin==="authored-response";
+  const candidatePractice=draftScope==="candidate";
+  const originalCandidates=candidatePractice ? documentedCandidateBoards(branches) : [];
+  const learnerCandidates=candidatePractice
+    ? independentSourceDecisions(position,branches,draft.played.slice(0,cursor)) : [];
   const viewColor=defendingTheSource && cursor>=1
     ? position.playerColor==="w" ? "b" : "w"
     : position.playerColor;
@@ -99,6 +107,7 @@ export function DeepCalculationLab({
     setError("");
     setShowSourceReply(false);
     setShowTwoPlyComparisons(false);
+    setShowCandidateAlternatives(false);
     setBusy(false);
   }
   function setBranch(id: string) {
@@ -109,6 +118,8 @@ export function DeepCalculationLab({
   }
   function move(uci: string, origin: PlyOrigin): boolean {
     if (maxed || busy || !playDeepMove(fen, uci)) return false;
+    if (origin==="learner" && draftScope==="candidate" && game.turn()!==position.playerColor)return false;
+    if (origin==="learner" && draftScope==="defender" && game.turn()===position.playerColor)return false;
     resetTransient();
     setDraft(previous => {
       const played=[...previous.played.slice(0,cursor),{uci,origin}];
@@ -165,6 +176,8 @@ export function DeepCalculationLab({
             as authored. They are legal examples, not proof of unique best moves.</p>
         </div>
         <span className="deep-lab-count">{cursor}/8 plies
+          {candidatePractice && <small> · {learnerCandidates.length} independent source-side
+            {learnerCandidates.length===1?" decision":" decisions"} (unscored)</small>}
           {defendingTheSource && <small> · {independentDefenses} independent defender
             {independentDefenses===1?" reply":" replies"} explored (unscored)</small>}
         </span>
@@ -202,10 +215,20 @@ export function DeepCalculationLab({
           <p><strong>Original study question:</strong> {position.defensiveStudy.keyQuestion}</p>
         )}
       </section>}
+      {candidatePractice && <section className="deep-lab-candidate-brief"
+        aria-label="Independent candidate and plan practice">
+        <strong>Choose a first move before examining the source alternatives</strong>
+        <p>Play a legal candidate on the original board. The opponent's turn uses
+          only a documented original response you explicitly choose, or optional
+          local engine analysis. Reconsider your plan on the new position.
+          There is no best-move grade for this exercise.</p>
+        {position.defensiveStudy?.keyQuestion && <p><strong>Source question:</strong> {position.defensiveStudy.keyQuestion}</p>}
+      </section>}
       <div className="deep-lab-board">
         <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}:${viewColor}`}
           fen={fen} orientation={viewColor} disabled={maxed || busy ||
-            (draftScope==="defender" && (cursor===0 || game.turn()===position.playerColor))}
+            (draftScope==="defender" && (cursor===0 || game.turn()===position.playerColor)) ||
+            (candidatePractice && game.turn()!==position.playerColor)}
           onMove={item => move(`${item.from}${item.to}${item.promotion ?? ""}`, "learner")} />
         <div className="deep-lab-board-details" role="status" aria-live="polite">
           {canUseAuthoredOpponent && <p>
@@ -213,6 +236,9 @@ export function DeepCalculationLab({
             What check, capture, block or counter-threat creates the most resistance?
           </p>}
           <strong>{maxed ? game.isGameOver() ? "Position ended" : "Eight-ply practice limit"
+            : candidatePractice
+              ? game.turn()===position.playerColor ? "Choose your candidate / continuation"
+                : "Opponent reply · use original source or optional local engine"
             : defendingTheSource
               ? game.turn()!==position.playerColor ? "Defend against the source move" : "Source side to move"
               : game.turn()===position.playerColor ? "Your side to move" : "Defender to move"}</strong>
@@ -239,6 +265,39 @@ export function DeepCalculationLab({
         ))}
       </nav>
       <div className="deep-lab-actions">
+        {candidatePractice && cursor>0 && originalCandidates.length>=2 && (
+          <section className="deep-lab-candidate-compare">
+            <button type="button" className="secondary"
+              aria-expanded={showCandidateAlternatives}
+              onClick={()=>setShowCandidateAlternatives(value=>!value)}>
+              {showCandidateAlternatives?"Hide":"Compare"} {originalCandidates.length} original first-move plans
+            </button>
+            {showCandidateAlternatives && <>
+              <p>These are legally replayed THREE-PLY original illustrations,
+                including cautionary alternatives. They are not ranked as best moves.</p>
+              <div className="deep-lab-source-boards">
+                {originalCandidates.map(item=><article key={item.branchId}>
+                  <h4>{item.label} · {item.firstSan}</h4>
+                  <ChessBoard fen={item.fen} orientation={position.playerColor} disabled/>
+                  <p><strong>Three-ply sample:</strong> {item.sample.join(" ")}</p>
+                  <p>{item.explanation}</p>
+                  <button type="button" className="secondary" onClick={()=>{
+                    resetTransient();
+                    const next=branches.find(b=>b.id===item.branchId);
+                    if(next)setDraft(blankDeepDraft(next));
+                  }}>Recalculate this candidate yourself</button>
+                </article>)}
+              </div>
+            </>}
+          </section>
+        )}
+        {candidatePractice && cursor>0 && game.turn()!==position.playerColor && (
+          <p className="deep-lab-source-turn" role="status">
+            {canUseAuthoredOpponent
+              ? "Recorded opposing responses are available below. Reveal them only after predicting the strongest defense."
+              : "This legal candidate has no recorded opponent reply at this exact prefix. Use Back to try another candidate or explicitly consult the optional local engine; no response has been fabricated."}
+          </p>
+        )}
         <button type="button" className="secondary" disabled={busy || cursor === 0}
           onClick={() => navigate(cursor - 1)}><ChevronLeft size={16}/> Back</button>
         <button type="button" className="secondary" disabled={busy || cursor === draft.played.length}
@@ -310,6 +369,21 @@ export function DeepCalculationLab({
         </section>
       )}
 
+      {candidatePractice && learnerCandidates.length>0 && <section
+        className="deep-lab-decision-log" aria-label="Your original candidate decisions">
+        <strong>Your independent moves · unscored</strong>
+        <ol>{learnerCandidates.map(item=><li key={item.ply}>
+          <strong>Ply {item.ply} · {item.san}</strong>
+          <span>{item.documented
+            ? `Matches original source example: ${item.sourceLabel}; not a best-move verdict`
+            : "Legal move outside documented source lines · no quality judgment"}</span>
+        </li>)}</ol>
+      </section>}
+      {candidatePractice && cursor>=2 && <details className="deep-lab-source-inquiry">
+        <summary>Reflect on the actual position and your plan</summary>
+        <CalculationStudyPanel key={`candidate:${storageOwner}:${position.id}:${focusSkillId??""}`}
+          position={position} storageOwner={storageOwner} focusSkillId={focusSkillId}/>
+      </details>}
       <div className="deep-lab-feedback">
         <strong>Branch comparison</strong>
         {alternate && <button type="button" className="secondary"
@@ -396,7 +470,8 @@ export function DeepCalculationLab({
           {exitLabel ? "Leave unscored practice" : "Skip optional depth lab"}
         </button>
         <button type="button" className="primary"
-          disabled={cursor < (exitLabel ? 2 : Math.min(4, branch.plies.length))}
+          disabled={cursor < (draftScope==="candidate" || draftScope==="defender" ? 2 :
+            Math.min(4,branch.plies.length))}
           onClick={onComplete}>
           {exitLabel ?? "Continue to independent study"} <ChevronRight size={16}/>
         </button>

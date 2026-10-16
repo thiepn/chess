@@ -101,3 +101,11 @@
 .calculation-practical-clock-controls output{font-variant-numeric:tabular-nums;min-width:110px;padding:8px}
 .calculation-practical-clock-controls button{min-height:44px}
 @media(max-width:600px){.calculation-practical-clock-controls{display:grid;grid-template-columns:1fr 1fr}.calculation-practical-clock-controls label,.calculation-practical-clock-controls output{grid-column:1/-1}.calculation-practical-clock-controls button{width:100%}}
+
+/* P108 original candidate-side source comparison; no second engine, grader or store. */
+.deep-lab-candidate-brief,.deep-lab-candidate-compare,.deep-lab-source-inquiry{display:grid;gap:10px;min-width:0;padding:12px;border:1px solid var(--chess-color-separator,var(--line))}
+.deep-lab-candidate-brief p,.deep-lab-candidate-compare p{margin:0;line-height:1.5;overflow-wrap:anywhere}
+.deep-lab-candidate-compare>button{justify-self:start;min-height:44px}
+.deep-lab-candidate-compare .deep-lab-source-boards article button{width:100%}
+.deep-lab-source-inquiry>summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+@media(max-width:600px){.deep-lab-candidate-compare>button{width:100%;justify-self:stretch}}
