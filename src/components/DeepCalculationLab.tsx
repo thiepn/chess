@@ -191,6 +191,17 @@ export function DeepCalculationLab({
           setDraft(sourceDefenderSetup(branch));
         }}>{cursor>0 ? "Restart defender-side challenge" : "Start defender-side challenge"}</button>
       </div>}
+      {draftScope==="defender" && <section className="deep-lab-defender-brief" aria-label="Defender challenge prompt">
+        <strong>{independentDefenses===0
+          ? "Find the first defensive resource"
+          : "Reassess after the source's last move"}</strong>
+        <p>Before moving, examine checks, captures, threats, exposed pieces and king
+          escape squares. The original source's next move is never an automatic
+          best-move verdict. Find a legal response on the board.</p>
+        {independentDefenses>0 && position.defensiveStudy?.keyQuestion && (
+          <p><strong>Original study question:</strong> {position.defensiveStudy.keyQuestion}</p>
+        )}
+      </section>}
       <div className="deep-lab-board">
         <ChessBoard key={`${position.id}:${branch.id}:${cursor}:${fen}:${viewColor}`}
           fen={fen} orientation={viewColor} disabled={maxed || busy ||
@@ -337,8 +348,8 @@ export function DeepCalculationLab({
               documented defender outcomes
           </button>
           {showTwoPlyComparisons && <>
-            <p>These boards show the exact source positions after the candidate
-              and defender reply. Compare king safety, material, initiative,
+            <p>These boards show the exact recorded positions after the relevant
+              source move and defender reply. Compare king safety, material, initiative,
               escape squares and the remaining source line before choosing a plan.
               No engine or mastery verdict is inferred.</p>
             <div className="deep-lab-source-boards">

@@ -88,3 +88,6 @@
 .deep-lab-decision-log ol{display:grid;gap:7px;margin:0;padding-left:24px}
 .deep-lab-decision-log li{line-height:1.5}
 .deep-lab-decision-log li span{display:block;overflow-wrap:anywhere}
+
+.deep-lab-defender-brief{display:grid;gap:6px;padding:12px;border-left:3px solid currentColor;min-width:0}
+.deep-lab-defender-brief p{margin:0;overflow-wrap:anywhere;line-height:1.5}

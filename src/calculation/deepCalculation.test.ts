@@ -143,6 +143,30 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
     expect(nextRecordedSourceMove(p,branches,entered)).toBeNull();
     expect(documentedDefenderOutcomes(p,branches,entered)).toEqual([]);
   });
+  it("surfaces multiple real defender outcomes across original case families",()=>{
+    const original=[...structures.positions,...attacks.positions,...defense.positions,
+      ...originalP110.positions] as CalculationPosition[];
+    let withAlternatives=0;
+    for(const position of original){
+      const branches=verifiedDeepBranches(position);
+      expect(branches.length,position.id).toBeGreaterThanOrEqual(1);
+      const setup=sourceDefenderSetup(branches[0]);
+      const outcomes=documentedDefenderOutcomes(position,branches,setup.played);
+      const firstDefenses=recordedDefenderChoices(position,branches,setup.played);
+      expect(outcomes.map(o=>o.replySan)).toEqual(firstDefenses.slice(0,outcomes.length).map(o=>o.san));
+      for(const choice of outcomes){
+        const selected=branches.find(b=>b.id===choice.branchId)!;
+        expect(choice.fen,position.id).toBe(selected.plies[1].afterFen);
+        expect(choice.continuation,position.id)
+          .toEqual(selected.plies.slice(2).map(p=>p.san));
+        expect(choice.explanation,position.id).toBe(selected.explanation);
+      }
+      if(outcomes.length>=2)withAlternatives++;
+    }
+    // Source metadata inspected: 31 raw P103/P105/P106/P110 cases
+    // have different legal responses to the same source candidate.
+    expect(withAlternatives).toBeGreaterThanOrEqual(20);
+  });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
     for(const sample of [structures.positions[0],attacks.positions[0]]){
       const p=sample as CalculationPosition;
