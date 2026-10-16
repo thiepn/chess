@@ -79,7 +79,8 @@ describe("actual Level 4–8 source coverage and historical grading boundaries",
    const selected=skills.filter(s=>["thinking","fight","finish","practical","advanced"].includes(s.stage));
    expect(selected).toHaveLength(51);
    const report=selected.map(s=>{
-     const sources=s.stage==="advanced" ? level78AdvancedCases(s.id,cases,endgamePositions,12)
+     const sources=(s.stage==="advanced" || s.stage==="practical")
+       ? level78AdvancedCases(s.id,cases,endgamePositions,12)
        : level456Pathways(s.id,cases,endgamePositions,12);
      return {skillId:s.id,stage:s.stage,count:sources.length,
        originallyScored:sources.filter(p=>p.assessed).length,
@@ -89,8 +90,14 @@ describe("actual Level 4–8 source coverage and historical grading boundaries",
    for(const row of report){
      expect(row.count).toBeLessThanOrEqual(12);
      expect(row.count).toBe(row.uniqueFen);
-     // Level 7 uses original Review and PGN evidence; no fictional static game cases.
-     if(row.stage==="practical")expect(row.count).toBe(0);
+     // Level 7 now has original, independently playable contextual boards.
+     // These practice choices must NEVER turn source moves into Review/mastery
+     // evidence, especially when the source was historically graded.
+     if(row.stage==="practical"){
+       expect(row.count,row.skillId).toBeGreaterThanOrEqual(5);
+       expect(row.originallyScored,row.skillId).toBe(0);
+       expect(row.contextual,row.skillId).toBe(row.count);
+     }
    }
    // Report is diagnostic, not a requirement to fabricate 12 boards per skill.
    console.info("Level 4–8 original source coverage",JSON.stringify(report));
