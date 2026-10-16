@@ -1,5 +1,6 @@
 import { skillById } from "../domain/curriculum";
 import { originalAdvancedThemeMatch } from "./advancedThemeMatch";
+import { sourceStudyKind, sourceStudyTheme } from "../calculation/studySkillAlignment";
 import type { CalculationPosition } from "../calculation/types";
 import type { EndgamePosition } from "../endgames/types";
 import type { TransferMission } from "../review/gameTransfer";
@@ -273,28 +274,72 @@ export function pairIdsForSkill(skillId?:string):readonly string[] {
 export type AdvancedCase =
   | {kind:"calculation";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:CalculationPosition}
   | {kind:"endgame";id:string;title:string;topic:string;assessed:boolean;direct:boolean;position:EndgamePosition};
+/** Source-owned positional scenarios for the five Level 7 PRACTICAL skills.
+ * This identifies applicable ORIGINAL boards only. It does not make clock
+ * observations, infer a real blunder or award new proficiency evidence. */
+export function originalPracticalSourceMatch(skillId:string, position:CalculationPosition):boolean {
+  if(position.source!=="authored")return false;
+  // P94 is the original candidate-move/defender decision family. Its boards
+  // can support a simulated time-allocation decision, NOT actual clock history.
+  if(skillId==="practical.time")
+    return /^calc:p94-\d+$/.test(position.id) &&
+      position.skillIds.includes("calculation.candidates") &&
+      position.principalVariation.length>=3;
+  const kind=sourceStudyKind(position);
+  const theme=sourceStudyTheme(position).toLowerCase();
+  if(!kind || !theme)return false;
+  switch(skillId){
+    case "practical.plan":
+      return (kind==="pieceCoordinationStudy" &&
+          /choosing among strategic plans|prophylaxis before expansion|converting space into initiative|improving the least active piece/.test(theme)) ||
+        (kind==="strategicImbalanceStudy" &&
+          /coordination and revising a plan|material versus activity|space and timely breaks/.test(theme));
+    case "practical.transition":
+      return kind==="openingTransitionStudy" || kind==="endgameDecisionStudy";
+    case "practical.post-move-check":
+      return (kind==="kingAttackStudy" &&
+          /check|interposition|rook|queen|shelter|flight|escape/.test(theme)) ||
+        (kind==="defensiveTechniqueStudy" &&
+          /interposition|rook threat|checking|queen|king flight/.test(theme));
+    case "practical.resilience":
+      return (kind==="defensiveTechniqueStudy" &&
+          /active rook defense|fortress|counter|trade|interposition|shield/.test(theme)) ||
+        (kind==="prophylaxisStudy" &&
+          /revision after unexpected defense|flexible defensive coordination|prevention versus counterattack/.test(theme));
+    default:
+      return false;
+  }
+}
 export function level78AdvancedCases(
  skillId:string,positions:readonly CalculationPosition[],
  endings:readonly EndgamePosition[],limit=12,
 ):AdvancedCase[] {
-  if(skillById[skillId]?.stage!=="advanced")return [];
+  const stage=skillById[skillId]?.stage;
+  if(stage!=="advanced" && stage!=="practical")return [];
+  const practical=stage==="practical";
   const max=Math.min(12,Math.max(0,Math.floor(limit)));
   const choice:AdvancedCase[]=[];
-  const endingsDirect=endings.filter(p=>p.skillId===skillId).map(position=>({
+  const endingsDirect=practical?[]:endings.filter(p=>p.skillId===skillId).map(position=>({
     kind:"endgame" as const,id:position.id,title:position.title,topic:position.objective,
     assessed:true,direct:true,position,
   }));
   const scored=positions.flatMap(position=>{
     if(position.source!=="authored")return [];
-    const direct=position.skillIds.includes(skillId);
-    if(!direct && !originalAdvancedThemeMatch(skillId,position))return [];
+    const direct=!practical && position.skillIds.includes(skillId);
+    if(!direct && !(practical
+      ? originalPracticalSourceMatch(skillId,position)
+      : originalAdvancedThemeMatch(skillId,position)))return [];
     const kind=position.strategicImbalanceStudy?.theme ??
       position.prophylaxisStudy?.theme ??
       position.endgameDecisionStudy?.family ??
       position.openingTransitionStudy?.theme ?? position.title;
-    const topic=kind+" · "+position.prompt;
+    const topic=(practical
+      ? skillId==="practical.time"
+        ? "Simulated time-allocation choice · no recorded clock data · "
+        : "Unscored practical decision transfer · "
+      : "")+kind+" · "+position.prompt;
     return [{kind:"calculation" as const,id:position.id,title:position.title,topic,
-      assessed:direct && position.assessmentStatus!=="instructional-only",direct,position}];
+      assessed:!practical && direct && position.assessmentStatus!=="instructional-only",direct,position}];
   });
   // Explicitly source qualified; direct first, endgame technique before related studies.
   const candidates=[...endingsDirect,...scored.filter(p=>p.direct),...scored.filter(p=>!p.direct)];

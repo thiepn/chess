@@ -312,12 +312,19 @@ function LessonPage({
             <button type="button" className="secondary" onClick={()=>onStartLesson(skill.id)}>
               <strong>1 · Learn or revisit this skill</strong><small>Original lesson and existing mastery evidence</small>
             </button>
+            {skill.stage==="practical" && <p>
+              These are playable source-authored decision scenarios, not recordings
+              of your own clock, mistakes or results. Use the original moves and
+              defender replies to rehearse the skill. All Level 7 source scenarios
+              are unscored; personal Review retains its own evidence.
+            </p>}
             {advancedCases.slice(0,visibleDepth).map(item=><div key={item.id} className="learn-v2-source-actions">
               <button type="button" className="secondary"
                 onClick={()=>item.kind==="calculation"
                   ? onOpenCalculationSource(item.position,skill.id) : onOpenEndgameSource(item.position)}>
                 <strong>{item.title}</strong>
-                <span>{item.kind==="endgame"?"Native endgame technique":
+                <span>{skill.stage==="practical"?"Practical board scenario · unscored":
+                  item.kind==="endgame"?"Native endgame technique":
                   item.assessed?"Native calculation":"Unscored authored decision"}
                   {item.direct?" · Direct original skill":" · Related original subject"}</span>
                 <small>{item.topic.slice(0,155)}</small>
@@ -333,7 +340,7 @@ function LessonPage({
               <small>{visibleDepth} / {advancedCases.length} advanced cases displayed</small>
             </button>}
             <button type="button" className="secondary" onClick={()=>onOpenHistoricalSkill(skill.id)}>
-              <strong>2 · Compare real historical decisions</strong>
+              <strong>{advancedCases.length?"3":"2"} · Compare real historical decisions</strong>
               <span>{journey.masterPairIds.length} source-pinned master-game pairs</span>
               <small>Compare candidate plans, defender replies, counterfactual lines, and write an ungraded revision.</small>
             </button>
@@ -350,7 +357,7 @@ function LessonPage({
               </div>
             </div>)}
             {gameMissions.length===0&&<div className="learn-v2-game-mission">
-              <strong>3 · Apply the skill to a real game</strong>
+              <strong>{advancedCases.length?"4":"3"} · Apply the skill to a real game</strong>
               <p>No source-qualified personal-game repair for this skill yet.
                 Import and analyze one of your own games in Review, then practice a verified mistake.</p>
               <button type="button" className="secondary" onClick={()=>onOpenReviewGame()}>Open your game review</button>
