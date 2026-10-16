@@ -312,6 +312,11 @@ function LessonPage({
             <button type="button" className="secondary" onClick={()=>onStartLesson(skill.id)}>
               <strong>1 · Learn or revisit this skill</strong><small>Original lesson and existing mastery evidence</small>
             </button>
+            {advancedCases.length>0 && <div className="learn-v2-original-board-heading">
+              <strong>2 · Practice a real source position</strong>
+              <small>{advancedCases.length} source-qualified boards available for this skill;
+                the original trainer and its score authority remain unchanged.</small>
+            </div>}
             {skill.stage==="practical" && <p>
               These are playable source-authored decision scenarios, not recordings
               of your own clock, mistakes or results. Use the original moves and

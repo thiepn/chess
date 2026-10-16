@@ -55,9 +55,9 @@ export const level78Guides: Readonly<Record<string,{prompts:readonly [string,str
   },
   "practical.resilience": {
     "prompts": [
-      "After a real mistake, identify the new evaluation-relevant threats rather than trying to undo history.",
-      "Find practical defensive choices and name how the opponent may resist each one.",
-      "Choose a next-game repair exercise and distinguish a clean delayed return from a repeated guess."
+      "After a real game mistake or a source-recorded defensive surprise, identify the new threats instead of replaying the old plan.",
+      "Find practical defensive choices and name how the source opponent may resist each one.",
+      "For a real game, plan a Review return; for a source board, compare the recorded response without claiming personal-game evidence."
     ],
     "masterPairIds": [
       "checks-and-counterattack",
