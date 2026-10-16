@@ -6,6 +6,7 @@ import {
   readDeepDraft, writeDeepDraft, discardDeepDraft, verifiedDeepBranches,
   recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,sourceDefenderSetup,
   matchingSourceBranch,nextRecordedSourceMove,recordedDefenseFeedback,
+  independentDefenderDecisions,documentedDefenderOutcomes,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
@@ -93,6 +94,54 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
     expect(deepFrames(p,entered.played)?.[4].fen).toBe(branch.plies[3].afterFen);
     expect(recordedDefenseFeedback(p,branch,entered.played)?.reply)
       .toBe(p.replyReason?.trim()||branch.explanation);
+  });
+  it("traces multiple genuine defender decisions without converting source moves into learner credit",()=>{
+    const source=defense.positions[0] as CalculationPosition;
+    const branches=verifiedDeepBranches(source);
+    const main=branches[0];
+    const entered=sourceDefenderSetup(main).played;
+    expect(independentDefenderDecisions(source,branches,entered)).toEqual([]);
+    const initial=documentedDefenderOutcomes(source,branches,entered,3);
+    expect(initial.length).toBeGreaterThanOrEqual(1);
+    expect(initial.every(x=>x.fen===branches.find(b=>b.id===x.branchId)?.plies[1].afterFen)).toBe(true);
+    entered.push({uci:main.plies[1].uci,origin:"learner"});
+    let decisions=independentDefenderDecisions(source,branches,entered);
+    expect(decisions).toHaveLength(1);
+    expect(decisions[0]).toMatchObject({ply:2,uci:main.plies[1].uci,san:main.plies[1].san,documented:true});
+    entered.push({uci:main.plies[2].uci,origin:"authored-response"});
+    const later=documentedDefenderOutcomes(source,branches,entered);
+    expect(later).toContainEqual(expect.objectContaining({
+      replySan:main.plies[3].san,
+      fen:main.plies[3].afterFen,
+    }));
+    expect(later.every(row=>row.fen===branches.find(b=>b.id===row.branchId)?.plies[3].afterFen)).toBe(true);
+    entered.push({uci:main.plies[3].uci,origin:"learner"});
+    decisions=independentDefenderDecisions(source,branches,entered);
+    expect(decisions).toHaveLength(2);
+    expect(decisions[1]).toMatchObject({ply:4,san:main.plies[3].san,documented:true});
+    expect(deepFrames(source,entered)?.[4].fen).toBe(main.plies[3].afterFen);
+    // An authored/autoplayed defense is not an independently chosen reply.
+    expect(independentDefenderDecisions(source,branches,[
+      entered[0],{...entered[1],origin:"authored-response"},entered[2],entered[3],
+    ])).toHaveLength(1);
+    // This legitimate source line cannot certify an invented 9th ply.
+    expect(documentedDefenderOutcomes(source,branches,
+      main.plies.map((step,i)=>({uci:step.uci,origin:i%2===0?"authored-response" as const:"learner" as const})))
+    ).toEqual([]);
+  });
+  it("reports legal unrecorded defenses as exploration, never as graded failures",()=>{
+    const p=defense.positions[0] as CalculationPosition;
+    const branches=verifiedDeepBranches(p);
+    const setup=sourceDefenderSetup(branches[0]).played;
+    const board=new Chess(branches[0].plies[0].afterFen);
+    const documented=new Set(branches.map(b=>b.plies[1]?.uci));
+    const different=board.moves({verbose:true}).find(m=>!documented.has(m.from+m.to+(m.promotion??"")));
+    expect(different).toBeDefined();
+    const entered=[...setup,{uci:different!.from+different!.to+(different!.promotion??""),origin:"learner" as const}];
+    expect(deepFrames(p,entered)?.length).toBe(3);
+    expect(independentDefenderDecisions(p,branches,entered)).toMatchObject([{ply:2,documented:false}]);
+    expect(nextRecordedSourceMove(p,branches,entered)).toBeNull();
+    expect(documentedDefenderOutcomes(p,branches,entered)).toEqual([]);
   });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
     for(const sample of [structures.positions[0],attacks.positions[0]]){
