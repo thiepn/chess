@@ -1,7 +1,7 @@
 import {describe,it,expect} from "vitest";
 import pairs from "../../public/data/model-games/p114-transfer-cases-v1.json";
 import {skills} from "../domain/curriculum";
-import {level78Guides,level78Guide,level78AdvancedCases,level78GameMissions,pairIdsForSkill} from "./level78Pathways";
+import {level78Guides,level78Guide,level78AdvancedCases,level78GameMissions,pairIdsForSkill,originalPracticalSourceMatch} from "./level78Pathways";
 import a109 from "../../public/data/calculation/p109-imbalances-a-v1.json";
 import a110 from "../../public/data/calculation/p110-prophylaxis-a-v1.json";
 import a112 from "../../public/data/calculation/p112-endgame-decisions-a-v1.json";
@@ -14,6 +14,15 @@ import p104 from "../../public/data/calculation/p104-knight-harmony-v1.json";
 import p104Plans from "../../public/data/calculation/p104-practical-plans-v1.json";
 import p105 from "../../public/data/calculation/p105-initiative-resistance-v1.json";
 import {originalAdvancedThemeMatch} from "./advancedThemeMatch";
+import a94 from "../../public/data/calculation/p94-candidates-v1.json";
+import a104Plans from "../../public/data/calculation/p104-practical-plans-v1.json";
+import a105Checking from "../../public/data/calculation/p105-checking-networks-v1.json";
+import a106Defense from "../../public/data/calculation/p106-active-defense-v1.json";
+import a109B from "../../public/data/calculation/p109-imbalances-b-v1.json";
+import a110B from "../../public/data/calculation/p110-prophylaxis-b-v1.json";
+import a111Opening from "../../public/data/calculation/p111-opening-bridges-a-v1.json";
+import a112Decisions from "../../public/data/calculation/p112-endgame-decisions-a-v1.json";
+import {hydrateOpeningTransition} from "../openings/transitionStudy";
 const cases=[a109,a110,a112].flatMap(x=>x.positions) as CalculationPosition[];
 describe("Levels 7–8 original transfer paths",()=>{
   it("covers 23 original curricula with grounded P114 comparative source IDs",()=>{
@@ -77,6 +86,43 @@ describe("Levels 7–8 original transfer paths",()=>{
     const privateCase={...original[0],source:"personal-game" as const};
     expect(originalAdvancedThemeMatch("pawns.iqp",privateCase)).toBe(false);
     expect(originalAdvancedThemeMatch("pawns.iqp",original[0])).toBe(true);
+  });
+  it("makes all five Level 7 practical topics independently playable with original unscored source boards",()=>{
+    const sources={
+      "practical.time":a94.positions as CalculationPosition[],
+      "practical.plan":[...a104Plans.positions,...a109B.positions] as CalculationPosition[],
+      "practical.transition":[
+        ...a111Opening.positions.map(p=>hydrateOpeningTransition(p as CalculationPosition)),
+        ...a112Decisions.positions,
+      ].filter((p):p is CalculationPosition=>Boolean(p)),
+      "practical.post-move-check":[...a105Checking.positions,...a106Defense.positions] as CalculationPosition[],
+      "practical.resilience":[...a106Defense.positions,...a110B.positions] as CalculationPosition[],
+    };
+    expect(a111Opening.positions.every(p=>hydrateOpeningTransition(p as CalculationPosition)!==null)).toBe(true);
+    const minimums={
+      "practical.time":12,"practical.plan":8,"practical.transition":12,
+      "practical.post-move-check":12,"practical.resilience":12,
+    };
+    for(const skill of Object.keys(sources) as (keyof typeof sources)[]){
+      const positions=sources[skill],snapshot=JSON.stringify(positions);
+      const chosen=level78AdvancedCases(skill,positions,[],12);
+      expect(chosen.length,skill).toBeGreaterThanOrEqual(minimums[skill]);
+      expect(chosen.length,skill).toBeLessThanOrEqual(12);
+      expect(new Set(chosen.map(c=>c.id)).size,skill).toBe(chosen.length);
+      expect(new Set(chosen.map(c=>c.position.fen)).size,skill).toBe(chosen.length);
+      expect(chosen.every(c=>c.kind==="calculation"&&!c.direct&&!c.assessed),skill).toBe(true);
+      expect(chosen.every(c=>c.position.source==="authored"&&
+        originalPracticalSourceMatch(skill,c.position)),skill).toBe(true);
+      expect(chosen.every(c=>c.topic.includes("no recorded clock data")||
+        c.topic.startsWith("Unscored practical decision transfer")),skill).toBe(true);
+      expect(JSON.stringify(positions),skill).toBe(snapshot);
+    }
+    const original=a94.positions[0] as CalculationPosition;
+    expect(originalPracticalSourceMatch("practical.time",{...original,source:"personal-game"})).toBe(false);
+    const material=studyMaterialFor(original,"practical.time");
+    expect(material?.questions.slice(0,3).map(q=>q.prompt))
+      .toEqual(level78Guide("practical.time")?.prompts);
+    expect(material?.questions[0].answer).toContain(original.explanation);
   });
   it("links only already-qualified owner Review missions and labels indirect associations",()=>{
     const m:TransferMission={mistakeId:"one",gameId:"g",gameLabel:"Player A — Player B",
