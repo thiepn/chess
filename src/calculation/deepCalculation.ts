@@ -203,6 +203,8 @@ export function documentedCandidateBoards(branches:readonly DeepBranch[],maximum
   branchId:string;label:string;firstUci:string;firstSan:string;fen:string;
   sample:string[];explanation:string;
 }[] {
+  const cap=Math.min(4,Math.max(0,Math.floor(maximum)));
+  if(cap===0)return [];
   const used=new Set<string>(),out:{
     branchId:string;label:string;firstUci:string;firstSan:string;fen:string;
     sample:string[];explanation:string;
@@ -217,7 +219,7 @@ export function documentedCandidateBoards(branches:readonly DeepBranch[],maximum
       sample:branch.plies.slice(0,3).map(p=>p.san),
       explanation:branch.explanation,
     });
-    if(out.length>=Math.min(4,Math.max(0,Math.floor(maximum))))break;
+    if(out.length>=cap)break;
   }
   return out;
 }

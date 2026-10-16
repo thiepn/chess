@@ -82,7 +82,10 @@ describe("Levels 7–8 original transfer paths",()=>{
       [...p104.positions,...p104Plans.positions] as CalculationPosition[],[]);
     expect(restrictions.length).toBeGreaterThanOrEqual(6);
     expect(restrictions.every(c=>!c.assessed)).toBe(true);
-    expect(level78AdvancedCases("practical.complications",p105.positions as CalculationPosition[],[])).toEqual([]);
+    const complexity=level78AdvancedCases("practical.complications",
+      p105.positions as CalculationPosition[],[]);
+    expect(complexity.length).toBeGreaterThanOrEqual(6);
+    expect(complexity.every(c=>c.kind==="calculation" && !c.direct && !c.assessed)).toBe(true);
     const privateCase={...original[0],source:"personal-game" as const};
     expect(originalAdvancedThemeMatch("pawns.iqp",privateCase)).toBe(false);
     expect(originalAdvancedThemeMatch("pawns.iqp",original[0])).toBe(true);

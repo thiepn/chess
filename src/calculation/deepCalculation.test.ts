@@ -7,11 +7,14 @@ import {
   recordedDefenderChoices,documentedDefensiveBoards,sharedBranchDraft,sourceDefenderSetup,
   matchingSourceBranch,nextRecordedSourceMove,recordedDefenseFeedback,
   independentDefenderDecisions,documentedDefenderOutcomes,
+  documentedCandidateBoards,independentSourceDecisions,
 } from "./deepCalculation";
 import defense from "../../public/data/calculation/p106-active-defense-v1.json";
 import structures from "../../public/data/calculation/p103-structures-a-v1.json";
 import attacks from "../../public/data/calculation/p105-checking-networks-v1.json";
 import originalP110 from "../../public/data/calculation/p110-prophylaxis-a-v1.json";
+import originalP104 from "../../public/data/calculation/p104-practical-plans-v1.json";
+import originalP112 from "../../public/data/calculation/p112-endgame-decisions-a-v1.json";
 import older from "../../public/data/calculation/p94-candidates-v1.json";
 import defensesP95 from "../../public/data/calculation/p95-defensive-resistance-v1.json";
 
@@ -167,6 +170,56 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
     // have different legal responses to the same source candidate.
     expect(withAlternatives).toBeGreaterThanOrEqual(20);
   });
+  it("offers original independent candidate decisions with source-backed three-ply contrasting boards",()=>{
+    for(const p of [structures.positions[0],originalP104.positions[0],originalP112.positions[0]] as CalculationPosition[]){
+      const sourceSnapshot=JSON.stringify(p);
+      const branches=verifiedDeepBranches(p);
+      const choices=documentedCandidateBoards(branches);
+      expect(choices.length,p.id).toBeGreaterThanOrEqual(2);
+      expect(documentedCandidateBoards(branches,0),p.id).toEqual([]);
+      expect(new Set(choices.map(c=>c.firstUci)).size,p.id).toBe(choices.length);
+      for(const choice of choices){
+        const source=branches.find(b=>b.id===choice.branchId)!;
+        expect(choice.firstSan,p.id).toBe(source.plies[0].san);
+        expect(choice.sample,p.id).toEqual(source.plies.slice(0,3).map(p=>p.san));
+        expect(choice.fen,p.id).toBe(source.plies[2].afterFen);
+        expect(choice.explanation,p.id).toBe(source.explanation);
+      }
+      const other=branches.find(b=>b.plies[0].uci!==branches[0].plies[0].uci)!;
+      const entered=[
+        {uci:other.plies[0].uci,origin:"learner" as const},
+        {uci:other.plies[1].uci,origin:"authored-response" as const},
+        {uci:other.plies[2].uci,origin:"learner" as const},
+      ];
+      expect(matchingSourceBranch(branches,entered)?.id,p.id).toBe(other.id);
+      expect(deepFrames(p,entered)?.[3].fen,p.id).toBe(other.plies[2].afterFen);
+      expect(independentSourceDecisions(p,branches,entered),p.id).toMatchObject([
+        {ply:1,san:other.plies[0].san,documented:true},
+        {ply:3,san:other.plies[2].san,documented:true},
+      ]);
+      expect(recordedDefenderChoices(p,branches,entered.slice(0,1)).length,p.id)
+        .toBeGreaterThan(0);
+      expect(JSON.stringify(p),p.id).toBe(sourceSnapshot);
+    }
+  });
+  it("keeps legal non-source candidate moves as ungraded exploration",()=>{
+    const p=structures.positions[0] as CalculationPosition;
+    const branches=verifiedDeepBranches(p);
+    const known=new Set(branches.map(b=>b.plies[0].uci));
+    const alternative=new Chess(p.fen).moves({verbose:true})
+      .find(m=>!known.has(m.from+m.to+(m.promotion??"")));
+    expect(alternative).toBeDefined();
+    const played=[{uci:alternative!.from+alternative!.to+(alternative!.promotion??""),
+      origin:"learner" as const}];
+    expect(deepFrames(p,played)?.length).toBe(2);
+    expect(independentSourceDecisions(p,branches,played)).toMatchObject([
+      {ply:1,documented:false},
+    ]);
+    expect(recordedDefenderChoices(p,branches,played)).toEqual([]);
+    expect(independentSourceDecisions(p,branches,[
+      {uci:branches[0].plies[0].uci,origin:"local-engine"},
+    ])).toEqual([]);
+  });
   it("offers multiple SOURCE-VERIFIED defender choices after the learner's exact first move",()=>{
     for(const sample of [structures.positions[0],attacks.positions[0]]){
       const p=sample as CalculationPosition;
@@ -312,6 +365,16 @@ describe("P108 source-authorized independent multi-ply calculation", () => {
       expect(readDeepDraft("owner-b",current,branches,"defender").played).toEqual([]);
       discardDeepDraft("owner-a",current,"defender");
       expect(readDeepDraft("owner-a",current,branches,"defender").cursor).toBe(0);
+      const originalCandidate=branches[0].plies[0];
+      writeDeepDraft("owner-a",current,{
+        branchId:branches[0].id,
+        played:[{uci:originalCandidate.uci,origin:"learner"}],cursor:1,reveal:false,
+      },"candidate");
+      expect(readDeepDraft("owner-a",current,branches,"candidate").cursor).toBe(1);
+      expect(readDeepDraft("owner-a",current,branches).cursor).toBe(3);
+      expect(readDeepDraft("owner-b",current,branches,"candidate").played).toEqual([]);
+      expect(readDeepDraft("owner-a",current,branches,"defender").played).toEqual([]);
+      discardDeepDraft("owner-a",current,"candidate");
       const key = [...storage.keys()][0];
       const record = JSON.parse(storage.get(key)!);
       storage.set(key, JSON.stringify({
