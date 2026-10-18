@@ -1,6 +1,7 @@
 import { Chess, type Square } from "chess.js";
 import type { TrainingMode } from "../domain/types";
 import type { LessonScript } from "./types";
+import { isIndependentLessonPosition } from "./lessonPositionKey";
 
 interface LessonSeed {
   title: string;
@@ -188,6 +189,10 @@ function makeScript(
       ],
     };
 
+  // Move clocks do not make an otherwise identical model board an
+  // independent transfer. Preserve historical FEN and move strings.
+  const independentTransfer = isIndependentLessonPosition(seed.fen, transfer.fen);
+
   return {
     id: `lesson-${skillId}`,
     skillId,
@@ -299,12 +304,12 @@ function makeScript(
         type: "move",
         stage: "transfer",
         // Repeating the worked position is retrieval, not transfer to new geometry.
-        support: transfer.fen === seed.fen ? "retrieval" : "transfer",
+        support: independentTransfer ? "transfer" : "retrieval",
         eyebrow: "TRANSFER",
         title:
-          transfer.fen === seed.fen
-            ? lessonText[26]
-            : lessonText[27],
+          independentTransfer
+            ? lessonText[27]
+            : lessonText[26],
         prompt: transfer.prompt,
         fen: transfer.fen,
         acceptedMoves:
@@ -486,11 +491,16 @@ export function lessonCatalogIssues() {
           (step) =>
             step.stage === "model",
         );
-      if (
-        !transferStep ||
-        !modelStep ||
-        transferStep.fen === modelStep.fen
-      ) {
+      let independent = false;
+      if (transferStep && modelStep) {
+        try {
+          independent = isIndependentLessonPosition(modelStep.fen, transferStep.fen);
+        } catch {
+          // The per-step FEN audit above already reports malformed boards.
+          // Do not grant them independent-transfer status.
+        }
+      }
+      if (!independent) {
         issues.push(
           `${skillId}${lessonText[51]}`,
         );
