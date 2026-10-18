@@ -1,4 +1,5 @@
 import type { LessonScript } from "./types";
+import { assertHistoricalTransferSource } from "./historicalTransferAuthority";
 import { checkedTransfer, type TransferExercise } from "./transferCompletion";
 import { withBeginnerPractice, type BeginnerPracticeEntry } from "./beginnerPractice";
 import { withG2TacticalTransfer, type G2Entry } from "./g2TacticalTransfer";
@@ -23,6 +24,7 @@ export function assembleVerifiedLesson(
   // The fallback model-position transfer in a base script is not that evidence.
   if (sources.tactical && !sources.transfer)
     throw Error("G2 requires its verified historical transfer source");
+  assertHistoricalTransferSource(base.skillId, Boolean(sources.transfer));
   const withTransfer = sources.transfer
     ? checkedTransfer(base, sources.transfer) : base;
   const withBeginner = sources.beginner
