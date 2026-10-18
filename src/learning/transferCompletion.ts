@@ -1,6 +1,7 @@
 import { Chess } from "chess.js";
 import type { LessonScript, LessonStep } from "./types";
 import { lessonPositionKey } from "./lessonPositionKey";
+import { assertOriginalTransferSlot } from "./historicalTransferAuthority";
 import { assertP92ChallengeOwnership } from "./p92ChallengeIntegrity";
 
 export interface TransferChallenge {
@@ -60,6 +61,7 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
 }
 
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
+  assertOriginalTransferSlot(lesson);
   // Compare actual position-defining FEN fields, not halfmove/fullmove
   // counters. A replay of an earlier model/choice/retrieval board cannot
   // qualify as the original independent P88 or P92 transfer.
