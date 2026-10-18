@@ -131,6 +131,11 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
     expect(assembledBeginner.steps.find(step => step.id === "g1-practice-8")).toMatchObject({
       support: "transfer",
     });
+    // The base script's same-position retrieval is not the mandatory P88
+    // transfer; G1 practice cannot silently replace that historical check.
+    expect(() => assembleVerifiedLesson(beginnerBase, {
+      beginner: beginner.get(beginnerSkill),
+    })).toThrow(/P88 requires its verified historical transfer source/);
   });
 
   it("rejects inconsistent native lessons before rendering or awarding credit", () => {
@@ -144,7 +149,7 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
       .toThrow(/verified historical transfer source/);
 
     const corrupted = { ...base, steps: [...base.steps, { ...base.steps[0] }] };
-    expect(() => assembleVerifiedLesson(corrupted, {}))
+    expect(() => assembleVerifiedLesson(corrupted, {transfer: historical.get(skillId)}))
       .toThrow(/duplicate step identities/);
 
     // A syntactically sound independent item can still collide with the
