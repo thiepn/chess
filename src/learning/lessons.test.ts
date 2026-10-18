@@ -176,6 +176,15 @@ describe("P88 original independent transfer curriculum", () => {
       fen:lessonScripts[uncovered[0]].steps[0].fen})).toThrow();
     expect(()=>checkedTransfer(lessonScripts[uncovered[0]],{...first,
       acceptedMove:"a1a1"})).toThrow();
+    const historical = lessonScripts[uncovered[0]];
+    expect(() => checkedTransfer({
+      ...historical,
+      steps: historical.steps.filter(step => step.id !== "transfer"),
+    }, first)).toThrow(/Original transfer slot/);
+    expect(() => checkedTransfer({
+      ...historical,
+      steps: [...historical.steps, historical.steps.find(step => step.id === "transfer")!],
+    }, first)).toThrow(/Original transfer slot/);
   });
 });
 
