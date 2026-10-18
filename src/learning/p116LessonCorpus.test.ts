@@ -39,7 +39,7 @@ describe("P116 complete on-demand lesson content", () => {
 
   it("does not qualify a clock-only model replay as new P116 transfer evidence", () => {
     const model = corpus.seeds["fundamentals.attacked"].fen;
-    const changedClocks = model.replace(/\\s+\\d+\\s+\\d+$/, " 49 100");
+    const changedClocks = model.replace(/\s+\d+\s+\d+$/, " 49 100");
     expect(changedClocks).not.toBe(model);
     expect(lessonPositionKey(changedClocks)).toBe(lessonPositionKey(model));
     expect(isIndependentLessonPosition(model, changedClocks)).toBe(false);
