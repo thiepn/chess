@@ -22,6 +22,7 @@ import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
 import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
+import { hasCompleteLessonEvidence } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import type {
   BoardArrow,
@@ -187,6 +188,8 @@ export function LessonRunner({
   const [results, setResults] =
     useState<LessonStepResult[]>([]);
   const completionSubmitted = useRef(false);
+  const advancePending = useRef(false);
+  const [completionError, setCompletionError] = useState<string | null>(null);
 
   const step = lesson.steps[stepIndex];
   const isLast =
@@ -199,6 +202,8 @@ export function LessonRunner({
 
   useEffect(() => {
     completionSubmitted.current = false;
+    advancePending.current = false;
+    setCompletionError(null);
     setStepIndex(0);
     setSolved(false);
     setStepHintsUsed(0);
@@ -210,6 +215,11 @@ export function LessonRunner({
     setResults([]);
     setBoardReset((value) => value + 1);
   }, [lesson.id]);
+
+  // A second click on a stale Continue button must never skip a step.
+  useEffect(() => {
+    advancePending.current = false;
+  }, [stepIndex]);
 
   function recordResult(
     item: LessonStepResult,
@@ -232,9 +242,26 @@ export function LessonRunner({
     setBoardReset((value) => value + 1);
   }
 
-  function nextStep() {
+  function restartIncompleteLesson() {
     if (completionSubmitted.current) return;
+    advancePending.current = false;
+    setCompletionError(null);
+    setStepIndex(0);
+    setResults([]);
+    setTotalHintsUsed(0);
+    setTotalWrongAttempts(0);
+    resetStepState();
+  }
+
+  function nextStep() {
+    if (completionSubmitted.current || advancePending.current) return;
     if (isLast) {
+      if (!hasCompleteLessonEvidence(lesson, results)) {
+        // Never turn a skipped or missing transfer into credible completion.
+        // Restart explicitly, instead of silently awarding partial credit.
+        setCompletionError("Some assessed positions were not recorded. Restart this lesson to complete every check; no credit has been submitted.");
+        return;
+      }
       completionSubmitted.current = true;
       const mastery =
         summarizeLessonMastery(results);
@@ -249,9 +276,8 @@ export function LessonRunner({
       return;
     }
 
-    setStepIndex(
-      (value) => value + 1,
-    );
+    advancePending.current = true;
+    setStepIndex(value => Math.min(value + 1, lesson.steps.length - 1));
     resetStepState();
   }
 
@@ -695,6 +721,14 @@ export function LessonRunner({
           </div>
 
           <div className="lesson-controls lesson-controls-v2">
+            {completionError && (
+              <div className="lesson-feedback error" role="alert">
+                <span>{completionError}</span>
+                <button type="button" onClick={restartIncompleteLesson}>
+                  <RotateCcw size={15} /> Restart lesson
+                </button>
+              </div>
+            )}
             <div className="lesson-mastery-preview">
               <span>
                 Independent checks
@@ -751,6 +785,7 @@ export function LessonRunner({
                   className="primary"
                   type="button"
                   onClick={nextStep}
+                  disabled={completionSubmitted.current || Boolean(completionError)}
                 >
                   {isLast
                     ? "Finish lesson"
