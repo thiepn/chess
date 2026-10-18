@@ -1,5 +1,6 @@
 import transferContent from "../../public/data/learning/transfer-v1.json";
 import { checkedTransfer, validateTransferCatalog } from "./transferCompletion";
+import { lessonPositionKey } from "./lessonPositionKey";
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
 import {
@@ -154,6 +155,18 @@ describe("P88 original independent transfer curriculum", () => {
       expect(lesson.steps.find(x=>x.id==="transfer")?.fen,skillId).toBe(model.fen);
     }
   });
+  it("rejects clocks-only repeat of the original board in native P88 transfer",()=>{
+    const entry=catalog.get(uncovered[0])!;
+    const lesson=lessonScripts[uncovered[0]];
+    const model=lesson.steps[0].fen;
+    const altered=model.replace(/\s+\d+\s+\d+$/, " 48 96");
+    expect(altered).not.toBe(model);
+    expect(lessonPositionKey(altered)).toBe(lessonPositionKey(model));
+    const firstLegal=new Chess(model).moves({verbose:true})[0];
+    const legalUci=firstLegal.from+firstLegal.to+(firstLegal.promotion ?? "");
+    expect(()=>checkedTransfer(lesson,{...entry,fen:altered,
+      acceptedMove:legalUci})).toThrow(/independently valid/);
+  });
   it("fails closed on tampered, incomplete, stale or repeated transfer data",()=>{
     expect(()=>validateTransferCatalog({...raw,schema:"wrong"})).toThrow();
     expect(()=>validateTransferCatalog({...raw,items:raw.items.slice(1)})).toThrow();
@@ -169,8 +182,8 @@ describe("P88 original independent transfer curriculum", () => {
 describe("P92 authored second-transfer content and corrected alternatives", () => {
   const catalog = validateTransferCatalog(transferContent);
   const deep = [...catalog.values()].filter(entry => entry.challenge);
-  it("adds 16 distinct verified positions with meaningful alternative plans", () => {
-    expect(deep).toHaveLength(16);
+  it("adds all 26 original authored second transfers with meaningful alternative plans", () => {
+    expect(deep).toHaveLength(26);
     expect(deep.filter(entry => entry.challenge!.acceptedMoves.length > 1)).toHaveLength(8);
     for (const item of deep) {
       const challenge = item.challenge!;
@@ -199,6 +212,20 @@ describe("P92 authored second-transfer content and corrected alternatives", () =
     expect(() => validateTransferCatalog(rewrite({acceptedMoves:[target.challenge!.acceptedMoves[0],
       target.challenge!.acceptedMoves[0]]}))).toThrow();
     expect(() => validateTransferCatalog(rewrite({fen:target.fen}))).toThrow();
+    const altered=target.fen.replace(/\s+\d+\s+\d+$/, " 48 96");
+    expect(altered).not.toBe(target.fen);
+    expect(lessonPositionKey(altered)).toBe(lessonPositionKey(target.fen));
+    // The original P88 answer remains legal in this position. It is not
+    // independent transfer merely because the clock fields were rewritten.
+    const oldAnswer=target.acceptedMove;
+    const oldMove=new Chess(target.fen).move({from:oldAnswer.slice(0,2),
+      to:oldAnswer.slice(2,4),promotion:oldAnswer.slice(4)||"q"});
+    expect(oldMove).toBeTruthy();
+    expect(() => validateTransferCatalog(rewrite({
+      fen:altered,acceptedMoves:[oldAnswer],
+      successByMove:{[oldAnswer]:target.challenge!.successByMove[
+        target.challenge!.acceptedMoves[0]]},
+    }))).toThrow(/Invalid authored second transfer/);
     expect(() => validateTransferCatalog(rewrite({successByMove:{}}))).toThrow();
   });
 });
