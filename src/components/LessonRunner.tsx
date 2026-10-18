@@ -22,6 +22,7 @@ import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
 import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
+import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttempt } from "../learning/liveStepAttempt";
 import { hasCompleteLessonEvidence } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import type {
@@ -188,6 +189,7 @@ export function LessonRunner({
   const [results, setResults] =
     useState<LessonStepResult[]>([]);
   const completionSubmitted = useRef(false);
+  const liveStepAttempt = useRef(createLiveStepAttempt());
   const advancePending = useRef(false);
   const [completionError, setCompletionError] = useState<string | null>(null);
 
@@ -201,6 +203,7 @@ export function LessonRunner({
   ) as Color;
 
   useEffect(() => {
+    liveStepAttempt.current = createLiveStepAttempt();
     completionSubmitted.current = false;
     advancePending.current = false;
     setCompletionError(null);
@@ -234,6 +237,7 @@ export function LessonRunner({
   }
 
   function resetStepState() {
+    liveStepAttempt.current = createLiveStepAttempt();
     setSolved(false);
     setStepHintsUsed(0);
     setStepWrongAttempts(0);
@@ -283,17 +287,10 @@ export function LessonRunner({
 
   function revealHint() {
     if (step.type !== "move") return;
-    if (
-      stepHintsUsed >= step.hints.length
-    ) {
-      return;
-    }
-    setStepHintsUsed(
-      (value) => value + 1,
-    );
-    setTotalHintsUsed(
-      (value) => value + 1,
-    );
+    const count = takeStepHint(liveStepAttempt.current, step.hints.length);
+    if (count === null) return;
+    setStepHintsUsed(count);
+    setTotalHintsUsed(value => value + 1);
     setFeedback(null);
     emitExperienceEvent({ feedback: "reveal" });
   }
@@ -312,7 +309,8 @@ export function LessonRunner({
   ) {
     if (
       step.type !== "choice" ||
-      solved
+      solved ||
+      liveStepAttempt.current.completed
     ) {
       return;
     }
@@ -323,30 +321,19 @@ export function LessonRunner({
     );
     if (!option) return;
 
-    if (
-      optionId === step.correctOptionId
-    ) {
+    if (optionId === step.correctOptionId) {
+      const result = finishStepAttempt(liveStepAttempt.current, step.id, step.support);
+      if (!result) return;
       setSolved(true);
       setFeedback(null);
-      recordResult({
-        stepId: step.id,
-        support: step.support,
-        correct: true,
-        firstTry:
-          stepWrongAttempts === 0,
-        hintsUsed: 0,
-        wrongAttempts:
-          stepWrongAttempts,
-      });
+      recordResult(result);
       return;
     }
 
-    setStepWrongAttempts(
-      (value) => value + 1,
-    );
-    setTotalWrongAttempts(
-      (value) => value + 1,
-    );
+    const wrongs = countStepMistake(liveStepAttempt.current);
+    if (wrongs === null) return;
+    setStepWrongAttempts(wrongs);
+    setTotalWrongAttempts(value => value + 1);
     setFeedback(option.feedback);
   }
 
@@ -459,11 +446,8 @@ export function LessonRunner({
             }
             arrows={displayedArrows}
             onMove={(move) => {
-              if (
-                step.type !== "move"
-              ) {
+              if (step.type !== "move" || liveStepAttempt.current.completed)
                 return false;
-              }
 
               const uci =
                 `${move.from}${move.to}${move.promotion ?? ""}`;
@@ -474,31 +458,18 @@ export function LessonRunner({
               );
 
               if (accepted) {
+                const result = finishStepAttempt(liveStepAttempt.current, step.id, step.support);
+                if (!result) return false;
                 setSolved(true);
                 setFeedback(step.successByMove?.[uci] ?? step.successBody);
-                recordResult({
-                  stepId: step.id,
-                  support:
-                    step.support,
-                  correct: true,
-                  firstTry:
-                    stepWrongAttempts ===
-                      0 &&
-                    stepHintsUsed === 0,
-                  hintsUsed:
-                    stepHintsUsed,
-                  wrongAttempts:
-                    stepWrongAttempts,
-                });
+                recordResult(result);
                 return true;
               }
 
-              setStepWrongAttempts(
-                (value) => value + 1,
-              );
-              setTotalWrongAttempts(
-                (value) => value + 1,
-              );
+              const wrongs = countStepMistake(liveStepAttempt.current);
+              if (wrongs === null) return false;
+              setStepWrongAttempts(wrongs);
+              setTotalWrongAttempts(value => value + 1);
               setFeedback(
                 step.wrongMoveFeedback?.[
                   uci
