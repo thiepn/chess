@@ -158,7 +158,7 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
 
   it("treats clock-only FEN changes as the same training position", () => {
     const same = source.items[0].cases[0].fen;
-    const differentClocks = same.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    const differentClocks = same.replace(/\s+\d+\s+\d+$/, " 48 96");
     expect(differentClocks).not.toBe(same);
     expect(lessonPositionKey(differentClocks)).toBe(lessonPositionKey(same));
 
@@ -168,7 +168,7 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
 
     const beginner = structuredClone(beginnerSource);
     const beginnerFen = beginner.items[0].exercises[0].fen;
-    beginner.items[0].exercises[1].fen = beginnerFen.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    beginner.items[0].exercises[1].fen = beginnerFen.replace(/\s+\d+\s+\d+$/, " 48 96");
     expect(() => validateBeginnerPractice(beginner)).toThrow();
 
     // Individually legal source positions must not repeat a historical board
@@ -177,7 +177,7 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
     const skillId = g2TacticalSkillIds[0];
     const base = lessonForSkill(skillId, "Original", "Original");
     const collided = structuredClone(validateG2TacticalTransfer(source).get(skillId)!);
-    collided.cases[0].fen = base.steps[0].fen.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    collided.cases[0].fen = base.steps[0].fen.replace(/\s+\d+\s+\d+$/, " 48 96");
     expect(() => assembleVerifiedLesson(base, {
       transfer: historical.get(skillId), tactical: collided,
     })).toThrow(/reused an original transfer board/);
