@@ -2,7 +2,8 @@ import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
 import source from "../../public/data/learning/g2-tactical-transfer-v1.json";
 import historicalTransfers from "../../public/data/learning/transfer-v1.json";
-import { lessonForSkill } from "./lessons";
+import { deepTransferSkillIds, lessonForSkill } from "./lessons";
+import { lessonPositionKey } from "./lessonPositionKey";
 import { summarizeLessonMastery } from "./mastery";
 import beginnerSource from "../../public/data/learning/g1-beginner-practice-v1.json";
 import { validateBeginnerPractice } from "./beginnerPractice";
@@ -140,7 +141,7 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
 
     // G2 requires the historical independent anchor and cannot bypass P88.
     expect(() => assembleVerifiedLesson(base, { tactical: tactics.get(skillId) }))
-      .toThrow(/transfer anchor/);
+      .toThrow(/verified historical transfer source/);
 
     const corrupted = { ...base, steps: [...base.steps, { ...base.steps[0] }] };
     expect(() => assembleVerifiedLesson(corrupted, {}))
@@ -153,6 +154,56 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
     expect(() => assembleVerifiedLesson(base, {
       transfer: historical.get(skillId), tactical: collision,
     })).toThrow(/reused an original transfer board/);
+  });
+
+  it("treats clock-only FEN changes as the same training position", () => {
+    const same = source.items[0].cases[0].fen;
+    const differentClocks = same.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    expect(differentClocks).not.toBe(same);
+    expect(lessonPositionKey(differentClocks)).toBe(lessonPositionKey(same));
+
+    const tactical = structuredClone(source);
+    tactical.items[1].cases[1].fen = differentClocks;
+    expect(() => validateG2TacticalTransfer(tactical)).toThrow();
+
+    const beginner = structuredClone(beginnerSource);
+    const beginnerFen = beginner.items[0].exercises[0].fen;
+    beginner.items[0].exercises[1].fen = beginnerFen.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    expect(() => validateBeginnerPractice(beginner)).toThrow();
+
+    // Individually legal source positions must not repeat a historical board
+    // simply by changing the non-positional halfmove/fullmove counters.
+    const historical = validateTransferCatalog(historicalTransfers);
+    const skillId = g2TacticalSkillIds[0];
+    const base = lessonForSkill(skillId, "Original", "Original");
+    const collided = structuredClone(validateG2TacticalTransfer(source).get(skillId)!);
+    collided.cases[0].fen = base.steps[0].fen.replace(/\\s+\\d+\\s+\\d+$/, " 48 96");
+    expect(() => assembleVerifiedLesson(base, {
+      transfer: historical.get(skillId), tactical: collided,
+    })).toThrow(/reused an original transfer board/);
+  });
+
+  it("assembles every original beginner and G2 skill with its proper source authority", () => {
+    const historical = validateTransferCatalog(historicalTransfers);
+    const tactics = validateG2TacticalTransfer(source);
+    const beginner = validateBeginnerPractice(beginnerSource);
+    for (const [skillId, entry] of beginner) {
+      const base = lessonForSkill(skillId, "Original", "Original");
+      const lesson = assembleVerifiedLesson(base, {
+        transfer: deepTransferSkillIds.includes(skillId) ? undefined : historical.get(skillId),
+        beginner: entry,
+      });
+      expect(lesson.steps.filter(step => step.id.startsWith("g1-practice-"))).toHaveLength(8);
+      expect(lesson.id).toBe(base.id);
+    }
+    for (const [skillId, entry] of tactics) {
+      const base = lessonForSkill(skillId, "Original", "Original");
+      const lesson = assembleVerifiedLesson(base, {
+        transfer: historical.get(skillId), tactical: entry,
+      });
+      expect(lesson.steps.filter(step => step.id.startsWith("g2-tactical-"))).toHaveLength(9);
+      expect(lesson.id).toBe(base.id);
+    }
   });
 
   it("fails closed on missing, repeated, unsupported or illegal authored tactical evidence", () => {
