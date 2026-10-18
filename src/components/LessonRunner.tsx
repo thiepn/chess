@@ -9,6 +9,7 @@ import type { Color } from "chess.js";
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import type {
@@ -21,6 +22,7 @@ import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
 import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
+import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -124,18 +126,28 @@ export function LessonRunner({
     return () => { cancelled = true; };
   }, [tacticalDepth, skill.id, tacticalRetry]);
 
-  const transferLesson = useMemo(() =>
-    missingTransfer && transferEntry?.skillId === skill.id
-      ? checkedTransfer(baseLesson, transferEntry.entry) : baseLesson,
-    [baseLesson, missingTransfer, skill.id, transferEntry]);
-  const beginnerLesson = useMemo(() =>
-    beginner && beginnerEntry?.skillId === skill.id
-      ? withBeginnerPractice(transferLesson, beginnerEntry.entry) : transferLesson,
-    [beginner, beginnerEntry, skill.id, transferLesson]);
-  const lesson = useMemo(() =>
-    tacticalDepth && tacticalEntry?.skillId === skill.id
-      ? withG2TacticalTransfer(beginnerLesson, tacticalEntry.entry) : beginnerLesson,
-    [beginnerLesson, tacticalDepth, tacticalEntry, skill.id]);
+  const prepared = useMemo(() => {
+    try {
+      const lesson = assembleVerifiedLesson(baseLesson, {
+        transfer: missingTransfer && transferEntry?.skillId === skill.id
+          ? transferEntry.entry : undefined,
+        beginner: beginner && beginnerEntry?.skillId === skill.id
+          ? beginnerEntry.entry : undefined,
+        tactical: tacticalDepth && tacticalEntry?.skillId === skill.id
+          ? tacticalEntry.entry : undefined,
+      });
+      return { lesson, error: null as string | null };
+    } catch {
+      // Source assets can be valid individually yet conflict when grafted
+      // onto a historical lesson. Never crash Train or award partial credit.
+      return {
+        lesson: baseLesson,
+        error: "The original lesson sources conflict. No training credit has been written. Return to Learn and choose another lesson.",
+      };
+    }
+  }, [baseLesson, missingTransfer, transferEntry, beginner, beginnerEntry,
+    tacticalDepth, tacticalEntry, skill.id]);
+  const { lesson, error: assemblyError } = prepared;
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -167,6 +179,7 @@ export function LessonRunner({
     useState(0);
   const [results, setResults] =
     useState<LessonStepResult[]>([]);
+  const completionSubmitted = useRef(false);
 
   const step = lesson.steps[stepIndex];
   const isLast =
@@ -178,6 +191,7 @@ export function LessonRunner({
   ) as Color;
 
   useEffect(() => {
+    completionSubmitted.current = false;
     setStepIndex(0);
     setSolved(false);
     setStepHintsUsed(0);
@@ -212,7 +226,9 @@ export function LessonRunner({
   }
 
   function nextStep() {
+    if (completionSubmitted.current) return;
     if (isLast) {
+      completionSubmitted.current = true;
       const mastery =
         summarizeLessonMastery(results);
       onComplete({
@@ -334,18 +350,22 @@ export function LessonRunner({
 
   const masteryPreview =
     summarizeLessonMastery(results);
+  const expectedIndependent = lesson.steps.filter(item =>
+    item.type === "choice" || (item.type === "move" && item.support !== "guided")).length;
+  const expectedTransfer = lesson.steps.filter(item =>
+    item.type === "move" && item.support === "transfer").length;
 
   // Never fall through to the same-position fallback: that is retrieval, not transfer.
-  if ((missingTransfer && transferEntry?.skillId !== skill.id) ||
+  if (assemblyError || (missingTransfer && transferEntry?.skillId !== skill.id) ||
       (beginner && beginnerEntry?.skillId !== skill.id) ||
       (tacticalDepth && tacticalEntry?.skillId !== skill.id)) {
-    const error = (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
+    const error = assemblyError ?? (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
       (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null) ??
       (tacticalDepth && tacticalEntry?.skillId !== skill.id ? tacticalError : null);
     return <div className="lesson-runner lesson-runner-v2" role="status">
       <h2>{error ? "Lesson source unavailable" : "Preparing original practice"}</h2>
       <p>{error ?? "Loading and validating the independent board positions for this lesson."}</p>
-      {error && <button type="button" onClick={() => {
+      {error && !assemblyError && <button type="button" onClick={() => {
         setTransferRetry(value => value + 1);
         setBeginnerRetry(value => value + 1);
         setTacticalRetry(value => value + 1);
@@ -678,12 +698,12 @@ export function LessonRunner({
                 }
                 /
                 {
-                  masteryPreview.independentSteps
+                  expectedIndependent
                 }
               </strong>
               <small>
-                {masteryPreview.transferSteps > 0
-                  ? `Independent transfer: ${masteryPreview.transferFirstTryCorrect}/${masteryPreview.transferSteps} · delayed recall will be scheduled`
+                {expectedTransfer > 0
+                  ? `Independent transfer: ${masteryPreview.transferFirstTryCorrect}/${expectedTransfer} · delayed recall will be scheduled`
                   : "First try · hints are counted separately"}
               </small>
             </div>
