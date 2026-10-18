@@ -7,6 +7,7 @@ import { ChessPiece, chessPieceNames } from "./ChessPiece";
 import { isBoardDrag, isBoardSquare } from "../interaction/board-pointer";
 import { liveBoardFen, recordAcceptedBoardFen } from "../interaction/live-board-position";
 import { decideBoardTap } from "../interaction/live-board-selection";
+import { isGestureBoardCurrent } from "../interaction/board-gesture-authority";
 
 
 interface BoardMove {
@@ -69,7 +70,8 @@ export function ChessBoard({
   }
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
   const [dragHover, setDragHover] = useState<Square | null>(null);
-  const pointerGestureRef = useRef<{ pointerId: number; from: Square; x: number; y: number; dragging: boolean } | null>(null);
+  const pointerGestureRef = useRef<{ pointerId: number; from: Square; x: number; y: number; dragging: boolean; fen: string } | null>(null);
+  const htmlDragFenRef = useRef<string | null>(null);
   const suppressNextClickRef = useRef(false);
   const [pendingPromotion, setPendingPromotion] = useState<{ from: Square; to: Square } | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
@@ -101,6 +103,8 @@ export function ChessBoard({
     setDragFrom(null);
     setDragHover(null);
     pointerGestureRef.current = null;
+    htmlDragFenRef.current = null;
+    suppressNextClickRef.current = false;
     setLastMove(null);
     setSecondaryMove(null);
     setLastMoveKind("move");
@@ -252,7 +256,7 @@ export function ChessBoard({
     if (disabled || pendingPromotion || event.pointerType === "mouse" || !event.isPrimary) return;
     const current = new Chess(liveBoardFen(positionRef));
     if (current.get(from)?.color !== current.turn()) return;
-    pointerGestureRef.current = { pointerId: event.pointerId, from, x: event.clientX, y: event.clientY, dragging: false };
+    pointerGestureRef.current = { pointerId: event.pointerId, from, x: event.clientX, y: event.clientY, dragging: false, fen: liveBoardFen(positionRef) };
     try { event.currentTarget.setPointerCapture(event.pointerId); }
     catch { /* Synthetic tests cannot capture an untrusted pointer. */ }
   }
@@ -260,6 +264,12 @@ export function ChessBoard({
   function handlePointerMove(event: ReactPointerEvent<HTMLButtonElement>) {
     const gesture = pointerGestureRef.current;
     if (!gesture || gesture.pointerId !== event.pointerId) return;
+    if (!isGestureBoardCurrent(gesture.fen, liveBoardFen(positionRef))) {
+      pointerGestureRef.current = null;
+      setDragFrom(null);
+      setDragHover(null);
+      return;
+    }
     if (!gesture.dragging && !isBoardDrag(gesture.x, gesture.y, event.clientX, event.clientY)) return;
     if (!gesture.dragging) {
       gesture.dragging = true;
@@ -273,6 +283,13 @@ export function ChessBoard({
     const gesture = pointerGestureRef.current;
     if (!gesture || gesture.pointerId !== event.pointerId) return;
     pointerGestureRef.current = null;
+    if (!isGestureBoardCurrent(gesture.fen, liveBoardFen(positionRef))) {
+      setDragFrom(null);
+      setDragHover(null);
+      suppressNextClickRef.current = true;
+      window.setTimeout(() => { suppressNextClickRef.current = false; }, 0);
+      return;
+    }
     if (!gesture.dragging) return; // Tap goes through normal click selection.
     const target = pointerSquare(event);
     setDragFrom(null);
@@ -538,6 +555,7 @@ export function ChessBoard({
                   return;
                 }
                 updateSelected(null);
+                htmlDragFenRef.current = liveBoardFen(positionRef);
                 setDragFrom(square);
               }}
               onDragOver={(event) => {
@@ -548,11 +566,18 @@ export function ChessBoard({
               }}
               onDrop={(event) => {
                 event.preventDefault();
-                if (dragFrom && dragFrom !== square) void requestMove(dragFrom, square);
+                if (dragFrom && dragFrom !== square &&
+                    isGestureBoardCurrent(htmlDragFenRef.current, liveBoardFen(positionRef)))
+                  void requestMove(dragFrom, square);
+                htmlDragFenRef.current = null;
                 setDragFrom(null);
                 setDragHover(null);
               }}
-              onDragEnd={() => { setDragFrom(null); setDragHover(null); }}
+              onDragEnd={() => {
+                htmlDragFenRef.current = null;
+                setDragFrom(null);
+                setDragHover(null);
+              }}
             >
               {piece && (() => {
                 const landingMove =
