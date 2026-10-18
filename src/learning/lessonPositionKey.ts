@@ -10,3 +10,8 @@ export function lessonPositionKey(fen: string): string {
     throw Error("Incomplete lesson FEN");
   return fields.slice(0, 4).join(" ");
 }
+
+/** True only for new tactical geometry, not a clock-only FEN rewrite. */
+export function isIndependentLessonPosition(modelFen: string, candidateFen: string): boolean {
+  return lessonPositionKey(modelFen) !== lessonPositionKey(candidateFen);
+}
