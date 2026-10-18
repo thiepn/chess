@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { hasCompleteLessonEvidence } from "./lessonCompletionEvidence";
+import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "./lessonCompletionEvidence";
 import { summarizeLessonMastery } from "./mastery";
 import type { LessonScript, LessonStepResult } from "./types";
 
@@ -61,4 +61,44 @@ describe("lesson completion and native grading authority", () => {
     expect(hasCompleteLessonEvidence(lesson, [...results.slice(0,2),{...results[2],correct:false}])).toBe(false);
     expect(hasCompleteLessonEvidence(lesson, [...results.slice(0,2),{...results[2],hintsUsed:-1}])).toBe(false);
   });
+
+  it("accepts the final solved transfer even before React commits a display render", () => {
+    const rendered = results.slice(0, 2);
+    expect(hasCompleteLessonEvidence(lesson, rendered)).toBe(false);
+    const immediate = withLatestLessonEvidence(rendered, results[2]);
+    expect(rendered).toHaveLength(2);
+    expect(immediate).toHaveLength(3);
+    expect(hasCompleteLessonEvidence(lesson, immediate)).toBe(true);
+    expect(summarizeLessonMastery(immediate).masteryPassed).toBe(true);
+  });
+
+  it("preserves genuine hint/mistake totals and assisted mastery in the same final snapshot", () => {
+    const helped = {...results[2], firstTry:false, hintsUsed:1, wrongAttempts:2};
+    const immediate = withLatestLessonEvidence(results.slice(0, 2), helped);
+    expect(hasCompleteLessonEvidence(lesson, immediate)).toBe(true);
+    expect(summarizeLessonMastery(immediate).masteryPassed).toBe(false);
+    expect(lessonEvidenceTotals(immediate)).toEqual({hintsUsed:1, wrongAttempts:2});
+    expect(lessonEvidenceTotals(results.slice(0, 2))).toEqual({hintsUsed:0, wrongAttempts:0});
+  });
+
+  it("keeps one original result per step and never mutates an earlier render snapshot", () => {
+    const rendered = results.slice(0, 2);
+    const corrected = withLatestLessonEvidence(rendered, {...results[1], firstTry:false, wrongAttempts:3});
+    expect(rendered[1].firstTry).toBe(true);
+    expect(corrected).toHaveLength(2);
+    expect(corrected[1].wrongAttempts).toBe(3);
+    expect(hasCompleteLessonEvidence(lesson, corrected)).toBe(false);
+    const finished = withLatestLessonEvidence(corrected, results[2]);
+    expect(hasCompleteLessonEvidence(lesson, finished)).toBe(true);
+    expect(lessonEvidenceTotals(finished).wrongAttempts).toBe(3);
+  });
+
+  it("does not turn missing, mismatched or forged evidence into earned completion", () => {
+    expect(hasCompleteLessonEvidence(lesson, withLatestLessonEvidence(results.slice(0, 2),
+      {...results[2], stepId:"invented"}))).toBe(false);
+    expect(hasCompleteLessonEvidence(lesson, withLatestLessonEvidence(results.slice(0, 2),
+      {...results[2], support:"retrieval"}))).toBe(false);
+    expect(hasCompleteLessonEvidence(lesson, [])).toBe(false); // Explicit restart.
+  });
+
 });
