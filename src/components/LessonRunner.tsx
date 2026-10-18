@@ -23,7 +23,7 @@ import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type Begi
 import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
 import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttempt } from "../learning/liveStepAttempt";
-import { hasCompleteLessonEvidence } from "../learning/lessonCompletionEvidence";
+import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import type {
   BoardArrow,
@@ -166,18 +166,6 @@ export function LessonRunner({
     stepHintsUsed,
     setStepHintsUsed,
   ] = useState(0);
-  const [
-    totalHintsUsed,
-    setTotalHintsUsed,
-  ] = useState(0);
-  const [
-    stepWrongAttempts,
-    setStepWrongAttempts,
-  ] = useState(0);
-  const [
-    totalWrongAttempts,
-    setTotalWrongAttempts,
-  ] = useState(0);
   const [feedback, setFeedback] =
     useState<string | null>(null);
   const [
@@ -188,6 +176,10 @@ export function LessonRunner({
     useState(0);
   const [results, setResults] =
     useState<LessonStepResult[]>([]);
+  // Latest verified answers must be available to Finish before React renders.
+  // This is only an in-memory mirror of the original lesson evidence, not
+  // another mastery or persisted Review store.
+  const resultsRef = useRef<LessonStepResult[]>([]);
   const completionSubmitted = useRef(false);
   const liveStepAttempt = useRef(createLiveStepAttempt());
   const advancePending = useRef(false);
@@ -210,11 +202,9 @@ export function LessonRunner({
     setStepIndex(0);
     setSolved(false);
     setStepHintsUsed(0);
-    setTotalHintsUsed(0);
-    setStepWrongAttempts(0);
-    setTotalWrongAttempts(0);
     setFeedback(null);
     setSelectedOption(null);
+    resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
   }, [lesson.id]);
@@ -224,23 +214,16 @@ export function LessonRunner({
     advancePending.current = false;
   }, [stepIndex]);
 
-  function recordResult(
-    item: LessonStepResult,
-  ) {
-    setResults((previous) => [
-      ...previous.filter(
-        (result) =>
-          result.stepId !== item.stepId,
-      ),
-      item,
-    ]);
+  function recordResult(item: LessonStepResult) {
+    const recorded = withLatestLessonEvidence(resultsRef.current, item);
+    resultsRef.current = recorded;
+    setResults(recorded);
   }
 
   function resetStepState() {
     liveStepAttempt.current = createLiveStepAttempt();
     setSolved(false);
     setStepHintsUsed(0);
-    setStepWrongAttempts(0);
     setFeedback(null);
     setSelectedOption(null);
     setBoardReset((value) => value + 1);
@@ -251,30 +234,29 @@ export function LessonRunner({
     advancePending.current = false;
     setCompletionError(null);
     setStepIndex(0);
+    resultsRef.current = [];
     setResults([]);
-    setTotalHintsUsed(0);
-    setTotalWrongAttempts(0);
     resetStepState();
   }
 
   function nextStep() {
     if (completionSubmitted.current || advancePending.current) return;
     if (isLast) {
-      if (!hasCompleteLessonEvidence(lesson, results)) {
+      const recorded = resultsRef.current;
+      if (!hasCompleteLessonEvidence(lesson, recorded)) {
         // Never turn a skipped or missing transfer into credible completion.
         // Restart explicitly, instead of silently awarding partial credit.
         setCompletionError("Some assessed positions were not recorded. Restart this lesson to complete every check; no credit has been submitted.");
         return;
       }
       completionSubmitted.current = true;
-      const mastery =
-        summarizeLessonMastery(results);
+      const mastery = summarizeLessonMastery(recorded);
+      const totals = lessonEvidenceTotals(recorded);
       onComplete({
         success: mastery.masteryPassed,
         quality: mastery.masteryQuality,
-        hintsUsed: totalHintsUsed,
-        wrongAttempts:
-          totalWrongAttempts,
+        hintsUsed: totals.hintsUsed,
+        wrongAttempts: totals.wrongAttempts,
         lessonEvidence: mastery,
       });
       return;
@@ -290,7 +272,6 @@ export function LessonRunner({
     const count = takeStepHint(liveStepAttempt.current, step.hints.length);
     if (count === null) return;
     setStepHintsUsed(count);
-    setTotalHintsUsed(value => value + 1);
     setFeedback(null);
     emitExperienceEvent({ feedback: "reveal" });
   }
@@ -332,8 +313,6 @@ export function LessonRunner({
 
     const wrongs = countStepMistake(liveStepAttempt.current);
     if (wrongs === null) return;
-    setStepWrongAttempts(wrongs);
-    setTotalWrongAttempts(value => value + 1);
     setFeedback(option.feedback);
   }
 
@@ -468,8 +447,6 @@ export function LessonRunner({
 
               const wrongs = countStepMistake(liveStepAttempt.current);
               if (wrongs === null) return false;
-              setStepWrongAttempts(wrongs);
-              setTotalWrongAttempts(value => value + 1);
               setFeedback(
                 step.wrongMoveFeedback?.[
                   uci
