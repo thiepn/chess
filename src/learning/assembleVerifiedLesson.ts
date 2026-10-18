@@ -19,6 +19,10 @@ export function assembleVerifiedLesson(
   base: LessonScript,
   sources: VerifiedLessonSources,
 ): LessonScript {
+  // G2 is defined as *additional* transfer after the verified P88 exercise.
+  // The fallback model-position transfer in a base script is not that evidence.
+  if (sources.tactical && !sources.transfer)
+    throw Error("G2 requires its verified historical transfer source");
   const withTransfer = sources.transfer
     ? checkedTransfer(base, sources.transfer) : base;
   const withBeginner = sources.beginner
