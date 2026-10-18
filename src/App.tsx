@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
 import { captureTrainingSession, resolveActiveTrainingSession, type ActiveTrainingPlan } from "./domain/sessionContinuity";
+import { resumeAdaptiveSequence } from "./domain/sessionResume";
 import {
   curriculumStages,
   domainLabels,
@@ -765,6 +766,7 @@ export default function App() {
           path?: string;
           mode?: SessionMode;
           activeIndex?: number | null;
+          activityIds?: string[];
           manualActivity?: TrainingActivity | null;
           activeModelGameId?: string | null;
           assessmentSession?: AssessmentSession | null;
@@ -772,8 +774,45 @@ export default function App() {
           owner?: string;
         };
         if (snapshot.owner === repo.getProfileId() && snapshot.path === route.path) {
-          if (snapshot.mode) setMode(snapshot.mode);
-          setActiveIndex(snapshot.activeIndex ?? null);
+          const restoredMode: SessionMode =
+            snapshot.mode === "quick" || snapshot.mode === "standard" || snapshot.mode === "deep"
+              ? snapshot.mode : mode;
+          if (restoredMode !== mode) setMode(restoredMode);
+          if (snapshot.activeIndex !== null && snapshot.activeIndex !== undefined) {
+            // Persisted IDs only express order. Canonical activities and all
+            // graded material are re-derived for this owner before rendering.
+            const current = restoredMode === mode
+              ? recommendedSession : composeSession(state, restoredMode);
+            const resumed = snapshot.activityIds
+              ? resumeAdaptiveSequence({
+                  owner: snapshot.owner,
+                  path: snapshot.path,
+                  activeIndex: snapshot.activeIndex,
+                  activityIds: snapshot.activityIds,
+                }, current, repo.getProfileId(), route.path)
+              : null;
+            if (resumed) {
+              activeTrainingPlan.current = captureTrainingSession(resumed.session, repo.getProfileId());
+              setActiveIndex(resumed.activeIndex);
+              setTrainingReturnPath(snapshot.trainingReturnPath ?? "/train");
+              return;
+            }
+            // Legacy or no-longer-available activity: recover by canonical
+            // route identity, never by the stored numeric index.
+            let selectedId = "";
+            try { selectedId = decodeURIComponent(route.path.slice("/train/session/".length)); }
+            catch { /* Reject malformed route identifiers. */ }
+            const matchingIndex = current.activities.findIndex(activity => activity.id === selectedId);
+            window.sessionStorage.removeItem("chess:training-runtime-v1");
+            if (matchingIndex >= 0) {
+              activeTrainingPlan.current = captureTrainingSession(current, repo.getProfileId());
+              setActiveIndex(matchingIndex);
+              return;
+            }
+            navigate("/train", { replace: true });
+            return;
+          }
+          setActiveIndex(null);
           setManualActivity(snapshot.manualActivity ?? null);
           setActiveModelGameId(snapshot.activeModelGameId ?? null);
           setAssessmentSession(snapshot.assessmentSession ?? null);
@@ -786,11 +825,14 @@ export default function App() {
     }
 
     const encodedId = route.path.slice("/train/session/".length);
-    const routeId = decodeURIComponent(encodedId);
-    const adaptiveIndex = session.activities.findIndex(
+    let routeId = "";
+    try { routeId = decodeURIComponent(encodedId); }
+    catch { /* Invalid route is never used to select an activity. */ }
+    const adaptiveIndex = recommendedSession.activities.findIndex(
       (activity) => activity.id === routeId,
     );
     if (adaptiveIndex >= 0) {
+      activeTrainingPlan.current = captureTrainingSession(recommendedSession, repo.getProfileId());
       setActiveIndex(adaptiveIndex);
       return;
     }
@@ -814,6 +856,7 @@ export default function App() {
         path: route.path,
         mode,
         activeIndex,
+        activityIds: activeIndex !== null ? session.activities.map(activity => activity.id) : undefined,
         manualActivity,
         activeModelGameId,
         assessmentSession,
