@@ -126,7 +126,14 @@ export function LessonRunner({
     return () => { cancelled = true; };
   }, [tacticalDepth, skill.id, tacticalRetry]);
 
+  const sourcesReady =
+    (!missingTransfer || transferEntry?.skillId === skill.id) &&
+    (!beginner || beginnerEntry?.skillId === skill.id) &&
+    (!tacticalDepth || tacticalEntry?.skillId === skill.id);
   const prepared = useMemo(() => {
+    // These independent assets load in parallel. Do not run partial source
+    // assembly, or mistake an in-flight historical transfer for a conflict.
+    if (!sourcesReady) return { lesson: baseLesson, error: null as string | null };
     try {
       const lesson = assembleVerifiedLesson(baseLesson, {
         transfer: missingTransfer && transferEntry?.skillId === skill.id
@@ -146,7 +153,7 @@ export function LessonRunner({
       };
     }
   }, [baseLesson, missingTransfer, transferEntry, beginner, beginnerEntry,
-    tacticalDepth, tacticalEntry, skill.id]);
+    tacticalDepth, tacticalEntry, skill.id, sourcesReady]);
   const { lesson, error: assemblyError } = prepared;
 
   const [stepIndex, setStepIndex] =
