@@ -1,5 +1,6 @@
 import { Chess } from "chess.js";
 import type { LessonScript, LessonStep } from "./types";
+import { lessonPositionKey } from "./lessonPositionKey";
 
 export const g2TacticalSkillIds = [
   "tactics.skewer",
@@ -68,7 +69,7 @@ export function validateG2TacticalTransfer(raw: unknown): ReadonlyMap<string, G2
         entry.cases.length !== 3)
       throw Error("Invalid original tactical skill or depth");
     for (const item of entry.cases) {
-      if (!item || typeof item.fen !== "string" || seenBoards.has(item.fen) ||
+      if (!item || typeof item.fen !== "string" || seenBoards.has(lessonPositionKey(item.fen)) ||
           ![item.prompt, item.success, item.misconception].every(text =>
             typeof text === "string" && text.trim().length >= 45) ||
           !Array.isArray(item.acceptedMoves) || item.acceptedMoves.length !== 1 ||
@@ -110,7 +111,7 @@ export function validateG2TacticalTransfer(raw: unknown): ReadonlyMap<string, G2
             !applyUci(new Chess(item.fen), wrong))
           throw Error("Invalid source-specific wrong-move feedback");
       }
-      seenBoards.add(item.fen);
+      seenBoards.add(lessonPositionKey(item.fen));
     }
     result.set(entry.skillId, entry);
   }
@@ -122,9 +123,9 @@ export function withG2TacticalTransfer(lesson: LessonScript, entry: G2Entry): Le
   if (lesson.skillId !== entry.skillId || !allowed.has(entry.skillId) ||
       lesson.steps.filter(step => step.id === "transfer").length !== 1)
     throw Error("Original P88 transfer anchor missing or mismatched");
-  const originalBoards = new Set(lesson.steps.map(step => step.fen));
-  if (entry.cases.some(item => originalBoards.has(item.fen)) ||
-      new Set(entry.cases.map(item => item.fen)).size !== entry.cases.length)
+  const originalBoards = new Set(lesson.steps.map(step => lessonPositionKey(step.fen)));
+  if (entry.cases.some(item => originalBoards.has(lessonPositionKey(item.fen))) ||
+      new Set(entry.cases.map(item => lessonPositionKey(item.fen))).size !== entry.cases.length)
     throw Error("G2 reused an original transfer board");
   const additions: LessonStep[] = entry.cases.flatMap((item, i) => {
     const promptStep: LessonStep = {
