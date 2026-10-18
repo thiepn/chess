@@ -13,6 +13,7 @@ import {
   Target,
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
+import { captureTrainingSession, resolveActiveTrainingSession, type ActiveTrainingPlan } from "./domain/sessionContinuity";
 import {
   curriculumStages,
   domainLabels,
@@ -284,6 +285,7 @@ export default function App() {
   const [previewIndex, setPreviewIndex] = useState(0);
   const [optionalStudiesOpen, setOptionalStudiesOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeTrainingPlan = useRef<ActiveTrainingPlan | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
@@ -315,6 +317,7 @@ export default function App() {
       if (identityChanged) {
         // Abort the prior owner's unsent runtime before the new identity
         // can write, render or rehydrate any former-owner session details.
+        activeTrainingPlan.current = null;
         setActiveIndex(null);
         setManualActivity(null);
         setActiveModelGameId(null);
@@ -401,7 +404,12 @@ export default function App() {
     state.lichess?.username,
   ]);
 
-  const session = useMemo(() => composeSession(state, mode), [state, mode]);
+  const recommendedSession = useMemo(() => composeSession(state, mode), [state, mode]);
+  // Mastery and due dates can re-rank recommendations after each answer.
+  // Retain the original already-started sequence for the current owner.
+  const session = resolveActiveTrainingSession(
+    recommendedSession, activeTrainingPlan.current, repo.getProfileId(), activeIndex,
+  );
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
   // A Review-triggered exercise must resolve from the current owner's saved
   // game even if a deferred view transition or reload clears manualActivity.
@@ -679,6 +687,7 @@ export default function App() {
   }
 
   function closeTrainingRuntime(returnPath = trainingReturnPath) {
+    activeTrainingPlan.current = null;
     setActiveIndex(null);
     setManualActivity(null);
     setActiveModelGameId(null);
@@ -688,8 +697,12 @@ export default function App() {
   }
 
   function openAdaptiveActivity(index: number) {
-    const activity = session.activities[index];
+    const owner = repo.getProfileId();
+    const captured = activeIndex !== null && activeTrainingPlan.current?.owner === owner
+      ? activeTrainingPlan.current.session : recommendedSession;
+    const activity = captured.activities[index];
     if (!activity) return;
+    activeTrainingPlan.current = captureTrainingSession(captured, owner);
     setTrainingReturnPath("/train");
     setManualActivity(null);
     setActiveModelGameId(null);
@@ -699,6 +712,7 @@ export default function App() {
   }
 
   function openManualActivity(activity: TrainingActivity) {
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path.startsWith("/train/") ? trainingReturnPath : route.path);
     setActiveIndex(null);
     setActiveModelGameId(null);
@@ -831,6 +845,7 @@ export default function App() {
     // an open training route; owner change has its separate stricter reset.
     if (!hadTrainingSession.current) return;
     hadTrainingSession.current = false;
+    activeTrainingPlan.current = null;
     if (!runtimeReady) return;
     setActiveIndex(null);
     setManualActivity(null);
@@ -1883,6 +1898,7 @@ export default function App() {
 
   function startModelGame(gameId: string) {
     if (!modelGameById[gameId]) return;
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
@@ -2430,6 +2446,7 @@ export default function App() {
   }
 
   function startPlacementAssessment() {
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
@@ -2440,6 +2457,7 @@ export default function App() {
 
   function startStageCheckpoint(stageId: CurriculumStageId) {
     if (stageGates[stageId].status === "locked") return;
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
