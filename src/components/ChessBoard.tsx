@@ -5,6 +5,7 @@ import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
 import { ChessPiece, chessPieceNames } from "./ChessPiece";
 import { isBoardDrag, isBoardSquare } from "../interaction/board-pointer";
+import { liveBoardFen, recordAcceptedBoardFen } from "../interaction/live-board-position";
 
 
 interface BoardMove {
@@ -145,7 +146,7 @@ export function ChessBoard({
 
   function requestMove(from: Square, to: Square) {
     if (disabled) return false;
-    const promotions = chess.moves({ square: from, verbose: true })
+    const promotions = new Chess(liveBoardFen(positionRef)).moves({ square: from, verbose: true })
       .filter((move) => move.to === to && Boolean(move.promotion));
     if (promotions.length) {
       setSelected(null);
@@ -158,7 +159,9 @@ export function ChessBoard({
   function tryMove(from: Square, to: Square, promotion: "q" | "r" | "b" | "n" = "q") {
     if (disabled) return false;
 
-    const candidate = new Chess(position);
+    // A prior accepted move may not have reached rendered React state yet.
+    // Validate against the latest synchronously committed board instead.
+    const candidate = new Chess(liveBoardFen(positionRef));
     let move;
 
     try {
@@ -204,7 +207,7 @@ export function ChessBoard({
             }
         : null;
 
-    positionRef.current = candidate.fen();
+    recordAcceptedBoardFen(positionRef, candidate.fen());
     setPosition(candidate.fen());
     setPendingPromotion(null);
     setLastMove({ from, to });
