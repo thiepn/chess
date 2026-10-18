@@ -18,6 +18,18 @@ export interface TransferExercise {
 }
 let cached: Promise<ReadonlyMap<string, TransferExercise>> | undefined;
 const fields = ["skillId","fen","acceptedMove","prompt","success","misconception"] as const;
+// Source-v1 P92 owners are contractual. Dropping a challenge otherwise lets a
+// successful fetch silently erase a required independent transfer and change
+// the original mastery/Review denominator without any catalog error.
+export const p92ChallengeSkillIds: ReadonlySet<string> = new Set([
+  "rules.board",   "rules.pieces",   "rules.capture",   "rules.check",
+  "rules.check-responses",   "rules.mate",   "rules.castling",   "rules.promotion",
+  "fundamentals.values",   "fundamentals.defended",   "fundamentals.trades",   "openings.principles",
+  "openings.development",   "openings.center",   "openings.king-safety",   "openings.queen-timing",
+  "openings.tempo",   "strategy.piece-activity",   "strategy.worst-piece",   "calculation.move-order",
+  "strategy.open-files",   "strategy.outposts",   "pawns.breaks",   "pawns.weaknesses",
+  "defense.prophylaxis",   "practical.plan", 
+]);
 
 function legal(fen: string, uci: string): boolean {
   try {
@@ -37,6 +49,11 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
       fields.some(k => typeof item[k] !== "string" || !item[k].trim()) ||
       !legal(item.fen,item.acceptedMove))
       throw Error("Invalid transfer record");
+    // A missing, null or relocated P92 check must fail closed rather than
+    // masquerade as a valid P88-only lesson.
+    const expectsChallenge = p92ChallengeSkillIds.has(item.skillId);
+    if (Boolean(item.challenge) !== expectsChallenge)
+      throw Error("Incomplete authored P92 transfer");
     const c = item.challenge;
     if (c) {
       const moves = c.acceptedMoves;
@@ -53,6 +70,8 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
     }
     rows.set(item.skillId,item);
   }
+  if (rows.size !== 49 || [...p92ChallengeSkillIds].some(id => !rows.get(id)?.challenge))
+    throw Error("Incomplete historical independent transfer catalog");
   return rows;
 }
 
