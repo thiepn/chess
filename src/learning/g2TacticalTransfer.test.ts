@@ -4,6 +4,9 @@ import source from "../../public/data/learning/g2-tactical-transfer-v1.json";
 import historicalTransfers from "../../public/data/learning/transfer-v1.json";
 import { lessonForSkill } from "./lessons";
 import { summarizeLessonMastery } from "./mastery";
+import beginnerSource from "../../public/data/learning/g1-beginner-practice-v1.json";
+import { validateBeginnerPractice } from "./beginnerPractice";
+import { assembleVerifiedLesson } from "./assembleVerifiedLesson";
 import { checkedTransfer, validateTransferCatalog } from "./transferCompletion";
 import {
   g2TacticalSkillIds, validateG2TacticalTransfer, withG2TacticalTransfer,
@@ -96,6 +99,60 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
         ? { ...item, firstTry: false, hintsUsed: 1 } : item);
       expect(summarizeLessonMastery(assisted).masteryPassed).toBe(false);
     }
+  });
+
+
+  it("assembles genuine G1 and G2 native lessons without rewriting their identities", () => {
+    const historical = validateTransferCatalog(historicalTransfers);
+    const tactics = validateG2TacticalTransfer(source);
+    const beginner = validateBeginnerPractice(beginnerSource);
+    const tacticalSkill = g2TacticalSkillIds[0];
+    const tacticalBase = lessonForSkill(tacticalSkill, "Original", "Original");
+    const tactical = assembleVerifiedLesson(tacticalBase, {
+      transfer: historical.get(tacticalSkill),
+      tactical: tactics.get(tacticalSkill),
+    });
+    expect(tactical.id).toBe(tacticalBase.id);
+    expect(tactical.steps.filter(step => step.id.startsWith("g2-tactical-"))).toHaveLength(9);
+    expect(tactical.steps.find(step => step.id === "transfer")).toBeDefined();
+
+    const beginnerSkill = "rules.board";
+    const beginnerBase = lessonForSkill(beginnerSkill, "Original", "Original");
+    const assembledBeginner = assembleVerifiedLesson(beginnerBase, {
+      transfer: historical.get(beginnerSkill),
+      beginner: beginner.get(beginnerSkill),
+    });
+    expect(assembledBeginner.id).toBe(beginnerBase.id);
+    expect(assembledBeginner.steps.filter(step => step.id.startsWith("g1-practice-"))).toHaveLength(8);
+    expect(assembledBeginner.steps.find(step => step.id === "g1-practice-4")).toMatchObject({
+      support: "transfer",
+    });
+    expect(assembledBeginner.steps.find(step => step.id === "g1-practice-8")).toMatchObject({
+      support: "transfer",
+    });
+  });
+
+  it("rejects inconsistent native lessons before rendering or awarding credit", () => {
+    const historical = validateTransferCatalog(historicalTransfers);
+    const tactics = validateG2TacticalTransfer(source);
+    const skillId = g2TacticalSkillIds[0];
+    const base = lessonForSkill(skillId, "Original", "Original");
+
+    // G2 requires the historical independent anchor and cannot bypass P88.
+    expect(() => assembleVerifiedLesson(base, { tactical: tactics.get(skillId) }))
+      .toThrow(/transfer anchor/);
+
+    const corrupted = { ...base, steps: [...base.steps, { ...base.steps[0] }] };
+    expect(() => assembleVerifiedLesson(corrupted, {}))
+      .toThrow(/duplicate step identities/);
+
+    // A syntactically sound independent item can still collide with the
+    // original model position, which should fail the entire assembly.
+    const collision = structuredClone(tactics.get(skillId)!);
+    collision.cases[0].fen = base.steps[0].fen;
+    expect(() => assembleVerifiedLesson(base, {
+      transfer: historical.get(skillId), tactical: collision,
+    })).toThrow(/reused an original transfer board/);
   });
 
   it("fails closed on missing, repeated, unsupported or illegal authored tactical evidence", () => {
