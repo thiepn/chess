@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import authored from "../../public/data/learning/transfer-v1.json";
-import { assertP92ChallengeOwnership, p92ChallengeSkillIds } from "./p92ChallengeIntegrity";
+import { assertP92ChallengeOwnership, p88TransferSkillIds, p92ChallengeSkillIds } from "./p92ChallengeIntegrity";
 
 describe("historical P92 source-v1 transfer ownership", () => {
   it("preserves all 26 authored challenge owners in the 49-row P88 catalog", () => {
     expect(authored.items).toHaveLength(49);
+    expect(p88TransferSkillIds.size).toBe(49);
     expect(p92ChallengeSkillIds.size).toBe(26);
     expect(() => assertP92ChallengeOwnership(authored.items)).not.toThrow();
     expect(authored.items.filter(row => row.challenge)).toHaveLength(26);
@@ -21,6 +22,19 @@ describe("historical P92 source-v1 transfer ownership", () => {
     (nulled.items.find(row => row.challenge)! as { challenge?: unknown }).challenge = null;
     expect(() => assertP92ChallengeOwnership(nulled.items))
       .toThrow(/Incomplete authored P92 transfer/);
+  });
+
+  it("rejects a missing or replaced P88-only lesson even when row count is intact", () => {
+    const missing = structuredClone(authored);
+    const baseOnly = missing.items.find(row => !row.challenge)!;
+    missing.items = missing.items.filter(row => row.skillId !== baseOnly.skillId);
+    expect(() => assertP92ChallengeOwnership(missing.items))
+      .toThrow(/Incomplete historical P88 source/);
+
+    const swapped = structuredClone(authored);
+    swapped.items.find(row => row.skillId === baseOnly.skillId)!.skillId = "unrecognized.original.lesson";
+    expect(() => assertP92ChallengeOwnership(swapped.items))
+      .toThrow(/Invalid historical P88 source identity/);
   });
 
   it("rejects relocation to another lesson, malformed challenge and duplicate owners", () => {
