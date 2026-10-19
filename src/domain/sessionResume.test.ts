@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TrainingSession } from "./types";
-import { resumeAdaptiveSequence } from "./sessionResume";
+import { resumeAdaptiveSequence, indexForAdaptiveRoute } from "./sessionResume";
 
 function session(ids: string[]): TrainingSession {
   return {
@@ -23,6 +23,32 @@ const stored = {
 };
 
 describe("reload of an owner-scoped adaptive training sequence", () => {
+
+  it("tracks browser Back/Forward route changes within the locked session", () => {
+    const original = session(["lesson-A", "lesson-B", "lesson-C"]);
+    expect(indexForAdaptiveRoute(original, "/train/session/lesson-A")).toBe(0);
+    expect(indexForAdaptiveRoute(original, "/train/session/lesson-B")).toBe(1);
+    expect(indexForAdaptiveRoute(original, "/train/session/lesson-C")).toBe(2);
+    expect(indexForAdaptiveRoute(original, "/train/session/lesson-B")).toBe(1);
+  });
+
+  it("resolves canonical URL-encoded activity identities", () => {
+    const current = session(["lesson-A", "review:game 1:4"]);
+    expect(indexForAdaptiveRoute(current, "/train/session/review%3Agame%201%3A4")).toBe(1);
+    expect(indexForAdaptiveRoute(current, "/train/session/review:game 1:4")).toBe(1);
+  });
+
+  it("rejects malformed or foreign routes instead of reusing the last index", () => {
+    const current = session(["lesson-A", "lesson-B"]);
+    for (const path of [
+      "/train", "/train/session/", "/review", "/train/session/%zz",
+      "/train/session/lesson-C", "/train/session/lesson-A/child",
+      "/train/session/%2f", "/train/session/%252F/illegal",
+    ]) {
+      expect(indexForAdaptiveRoute(current, path), path).toBeNull();
+    }
+  });
+
   it("reconstructs the selected order from current-owner canonical activities", () => {
     const current = session(["lesson-C", "lesson-A", "lesson-B"]);
     const resumed = resumeAdaptiveSequence(stored, current, owner, path);
