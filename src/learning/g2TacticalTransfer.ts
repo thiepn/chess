@@ -157,6 +157,9 @@ export function withG2TacticalTransfer(lesson: LessonScript, entry: G2Entry): Le
         eyebrow: `CONDITIONAL OPPONENT REPLY ${j + 1} OF ${item.replies.length}`,
         title: `If Black responds ${played.san}`,
         fen: branch.fen(),
+        // Explain exactly where the source-authored legal defense went.
+        arrows: [{ from: played.from, to: played.to, tone: "focus" }],
+        highlights: [{ square: played.to, tone: "focus" }],
         body: reply.explanation,
       };
     });
