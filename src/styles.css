@@ -9341,3 +9341,115 @@ html[data-motion="reduced"] .play-v2-opponent-list button,
 html[data-motion="reduced"] .play-v2-scenario-list > button {
   transition: none !important;
 }
+
+/* G4 — original opponent-defense reading lab */
+.lesson-reply-comparison {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0 20px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(177, 192, 220, .16);
+  border-bottom: 1px solid rgba(177, 192, 220, .12);
+}
+.lesson-reply-comparison > .lesson-prompt {
+  margin: 0;
+  max-width: 65ch;
+  color: #cbd4e5;
+  font-size: 14px;
+  font-weight: 450;
+}
+.lesson-reply-comparison > .lesson-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+.lesson-reply-comparison .lesson-choice {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  min-height: 48px;
+  font-size: 12px;
+}
+.lesson-reply-comparison .lesson-choice small {
+  color: #b3c6f4;
+  font-size: 10px;
+}
+.lesson-defense-prediction {
+  display: grid;
+  gap: 8px;
+}
+.lesson-defense-prediction label {
+  font-size: 13px;
+  font-weight: 650;
+  color: #e5ebf6;
+}
+.lesson-defense-prediction textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid rgba(177, 192, 220, .3);
+  border-radius: 8px;
+  background: rgba(8, 15, 29, .78);
+  color: #f2f5fc;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.lesson-defense-prediction textarea:focus-visible,
+.lesson-defense-contrast button:focus-visible {
+  outline: 2px solid #94b7ff;
+  outline-offset: 2px;
+}
+.lesson-defense-prediction small {
+  color: #a9b7cd;
+  font-size: 11px;
+}
+.lesson-defense-prediction .primary,
+.lesson-defense-contrast > button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lesson-defense-prediction > p {
+  color: #b8cbed;
+  font-size: 12px;
+}
+.lesson-defense-contrast {
+  display: grid;
+  gap: 12px;
+}
+.lesson-defense-contrast > button {
+  border: 1px solid rgba(177, 192, 220, .3);
+  border-radius: 8px;
+  background: transparent;
+  color: #dfebff;
+}
+.lesson-defense-contrast .lesson-choice-grid {
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lesson-defense-contrast .lesson-feedback {
+  display: block;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #d4dced;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.lesson-defense-contrast .lesson-feedback strong {
+  display: block;
+  margin-bottom: 8px;
+}
+@media (max-width: 720px) {
+  .lesson-defense-contrast .lesson-choice-grid {
+    grid-template-columns: 1fr;
+  }
+  .lesson-reply-comparison { gap: 12px; }
+  .lesson-reply-comparison .lesson-choice { padding: 8px; }
+}
