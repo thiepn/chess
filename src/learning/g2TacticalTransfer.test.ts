@@ -90,6 +90,11 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
           branch.move({from: uci.slice(0, 2), to: uci.slice(2, 4)});
           const step = replies.find(item => item.id === `g2-tactical-${i + 1}-reply-${j + 1}`);
           expect(step?.fen).toBe(branch.fen());
+          if (step?.type !== "explain") throw Error("Expected authored reply explanation");
+          expect(step.arrows).toEqual([{
+            from: uci.slice(0, 2), to: uci.slice(2, 4), tone: "focus",
+          }]);
+          expect(step.highlights).toEqual([{square:uci.slice(2, 4), tone:"focus"}]);
         }
       }
       const clean = updated.steps.filter(step => step.type === "move")
