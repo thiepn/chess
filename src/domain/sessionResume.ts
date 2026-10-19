@@ -59,3 +59,26 @@ export function resumeAdaptiveSequence(
     },
   };
 }
+
+/**
+ * Browser Back/Forward changes the route without re-opening the runner.
+ * Resolve the actual route against canonical current-session activity IDs,
+ * never against whichever exercise happens to occupy a numeric index.
+ */
+export function indexForAdaptiveRoute(
+  session: TrainingSession,
+  path: string,
+): number | null {
+  if (!path.startsWith("/train/session/")) return null;
+  const encoded = path.slice("/train/session/".length);
+  if (!encoded || encoded.includes("/")) return null;
+  let id: string;
+  try {
+    id = decodeURIComponent(encoded);
+  } catch {
+    return null;
+  }
+  if (!id || id.includes("/")) return null;
+  const index = session.activities.findIndex(activity => activity.id === id);
+  return index < 0 ? null : index;
+}
