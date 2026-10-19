@@ -26,6 +26,7 @@ import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttemp
 import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import { g2ReplyComparison } from "../learning/g2ReplyComparison";
+import { g4DefenseStudy } from "../learning/g4DefenseStudy";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -186,10 +187,15 @@ export function LessonRunner({
   const advancePending = useRef(false);
   const [completionError, setCompletionError] = useState<string | null>(null);
   const [comparisonSelection, setComparisonSelection] = useState<string | null>(null);
+  const [revealedDefenses, setRevealedDefenses] = useState<string[]>([]);
+  const [defenseNotes, setDefenseNotes] = useState<Record<string, string>>({});
+  const [showDefenseContrast, setShowDefenseContrast] = useState(false);
 
   const step = lesson.steps[stepIndex];
   const comparison = g2ReplyComparison(lesson, step.id);
-  const displayedStep = comparison?.options.find(option => option.id === comparisonSelection)?.step ?? step;
+  const defenseStudy = comparison
+    ? g4DefenseStudy(comparison, comparisonSelection, revealedDefenses) : null;
+  const displayedStep = defenseStudy?.frame.step ?? step;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
@@ -209,6 +215,9 @@ export function LessonRunner({
     setFeedback(null);
     setSelectedOption(null);
     setComparisonSelection(null);
+    setRevealedDefenses([]);
+    setDefenseNotes({});
+    setShowDefenseContrast(false);
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -228,6 +237,9 @@ export function LessonRunner({
   function resetStepState() {
     liveStepAttempt.current = createLiveStepAttempt();
     setComparisonSelection(null);
+    setRevealedDefenses([]);
+    setDefenseNotes({});
+    setShowDefenseContrast(false);
     setSolved(false);
     setStepHintsUsed(0);
     setFeedback(null);
@@ -479,7 +491,9 @@ export function LessonRunner({
             <span>
               {step.type === "move"
                 ? "Move only when you can explain the idea"
-                : "Study the position before continuing"}
+                : defenseStudy?.chosen && !defenseStudy.isRevealed
+                  ? "Predict the defense before revealing the original line"
+                  : "Study the position before continuing"}
             </span>
           </div>
         </div>
@@ -498,23 +512,91 @@ export function LessonRunner({
 
             <h2>{displayedStep.title}</h2>
 
-            {comparison && (
-              <div className="lesson-reply-comparison" role="group" aria-label={`Tactical case ${comparison.caseNumber} variation comparison`}>
-                <p className="lesson-prompt">Compare the original tactic with two authored legal Black replies. These are unscored examples; your original answer stays recorded.</p>
-                <div className="lesson-choice-grid">
-                  {comparison.options.map(option => (
-                    <button
-                      key={option.id}
-                      type="button"
-                      className={`lesson-choice ${displayedStep.id === option.id ? "selected" : ""}`}
-                      aria-pressed={displayedStep.id === option.id}
-                      onClick={() => setComparisonSelection(option.id)}
-                    >
-                      <span>{option.label}</span>
-                    </button>
-                  ))}
+            {comparison && defenseStudy && (
+              <section className="lesson-reply-comparison" aria-label={`Tactical case ${comparison.caseNumber} defense reading lab`}>
+                <p className="lesson-prompt">
+                  Study what Black could do after your tactical move. Select a defense,
+                  make a prediction, then reveal the source-authored board and explanation.
+                  This is optional, unscored study: no extra mastery or review credit.
+                </p>
+                <div className="lesson-choice-grid" role="group" aria-label="Tactical defense selection">
+                  {comparison.options.map((option, index) => {
+                    const active = index === 0
+                      ? comparisonSelection === null
+                      : comparisonSelection === option.id;
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={`lesson-choice ${active ? "selected" : ""}`}
+                        aria-pressed={active}
+                        onClick={() => {
+                          setComparisonSelection(index === 0 ? null : option.id);
+                          setShowDefenseContrast(false);
+                        }}
+                      >
+                        <span>{option.label}</span>
+                        {index > 0 && revealedDefenses.includes(option.id) && (
+                          <small>Revealed</small>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
+                {defenseStudy.chosen && (
+                  <div className="lesson-defense-prediction">
+                    <label htmlFor="lesson-defense-notes">
+                      Your prediction for {defenseStudy.chosen.label}
+                    </label>
+                    <textarea
+                      id="lesson-defense-notes"
+                      rows={2}
+                      maxLength={600}
+                      value={defenseNotes[defenseStudy.chosen.id] ?? ""}
+                      onChange={(event) => setDefenseNotes(previous => ({
+                        ...previous,
+                        [defenseStudy.chosen!.id]: event.target.value,
+                      }))}
+                      placeholder="What might Black play, and what would change?"
+                    />
+                    <small>Private temporary scratchpad. Not saved, synced or graded.</small>
+                    {!defenseStudy.isRevealed ? (
+                      <button type="button" className="primary" onClick={() => {
+                        setRevealedDefenses(previous => previous.includes(defenseStudy.chosen!.id)
+                          ? previous : [...previous, defenseStudy.chosen!.id]);
+                      }}>
+                        Reveal original defense
+                      </button>
+                    ) : (
+                      <p role="status">Showing the source-authored reply and explanation below.</p>
+                    )}
+                  </div>
+                )}
+                {defenseStudy.canCompare && (
+                  <div className="lesson-defense-contrast">
+                    <button
+                      type="button"
+                      aria-expanded={showDefenseContrast}
+                      onClick={() => setShowDefenseContrast(value => !value)}
+                    >
+                      {showDefenseContrast ? "Hide" : "Compare"} both authored defenses
+                    </button>
+                    {showDefenseContrast && (
+                      <div className="lesson-choice-grid" role="region" aria-label="Both original Black reply explanations">
+                        {defenseStudy.revealedReplies.map(option => (
+                          <div key={option.id} className="lesson-feedback">
+                            <strong>{option.step.title}</strong>
+                            {option.step.type === "explain" && <p>{option.step.body}</p>}
+                            {defenseNotes[option.id] && (
+                              <p><strong>Your prediction:</strong> {defenseNotes[option.id]}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
             )}
 
             {step.type ===
