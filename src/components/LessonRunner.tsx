@@ -25,6 +25,7 @@ import { summarizeLessonMastery } from "../learning/mastery";
 import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttempt } from "../learning/liveStepAttempt";
 import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
+import { g2ReplyComparison } from "../learning/g2ReplyComparison";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -184,12 +185,15 @@ export function LessonRunner({
   const liveStepAttempt = useRef(createLiveStepAttempt());
   const advancePending = useRef(false);
   const [completionError, setCompletionError] = useState<string | null>(null);
+  const [comparisonSelection, setComparisonSelection] = useState<string | null>(null);
 
   const step = lesson.steps[stepIndex];
+  const comparison = g2ReplyComparison(lesson, step.id);
+  const displayedStep = comparison?.options.find(option => option.id === comparisonSelection)?.step ?? step;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
-    step.fen.split(/\s+/)[1] === "b"
+    displayedStep.fen.split(/\s+/)[1] === "b"
       ? "b"
       : "w"
   ) as Color;
@@ -204,6 +208,7 @@ export function LessonRunner({
     setStepHintsUsed(0);
     setFeedback(null);
     setSelectedOption(null);
+    setComparisonSelection(null);
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -222,6 +227,7 @@ export function LessonRunner({
 
   function resetStepState() {
     liveStepAttempt.current = createLiveStepAttempt();
+    setComparisonSelection(null);
     setSolved(false);
     setStepHintsUsed(0);
     setFeedback(null);
@@ -328,8 +334,8 @@ export function LessonRunner({
 
   const displayedHighlights: BoardHighlight[] =
     [
-      ...(step.type === "explain"
-        ? step.highlights ?? []
+      ...(displayedStep.type === "explain"
+        ? displayedStep.highlights ?? []
         : []),
       ...(step.type === "move" &&
       latestHint
@@ -338,8 +344,8 @@ export function LessonRunner({
     ];
 
   const displayedArrows: BoardArrow[] = [
-    ...(step.type === "explain"
-      ? step.arrows ?? []
+    ...(displayedStep.type === "explain"
+      ? displayedStep.arrows ?? []
       : []),
     ...(step.type === "move" &&
     latestHint
@@ -413,8 +419,8 @@ export function LessonRunner({
       <div className="lesson-stage">
         <div className="lesson-board-column">
           <ChessBoard
-            key={`${step.id}-${boardReset}`}
-            fen={step.fen}
+            key={`${displayedStep.id}-${boardReset}`}
+            fen={displayedStep.fen}
             orientation={orientation}
             disabled={
               step.type !== "move" ||
@@ -482,7 +488,7 @@ export function LessonRunner({
           <div>
             <div className="lesson-step-meta">
               <p className="eyebrow">
-                {step.eyebrow ??
+                {displayedStep.eyebrow ??
                   "LESSON"}
               </p>
               <span>
@@ -490,12 +496,32 @@ export function LessonRunner({
               </span>
             </div>
 
-            <h2>{step.title}</h2>
+            <h2>{displayedStep.title}</h2>
+
+            {comparison && (
+              <div className="lesson-reply-comparison" role="group" aria-label={`Tactical case ${comparison.caseNumber} variation comparison`}>
+                <p className="lesson-prompt">Compare the original tactic with two authored legal Black replies. These are unscored examples; your original answer stays recorded.</p>
+                <div className="lesson-choice-grid">
+                  {comparison.options.map(option => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      className={`lesson-choice ${displayedStep.id === option.id ? "selected" : ""}`}
+                      aria-pressed={displayedStep.id === option.id}
+                      onClick={() => setComparisonSelection(option.id)}
+                    >
+                      <span>{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {step.type ===
             "explain" ? (
               <p className="lesson-body">
-                {step.body}
+                {displayedStep.type === "explain" ? displayedStep.body :
+                  displayedStep.type === "move" ? displayedStep.prompt : step.body}
               </p>
             ) : step.type ===
               "choice" ? (
