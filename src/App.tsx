@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
 import { captureTrainingSession, resolveActiveTrainingSession, type ActiveTrainingPlan } from "./domain/sessionContinuity";
-import { resumeAdaptiveSequence } from "./domain/sessionResume";
+import { resumeAdaptiveSequence, indexForAdaptiveRoute } from "./domain/sessionResume";
 import {
   curriculumStages,
   domainLabels,
@@ -298,6 +298,7 @@ export default function App() {
   const page = route.page;
   const mainContentRef = useRef<HTMLElement>(null);
   const previousRoutePath = useRef(route.path);
+  const previousAdaptiveRoutePath = useRef(route.path);
   const learnRoute = resolveLearnRoute(route.path);
   const learnSection = learnRoute.section;
   const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
@@ -876,6 +877,35 @@ export default function App() {
     trainingReturnPath,
     trainingSessionOpen,
   ]);
+
+  // popstate navigation can update the URL while an existing runner is still
+  // active. The restore effect above intentionally skips active runners;
+  // keep the displayed exercise aligned with the canonical browser route.
+  useEffect(() => {
+    if (previousAdaptiveRoutePath.current === route.path) return;
+    previousAdaptiveRoutePath.current = route.path;
+    if (!loaded || !trainingSessionOpen || activeIndex === null ||
+        manualActivity || routePracticeActivity || activeModelGame || assessmentSession)
+      return;
+
+    const next = indexForAdaptiveRoute(session, route.path);
+    if (next !== null) {
+      if (next !== activeIndex) setActiveIndex(next);
+      return;
+    }
+
+    // A link to a different currently recommended lesson intentionally starts
+    // a new native sequence; old owner-scoped activity content is never used.
+    const recommendedIndex = indexForAdaptiveRoute(recommendedSession, route.path);
+    if (recommendedIndex !== null) {
+      activeTrainingPlan.current = captureTrainingSession(recommendedSession, repo.getProfileId());
+      setActiveIndex(recommendedIndex);
+      return;
+    }
+    closeTrainingRuntime("/train");
+  }, [route.path, loaded, trainingSessionOpen, activeIndex, session,
+       recommendedSession, manualActivity, routePracticeActivity,
+       activeModelGame, assessmentSession]);
 
   const hadTrainingSession = useRef(false);
   useEffect(() => {
