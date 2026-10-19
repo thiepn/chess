@@ -111,6 +111,40 @@ describe("G6 original Black reply continuation lab", () => {
     expect(castled.moves[0].san).toBe("O-O");
   });
 
+  it("preserves threefold-repetition rules across the entire explored history", () => {
+    let line = beginG6Exploration(new Chess().fen())!;
+    const repeated = [
+      "g1f3", "g8f6", "f3g1", "f6g8",
+      "g1f3", "g8f6", "f3g1", "f6g8",
+    ];
+    for (const move of repeated) {
+      const next = apply(line, move);
+      expect(next).not.toBeNull();
+      line = next!;
+    }
+    expect(g6PositionState(line).terminal).toBe(true);
+    // Merely restoring the final FEN would lose repetition history.
+    const incompleteBoard = new Chess(g6CurrentFen(line));
+    const legal = incompleteBoard.moves({ verbose: true })[0];
+    incompleteBoard.move({ from: legal.from, to: legal.to, promotion: legal.promotion });
+    expect(g6ExploreMove(line, {
+      from: legal.from, to: legal.to, san: legal.san, fen: incompleteBoard.fen(),
+    })).toBeNull();
+  });
+
+  it("refuses corrupted temporary history instead of accepting a forged result", () => {
+    const start = beginG6Exploration(new Chess().fen())!;
+    const line = apply(start, "e2e4")!;
+    const altered = {
+      ...line, moves: [{ ...line.moves[0], san: "forged move" }],
+    };
+    expect(g6PositionState(altered).terminal).toBe(true);
+    expect(g6PositionState(altered).description).toBe("Exploration unavailable");
+    expect(g6ExploreMove(altered, {
+      from: "e7", to: "e5", san: "e5", fen: "forged",
+    })).toBeNull();
+  });
+
   it("stops after twelve legal exploratory moves with no extra scored exercise", () => {
     const moves = [
       "e2e4", "e7e5", "g1f3", "b8c6", "f1c4", "g8f6",
