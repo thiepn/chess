@@ -9453,3 +9453,69 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   .lesson-reply-comparison { gap: 12px; }
   .lesson-reply-comparison .lesson-choice { padding: 8px; }
 }
+
+/* G5 — move-by-move original tactical replay */
+.lesson-tactical-replay {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(164, 186, 226, .24);
+  background: rgba(27, 40, 65, .3);
+  border-radius: 8px;
+}
+.lesson-tactical-replay .secondary {
+  justify-self: start;
+  min-height: 44px;
+  padding: 9px 14px;
+  font-size: 13px;
+}
+.lesson-tactical-replay-meta {
+  display: flex;
+  gap: 8px 14px;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #e8edf6;
+  font-size: 14px;
+}
+.lesson-tactical-replay-meta span {
+  color: #b9c5d9;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.lesson-tactical-replay > p {
+  margin: 0;
+  color: #d6e0ef;
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.lesson-tactical-replay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lesson-tactical-replay-actions button {
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid rgba(166, 193, 238, .3);
+  border-radius: 6px;
+  background: rgba(7, 13, 26, .35);
+  color: #e6eefa;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lesson-tactical-replay-actions button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.lesson-tactical-replay-actions button:focus-visible,
+.lesson-tactical-replay .secondary:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+@media (max-width: 420px) {
+  .lesson-tactical-replay { padding: 12px; }
+  .lesson-tactical-replay-actions button { flex: 1 1 42%; }
+}
