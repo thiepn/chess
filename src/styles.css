@@ -9594,3 +9594,81 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   .lesson-exploration { padding: 10px; }
   .lesson-exploration-actions button { flex: 1 1 44%; }
 }
+
+.lesson-variation-notebook {
+  display: grid;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(161, 184, 217, .2);
+}
+.lesson-variation-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.lesson-variation-slot {
+  display: grid;
+  gap: 8px;
+}
+.lesson-variation-slot button,
+.lesson-variation-facts button {
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid rgba(161, 184, 217, .38);
+  border-radius: 6px;
+  background: rgba(10, 19, 36, .75);
+  color: #eaf0fa;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lesson-variation-slot button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.lesson-variation-notebook button:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+.lesson-variation-analysis {
+  display: grid;
+  gap: 10px;
+}
+.lesson-variation-analysis > p {
+  color: #c6d5ec;
+  margin: 0;
+  font-size: 13px;
+}
+.lesson-variation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.lesson-variation-facts {
+  min-width: 0;
+  padding: 12px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid rgba(161, 184, 217, .23);
+  border-radius: 6px;
+  color: #d6e1f2;
+}
+.lesson-variation-facts strong { font-size: 14px; }
+.lesson-variation-facts p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.lesson-variation-facts .lesson-variation-san {
+  font-variant-numeric: tabular-nums;
+  color: #f2f5fc;
+  font-size: 14px;
+}
+@media (max-width: 720px) {
+  .lesson-variation-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+  .lesson-variation-controls { grid-template-columns: 1fr; }
+}
