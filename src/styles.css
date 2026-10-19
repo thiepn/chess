@@ -9672,3 +9672,98 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
 @media (max-width: 390px) {
   .lesson-variation-controls { grid-template-columns: 1fr; }
 }
+
+/* G8: factual attackers, defenders, and legal-move inspection */
+.lesson-board-vision {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0;
+}
+.lesson-vision-toggle {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid rgba(160, 192, 238, .4);
+  border-radius: 7px;
+  background: rgba(18, 31, 52, .7);
+  color: #ecf2ff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lesson-vision-inspector {
+  display: grid;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid rgba(160, 192, 238, .28);
+  border-radius: 8px;
+  background: rgba(17, 29, 49, .48);
+  color: #dce5f3;
+}
+.lesson-vision-inspector p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.lesson-vision-selected {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(160, 192, 238, .3);
+  border-radius: 7px;
+}
+.lesson-vision-selected strong,
+.lesson-vision-threats strong {
+  color: #f1f5ff;
+  font-size: 14px;
+}
+.lesson-vision-attackers,
+.lesson-vision-threats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.lesson-vision-attackers > div,
+.lesson-vision-threats > div,
+.lesson-vision-selected > div {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+}
+.lesson-vision-square-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+}
+.lesson-vision-square-list button {
+  min-height: 44px;
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+  padding: 9px 12px;
+  border: 1px solid rgba(156, 181, 220, .25);
+  background: rgba(8, 16, 31, .46);
+  border-radius: 6px;
+  color: #ecf2ff;
+  text-align: left;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lesson-vision-square-list button span {
+  font-size: 14px;
+  color: #c3d3ea;
+}
+.lesson-vision-square-list button[aria-pressed="true"] {
+  border-color: #9bbfff;
+}
+.lesson-board-vision button:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .lesson-vision-inspector { padding: 12px; }
+  .lesson-vision-attackers,
+  .lesson-vision-threats { grid-template-columns: 1fr; }
+}
