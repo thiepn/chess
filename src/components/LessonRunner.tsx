@@ -27,6 +27,7 @@ import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTota
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import { g2ReplyComparison } from "../learning/g2ReplyComparison";
 import { g4DefenseStudy, continuesG4Case } from "../learning/g4DefenseStudy";
+import { g5TacticalReplay, g5ReplayIndex } from "../learning/g5TacticalReplay";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -190,12 +191,19 @@ export function LessonRunner({
   const [revealedDefenses, setRevealedDefenses] = useState<string[]>([]);
   const [defenseNotes, setDefenseNotes] = useState<Record<string, string>>({});
   const [showDefenseContrast, setShowDefenseContrast] = useState(false);
+  const [replayPly, setReplayPly] = useState<number | null>(null);
 
   const step = lesson.steps[stepIndex];
   const comparison = g2ReplyComparison(lesson, step.id);
   const defenseStudy = comparison
     ? g4DefenseStudy(comparison, comparisonSelection, revealedDefenses) : null;
   const displayedStep = defenseStudy?.frame.step ?? step;
+  const tacticalReplay = defenseStudy?.isRevealed && defenseStudy.chosen && comparison &&
+    tacticalEntry?.skillId === skill.id
+    ? g5TacticalReplay(tacticalEntry.entry, comparison, defenseStudy.chosen.id)
+    : null;
+  const replayFrame = tacticalReplay && replayPly !== null
+    ? tacticalReplay.frames[replayPly] : null;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
@@ -218,6 +226,7 @@ export function LessonRunner({
     setRevealedDefenses([]);
     setDefenseNotes({});
     setShowDefenseContrast(false);
+    setReplayPly(null);
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -242,6 +251,7 @@ export function LessonRunner({
       setDefenseNotes({});
     }
     setShowDefenseContrast(false);
+    setReplayPly(null);
     setSolved(false);
     setStepHintsUsed(0);
     setFeedback(null);
@@ -346,8 +356,8 @@ export function LessonRunner({
   const latestHint =
     revealedHints.at(-1);
 
-  const displayedHighlights: BoardHighlight[] =
-    [
+  const displayedHighlights: BoardHighlight[] = replayFrame
+    ? [...replayFrame.highlights] : [
       ...(displayedStep.type === "explain"
         ? displayedStep.highlights ?? []
         : []),
@@ -357,7 +367,7 @@ export function LessonRunner({
         : []),
     ];
 
-  const displayedArrows: BoardArrow[] = [
+  const displayedArrows: BoardArrow[] = replayFrame ? [...replayFrame.arrows] : [
     ...(displayedStep.type === "explain"
       ? displayedStep.arrows ?? []
       : []),
@@ -433,8 +443,8 @@ export function LessonRunner({
       <div className="lesson-stage">
         <div className="lesson-board-column">
           <ChessBoard
-            key={`${displayedStep.id}-${boardReset}`}
-            fen={displayedStep.fen}
+            key={`${displayedStep.id}-${replayFrame?.id ?? "normal"}-${boardReset}`}
+            fen={replayFrame?.fen ?? displayedStep.fen}
             orientation={orientation}
             disabled={
               step.type !== "move" ||
@@ -516,11 +526,7 @@ export function LessonRunner({
 
             {comparison && defenseStudy && (
               <section className="lesson-reply-comparison" aria-label={`Tactical case ${comparison.caseNumber} defense reading lab`}>
-                <p className="lesson-prompt">
-                  Study what Black could do after your tactical move. Select a defense,
-                  make a prediction, then reveal the source-authored board and explanation.
-                  This is optional, unscored study: no extra mastery or review credit.
-                </p>
+                <p className="lesson-prompt">Select a defense, predict it, then reveal and replay the original line.</p>
                 <div className="lesson-choice-grid" role="group" aria-label="Tactical defense selection">
                   {comparison.options.map((option, index) => {
                     const active = index === 0
@@ -535,6 +541,7 @@ export function LessonRunner({
                         onClick={() => {
                           setComparisonSelection(index === 0 ? null : option.id);
                           setShowDefenseContrast(false);
+                          setReplayPly(null);
                         }}
                       >
                         <span>{option.label}</span>
@@ -571,6 +578,43 @@ export function LessonRunner({
                       </button>
                     ) : (
                       <p role="status">Showing the source-authored reply and explanation below.</p>
+                    )}
+                  </div>
+                )}
+                {tacticalReplay && (
+                  <div className="lesson-tactical-replay">
+                    {replayPly === null ? (
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => setReplayPly(0)}
+                      >
+                        Replay White's tactic and Black's reply
+                      </button>
+                    ) : (
+                      <>
+                        <div className="lesson-tactical-replay-meta" role="status" aria-live="polite">
+                          <strong>{replayFrame?.label}</strong>
+                          <span>Position {replayPly + 1} of 3</span>
+                        </div>
+                        <p>{replayFrame?.explanation}</p>
+                        <div className="lesson-tactical-replay-actions">
+                          <button type="button" disabled={replayPly === 0}
+                            onClick={() => setReplayPly(current =>
+                              current === null ? 0 : g5ReplayIndex(current, -1))}>
+                            Previous move
+                          </button>
+                          <button type="button" disabled={replayPly === 2}
+                            onClick={() => setReplayPly(current =>
+                              current === null ? 0 : g5ReplayIndex(current, 1))}>
+                            Next move
+                          </button>
+                          <button type="button"
+                            onClick={() => setReplayPly(null)}>
+                            Close replay
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
                 )}
