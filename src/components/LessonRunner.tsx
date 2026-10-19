@@ -26,6 +26,8 @@ import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttemp
 import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import { g2ReplyComparison } from "../learning/g2ReplyComparison";
+import { g8InspectSquare, g8BoardVision } from "../learning/g8BoardVision";
+import { chessPieceNames } from "./ChessPiece";
 import { g4DefenseStudy, continuesG4Case } from "../learning/g4DefenseStudy";
 import { g5TacticalReplay, g5ReplayIndex } from "../learning/g5TacticalReplay";
 import {
@@ -205,6 +207,8 @@ export function LessonRunner({
   const explorationsRef = useRef<Record<string, G6Exploration>>({});
   const [variationNotebooks, setVariationNotebooks] = useState<Record<string, G7VariationNotebook>>({});
   const variationNotebooksRef = useRef<Record<string, G7VariationNotebook>>({});
+  const [boardVisionOpen, setBoardVisionOpen] = useState(false);
+  const [inspectedSquare, setInspectedSquare] = useState<import("chess.js").Square | null>(null);
 
   const step = lesson.steps[stepIndex];
   const comparison = g2ReplyComparison(lesson, step.id);
@@ -226,6 +230,11 @@ export function LessonRunner({
     variationNotebooks[tacticalReplay.replyStepId]?.anchorFen === tacticalReplay.frames[2].fen
     ? variationNotebooks[tacticalReplay.replyStepId] : null;
   const variationComparison = variationNotebook ? g7CompareVariations(variationNotebook) : null;
+  const boardFen = activeExploration
+    ? g6CurrentFen(activeExploration) : (replayFrame?.fen ?? displayedStep.fen);
+  const boardVision = boardVisionOpen && comparison ? g8BoardVision(boardFen) : null;
+  const squareVision = boardVisionOpen && inspectedSquare && comparison
+    ? g8InspectSquare(boardFen, inspectedSquare) : null;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
@@ -254,6 +263,8 @@ export function LessonRunner({
     setExplorations({});
     variationNotebooksRef.current = {};
     setVariationNotebooks({});
+    setBoardVisionOpen(false);
+    setInspectedSquare(null);
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -305,6 +316,8 @@ export function LessonRunner({
     setShowDefenseContrast(false);
     setReplayPly(null);
     setActiveExplorationId(null);
+    setBoardVisionOpen(false);
+    setInspectedSquare(null);
     if (!keepCaseStudy) {
       explorationsRef.current = {};
       setExplorations({});
@@ -415,7 +428,8 @@ export function LessonRunner({
   const latestHint =
     revealedHints.at(-1);
 
-  const displayedHighlights: BoardHighlight[] = explorationLastMove
+  const displayedHighlights: BoardHighlight[] = squareVision
+    ? [...squareVision.highlights] : explorationLastMove
     ? [{ square: explorationLastMove.to, tone: "focus" }] : replayFrame
     ? [...replayFrame.highlights] : [
       ...(displayedStep.type === "explain"
@@ -427,7 +441,8 @@ export function LessonRunner({
         : []),
     ];
 
-  const displayedArrows: BoardArrow[] = explorationLastMove
+  const displayedArrows: BoardArrow[] = squareVision
+    ? [...squareVision.arrows] : explorationLastMove
     ? [{ from: explorationLastMove.from, to: explorationLastMove.to, tone: "focus" }]
     : replayFrame ? [...replayFrame.arrows] : [
     ...(displayedStep.type === "explain"
@@ -505,12 +520,13 @@ export function LessonRunner({
       <div className="lesson-stage">
         <div className="lesson-board-column">
           <ChessBoard
-            key={`${displayedStep.id}-${activeExploration ? "g6" : (replayFrame?.id ?? "normal")}-${boardReset}`}
-            fen={activeExploration ? g6CurrentFen(activeExploration) : (replayFrame?.fen ?? displayedStep.fen)}
+            key={`${displayedStep.id}-${activeExploration ? "g6" : (replayFrame?.id ?? "normal")}-${boardVisionOpen ? "inspection" : "play"}-${boardReset}`}
+            fen={boardFen}
             orientation={orientation}
-            disabled={activeExploration ? Boolean(explorationStatus?.terminal) : (
+            disabled={boardVisionOpen || (activeExploration ? Boolean(explorationStatus?.terminal) : (
               step.type !== "move" || solved
-            )}
+            ))}
+            onInspectSquare={boardVisionOpen && comparison ? setInspectedSquare : undefined}
             highlights={
               displayedHighlights
             }
@@ -593,6 +609,82 @@ export function LessonRunner({
             </div>
 
             <h2>{displayedStep.title}</h2>
+
+            {comparison && (
+              <section className="lesson-board-vision" aria-label="Board vision: attackers and defenders">
+                <button type="button" className="lesson-vision-toggle"
+                  aria-expanded={boardVisionOpen}
+                  onClick={() => {
+                    setBoardVisionOpen(open => !open);
+                    setInspectedSquare(null);
+                  }}>
+                  {boardVisionOpen ? "Close" : "Inspect"} attacks and defenders
+                </button>
+                {boardVisionOpen && boardVision && (
+                  <div className="lesson-vision-inspector">
+                    <p>
+                      Select any square on the chessboard to inspect its attackers.
+                      Attacks include pinned pieces and do not always mean legal captures.
+                    </p>
+                    <p><strong>{boardVision.sideToMove === "w" ? "White" : "Black"} to move</strong></p>
+                    {squareVision ? (
+                      <div className="lesson-vision-selected" role="status" aria-live="polite">
+                        <strong>
+                          {squareVision.square} — {squareVision.occupant
+                            ? `${squareVision.occupant.color === "w" ? "White" : "Black"} ${chessPieceNames[squareVision.occupant.piece]}`
+                            : "Empty square"}
+                        </strong>
+                        <div className="lesson-vision-attackers">
+                          {([
+                            ["White", squareVision.whiteAttackers],
+                            ["Black", squareVision.blackAttackers],
+                          ] as const).map(([side, attackers]) => (
+                            <div key={side}>
+                              <strong>{side} attackers: {attackers.length}</strong>
+                              <p>{attackers.length
+                                ? attackers.map(piece => `${chessPieceNames[piece.piece]} ${piece.square}`).join(", ")
+                                : "None"}</p>
+                            </div>
+                          ))}
+                        </div>
+                        {squareVision.occupant && (
+                          <div>
+                            <strong>Legal moves from {squareVision.square}</strong>
+                            <p>{squareVision.occupant.color !== squareVision.sideToMove
+                              ? "This piece is not on the side to move."
+                              : squareVision.legalMoves.length
+                                ? squareVision.legalMoves.map(move => `${move.san} (${move.to})`).join(", ")
+                                : "No legal moves from this square."}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p role="status">Select a square on the board.</p>
+                    )}
+                    <div className="lesson-vision-threats">
+                      {([
+                        ["White pieces attacked", boardVision.attackedWhite],
+                        ["Black pieces attacked", boardVision.attackedBlack],
+                      ] as const).map(([title, occupied]) => (
+                        <div key={title}>
+                          <strong>{title} ({occupied.length})</strong>
+                          <div className="lesson-vision-square-list">
+                            {occupied.length ? occupied.map(piece => (
+                              <button key={piece.square} type="button"
+                                aria-pressed={inspectedSquare === piece.square}
+                                onClick={() => setInspectedSquare(piece.square)}>
+                                {chessPieceNames[piece.piece]} {piece.square}
+                                <span>{piece.attackers} attackers · {piece.defenders} defenders</span>
+                              </button>
+                            )) : <p>None</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
 
             {comparison && defenseStudy && (
               <section className="lesson-reply-comparison" aria-label={`Tactical case ${comparison.caseNumber} defense reading lab`}>
