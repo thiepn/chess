@@ -26,7 +26,7 @@ import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttemp
 import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
 import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import { g2ReplyComparison } from "../learning/g2ReplyComparison";
-import { g4DefenseStudy } from "../learning/g4DefenseStudy";
+import { g4DefenseStudy, continuesG4Case } from "../learning/g4DefenseStudy";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -234,11 +234,13 @@ export function LessonRunner({
     setResults(recorded);
   }
 
-  function resetStepState() {
+  function resetStepState(keepCaseStudy = false) {
     liveStepAttempt.current = createLiveStepAttempt();
     setComparisonSelection(null);
-    setRevealedDefenses([]);
-    setDefenseNotes({});
+    if (!keepCaseStudy) {
+      setRevealedDefenses([]);
+      setDefenseNotes({});
+    }
     setShowDefenseContrast(false);
     setSolved(false);
     setStepHintsUsed(0);
@@ -282,7 +284,7 @@ export function LessonRunner({
 
     advancePending.current = true;
     setStepIndex(value => Math.min(value + 1, lesson.steps.length - 1));
-    resetStepState();
+    resetStepState(continuesG4Case(step.id, lesson.steps[stepIndex + 1]?.id ?? ""));
   }
 
   function revealHint() {
