@@ -32,6 +32,10 @@ import {
   beginG6Exploration, g6CurrentFen, g6ExploreMove, g6PositionState,
   g6Rewind, type G6Exploration,
 } from "../learning/g6ContinuationLab";
+import {
+  g7BeginNotebook, g7SaveVariation, g7LoadVariation,
+  g7CompareVariations, type G7VariationNotebook, type G7Slot,
+} from "../learning/g7VariationNotebook";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -199,6 +203,8 @@ export function LessonRunner({
   const [activeExplorationId, setActiveExplorationId] = useState<string | null>(null);
   const [explorations, setExplorations] = useState<Record<string, G6Exploration>>({});
   const explorationsRef = useRef<Record<string, G6Exploration>>({});
+  const [variationNotebooks, setVariationNotebooks] = useState<Record<string, G7VariationNotebook>>({});
+  const variationNotebooksRef = useRef<Record<string, G7VariationNotebook>>({});
 
   const step = lesson.steps[stepIndex];
   const comparison = g2ReplyComparison(lesson, step.id);
@@ -216,6 +222,10 @@ export function LessonRunner({
     ? explorations[tacticalReplay.replyStepId] : null;
   const explorationStatus = activeExploration ? g6PositionState(activeExploration) : null;
   const explorationLastMove = activeExploration?.moves.at(-1);
+  const variationNotebook = tacticalReplay &&
+    variationNotebooks[tacticalReplay.replyStepId]?.anchorFen === tacticalReplay.frames[2].fen
+    ? variationNotebooks[tacticalReplay.replyStepId] : null;
+  const variationComparison = variationNotebook ? g7CompareVariations(variationNotebook) : null;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
@@ -242,6 +252,8 @@ export function LessonRunner({
     setActiveExplorationId(null);
     explorationsRef.current = {};
     setExplorations({});
+    variationNotebooksRef.current = {};
+    setVariationNotebooks({});
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -251,6 +263,31 @@ export function LessonRunner({
   useEffect(() => {
     advancePending.current = false;
   }, [stepIndex]);
+
+  function saveCandidate(slot: G7Slot) {
+    if (!tacticalReplay || !activeExploration) return;
+    const id = tacticalReplay.replyStepId;
+    const anchorFen = tacticalReplay.frames[2].fen;
+    const notebook = variationNotebooksRef.current[id] ?? g7BeginNotebook(anchorFen);
+    if (!notebook) return;
+    const next = g7SaveVariation(notebook, slot, activeExploration);
+    if (!next) return;
+    variationNotebooksRef.current = { ...variationNotebooksRef.current, [id]: next };
+    setVariationNotebooks(variationNotebooksRef.current);
+  }
+
+  function loadCandidate(slot: G7Slot) {
+    if (!tacticalReplay) return;
+    const id = tacticalReplay.replyStepId;
+    const notebook = variationNotebooksRef.current[id];
+    if (!notebook) return;
+    const line = g7LoadVariation(notebook, slot, tacticalReplay.frames[2].fen);
+    if (!line) return;
+    explorationsRef.current = { ...explorationsRef.current, [id]: line };
+    setExplorations(explorationsRef.current);
+    setReplayPly(null);
+    setActiveExplorationId(id);
+  }
 
   function recordResult(item: LessonStepResult) {
     const recorded = withLatestLessonEvidence(resultsRef.current, item);
@@ -271,6 +308,8 @@ export function LessonRunner({
     if (!keepCaseStudy) {
       explorationsRef.current = {};
       setExplorations({});
+      variationNotebooksRef.current = {};
+      setVariationNotebooks({});
     }
     setSolved(false);
     setStepHintsUsed(0);
@@ -712,6 +751,46 @@ export function LessonRunner({
                           <button type="button" onClick={() => setActiveExplorationId(null)}>
                             Return to original line
                           </button>
+                        </div>
+                        <div className="lesson-variation-notebook" aria-label="Alternative line comparison">
+                          <div className="lesson-variation-controls">
+                            {(["A", "B"] as const).map(slot => (
+                              <div className="lesson-variation-slot" key={slot}>
+                                <button type="button"
+                                  disabled={activeExploration.moves.length === 0}
+                                  onClick={() => saveCandidate(slot)}>
+                                  Save as line {slot}
+                                </button>
+                                <button type="button"
+                                  disabled={!variationNotebook?.[slot]}
+                                  onClick={() => loadCandidate(slot)}>
+                                  Load line {slot}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                          {variationComparison && (
+                            <div className="lesson-variation-analysis" role="region"
+                              aria-label="Comparison of learner-created legal lines">
+                              <p>Common starting moves: {variationComparison.commonPlies}</p>
+                              <div className="lesson-variation-grid">
+                                {(["A", "B"] as const).map(slot => {
+                                  const facts = variationComparison[slot];
+                                  return (
+                                    <div className="lesson-variation-facts" key={slot}>
+                                      <strong>Line {slot} · {facts.plies} plies</strong>
+                                      <p className="lesson-variation-san">{facts.moves.join(" ")}</p>
+                                      <p>{facts.status}</p>
+                                      <p>Pieces remaining — White: {facts.whitePieces}, Black: {facts.blackPieces}</p>
+                                      <button type="button" onClick={() => loadCandidate(slot)}>
+                                        Explore line {slot}
+                                      </button>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
                         </div>
                         <p>Play either side using the board. Legal moves only; no evaluation or lesson credit.</p>
                       </>
