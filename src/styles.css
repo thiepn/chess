@@ -9619,7 +9619,7 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   background: rgba(10, 19, 36, .75);
   color: #eaf0fa;
   font: inherit;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
 }
 .lesson-variation-slot button:disabled {
@@ -9637,7 +9637,7 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
 .lesson-variation-analysis > p {
   color: #c6d5ec;
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .lesson-variation-grid {
   display: grid;
@@ -9658,7 +9658,7 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
 .lesson-variation-facts p {
   margin: 0;
   line-height: 1.55;
-  font-size: 13px;
+  font-size: 14px;
   overflow-wrap: anywhere;
 }
 .lesson-variation-facts .lesson-variation-san {
