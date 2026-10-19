@@ -26,6 +26,7 @@ interface ChessBoardProps {
   arrows?: BoardArrow[];
   onMove?: (move: BoardMove) => boolean;
   presentationMove?: { from: Square; to: Square };
+  onInspectSquare?: (square: Square) => void;
 }
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
@@ -58,6 +59,7 @@ export function ChessBoard({
   arrows = [],
   onMove,
   presentationMove,
+  onInspectSquare,
 }: ChessBoardProps) {
   const [position, setPosition] = useState(fen);
   const positionRef = useRef(fen);
@@ -357,6 +359,10 @@ export function ChessBoard({
 
   function selectSquare(square: Square) {
     setFocusedSquare(square);
+    if (disabled && onInspectSquare) {
+      onInspectSquare(square);
+      return;
+    }
     if (disabled || pendingPromotion) return;
 
     const current = new Chess(liveBoardFen(positionRef));
@@ -451,7 +457,9 @@ export function ChessBoard({
     <div className="chess-board-wrap">
       <span id={instructionsId} className="sr-only">
         {disabled
-          ? "Chessboard preview. Use arrow keys to inspect squares."
+          ? onInspectSquare
+            ? "Use arrow keys to focus squares. Press Enter or Space to inspect attacks and defenders."
+            : "Chessboard preview. Use arrow keys to inspect squares."
           : "Use arrow keys to move between squares. Press Enter or Space to select a piece or destination. Press Escape to clear a selected square. On touch, drag a piece or tap the piece and its destination."}
       </span>
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
@@ -465,7 +473,7 @@ export function ChessBoard({
         aria-rowcount={8}
         aria-colcount={8}
         aria-describedby={instructionsId}
-        aria-label={`${disabled ? "Chessboard preview" : "Interactive chessboard"}. ${orientation === "w" ? "White" : "Black"} is at the bottom.`}
+        aria-label={`${disabled && onInspectSquare ? "Chessboard threat inspector" : disabled ? "Chessboard preview" : "Interactive chessboard"}. ${orientation === "w" ? "White" : "Black"} is at the bottom.`}
       >
         {squares.map((square, index) => {
           const piece = chess.get(square);
@@ -533,7 +541,7 @@ export function ChessBoard({
               tabIndex={square === focusedSquare ? 0 : -1}
               aria-label={squareLabel(square)}
               aria-selected={isSelected}
-              aria-disabled={disabled}
+              aria-disabled={disabled && !onInspectSquare}
               onFocus={() => setFocusedSquare(square)}
               onKeyDown={(event) => handleSquareKeyDown(event, square)}
               onClick={() => {
