@@ -28,6 +28,10 @@ import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
 import { g2ReplyComparison } from "../learning/g2ReplyComparison";
 import { g4DefenseStudy, continuesG4Case } from "../learning/g4DefenseStudy";
 import { g5TacticalReplay, g5ReplayIndex } from "../learning/g5TacticalReplay";
+import {
+  beginG6Exploration, g6CurrentFen, g6ExploreMove, g6PositionState,
+  g6Rewind, type G6Exploration,
+} from "../learning/g6ContinuationLab";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -192,6 +196,9 @@ export function LessonRunner({
   const [defenseNotes, setDefenseNotes] = useState<Record<string, string>>({});
   const [showDefenseContrast, setShowDefenseContrast] = useState(false);
   const [replayPly, setReplayPly] = useState<number | null>(null);
+  const [activeExplorationId, setActiveExplorationId] = useState<string | null>(null);
+  const [explorations, setExplorations] = useState<Record<string, G6Exploration>>({});
+  const explorationsRef = useRef<Record<string, G6Exploration>>({});
 
   const step = lesson.steps[stepIndex];
   const comparison = g2ReplyComparison(lesson, step.id);
@@ -204,6 +211,11 @@ export function LessonRunner({
     : null;
   const replayFrame = tacticalReplay && replayPly !== null
     ? tacticalReplay.frames[replayPly] : null;
+  const activeExploration = tacticalReplay && activeExplorationId === tacticalReplay.replyStepId &&
+    explorations[tacticalReplay.replyStepId]?.anchorFen === tacticalReplay.frames[2].fen
+    ? explorations[tacticalReplay.replyStepId] : null;
+  const explorationStatus = activeExploration ? g6PositionState(activeExploration) : null;
+  const explorationLastMove = activeExploration?.moves.at(-1);
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
@@ -227,6 +239,9 @@ export function LessonRunner({
     setDefenseNotes({});
     setShowDefenseContrast(false);
     setReplayPly(null);
+    setActiveExplorationId(null);
+    explorationsRef.current = {};
+    setExplorations({});
     resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
@@ -252,6 +267,11 @@ export function LessonRunner({
     }
     setShowDefenseContrast(false);
     setReplayPly(null);
+    setActiveExplorationId(null);
+    if (!keepCaseStudy) {
+      explorationsRef.current = {};
+      setExplorations({});
+    }
     setSolved(false);
     setStepHintsUsed(0);
     setFeedback(null);
@@ -356,7 +376,8 @@ export function LessonRunner({
   const latestHint =
     revealedHints.at(-1);
 
-  const displayedHighlights: BoardHighlight[] = replayFrame
+  const displayedHighlights: BoardHighlight[] = explorationLastMove
+    ? [{ square: explorationLastMove.to, tone: "focus" }] : replayFrame
     ? [...replayFrame.highlights] : [
       ...(displayedStep.type === "explain"
         ? displayedStep.highlights ?? []
@@ -367,7 +388,9 @@ export function LessonRunner({
         : []),
     ];
 
-  const displayedArrows: BoardArrow[] = replayFrame ? [...replayFrame.arrows] : [
+  const displayedArrows: BoardArrow[] = explorationLastMove
+    ? [{ from: explorationLastMove.from, to: explorationLastMove.to, tone: "focus" }]
+    : replayFrame ? [...replayFrame.arrows] : [
     ...(displayedStep.type === "explain"
       ? displayedStep.arrows ?? []
       : []),
@@ -443,18 +466,26 @@ export function LessonRunner({
       <div className="lesson-stage">
         <div className="lesson-board-column">
           <ChessBoard
-            key={`${displayedStep.id}-${replayFrame?.id ?? "normal"}-${boardReset}`}
-            fen={replayFrame?.fen ?? displayedStep.fen}
+            key={`${displayedStep.id}-${activeExploration ? "g6" : (replayFrame?.id ?? "normal")}-${boardReset}`}
+            fen={activeExploration ? g6CurrentFen(activeExploration) : (replayFrame?.fen ?? displayedStep.fen)}
             orientation={orientation}
-            disabled={
-              step.type !== "move" ||
-              solved
-            }
+            disabled={activeExploration ? Boolean(explorationStatus?.terminal) : (
+              step.type !== "move" || solved
+            )}
             highlights={
               displayedHighlights
             }
             arrows={displayedArrows}
             onMove={(move) => {
+              if (activeExploration && tacticalReplay) {
+                const source = explorationsRef.current[tacticalReplay.replyStepId];
+                if (!source || source.anchorFen !== tacticalReplay.frames[2].fen) return false;
+                const next = g6ExploreMove(source, move);
+                if (!next) return false;
+                explorationsRef.current = { ...explorationsRef.current, [tacticalReplay.replyStepId]: next };
+                setExplorations(explorationsRef.current);
+                return true;
+              }
               if (step.type !== "move" || liveStepAttempt.current.completed)
                 return false;
 
@@ -542,6 +573,7 @@ export function LessonRunner({
                           setComparisonSelection(index === 0 ? null : option.id);
                           setShowDefenseContrast(false);
                           setReplayPly(null);
+                          setActiveExplorationId(null);
                         }}
                       >
                         <span>{option.label}</span>
@@ -587,7 +619,7 @@ export function LessonRunner({
                       <button
                         type="button"
                         className="secondary"
-                        onClick={() => setReplayPly(0)}
+                        onClick={() => { setActiveExplorationId(null); setReplayPly(0); }}
                       >
                         Replay White's tactic and Black's reply
                       </button>
@@ -614,6 +646,74 @@ export function LessonRunner({
                             Close replay
                           </button>
                         </div>
+                      </>
+                    )}
+                  </div>
+                )}
+                {tacticalReplay && (
+                  <div className="lesson-exploration" aria-label="Legal continuation study">
+                    {!activeExploration ? (
+                      <button type="button" className="secondary" onClick={() => {
+                        const id = tacticalReplay.replyStepId;
+                        const anchor = tacticalReplay.frames[2].fen;
+                        const previous = explorationsRef.current[id];
+                        const line = previous?.anchorFen === anchor
+                          ? previous : beginG6Exploration(anchor);
+                        if (!line) return;
+                        explorationsRef.current = { ...explorationsRef.current, [id]: line };
+                        setExplorations(explorationsRef.current);
+                        setReplayPly(null);
+                        setActiveExplorationId(id);
+                      }}>
+                        Explore legal continuations
+                      </button>
+                    ) : (
+                      <>
+                        <div className="lesson-exploration-status" role="status" aria-live="polite">
+                          <strong>{explorationStatus?.description}</strong>
+                          <span>{activeExploration.moves.length} / 12 moves explored</span>
+                        </div>
+                        <div className="lesson-exploration-moves" aria-label="Explored continuation">
+                          <button type="button" className="lesson-exploration-ply"
+                            onClick={() => {
+                              const id = tacticalReplay.replyStepId;
+                              const next = g6Rewind(explorationsRef.current[id], 0);
+                              if (!next) return;
+                              explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                              setExplorations(explorationsRef.current);
+                            }}>
+                            Start position
+                          </button>
+                          {activeExploration.moves.map((item, index) => (
+                            <button key={`${index}-${item.fen}`} type="button"
+                              className={`lesson-exploration-ply ${index === activeExploration.moves.length - 1 ? "current" : ""}`}
+                              onClick={() => {
+                                const id = tacticalReplay.replyStepId;
+                                const next = g6Rewind(explorationsRef.current[id], index + 1);
+                                if (!next) return;
+                                explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                                setExplorations(explorationsRef.current);
+                              }}>
+                              {index % 2 === 0 ? "White" : "Black"}: {item.san}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="lesson-exploration-actions">
+                          <button type="button" disabled={activeExploration.moves.length === 0}
+                            onClick={() => {
+                              const id = tacticalReplay.replyStepId;
+                              const next = g6Rewind(explorationsRef.current[id], activeExploration.moves.length - 1);
+                              if (!next) return;
+                              explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                              setExplorations(explorationsRef.current);
+                            }}>
+                            Undo move
+                          </button>
+                          <button type="button" onClick={() => setActiveExplorationId(null)}>
+                            Return to original line
+                          </button>
+                        </div>
+                        <p>Play either side using the board. Legal moves only; no evaluation or lesson credit.</p>
                       </>
                     )}
                   </div>
