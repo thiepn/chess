@@ -38,6 +38,23 @@ export function g6CurrentFen(line: G6Exploration): string {
   return line.moves.at(-1)?.fen ?? line.anchorFen;
 }
 
+function replayG6Line(line: G6Exploration): Chess | null {
+  try {
+    const board = new Chess(line.anchorFen);
+    for (const item of line.moves) {
+      if (board.isGameOver()) return null;
+      const move = board.move({
+        from: item.from, to: item.to, promotion: item.promotion || "q",
+      });
+      if (!move || move.san !== item.san || board.fen() !== item.fen)
+        return null;
+    }
+    return board;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Match the same move and full resulting FEN accepted by the mounted
  * ChessBoard. The local line is unscored and cannot create training evidence.
@@ -48,8 +65,8 @@ export function g6ExploreMove(
 ): G6Exploration | null {
   if (line.moves.length >= MAX_G6_PLIES) return null;
   try {
-    const board = new Chess(g6CurrentFen(line));
-    if (board.isGameOver()) return null;
+    const board = replayG6Line(line);
+    if (!board || board.isGameOver()) return null;
     const played = board.move({
       from: proposed.from,
       to: proposed.to,
@@ -86,7 +103,11 @@ export interface G6PositionState {
 }
 
 export function g6PositionState(line: G6Exploration): G6PositionState {
-  const board = new Chess(g6CurrentFen(line));
+  const board = replayG6Line(line);
+  if (!board) return {
+    sideToMove: "White", inCheck: false, terminal: true,
+    description: "Exploration unavailable",
+  };
   const sideToMove = board.turn() === "w" ? "White" : "Black";
   const terminal = board.isGameOver() || line.moves.length >= MAX_G6_PLIES;
   const description = board.isCheckmate()
