@@ -35,3 +35,11 @@ export function g4DefenseStudy(
     canCompare: replies.length === 2 && revealed.length === 2,
   };
 }
+
+/** Keep local study notes only across the two replies of the same G2 case. */
+export function continuesG4Case(currentId: string, nextId: string): boolean {
+  const pattern = /^g2-tactical-([1-9]\d*)-reply-[12]$/;
+  const current = pattern.exec(currentId);
+  const next = pattern.exec(nextId);
+  return Boolean(current && next && current[1] === next[1] && currentId !== nextId);
+}
