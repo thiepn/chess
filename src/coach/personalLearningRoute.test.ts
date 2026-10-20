@@ -101,11 +101,11 @@ describe("G9 personal game-to-learning-and-transfer journey", () => {
     const duplicated={...b.game,pgn:a.game.pgn};
     const route=personalLearningRoute(a.game,a.moment,
       [a.game,duplicated],[a.mistake,b.mistake],[],now)!;
-    expect(route.handoff.recurring).toBe(true);
+    expect(route.handoff.recurring).toBe(false);
     expect(route.independentPosition).toBeNull();
 
     const second=gameCase("clock",[],"2026-10-13");
-    const changedFen=second.mistake.positionFen.replace(/\\d+ \\d+$/, "14 32");
+    const changedFen=second.mistake.positionFen.replace(/\d+ \d+$/, "14 32");
     const clockGame={
       ...second.game,
       moves:second.game.moves.map(m=>({...m,beforeFen:changedFen})),
