@@ -327,6 +327,7 @@ export function ReviewView({
         mistakes={mistakes.filter((mistake) => mistake.gameId === selectedGame.id)}
         allGames={games}
         allMistakes={mistakes}
+        practiceHistory={practiceHistory}
         onBack={() => onNavigate("/review")}
         onTrainMistake={onTrainMistake}
         onReplayMistake={onReplayMistake}
