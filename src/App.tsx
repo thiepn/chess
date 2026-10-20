@@ -3356,6 +3356,7 @@ export default function App() {
             onNavigate={navigate}
             mistakes={state.mistakes ?? []}
             practiceHistory={state.reviewPracticeHistory ?? []}
+            learningEvents={state.analytics?.events ?? []}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}
