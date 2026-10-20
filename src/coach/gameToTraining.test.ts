@@ -71,10 +71,10 @@ describe("Personal Chess Coach game-to-training handoff", () => {
     const a = gameCase("source-one");
     const b = gameCase("source-copy");
     const c = gameCase("actual-second-game");
-    const samePgn = "[Event \\"Original analyzed game\\"]\\n1. a3 *";
+    const samePgn = '[Event "Original analyzed game"] 1. a3 *';
     const first = {...a.game, pgn:samePgn};
     const copy = {...b.game, pgn:samePgn};
-    const second = {...c.game, pgn:"[Event \\"Other game\\"]\\n1. a3 *"};
+    const second = {...c.game, pgn:'[Event "Other game"] 1. a3 *'};
     const initial = gameToTrainingHandoff(first, a.moment,
       [first, copy], [a.mistake, b.mistake], now)!;
     expect(initial.evidenceGames).toBe(1);
