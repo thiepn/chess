@@ -29,6 +29,8 @@ import {
 import { ChessBoard } from "./ChessBoard";
 import { personalLearningRoute } from "../coach/personalLearningRoute";
 import type { RecordedReviewAttempt } from "../review/practiceLoop";
+import type { LearningAnalyticsEvent } from "../analytics/types";
+import { g10LearningFeedback } from "../coach/learningFeedback";
 
 interface GameReviewCoachProps {
   game: ImportedGame;
@@ -37,6 +39,7 @@ interface GameReviewCoachProps {
   allGames: ImportedGame[];
   allMistakes: PersonalMistake[];
   practiceHistory: RecordedReviewAttempt[];
+  learningEvents: LearningAnalyticsEvent[];
   onTrainMistake: (mistakeId: string) => void;
   reflection?: GameReviewReflection;
   openingDeviation?: OpeningDeviation;
@@ -180,6 +183,7 @@ export function GameReviewCoach({
   allGames,
   allMistakes,
   practiceHistory,
+  learningEvents,
   onTrainMistake,
   reflection,
   openingDeviation,
@@ -358,6 +362,9 @@ export function GameReviewCoach({
     game, moment, allGames, allMistakes, practiceHistory,
   ), [game, moment, allGames, allMistakes, practiceHistory]);
   const handoff = learningRoute?.handoff;
+  const feedback = useMemo(() => learningRoute
+    ? g10LearningFeedback(learningRoute, allGames, allMistakes, practiceHistory, learningEvents)
+    : null, [learningRoute, allGames, allMistakes, practiceHistory, learningEvents]);
   const resultMoveSan = retryMove
     ? sanFor(
         moment.positionFen,
