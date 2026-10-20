@@ -79,6 +79,10 @@ describe("Personal Chess Coach game-to-training handoff", () => {
       [first, copy], [a.mistake, b.mistake], now)!;
     expect(initial.evidenceGames).toBe(1);
     expect(initial.recurring).toBe(false);
+    const whitespaceCopy = {...b.game,
+      pgn:'[Event    "Original analyzed game"]    1. a3 *'};
+    expect(gameToTrainingHandoff(first, a.moment,
+      [first, whitespaceCopy], [a.mistake, b.mistake], now)?.recurring).toBe(false);
     const distinct = gameToTrainingHandoff(first, a.moment,
       [first, copy, second], [a.mistake, b.mistake, c.mistake], now)!;
     expect(distinct.evidenceGames).toBe(2);
