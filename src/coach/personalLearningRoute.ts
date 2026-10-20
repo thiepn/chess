@@ -25,7 +25,7 @@ export interface PersonalLearningRoute {
 /** Same recorded human game must not become independent evidence via re-import. */
 export function recordedGameIdentity(game: ImportedGame): string {
   if (game.source && game.externalId) return `external:${game.source}:${game.externalId}`;
-  if (game.pgn?.trim()) return `pgn:${game.pgn.trim().replace(/\\s+/g, " ")}`;
+  if (game.pgn?.trim()) return `pgn:${game.pgn.trim().replace(/\s+/g, " ")}`;
   return `local:${game.id}`;
 }
 
@@ -40,7 +40,7 @@ function distinctPosition(first: string, second: string): boolean {
 /** Only dates that identify a real calendar day are compared; import time is not game time. */
 function playedDay(game: ImportedGame): number | null {
   const raw = game.date?.trim().replaceAll(".", "-");
-  if (!raw || !/^\\d{4}-\\d{2}-\\d{2}$/.test(raw)) return null;
+  if (!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
   const timestamp = Date.parse(`${raw}T00:00:00Z`);
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === raw
     ? timestamp : null;
