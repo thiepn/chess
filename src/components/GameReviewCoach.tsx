@@ -822,6 +822,17 @@ export function GameReviewCoach({
                   </button>
                 </div>
               )}
+              {feedback?.transferAcrossGames && (
+                <p className="review-coach-later-games">
+                  Different original game positions:
+                  {" "}{feedback.transferAcrossGames.cleanUnaidedPositions}
+                  {" "}with at least one clean unaided recall of
+                  {" "}{feedback.transferAcrossGames.verifiedPositions} verified positions.
+                  {" "}{feedback.transferAcrossGames.attemptedPositions} practiced;
+                  {" "}{feedback.transferAcrossGames.needsIndependentRetry}
+                  {" "}practiced without a clean recall.
+                </p>
+              )}
               {learningRoute?.later && learningRoute.later.analyzedGames > 0 && (
                 <p className="review-coach-later-games">
                   Later-dated analyzed games: {learningRoute.later.analyzedGames}.
