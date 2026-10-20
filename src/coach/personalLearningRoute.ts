@@ -24,8 +24,8 @@ export interface PersonalLearningRoute {
 
 /** Same recorded human game must not become independent evidence via re-import. */
 export function recordedGameIdentity(game: ImportedGame): string {
-  if (game.source && game.externalId) return `external:${game.source}:${game.externalId}`;
   if (game.pgn?.trim()) return `pgn:${game.pgn.trim().replace(/\s+/g, " ")}`;
+  if (game.source && game.externalId) return `external:${game.source}:${game.externalId}`;
   return `local:${game.id}`;
 }
 
