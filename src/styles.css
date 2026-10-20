@@ -9767,3 +9767,37 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   .lesson-vision-attackers,
   .lesson-vision-threats { grid-template-columns: 1fr; }
 }
+
+/* Source-backed game-to-training handoff, inside the existing Review coach. */
+.review-coach-handoff {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .24);
+  border-radius: 8px;
+  background: rgba(17, 30, 49, .45);
+}
+.review-coach-handoff > strong {
+  color: #eef3fb;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.review-coach-handoff > p {
+  margin: 0;
+  color: #cbd6e8;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.review-coach-handoff > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+}
+.review-coach-handoff > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
