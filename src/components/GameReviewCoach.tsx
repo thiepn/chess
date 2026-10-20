@@ -27,7 +27,8 @@ import {
   repertoireById,
 } from "../openings/repertoire";
 import { ChessBoard } from "./ChessBoard";
-import { gameToTrainingHandoff } from "../coach/gameToTraining";
+import { personalLearningRoute } from "../coach/personalLearningRoute";
+import type { RecordedReviewAttempt } from "../review/practiceLoop";
 
 interface GameReviewCoachProps {
   game: ImportedGame;
@@ -35,6 +36,7 @@ interface GameReviewCoachProps {
   mistake?: PersonalMistake;
   allGames: ImportedGame[];
   allMistakes: PersonalMistake[];
+  practiceHistory: RecordedReviewAttempt[];
   onTrainMistake: (mistakeId: string) => void;
   reflection?: GameReviewReflection;
   openingDeviation?: OpeningDeviation;
@@ -177,6 +179,7 @@ export function GameReviewCoach({
   mistake,
   allGames,
   allMistakes,
+  practiceHistory,
   onTrainMistake,
   reflection,
   openingDeviation,
@@ -351,9 +354,10 @@ export function GameReviewCoach({
     emitExperienceEvent({ feedback: "reveal" });
   }
 
-  const handoff = useMemo(() => gameToTrainingHandoff(
-    game, moment, allGames, allMistakes,
-  ), [game, moment, allGames, allMistakes]);
+  const learningRoute = useMemo(() => personalLearningRoute(
+    game, moment, allGames, allMistakes, practiceHistory,
+  ), [game, moment, allGames, allMistakes, practiceHistory]);
+  const handoff = learningRoute?.handoff;
   const resultMoveSan = retryMove
     ? sanFor(
         moment.positionFen,
@@ -754,6 +758,10 @@ export function GameReviewCoach({
                   <strong>{handoff.observation}</strong>
                   <p>{handoff.gameCountLabel}</p>
                   {handoff.skillTitle && <p>Related skill: {handoff.skillTitle}</p>}
+                  {learningRoute && learningRoute.originalRecall.recordedAttempts > 0 && (
+                    <p>Original position: {learningRoute.originalRecall.cleanAttempts} unaided clean recalls
+                      from {learningRoute.originalRecall.recordedAttempts} verified attempts</p>
+                  )}
                   {handoff.mistakeId && (
                     <button type="button" className="secondary" onClick={() => {
                       persist({ relatedPracticeStarted: true });
@@ -766,6 +774,30 @@ export function GameReviewCoach({
                 </div>
               ) : (
                 <p>No verified game position is available for targeted practice.</p>
+              )}
+
+              {learningRoute?.independentPosition && (
+                <div className="review-coach-transfer-route">
+                  <strong>Different game position</strong>
+                  <p>Move {learningRoute.independentPosition.moveNumber} from another analyzed game.
+                    {learningRoute.independentPosition.recordedAttempts === 0
+                      ? " No practice attempt recorded for this position."
+                      : ` ${learningRoute.independentPosition.recordedAttempts} prior practice attempt(s) recorded.`}
+                  </p>
+                  <button type="button" className="primary" onClick={() => {
+                    persist({ relatedPracticeStarted: true });
+                    onTrainMistake(learningRoute.independentPosition!.mistakeId);
+                  }}>
+                    Practice independent game position <ChevronRight size={16} />
+                  </button>
+                </div>
+              )}
+              {learningRoute?.later && learningRoute.later.analyzedGames > 0 && (
+                <p className="review-coach-later-games">
+                  Later-dated analyzed games: {learningRoute.later.analyzedGames}.
+                  Verified mistakes in this skill: {learningRoute.later.gamesWithVerifiedMistakes}.
+                  Training effectiveness is evaluated separately; this count does not establish improvement.
+                </p>
               )}
 
               {openingDeviation ? (
