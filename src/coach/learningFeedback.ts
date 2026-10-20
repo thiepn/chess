@@ -80,7 +80,8 @@ export function g10LearningFeedback(
     e.evidenceSource === "mixedPuzzle" || e.evidenceSource === "checkpoint",
   );
   const ownedGames = new Map(games.filter(g => g.id && g.source !== "training" &&
-    g.analyzedAt && g.reviewStory).map(g => [g.id, g]));
+    g.analyzedAt && validNow && Number.isFinite(Date.parse(g.analyzedAt)) &&
+    Date.parse(g.analyzedAt) <= now.getTime() && g.reviewStory).map(g => [g.id, g]));
   const verifiedMistakes = mistakes.filter(m => {
     const game = ownedGames.get(m.gameId);
     return Boolean(game && legalReviewMistake(m, game));
