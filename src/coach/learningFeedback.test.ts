@@ -165,6 +165,24 @@ describe("G10 verified game-to-training feedback",()=>{
     expect("improved" in result).toBe(false);
   });
 
+  it("does not include a human game analyzed after the observation date",()=>{
+    const a=sourceGame("a","2026-10-10");
+    const b=sourceGame("b","2026-10-12",["e4","e5"]);
+    const c=sourceGame("c","2026-10-18",["d4","d5"]);
+    const future={...c.game,analyzedAt:"2026-12-01T10:00:00Z"};
+    const history=[
+      ...attempt(a.game,a.mistake,"clean","2026-10-14T10:00:00Z"),
+      ...attempt(b.game,b.mistake,"clean","2026-10-15T10:00:00Z"),
+    ];
+    const route=personalLearningRoute(a.game,a.moment,
+      [a.game,b.game],[a.mistake,b.mistake],history,NOW)!;
+    const feedback=g10LearningFeedback(route,
+      [a.game,b.game,future],[a.mistake,b.mistake,c.mistake],history,[],NOW);
+    expect(feedback.afterIndependentRecall).toEqual({
+      distinctAnalyzedGames:0,gamesWithVerifiedSkillMistake:0,
+    });
+  });
+
   it("rejects unverified, future and foreign attempts and duplicate analytics IDs",()=>{
     const a=sourceGame("a","2026-10-10");
     const b=sourceGame("b","2026-10-12",["e4","e5"]);
