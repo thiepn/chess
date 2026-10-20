@@ -53,7 +53,7 @@ export function gameToTrainingHandoff(
   const gameIdentities = skillId
     ? new Set(verified.filter(item => item.skillIds.includes(skillId)).map(item => {
         const recorded = eligible.get(item.gameId)!;
-        const pgn = recorded.pgn?.trim();
+        const pgn = recorded.pgn?.trim().replace(/\s+/g, " ");
         if (pgn) return `pgn:${pgn}`;
         if (recorded.externalId && recorded.source)
           return `source:${recorded.source}:${recorded.externalId}`;
