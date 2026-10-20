@@ -38,7 +38,7 @@ function distinctPosition(first: string, second: string): boolean {
 }
 
 /** Only dates that identify a real calendar day are compared; import time is not game time. */
-function playedDay(game: ImportedGame): number | null {
+export function playedDay(game: ImportedGame): number | null {
   const raw = game.date?.trim().replaceAll(".", "-");
   if (!raw || !/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
   const timestamp = Date.parse(`${raw}T00:00:00Z`);
