@@ -25,6 +25,8 @@ import { GameReviewCoach } from "./GameReviewCoach";
 interface GameStoryViewProps {
   game: ImportedGame;
   mistakes: PersonalMistake[];
+  allGames: ImportedGame[];
+  allMistakes: PersonalMistake[];
   onBack: () => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
@@ -91,6 +93,8 @@ function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
 export function GameStoryView({
   game,
   mistakes,
+  allGames,
+  allMistakes,
   onBack,
   onTrainMistake,
   onReplayMistake,
@@ -544,6 +548,9 @@ export function GameStoryView({
           game={game}
           moment={coachMoment}
           mistake={coachMistake}
+          allGames={allGames}
+          allMistakes={allMistakes}
+          onTrainMistake={onTrainMistake}
           reflection={reflections[coachMoment.id]}
           openingDeviation={coachDeviation}
           onClose={() => setCoachMomentId(null)}
