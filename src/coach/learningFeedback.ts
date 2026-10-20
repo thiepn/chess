@@ -11,7 +11,7 @@ export interface G10ReviewFeedback {
   clean: number;
   assisted: number;
   missed: number;
-  cleanOnSeparateDays: boolean;
+  spacedCleanRecalls: boolean;
   latestCleanAt: string | null;
 }
 
@@ -41,13 +41,17 @@ function summarizeAttempts(
   const assisted = records.filter(item =>
     item.succeeded && (item.hintsUsed > 0 || item.wrongAttempts > 0),
   );
-  const cleanDays = new Set(clean.map(item => item.occurredAt.slice(0, 10)));
+  const spacedCleanRecalls = clean.some((attempt, index) =>
+    clean.slice(0, index).some(previous =>
+      Date.parse(attempt.occurredAt) - Date.parse(previous.occurredAt) >= 86_400_000,
+    ),
+  );
   return {
     attempted: records.length,
     clean: clean.length,
     assisted: assisted.length,
     missed: records.length - clean.length - assisted.length,
-    cleanOnSeparateDays: cleanDays.size >= 2,
+    spacedCleanRecalls,
     latestCleanAt: clean.at(-1)?.occurredAt ?? null,
   };
 }
