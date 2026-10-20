@@ -165,6 +165,31 @@ describe("G10 verified game-to-training feedback",()=>{
     expect("improved" in result).toBe(false);
   });
 
+  it("retains earlier clean transfer evidence when the coach selects a new unpracticed game",()=>{
+    const a=sourceGame("a","2026-10-10");
+    const b=sourceGame("b","2026-10-12",["e4","e5"]);
+    const c=sourceGame("c","2026-10-14",["d4","d5"]);
+    const d=sourceGame("d","2026-10-18",["c4","e5"]);
+    const games=[a.game,b.game,c.game,d.game];
+    const mistakes=[a.mistake,b.mistake,c.mistake];
+    const history=[
+      ...attempt(a.game,a.mistake,"clean","2026-10-14T10:00:00Z"),
+      ...attempt(b.game,b.mistake,"clean","2026-10-15T10:00:00Z"),
+    ];
+    const route=personalLearningRoute(a.game,a.moment,games,mistakes,history,NOW)!;
+    expect(route.independentPosition?.mistakeId).toBe(c.mistake.id);
+    const feedback=g10LearningFeedback(route,games,mistakes,history,[],NOW);
+    expect(feedback.differentGame?.attempted).toBe(0);
+    expect(feedback.transferAcrossGames).toEqual({
+      verifiedPositions:2,attemptedPositions:1,
+      cleanUnaidedPositions:1,needsIndependentRetry:0,
+    });
+    expect(feedback.afterIndependentRecall).toEqual({
+      distinctAnalyzedGames:1,gamesWithVerifiedSkillMistake:0,
+    });
+    expect(feedback.next).toBe("different-game");
+  });
+
   it("does not include a human game analyzed after the observation date",()=>{
     const a=sourceGame("a","2026-10-10");
     const b=sourceGame("b","2026-10-12",["e4","e5"]);
