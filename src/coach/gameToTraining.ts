@@ -49,10 +49,18 @@ export function gameToTrainingHandoff(
   const skillId = (current?.skillIds ?? moment.skillIds)
     .find(id => moment.skillIds.includes(id) && Boolean(skillById[id])) ?? null;
   if (!current && !skillId) return null;
-  const gameIds = skillId
-    ? new Set(verified.filter(item => item.skillIds.includes(skillId)).map(item => item.gameId))
+  // Re-imported copies of the same recorded game are not independent evidence.
+  const gameIdentities = skillId
+    ? new Set(verified.filter(item => item.skillIds.includes(skillId)).map(item => {
+        const recorded = eligible.get(item.gameId)!;
+        const pgn = recorded.pgn?.trim();
+        if (pgn) return `pgn:${pgn}`;
+        if (recorded.externalId && recorded.source)
+          return `source:${recorded.source}:${recorded.externalId}`;
+        return `id:${recorded.id}`;
+      }))
     : new Set<string>();
-  const evidenceGames = gameIds.size;
+  const evidenceGames = gameIdentities.size;
   const recurring = current !== undefined && evidenceGames >= 2;
   const gameCountLabel = !skillId || !evidenceGames
     ? "No verified multi-game skill pattern"
