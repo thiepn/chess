@@ -67,6 +67,28 @@ describe("Personal Chess Coach game-to-training handoff", () => {
     expect(gameToTrainingHandoff(a.game,a.moment,[a.game],[a.mistake,a.mistake],now)?.recurring).toBe(false);
   });
 
+  it("does not turn duplicate game imports into repeated independent evidence", () => {
+    const a = gameCase("source-one");
+    const b = gameCase("source-copy");
+    const c = gameCase("actual-second-game");
+    const samePgn = "[Event \\"Original analyzed game\\"]\\n1. a3 *";
+    const first = {...a.game, pgn:samePgn};
+    const copy = {...b.game, pgn:samePgn};
+    const second = {...c.game, pgn:"[Event \\"Other game\\"]\\n1. a3 *"};
+    const initial = gameToTrainingHandoff(first, a.moment,
+      [first, copy], [a.mistake, b.mistake], now)!;
+    expect(initial.evidenceGames).toBe(1);
+    expect(initial.recurring).toBe(false);
+    const distinct = gameToTrainingHandoff(first, a.moment,
+      [first, copy, second], [a.mistake, b.mistake, c.mistake], now)!;
+    expect(distinct.evidenceGames).toBe(2);
+    expect(distinct.recurring).toBe(true);
+    const externalA = {...a.game, externalId:"same-source", source:"lichess" as const};
+    const externalB = {...b.game, externalId:"same-source", source:"lichess" as const};
+    expect(gameToTrainingHandoff(externalA, a.moment,
+      [externalA, externalB], [a.mistake, b.mistake], now)?.evidenceGames).toBe(1);
+  });
+
   it("excludes training games and foreign, tampered, or unanalysed records", () => {
     const a=gameCase("a"),b=gameCase("b");
     expect(gameToTrainingHandoff({...a.game,source:"training"},a.moment,
