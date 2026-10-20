@@ -27,6 +27,7 @@ import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
 import { reviewPracticeQueue, verifiedReviewAttempts, type RecordedReviewAttempt } from "../review/practiceLoop";
+import type { LearningAnalyticsEvent } from "../analytics/types";
 import {gameTransferMissions,gameTransferReadiness} from "../review/gameTransfer";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
@@ -38,6 +39,7 @@ interface ReviewViewProps {
   games: ImportedGame[];
   mistakes: PersonalMistake[];
   practiceHistory: RecordedReviewAttempt[];
+  learningEvents: LearningAnalyticsEvent[];
   routePath: string;
   onNavigate: (path: string) => void;
   lichess?: LichessConnection;
@@ -70,6 +72,7 @@ export function ReviewView({
   games,
   mistakes,
   practiceHistory,
+  learningEvents,
   routePath,
   onNavigate,
   lichess,
@@ -328,6 +331,7 @@ export function ReviewView({
         allGames={games}
         allMistakes={mistakes}
         practiceHistory={practiceHistory}
+        learningEvents={learningEvents}
         onBack={() => onNavigate("/review")}
         onTrainMistake={onTrainMistake}
         onReplayMistake={onReplayMistake}
