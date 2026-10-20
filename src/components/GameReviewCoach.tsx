@@ -765,16 +765,29 @@ export function GameReviewCoach({
                   <strong>{handoff.observation}</strong>
                   <p>{handoff.gameCountLabel}</p>
                   {handoff.skillTitle && <p>Related skill: {handoff.skillTitle}</p>}
-                  {learningRoute && learningRoute.originalRecall.recordedAttempts > 0 && (
-                    <p>Original position: {learningRoute.originalRecall.cleanAttempts} unaided clean recalls
-                      from {learningRoute.originalRecall.recordedAttempts} verified attempts</p>
+                  {feedback && feedback.original.attempted > 0 && (
+                    <p>Original review: {feedback.original.clean} clean unaided,
+                      {" "}{feedback.original.assisted} assisted,
+                      {" "}{feedback.original.missed} missed.
+                      {feedback.original.spacedCleanRecalls && " Clean recalls at least 24 hours apart."}
+                    </p>
+                  )}
+                  {feedback && feedback.guided.observed > 0 && (
+                    <p>Recorded lesson/guided evidence: {feedback.guided.successful} successful
+                      {" "}of {feedback.guided.observed}. This is guided practice, not a transfer result.</p>
+                  )}
+                  {feedback && feedback.independentPractice.observed > 0 && (
+                    <p>Recorded mixed/checkpoint practice: {feedback.independentPractice.successful}
+                      {" "}successful of {feedback.independentPractice.observed}.
+                      Different-game recall is assessed separately.</p>
                   )}
                   {handoff.mistakeId && (
                     <button type="button" className="secondary" onClick={() => {
                       persist({ relatedPracticeStarted: true });
                       onTrainMistake(handoff.mistakeId!);
                     }}>
-                      {handoff.due ? "Review due game position" : "Practice this game position"}
+                      {feedback?.next === "original" ? "Next: review original game position"
+    : handoff.due ? "Review due game position" : "Practice this game position"}
                       <ChevronRight size={16} />
                     </button>
                   )}
@@ -791,11 +804,21 @@ export function GameReviewCoach({
                       ? " No practice attempt recorded for this position."
                       : ` ${learningRoute.independentPosition.recordedAttempts} prior practice attempt(s) recorded.`}
                   </p>
+                  {feedback?.differentGame && feedback.differentGame.attempted > 0 && (
+                    <p>Different-game review: {feedback.differentGame.clean} clean unaided,
+                      {" "}{feedback.differentGame.assisted} assisted,
+                      {" "}{feedback.differentGame.missed} missed.
+                      {feedback.differentGame.spacedCleanRecalls &&
+                        " Clean recalls at least 24 hours apart."}
+                    </p>
+                  )}
                   <button type="button" className="primary" onClick={() => {
                     persist({ relatedPracticeStarted: true });
                     onTrainMistake(learningRoute.independentPosition!.mistakeId);
                   }}>
-                    Practice independent game position <ChevronRight size={16} />
+                    {feedback?.next === "different-game" ?
+                      "Next: practice different game position" : "Practice different game position"}
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               )}
@@ -804,6 +827,16 @@ export function GameReviewCoach({
                   Later-dated analyzed games: {learningRoute.later.analyzedGames}.
                   Verified mistakes in this skill: {learningRoute.later.gamesWithVerifiedMistakes}.
                   Training effectiveness is evaluated separately; this count does not establish improvement.
+                </p>
+              )}
+
+              {feedback?.afterIndependentRecall && (
+                <p className="review-coach-later-games">
+                  After clean recall on a different game position:
+                  {" "}{feedback.afterIndependentRecall.distinctAnalyzedGames} later-dated analyzed games;
+                  {" "}{feedback.afterIndependentRecall.gamesWithVerifiedSkillMistake}
+                  {" "}with a verified mistake in this skill.
+                  These are observations, not proof that training caused improvement.
                 </p>
               )}
 
@@ -839,7 +872,7 @@ export function GameReviewCoach({
                     );
                   }}
                 >
-                  Practice {handoff.skillTitle ?? "related skill"}
+                  {feedback?.next === "canonical-skill" ? "Next: practice" : "Practice"} {handoff.skillTitle ?? "related skill"}
                   <ChevronRight size={16} />
                 </button>
               ) : null}
