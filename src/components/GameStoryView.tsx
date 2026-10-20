@@ -22,6 +22,7 @@ import type { OpeningDeviation } from "../openings/types";
 import { ChessBoard } from "./ChessBoard";
 import { GameReviewCoach } from "./GameReviewCoach";
 import type { RecordedReviewAttempt } from "../review/practiceLoop";
+import type { LearningAnalyticsEvent } from "../analytics/types";
 
 interface GameStoryViewProps {
   game: ImportedGame;
@@ -29,6 +30,7 @@ interface GameStoryViewProps {
   allGames: ImportedGame[];
   allMistakes: PersonalMistake[];
   practiceHistory: RecordedReviewAttempt[];
+  learningEvents: LearningAnalyticsEvent[];
   onBack: () => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
@@ -98,6 +100,7 @@ export function GameStoryView({
   allGames,
   allMistakes,
   practiceHistory,
+  learningEvents,
   onBack,
   onTrainMistake,
   onReplayMistake,
@@ -554,6 +557,7 @@ export function GameStoryView({
           allGames={allGames}
           allMistakes={allMistakes}
           practiceHistory={practiceHistory}
+          learningEvents={learningEvents}
           onTrainMistake={onTrainMistake}
           reflection={reflections[coachMoment.id]}
           openingDeviation={coachDeviation}
