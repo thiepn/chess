@@ -766,7 +766,7 @@ export function GameReviewCoach({
                 </div>
               ) : (
                 <p>No verified game position is available for targeted practice.</p>
-              )>
+              )}
 
               {openingDeviation ? (
                 <button
