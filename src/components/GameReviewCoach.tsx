@@ -27,11 +27,15 @@ import {
   repertoireById,
 } from "../openings/repertoire";
 import { ChessBoard } from "./ChessBoard";
+import { gameToTrainingHandoff } from "../coach/gameToTraining";
 
 interface GameReviewCoachProps {
   game: ImportedGame;
   moment: GameStoryMoment;
   mistake?: PersonalMistake;
+  allGames: ImportedGame[];
+  allMistakes: PersonalMistake[];
+  onTrainMistake: (mistakeId: string) => void;
   reflection?: GameReviewReflection;
   openingDeviation?: OpeningDeviation;
   onClose: () => void;
@@ -171,6 +175,9 @@ export function GameReviewCoach({
   game,
   moment,
   mistake,
+  allGames,
+  allMistakes,
+  onTrainMistake,
   reflection,
   openingDeviation,
   onClose,
@@ -344,8 +351,9 @@ export function GameReviewCoach({
     emitExperienceEvent({ feedback: "reveal" });
   }
 
-  const primarySkillId =
-    moment.skillIds.find(Boolean);
+  const handoff = useMemo(() => gameToTrainingHandoff(
+    game, moment, allGames, allMistakes,
+  ), [game, moment, allGames, allMistakes]);
   const resultMoveSan = retryMove
     ? sanFor(
         moment.positionFen,
@@ -741,15 +749,24 @@ export function GameReviewCoach({
               <p className="eyebrow">
                 TRANSFER NOW
               </p>
-              <h3>
-                Test the same lesson immediately.
-              </h3>
-              <p>
-                Do not end review at
-                explanation. Make the same
-                decision again in a different
-                training context.
-              </p>
+              {handoff ? (
+                <div className="review-coach-handoff" role="group" aria-label="Game evidence and next practice">
+                  <strong>{handoff.observation}</strong>
+                  <p>{handoff.gameCountLabel}</p>
+                  {handoff.skillTitle && <p>Related skill: {handoff.skillTitle}</p>}
+                  {handoff.mistakeId && (
+                    <button type="button" className="secondary" onClick={() => {
+                      persist({ relatedPracticeStarted: true });
+                      onTrainMistake(handoff.mistakeId!);
+                    }}>
+                      {handoff.due ? "Review due game position" : "Practice this game position"}
+                      <ChevronRight size={16} />
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <p>No verified game position is available for targeted practice.</p>
+              )>
 
               {openingDeviation ? (
                 <button
@@ -769,7 +786,7 @@ export function GameReviewCoach({
                   Practice repertoire position
                   <ChevronRight size={16} />
                 </button>
-              ) : primarySkillId ? (
+              ) : handoff?.skillId ? (
                 <button
                   className="primary"
                   type="button"
@@ -779,11 +796,11 @@ export function GameReviewCoach({
                         true,
                     });
                     onPracticeSkill(
-                      primarySkillId,
+                      handoff.skillId!,
                     );
                   }}
                 >
-                  Practice related position
+                  Practice {handoff.skillTitle ?? "related skill"}
                   <ChevronRight size={16} />
                 </button>
               ) : null}
