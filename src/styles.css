@@ -9801,3 +9801,37 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   outline: 2px solid #a9c6ff;
   outline-offset: 2px;
 }
+
+/* Original-game transfer sits in the existing coached Review action column. */
+.review-coach-transfer-route {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(159, 187, 228, .2);
+}
+.review-coach-transfer-route strong {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #edf2fc;
+}
+.review-coach-transfer-route p,
+.review-coach-later-games {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #cdd9eb;
+}
+.review-coach-transfer-route > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  white-space: normal;
+  text-align: left;
+}
+.review-coach-transfer-route > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
