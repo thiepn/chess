@@ -2,6 +2,7 @@ import type { LearningAnalyticsEvent } from "../analytics/types";
 import type { ImportedGame, PersonalMistake } from "../games/types";
 import type { RecordedReviewAttempt } from "../review/practiceLoop";
 import { legalReviewMistake, verifiedReviewAttempts } from "../review/practiceLoop";
+import { lessonPositionKey } from "../learning/lessonPositionKey";
 import {
   playedDay, recordedGameIdentity, type PersonalLearningRoute,
 } from "./personalLearningRoute";
@@ -20,6 +21,12 @@ export interface G10LearningFeedback {
   independentPractice: { observed: number; successful: number };
   original: G10ReviewFeedback;
   differentGame: G10ReviewFeedback | null;
+  transferAcrossGames: {
+    verifiedPositions: number;
+    attemptedPositions: number;
+    cleanUnaidedPositions: number;
+    needsIndependentRetry: number;
+  } | null;
   afterIndependentRecall: {
     distinctAnalyzedGames: number;
     gamesWithVerifiedSkillMistake: number;
@@ -97,13 +104,46 @@ export function g10LearningFeedback(
   const differentGame = differentMistake
     ? summarizeAttempts(differentMistake, reviewAttempts, now) : null;
 
+  // A new G9 recommendation must not make earlier verified transfer work
+  // disappear. Different original games, new board geometry, same source skill.
+  const transferred: PersonalMistake[] = [];
+  if (originalMistake && skillId && route.handoff.recurring) {
+    const origin = ownedGames.get(originalMistake.gameId);
+    const usedGames = new Set(origin ? [recordedGameIdentity(origin)] : []);
+    for (const mistake of verifiedMistakes) {
+      const game = ownedGames.get(mistake.gameId);
+      if (!game || mistake.id === originalMistake.id ||
+          !mistake.skillIds.includes(skillId)) continue;
+      const identity = recordedGameIdentity(game);
+      if (usedGames.has(identity)) continue;
+      try {
+        if (lessonPositionKey(originalMistake.positionFen) ===
+            lessonPositionKey(mistake.positionFen)) continue;
+      } catch { continue; }
+      usedGames.add(identity);
+      transferred.push(mistake);
+    }
+  }
+  const positionReports = transferred.map(m =>
+    ({ mistake: m, report: summarizeAttempts(m, reviewAttempts, now) }),
+  );
+  const transferAcrossGames = transferred.length ? {
+    verifiedPositions: transferred.length,
+    attemptedPositions: positionReports.filter(p => p.report.attempted > 0).length,
+    cleanUnaidedPositions: positionReports.filter(p => p.report.clean > 0).length,
+    needsIndependentRetry: positionReports.filter(p =>
+      p.report.attempted > 0 && p.report.clean === 0).length,
+  } : null;
+
   // Date-only game records do not establish same-day ordering. Only evaluate
   // games strictly after a verified clean attempt at a different position.
   let afterIndependentRecall: G10LearningFeedback["afterIndependentRecall"] = null;
-  const earliestClean = differentMistake && validNow
-    ? verifiedReviewAttempts(differentMistake, reviewAttempts, now).find(a =>
-        a.succeeded && a.hintsUsed === 0 && a.wrongAttempts === 0)?.occurredAt
-    : null;
+  const cleanTimes = validNow ? positionReports.flatMap(p =>
+    verifiedReviewAttempts(p.mistake, reviewAttempts, now)
+      .filter(a => a.succeeded && a.hintsUsed === 0 && a.wrongAttempts === 0)
+      .map(a => a.occurredAt),
+  ).sort((a, b) => Date.parse(a) - Date.parse(b)) : [];
+  const earliestClean = cleanTimes[0] ?? null;
   if (earliestClean && skillId) {
     const cleanedDay = Date.parse(earliestClean.slice(0, 10) + "T00:00:00Z");
     const unique = new Set<string>();
@@ -134,6 +174,6 @@ export function g10LearningFeedback(
       successful: guided.filter(e => e.success === true).length },
     independentPractice: { observed: independentPractice.length,
       successful: independentPractice.filter(e => e.success === true).length },
-    original, differentGame, afterIndependentRecall, next,
+    original, differentGame, transferAcrossGames, afterIndependentRecall, next,
   };
 }
