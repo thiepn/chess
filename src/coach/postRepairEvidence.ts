@@ -57,6 +57,9 @@ export function g13RepairEvidence(
   const sourceGame = source ? byId.get(source.gameId) : undefined;
   const original = source ? sinceRepair(source, attempts, completed, now) : [];
   const originalClean = original.filter(clean).length;
+  // A separate-position success must follow the first clean original recall,
+  // not merely the completion timestamp of the prescribed activity.
+  const firstOriginalCleanAt = original.find(clean)?.occurredAt ?? null;
   const positions: { mistake: PersonalMistake; game: ImportedGame;
     attempts: RecordedReviewAttempt[] }[] = [];
   if (source && sourceGame && route.handoff.recurring) {
@@ -73,7 +76,9 @@ export function g13RepairEvidence(
       seenGames.add(identity);
       seenPositions.add(position);
       positions.push({mistake,game,
-        attempts: sinceRepair(mistake, attempts, completed, now)});
+        attempts: firstOriginalCleanAt === null ? [] :
+          sinceRepair(mistake, attempts, completed, now)
+            .filter(a => Date.parse(a.occurredAt) > Date.parse(firstOriginalCleanAt))});
     }
   }
   const cleanAttempts = positions.flatMap(p => p.attempts.filter(clean))

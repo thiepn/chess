@@ -89,6 +89,24 @@ describe("G13 verified post-completion independent transfer",()=>{
     expect(done.next).toBe("review-later-game");
     expect(done.laterGameId).toBe("third");
   });
+  it("requires independent recall after the first clean original recall, not merely after repair",()=>{
+    const f=fixture();
+    const independentBeforeOriginal=recall(f.y,f.b,"2026-10-11T09:00:00Z");
+    const original=recall(f.x,f.a,"2026-10-11T10:00:00Z");
+    const premature=g13RepairEvidence(repair("third"),route(),
+      f.games,f.mistakes,[independentBeforeOriginal,original],NOW)!;
+    expect(premature.original).toEqual({attempted:1,clean:1});
+    expect(premature.independent).toEqual({positions:1,attempted:0,clean:0});
+    expect(premature.next).toBe("practice-independent");
+    expect(premature.laterGameId).toBeNull();
+    const retried=recall(f.y,f.b,"2026-10-12T11:00:00Z");
+    const completed=g13RepairEvidence(repair("third"),route(),
+      f.games,f.mistakes,[independentBeforeOriginal,original,retried],NOW)!;
+    expect(completed.independent).toEqual({positions:1,attempted:1,clean:1});
+    expect(completed.firstIndependentCleanAt).toBe(retried.occurredAt);
+    expect(completed.next).toBe("review-later-game");
+  });
+
   it("rejects a later import of an earlier-played human game",()=>{
     const f=fixture(), early={...f.c,date:"2026.10.11"};
     const attempts=[recall(f.x,f.a,"2026-10-11T10:00:00Z"),
