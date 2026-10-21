@@ -9867,3 +9867,36 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   outline: 2px solid #a9c6ff;
   outline-offset: 2px;
 }
+
+.review-coach-post-training {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .28);
+  border-radius: 8px;
+}
+.review-coach-post-training > strong {
+  color: #eef3fb;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.review-coach-post-training > p {
+  margin: 0;
+  color: #ccd8eb;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.review-coach-post-training > button {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.review-coach-post-training > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
