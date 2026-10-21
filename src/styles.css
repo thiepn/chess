@@ -9835,3 +9835,35 @@ html[data-motion="reduced"] .play-v2-scenario-list > button {
   outline: 2px solid #a9c6ff;
   outline-offset: 2px;
 }
+
+.review-coach-prescription {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .24);
+  border-radius: 8px;
+}
+.review-coach-prescription strong {
+  font-size: 15px;
+  line-height: 1.45;
+  color: #eef3fb;
+}
+.review-coach-prescription p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cbd7e9;
+}
+.review-coach-prescription button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.review-coach-prescription button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
