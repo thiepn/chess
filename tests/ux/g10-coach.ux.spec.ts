@@ -69,6 +69,7 @@ test("G10 source-backed coached Review shows verified training evidence and open
   // No matching composer-authorized prescription exists in this single-game
   // source fixture. The coach must not invent a repair or a plan-launch action.
   await expect(page.locator(".review-coach-prescription")).toHaveCount(0);
+  await expect(page.locator(".review-coach-post-training")).toHaveCount(0);
   await expect(page.getByRole("button",{name:"Open prescribed training plan"})).toHaveCount(0);
   await expect(page.getByText("After clean recall on a different game position")).toHaveCount(0);
   await page.locator(".review-coach-handoff").getByRole("button",{
