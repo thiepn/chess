@@ -137,10 +137,10 @@ test("G12 original completed repair offers actual game-position recall, not a fa
   const repair = page.locator(".review-coach-post-training");
   await expect(repair).toContainText("Completed repair: Review your opening development");
   await expect(repair).toContainText("Original game Review: 0 clean unaided");
-  await expect(repair).toContainText("Recorded game evaluation: untested");
+  await expect(repair).toContainText("Recorded game evaluation: collecting");
   await expect(repair.getByRole("button",{name:"Review original game position"})).toBeVisible();
   await expect(page.getByRole("button",{name:"Review analyzed human game"})).toHaveCount(0);
   await repair.getByRole("button",{name:"Review original game position"}).click();
-  await expect(page).toHaveURL(/\\/train\\/session\\//);
+  await expect(page).toHaveURL(/\/train\/session\//);
   await expect(page.locator(".train-runtime-page")).toBeVisible();
 });
