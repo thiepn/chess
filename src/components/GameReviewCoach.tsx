@@ -865,6 +865,28 @@ export function GameReviewCoach({
                 </p>
               )}
 
+              {followUp && (
+                <section className="review-coach-prescription" aria-label="Linked training repair">
+                  <strong>{followUp.title}</strong>
+                  <p>{followUp.explanation}</p>
+                  {followUp.outcome && followUp.outcome.completions > 0 && (
+                    <p>
+                      Recorded repair evaluation: {followUp.outcome.status}.
+                      {" "}{followUp.outcome.postGames} matching later games assessed.
+                      This is the existing prescription outcome, not a new rating.
+                    </p>
+                  )}
+                  {followUp.action === "open-training" && followUp.planActivityId && (
+                    <button type="button" className="primary" onClick={() => {
+                      persist({ relatedPracticeStarted: true });
+                      onOpenTrainingPlan();
+                    }}>
+                      Open prescribed training plan <ChevronRight size={16} />
+                    </button>
+                  )}
+                </section>
+              )}
+
               {openingDeviation ? (
                 <button
                   className="primary"
