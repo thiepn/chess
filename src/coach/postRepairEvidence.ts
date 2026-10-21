@@ -6,7 +6,7 @@ import type { G12PostTrainingFollowThrough } from "./postTrainingFollowThrough";
 
 export type G13NextAction = "review-original" | "practice-independent" |
   "await-original" | "await-independent" | "review-later-game" | "await-later-game";
-export interface G13RepairEvidence {
+export interface G13RepairEvidenceResult {
   original: { attempted: number; clean: number };
   independent: { positions: number; attempted: number; clean: number };
   firstIndependentCleanAt: string | null;
@@ -36,7 +36,7 @@ export function g13RepairEvidence(
   repair: G12PostTrainingFollowThrough, route: PersonalLearningRoute,
   games: readonly ImportedGame[], mistakes: readonly PersonalMistake[],
   attempts: readonly RecordedReviewAttempt[], now = new Date(),
-): G13RepairEvidence | null {
+): G13RepairEvidenceResult | null {
   const time = now.getTime(), completed = boundedTime(repair.completedAt, time);
   const skill = route.handoff.skillId;
   if (completed === null || !skill || !repair.recordId) return null;

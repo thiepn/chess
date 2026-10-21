@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import type { LearningAnalyticsEvent } from "../../src/analytics/types";
+import { importPgn } from "../../src/games/import";
 import type { PersonalMistake } from "../../src/games/types";
 import { recordReviewAttempt } from "../../src/review/practiceLoop";
 import { FIXED_TIME, visualGameId, visualUserState } from "../visual/fixtures";
@@ -143,6 +144,87 @@ test("G12 original completed repair offers actual game-position recall, not a fa
   await expect(repair.getByRole("button",{name:"Review original game position"})).toBeVisible();
   await expect(page.getByRole("button",{name:"Review analyzed human game"})).toHaveCount(0);
   await repair.getByRole("button",{name:"Review original game position"}).click();
+  await expect(page).toHaveURL(/\/train\/session\//);
+  await expect(page.locator(".train-runtime-page")).toBeVisible();
+});
+
+
+test("G13 keeps post-completion different-game Review actionable without treating prior work as transfer", async ({page}) => {
+  await page.clock.setFixedTime(new Date(FIXED_TIME));
+  const originalGame=structuredClone(visualUserState.games![0]);
+  const moment=originalGame.reviewStory!.moments[0];
+  const move=originalGame.moves.find(m=>m.ply===moment.ply)!;
+  const originalId="g13-original-mistake";
+  moment.mistakeId=originalId;
+  originalGame.criticalMomentIds=[originalId];
+  const original: PersonalMistake={
+    id:originalId,gameId:originalGame.id,ply:moment.ply,
+    moveNumber:move.moveNumber,playerColor:move.color,
+    positionFen:move.beforeFen,actualMove:move.uci,actualSan:move.san,
+    bestMove:moment.bestMove,principalVariation:[...moment.principalVariation],
+    evaluationBefore:moment.evaluationBefore,evaluationAfter:moment.evaluationAfter,
+    centipawnLoss:moment.centipawnLoss,severity:"mistake",
+    skillIds:[...moment.skillIds],explanation:moment.summary,
+    createdAt:"2026-10-07T07:00:00Z",nextReviewAt:"2026-10-07T07:00:00Z",
+    attempts:0,successes:0,resolved:false,
+  };
+  const second=importPgn(`[Event "G13 Independent Source Game"]
+[Site "Offline"]
+[Date "2026.10.07"]
+[White "Learner"]
+[Black "Opponent"]
+[Result "*"]
+
+1. d4 d5 2. c4 e6 *`,"w",FIXED_TIME,{source:"manual"});
+  second.analyzedAt=FIXED_TIME;
+  second.reviewStory={...structuredClone(originalGame.reviewStory!),moments:[]};
+  const different=second.moves[2];
+  const independent:PersonalMistake={
+    ...original,id:"g13-different-mistake",gameId:second.id,
+    ply:different.ply,moveNumber:different.moveNumber,playerColor:different.color,
+    positionFen:different.beforeFen,actualMove:different.uci,actualSan:different.san,
+    bestMove:"g1f3",principalVariation:["g1f3"],
+  };
+  const before=recordReviewAttempt([],original,originalGame,{
+    playedMove:original.bestMove,triedMoves:[original.bestMove],
+    succeeded:true,quality:1,hintsUsed:0,wrongAttempts:0,
+  },new Date("2026-10-07T07:30:00Z"));
+  const after=recordReviewAttempt(before,original,originalGame,{
+    playedMove:original.bestMove,triedMoves:[original.bestMove],
+    succeeded:true,quality:1,hintsUsed:0,wrongAttempts:0,
+  },new Date("2026-10-07T09:00:00Z"));
+  expect(after).toHaveLength(2);
+  const tracking={
+    id:"g13-completed-repair",prescriptionId:"g13-opening-repair",
+    kind:"opening-repair" as const,title:"Review opening development",
+    target:{dimension:"mistake" as const,key:moment.skillIds[0],
+      skillId:moment.skillIds[0],label:"Opening development"},
+    issuedAt:"2026-10-07T07:00:00Z",
+    baseline:{capturedAt:"2026-10-07T07:00:00Z",games:2,score:45},
+    starts:1,completions:1,lastStartedAt:"2026-10-07T07:30:00Z",
+    lastCompletedAt:"2026-10-07T08:00:00Z",
+    completedActionIds:["canonical-action"],
+    trainingSuccesses:1,trainingQualityTotal:1,
+  };
+  const state={...visualUserState,games:[originalGame,second],
+    mistakes:[original,independent],reviewPracticeHistory:after,
+    prescriptionHistory:[tracking]};
+  await page.addInitScript(saved=>{
+    try{localStorage.setItem("thiepn.chess.user-state.v1",JSON.stringify(saved));}
+    catch{/* Origin-bound app state only. */}
+  },state);
+  await page.goto(`/review/${encodeURIComponent(visualGameId)}`,{waitUntil:"domcontentloaded"});
+  await expect(page.locator(".review-workstation")).toBeVisible();
+  await page.locator(".moment-coach-primary").click();
+  await page.locator(".review-thought-grid button").first().click();
+  await page.getByRole("button",{name:"Retry before seeing the answer"}).click();
+  await page.getByRole("button",{name:"Show best"}).click();
+  const repair=page.locator(".review-coach-post-training");
+  await expect(repair).toContainText("Original game Review (all time): 2 clean unaided");
+  await expect(repair).toContainText("Since completion: 1 clean unaided original recalls");
+  await expect(repair).toContainText("0 of 1 different-game positions recalled cleanly");
+  await expect(repair.getByRole("button",{name:"Review original game position"})).toHaveCount(0);
+  await repair.getByRole("button",{name:"Practice independent position"}).click();
   await expect(page).toHaveURL(/\/train\/session\//);
   await expect(page.locator(".train-runtime-page")).toBeVisible();
 });
