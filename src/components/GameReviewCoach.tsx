@@ -34,6 +34,7 @@ import { g10LearningFeedback } from "../coach/learningFeedback";
 import { g11CoachFollowUp } from "../coach/prescriptionHandoff";
 import type { CoachEffectivenessInsight, TrainingPrescription, PrescriptionTrackingRecord } from "../prescriptions/types";
 import { g12PostTrainingFollowThrough } from "../coach/postTrainingFollowThrough";
+import { g13RepairEvidence } from "../coach/postRepairEvidence";
 import type { TrainingActivity } from "../domain/types";
 
 interface GameReviewCoachProps {
@@ -387,6 +388,9 @@ export function GameReviewCoach({
   const postTraining = useMemo(() => learningRoute && feedback
     ? g12PostTrainingFollowThrough(learningRoute, feedback, prescriptionHistory, coachEffectiveness, allGames)
     : null, [learningRoute, feedback, prescriptionHistory, coachEffectiveness, allGames]);
+  const repairEvidence = useMemo(() => postTraining && learningRoute
+    ? g13RepairEvidence(postTraining, learningRoute, allGames, allMistakes, practiceHistory)
+    : null, [postTraining, learningRoute, allGames, allMistakes, practiceHistory]);
   const resultMoveSan = retryMove
     ? sanFor(
         moment.positionFen,
@@ -878,11 +882,11 @@ export function GameReviewCoach({
                   <strong>Completed repair: {postTraining.title}</strong>
                   <p>{postTraining.completions} recorded completion(s).
                     {" "}{postTraining.completedActions} distinct prescribed actions completed.</p>
-                  <p>Original game Review: {postTraining.originalRecall.cleanUnaided} clean unaided,
+                  <p>Original game Review (all time): {postTraining.originalRecall.cleanUnaided} clean unaided,
                     {" "}{postTraining.originalRecall.assisted} assisted,
                     {" "}{postTraining.originalRecall.missed} missed.</p>
                   {postTraining.independentRecall && (
-                    <p>Different-game transfer: {postTraining.independentRecall.cleanPositions}
+                    <p>Different-game Review (all time): {postTraining.independentRecall.cleanPositions}
                       {" "}positions with clean unaided recall from
                       {" "}{postTraining.independentRecall.attemptedPositions} practiced.</p>
                   )}
@@ -893,23 +897,28 @@ export function GameReviewCoach({
                         ` Training success: ${postTraining.outcome.trainingSuccessRate}%.`}
                     </p>
                   )}
-                  <p>{postTraining.explanation}</p>
-                  {postTraining.next === "recall-original" && handoff?.mistakeId && (
+                  {repairEvidence && (
+                    <p>Since completion: {repairEvidence.original.clean} clean unaided original recalls;
+                      {" "}{repairEvidence.independent.clean} of
+                      {" "}{repairEvidence.independent.positions} different-game positions recalled cleanly.</p>
+                  )}
+                  <p>{repairEvidence?.explanation ?? "Post-repair evidence unavailable."}</p>
+                  {repairEvidence?.next === "review-original" && handoff?.mistakeId && (
                     <button type="button" className="secondary" onClick={() => {
                       persist({ relatedPracticeStarted: true });
                       onTrainMistake(handoff.mistakeId!);
                     }}>Review original game position <ChevronRight size={16}/></button>
                   )}
-                  {postTraining.next === "practice-different-game" &&
-                    learningRoute?.independentPosition && (
+                  {repairEvidence?.next === "practice-independent" &&
+                    repairEvidence.practiceMistakeId && (
                     <button type="button" className="primary" onClick={() => {
                       persist({ relatedPracticeStarted: true });
-                      onTrainMistake(learningRoute.independentPosition!.mistakeId);
+                      onTrainMistake(repairEvidence.practiceMistakeId!);
                     }}>Practice independent position <ChevronRight size={16}/></button>
                   )}
-                  {postTraining.next === "review-later-game" && postTraining.laterGameId && (
+                  {repairEvidence?.next === "review-later-game" && repairEvidence.laterGameId && (
                     <button type="button" className="primary" onClick={() =>
-                      onOpenReviewGame(postTraining.laterGameId!)}>
+                      onOpenReviewGame(repairEvidence.laterGameId!)}>
                       Review analyzed human game <ChevronRight size={16}/>
                     </button>
                   )}
