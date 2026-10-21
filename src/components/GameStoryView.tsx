@@ -23,7 +23,7 @@ import { ChessBoard } from "./ChessBoard";
 import { GameReviewCoach } from "./GameReviewCoach";
 import type { RecordedReviewAttempt } from "../review/practiceLoop";
 import type { LearningAnalyticsEvent } from "../analytics/types";
-import type { CoachEffectivenessInsight, TrainingPrescription } from "../prescriptions/types";
+import type { CoachEffectivenessInsight, TrainingPrescription, PrescriptionTrackingRecord } from "../prescriptions/types";
 import type { TrainingActivity } from "../domain/types";
 
 interface GameStoryViewProps {
@@ -35,6 +35,8 @@ interface GameStoryViewProps {
   learningEvents: LearningAnalyticsEvent[];
   prescriptions: TrainingPrescription[];
   coachEffectiveness: CoachEffectivenessInsight;
+  prescriptionHistory: PrescriptionTrackingRecord[];
+  onOpenReviewGame: (id: string) => void;
   scheduledTraining: TrainingActivity[];
   onOpenTrainingPlan: () => void;
   onBack: () => void;
@@ -109,6 +111,8 @@ export function GameStoryView({
   learningEvents,
   prescriptions,
   coachEffectiveness,
+  prescriptionHistory,
+  onOpenReviewGame,
   scheduledTraining,
   onOpenTrainingPlan,
   onBack,
@@ -570,6 +574,8 @@ export function GameStoryView({
           learningEvents={learningEvents}
           prescriptions={prescriptions}
           coachEffectiveness={coachEffectiveness}
+          prescriptionHistory={prescriptionHistory}
+          onOpenReviewGame={onOpenReviewGame}
           scheduledTraining={scheduledTraining}
           onOpenTrainingPlan={onOpenTrainingPlan}
           onTrainMistake={onTrainMistake}
