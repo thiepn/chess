@@ -32,7 +32,8 @@ import type { RecordedReviewAttempt } from "../review/practiceLoop";
 import type { LearningAnalyticsEvent } from "../analytics/types";
 import { g10LearningFeedback } from "../coach/learningFeedback";
 import { g11CoachFollowUp } from "../coach/prescriptionHandoff";
-import type { CoachEffectivenessInsight, TrainingPrescription } from "../prescriptions/types";
+import type { CoachEffectivenessInsight, TrainingPrescription, PrescriptionTrackingRecord } from "../prescriptions/types";
+import { g12PostTrainingFollowThrough } from "../coach/postTrainingFollowThrough";
 import type { TrainingActivity } from "../domain/types";
 
 interface GameReviewCoachProps {
@@ -45,6 +46,8 @@ interface GameReviewCoachProps {
   learningEvents: LearningAnalyticsEvent[];
   prescriptions: TrainingPrescription[];
   coachEffectiveness: CoachEffectivenessInsight;
+  prescriptionHistory: PrescriptionTrackingRecord[];
+  onOpenReviewGame: (id: string) => void;
   scheduledTraining: TrainingActivity[];
   onOpenTrainingPlan: () => void;
   onTrainMistake: (mistakeId: string) => void;
@@ -193,6 +196,8 @@ export function GameReviewCoach({
   learningEvents,
   prescriptions,
   coachEffectiveness,
+  prescriptionHistory,
+  onOpenReviewGame,
   scheduledTraining,
   onOpenTrainingPlan,
   onTrainMistake,
@@ -379,6 +384,9 @@ export function GameReviewCoach({
   const followUp = useMemo(() => learningRoute && feedback
     ? g11CoachFollowUp(learningRoute, feedback, prescriptions, coachEffectiveness, scheduledTraining)
     : null, [learningRoute, feedback, prescriptions, coachEffectiveness, scheduledTraining]);
+  const postTraining = useMemo(() => learningRoute && feedback
+    ? g12PostTrainingFollowThrough(learningRoute, feedback, prescriptionHistory, coachEffectiveness, allGames)
+    : null, [learningRoute, feedback, prescriptionHistory, coachEffectiveness, allGames]);
   const resultMoveSan = retryMove
     ? sanFor(
         moment.positionFen,
