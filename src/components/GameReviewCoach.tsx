@@ -803,7 +803,7 @@ export function GameReviewCoach({
                       {" "}successful of {feedback.independentPractice.observed}.
                       Different-game recall is assessed separately.</p>
                   )}
-                  {handoff.mistakeId && (
+                  {handoff.mistakeId && !postTraining && (
                     <button type="button" className="secondary" onClick={() => {
                       persist({ relatedPracticeStarted: true });
                       onTrainMistake(handoff.mistakeId!);
@@ -818,7 +818,7 @@ export function GameReviewCoach({
                 <p>No verified game position is available for targeted practice.</p>
               )}
 
-              {learningRoute?.independentPosition && (
+              {!postTraining && learningRoute?.independentPosition && (
                 <div className="review-coach-transfer-route">
                   <strong>Different game position</strong>
                   <p>Move {learningRoute.independentPosition.moveNumber} from another analyzed game.
@@ -844,7 +844,7 @@ export function GameReviewCoach({
                   </button>
                 </div>
               )}
-              {feedback?.transferAcrossGames && (
+              {!postTraining && feedback?.transferAcrossGames && (
                 <p className="review-coach-later-games">
                   Different original game positions:
                   {" "}{feedback.transferAcrossGames.cleanUnaidedPositions}
@@ -855,7 +855,7 @@ export function GameReviewCoach({
                   {" "}practiced without a clean recall.
                 </p>
               )}
-              {learningRoute?.later && learningRoute.later.analyzedGames > 0 && (
+              {!postTraining && learningRoute?.later && learningRoute.later.analyzedGames > 0 && (
                 <p className="review-coach-later-games">
                   Later-dated analyzed games: {learningRoute.later.analyzedGames}.
                   Verified mistakes in this skill: {learningRoute.later.gamesWithVerifiedMistakes}.
@@ -863,7 +863,7 @@ export function GameReviewCoach({
                 </p>
               )}
 
-              {feedback?.afterIndependentRecall && (
+              {!postTraining && feedback?.afterIndependentRecall && (
                 <p className="review-coach-later-games">
                   After clean recall on a different game position:
                   {" "}{feedback.afterIndependentRecall.distinctAnalyzedGames} later-dated analyzed games;
@@ -916,7 +916,7 @@ export function GameReviewCoach({
                 </section>
               )}
 
-              {followUp && (
+              {!postTraining && followUp && (
                 <section className="review-coach-prescription" aria-label="Linked training repair">
                   <strong>{followUp.title}</strong>
                   <p>{followUp.explanation}</p>
