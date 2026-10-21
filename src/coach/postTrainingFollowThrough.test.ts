@@ -222,6 +222,21 @@ describe("G12 original completed prescription and real-game follow-through", () 
     expect(result.laterGameId).toBeNull();
   });
 
+  it("does not treat late imports of games played before completion as post-training evidence", () => {
+    const record = tracking();
+    const stalePlayedGame = {
+      ...game("late-import", "2026-10-17T10:00:00Z"),
+      date: "2026.10.06",
+    };
+    const output = g12PostTrainingFollowThrough(route(), feedback(),
+      [record], evaluated([record], [stalePlayedGame]),
+      [stalePlayedGame], NOW)!;
+    expect(output.laterGameId).toBeNull();
+    expect(output.next).toBe("await-human-games");
+    // G12 reports the original evaluator without rewriting its classification.
+    expect(output.outcome?.postGames).toBe(1);
+  });
+
   it("refuses mismatched effectiveness rows rather than assigning unrelated improvement", () => {
     const record = tracking();
     const fabricated = { ...evaluated([record]),
