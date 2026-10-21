@@ -3359,6 +3359,7 @@ export default function App() {
             learningEvents={state.analytics?.events ?? []}
             prescriptions={progressIntelligence.prescriptions}
             coachEffectiveness={progressIntelligence.coachEffectiveness}
+            prescriptionHistory={state.prescriptionHistory ?? []}
             scheduledTraining={session.activities}
             onOpenTrainingPlan={() => navigate("/train")}
             lichess={state.lichess}
