@@ -28,6 +28,8 @@ import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
 import { reviewPracticeQueue, verifiedReviewAttempts, type RecordedReviewAttempt } from "../review/practiceLoop";
 import type { LearningAnalyticsEvent } from "../analytics/types";
+import type { CoachEffectivenessInsight, TrainingPrescription } from "../prescriptions/types";
+import type { TrainingActivity } from "../domain/types";
 import {gameTransferMissions,gameTransferReadiness} from "../review/gameTransfer";
 const GameStoryView = lazy(() =>
   import("./GameStoryView").then((module) => ({ default: module.GameStoryView })),
@@ -40,6 +42,10 @@ interface ReviewViewProps {
   mistakes: PersonalMistake[];
   practiceHistory: RecordedReviewAttempt[];
   learningEvents: LearningAnalyticsEvent[];
+  prescriptions: TrainingPrescription[];
+  coachEffectiveness: CoachEffectivenessInsight;
+  scheduledTraining: TrainingActivity[];
+  onOpenTrainingPlan: () => void;
   routePath: string;
   onNavigate: (path: string) => void;
   lichess?: LichessConnection;
@@ -73,6 +79,10 @@ export function ReviewView({
   mistakes,
   practiceHistory,
   learningEvents,
+  prescriptions,
+  coachEffectiveness,
+  scheduledTraining,
+  onOpenTrainingPlan,
   routePath,
   onNavigate,
   lichess,
@@ -332,6 +342,10 @@ export function ReviewView({
         allMistakes={mistakes}
         practiceHistory={practiceHistory}
         learningEvents={learningEvents}
+        prescriptions={prescriptions}
+        coachEffectiveness={coachEffectiveness}
+        scheduledTraining={scheduledTraining}
+        onOpenTrainingPlan={onOpenTrainingPlan}
         onBack={() => onNavigate("/review")}
         onTrainMistake={onTrainMistake}
         onReplayMistake={onReplayMistake}
