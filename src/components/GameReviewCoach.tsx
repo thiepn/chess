@@ -873,11 +873,54 @@ export function GameReviewCoach({
                 </p>
               )}
 
+              {postTraining && (
+                <section className="review-coach-post-training" aria-label="Completed repair follow-through">
+                  <strong>Completed repair: {postTraining.title}</strong>
+                  <p>{postTraining.completions} recorded completion(s).
+                    {" "}{postTraining.completedActions} distinct prescribed actions completed.</p>
+                  <p>Original game Review: {postTraining.originalRecall.cleanUnaided} clean unaided,
+                    {" "}{postTraining.originalRecall.assisted} assisted,
+                    {" "}{postTraining.originalRecall.missed} missed.</p>
+                  {postTraining.independentRecall && (
+                    <p>Different-game transfer: {postTraining.independentRecall.cleanPositions}
+                      {" "}positions with clean unaided recall from
+                      {" "}{postTraining.independentRecall.attemptedPositions} practiced.</p>
+                  )}
+                  {postTraining.outcome && (
+                    <p>Recorded game evaluation: {postTraining.outcome.status}
+                      {" "}({postTraining.outcome.postGames} matching human games).
+                      {postTraining.outcome.trainingSuccessRate !== null &&
+                        ` Training success: ${postTraining.outcome.trainingSuccessRate}%.`}
+                    </p>
+                  )}
+                  <p>{postTraining.explanation}</p>
+                  {postTraining.next === "recall-original" && handoff?.mistakeId && (
+                    <button type="button" className="secondary" onClick={() => {
+                      persist({ relatedPracticeStarted: true });
+                      onTrainMistake(handoff.mistakeId!);
+                    }}>Review original game position <ChevronRight size={16}/></button>
+                  )}
+                  {postTraining.next === "practice-different-game" &&
+                    learningRoute?.independentPosition && (
+                    <button type="button" className="primary" onClick={() => {
+                      persist({ relatedPracticeStarted: true });
+                      onTrainMistake(learningRoute.independentPosition!.mistakeId);
+                    }}>Practice independent position <ChevronRight size={16}/></button>
+                  )}
+                  {postTraining.next === "review-later-game" && postTraining.laterGameId && (
+                    <button type="button" className="primary" onClick={() =>
+                      onOpenReviewGame(postTraining.laterGameId!)}>
+                      Review analyzed human game <ChevronRight size={16}/>
+                    </button>
+                  )}
+                </section>
+              )}
+
               {followUp && (
                 <section className="review-coach-prescription" aria-label="Linked training repair">
                   <strong>{followUp.title}</strong>
                   <p>{followUp.explanation}</p>
-                  {followUp.outcome && followUp.outcome.completions > 0 && (
+                  {!postTraining && followUp.outcome && followUp.outcome.completions > 0 && (
                     <p>
                       Recorded repair evaluation: {followUp.outcome.status}.
                       {" "}{followUp.outcome.postGames} matching later games assessed.
