@@ -5,7 +5,7 @@ import type {
   PrescriptionEffectivenessRow,
 } from "../prescriptions/types";
 import type { G10LearningFeedback } from "./learningFeedback";
-import type { PersonalLearningRoute } from "./personalLearningRoute";
+import { playedDay, type PersonalLearningRoute } from "./personalLearningRoute";
 
 export type G12NextAction =
   | "recall-original" | "practice-different-game" | "review-later-game"
@@ -55,6 +55,11 @@ function matchingLaterGame(
     const imported = validTimestamp(game.importedAt, now);
     const analyzed = validTimestamp(game.analyzedAt, now);
     if (imported === null || analyzed === null || imported <= completedAt)
+      return false;
+    // Import time alone is not evidence the human game was played after repair.
+    const actualPlayDay = playedDay(game);
+    const completionDay = Date.parse(new Date(completedAt).toISOString().slice(0, 10) + "T00:00:00Z");
+    if (actualPlayDay === null || actualPlayDay <= completionDay)
       return false;
     if (record.target.dimension === "phase" &&
         !game.reviewStory.phases.some(phase => phase.phase === record.target.key))
@@ -135,7 +140,7 @@ export function g12PostTrainingFollowThrough(
     title: record.title,
     completedAt: record.lastCompletedAt!,
     completions: record.completions,
-    completedActions: new Set(record.completedActionIds).size,
+    completedActions: new Set(record.completedActionIds ?? []).size,
     outcome,
     originalRecall: {
       cleanUnaided: feedback.original.clean,
