@@ -8649,12 +8649,12 @@ html[data-motion="reduced"] .learn-v2-skill-row {
 }
 
 .play-v2-control-group legend {
-  margin-bottom: 8px;
-  color: var(--chess-color-text-muted);
-  font-size: 8px;
-  font-weight: 750;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  margin-bottom: 9px;
+  color: var(--chess-color-text-secondary);
+  font-size: 13px;
+  font-weight: 680;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .play-v2-segmented {
@@ -8673,10 +8673,10 @@ html[data-motion="reduced"] .learn-v2-skill-row {
 }
 
 .play-v2-segmented button {
-  min-height: 40px;
-  border-radius: 7px;
-  font-size: 10px;
-  font-weight: 700;
+  min-height: 44px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 650;
 }
 
 .play-v2-segmented button.active,
@@ -8690,7 +8690,10 @@ html[data-motion="reduced"] .learn-v2-skill-row {
 .play-v2-time-list,
 .play-v2-opponent-list {
   display: grid;
-  gap: 4px;
+  gap: 7px;
+}
+.play-v2-opponent-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .play-v2-time-list {
@@ -8698,9 +8701,10 @@ html[data-motion="reduced"] .learn-v2-skill-row {
 }
 
 .play-v2-time-list button {
-  min-height: 48px;
-  padding: 6px 7px;
-  border-radius: 7px;
+  min-height: 62px;
+  min-width: 0;
+  padding: 8px 7px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -8717,32 +8721,40 @@ html[data-motion="reduced"] .learn-v2-skill-row {
 .play-v2-time-list strong,
 .play-v2-opponent-list strong {
   color: inherit;
-  font-size: 9px;
+  font-size: 13px;
+  line-height: 1.25;
 }
-
 .play-v2-time-list small,
 .play-v2-opponent-list small {
-  color: var(--chess-color-text-muted);
-  font-size: 7px;
+  color: var(--chess-color-text-secondary);
+  font-size: 11px;
+  line-height: 1.25;
 }
 
 .play-v2-opponent-list button {
-  min-height: 48px;
-  padding: 6px 8px;
-  border-radius: 7px;
+  min-height: 66px;
+  min-width: 0;
+  padding: 9px;
+  border-radius: 5px;
   display: grid;
-  grid-template-columns: 20px minmax(0, 1fr) auto;
-  gap: 7px;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 6px;
   align-items: center;
   text-align: left;
+}
+.play-v2-opponent-list button > span {
+  overflow: hidden;
+}
+.play-v2-opponent-list button em {
+  grid-column: 2;
 }
 
 .play-v2-opponent-list button em {
   color: var(--chess-color-accent);
-  font-size: 7px;
+  font-size: 11px;
   font-style: normal;
-  font-weight: 750;
-  text-transform: uppercase;
+  font-weight: 680;
+  text-transform: none;
 }
 
 .play-v2-start-block {
@@ -8751,18 +8763,19 @@ html[data-motion="reduced"] .learn-v2-skill-row {
   gap: 10px;
 }
 
-.play-v2-start-block > div {
+.play-v2-start-block > .play-v2-selection-summary {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
-  color: var(--chess-color-text-muted);
-  font-size: 8px;
-}
-
-.play-v2-start-block > div strong {
+  gap: 6px 12px;
   color: var(--chess-color-text-secondary);
-  font-size: 10px;
+  font-size: 12px;
+}
+.play-v2-selection-summary strong {
+  color: var(--chess-color-text-primary);
+  font-size: 13px;
+  font-weight: 650;
 }
 
 .play-v2-start-block .primary {
@@ -8940,6 +8953,44 @@ html[data-motion="reduced"] .learn-v2-skill-row {
   grid-column: 2;
 }
 
+/* Saved games are actions, not notices that obscure the setup. */
+.play-v2 .play-resume-notice,
+.play-v2 .play-recovery-notice {
+  grid-column: 1 / -1;
+  min-width: 0;
+  border-block: 1px solid var(--chess-color-separator-strong);
+  padding: 12px 0;
+  background: transparent;
+  color: var(--chess-color-text-primary);
+}
+.play-resume-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.play-resume-details { display: grid; gap: 3px; min-width: 0; }
+.play-resume-details strong,
+.play-recovery-notice strong { font-size: 15px; font-weight: 680; }
+.play-resume-details span,
+.play-recovery-notice p {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--chess-color-text-secondary);
+  margin: 0;
+}
+.play-resume-action {
+  flex: 0 0 auto;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.play-recovery-notice { display: grid; gap: 10px; }
+.play-recovery-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.play-recovery-actions button { min-height: 44px; }
+
 /* Active game page */
 
 .play-game-page {
@@ -9075,6 +9126,44 @@ html[data-motion="reduced"] .learn-v2-skill-row {
   box-shadow: none;
   scrollbar-width: thin;
 }
+
+.game-save-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  color: var(--chess-color-text-primary);
+  font-size: 14px;
+  font-weight: 620;
+}
+.game-opponent {
+  min-width: 0;
+  max-width: 56%;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--chess-color-text-secondary);
+}
+.game-opponent span {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.game-opponent[data-state="error"] { color: var(--chess-color-error); }
+.game-opponent[data-state="ready"] { color: var(--chess-color-correct); }
+.game-opponent[data-state="thinking"] { color: var(--chess-color-concept); }
+.game-moves-toggle .game-moves-chevron { flex: 0 0 auto; transition: transform 170ms ease; }
+.game-moves-toggle[aria-expanded="true"] .game-moves-chevron { transform: rotate(180deg); }
+.game-result-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.game-result-actions > button { width: 100%; min-height: 46px; font-size: 14px; }
+html[data-motion="reduced"] .game-moves-chevron { transition: none; }
 
 .play-game-page .game-mode-header {
   padding-bottom: 14px;

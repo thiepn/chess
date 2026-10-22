@@ -265,7 +265,7 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto auto auto;
     gap: 8px;
-    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    padding-bottom: calc(112px + env(safe-area-inset-bottom));
     overflow: visible;
   }
   .app-shell-v2 .play-v2-board-column {
@@ -312,12 +312,50 @@
     border-top: 1px solid var(--chess-color-separator);
     background: var(--chess-color-bg-app);
   }
-  .play-v2-start-block > div { display: none; }
+  .app-shell-v2 .play-v2-start-block > .play-v2-selection-summary {
+    display: flex;
+    justify-content: space-between;
+    min-width: 0;
+    min-height: 23px;
+    gap: 6px;
+    padding: 0 2px 5px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .app-shell-v2 .play-v2-start-block > .play-v2-selection-summary strong {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .app-shell-v2 .play-v2-start-block .primary {
     width: 100%;
     min-width: 0;
     min-height: var(--chess-action-height);
   }
+  .app-shell-v2 .play-resume-notice {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    order: -1;
+    margin: 0;
+    padding: 8px 0;
+  }
+  .app-shell-v2 .play-resume-action { min-height: 44px; padding-inline: 10px; }
+  .app-shell-v2 .play-resume-details span { font-size: 12px; }
+  .app-shell-v2 .play-recovery-notice { order: -2; }
+  .app-shell-v2 .play-v2-time-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .app-shell-v2 .play-v2-opponent-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .app-shell-v2 .play-v2-opponent-list button {
+    min-width: 0;
+    min-height: 58px;
+    padding: 7px;
+  }
+  .app-shell-v2 .play-v2-time-list button { min-height: 56px; }
   .play-v2-scenarios, .play-v2-human { display: grid; min-width: 0; }
   .play-v2-scenarios { order: 2; }
   .play-v2-human { order: 3; grid-template-columns: minmax(0, 1fr); }
@@ -751,6 +789,17 @@
     min-height: 0;
     overflow: hidden;
   }
+  .app-shell-v2 .play-game-page:has(> p[role="alert"]) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .app-shell-v2 .play-game-page > p[role="alert"] {
+    margin: 0;
+    padding: 5px 8px;
+    color: var(--chess-color-error);
+    background: var(--chess-color-bg-app);
+    font-size: 13px;
+  }
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-arena {
     height: 100%;
     min-height: 0;
@@ -788,6 +837,9 @@
     width: min(100%, 44svh);
     max-width: calc(100vw - 14px);
     flex: 0 1 auto;
+  }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-finished .game-board-column .chess-board-wrap {
+    width: min(100%, 30svh);
   }
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-player-strip {
     width: 100%;
@@ -882,8 +934,21 @@
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-result-card {
     min-height: 0;
     flex: 1 1 auto;
+    margin: 2px 0 0;
     overflow-y: auto;
     overscroll-behavior-y: contain;
+  }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-result-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    margin: 8px 0 0;
+    padding: 7px 0 max(4px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--chess-color-separator-strong);
+    background: var(--chess-color-bg-raised);
+  }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-result-actions > button {
+    min-height: 44px;
   }
   .app-shell-v2.app-shell-mode-focus .app-main {
     min-height: 0;
@@ -1043,7 +1108,10 @@
   }
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column { min-height: 0; }
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column .chess-board-wrap {
-    width: min(100%, calc(100dvh - 142px));
+    width: min(100%, calc(100dvh - 174px));
+  }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-finished .game-board-column .chess-board-wrap {
+    width: min(100%, calc(100dvh - 214px));
   }
   :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-side-panel {
     min-height: 0;

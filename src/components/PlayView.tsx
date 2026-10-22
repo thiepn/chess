@@ -3,6 +3,7 @@ import { DEFAULT_POSITION, type Color } from "chess.js";
 import {
   ChevronRight,
   Clock3,
+  RotateCcw,
   Compass,
   Link2,
   Shield,
@@ -100,6 +101,39 @@ function readPlaySnapshot(owner: string): PlaySessionSnapshot | undefined {
     return undefined;
   }
 }
+function hasUnreadablePlaySnapshot(owner: string): boolean {
+  try {
+    if (window.localStorage.getItem(storageKey(owner)) === null) return false;
+    const session = readPlaySnapshot(owner);
+    if (!session) return true;
+    const checkpoint = session.checkpoint;
+    return Boolean(checkpoint && (
+      checkpoint.version !== 1 ||
+      !Array.isArray(checkpoint.moves) ||
+      typeof checkpoint.initialFen !== "string" ||
+      !checkpoint.clock
+    ));
+  } catch {
+    return false;
+  }
+}
+
+function exportPlayRecoveryFile(owner: string): boolean {
+  try {
+    const raw = window.localStorage.getItem(storageKey(owner));
+    if (!raw) return false;
+    const url = URL.createObjectURL(new Blob([raw], { type: "application/json" }));
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "chess-unfinished-game.json";
+    anchor.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function writePlaySnapshot(owner: string, snapshot: PlaySessionSnapshot): boolean {
   try {
     window.localStorage.setItem(storageKey(owner), JSON.stringify(snapshot));
@@ -133,6 +167,7 @@ export function PlayView({
   const [timeControl, setTimeControl] = useState<TimeControlId>("15+10");
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
+  const [, refreshSavedSession] = useState(0);
 
   // This callback must retain its identity across parent renders. Otherwise
   // GameArena's checkpoint effect performs a disk write whenever unrelated
@@ -154,6 +189,7 @@ export function PlayView({
   );
 
   const latestSnapshot = readPlaySnapshot(storageOwner);
+  const unreadableSnapshot = hasUnreadablePlaySnapshot(storageOwner);
   const snapshot = route.mode === "game" && latestSnapshot?.path === routePath
     ? latestSnapshot
     : undefined;
@@ -172,9 +208,15 @@ export function PlayView({
   const selectedScenario = selectedScenarioId
     ? scenarioById[selectedScenarioId]
     : undefined;
+  const unfinishedGame = latestSnapshot?.checkpoint &&
+    Array.isArray(latestSnapshot.checkpoint.moves) &&
+    !latestSnapshot.checkpoint.finished ? latestSnapshot : undefined;
+  const selectedTime = timeControls.find((item) => item.id === timeControl)?.label ?? timeControl;
 
   useEffect(() => {
     if (!externalScenario || route.mode === "game") return;
+    // A malformed saved session must never be replaced by a routed scenario.
+    if (hasUnreadablePlaySnapshot(storageOwner)) return;
     const previous = readPlaySnapshot(storageOwner);
     if (previous?.checkpoint && !previous.checkpoint.finished &&
         !window.confirm("Starting another game will replace your unfinished game. Continue?")) {
@@ -202,6 +244,7 @@ export function PlayView({
   }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode, storageOwner]);
 
   function startGame(setup: PlaySetup, scenario?: TrainingScenario) {
+    if (hasUnreadablePlaySnapshot(storageOwner)) return;
     const previous = readPlaySnapshot(storageOwner);
     if (previous?.checkpoint && !previous.checkpoint.finished &&
         !window.confirm("Replace your unfinished game?")) return;
@@ -261,7 +304,7 @@ export function PlayView({
           <p>
             This game could not be restored. Return to Play and start a new one.
           </p>
-          <button className="secondary" type="button" onClick={exitGame}>
+          <button className="secondary" type="button" onClick={() => onNavigate("/play", { replace: true })}>
             Back to Play
           </button>
         </section>
@@ -286,16 +329,7 @@ export function PlayView({
       <section className="play-game-recovery" role="alert">
         <strong>Saved game needs recovery</strong>
         <p>{recoveryError}</p>
-        <button className="secondary" type="button" onClick={() => {
-          const raw = localStorage.getItem(storageKey(storageOwner));
-          if (!raw) return;
-          const url = URL.createObjectURL(new Blob([raw], { type: "application/json" }));
-          const anchor = document.createElement("a");
-          anchor.href = url;
-          anchor.download = "chess-unfinished-game.json";
-          anchor.click();
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-        }}>Export recovery file</button>
+        <button className="secondary" type="button" onClick={() => exportPlayRecoveryFile(storageOwner)}>Export recovery file</button>
         <button className="secondary" type="button" onClick={() => onNavigate("/play", { replace: true })}>Back to Play</button>
       </section>
     );
@@ -324,14 +358,37 @@ export function PlayView({
 
   return (
     <section className="play-v2" aria-labelledby="play-setup-title">
-      {saveFailed && <p role="alert">Game storage is unavailable. Check browser storage settings before playing.</p>}
-      {latestSnapshot?.checkpoint && !latestSnapshot.checkpoint.finished && (
-        <div className="play-resume-notice">
-          <strong>Unfinished game{latestSnapshot.checkpoint.suspended ? " · paused" : ""}</strong>
-          <button type="button" className="secondary" onClick={() => onNavigate(latestSnapshot.path)}>
-            Resume saved game
+      {saveFailed && <p role="alert">Game could not be saved. Check browser storage before starting another game.</p>}
+      {unreadableSnapshot && (
+        <section className="play-recovery-notice" role="alert" aria-label="Saved game recovery">
+          <strong>Saved game needs recovery</strong>
+          <p>The previous session cannot be read. Export its original data before replacing it.</p>
+          <div className="play-recovery-actions">
+            <button type="button" className="primary" onClick={() => exportPlayRecoveryFile(storageOwner)}>Export backup</button>
+            <button type="button" className="secondary" onClick={() => {
+              if (!window.confirm("Discard the unreadable saved game? This cannot be undone. Export the backup first.")) return;
+              clearPlaySnapshot(storageOwner);
+              refreshSavedSession((count) => count + 1);
+            }}>Discard unreadable game</button>
+          </div>
+        </section>
+      )}
+      {unfinishedGame && (
+        <section className="play-resume-notice" aria-label="Unfinished game">
+          <div className="play-resume-details">
+            <strong>Unfinished game</strong>
+            <span>
+              {unfinishedGame.checkpoint!.moves.length} moves ·
+              {unfinishedGame.setup.playerColor === "w" ? " White" : " Black"} ·
+              {" "}{unfinishedGame.setup.timeControl ?? "Untimed"}
+              {unfinishedGame.checkpoint!.suspended ? " · saved" : " · in progress"}
+            </span>
+          </div>
+          <button type="button" className="primary play-resume-action" onClick={() => onNavigate(unfinishedGame.path)}>
+            <RotateCcw size={17} aria-hidden="true" />
+            Resume game
           </button>
-        </div>
+        </section>
       )}
       <div className="play-v2-board-column">
         <div className="play-v2-board-label">
@@ -353,22 +410,17 @@ export function PlayView({
 
       <aside className="play-v2-setup">
         <div className="play-v2-setup-head">
-          <p className="eyebrow">PLAY</p>
           <h1 id="play-setup-title">
             {selectedScenario ? selectedScenario.title : "New game"}
           </h1>
-          <p>
-            {selectedScenario
-              ? selectedScenario.description
-              : "Choose your color, time, and opponent, then play."}
-          </p>
+          {selectedScenario && <p>{selectedScenario.description}</p>}
         </div>
 
         {!selectedScenario && (
           <>
             <fieldset className="play-v2-control-group">
               <legend>Color</legend>
-              <div className="play-v2-segmented">
+              <div className="play-v2-segmented" role="group" aria-label="Choose playing color">
                 <button
                   type="button"
                   className={side === "w" ? "active" : ""}
@@ -390,7 +442,7 @@ export function PlayView({
 
             <fieldset className="play-v2-control-group">
               <legend>Time</legend>
-              <div className="play-v2-time-list">
+              <div className="play-v2-time-list" role="group" aria-label="Choose time control">
                 {timeControls.map((item) => (
                   <button
                     key={item.id}
@@ -413,7 +465,7 @@ export function PlayView({
 
         <fieldset className="play-v2-control-group">
           <legend>Opponent</legend>
-          <div className="play-v2-opponent-list">
+          <div className="play-v2-opponent-list" role="group" aria-label="Choose opponent">
             {profileOrder.map((id) => {
               const profile =
                 id === "adaptive"
@@ -441,14 +493,15 @@ export function PlayView({
         </fieldset>
 
         <div className="play-v2-start-block">
-          <div>
-            <span>Opponent</span>
+          <div className="play-v2-selection-summary" aria-live="polite">
+            <span>{selectedScenario ? "Position" : side === "w" ? "White" : "Black"}</span>
             <strong>{resolvedProfile.name}</strong>
-
+            <span>{selectedScenario ? "Untimed" : selectedTime}</span>
           </div>
           <button
             className="primary"
             type="button"
+            disabled={unreadableSnapshot}
             onPointerEnter={() => void import("./GameArena")}
             onFocus={() => void import("./GameArena")}
             onClick={() => {
@@ -473,7 +526,7 @@ export function PlayView({
               }
             }}
           >
-            {selectedScenario ? "Play position" : "Start game"}
+            {selectedScenario ? "Start position" : "Start game"}
             <ChevronRight size={17} />
           </button>
         </div>
