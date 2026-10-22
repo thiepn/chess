@@ -11,6 +11,7 @@ import "./styles/p59-visual-qa.css";
 import "./styles/p59b-refinement.css";
 import "./styles/p64-premium-finishing.css";
 import "./styles/p107-study.css";
+import "./styles/mobile-app-viewport.css";
 
 import { initializeChessAccount } from "./account/chessSession";
 

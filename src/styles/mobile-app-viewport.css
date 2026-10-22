@@ -1,0 +1,337 @@
+/* Mobile app window. Only the working panel scrolls; the browser page does not.
+   Keep pinch accessibility available rather than disabling user scaling. */
+@media (max-width: 820px) {
+  html, body, #root {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  .app-shell-v2 {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .app-shell-v2 .app-topbar {
+    position: relative;
+    top: auto;
+    flex: 0 0 auto;
+    z-index: 60;
+  }
+  .app-shell-v2 .app-main {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-x: clip;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .app-shell-v2 :is(button, a, [role="button"]) {
+    touch-action: manipulation;
+  }
+  /* The lesson launch action is always above the five-destination tab bar. */
+  .app-shell-v2 .app-main:has(.train-room) {
+    padding-bottom: calc(var(--chess-mobile-nav-safe-height) + 106px);
+  }
+  .train-room .train-task-actions {
+    position: fixed;
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    bottom: var(--chess-mobile-nav-safe-height);
+    z-index: 35;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    gap: 8px;
+    margin: 0;
+    padding: 8px;
+    background: var(--chess-color-bg-app);
+    border: 1px solid var(--chess-color-separator);
+    border-bottom: 0;
+  }
+  .train-room .train-task-actions button {
+    min-width: 0;
+    min-height: 48px;
+  }
+  .app-main:has(.play-v2) {
+    padding-bottom: calc(var(--chess-mobile-nav-safe-height) + 112px);
+  }
+  .play-v2 .play-v2-start-block {
+    position: fixed;
+    bottom: var(--chess-mobile-nav-safe-height);
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    z-index: 35;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid var(--chess-color-separator);
+    border-bottom: 0;
+    background: var(--chess-color-bg-app);
+  }
+  .play-v2 .play-v2-start-block > button { min-height: 48px; }
+
+  /* Routed training consumes the actual visual viewport, including PWA mode.
+     Non-board activities may scroll within main; no root document scrolling. */
+  .app-shell-v2.training-session-open .app-main {
+    height: auto;
+    padding: 0 max(8px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+    overflow-y: hidden;
+  }
+  .train-runtime-page {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 2px minmax(0, 1fr);
+    overflow: hidden;
+  }
+  .train-runtime-header, .train-runtime-progress {
+    position: relative;
+    top: auto;
+    margin: 0;
+  }
+  .train-runtime-header { min-height: 44px; padding-inline: 4px; }
+  .train-runtime-body {
+    height: 100%;
+    min-height: 0;
+    padding: 6px 0 max(4px, env(safe-area-inset-bottom));
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .train-runtime-body:has(.lesson-runner .lesson-stage) {
+    overflow: hidden;
+  }
+  .train-runtime-body:has(.lesson-runner .lesson-stage) .train-runtime-runner {
+    height: 100%;
+    min-height: 0;
+  }
+  .train-runtime-body .lesson-runner:has(.lesson-stage) {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 5px;
+    overflow: hidden;
+  }
+  .train-runtime-body .lesson-runner-v2:has(.lesson-stage) {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .train-runtime-body .lesson-progress-rail {
+    min-height: 0;
+    padding: 3px;
+    gap: 3px;
+  }
+  .train-runtime-body .lesson-progress-stage { padding: 3px; gap: 0; }
+  .train-runtime-body .lesson-progress-stage > span { width: 18px; height: 18px; }
+  .train-runtime-body .lesson-progress-stage small { display: none; }
+
+  .train-runtime-body.board-first-sheet .lesson-stage {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 6px;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .train-runtime-body.board-first-sheet .lesson-board-column {
+    position: relative;
+    top: auto;
+    align-self: start;
+    justify-self: center;
+    width: 100%;
+    min-height: 0;
+    max-width: min(100%, max(175px, calc(100dvh - 355px)));
+  }
+  .train-runtime-body.board-first-sheet .lesson-board-column .chess-board-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  .train-runtime-body.board-first-sheet .lesson-instruction {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .train-runtime-body.board-first-sheet .lesson-instruction > :first-child {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 2px;
+  }
+  .train-runtime-body.board-first-sheet .lesson-instruction h2 {
+    font-size: clamp(19px, 5vw, 24px);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .train-runtime-body.board-first-sheet .lesson-controls {
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 6px 0 0;
+    margin: 0;
+    border-top: 1px solid var(--chess-color-separator);
+    background: var(--chess-color-bg-app);
+  }
+  .train-runtime-body.board-first-sheet .lesson-button-row {
+    position: static;
+    bottom: auto;
+    z-index: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    background: transparent;
+  }
+  .train-runtime-body.board-first-sheet .lesson-button-row > button {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .train-runtime-body.board-first-sheet .lesson-mastery-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    padding: 4px 6px;
+  }
+  .train-runtime-body.board-first-sheet .lesson-mastery-preview small {
+    display: none;
+  }
+  .train-runtime-body.board-first-sheet .puzzle-source-line {
+    margin-bottom: 5px;
+    padding: 0;
+  }
+  .train-runtime-body.board-first-sheet .puzzle-source-line span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  /* Never let long exercise instructions take the Continue footer away. */
+  .train-runtime-body.board-first-sheet .lesson-instruction > :first-child:focus-visible {
+    outline-offset: -2px;
+  }
+  /* Play has its own board and move list; the list is the scroll container. */
+  .app-shell-v2.play-session-open .app-main:has(.play-game-page) {
+    padding: 4px 8px max(4px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+  .play-session-open .play-game-page,
+  .play-session-open .play-game-page .game-arena {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+  }
+  .play-session-open .play-game-page .game-layout {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 4px;
+    padding: 4px 0 0;
+    overflow: hidden;
+  }
+  .play-session-open .play-game-page .game-board-column {
+    gap: 2px;
+    min-height: 0;
+  }
+  .play-session-open .play-game-page .game-board-column .chess-board-wrap {
+    width: min(100%, max(175px, calc(100dvh - 330px)));
+  }
+  .play-session-open .play-game-page .game-player-strip {
+    min-height: 34px;
+  }
+  .play-session-open .play-game-page .game-side-panel {
+    min-height: 0;
+    height: 100%;
+    padding-top: 4px;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Landscape and short devices allocate board space by *height*, not width. */
+@media (max-width: 960px) and (orientation: landscape) and (max-height: 650px) {
+  html, body, #root { height: 100%; overflow: hidden; }
+  .app-shell-v2 { height: 100dvh; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .app-shell-v2 .app-main { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+  .app-shell-v2.training-session-open .app-main { overflow: hidden; }
+  .train-runtime-page {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto 2px minmax(0, 1fr);
+    overflow: hidden;
+  }
+  .train-runtime-body { height: 100%; min-height: 0; overflow: auto; padding: 3px 0; }
+  .train-runtime-body:has(.lesson-runner .lesson-stage) { overflow: hidden; }
+  .train-runtime-body .lesson-runner:has(.lesson-stage) { height: 100%; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr); overflow: hidden; }
+  .train-runtime-body .lesson-runner-v2:has(.lesson-stage) { grid-template-rows: auto minmax(0, 1fr); }
+  .train-runtime-body .lesson-progress-rail { padding: 2px; }
+  .train-runtime-body .lesson-progress-stage { padding: 2px; }
+  .train-runtime-body .lesson-progress-stage small { display: none; }
+  .train-runtime-body.board-first-sheet .lesson-stage {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 49%) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 8px;
+    overflow: hidden;
+  }
+  .train-runtime-body.board-first-sheet .lesson-board-column {
+    position: relative;
+    top: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: min(100%, calc(100dvh - 68px));
+  }
+  .train-runtime-body.board-first-sheet .lesson-board-column .chess-board-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  .train-runtime-body.board-first-sheet .lesson-instruction {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: flex-start;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+    padding: 0;
+  }
+  .train-runtime-body.board-first-sheet .lesson-instruction > :first-child {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .train-runtime-body.board-first-sheet .lesson-controls {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 5px 0;
+    background: var(--chess-color-bg-app);
+  }
+  .train-runtime-body.board-first-sheet .lesson-button-row {
+    position: static;
+    bottom: auto;
+    padding: 0;
+    background: transparent;
+  }
+  .train-runtime-body.board-first-sheet .lesson-mastery-preview small { display: none; }
+  .train-runtime-body.board-first-sheet .puzzle-source-line span { display: none; }
+}
