@@ -533,8 +533,12 @@
     min-height: 34px;
     flex: 0 0 auto;
   }
-  .play-session-open .play-game-page .game-player-strip small { font-size: 11px; }
-  .play-session-open .play-game-page .game-clock { height: 34px; }
+  .play-session-open .play-game-page .game-player-strip small { font-size: 12px; }
+  .play-session-open .play-game-page .game-clock {
+    height: 40px;
+    min-width: 90px;
+  }
+  .play-session-open .play-game-page .game-clock strong { font-size: 16px; }
   .play-session-open .play-game-page .game-turn-line {
     width: 100%;
     min-height: 22px;

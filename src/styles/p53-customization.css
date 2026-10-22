@@ -68,27 +68,27 @@ body,
 /* Board palettes. Semantic overlays remain the P39/P52 colors. */
 
 html[data-board-theme="tournament"] {
-  --chess-board-light: #d5cebd;
-  --chess-board-dark: #62665f;
-  --chess-board-frame: #171918;
-  --chess-board-coordinate-light: rgba(20, 22, 21, 0.54);
-  --chess-board-coordinate-dark: rgba(244, 241, 233, 0.52);
+  --chess-board-light: #e8e0cf;
+  --chess-board-dark: #7a897b;
+  --chess-board-frame: #171b18;
+  --chess-board-coordinate-light: #485148;
+  --chess-board-coordinate-dark: #f0ebdf;
 }
 
 html[data-board-theme="walnut"] {
-  --chess-board-light: #d9c5a5;
-  --chess-board-dark: #805f45;
+  --chess-board-light: #ead6b7;
+  --chess-board-dark: #86694d;
   --chess-board-frame: #211915;
-  --chess-board-coordinate-light: rgba(42, 30, 22, 0.58);
-  --chess-board-coordinate-dark: rgba(255, 246, 231, 0.58);
+  --chess-board-coordinate-light: #503924;
+  --chess-board-coordinate-dark: #f7ede1;
 }
 
 html[data-board-theme="slate"] {
-  --chess-board-light: #cbd1ce;
-  --chess-board-dark: #59666a;
+  --chess-board-light: #d9e0dc;
+  --chess-board-dark: #718287;
   --chess-board-frame: #121719;
-  --chess-board-coordinate-light: rgba(18, 28, 30, 0.56);
-  --chess-board-coordinate-dark: rgba(244, 248, 247, 0.56);
+  --chess-board-coordinate-light: #2f4245;
+  --chess-board-coordinate-dark: #f1f5f2;
 }
 
 /* Piece treatments retain recognizable Staunton silhouettes. */
@@ -174,7 +174,7 @@ html[data-board-theme="slate"] {
   background: transparent;
   color: var(--chess-color-text-muted);
   cursor: pointer;
-  font-size: 0.67rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -203,7 +203,7 @@ html[data-board-theme="slate"] {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 750;
 }
 
@@ -226,7 +226,7 @@ html[data-board-theme="slate"] {
   align-content: center;
   gap: 6px;
   cursor: pointer;
-  font-size: 0.62rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
@@ -288,12 +288,12 @@ html[data-board-theme="slate"] {
 
 .board-theme-swatch i:nth-child(1),
 .board-theme-swatch i:nth-child(4) {
-  background: #d5cebd;
+  background: #e8e0cf;
 }
 
 .board-theme-swatch i:nth-child(2),
 .board-theme-swatch i:nth-child(3) {
-  background: #62665f;
+  background: #7a897b;
 }
 
 .board-theme-swatch[data-preview-board-theme="walnut"] {
@@ -302,12 +302,12 @@ html[data-board-theme="slate"] {
 
 .board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(1),
 .board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(4) {
-  background: #d9c5a5;
+  background: #ead6b7;
 }
 
 .board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(2),
 .board-theme-swatch[data-preview-board-theme="walnut"] i:nth-child(3) {
-  background: #805f45;
+  background: #86694d;
 }
 
 .board-theme-swatch[data-preview-board-theme="slate"] {
@@ -316,12 +316,12 @@ html[data-board-theme="slate"] {
 
 .board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(1),
 .board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(4) {
-  background: #cbd1ce;
+  background: #d9e0dc;
 }
 
 .board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(2),
 .board-theme-swatch[data-preview-board-theme="slate"] i:nth-child(3) {
-  background: #59666a;
+  background: #718287;
 }
 
 .piece-style-preview {
