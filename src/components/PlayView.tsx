@@ -94,7 +94,16 @@ function readPlaySnapshot(owner: string): PlaySessionSnapshot | undefined {
     const raw = window.localStorage.getItem(storageKey(owner));
     if (!raw) return undefined;
     const parsed = JSON.parse(raw) as PlaySessionSnapshot;
-    if (!parsed || typeof parsed.path !== "string" || !parsed.setup) return undefined;
+    if (!parsed || typeof parsed !== "object" || typeof parsed.path !== "string" ||
+        !parsed.setup || typeof parsed.setup !== "object") return undefined;
+    const setup = parsed.setup;
+    if (!["standard", "opening", "conversion", "defense", "endgame", "replay"].includes(setup.mode) ||
+        !["w", "b"].includes(setup.playerColor) ||
+        !profileOrder.includes(setup.aiProfileId) ||
+        (setup.timeControl !== undefined &&
+          !timeControls.some((item) => item.id === setup.timeControl)) ||
+        (setup.scenarioId !== undefined && typeof setup.scenarioId !== "string") ||
+        parsed.path !== playGamePath(setup)) return undefined;
     return parsed;
   } catch {
     // Preserve an unreadable snapshot for manual recovery; never delete it.
@@ -107,12 +116,18 @@ function hasUnreadablePlaySnapshot(owner: string): boolean {
     const session = readPlaySnapshot(owner);
     if (!session) return true;
     const checkpoint = session.checkpoint;
-    return Boolean(checkpoint && (
-      checkpoint.version !== 1 ||
-      !Array.isArray(checkpoint.moves) ||
-      typeof checkpoint.initialFen !== "string" ||
-      !checkpoint.clock
-    ));
+    if (!checkpoint) return false;
+    const scenario = session.scenario ??
+      (session.setup.scenarioId ? scenarioById[session.setup.scenarioId] : undefined);
+    if (session.setup.scenarioId && !scenario) return true;
+    const initialFen = scenario?.fen ?? DEFAULT_POSITION;
+    try {
+      restoreCheckpoint(initialFen, checkpoint,
+        scenario ? "untimed" : session.setup.timeControl ?? "untimed", Date.now());
+      return false;
+    } catch {
+      return true;
+    }
   } catch {
     return false;
   }
@@ -238,7 +253,11 @@ export function PlayView({
       scenario: externalScenario,
       returnPath: externalScenarioReturnPath,
     };
-    if (!writePlaySnapshot(storageOwner, nextSnapshot)) setSaveFailed(true);
+    if (!writePlaySnapshot(storageOwner, nextSnapshot)) {
+      setSaveFailed(true);
+      return;
+    }
+    setSaveFailed(false);
     // Replay is one routed action: do not leave a temporary Play setup in history.
     onNavigate(path, { replace: true });
   }, [externalScenario, externalScenarioReturnPath, onNavigate, profileId, route.mode, storageOwner]);
@@ -248,13 +267,19 @@ export function PlayView({
     const previous = readPlaySnapshot(storageOwner);
     if (previous?.checkpoint && !previous.checkpoint.finished &&
         !window.confirm("Replace your unfinished game?")) return;
+    if (previous?.checkpoint?.finished && !previous.checkpoint.finished.reviewSent &&
+        !window.confirm("The previous completed game has not transferred to Review. Replacing it may lose its only local copy. Continue?")) return;
     const path = playGamePath(setup);
     const nextSnapshot: PlaySessionSnapshot = {
       path,
       setup,
       scenario,
     };
-    if (!writePlaySnapshot(storageOwner, nextSnapshot)) setSaveFailed(true);
+    if (!writePlaySnapshot(storageOwner, nextSnapshot)) {
+      setSaveFailed(true);
+      return;
+    }
+    setSaveFailed(false);
     onNavigate(path);
   }
 
@@ -268,6 +293,7 @@ export function PlayView({
       setSaveFailed(true);
       return;
     }
+    setSaveFailed(false);
     onExternalScenarioExit?.();
     onNavigate(playReturnPath(current.returnPath), { replace: true });
   }
@@ -358,7 +384,7 @@ export function PlayView({
 
   return (
     <section className="play-v2" aria-labelledby="play-setup-title">
-      {saveFailed && <p role="alert">Game could not be saved. Check browser storage before starting another game.</p>}
+      {saveFailed && <p role="alert" className="play-save-error">Game could not be saved. The previous saved game was not replaced. Check browser storage and try again.</p>}
       {unreadableSnapshot && (
         <section className="play-recovery-notice" role="alert" aria-label="Saved game recovery">
           <strong>Saved game needs recovery</strong>

@@ -177,6 +177,35 @@ export function GameArena({
   });
   const [sendingReview, setSendingReview] = useState(false);
   const [reviewSent, setReviewSent] = useState(Boolean(recovered.finished?.reviewSent));
+  const [reviewError, setReviewError] = useState<string | null>(null);
+  const reviewRequestRef = useRef(false);
+
+  async function transferToReview(openWhenDone: boolean) {
+    if (!result || reviewRequestRef.current) return;
+    if (reviewSent) {
+      if (openWhenDone) onOpenReview?.(result.importedGame.id);
+      return;
+    }
+    reviewRequestRef.current = true;
+    setSendingReview(true);
+    setReviewError(null);
+    try {
+      const transferred = await onFinished(result);
+      setReviewSent(transferred);
+      if (transferred) {
+        if (openWhenDone) onOpenReview?.(result.importedGame.id);
+      } else {
+        setReviewError("Review transfer did not finish. Your completed game remains in this session; retry before opening Review.");
+      }
+    } catch {
+      setReviewSent(false);
+      setReviewError("Review could not save this game. Retry the transfer before leaving this page.");
+    } finally {
+      reviewRequestRef.current = false;
+      setSendingReview(false);
+    }
+  }
+
   useEffect(() => {
     const list = movesListRef.current;
     if (list) list.scrollTop = list.scrollHeight;
@@ -409,8 +438,9 @@ export function GameArena({
       const analyzed = await onFinished(finished);
       setReviewSent(analyzed);
     } catch {
-      // Review may still open a saved game and retry its analysis.
+      // Keep the completed checkpoint available for an explicit retry.
       setReviewSent(false);
+      setReviewError("Review could not save this game. Retry the transfer before leaving this page.");
     } finally {
       setSendingReview(false);
     }
@@ -756,7 +786,7 @@ export function GameArena({
                 )}
               </div>
 
-              <div className="review-transfer">
+              <div className="review-transfer" role="status" aria-live="polite">
                 {sendingReview ? (
                   <>
                     <LoaderCircle className="spin" size={16} />
@@ -775,28 +805,27 @@ export function GameArena({
                 )}
               </div>
 
+              {reviewError && <p className="game-review-error" role="alert">{reviewError}</p>}
               <div className="game-result-actions" role="group" aria-label="After game">
-              {onOpenReview && (
-                <button
-                  className="primary"
-                  type="button"
-                  disabled={sendingReview}
-                  onClick={() => onOpenReview(result.importedGame.id)}
-                >
-                  {reviewSent ? "Review game" : "Open game in Review"}
+                {onOpenReview && (
+                  <button
+                    className="primary"
+                    type="button"
+                    disabled={sendingReview}
+                    onClick={() => void transferToReview(true)}
+                  >
+                    {sendingReview ? "Saving game…" : reviewSent ? "Review game" : "Save and open in Review"}
+                  </button>
+                )}
+                {!reviewSent && (
+                  <button className="secondary" type="button" disabled={sendingReview}
+                    onClick={() => void transferToReview(false)}>
+                    Retry Review transfer
+                  </button>
+                )}
+                <button className={onOpenReview ? "secondary" : "primary"} type="button" onClick={onExit}>
+                  {exitLabel}
                 </button>
-              )}
-              {!reviewSent && <button type="button" className="secondary" disabled={sendingReview}
-                onClick={() => {
-                  setSendingReview(true);
-                  void Promise.resolve().then(() => onFinished(result))
-                    .then((analyzed) => setReviewSent(analyzed))
-                    .catch(() => setReviewSent(false))
-                    .finally(() => setSendingReview(false));
-                }}>Retry Review transfer</button>}
-              <button className={onOpenReview ? "secondary" : "primary"} type="button" onClick={onExit}>
-                {exitLabel}
-              </button>
               </div>
             </div>
           )}
