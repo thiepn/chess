@@ -64,12 +64,18 @@
     white-space:nowrap;font-size:14px
   }
 
+  /* The original sticky lesson rail has backdrop-filter, which creates a
+     containing block for fixed children. Remove it so the actions dock
+     is positioned against the actual viewport instead of the rail. */
+  .app-shell-v2 .lesson-page-v2 .learn-v2-lesson-rail {
+    position:static;top:auto;backdrop-filter:none
+  }
   /* Course: Begin lesson and Practice move from board metadata to real actions. */
   .app-shell-v2 .app-main:has(.lesson-page-v2) {
     padding-bottom:calc(var(--chess-mobile-nav-safe-height) + 100px)
   }
   .app-shell-v2 .lesson-page-v2 .learn-v2-lesson-actions {
-    display:grid;position:fixed;z-index:55;
+    display:grid;position:fixed;top:auto;z-index:55;
     left:max(9px,env(safe-area-inset-left));
     right:max(9px,env(safe-area-inset-right));
     bottom:var(--chess-mobile-nav-safe-height);

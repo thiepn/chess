@@ -43,3 +43,8 @@ test("adaptive policy shares the workspace rather than moving Continue below the
   assert.match(css,/\.train-runtime-body\.board-first-sheet:has\(\.lesson-runner \.lesson-stage\) \.train-runtime-runner \{\s*flex:1 1 auto;height:auto;min-height:0/);
   assert.match(css,/\.train-runtime-body \.lesson-progress-rail \{\s*display:flex;flex-wrap:nowrap/);
 });
+
+test("course action dock is viewport-based, not trapped by a backdrop-filtered lesson rail",()=>{
+  assert.match(css,/\.app-shell-v2 \.lesson-page-v2 \.learn-v2-lesson-rail \{\s*position:static;top:auto;backdrop-filter:none/);
+  assert.match(css,/\.app-shell-v2 \.lesson-page-v2 \.learn-v2-lesson-actions \{\s*display:grid;position:fixed;top:auto/);
+});
