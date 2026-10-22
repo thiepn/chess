@@ -227,9 +227,11 @@ describe("G2 authored original tactical transfer and differentiated defense", ()
     wrongReply.items[0].cases[0].replies[1].uci = "a1a1";
     expect(() => validateG2TacticalTransfer(wrongReply)).toThrow();
     const invalidAlternative = structuredClone(source);
-    invalidAlternative.items[0].cases[0].wrongMoveFeedback = {
-      "a1a1": "This is deliberately an invalid move with a long text entry which must not qualify as legal user feedback.",
-    };
+    Object.assign(invalidAlternative.items[0].cases[0], {
+      wrongMoveFeedback: {
+        "a1a1": "This is deliberately an invalid move with a long text entry which must not qualify as legal user feedback.",
+      },
+    });
     expect(() => validateG2TacticalTransfer(invalidAlternative)).toThrow();
     const wrongSide = structuredClone(source);
     const originalFen = wrongSide.items[0].cases[0].fen;

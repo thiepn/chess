@@ -13,7 +13,7 @@ import type { CalculationPosition } from "./types";
 import { alignSourceStudySkills, sourceStudyKind, sourceStudyTheme } from "./studySkillAlignment";
 
 const samples = [a103, a104, a105, a106, a109, a110, a111, a112]
-  .flatMap(asset => asset.positions) as unknown as CalculationPosition[];
+  .flatMap(asset => asset.positions as unknown as CalculationPosition[]);
 
 describe("G0 source-qualified, unscored study routing", () => {
   it("routes actual authored themes, not generic tactical or unrelated stages", () => {
