@@ -46,9 +46,9 @@ export function SavedStudyTrainer({
   }
 
   return (
-    <div className="lesson-runner saved-study-trainer">
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+    <div className="lesson-runner saved-study-trainer training-workspace">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={boardVersion}
             fen={study.fen}
@@ -78,8 +78,8 @@ export function SavedStudyTrainer({
           </div>
         </div>
 
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">FROM YOUR LIBRARY</p>
             <h2>{solved ? training.targetSan : "Recover the key move."}</h2>
             <p className="lesson-prompt">
@@ -121,7 +121,7 @@ export function SavedStudyTrainer({
             )}
           </div>
 
-          <div className="lesson-controls">
+          <div className="lesson-controls training-workspace-actions">
             <div className="lesson-button-row">
               {!solved ? (
                 <button

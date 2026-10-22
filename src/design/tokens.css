@@ -26,11 +26,20 @@
   --chess-color-concept: #c99c52;
 
   /* Board target palette */
-  --chess-board-light: #d5cebd;
-  --chess-board-dark: #62665f;
-  --chess-board-frame: #171918;
-  --chess-board-coordinate-light: rgba(20, 22, 21, 0.5);
-  --chess-board-coordinate-dark: rgba(244, 241, 233, 0.48);
+  --chess-board-light: #e8e0cf;
+  --chess-board-dark: #7a897b;
+  --chess-board-frame: #171b18;
+  --chess-board-coordinate-light: #485148;
+  --chess-board-coordinate-dark: #f0ebdf;
+  --chess-board-selection: rgba(37, 91, 77, 0.82);
+  --chess-board-selected-wash: rgba(215, 236, 190, 0.32);
+  --chess-board-last-origin: rgba(238, 203, 104, 0.27);
+  --chess-board-last-target: rgba(238, 203, 104, 0.44);
+  --chess-board-legal-dot: rgba(15, 42, 37, 0.36);
+  --chess-board-check: #bb4544;
+  --chess-board-highlight-good: rgba(53, 135, 92, 0.30);
+  --chess-board-highlight-hint: rgba(238, 195, 88, 0.30);
+  --chess-board-highlight-danger: rgba(193, 66, 65, 0.28);
 
   /* Typography */
   --chess-font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -59,7 +68,7 @@
   /* Shape */
   --chess-radius-control: 0.5rem;
   --chess-radius-panel: 0.75rem;
-  --chess-radius-board: 0.625rem;
+  --chess-radius-board: 0.25rem;
   --chess-radius-pill: 999px;
 
   /* Application shell targets */
@@ -77,7 +86,7 @@
   /* Motion */
   --chess-motion-fast: 120ms;
   --chess-motion-ui: 170ms;
-  --chess-motion-piece: 180ms;
+  --chess-motion-piece: 160ms;
   --chess-motion-page: 150ms;
   --chess-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
 

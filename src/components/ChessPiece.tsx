@@ -32,6 +32,7 @@ function Pawn() {
     <>
       <circle cx="50" cy="30" r="14" className="piece-fill piece-outline" />
       <path d="M42 43h16l7 24H35l7-24Z" className="piece-fill piece-outline" />
+      <path d="M39 62h22" className="piece-inlay" />
       <PieceBase />
     </>
   );
@@ -46,6 +47,7 @@ function Rook() {
       />
       <path d="M34 40h32l5 27H29l5-27Z" className="piece-fill piece-outline" />
       <path d="M34 46h32" className="piece-detail" />
+      <path d="M38 40v-9M62 40v-9M36 62h28" className="piece-inlay" />
       <PieceBase />
     </>
   );
@@ -62,6 +64,7 @@ function Knight() {
         d="M47 37c8 0 15 3 20 9-10 1-16 5-21 13"
         className="piece-detail"
       />
+      <path d="M43 48c-5 4-8 10-9 17M43 57c-4 2-7 6-8 10" className="piece-inlay" />
       <circle cx="57" cy="39" r="2.2" className="piece-eye" />
       <PieceBase />
     </>
@@ -76,6 +79,7 @@ function Bishop() {
         className="piece-fill piece-outline"
       />
       <path d="M55 28 44 47" className="piece-detail bishop-cut" />
+      <path d="M43 53h14" className="piece-inlay" />
       <path d="M38 58h24l7 9H31l7-9Z" className="piece-fill piece-outline" />
       <PieceBase />
     </>
@@ -94,6 +98,7 @@ function Queen() {
         className="piece-fill piece-outline"
       />
       <path d="M36 55h28" className="piece-detail" />
+      <path d="M34 49h32" className="piece-inlay" />
       <PieceBase />
     </>
   );
@@ -108,6 +113,7 @@ function King() {
         className="piece-fill piece-outline"
       />
       <path d="M38 58h24l7 9H31l7-9Z" className="piece-fill piece-outline" />
+      <path d="M39 54h22" className="piece-inlay" />
       <PieceBase />
     </>
   );

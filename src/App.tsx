@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
+  ArrowLeft,
   BarChart3,
   Bookmark,
   BookOpen,
@@ -9,6 +10,7 @@ import {
   Library,
   Play,
   RefreshCcw,
+  Settings2,
   Swords,
   Target,
 } from "lucide-react";
@@ -79,6 +81,7 @@ import { recordModelGameCheckpoint, recordModelGameCompletion } from "./model-ga
 import type { ModelGameCheckpointResult } from "./model-games/types";
 import { applyStudyAttempt, createStudyTraining } from "./library/progress";
 import { ExperienceProvider } from "./interaction/ExperienceProvider";
+import { mobileShellRoute } from "./design/mobileShell";
 import { ExperienceControls } from "./components/ExperienceControls";
 import { defaultExperienceSettings } from "./interaction/types";
 import { emitExperienceEvent } from "./interaction/events";
@@ -125,9 +128,6 @@ import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { reviewGamePath } from "./review/reviewRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
-import "./styles/p47-train-native.css";
-import "./styles/p51-train-large.css";
-
 // Advanced, unscored study catalog is not needed to initialize the first screen.
 const StrategicStudyLibrary = lazy(() =>
   import("./components/StrategicStudyLibrary").then((module) => ({
@@ -463,6 +463,7 @@ export default function App() {
     page === "train" && route.path.startsWith("/train/session/");
   const playSessionOpen =
     page === "play" && route.path.startsWith("/play/game/");
+  const mobileScreen = mobileShellRoute(page, route.path, trainingSessionOpen, playSessionOpen);
 
   const previousReplayPage = useRef(page);
   useEffect(() => {
@@ -2726,6 +2727,8 @@ export default function App() {
         className={[
           "app-shell",
           "app-shell-v2",
+          `app-page-${page}`,
+          `app-shell-mode-${mobileScreen.mode}`,
           trainingSessionOpen ? "training-session-open" : "",
           playSessionOpen ? "play-session-open" : "",
         ]
@@ -2736,6 +2739,21 @@ export default function App() {
           Skip to main content
         </a>
         <header className="app-topbar">
+          <div className="app-mobile-titlebar">
+            {mobileScreen.returnPath ? (
+              <button
+                type="button"
+                className="app-mobile-back"
+                onClick={() => navigate(mobileScreen.returnPath!)}
+                aria-label={`Back to ${mobileScreen.title === "Game review" ? "Review" : mobileScreen.title === "Study" ? "Library" : mobileScreen.title}`}
+              >
+                <ArrowLeft size={19} aria-hidden="true" />
+                <span>{mobileScreen.title}</span>
+              </button>
+            ) : (
+              <strong className="app-mobile-page-title">{mobileScreen.title}</strong>
+            )}
+          </div>
           <button
             className="app-brand"
             type="button"
@@ -2792,6 +2810,16 @@ export default function App() {
             <div className="topbar-experience">
               <ExperienceControls />
             </div>
+            <button
+              type="button"
+              className={page === "settings" ? "app-settings-link active" : "app-settings-link"}
+              aria-label="Settings"
+              title="Settings"
+              aria-current={page === "settings" ? "page" : undefined}
+              onClick={() => navigatePage("settings")}
+            >
+              <Settings2 size={20} aria-hidden="true" />
+            </button>
             <button
               type="button"
               className="topbar-sync"
@@ -2874,7 +2902,18 @@ export default function App() {
                 </div>
               </header>
 
-              <div className="train-runtime-progress" aria-hidden="true">
+              <div
+                className="train-runtime-progress"
+                role="progressbar"
+                aria-label="Training session progress"
+                aria-valuemin={0}
+                aria-valuemax={Math.max(1, session.activities.length)}
+                aria-valuenow={
+                  active && !manualActivity
+                    ? Math.min((activeIndex ?? 0) + 1, Math.max(1, session.activities.length))
+                    : runtimeReady ? Math.max(1, session.activities.length) : 0
+                }
+              >
                 <span
                   style={{
                     width:
@@ -3312,6 +3351,7 @@ export default function App() {
           ) : (
             <LearnView
               mastery={state.mastery}
+              lessonEvents={state.analytics?.events ?? []}
               gates={stageGates}
               placement={state.placement}
               curriculumFloor={courseCurriculumFloor(state)}
@@ -3552,7 +3592,7 @@ export default function App() {
         </Suspense>
       </main>
 
-      {!trainingSessionOpen && !playSessionOpen && (
+      {mobileScreen.showPrimaryNav && (
         <nav className="mobile-nav" aria-label="Primary navigation">
           {navItems.map(({ id, label, Icon }) => (
             <button

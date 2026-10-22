@@ -165,7 +165,7 @@ export function AssessmentRunner({
   }
 
   return (
-    <section className="assessment-runner">
+    <section className="assessment-runner training-workspace">
       <div className="assessment-head">
         <div>
           <p className="eyebrow">
@@ -199,8 +199,8 @@ export function AssessmentRunner({
         />
       </div>
 
-      <div className="assessment-stage">
-        <div className="assessment-board">
+      <div className="assessment-stage training-workspace-stage">
+        <div className="assessment-board training-workspace-board">
           <ChessBoard
             key={`${session.id}:${item.id}`}
             fen={item.fen}
@@ -224,7 +224,7 @@ export function AssessmentRunner({
           </div>
         </div>
 
-        <aside className="assessment-panel">
+        <aside className="assessment-panel training-workspace-panel">
           {!answered ? (
             <div className="assessment-prompt">
               <ClipboardCheck size={22} />
@@ -271,7 +271,7 @@ export function AssessmentRunner({
             </div>
           )}
 
-          <div className="assessment-panel-footer">
+          <div className="assessment-panel-footer training-workspace-actions">
             <span>
               {session.kind === "placement"
                 ? "Placement affects where the course begins, not whether material stays accessible."

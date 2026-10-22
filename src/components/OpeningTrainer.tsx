@@ -273,7 +273,7 @@ function OpeningRecallTrainer({
   }
 
   return (
-    <div className="lesson-runner opening-trainer opening-trainer-v2">
+    <div className="lesson-runner opening-trainer opening-trainer-v2 training-workspace">
       <div className="opening-recall-stage">
         <span
           className={
@@ -297,8 +297,8 @@ function OpeningRecallTrainer({
         </span>
       </div>
 
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={`${node.id}-${boardVersion}`}
             fen={node.fen}
@@ -343,8 +343,8 @@ function OpeningRecallTrainer({
           </div>
         </div>
 
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">
               {stage === "move"
                 ? "REPERTOIRE RECALL"
@@ -538,7 +538,7 @@ function OpeningRecallTrainer({
             )}
           </div>
 
-          <div className="lesson-controls">
+          <div className="lesson-controls training-workspace-actions">
             <div className="lesson-button-row">
               {stage === "move" && (
                 <button
@@ -704,7 +704,7 @@ function OpeningLineRehearsal({
   }
 
   return (
-    <div className="lesson-runner opening-trainer opening-line-trainer">
+    <div className="lesson-runner opening-trainer opening-line-trainer training-workspace">
       <div className="opening-line-progress">
         <span>
           Ply {index} /{" "}
@@ -722,8 +722,8 @@ function OpeningLineRehearsal({
         </strong>
       </div>
 
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={`${parent.id}-${index}`}
             fen={parent.fen}
@@ -762,8 +762,8 @@ function OpeningLineRehearsal({
           </div>
         </div>
 
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">
               FULL-LINE REHEARSAL
             </p>
@@ -789,6 +789,10 @@ function OpeningLineRehearsal({
               </div>
             )}
 
+
+          </div>
+          <div className="lesson-controls training-workspace-actions">
+            <div className="lesson-button-row">
             {!learnerTurn && (
               <button
                 type="button"
@@ -804,6 +808,7 @@ function OpeningLineRehearsal({
                 />
               </button>
             )}
+            </div>
           </div>
         </div>
       </div>

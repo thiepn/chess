@@ -61,7 +61,7 @@
 
 .library-v2-root small {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-root.active svg {
@@ -87,7 +87,7 @@
   gap: 9px;
   cursor: pointer;
   text-align: left;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .library-v2-rail nav button:hover {
@@ -102,7 +102,7 @@
 
 .library-v2-rail nav small {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-system-links {
@@ -125,7 +125,7 @@
   gap: 8px;
   cursor: pointer;
   text-align: left;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .library-v2-system-links button:hover,
@@ -176,7 +176,7 @@
   align-items: center;
   gap: 7px;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -184,7 +184,7 @@
   max-width: 60ch;
   margin: 7px 0 0;
   color: var(--chess-color-text-muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -208,7 +208,7 @@
   outline: 0;
   background: transparent;
   color: var(--chess-color-text-primary);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .library-v2-shelf {
@@ -232,7 +232,7 @@
 .library-v2-shelf > header span,
 .library-v2-reference-section > header span {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 750;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -252,7 +252,7 @@
   background: transparent;
   color: var(--chess-color-accent);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-list,
@@ -303,7 +303,7 @@
   overflow: hidden;
   color: var(--chess-color-text-primary);
   font-family: var(--chess-font-editorial);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 650;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -312,7 +312,7 @@
 .library-v2-row-copy small {
   overflow: hidden;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -324,7 +324,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
-  font-size: 8px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -353,7 +353,7 @@
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-row-actions button:hover {
@@ -424,13 +424,13 @@
 .library-v2-reference-row strong {
   color: var(--chess-color-text-primary);
   font-family: var(--chess-font-editorial);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .library-v2-reference-row em {
   overflow: hidden;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   font-style: normal;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -465,7 +465,7 @@
   border-radius: 5px;
   color: var(--chess-color-text-muted);
   font-family: var(--chess-font-mono);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-game-row > span:nth-child(2),
@@ -482,7 +482,7 @@
 .library-v2-game-row strong {
   overflow: hidden;
   color: var(--chess-color-text-primary);
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -490,7 +490,7 @@
 .library-v2-game-row small {
   overflow: hidden;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -533,7 +533,7 @@
 
 .library-v2-index-cell > span {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 750;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -550,7 +550,7 @@
 .library-v2-index-cell > small {
   grid-column: 1;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-v2-index-cell > svg {
@@ -580,7 +580,7 @@
   align-items: center;
   gap: 7px;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 750;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -602,7 +602,7 @@
 .library-v2-context > section > p {
   margin: 4px 0 9px;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -629,7 +629,7 @@
 .library-v2-context > section > button > strong {
   overflow: hidden;
   color: var(--chess-color-text-secondary);
-  font-size: 9px;
+  font-size: 11px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -646,12 +646,12 @@
 
 .library-v2-empty strong {
   color: var(--chess-color-text-secondary);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .library-v2-empty span {
   max-width: 35ch;
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.45;
 }
 
@@ -681,7 +681,7 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .library-workspace-head > div:nth-child(2) {
@@ -709,7 +709,7 @@
 
 .library-workspace-status {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-analysis-v2 {
@@ -806,7 +806,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -825,7 +825,7 @@
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-engine-result {
@@ -854,7 +854,7 @@
 .library-engine-result strong {
   color: var(--chess-color-text-primary);
   font-family: var(--chess-font-mono);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .library-engine-result p {
@@ -862,14 +862,14 @@
   margin: 0;
   color: var(--chess-color-text-muted);
   font-family: var(--chess-font-mono);
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
 .library-engine-empty {
   margin: 7px 0 0;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -911,14 +911,14 @@
 .library-training-v2 select {
   min-height: 36px;
   padding: 0 9px;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .library-study-editor-v2 textarea {
   min-height: 78px;
   padding: 8px 9px;
   resize: vertical;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -930,7 +930,7 @@
   min-height: 34px;
   color: var(--chess-color-text-muted);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -961,7 +961,7 @@
   background: transparent;
   color: var(--chess-color-text-secondary);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
 }
 
 .library-training-v2 {
@@ -983,7 +983,7 @@
 
 .library-training-v2 strong {
   color: var(--chess-color-text-secondary);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .library-training-v2 small {
@@ -1011,7 +1011,7 @@
   background: transparent;
   color: var(--chess-color-accent);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 11px;
 }
 
 @media (max-width: 1180px) {

@@ -132,9 +132,9 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
   }
 
   return (
-    <div className="lesson-runner mistake-runner">
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+    <div className="lesson-runner mistake-runner training-workspace">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={`${mistake.id}-${boardVersion}-${lineStep}`}
             fen={currentFen}
@@ -179,8 +179,8 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
             </section>
           )}
         </div>
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">FROM YOUR OWN GAME · TRAINING</p>
             <h2>{solved ? "You found the engine's choice." : draft.revealed
               ? "Review the stronger choice." : "What should you play instead?"}</h2>
@@ -240,7 +240,7 @@ export function PersonalMistakeRunner({ mistake, storageOwner, onComplete }: Per
               </>
             )}
           </div>
-          <div className="lesson-controls">
+          <div className="lesson-controls training-workspace-actions">
             <div className="lesson-button-row">
               {!finished && (
                 <>

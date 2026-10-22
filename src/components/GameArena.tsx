@@ -1,5 +1,6 @@
 import { Chess, type Color, type Square } from "chess.js";
 import {
+  ChevronDown,
   Clock3,
   Flag,
   LoaderCircle,
@@ -9,7 +10,7 @@ import {
   Target,
   Swords,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { StockfishBrowserEngine } from "../engine/stockfish";
 import { opponentThinkBudgetMs } from "../play/opponentSearch";
 import { useExperience } from "../interaction/ExperienceProvider";
@@ -130,6 +131,9 @@ export function GameArena({
   const finishedRef = useRef(Boolean(recovered.finished));
   const [fen, setFen] = useState(recovered.chess.fen());
   const [moves, setMoves] = useState<string[]>(() => recovered.chess.history());
+  const [mobileMovesOpen, setMobileMovesOpen] = useState(false);
+  const movesId = useId();
+  const movesListRef = useRef<HTMLDivElement>(null);
   const clockRef = useRef<RunningClock>(recovered.clock);
   const [clock, setClock] = useState<RunningClock>(recovered.clock);
   const [engineNonce, setEngineNonce] = useState(0);
@@ -173,6 +177,39 @@ export function GameArena({
   });
   const [sendingReview, setSendingReview] = useState(false);
   const [reviewSent, setReviewSent] = useState(Boolean(recovered.finished?.reviewSent));
+  const [reviewError, setReviewError] = useState<string | null>(null);
+  const reviewRequestRef = useRef(false);
+
+  async function transferToReview(openWhenDone: boolean) {
+    if (!result || reviewRequestRef.current) return;
+    if (reviewSent) {
+      if (openWhenDone) onOpenReview?.(result.importedGame.id);
+      return;
+    }
+    reviewRequestRef.current = true;
+    setSendingReview(true);
+    setReviewError(null);
+    try {
+      const transferred = await onFinished(result);
+      setReviewSent(transferred);
+      if (transferred) {
+        if (openWhenDone) onOpenReview?.(result.importedGame.id);
+      } else {
+        setReviewError("Review transfer did not finish. Your completed game remains in this session; retry before opening Review.");
+      }
+    } catch {
+      setReviewSent(false);
+      setReviewError("Review could not save this game. Retry the transfer before leaving this page.");
+    } finally {
+      reviewRequestRef.current = false;
+      setSendingReview(false);
+    }
+  }
+
+  useEffect(() => {
+    const list = movesListRef.current;
+    if (list) list.scrollTop = list.scrollHeight;
+  }, [moves.length, mobileMovesOpen]);
   const clockConfig = useMemo(() => timeControlConfig(timeControl), [timeControl]);
   const whiteMs = clock.whiteMs;
   const blackMs = clock.blackMs;
@@ -401,8 +438,9 @@ export function GameArena({
       const analyzed = await onFinished(finished);
       setReviewSent(analyzed);
     } catch {
-      // Review may still open a saved game and retry its analysis.
+      // Keep the completed checkpoint available for an explicit retry.
       setReviewSent(false);
+      setReviewError("Review could not save this game. Retry the transfer before leaving this page.");
     } finally {
       setSendingReview(false);
     }
@@ -501,14 +539,14 @@ export function GameArena({
   ]);
 
   return (
-    <section className="game-arena">
+    <section className={result || emptyResult ? "game-arena game-finished" : "game-arena game-active"} aria-label="Chess game">
       <div className="game-topbar">
-        <button className="back-link" type="button" onClick={result || emptyResult ? onExit : saveAndExit}>
+        <button className="back-link game-save-exit" type="button" onClick={result || emptyResult ? onExit : saveAndExit}>
           <RotateCcw size={15} /> {result || emptyResult ? exitLabel : "Save & exit"}
         </button>
-        <div className="game-opponent" aria-live="polite">
-          <Swords size={15} />
-          <span>{engineStatus}</span>
+        <div className="game-opponent" data-state={result || emptyResult ? "finished" : error ? "error" : thinking ? "thinking" : engineReady ? "ready" : "loading"} role="status" aria-live="polite">
+          <Swords size={15} aria-hidden="true" />
+          <span>{result || emptyResult ? "Game complete" : error ? "Opponent unavailable" : engineStatus}</span>
         </div>
       </div>
 
@@ -525,7 +563,7 @@ export function GameArena({
               </span>
             </div>
             <div
-              className={gameRef.current.turn() !== playerColor && !result ? "game-clock active" : "game-clock"}
+              className={gameRef.current.turn() !== playerColor && !result && !emptyResult ? "game-clock active" : "game-clock"}
               role="timer"
               aria-live="off"
               aria-label={`${profile.name} clock, ${timeControl === "untimed"
@@ -592,7 +630,7 @@ export function GameArena({
               </span>
             </div>
             <div
-              className={playerToMove && !result ? "game-clock active" : "game-clock"}
+              className={playerToMove && !result && !emptyResult ? "game-clock active" : "game-clock"}
               role="timer"
               aria-live="off"
               aria-label={`Your clock, ${timeControl === "untimed"
@@ -608,7 +646,7 @@ export function GameArena({
             </div>
           </div>
 
-          <div className="game-turn-line" aria-live="polite">
+          <div className="game-turn-line" role="status" aria-live="polite" aria-atomic="true">
             <span>
               {result || emptyResult
                 ? outcomeLabel((result ?? emptyResult)!.outcome)
@@ -622,7 +660,7 @@ export function GameArena({
           </div>
         </div>
 
-        <aside className="game-side-panel">
+        <aside className={mobileMovesOpen ? "game-side-panel moves-expanded" : "game-side-panel"}>
           <div className="game-mode-header">
             <div className="game-mode-icon">
               {scenario ? <TargetIcon mode={scenario.mode} /> : <Swords size={20} />}
@@ -653,12 +691,23 @@ export function GameArena({
             <p>{profile.description}</p>
           </div>
 
-          <div className="move-sheet">
+          <button
+            type="button"
+            className="game-moves-toggle"
+            aria-expanded={mobileMovesOpen}
+            aria-controls={movesId}
+            onClick={() => setMobileMovesOpen((open) => !open)}
+          >
+            <span>Moves</span>
+            <strong>{moves.length ? moves[moves.length - 1] : "—"} · {moves.length}</strong>
+            <ChevronDown className="game-moves-chevron" size={18} aria-hidden="true" />
+          </button>
+          <div className="move-sheet" id={movesId}>
             <div className="move-sheet-title">
               <span>Moves</span>
               <strong>{moves.length} plies</strong>
             </div>
-            <div className="move-list">
+            <div className="move-list" ref={movesListRef} aria-label="Played moves">
               {moveRows.length ? (
                 moveRows.map((row) => (
                   <div key={row.number}>
@@ -688,7 +737,7 @@ export function GameArena({
           )}
 
           {!result && !emptyResult && (
-            <div className="game-session-actions">
+            <div className="game-session-actions" role="group" aria-label="Game actions">
               <button className="secondary" type="button" onClick={onExit}>
                 Discard game
               </button>
@@ -714,7 +763,7 @@ export function GameArena({
           )}
 
           {result && (
-            <div className="game-result-card">
+            <div className="game-result-card" role="status" aria-live="polite">
               <div className="game-result-symbol">
                 {result.outcome === "win" ? (
                   <CheckCircle2 size={24} />
@@ -737,7 +786,7 @@ export function GameArena({
                 )}
               </div>
 
-              <div className="review-transfer">
+              <div className="review-transfer" role="status" aria-live="polite">
                 {sendingReview ? (
                   <>
                     <LoaderCircle className="spin" size={16} />
@@ -756,27 +805,28 @@ export function GameArena({
                 )}
               </div>
 
-              {!reviewSent && <button type="button" className="secondary" disabled={sendingReview}
-                onClick={() => {
-                  setSendingReview(true);
-                  void Promise.resolve().then(() => onFinished(result))
-                    .then((analyzed) => setReviewSent(analyzed))
-                    .catch(() => setReviewSent(false))
-                    .finally(() => setSendingReview(false));
-                }}>Retry Review transfer</button>}
-              {onOpenReview && (
-                <button
-                  className="primary"
-                  type="button"
-                  disabled={sendingReview}
-                  onClick={() => onOpenReview(result.importedGame.id)}
-                >
-                  {reviewSent ? "Review game" : "Open game in Review"}
+              {reviewError && <p className="game-review-error" role="alert">{reviewError}</p>}
+              <div className="game-result-actions" role="group" aria-label="After game">
+                {onOpenReview && (
+                  <button
+                    className="primary"
+                    type="button"
+                    disabled={sendingReview}
+                    onClick={() => void transferToReview(true)}
+                  >
+                    {sendingReview ? "Saving game…" : reviewSent ? "Review game" : "Save and open in Review"}
+                  </button>
+                )}
+                {!reviewSent && (
+                  <button className="secondary" type="button" disabled={sendingReview}
+                    onClick={() => void transferToReview(false)}>
+                    Retry Review transfer
+                  </button>
+                )}
+                <button className={onOpenReview ? "secondary" : "primary"} type="button" onClick={onExit}>
+                  {exitLabel}
                 </button>
-              )}
-              <button className={onOpenReview ? "secondary" : "primary"} type="button" onClick={onExit}>
-                {exitLabel}
-              </button>
+              </div>
             </div>
           )}
         </aside>

@@ -279,9 +279,9 @@ export function PuzzleRunner({
   }
 
   return (
-    <div className="lesson-runner puzzle-runner">
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+    <div className="lesson-runner puzzle-runner training-workspace">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={`${puzzle.id}-${boardVersion}`}
             fen={position}
@@ -343,8 +343,8 @@ export function PuzzleRunner({
           </div>
         </div>
 
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">{label.toUpperCase()}</p>
             <h2>{revealed?"Study the reference line.":solved ? "Position solved." : "Find the reference move."}</h2>
             <p className="lesson-prompt">
@@ -359,6 +359,12 @@ export function PuzzleRunner({
                     : "No motif is given. Calculate checks, captures, quiet threats and defensive resources. Predict the strongest reply."}
             </p>
 
+            <div className="puzzle-attempt-progress" role="progressbar"
+              aria-label="Puzzle continuation progress"
+              aria-valuemin={0} aria-valuemax={puzzle.solutionMoves.length}
+              aria-valuenow={solved ? puzzle.solutionMoves.length : Math.min(solutionIndex, puzzle.solutionMoves.length)}>
+              <span style={{ width: `${((solved ? puzzle.solutionMoves.length : solutionIndex) / Math.max(1, puzzle.solutionMoves.length)) * 100}%` }} />
+            </div>
             <div className="puzzle-meta">
               <span>Rated {puzzle.rating}</span>
               {puzzle.source === "lichess" && <span>Lichess · CC0</span>}
@@ -520,7 +526,7 @@ export function PuzzleRunner({
             )}
           </div>
 
-          <div className="lesson-controls">
+          <div className="lesson-controls training-workspace-actions">
             <div className="puzzle-source-line">
               <Check size={14} />
               <span>

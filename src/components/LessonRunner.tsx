@@ -479,7 +479,7 @@ export function LessonRunner({
     </div>;
   }
   return (
-    <div className="lesson-runner lesson-runner-v2">
+    <div className="lesson-runner lesson-runner-v2 training-workspace">
       <div className="lesson-progress-rail" role="group"
         aria-label={`Lesson progress: step ${stepIndex + 1} of ${lesson.steps.length}`}>
         {lesson.steps.map((item, index) => ({ item, index }))
@@ -517,8 +517,8 @@ export function LessonRunner({
         )}
       </div>
 
-      <div className="lesson-stage">
-        <div className="lesson-board-column">
+      <div className="lesson-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <ChessBoard
             key={`${displayedStep.id}-${activeExploration ? "g6" : (replayFrame?.id ?? "normal")}-${boardVisionOpen ? "inspection" : "play"}-${boardReset}`}
             fen={boardFen}
@@ -596,8 +596,8 @@ export function LessonRunner({
           </div>
         </div>
 
-        <div className="lesson-instruction">
-          <div>
+        <div className="lesson-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <div className="lesson-step-meta">
               <p className="eyebrow">
                 {displayedStep.eyebrow ??
@@ -1093,7 +1093,7 @@ export function LessonRunner({
             )}
           </div>
 
-          <div className="lesson-controls lesson-controls-v2">
+          <div className="lesson-controls lesson-controls-v2 training-workspace-actions">
             {completionError && (
               <div className="lesson-feedback error" role="alert">
                 <span>{completionError}</span>

@@ -12,58 +12,16 @@ html[data-app-theme="warm-graphite"] {
   --chess-color-text-muted: #aa9e92;
   --chess-color-separator: rgba(244,232,215,.12);
 }
-html[data-board-theme="tournament"] {
-  --chess-board-light: #dad3c3;
-  --chess-board-dark: #73776d;
-  --chess-board-frame: #151917;
-  --chess-board-coordinate-light: rgba(24,27,24,.64);
-  --chess-board-coordinate-dark: rgba(255,249,236,.73);
-}
-
-/* A finished board has a consistent edge and readable pieces on both square colors. */
-.app-shell-v2 .chess-board-wrap {
-  padding: clamp(4px, .6vw, 7px);
-  border: 1px solid rgba(233,226,210,.24);
-  box-shadow: 0 16px 34px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.045);
-}
-.app-shell-v2 .chess-board-v2 {
-  box-shadow: inset 0 0 0 1px rgba(17,20,18,.42);
-}
-.app-shell-v2 .chess-board-v2 .chess-piece-b {
-  --piece-fill: #242b28;
-  --piece-stroke: #e4ddcf;
-}
-.app-shell-v2 .chess-board-v2 .chess-piece-w {
-  --piece-fill: #f7f2e8;
-  --piece-stroke: #4c504b;
-}
-.app-shell-v2 .chess-board-v2 .file-label,
-.app-shell-v2 .chess-board-v2 .rank-label {
-  font-size: clamp(8px, .82vw, 10px);
-  opacity: .9;
-}
-.app-shell-v2 .chess-board-v2 .board-square.selected {
-  box-shadow: inset 0 0 0 3px rgba(53,123,216,.95),
-    inset 0 0 0 999px rgba(53,123,216,.16);
-}
-.app-shell-v2 .chess-board-v2 .board-square.last-move:not(.selected) {
-  box-shadow: inset 0 0 0 999px rgba(53,123,216,.135);
-}
-.app-shell-v2 .chess-board-v2 .board-square:focus-visible {
-  outline: 3px solid #fff4da;
-  outline-offset: -4px;
-}
-
 /* Toolbars / captions: compact but no longer microscopic. */
 .app-shell-v2 :is(.train-board-context,.train-board-status,.play-v2-board-label,
   .play-v2-board-note,.learn-v2-board-caption,.review-workstation-head p,
   .board-caption,.game-turn-line) {
-  font-size: max(11px, .76rem);
+  font-size: max(13px, .82rem);
   line-height: 1.45;
 }
 .app-shell-v2 :is(.train-session-facts,.train-placement-action,.train-coach-note,
   .review-v2-feature-insight > p,.review-v2-main-head p:not(.eyebrow)) {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.55;
 }
 
@@ -80,11 +38,11 @@ html[data-board-theme="tournament"] {
   gap: 6px;
 }
 .app-shell-v2 .train-queue-copy small {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .035em;
 }
 .app-shell-v2 .train-queue-copy strong {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.34;
   white-space: normal;
   display: -webkit-box;
@@ -92,18 +50,18 @@ html[data-board-theme="tournament"] {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.app-shell-v2 .train-queue-time { font-size: 10px; }
-.app-shell-v2 .train-duration-tabs strong { font-size: 12px; }
-.app-shell-v2 .train-duration-tabs span { font-size: 10px; opacity: .86; }
+.app-shell-v2 .train-queue-time { font-size: 12px; }
+.app-shell-v2 .train-duration-tabs strong { font-size: 13px; }
+.app-shell-v2 .train-duration-tabs span { font-size: 12px; opacity: .86; }
 
 /* Learn is a book; labels and descriptions are reading content, not texture. */
-.app-shell-v2 .learn-v2-stage-label strong { font-size: 12px; }
+.app-shell-v2 .learn-v2-stage-label strong { font-size: 13px; }
 .app-shell-v2 .learn-v2-stage-label small,
-.app-shell-v2 .learn-v2-stage-state { font-size: 10px; }
+.app-shell-v2 .learn-v2-stage-state { font-size: 12px; }
 .app-shell-v2 .learn-v2-chapter-head > div:first-child > p:last-child,
 .app-shell-v2 .learn-v2-skill-copy p,
 .app-shell-v2 .learn-subpage-head p:not(.eyebrow) {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.55;
 }
 .app-shell-v2 .learn-v2-skill-row { min-height: 96px; }
@@ -114,7 +72,7 @@ html[data-board-theme="tournament"] {
 .app-shell-v2 .review-v2-feature-opening,
 .app-shell-v2 .review-v2-feature-insight > p,
 .app-shell-v2 .review-v2-game-copy small {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.55;
 }
 .app-shell-v2 .review-v2-feature-insight > strong {
@@ -138,15 +96,15 @@ html[data-board-theme="tournament"] {
   .progress-v2-chart-legend,
   .progress-v2-evidence
 ) {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.45;
 }
 .app-shell-v2 .progress-v2-rating-meta strong,
 .app-shell-v2 .progress-v2-trajectory > header strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 .app-shell-v2 .progress-v2-grid-label,
-.app-shell-v2 .progress-v2-axis-label { font-size: 10px; }
+.app-shell-v2 .progress-v2-axis-label { font-size: 12px; }
 .app-shell-v2 .progress-v2-trend-empty {
   min-height: 162px;
   padding: 22px 4px;
@@ -166,7 +124,7 @@ html[data-board-theme="tournament"] {
   max-width: 54ch;
   margin: 0;
   color: var(--chess-color-text-secondary);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .app-shell-v2 .progress-v2-trend-empty button {
@@ -194,12 +152,12 @@ html[data-board-theme="tournament"] {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .app-shell-v2 .board-promotion-caption small {
   font-family: var(--chess-font-mono);
   color: var(--chess-color-text-secondary);
-  font-size: 11px;
+  font-size: 12px;
 }
 .app-shell-v2 .board-promotion-options {
   display: grid;

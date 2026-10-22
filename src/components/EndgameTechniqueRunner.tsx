@@ -406,7 +406,7 @@ function EndgameTechniqueSession({
 
   if (stage === "recognition") {
     return (
-      <div className="endgame-runner">
+      <div className="endgame-runner training-workspace">
         <div className="endgame-header">
           <div>
             <p className="eyebrow">
@@ -427,8 +427,8 @@ function EndgameTechniqueSession({
           </button>
         )}
 
-        <div className="endgame-recognition-layout">
-          <div className="endgame-preview-board">
+        <div className="endgame-recognition-layout training-workspace-stage">
+          <div className="endgame-preview-board training-workspace-board">
             <ChessBoard
               fen={position.fen}
               orientation={
@@ -438,7 +438,7 @@ function EndgameTechniqueSession({
             />
           </div>
 
-          <div className="endgame-recognition-panel">
+          <div className="endgame-recognition-panel training-workspace-panel">
             <div className="endgame-objective">
               <Target size={17} />
               <div>
@@ -453,7 +453,7 @@ function EndgameTechniqueSession({
               {position.recognitionPrompt}
             </h3>
 
-            <div className="endgame-recognition-options">
+            <div className="endgame-recognition-options training-choice-list">
               {position.recognitionOptions.map(
                 (option) => (
                   <button
@@ -507,7 +507,7 @@ function EndgameTechniqueSession({
             )}
 
             <button
-              className="primary"
+              className="primary endgame-recognition-continue"
               type="button"
               disabled={
                 !recognitionChoice ||
@@ -531,7 +531,7 @@ function EndgameTechniqueSession({
   }
 
   return (
-    <div className="endgame-runner">
+    <div className="endgame-runner training-workspace">
       <div className="endgame-header">
         <div>
           <p className="eyebrow">
@@ -565,8 +565,8 @@ function EndgameTechniqueSession({
         </div>
       </div>
 
-      <div className="endgame-play-layout">
-        <div className="endgame-board-column">
+      <div className="endgame-play-layout training-workspace-stage">
+        <div className="endgame-board-column training-workspace-board">
           <ChessBoard
             key={`${position.id}-${fen}`}
             fen={fen}
@@ -636,7 +636,7 @@ function EndgameTechniqueSession({
           </div>
         </div>
 
-        <aside className="endgame-side-panel">
+        <aside className="endgame-side-panel training-workspace-panel">
           <div className="endgame-technique-card">
             <span>Technique</span>
             <strong>

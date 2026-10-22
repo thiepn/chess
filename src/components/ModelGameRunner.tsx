@@ -279,7 +279,7 @@ export function ModelGameRunner({
   }
 
   return (
-    <section className="model-game-runner">
+    <section className="model-game-runner training-workspace">
       <header className="model-game-runner-header">
         <div>
           <p className="eyebrow">
@@ -329,8 +329,8 @@ export function ModelGameRunner({
         </span>
       </div>
 
-      <div className="model-game-runner-layout">
-        <div className="model-game-board">
+      <div className="model-game-runner-layout training-workspace-stage">
+        <div className="model-game-board training-workspace-board">
           <ChessBoard
             key={
               phase === "reveal"
@@ -366,7 +366,7 @@ export function ModelGameRunner({
           </div>
         </div>
 
-        <div className="model-game-decision-panel">
+        <div className="model-game-decision-panel training-workspace-panel">
           <div className="model-game-skill-chip">
             <span>
               {skill

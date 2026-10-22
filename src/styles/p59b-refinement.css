@@ -1,25 +1,5 @@
 /* P59B — chess-native finish. Deliberately no decorative gradients or UI cards. */
 
-/* Tactile chess material: one raised object, the board; labels and rails stay flat. */
-.app-shell-v2 .chess-board-wrap {
-  border-color: rgba(242, 232, 213, .17);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, .33), inset 0 1px rgba(255, 255, 255, .055);
-}
-.app-shell-v2 .chess-board-v2 {
-  box-shadow: inset 0 0 0 1px rgba(15, 19, 18, .45);
-}
-.app-shell-v2 .chess-board-v2 .chess-piece-svg {
-  shape-rendering: geometricPrecision;
-}
-.app-shell-v2 .chess-board-v2 .chess-piece-w {
-  --piece-fill: #f4efe3;
-  --piece-stroke: #4b4d49;
-}
-.app-shell-v2 .chess-board-v2 .chess-piece-b {
-  --piece-fill: #272d2a;
-  --piece-stroke: #e2d8c7;
-}
-
 /* Review must be a game-analysis workspace, not a PGN-import dashboard. */
 .review-v2-feature {
   display: grid;

@@ -466,8 +466,9 @@ export function ChessBoard({
         {boardStatus}
       </span>
       <div
-        className={`chess-board chess-board-v2 orientation-${orientation === "w" ? "white" : "black"}${boardFlipping ? " board-flipping" : ""}`}
+        className={`chess-board chess-board-v2 orientation-${orientation === "w" ? "white" : "black"}${boardFlipping ? " board-flipping" : ""}${disabled ? " board-readonly" : " board-interactive"}`}
         data-orientation={orientation}
+        data-interaction={disabled ? onInspectSquare ? "inspect" : "preview" : "play"}
         data-last-move-kind={lastMove ? lastMoveKind : undefined}
         role="grid"
         aria-rowcount={8}
@@ -501,6 +502,7 @@ export function ChessBoard({
             dragFrom === square ? "board-drag-source" : "",
             dragFrom && isLegal ? "board-drag-legal" : "",
             dragFrom && dragHover === square ? "board-drag-hover" : "",
+            dragFrom && dragHover === square ? isLegal ? "board-drop-accepted" : "board-drop-rejected" : "",
             isLegal ? "legal-target" : "",
             isLast ? "last-move" : "",
             isMoveOrigin ? "move-origin" : "",
@@ -526,12 +528,6 @@ export function ChessBoard({
               style={{
                 touchAction: !disabled && piece?.color === chess.turn() ? "none" : "manipulation",
                 cursor: dragFrom === square ? "grabbing" : !disabled && piece?.color === chess.turn() ? "grab" : undefined,
-                outline: dragFrom === square
-                  ? "3px solid #357bd8"
-                  : dragFrom && dragHover === square
-                    ? (isLegal ? "4px solid #328554" : "3px solid #c86464")
-                    : undefined,
-                outlineOffset: dragFrom === square || (dragFrom && dragHover === square) ? "-3px" : undefined,
               }}
               ref={(node) => {
                 if (node) squareRefs.current.set(square, node);
