@@ -176,7 +176,12 @@ function LessonPage({
         </div>
 
         <div className="learn-v2-lesson-actions">
-
+          <button className="primary" type="button"
+            onClick={() => onStartLesson(skill.id)}>
+            Begin lesson <ChevronRight size={16} />
+          </button>
+          {practiceAvailable && <button className="secondary" type="button"
+            onClick={() => onStartPractice(skill.id)}>Practice positions</button>}
         </div>
       </aside>
 
@@ -184,12 +189,7 @@ function LessonPage({
         <div className="learn-v2-board-context">
           <span>{copy.eyebrow}</span>
           <span>{stepIndex + 1} / {lesson.steps.length}</span>
-          <button className="primary" type="button"
-            onClick={() => onStartLesson(skill.id)}>
-            Begin lesson <ChevronRight size={16} />
-          </button>
-          {practiceAvailable && <button className="secondary" type="button"
-            onClick={() => onStartPractice(skill.id)}>Practice positions</button>}
+
         </div>
         <ChessBoard
           key={`${skill.id}:${step.id}`}

@@ -3160,7 +3160,7 @@ export default function App() {
               </button>
             </aside>
 
-            <div className="train-room-board-column">
+            {previewFen && <div className="train-room-board-column">
               <div className="train-board-context">
                 <span>{previewSkill ? domainLabels[previewSkill.domain] : "Training"}</span>
                 <span>{boundedPreviewIndex + 1} / {Math.max(1, session.activities.length)}</span>
@@ -3174,11 +3174,7 @@ export default function App() {
                     orientation={previewFen.split(/\s+/)[1] === "b" ? "b" : "w"}
                     disabled
                   />
-                ) : (
-                  <div className="train-preview-empty" aria-live="polite">
-                    No training position is due.
-                  </div>
-                )}
+                ) : null}
               </div>
 
               <div className="train-board-status">
@@ -3192,7 +3188,7 @@ export default function App() {
                   {progressIntelligence.trainingHorizon.managedWeeklyMinutes} min this week
                 </span>
               </div>
-            </div>
+            </div>}
 
             <aside className="train-room-coach">
               <div className="train-task-copy">
@@ -3230,7 +3226,7 @@ export default function App() {
                   type="button"
                   onClick={() => navigatePage("learn")}
                 >
-                  Study concept
+                  Course
                 </button>
               </div>
 
