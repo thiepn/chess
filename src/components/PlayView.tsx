@@ -40,9 +40,6 @@ const GameArena = lazy(() =>
 import { LichessSyncCard } from "./LichessSyncCard";
 import { reviewGamePath } from "../review/reviewRoutes";
 import { restoreCheckpoint, type GameCheckpoint } from "../play/gameRecovery";
-import "../styles/p47-play-native.css";
-import "../styles/p51-play-large.css";
-
 interface PlayViewProps {
   mastery: Record<string, SkillMastery>;
   lichess?: LichessConnection;

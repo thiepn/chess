@@ -1,8 +1,5 @@
 import { lazy, useEffect, useMemo, useRef, useState } from "react";
 import { nextVisibleCount, HISTORY_PAGE_SIZE } from "../routing/pageWindow";
-import "../styles/review-v2.css";
-import "../styles/p47-review-native.css";
-import "../styles/p51-review-large.css";
 import {
   ChevronRight,
   FileUp,

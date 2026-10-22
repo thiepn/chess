@@ -125,9 +125,6 @@ import { learnSkillPath, resolveLearnRoute } from "./learning/learnRoutes";
 import { reviewGamePath } from "./review/reviewRoutes";
 import { primaryAppPages } from "./design/appArchitecture";
 import { useAppRouter } from "./routing/appRouter";
-import "./styles/p47-train-native.css";
-import "./styles/p51-train-large.css";
-
 // Advanced, unscored study catalog is not needed to initialize the first screen.
 const StrategicStudyLibrary = lazy(() =>
   import("./components/StrategicStudyLibrary").then((module) => ({

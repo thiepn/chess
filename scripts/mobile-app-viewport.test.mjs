@@ -37,11 +37,37 @@ test("standalone PWA manifest has real install icon sizes and a scoped start", (
   }
 });
 
-test("mobile progression controls are not trapped inside overflow-hidden panels", () => {
-  assert.match(css, /Mobile progression regression/);
-  const repair = css.slice(css.indexOf("Mobile progression regression"));
-  assert.match(repair, /\.train-runtime-body:has\(\.lesson-runner \.lesson-stage\)[\s\S]*?overflow-y: auto/);
-  assert.match(repair, /\.train-runtime-body\.board-first-sheet \.lesson-instruction\s*\{[\s\S]*?overflow: visible/);
-  assert.match(repair, /\.train-runtime-body\.board-first-sheet \.lesson-instruction \.lesson-controls,[\s\S]*?position: fixed/);
-  assert.match(repair, /\.play-session-open \.play-game-page \.game-side-panel\s*\{[\s\S]*?overflow: visible/);
+test("mobile activity geometry uses one authored CSS rule set", () => {
+  assert.equal((css.match(/@media/g) ?? []).length, 2);
+  assert.doesNotMatch(css, /Mobile progression regression/);
+  assert.match(css, /\.train-runtime-body\.board-first-sheet \.lesson-stage/);
+  assert.match(css, /\.train-runtime-body\.board-first-sheet \.lesson-instruction > :first-child/);
+  assert.match(css, /\.train-runtime-body\.board-first-sheet \.lesson-controls/);
+  assert.match(css, /\.train-runtime-body\.board-first-sheet \.lesson-button-row/);
+  assert.match(css, /\.game-session-actions/);
+  assert.match(css, /44svh/);
+  assert.doesNotMatch(css, /z-index: 85/);
+});
+
+test("lazy route components no longer inject CSS after the viewport contract", () => {
+  const styles = [
+    "review-v2.css", "library-v2.css", "progress-v2.css",
+    "p47-train-native.css", "p47-learn-native.css", "p47-play-native.css",
+    "p47-review-native.css", "p47-library-native.css", "p47-progress-native.css",
+    "p51-train-large.css", "p51-learn-large.css", "p51-play-large.css",
+    "p51-review-large.css", "p51-library-large.css", "p51-progress-large.css",
+  ];
+  const finalCssImport = entry.indexOf('import "./styles/mobile-app-viewport.css"');
+  for (const style of styles) {
+    const declaration = "import \"./styles/" + style + "\";";
+    const index = entry.indexOf(declaration);
+    assert.ok(index >= 0 && index < finalCssImport, style + " must load before viewport rules");
+  }
+  for (const file of [
+    "src/App.tsx", "src/components/LearnView.tsx", "src/components/PlayView.tsx",
+    "src/components/ReviewView.tsx", "src/components/ProgressView.tsx",
+    "src/components/LibraryView.tsx",
+  ]) {
+    assert.doesNotMatch(readFileSync(file, "utf8"), /import\s+["'][.][.]?\/styles\/[^"']+\.css["']/);
+  }
 });
