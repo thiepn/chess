@@ -254,6 +254,52 @@
   .play-session-open .play-game-page .game-player-strip {
     min-height: 34px;
   }
+
+  .play-session-open .play-game-page .game-side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .play-session-open .play-game-page .game-mode-header {
+    flex: 0 0 auto;
+    padding: 0;
+  }
+  .play-session-open .play-game-page .game-objective {
+    flex: 0 0 auto;
+    padding-top: 4px;
+  }
+  .play-session-open .play-game-page .move-sheet {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .play-session-open .play-game-page .move-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .play-session-open .play-game-page .game-session-actions {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    padding-top: 5px;
+    border-top: 1px solid var(--chess-color-separator);
+    background: var(--chess-color-bg-app);
+  }
+  .play-session-open .play-game-page .game-session-actions > button {
+    min-width: 0;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .play-session-open .play-game-page .game-result-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
   .play-session-open .play-game-page .game-side-panel {
     min-height: 0;
     height: 100%;
