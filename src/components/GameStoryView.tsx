@@ -3,13 +3,16 @@ import {
   ArrowLeft,
   CheckCircle2,
   ChevronLeft,
+  ChevronRight,
+  ChevronDown,
   Play,
   Swords,
   Target,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { skillById } from "../domain/curriculum";
 import { momentVariation } from "../review/variation";
+import { reviewSourceLabel, reviewSourceLink } from "../review/reviewPresentation";
 import type {
   GamePhase,
   GameReviewReflection,
@@ -142,11 +145,17 @@ export function GameStoryView({
     { from: Square; to: Square } | undefined
   >();
   const [coachMomentId, setCoachMomentId] = useState<string | null>(null);
+  const [movesOpen, setMovesOpen] = useState(false);
+  const notationId = useId();
+  const notationRef = useRef<HTMLDivElement>(null);
 
   const selectedMove = useMemo(
     () => game.moves.find((move) => move.ply === selectedPly),
     [game.moves, selectedPly],
   );
+  const selectedMoveIndex = game.moves.findIndex((move) => move.ply === selectedPly);
+  const nextMove = game.moves[selectedMoveIndex + 1];
+  const previousMove = selectedMoveIndex > 0 ? game.moves[selectedMoveIndex - 1] : undefined;
   const selectedMoment = useMemo(
     () => story?.moments.find((moment) => moment.ply === selectedPly),
     [selectedPly, story],
@@ -194,6 +203,13 @@ export function GameStoryView({
   }, [game.moves]);
 
   useEffect(() => {
+    const button = notationRef.current?.querySelector<HTMLButtonElement>(
+      `button[data-review-ply="${selectedPly}"]`,
+    );
+    button?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [selectedPly, movesOpen]);
+
+  useEffect(() => {
     const base =
       selectedMoment?.positionFen ??
       selectedMove?.beforeFen ??
@@ -203,7 +219,16 @@ export function GameStoryView({
     setPresentationMove(undefined);
     setBoardFen(base);
 
-    if (!selectedMoment || preview === "position") return;
+    if (preview === "position") return;
+    if (preview === "actual" && selectedMove) {
+      setBoardFen(selectedMove.afterFen);
+      setPresentationMove({
+        from: selectedMove.from as Square,
+        to: selectedMove.to as Square,
+      });
+      return;
+    }
+    if (!selectedMoment) return;
     if (preview === "line") {
       const step = variation[lineStep - 1];
       if (step && lineAvailable) {
@@ -215,8 +240,7 @@ export function GameStoryView({
       }
       return;
     }
-    const uci =
-      preview === "actual" ? selectedMoment.actualMove : selectedMoment.bestMove;
+    const uci = selectedMoment.bestMove;
     const timer = window.setTimeout(() => {
       setBoardFen(applyUci(base, uci));
       setPresentationMove({
@@ -249,8 +273,8 @@ export function GameStoryView({
   }
 
   const arrows =
-    selectedMoment && preview === "actual"
-      ? moveArrow(selectedMoment.actualMove, "danger")
+    selectedMove && preview === "actual"
+      ? [{ from: selectedMove.from as Square, to: selectedMove.to as Square, tone: "focus" as const }]
       : selectedMoment && preview === "better"
         ? moveArrow(selectedMoment.bestMove, "good")
         : selectedMoment && preview === "line" && lineAvailable && lineStep > 0
@@ -294,6 +318,20 @@ export function GameStoryView({
         </div>
       </header>
 
+      <div className="review-workstation-provenance" aria-label="Review source and analysis state">
+        <span>{reviewSourceLabel(game)} · imported {game.importedAt.slice(0, 10)}</span>
+        <span role="status" aria-live="polite">
+          {refreshingAnalysis ? "Reanalyzing saved game…" :
+            `Saved review${game.analysisEngine ? ` · ${game.analysisEngine}` : ""}`}
+          {game.analyzedAt ? ` · ${game.analyzedAt.slice(0, 10)}` : ""}
+        </span>
+        {reviewSourceLink(game) && (
+          <a href={reviewSourceLink(game)!} target="_blank" rel="noopener noreferrer">
+            Original game
+          </a>
+        )}
+      </div>
+
       <div className="review-phase-strip" aria-label="Game phases">
         {story.phases.map((phase) => (
           <button
@@ -319,6 +357,66 @@ export function GameStoryView({
         ))}
       </div>
 
+      <div className="review-workstation-timeline">
+      <section className="review-eval-strip" aria-label="Critical moment evaluation trace">
+        <div className="review-eval-label">
+          <span>Critical moments</span>
+          <strong>{story.moments.length}</strong>
+        </div>
+        <div className="review-eval-track-scroll">
+        <div className="review-eval-track"
+          style={{ minWidth: `${Math.max(320, story.moments.length * 48)}px` }}>
+          {story.moments.map((moment, index) => {
+            const normalized = Math.max(
+              -6,
+              Math.min(6, moment.evaluationAfter / 100),
+            );
+            const top = 50 - (normalized / 6) * 14;
+            return (
+              <button
+                key={moment.id}
+                type="button"
+                className={[
+                  selectedPly === moment.ply ? "active" : "",
+                  moment.severity ?? "",
+                  moment.kind,
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                style={{
+                  left: `${story.moments.length <= 1 ? 50 : (index / (story.moments.length - 1)) * 100}%`,
+                  top: `${top}%`,
+                }}
+                aria-label={`${phaseLabel(moment.phase)}, move ${moment.moveNumber}: ${moment.title}. Saved evaluation ${evaluationLabel(moment.evaluationBefore)} to ${evaluationLabel(moment.evaluationAfter)}; estimated ${(moment.centipawnLoss / 100).toFixed(1)} pawns lost`}
+                aria-current={selectedPly === moment.ply ? "step" : undefined}
+                onClick={() => setSelectedPly(moment.ply)}
+              />
+            );
+          })}
+        </div>
+        </div>
+      </section>
+
+      <div className="review-moment-navigation" role="group" aria-label="Key moment navigation">
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply < selectedPly)}
+          onClick={() => {
+            const previous = [...story.moments].reverse().find((moment) => moment.ply < selectedPly);
+            if (previous) setSelectedPly(previous.ply);
+          }}>
+          Previous key moment
+        </button>
+        <button type="button" className="secondary"
+          disabled={!story.moments.some((moment) => moment.ply > selectedPly)}
+          onClick={() => {
+            const next = story.moments.find((moment) => moment.ply > selectedPly);
+            if (next) setSelectedPly(next.ply);
+          }}>
+          Next key moment
+        </button>
+      </div>
+      </div>
+
       <section className="review-workspace-v2">
         <div className="review-board-v2">
           <ChessBoard
@@ -330,6 +428,35 @@ export function GameStoryView({
             presentationMove={presentationMove}
           />
 
+          <div className="review-board-selection" role="status" aria-live="polite">
+            <strong>
+              {selectedMove
+                ? `Move ${selectedMove.moveNumber} · ${selectedMove.color === "w" ? "White" : "Black"} · ${selectedMove.san}`
+                : "Starting position"}
+            </strong>
+            <span>{preview === "position" ? "Before selected move" :
+              preview === "actual" ? "After played move" :
+                preview === "better" ? "After saved engine suggestion" :
+                  `Verified variation ${lineStep}/${variation.length}`}</span>
+          </div>
+
+          <div className="review-move-controls" role="group" aria-label="Navigate recorded game moves">
+            <button type="button" disabled={selectedPly === 0}
+              onClick={() => setSelectedPly(0)} aria-label="Starting position">Start</button>
+            <button type="button" disabled={selectedPly === 0}
+              onClick={() => setSelectedPly(previousMove?.ply ?? 0)} aria-label="Previous game move">
+              <ChevronLeft size={17} aria-hidden="true" />
+            </button>
+            <span aria-live="off">{Math.max(0, selectedMoveIndex + 1)} / {game.moves.length}</span>
+            <button type="button" disabled={!nextMove}
+              onClick={() => nextMove && setSelectedPly(nextMove.ply)} aria-label="Next game move">
+              <ChevronRight size={17} aria-hidden="true" />
+            </button>
+            <button type="button" disabled={!nextMove}
+              onClick={() => game.moves.at(-1) && setSelectedPly(game.moves.at(-1)!.ply)}
+              aria-label="Final game move">End</button>
+          </div>
+
           <div className="story-preview-controls">
             <button
               type="button"
@@ -339,7 +466,7 @@ export function GameStoryView({
             >
               Position
             </button>
-            {selectedMoment && (
+            {selectedMove && (
               <>
                 <button
                   type="button"
@@ -347,9 +474,9 @@ export function GameStoryView({
                   aria-pressed={preview === "actual"}
                   onClick={() => setPreview("actual")}
                 >
-                  Your move
+                  Played move
                 </button>
-                {variation.length > 0 && (!selectedMistake || selectedReflection?.bestRevealed) && (
+                {selectedMoment && variation.length > 0 && (!selectedMistake || selectedReflection?.bestRevealed) && (
                   <button
                     type="button"
                     className={preview === "better" ? "active better" : ""}
@@ -359,7 +486,7 @@ export function GameStoryView({
                     Better move
                   </button>
                 )}
-                {lineAvailable && (
+                {selectedMoment && lineAvailable && (
                   <button type="button" className={preview === "line" ? "active better" : ""}
                     aria-pressed={preview === "line"}
                     onClick={() => { setLineStep(0); setPreview("line"); }}>
@@ -404,13 +531,19 @@ export function GameStoryView({
           </div>
         </div>
 
-        <aside className="review-notation-v2" aria-label="Move notation">
+        <aside className={movesOpen ? "review-notation-v2 moves-expanded" : "review-notation-v2"} aria-label="Move notation">
           <header>
             <span>Moves</span>
             <strong>{game.moves.length} plies</strong>
+            <button className="review-notation-toggle" type="button"
+              aria-expanded={movesOpen} aria-controls={notationId}
+              onClick={() => setMovesOpen((expanded) => !expanded)}>
+              {movesOpen ? "Hide" : "Show"} moves
+              <ChevronDown size={17} aria-hidden="true" />
+            </button>
           </header>
 
-          <div className="review-notation-list" onKeyDown={(event) => {
+          <div className="review-notation-list" id={notationId} ref={notationRef} onKeyDown={(event) => {
             if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
             if (!(event.target instanceof HTMLButtonElement)) return;
             const index = game.moves.findIndex((move) => move.ply === selectedPly);
@@ -445,6 +578,7 @@ export function GameStoryView({
                         .filter(Boolean)
                         .join(" ")}
                       aria-current={selectedPly === move.ply ? "step" : undefined}
+                      aria-label={`Move ${move.moveNumber}, ${move.color === "w" ? "White" : "Black"} ${move.san}${moment ? `, ${moment.severity ?? moment.kind}` : ""}`}
                       onClick={() => setSelectedPly(move.ply)}
                     >
                       {move.san}
@@ -472,12 +606,26 @@ export function GameStoryView({
               <p className="eyebrow">
                 {phaseLabel(selectedPhase?.phase ?? "middlegame")} · MOVE {selectedMove.moveNumber}
               </p>
-              <h2>{selectedMove.san}</h2>
-              <p>
-                No separate engine evaluation was stored for this move. Use the notation to inspect the legal game position.
-              </p>
+              <h2>{selectedMove.color === "w" ? "White" : "Black"} played {selectedMove.san}</h2>
+              <p>Original move preserved from this game's PGN. No separate engine evaluation was saved for this move.</p>
             </div>
-          ) : null}
+          ) : (
+            <div className="ordinary-move">
+              <h2>Starting position</h2>
+              <p>Navigate the recorded moves or choose a key moment.</p>
+            </div>
+          )}
+      {onRefreshAnalysis && (
+        <div className="review-v2-refresh">
+          <button className="secondary" type="button" disabled={refreshingAnalysis}
+            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
+            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
+          </button>
+          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
+        </div>
+      )}
+
+
           <div className="review-v2-next-actions" aria-label="After reviewing this game">
             <p className="eyebrow">YOUR NEXT MOVE</p>
             <p>
@@ -495,73 +643,13 @@ export function GameStoryView({
               <Swords size={16} /> Play another game
             </button>
           </div>
+
         </aside>
       </section>
 
-      {onRefreshAnalysis && (
-        <div className="review-v2-refresh">
-          <button className="secondary" type="button" disabled={refreshingAnalysis}
-            onClick={onRefreshAnalysis} aria-busy={refreshingAnalysis}>
-            {refreshingAnalysis ? "Reanalyzing saved game…" : "Refresh engine review"}
-          </button>
-          {analysisError && <p role="alert">{analysisError} The previous game and review remain saved. Retry when the engine is available.</p>}
-        </div>
-      )}
 
-      <section className="review-eval-strip" aria-label="Critical moment evaluation trace">
-        <div className="review-eval-label">
-          <span>Critical moments</span>
-          <strong>{story.moments.length}</strong>
-        </div>
-        <div className="review-eval-track">
-          {story.moments.map((moment, index) => {
-            const normalized = Math.max(
-              -6,
-              Math.min(6, moment.evaluationAfter / 100),
-            );
-            const top = 50 - (normalized / 6) * 38;
-            return (
-              <button
-                key={moment.id}
-                type="button"
-                className={[
-                  selectedPly === moment.ply ? "active" : "",
-                  moment.severity ?? "",
-                  moment.kind,
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                style={{
-                  left: `${story.moments.length <= 1 ? 50 : (index / (story.moments.length - 1)) * 100}%`,
-                  top: `${top}%`,
-                }}
-                aria-label={`${phaseLabel(moment.phase)}, move ${moment.moveNumber}: ${moment.title}`}
-                aria-current={selectedPly === moment.ply ? "step" : undefined}
-                onClick={() => setSelectedPly(moment.ply)}
-              />
-            );
-          })}
-        </div>
-      </section>
 
-      <div className="review-moment-navigation" role="group" aria-label="Key moment navigation">
-        <button type="button" className="secondary"
-          disabled={!story.moments.some((moment) => moment.ply < selectedPly)}
-          onClick={() => {
-            const previous = [...story.moments].reverse().find((moment) => moment.ply < selectedPly);
-            if (previous) setSelectedPly(previous.ply);
-          }}>
-          Previous key moment
-        </button>
-        <button type="button" className="secondary"
-          disabled={!story.moments.some((moment) => moment.ply > selectedPly)}
-          onClick={() => {
-            const next = story.moments.find((moment) => moment.ply > selectedPly);
-            if (next) setSelectedPly(next.ply);
-          }}>
-          Next key moment
-        </button>
-      </div>
+
 
       {coachMoment && (
         <GameReviewCoach
@@ -686,6 +774,14 @@ function MomentDetails({
         <button className="moment-coach-primary" type="button" onClick={onCoach}>
           <Target size={16} /> Review this decision first
         </button>
+      )}
+
+      {mistake && !reflection?.bestRevealed && (
+        <div className="moment-actions">
+          <button className="primary" type="button" onClick={() => onTrainMistake(mistake.id)}>
+            <Swords size={16} /> Practice independently
+          </button>
+        </div>
       )}
 
       {mistake && reflection?.bestRevealed && (

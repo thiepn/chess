@@ -151,6 +151,13 @@
     top: -3px;
   }
 
+  /* Routed Review owns its scroll regions; index/library keeps ordinary scroll. */
+  .app-shell-v2 .app-main:has(.review-workstation) {
+    min-height: 0;
+    overflow: hidden;
+    padding: 5px var(--chess-app-inline-end) 4px var(--chess-app-inline);
+  }
+
   /* Learn section reading stays inside the phone viewport. */
   .app-shell-v2.app-shell-mode-focus .app-main:has(.lesson-page-v2),
   .app-shell-v2 .app-main:has(.lesson-page-v2) {
@@ -985,6 +992,12 @@
       max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
   }
   .app-shell-v2:has(.lesson-page-v2) .mobile-nav { display: none; }
+  .app-shell-v2 .app-main:has(.review-workstation) {
+    min-height: 0;
+    overflow: hidden;
+    padding: max(4px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
   .app-shell-v2.app-shell-mode-session .app-topbar { display: none; }
   .app-shell-v2.app-shell-mode-session .app-main { overflow: hidden; padding: 3px 6px; }
   .train-runtime-page {

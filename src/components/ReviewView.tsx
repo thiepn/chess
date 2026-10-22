@@ -6,6 +6,7 @@ import {
   Link2,
   LoaderCircle,
   RotateCcw,
+  Search,
   Swords,
   Target,
   Upload,
@@ -23,6 +24,8 @@ import type {
 import type { LichessConnection } from "../lichess/types";
 import type { OpeningDeviation } from "../openings/types";
 import { resolveReviewRoute, reviewGamePath } from "../review/reviewRoutes";
+import { filterReviewGames, reviewSourceLabel, reviewSourceLink,
+  type ReviewGameSource, type ReviewGameStatus } from "../review/reviewPresentation";
 import { reviewPracticeQueue, verifiedReviewAttempts, type RecordedReviewAttempt } from "../review/practiceLoop";
 import type { LearningAnalyticsEvent } from "../analytics/types";
 import type { CoachEffectivenessInsight, TrainingPrescription, PrescriptionTrackingRecord } from "../prescriptions/types";
@@ -115,7 +118,10 @@ export function ReviewView({
   const [batchStatus, setBatchStatus] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [visibleGames, setVisibleGames] = useState(HISTORY_PAGE_SIZE);
-  useEffect(() => setVisibleGames(HISTORY_PAGE_SIZE), [games.length]);
+  const [gameQuery, setGameQuery] = useState("");
+  const [gameStatus, setGameStatus] = useState<ReviewGameStatus>("all");
+  const [gameSource, setGameSource] = useState<ReviewGameSource>("all");
+  useEffect(() => setVisibleGames(HISTORY_PAGE_SIZE), [games.length, gameQuery, gameStatus, gameSource]);
 
   const route = resolveReviewRoute(routePath);
   const selectedGame = route.gameId
@@ -151,6 +157,9 @@ export function ReviewView({
     () => [...games].sort((a, b) => b.importedAt.localeCompare(a.importedAt)),
     [games],
   );
+  const filteredGames = useMemo(() => filterReviewGames(games, gameQuery, gameStatus, gameSource),
+    [games, gameQuery, gameStatus, gameSource]);
+  const reviewedCount = sortedGames.filter((game) => Boolean(game.reviewStory)).length;
   const latestAnalyzedGame = sortedGames.find((game) => game.reviewStory);
   const nextUnanalyzedGame = sortedGames.find((game) => !game.reviewStory);
   const featuredMoment = latestAnalyzedGame?.reviewStory?.moments[0];
@@ -313,10 +322,19 @@ export function ReviewView({
             <p>
               This game is saved, but it does not yet have the structured visual review.
             </p>
+            <p className="review-v2-upgrade-source">
+              {reviewSourceLabel(selectedGame)} · {selectedGame.moves.length} moves ·
+              {" "}{selectedGame.importedAt.slice(0, 10)}
+            </p>
+            {reviewSourceLink(selectedGame) && (
+              <a className="review-v2-original-link" href={reviewSourceLink(selectedGame)!}
+                target="_blank" rel="noopener noreferrer">Original Lichess game</a>
+            )}
             <button
               className="primary"
               type="button"
-              disabled={reanalyzingGameId === selectedGame.id}
+              disabled={analyzing || batchAnalyzing}
+              aria-busy={reanalyzingGameId === selectedGame.id}
               onClick={() => void reanalyzeStoredGame(selectedGame)}
             >
               {reanalyzingGameId === selectedGame.id ? (
@@ -326,6 +344,11 @@ export function ReviewView({
               )}
               Analyze game
             </button>
+            {reanalyzingGameId === selectedGame.id && progress && (
+              <div className="review-v2-upgrade-progress" role="status" aria-live="polite">
+                {progress.phase.replaceAll("-", " ")} · {progress.completed}/{progress.total} moves processed
+              </div>
+            )}
             {error && <p className="review-v2-analysis-error" role="alert">{error} Your game is still saved. Retry analysis when the engine is available.</p>}
           </div>
         </section>
@@ -379,12 +402,42 @@ export function ReviewView({
             <span>Review</span>
             <strong id="review-title">Games</strong>
           </div>
-          <small>{games.length}</small>
+          <small>{filteredGames.length} of {games.length}</small>
+        </div>
+        <div className="review-v2-history-controls">
+          <label htmlFor="review-game-search">Search games</label>
+          <div className="review-v2-search-field">
+            <Search size={16} aria-hidden="true" />
+            <input id="review-game-search" type="search" value={gameQuery}
+              onChange={(event) => setGameQuery(event.target.value)}
+              placeholder="Player, opening or event" />
+          </div>
+          <div className="review-v2-status-filter" role="group" aria-label="Game analysis status">
+            {([
+              ["all", "All"],
+              ["reviewed", "Reviewed"],
+              ["pending", "To analyze"],
+            ] as const).map(([value, label]) => (
+              <button key={value} type="button" aria-pressed={gameStatus === value}
+                className={gameStatus === value ? "active" : ""}
+                onClick={() => setGameStatus(value)}>
+                {label}
+              </button>
+            ))}
+          </div>
+          <label htmlFor="review-game-source">Source</label>
+          <select id="review-game-source" value={gameSource}
+            onChange={(event) => setGameSource(event.target.value as ReviewGameSource)}>
+            <option value="all">All sources</option>
+            <option value="manual">PGN import</option>
+            <option value="lichess">Lichess</option>
+            <option value="training">Training games</option>
+          </select>
         </div>
 
-        <div className="review-v2-game-list">
-          {sortedGames.length ? (
-            sortedGames.slice(0, visibleGames).map((game) => (
+        <div className="review-v2-game-list" aria-live="polite">
+          {filteredGames.length ? (
+            filteredGames.slice(0, visibleGames).map((game) => (
               <button
                 key={game.id}
                 type="button"
@@ -394,19 +447,17 @@ export function ReviewView({
                 onFocus={() => {
                   if (game.reviewStory) void import("./GameStoryView");
                 }}
-                onClick={() =>
-                  game.reviewStory
-                    ? onNavigate(reviewGamePath(game.id))
-                    : void reanalyzeStoredGame(game)
-                }
-                disabled={reanalyzingGameId === game.id}
+                onClick={() => onNavigate(reviewGamePath(game.id))}
+                aria-label={`${game.white} versus ${game.black}, ${game.result}, ${reviewSourceLabel(game)}. ${game.reviewStory ? "Open review" : "Analysis required"}`}
+                disabled={analyzing && reanalyzingGameId === game.id}
               >
                 <span className="review-v2-result">{game.result}</span>
                 <span className="review-v2-game-copy">
                   <strong>{game.white} — {game.black}</strong>
                   <small>
                     {game.openingName ?? game.event ?? "Chess game"}
-                    {game.source === "lichess" ? " · Lichess" : ""}
+                    {" · "}{reviewSourceLabel(game)}
+                    {" · "}{game.importedAt.slice(0, 10)}
                   </small>
                 </span>
                 <span className="review-v2-game-state">
@@ -414,24 +465,26 @@ export function ReviewView({
                     ? "Analyzing"
                     : game.reviewStory
                       ? `${game.reviewStory.moments.length} moments`
-                      : "Analyze"}
+                      : "Needs analysis"}
                 </span>
               </button>
             ))
           ) : (
-            <div className="review-v2-empty-list">
-              <Swords size={18} />
-              <span>No games yet.</span>
+            <div className="review-v2-empty-list" role="status">
+              <Swords size={18} aria-hidden="true" />
+              <span>{games.length ? "No matching games." : "No games yet."}</span>
+              {games.length > 0 && (
+                <button type="button" className="secondary" onClick={() => {
+                  setGameQuery(""); setGameStatus("all"); setGameSource("all");
+                }}>Clear filters</button>
+              )}
             </div>
           )}
         </div>
-        {sortedGames.length > visibleGames && (
-          <button
-            type="button"
-            className="secondary"
-            onClick={() => setVisibleGames((count) => nextVisibleCount(sortedGames.length, count))}
-          >
-            Show more games ({sortedGames.length - visibleGames} remaining)
+        {filteredGames.length > visibleGames && (
+          <button type="button" className="secondary review-v2-load-more"
+            onClick={() => setVisibleGames((count) => nextVisibleCount(filteredGames.length, count))}>
+            Show more games ({filteredGames.length - visibleGames} remaining)
           </button>
         )}
       </aside>
@@ -449,8 +502,8 @@ export function ReviewView({
           </div>
           <div className="review-v2-summary">
             <span>
-              <strong>{games.filter((game) => game.analyzedAt).length}</strong>
-              analyzed
+              <strong>{reviewedCount}</strong>
+              reviewed
             </span>
             <span>
               <strong>{pendingPractice.length}</strong>
