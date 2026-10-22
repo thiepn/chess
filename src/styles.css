@@ -7601,7 +7601,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2 {
   min-height: calc(100dvh - var(--chess-topbar-height) - 44px);
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 238px minmax(0, 1fr);
   gap: clamp(24px, 3vw, 42px);
   color: var(--chess-color-text-primary);
 }
@@ -7643,7 +7643,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-course-mark span {
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -7651,7 +7651,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-course-mark strong {
   color: var(--chess-color-text-primary);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.35;
 }
 
@@ -7697,7 +7697,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   place-items: center;
   border: 1px solid var(--chess-color-separator);
   border-radius: 50%;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 750;
 }
 
@@ -7715,7 +7715,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2-stage-label strong {
   overflow: hidden;
   color: inherit;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 650;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -7723,13 +7723,13 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-stage-label small {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .learn-v2-stage-state {
   min-width: 28px;
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
   text-align: right;
 }
 
@@ -7756,7 +7756,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   gap: 8px;
   cursor: pointer;
   text-align: left;
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .learn-v2-tools button:hover {
@@ -7767,6 +7767,77 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   min-width: 0;
   max-width: 1040px;
 }
+
+/* The course entry precedes chapter browsing and always identifies a real skill. */
+.learn-v2-continue {
+  min-width: 0;
+  padding: 12px 0 14px;
+  border-bottom: 1px solid var(--chess-color-separator-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.learn-v2-continue-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.learn-v2-continue-copy > span {
+  color: var(--chess-color-text-secondary);
+  font-size: 14px;
+  font-weight: 650;
+}
+.learn-v2-continue-copy > strong {
+  color: var(--chess-color-text-primary);
+  font-family: var(--chess-font-editorial);
+  font-size: clamp(18px, 2vw, 23px);
+  font-weight: 650;
+  line-height: 1.2;
+}
+.learn-v2-continue-copy small {
+  font-size: 14px;
+  color: var(--chess-color-text-secondary);
+}
+.learn-v2-continue > .primary {
+  flex: 0 0 auto;
+  min-width: 128px;
+  min-height: 48px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.learn-v2-chapter-switcher {
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid var(--chess-color-separator);
+}
+.learn-v2-chapter-switcher > span {
+  color: var(--chess-color-text-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.learn-v2-chapter-switcher button {
+  border: 0;
+  background: transparent;
+  color: var(--chess-color-text-primary);
+  min-height: 44px;
+  min-width: 0;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.learn-v2-chapter-switcher button:last-child { justify-content: flex-end; }
+.learn-v2-chapter-switcher button:disabled { opacity: .35; cursor: default; }
 
 .learn-v2-chapter-head {
   min-height: 146px;
@@ -7797,14 +7868,14 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   display: block;
   margin-top: 8px;
   color: var(--chess-color-text-secondary);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .learn-v2-chapter-head > div:first-child > p:last-child {
   max-width: 66ch;
   margin: 7px 0 0;
   color: var(--chess-color-text-muted);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -7814,12 +7885,12 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   grid-template-columns: 1fr auto;
   gap: 5px 10px;
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .learn-v2-stage-progress strong {
   color: var(--chess-color-text-primary);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .learn-v2-progress-track {
@@ -7860,12 +7931,12 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-gate-copy strong {
   color: var(--chess-color-text-secondary);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .learn-v2-gate-copy div > span {
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .learn-v2-stage-actions .secondary {
@@ -7897,12 +7968,12 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-placement strong {
   color: var(--chess-color-text-secondary);
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .learn-v2-placement small {
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .learn-v2-placement button {
@@ -7911,7 +7982,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   background: transparent;
   color: var(--chess-color-accent);
   cursor: pointer;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -7924,7 +7995,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   min-height: 104px;
   padding: 15px 0;
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr) 130px 150px;
+  grid-template-columns: 30px minmax(0, 1fr) 140px 162px;
   gap: 16px;
   align-items: center;
   border-bottom: 1px solid var(--chess-color-separator);
@@ -7951,7 +8022,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2-skill-index {
   color: var(--chess-color-text-muted);
   font-family: var(--chess-font-mono);
-  font-size: 10px;
+  font-size: 13px;
   text-align: center;
 }
 
@@ -7968,7 +8039,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-skill-copy > div:first-child > span {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -7976,7 +8047,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-skill-copy > div:first-child > small {
   color: var(--chess-color-accent);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 750;
   text-transform: uppercase;
 }
@@ -7993,9 +8064,18 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   max-width: 64ch;
   margin: 4px 0 0;
   color: var(--chess-color-text-muted);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.5;
 }
+
+.learn-v2-skill-evidence {
+  display: block;
+  margin-top: 5px;
+  color: var(--chess-color-text-secondary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.learn-v2-skill-row.strong-skill .learn-v2-skill-index { color: var(--chess-color-correct); }
 
 .learn-v2-prerequisite {
   margin-top: 6px;
@@ -8003,7 +8083,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .learn-v2-skill-mastery {
@@ -8011,12 +8091,12 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   grid-template-columns: 1fr auto;
   gap: 4px 8px;
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .learn-v2-skill-mastery strong {
   color: var(--chess-color-text-secondary);
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .learn-v2-skill-actions {
@@ -8032,7 +8112,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   padding: 0 11px;
   border-radius: 7px;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -8057,7 +8137,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 /* Interactive textbook page */
@@ -8084,7 +8164,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 13px;
   text-align: left;
 }
 
@@ -8101,7 +8181,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-lesson-identity > span {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -8116,7 +8196,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-lesson-identity > small {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .learn-v2-step-list {
@@ -8160,7 +8240,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   place-items: center;
   border: 1px solid var(--chess-color-separator);
   border-radius: 50%;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .learn-v2-step-list button > div {
@@ -8171,7 +8251,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-step-list small {
   color: var(--chess-color-text-muted);
-  font-size: 7px;
+  font-size: 12px;
   font-weight: 750;
   text-transform: uppercase;
 }
@@ -8179,7 +8259,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2-step-list strong {
   overflow: hidden;
   color: inherit;
-  font-size: 9px;
+  font-size: 12px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -8209,11 +8289,11 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2-board-caption {
   width: min(100%, 680px);
   color: var(--chess-color-text-muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .learn-v2-board-context {
-  min-height: 28px;
+  min-height: 32px;
   padding: 0 2px;
   display: flex;
   align-items: center;
@@ -8238,12 +8318,74 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   position: sticky;
   top: calc(var(--chess-topbar-height) + 22px);
   align-self: start;
-  padding: 4px 0 0;
+  min-width: 0;
+  min-height: 0;
+  max-height: calc(100dvh - var(--chess-topbar-height) - 44px);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+.learn-v2-reading-content {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 4px 4px 12px 0;
+}
+.learn-v2-reading-footer {
+  min-width: 0;
+  padding: 10px 0 max(6px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--chess-color-separator-strong);
+  background: var(--chess-color-bg-app);
+  display: grid;
+  gap: 8px;
+}
+.learn-v2-step-progress {
+  width: 100%;
+  height: 3px;
+  margin: 14px 0 0;
+  background: var(--chess-color-separator);
+  overflow: hidden;
+}
+.learn-v2-step-progress > span {
+  height: 100%;
+  display: block;
+  background: var(--chess-color-accent);
+}
+.learn-v2-reading-transfer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+.learn-v2-reading-transfer button {
+  width: 100%;
+  min-height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.learn-v2-reading-nav > button {
+  min-width: 0;
+  min-height: 44px;
+  font-size: 14px;
 }
 
 .learn-v2-reading .eyebrow {
   color: var(--chess-color-accent);
 }
+.learn-v2-lesson-evidence {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 7px;
+  padding: 2px 0;
+  color: var(--chess-color-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 
 .learn-v2-reading h1 {
   margin: 7px 0 0;
@@ -8258,7 +8400,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 .learn-v2-reading-body {
   margin: 12px 0 0;
   color: var(--chess-color-text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.68;
 }
 
@@ -8273,7 +8415,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-reading-note > span {
   color: var(--chess-color-text-muted);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 750;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -8281,19 +8423,20 @@ html[data-motion="reduced"] .train-runtime-progress > span {
 
 .learn-v2-reading-note strong {
   color: var(--chess-color-text-primary);
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .learn-v2-reading-note p {
   margin: 0;
   color: var(--chess-color-text-muted);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.55;
 }
 
 .learn-v2-reading-nav {
-  margin-top: 14px;
-  display: flex;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
 }
 
@@ -8331,7 +8474,7 @@ html[data-motion="reduced"] .train-runtime-progress > span {
   max-width: 62ch;
   margin: 7px 0 0;
   color: var(--chess-color-text-muted);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.55;
 }
 

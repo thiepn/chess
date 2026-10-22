@@ -3351,6 +3351,7 @@ export default function App() {
           ) : (
             <LearnView
               mastery={state.mastery}
+              lessonEvents={state.analytics?.events ?? []}
               gates={stageGates}
               placement={state.placement}
               curriculumFloor={courseCurriculumFloor(state)}

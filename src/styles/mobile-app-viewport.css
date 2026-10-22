@@ -151,6 +151,15 @@
     top: -3px;
   }
 
+  /* Learn section reading stays inside the phone viewport. */
+  .app-shell-v2.app-shell-mode-focus .app-main:has(.lesson-page-v2),
+  .app-shell-v2 .app-main:has(.lesson-page-v2) {
+    overflow: hidden;
+    height: 100%;
+    min-height: 0;
+    padding: 5px var(--chess-app-inline-end) 3px var(--chess-app-inline);
+  }
+
   /* Train home is board-first; auxiliary long content is optional. */
   .app-shell-v2 .app-main:has(.train-room) { padding: 6px 8px 0; }
   .app-shell-v2 .train-room {
@@ -968,6 +977,14 @@
     overflow: hidden;
   }
   .app-shell-v2 .app-main { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+  .app-shell-v2.app-shell-mode-focus .app-main:has(.lesson-page-v2) {
+    overflow: hidden;
+    min-height: 0;
+    height: 100%;
+    padding: max(4px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+  .app-shell-v2:has(.lesson-page-v2) .mobile-nav { display: none; }
   .app-shell-v2.app-shell-mode-session .app-topbar { display: none; }
   .app-shell-v2.app-shell-mode-session .app-main { overflow: hidden; padding: 3px 6px; }
   .train-runtime-page {

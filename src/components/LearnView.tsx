@@ -9,12 +9,11 @@ import {
   LockKeyhole,
   Play,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   curriculumStages,
   domainLabels,
   isSkillUnlocked,
-  readyCurriculumSkills,
   skillById,
   skills,
 } from "../domain/curriculum";
@@ -29,11 +28,14 @@ import type {
   StageGateStatus,
 } from "../assessment/types";
 import { lessonForSkill } from "../learning/lessons";
+import { chapterEvidence, nextCourseLesson, recordedLessonStatus } from "../learning/learnJourney";
+import type { LearningAnalyticsEvent } from "../analytics/types";
 import type { LessonStep } from "../learning/types";
 import { supportsPuzzlePractice } from "../puzzles/support";
 import { ChessBoard } from "./ChessBoard";
 interface LearnViewProps {
   mastery: Record<string, SkillMastery>;
+  lessonEvents?: readonly LearningAnalyticsEvent[];
   gates: Record<CurriculumStageId, StageGateEvaluation>;
   placement?: PlacementProfile;
   curriculumFloor: number;
@@ -89,29 +91,17 @@ function lessonStepCopy(step: LessonStep) {
   };
 }
 
-function stageAverage(
-  stageId: CurriculumStageId,
-  mastery: Record<string, SkillMastery>,
-) {
-  const stageSkills = skills.filter((skill) => skill.stage === stageId);
-  if (!stageSkills.length) return 0;
-  return Math.round(
-    stageSkills.reduce(
-      (sum, skill) => sum + skillMastery(mastery, skill.id),
-      0,
-    ) / stageSkills.length,
-  );
-}
-
 function LessonPage({
   skill,
   mastery,
+  lessonEvents,
   onBack,
   onStartLesson,
   onStartPractice,
 }: {
   skill: ChessSkill;
   mastery: Record<string, SkillMastery>;
+  lessonEvents: readonly LearningAnalyticsEvent[];
   onBack: () => void;
   onStartLesson: (skillId: string) => void;
   onStartPractice: (skillId: string) => void;
@@ -127,15 +117,21 @@ function LessonPage({
     [skill],
   );
   const [stepIndex, setStepIndex] = useState(0);
+  const readingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setStepIndex(0);
   }, [skill.id]);
 
+  useEffect(() => {
+    if (readingRef.current) readingRef.current.scrollTop = 0;
+  }, [stepIndex, skill.id]);
+
   const step = lesson.steps[Math.min(stepIndex, lesson.steps.length - 1)];
   const copy = lessonStepCopy(step);
   const orientation = new Chess(step.fen).turn() === "b" ? "b" : "w";
   const value = skillMastery(mastery, skill.id);
+  const lessonStatus = recordedLessonStatus(lessonEvents, skill.id);
   const practiceAvailable = supportsPuzzlePractice(skill.id) ||
     skill.trainingModes.some(mode=>mode==="calculation" ||
       mode==="endgameDrill" || mode==="conversionChallenge");
@@ -151,7 +147,7 @@ function LessonPage({
         <div className="learn-v2-lesson-identity">
           <span>{domainLabels[skill.domain]}</span>
           <strong>{lesson.title}</strong>
-          <small>{masteryLabel(value)} · {value}% mastery</small>
+          <small>{masteryLabel(value)} · {value}% skill mastery</small>
         </div>
 
         <div className="learn-v2-step-list">
@@ -161,6 +157,7 @@ function LessonPage({
               type="button"
               className={index === stepIndex ? "active" : ""}
               aria-current={index === stepIndex ? "step" : undefined}
+              aria-label={`Section ${index + 1} of ${lesson.steps.length}: ${item.title}`}
               onClick={() => setStepIndex(index)}
             >
               <span>{index + 1}</span>
@@ -172,21 +169,12 @@ function LessonPage({
           ))}
         </div>
 
-        <div className="learn-v2-lesson-actions">
-
-        </div>
       </aside>
 
       <div className="learn-v2-board-column">
         <div className="learn-v2-board-context">
           <span>{copy.eyebrow}</span>
-          <span>{stepIndex + 1} / {lesson.steps.length}</span>
-          <button className="primary" type="button"
-            onClick={() => onStartLesson(skill.id)}>
-            Begin lesson <ChevronRight size={16} />
-          </button>
-          {practiceAvailable && <button className="secondary" type="button"
-            onClick={() => onStartPractice(skill.id)}>Practice positions</button>}
+          <span>Section {stepIndex + 1} of {lesson.steps.length}</span>
         </div>
         <ChessBoard
           key={`${skill.id}:${step.id}`}
@@ -197,21 +185,38 @@ function LessonPage({
           arrows={step.type === "explain" ? step.arrows : undefined}
         />
         <div className="learn-v2-board-caption">
-          Preview the idea here. Interactive moves begin in the guided lesson.
+          {orientation === "w" ? "White" : "Black"} to move · {step.type === "explain" ? "Annotated position" : "Lesson position"}
         </div>
       </div>
 
       <article className="learn-v2-reading">
-        <p className="eyebrow">{domainLabels[skill.domain].toUpperCase()}</p>
+        <div className="learn-v2-reading-content" ref={readingRef}>
+        <p className="eyebrow">{domainLabels[skill.domain].toUpperCase()} · {step.stage}</p>
+        <div className="learn-v2-lesson-evidence" role="status">
+          {lessonStatus === "passed" ? "Guided lesson passed" :
+            lessonStatus === "attempted" ? "Guided lesson attempted" : "Guided lesson not started"}
+        </div>
         <h1 id="lesson-page-title">{copy.title}</h1>
         <p className="learn-v2-reading-body">{copy.body}</p>
 
-        <div className="learn-v2-reading-note">
-          <span>Concept</span>
-          <strong>{skill.title}</strong>
-          <p>{skill.description}</p>
+        {stepIndex === 0 && (
+          <div className="learn-v2-reading-note">
+            <span>Skill focus</span>
+            <strong>{skill.title}</strong>
+            <p>{skill.description}</p>
+          </div>
+        )}
+
+
         </div>
 
+        <footer className="learn-v2-reading-footer">
+        <div className="learn-v2-step-progress"
+          role="progressbar" aria-label="Reading sections"
+          aria-valuemin={0} aria-valuemax={lesson.steps.length}
+          aria-valuenow={stepIndex + 1}>
+          <span style={{ width: `${((stepIndex + 1) / lesson.steps.length) * 100}%` }} />
+        </div>
         <div className="learn-v2-reading-nav">
           <button
             type="button"
@@ -231,10 +236,21 @@ function LessonPage({
               )
             }
           >
-            Next idea
+            Next section
             <ChevronRight size={15} />
           </button>
         </div>
+        <div className="learn-v2-reading-transfer">
+          <button className="primary" type="button" onClick={() => onStartLesson(skill.id)}>
+            Start guided lesson <ChevronRight size={17} />
+          </button>
+          {practiceAvailable && (
+            <button className="secondary" type="button" onClick={() => onStartPractice(skill.id)}>
+              Practice positions
+            </button>
+          )}
+        </div>
+        </footer>
       </article>
     </section>
   );
@@ -242,6 +258,7 @@ function LessonPage({
 
 export function LearnView({
   mastery,
+  lessonEvents = [],
   gates,
   placement,
   curriculumFloor,
@@ -259,10 +276,8 @@ export function LearnView({
     ? skillById[selectedSkillId]
     : undefined;
 
-  const recommendedSkill = readyCurriculumSkills(
-    mastery,
-    curriculumFloor,
-  )[0];
+  const continuation = nextCourseLesson(mastery, curriculumFloor);
+  const recommendedSkill = continuation?.kind === "next" ? continuation.skill : undefined;
 
   const placementStage = placement
     ? curriculumStages.find(
@@ -272,7 +287,7 @@ export function LearnView({
 
   const initialStage =
     selectedSkill?.stage ??
-    recommendedSkill?.stage ??
+    continuation?.skill.stage ??
     placementStage?.id ??
     curriculumStages[0].id;
 
@@ -290,6 +305,7 @@ export function LearnView({
       <LessonPage
         skill={selectedSkill}
         mastery={mastery}
+        lessonEvents={lessonEvents}
         onBack={onBackToCourse}
         onStartLesson={onStartLesson}
         onStartPractice={onStartPractice}
@@ -302,10 +318,11 @@ export function LearnView({
     curriculumStages[0];
   const stageSkills = skills.filter((skill) => skill.stage === stage.id);
   const gate = gates[stage.id];
-  const average = stageAverage(stage.id, mastery);
-  const mastered = stageSkills.filter(
-    (skill) => skillMastery(mastery, skill.id) >= 75,
-  ).length;
+  const evidence = chapterEvidence(stage.id, mastery);
+  const { average, mastered } = evidence;
+  const stageIndex = curriculumStages.findIndex((item) => item.id === stage.id);
+  const previousStage = curriculumStages[stageIndex - 1];
+  const nextStage = curriculumStages[stageIndex + 1];
 
   return (
     <section className="learn-v2" aria-labelledby="learn-course-title">
@@ -320,7 +337,7 @@ export function LearnView({
 
         <nav className="learn-v2-stage-nav" aria-label="Curriculum stages">
           {curriculumStages.map((item) => {
-            const itemAverage = stageAverage(item.id, mastery);
+            const itemEvidence = chapterEvidence(item.id, mastery);
             const itemGate = gates[item.id];
             return (
               <button
@@ -333,7 +350,7 @@ export function LearnView({
                 <span className="learn-v2-stage-number">{item.order + 1}</span>
                 <span className="learn-v2-stage-label">
                   <strong>{item.shortTitle}</strong>
-                  <small>{item.targetRating}</small>
+                  <small>{item.targetRating} · {itemEvidence.practiced} practiced</small>
                 </span>
                 <span
                   className={[
@@ -346,7 +363,7 @@ export function LearnView({
                   {itemGate.status === "passed" ? (
                     <CheckCircle2 size={13} />
                   ) : (
-                    `${itemAverage}%`
+                    `${itemEvidence.mastered}/${itemEvidence.total}`
                   )}
                 </span>
               </button>
@@ -367,6 +384,31 @@ export function LearnView({
       </aside>
 
       <main className="learn-v2-chapter">
+        {continuation && (
+          <section className="learn-v2-continue" aria-label="Continue learning">
+            <div className="learn-v2-continue-copy">
+              <span>{continuation.kind === "next" ? "Continue learning" : "Revisit a lesson"}</span>
+              <strong>{continuation.skill.title}</strong>
+              <small>{curriculumStages.find((item) => item.id === continuation.skill.stage)?.title} · {masteryLabel(skillMastery(mastery, continuation.skill.id))}</small>
+            </div>
+            <button type="button" className="primary" onClick={() => onOpenSkill(continuation.skill.id)}>
+              {continuation.kind === "next" ? "Continue" : "Read again"}
+              <ChevronRight size={18} aria-hidden="true" />
+            </button>
+          </section>
+        )}
+
+        <div className="learn-v2-chapter-switcher" role="group" aria-label="Chapter navigation">
+          <button type="button" disabled={!previousStage} onClick={() => previousStage && setSelectedStageId(previousStage.id)}>
+            <ChevronLeft size={16} aria-hidden="true" />
+            {previousStage ? previousStage.shortTitle : "First chapter"}
+          </button>
+          <span>Chapter {stage.order + 1} of {curriculumStages.length}</span>
+          <button type="button" disabled={!nextStage} onClick={() => nextStage && setSelectedStageId(nextStage.id)}>
+            {nextStage ? nextStage.shortTitle : "Last chapter"}
+            <ChevronRight size={16} aria-hidden="true" />
+          </button>
+        </div>
         <header className="learn-v2-chapter-head">
           <div>
             <p className="eyebrow">{stage.targetRating.toUpperCase()}</p>
@@ -376,9 +418,10 @@ export function LearnView({
           </div>
 
           <div className="learn-v2-stage-progress">
-            <span>{mastered}/{stageSkills.length} mastered</span>
+            <span>{mastered}/{stageSkills.length} strong skills · {evidence.practiced} practiced</span>
             <strong>{average}%</strong>
-            <div className="learn-v2-progress-track">
+            <div className="learn-v2-progress-track" role="progressbar"
+              aria-label="Average chapter skill mastery" aria-valuemin={0} aria-valuemax={100} aria-valuenow={average}>
               <i style={{ width: `${average}%` }} />
             </div>
           </div>
@@ -425,6 +468,8 @@ export function LearnView({
         <div className="learn-v2-skill-list" role="list">
           {stageSkills.map((skill, index) => {
             const value = skillMastery(mastery, skill.id);
+            const attempts = mastery[skill.id]?.attempts ?? 0;
+            const lessonStatus = recordedLessonStatus(lessonEvents, skill.id);
             const unlocked = isSkillUnlocked(skill, mastery);
             const practiceAvailable = supportsPuzzlePractice(skill.id) ||
     skill.trainingModes.some(mode=>mode==="calculation" ||
@@ -441,6 +486,7 @@ export function LearnView({
                   "learn-v2-skill-row",
                   unlocked ? "" : "locked",
                   recommendedSkill?.id === skill.id ? "recommended" : "",
+                  value >= 75 ? "strong-skill" : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -450,10 +496,17 @@ export function LearnView({
                 <div className="learn-v2-skill-copy">
                   <div>
                     <span>{domainLabels[skill.domain]}</span>
-                    {recommendedSkill?.id === skill.id && <small>Next</small>}
+                    {recommendedSkill?.id === skill.id && <small>Next lesson</small>}
                   </div>
                   <strong>{skill.title}</strong>
                   <p>{skill.description}</p>
+                  {(lessonStatus !== "not-started" || attempts > 0) && (
+                    <small className="learn-v2-skill-evidence">
+                      {lessonStatus === "passed" ? "Guided lesson passed" :
+                        lessonStatus === "attempted" ? "Guided lesson attempted" : "Skill practice recorded"}
+                      {attempts > 0 ? ` · ${attempts} skill attempts` : ""}
+                    </small>
+                  )}
                   {!unlocked && prerequisites.length > 0 && (
                     <div className="learn-v2-prerequisite">
                       <LockKeyhole size={12} />
@@ -478,7 +531,7 @@ export function LearnView({
                         className="learn-v2-open"
                         onClick={() => onOpenSkill(skill.id)}
                       >
-                        Open
+                        Read lesson
                         <ChevronRight size={15} />
                       </button>
                       {practiceAvailable && (
