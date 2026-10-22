@@ -492,13 +492,7 @@ export function ReviewView({
       <main className="review-v2-main">
         <header className="review-v2-main-head">
           <div>
-            <p className="eyebrow">ANALYSIS DESK</p>
             <h1>{latestAnalyzedGame ? "Game review" : "Import a game"}</h1>
-            <p>
-              {latestAnalyzedGame
-                ? "Return to your last analyzed game, study its turning points, or import another."
-                : "Analyze the game, inspect critical moments, and save positions you want to practice."}
-            </p>
           </div>
           <div className="review-v2-summary">
             <span>
@@ -516,12 +510,8 @@ export function ReviewView({
           <section className="review-v2-first-step" aria-label="Start learning from a game">
             {nextUnanalyzedGame ? (
               <>
-                <p className="eyebrow">CONTINUE YOUR GAME</p>
-                <h2>Your saved game is ready to study</h2>
-                <p>
-                  {nextUnanalyzedGame.white} — {nextUnanalyzedGame.black}. Your moves are preserved.
-                  Analyze them to find a useful position to practice.
-                </p>
+                <h2>{nextUnanalyzedGame.white} — {nextUnanalyzedGame.black}</h2>
+                <p>{reviewSourceLabel(nextUnanalyzedGame)} · {nextUnanalyzedGame.moves.length} recorded moves · Analysis required</p>
                 <button type="button" className="primary"
                   disabled={analyzing || batchAnalyzing}
                   onClick={() => onNavigate(reviewGamePath(nextUnanalyzedGame.id))}>
@@ -559,7 +549,7 @@ export function ReviewView({
               </span>
             </div>
             <div className="review-v2-feature-detail">
-              <p className="eyebrow">CONTINUE REVIEWING</p>
+
               <h2 id="review-feature-title">
                 {latestAnalyzedGame.white} — {latestAnalyzedGame.black}
               </h2>

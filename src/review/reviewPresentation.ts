@@ -23,7 +23,7 @@ export function filterReviewGames(
     return !term || [
       game.white, game.black, game.openingName, game.event, game.id, game.externalId,
     ].some((field) => field?.toLocaleLowerCase().includes(term));
-  }).sort((a, b) => b.importedAt.localeCompare(a.importedAt));
+  }).sort((a, b) => b.importedAt.localeCompare(a.importedAt) || a.id.localeCompare(b.id));
 }
 
 /** Original external provenance is linked only for an authenticated HTTPS Lichess host. */

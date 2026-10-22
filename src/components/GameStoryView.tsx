@@ -79,21 +79,6 @@ function evaluationLabel(cp: number) {
   return `${value >= 0 ? "+" : ""}${value.toFixed(1)}`;
 }
 
-function applyUci(fen: string, uci: string) {
-  if (!uci || uci === "(none)") return fen;
-  try {
-    const chess = new Chess(fen);
-    chess.move({
-      from: uci.slice(0, 2),
-      to: uci.slice(2, 4),
-      promotion: uci.slice(4, 5) || "q",
-    });
-    return chess.fen();
-  } catch {
-    return fen;
-  }
-}
-
 function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
   if (!uci || uci === "(none)") return [];
   return [
@@ -134,7 +119,7 @@ export function GameStoryView({
   analysisError,
 }: GameStoryViewProps) {
   const story = game.reviewStory;
-  const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 1;
+  const firstMomentPly = story?.moments[0]?.ply ?? game.moves[0]?.ply ?? 0;
   const [selectedPly, setSelectedPly] = useState(firstMomentPly);
   const [preview, setPreview] = useState<PreviewMode>("position");
   const [lineStep, setLineStep] = useState(0);
@@ -154,7 +139,7 @@ export function GameStoryView({
     [game.moves, selectedPly],
   );
   const selectedMoveIndex = game.moves.findIndex((move) => move.ply === selectedPly);
-  const nextMove = game.moves[selectedMoveIndex + 1];
+  const nextMove = selectedPly === 0 ? game.moves[0] : game.moves[selectedMoveIndex + 1];
   const previousMove = selectedMoveIndex > 0 ? game.moves[selectedMoveIndex - 1] : undefined;
   const selectedMoment = useMemo(
     () => story?.moments.find((moment) => moment.ply === selectedPly),
@@ -203,10 +188,15 @@ export function GameStoryView({
   }, [game.moves]);
 
   useEffect(() => {
-    const button = notationRef.current?.querySelector<HTMLButtonElement>(
+    const container = notationRef.current;
+    const button = container?.querySelector<HTMLButtonElement>(
       `button[data-review-ply="${selectedPly}"]`,
     );
-    button?.scrollIntoView({ block: "nearest", inline: "nearest" });
+    if (!container || !button || !movesOpen) return;
+    const top = button.offsetTop - container.offsetTop;
+    if (top < container.scrollTop) container.scrollTop = top;
+    else if (top + button.offsetHeight > container.scrollTop + container.clientHeight)
+      container.scrollTop = top + button.offsetHeight - container.clientHeight;
   }, [selectedPly, movesOpen]);
 
   useEffect(() => {
@@ -240,17 +230,16 @@ export function GameStoryView({
       }
       return;
     }
-    const uci = selectedMoment.bestMove;
-    const timer = window.setTimeout(() => {
-      setBoardFen(applyUci(base, uci));
+    if (preview === "better") {
+      const verified = variation[0];
+      if (!verified || (selectedMistake && !selectedReflection?.bestRevealed)) return;
+      setBoardFen(verified.fen);
       setPresentationMove({
-        from: uci.slice(0, 2) as Square,
-        to: uci.slice(2, 4) as Square,
+        from: verified.uci.slice(0, 2) as Square,
+        to: verified.uci.slice(2, 4) as Square,
       });
-    }, 180);
-
-    return () => window.clearTimeout(timer);
-  }, [game.moves, preview, selectedMoment, selectedMove, lineStep, lineAvailable, variation]);
+    }
+  }, [game.moves, preview, selectedMoment, selectedMove, selectedMistake, selectedReflection?.bestRevealed, lineStep, lineAvailable, variation]);
 
   useEffect(() => {
     setPreview("position");

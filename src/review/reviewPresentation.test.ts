@@ -18,6 +18,12 @@ describe("Review game presentation without changing sources", () => {
     expect(result[0]).toBe(games[1]);
   });
 
+  it("stabilizes equal import timestamps without altering game identities", () => {
+    const one = game("b", "manual", true);
+    const two = game("a", "manual", true);
+    expect(filterReviewGames([one, two], "", "all", "all").map((entry) => entry.id)).toEqual(["a", "b"]);
+  });
+
   it("filters by real stored analysis and source instead of manufacturing reviewed records", () => {
     expect(filterReviewGames(games, "", "pending", "all").map((entry) => entry.id)).toEqual(["new"]);
     expect(filterReviewGames(games, "", "reviewed", "training").map((entry) => entry.id)).toEqual(["train"]);
