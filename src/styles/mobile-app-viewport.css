@@ -128,9 +128,24 @@
   .train-runtime-runner {width:100%;min-width:0;min-height:0}
   .train-runtime-policy {margin-bottom:6px}
   .train-runtime-policy :is(strong,span) {font-size:12px}
-  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) {overflow:hidden}
+  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) {
+    display:flex;flex-direction:column;overflow:hidden
+  }
+  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) .train-runtime-policy {
+    flex:0 0 auto;max-height:35px;min-height:0;margin:0 0 4px;
+    padding:5px 2px;overflow:hidden
+  }
+  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) .train-runtime-policy > div {
+    min-width:0;overflow:hidden
+  }
+  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) .train-runtime-policy strong {
+    display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+  }
+  .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) .train-runtime-policy span {
+    display:none
+  }
   .train-runtime-body.board-first-sheet:has(.lesson-runner .lesson-stage) .train-runtime-runner {
-    height:100%
+    flex:1 1 auto;height:auto;min-height:0
   }
   .train-runtime-body.board-first-sheet .lesson-runner:has(.lesson-stage) {
     display:grid;grid-template-rows:minmax(0,1fr);
@@ -139,8 +154,14 @@
   .train-runtime-body.board-first-sheet .lesson-runner-v2:has(.lesson-stage) {
     grid-template-rows:auto minmax(0,1fr)
   }
-  .train-runtime-body .lesson-progress-rail {padding:3px;gap:3px;min-height:0}
-  .train-runtime-body .lesson-progress-stage {padding:2px;gap:0}
+  .train-runtime-body .lesson-progress-rail {
+    display:flex;flex-wrap:nowrap;gap:4px;padding:3px;
+    height:28px;min-height:28px;overflow-x:auto;overflow-y:hidden;
+    scrollbar-width:none
+  }
+  .train-runtime-body .lesson-progress-stage {
+    flex:0 0 20px;min-width:20px;padding:1px;gap:0
+  }
   .train-runtime-body .lesson-progress-stage > span {width:17px;height:17px}
   .train-runtime-body .lesson-progress-stage small {display:none}
   .train-runtime-body.board-first-sheet .lesson-stage {

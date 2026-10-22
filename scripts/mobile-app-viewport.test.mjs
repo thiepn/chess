@@ -37,3 +37,9 @@ test("PWA manifest, touch and accessible scaling survive",()=>{
     assert.equal(png.readUInt32BE(16),size);
   }
 });
+
+test("adaptive policy shares the workspace rather than moving Continue below the viewport",()=>{
+  assert.match(css,/\.train-runtime-body\.board-first-sheet:has\(\.lesson-runner \.lesson-stage\) \{\s*display:flex;flex-direction:column;overflow:hidden/);
+  assert.match(css,/\.train-runtime-body\.board-first-sheet:has\(\.lesson-runner \.lesson-stage\) \.train-runtime-runner \{\s*flex:1 1 auto;height:auto;min-height:0/);
+  assert.match(css,/\.train-runtime-body \.lesson-progress-rail \{\s*display:flex;flex-wrap:nowrap/);
+});
