@@ -373,64 +373,128 @@
     overflow-y: auto;
     overscroll-behavior-y: contain;
   }
-  .train-runtime-body:has(.lesson-runner .lesson-stage) { overflow: hidden; }
-  .train-runtime-body:has(.lesson-runner .lesson-stage) .train-runtime-runner {
-    height: 100%;
-    min-height: 0;
-  }
-  .train-runtime-body .lesson-runner:has(.lesson-stage) {
-    height: 100%;
-    min-height: 0;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr);
-    gap: 3px;
+  /* Train / Learn / Review transfers share one board + reading + actions layout.
+     Runner-owned actions stay in document order, not in a fixed overlay. */
+  .train-runtime-body:has(.training-workspace) {
     overflow: hidden;
   }
-  .train-runtime-body .lesson-runner-v2:has(.lesson-stage) {
+  .train-runtime-body:has(.training-workspace) .train-runtime-runner {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .train-runtime-body .training-workspace {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    max-width: none;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 4px;
+    overflow: hidden;
+  }
+  .train-runtime-body .lesson-runner-v2.training-workspace,
+  .train-runtime-body .opening-trainer.training-workspace:has(> .opening-recall-stage),
+  .train-runtime-body .opening-trainer.training-workspace:has(> .opening-line-progress),
+  .train-runtime-body .calculation-runner.training-workspace {
     grid-template-rows: auto minmax(0, 1fr);
   }
-  .train-runtime-body .lesson-progress-rail {
+  .train-runtime-body .assessment-runner.training-workspace {
+    grid-template-rows: auto 3px minmax(0, 1fr);
+  }
+  .train-runtime-body .model-game-runner.training-workspace {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+  .train-runtime-body .endgame-runner.training-workspace {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .train-runtime-body .endgame-runner.training-workspace:has(> button.secondary) {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+  .train-runtime-body .lesson-progress-rail,
+  .train-runtime-body .opening-recall-stage,
+  .train-runtime-body .opening-line-progress,
+  .train-runtime-body .calculation-stage-rail,
+  .train-runtime-body .model-game-stage-rail {
     min-height: 0;
+    margin: 0;
     padding: 2px;
-    gap: 2px;
+    gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
   }
   .train-runtime-body .lesson-progress-stage { min-width: 0; padding: 2px; gap: 0; }
   .train-runtime-body .lesson-progress-stage > span { width: 18px; height: 18px; }
   .train-runtime-body .lesson-progress-stage small { display: none; }
-  .train-runtime-body.board-first-sheet .lesson-stage {
+  .train-runtime-body :is(.calculation-stage-chip, .model-game-stage-rail > span) {
+    flex: 0 0 auto;
+    min-width: 72px;
+    min-height: 30px;
+    scroll-snap-align: nearest;
+  }
+  .train-runtime-body .training-workspace-stage {
     height: 100%;
+    width: 100%;
     min-height: 0;
+    min-width: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
-    gap: 4px;
     align-items: stretch;
+    gap: 5px;
     overflow: hidden;
   }
-  .train-runtime-body.board-first-sheet .lesson-board-column {
+  .train-runtime-body .training-workspace-board {
     position: relative;
-    inset: auto;
-    align-self: start;
-    justify-self: center;
-    width: min(100%, 44svh);
+    top: auto;
+    min-width: 0;
     min-height: 0;
-    max-width: 100%;
-  }
-  .train-runtime-body.board-first-sheet .lesson-board-column .chess-board-wrap {
     width: 100%;
     max-width: 100%;
-  }
-  .train-runtime-body.board-first-sheet .lesson-instruction {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    height: 100%;
-    min-height: 0;
-    max-height: none;
-    padding: 0;
-    gap: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
     overflow: hidden;
   }
-  .train-runtime-body.board-first-sheet .lesson-instruction > :first-child {
+  .train-runtime-body .training-workspace-board .chess-board-wrap {
+    flex: 0 1 auto;
+    width: min(100%, 43svh);
+    max-width: calc(100vw - 18px);
+    margin: 0 auto;
+  }
+  .train-runtime-body .training-workspace-board .board-caption {
+    width: min(100%, 43svh);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 16px;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .train-runtime-body .training-workspace-panel {
+    position: relative;
+    top: auto;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+  .train-runtime-body .training-workspace-reading {
+    flex: 1 1 auto;
+    min-width: 0;
     min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
@@ -438,51 +502,248 @@
     -webkit-overflow-scrolling: touch;
     padding: 5px 3px;
   }
-  .train-runtime-body.board-first-sheet .lesson-instruction h2 {
-    font-size: clamp(18px, 5vw, 23px);
-    line-height: 1.18;
+  .train-runtime-body .training-workspace-panel :is(h2,h3) {
+    line-height: 1.22;
+    overflow-wrap: break-word;
+  }
+  .train-runtime-body .training-workspace-panel h2 {
+    font-size: clamp(18px, 4.9vw, 23px);
     margin-bottom: 5px;
   }
-  .train-runtime-body.board-first-sheet .lesson-controls {
-    display: grid;
-    grid-template-rows: minmax(0, auto) auto;
+  .train-runtime-body .training-workspace-panel :is(.lesson-prompt, .puzzle-reply-status,
+      .calculation-instructional-note, .endgame-objective strong, .assessment-prompt p,
+      .model-game-prompt, .lesson-feedback, .hint-card) {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .train-runtime-body .training-workspace-actions {
+    position: relative;
+    bottom: auto;
+    flex: 0 0 auto;
     min-height: 48px;
     max-height: min(33svh, 210px);
-    padding: 5px 0 max(3px, env(safe-area-inset-bottom));
     margin: 0;
+    padding: 5px 0 max(3px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
     border-top: 1px solid var(--chess-color-separator);
     background: var(--chess-color-bg-app);
     overflow: hidden;
   }
-  .train-runtime-body.board-first-sheet .lesson-controls .lesson-feedback.error,
-  .train-runtime-body.board-first-sheet .lesson-mastery-preview {
+  .train-runtime-body .lesson-controls.training-workspace-actions > :not(.lesson-button-row) {
+    flex: 0 1 auto;
     min-height: 0;
     overflow-y: auto;
   }
-  .train-runtime-body.board-first-sheet .lesson-mastery-preview {
-    display: flex;
-    align-items: center;
-    flex: 0 1 auto;
-    padding: 3px 4px;
-    margin: 0;
-  }
-  .train-runtime-body.board-first-sheet .lesson-mastery-preview small { display: none; }
-  .train-runtime-body.board-first-sheet .lesson-button-row {
+  .train-runtime-body .training-workspace-actions .lesson-button-row,
+  .train-runtime-body .training-workspace-panel .lesson-button-row {
+    position: static;
+    bottom: auto;
+    z-index: auto;
+    width: 100%;
+    min-height: 44px;
+    max-height: min(29svh, 178px);
     display: flex;
     flex-wrap: wrap;
-    flex: 0 0 auto;
-    position: static;
+    align-items: stretch;
+    flex: 0 1 auto;
     gap: 6px;
     margin: 0;
     padding: 0;
-    border: 0;
-    background: transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--chess-color-bg-app);
+    overscroll-behavior: contain;
   }
-  .train-runtime-body.board-first-sheet .lesson-button-row > button {
-    flex: 1 1 auto;
+  .train-runtime-body .training-workspace-panel .lesson-button-row > button {
+    flex: 1 1 max(42%, 115px);
     min-width: 0;
     min-height: 44px;
+    margin: 0;
     font-size: 14px;
+  }
+  .train-runtime-body .training-workspace-panel .lesson-button-row > .primary {
+    order: -1;
+  }
+  .train-runtime-body .lesson-mastery-preview small { display: none; }
+  .train-runtime-body .puzzle-source-line { margin: 0; padding: 0 2px; }
+  .train-runtime-body .puzzle-source-line > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .train-runtime-body .puzzle-attempt-progress {
+    width: 100%;
+    height: 3px;
+    margin: 7px 0 10px;
+    overflow: hidden;
+    background: var(--chess-color-separator);
+  }
+  .train-runtime-body .puzzle-attempt-progress > span {
+    display: block;
+    height: 100%;
+    background: var(--chess-color-correct);
+    transition: width 160ms ease;
+  }
+
+  /* Calculation: stages stay visible, the candidate/notebook text scrolls
+     inside the right-side reading area, never over the chessboard. */
+  .train-runtime-body .calculation-runner .training-workspace-stage {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .train-runtime-body .calculation-board-frame {
+    width: min(100%, 43svh);
+    min-width: 0;
+    max-width: 100%;
+  }
+  .train-runtime-body .calculation-board-frame .chess-board-wrap { width: 100%; }
+  .train-runtime-body .calculation-instruction {
+    display: flex;
+    flex-direction: column;
+  }
+  .train-runtime-body .calculation-instruction > :first-child:not(.training-workspace-actions) {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .train-runtime-body .calculation-engine-state {
+    min-height: 0;
+    padding: 2px 4px;
+  }
+
+  /* Assessments are no-hint/no-retry by authority; the Next control stays
+     outside the scrolling feedback and remains disabled until answered. */
+  .train-runtime-body .assessment-head,
+  .train-runtime-body .model-game-runner-header,
+  .train-runtime-body .endgame-header {
+    min-height: 0;
+    max-height: 62px;
+    margin: 0;
+    padding: 3px 2px;
+    overflow: hidden;
+  }
+  .train-runtime-body .assessment-head h2,
+  .train-runtime-body .endgame-header h2,
+  .train-runtime-body .model-game-runner-header h2 {
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .train-runtime-body .assessment-head .eyebrow,
+  .train-runtime-body .model-game-runner-header .eyebrow,
+  .train-runtime-body .endgame-header .eyebrow {
+    margin-bottom: 2px;
+  }
+  .train-runtime-body .assessment-progress { min-height: 3px; margin: 0; }
+  .train-runtime-body .assessment-panel {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .train-runtime-body .assessment-panel-footer {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    flex: 0 0 auto;
+    z-index: 2;
+  }
+  .train-runtime-body .assessment-panel-footer > span {
+    display: block;
+    max-height: 44px;
+    min-height: 0;
+    overflow-y: auto;
+    font-size: 12px;
+  }
+  .train-runtime-body .assessment-panel-footer button {
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  /* Endgame recognition/play, including its separate resistance engine.
+     Never hide the recognition options, process cues, or result decisions. */
+  .train-runtime-body .endgame-recognition-panel,
+  .train-runtime-body .endgame-side-panel {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .train-runtime-body .endgame-recognition-options {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 40%;
+    overflow-y: auto;
+  }
+  .train-runtime-body .endgame-recognition-continue {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    min-height: 48px;
+    flex: 0 0 auto;
+    margin-top: auto;
+    background: var(--chess-color-accent);
+  }
+  .train-runtime-body .endgame-side-panel > .resign-button {
+    position: sticky;
+    bottom: 0;
+    flex: 0 0 auto;
+    min-height: 44px;
+    margin-top: auto;
+    z-index: 2;
+    background: var(--chess-color-bg-app);
+  }
+  .train-runtime-body .endgame-result-card {
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+  .train-runtime-body .endgame-result-card > button.primary {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    min-height: 48px;
+  }
+  .train-runtime-body .endgame-source-note {
+    flex: 0 0 auto;
+    font-size: 12px;
+  }
+
+  /* Model games: plan / move / explanation are independent scroll states,
+     with the original authored decision actions remaining in reach. */
+  .train-runtime-body .model-game-decision-panel {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .train-runtime-body .model-game-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 48px;
+    margin-top: auto;
+    padding: 5px 0 max(3px,env(safe-area-inset-bottom));
+    border-top: 1px solid var(--chess-color-separator);
+    background: var(--chess-color-bg-app);
+  }
+  .train-runtime-body .model-game-actions > button {
+    min-height: 44px;
+    flex: 1 1 44%;
+  }
+  .train-runtime-body .model-game-actions > .primary { order: -1; }
+
+  /* Adaptive engine training reuses live-game geometry and move controls. */
+  .train-runtime-body.adaptive-game-sheet {
+    overflow: hidden;
+  }
+  .train-runtime-body.adaptive-game-sheet .train-runtime-runner {
+    height: 100%;
+    min-height: 0;
+  }
+  .train-runtime-body.adaptive-game-sheet .game-arena {
+    height: 100%;
+    min-height: 0;
   }
 
   .app-shell-v2 .play-game-page {
@@ -490,20 +751,20 @@
     min-height: 0;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-arena {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-arena {
     height: 100%;
     min-height: 0;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-topbar {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-topbar {
     min-height: 42px;
     display: flex;
     align-items: center;
     padding: 2px 1px;
   }
-  .play-session-open .play-game-page .game-layout {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-layout {
     height: 100%;
     min-height: 0;
     display: grid;
@@ -514,7 +775,7 @@
     padding: 2px 0;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-board-column {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column {
     min-height: 0;
     min-width: 0;
     display: flex;
@@ -523,29 +784,29 @@
     gap: 2px;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-board-column .chess-board-wrap {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column .chess-board-wrap {
     width: min(100%, 44svh);
     max-width: calc(100vw - 14px);
     flex: 0 1 auto;
   }
-  .play-session-open .play-game-page .game-player-strip {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-player-strip {
     width: 100%;
     min-height: 34px;
     flex: 0 0 auto;
   }
-  .play-session-open .play-game-page .game-player-strip small { font-size: 12px; }
-  .play-session-open .play-game-page .game-clock {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-player-strip small { font-size: 12px; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-clock {
     height: 40px;
     min-width: 90px;
   }
-  .play-session-open .play-game-page .game-clock strong { font-size: 16px; }
-  .play-session-open .play-game-page .game-turn-line {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-clock strong { font-size: 16px; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-turn-line {
     width: 100%;
     min-height: 22px;
     padding: 1px 3px;
     font-size: 12px;
   }
-  .play-session-open .play-game-page .game-side-panel {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-side-panel {
     min-width: 0;
     min-height: 0;
     height: 100%;
@@ -556,10 +817,10 @@
     overflow: hidden;
     border-top: 1px solid var(--chess-color-separator);
   }
-  .play-session-open .play-game-page .game-mode-header,
-  .play-session-open .play-game-page .game-description,
-  .play-session-open .play-game-page .game-profile-card { display: none; }
-  .play-session-open .play-game-page .game-objective {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-mode-header,
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-description,
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-profile-card { display: none; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-objective {
     flex: 0 0 auto;
     min-height: 0;
     padding: 1px 0;
@@ -586,24 +847,24 @@
     white-space: nowrap;
     font-weight: 600;
   }
-  .play-session-open .play-game-page .game-side-panel .move-sheet {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-side-panel .move-sheet {
     display: none;
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-side-panel.moves-expanded .move-sheet {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-side-panel.moves-expanded .move-sheet {
     display: flex;
     flex-direction: column;
     max-height: 22svh;
   }
-  .play-session-open .play-game-page .move-sheet .move-list {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .move-sheet .move-list {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior-y: contain;
   }
-  .play-session-open .play-game-page .game-session-actions {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-session-actions {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 8px;
@@ -613,12 +874,12 @@
     border-top: 1px solid var(--chess-color-separator);
     background: var(--chess-color-bg-app);
   }
-  .play-session-open .play-game-page .game-session-actions > button {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-session-actions > button {
     min-width: 0;
     min-height: var(--chess-action-height);
     font-size: 14px;
   }
-  .play-session-open .play-game-page .game-result-card {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-result-card {
     min-height: 0;
     flex: 1 1 auto;
     overflow-y: auto;
@@ -651,17 +912,46 @@
     grid-template-rows: auto 2px minmax(0, 1fr);
     overflow: hidden;
   }
+  .train-runtime-body.adaptive-game-sheet { overflow: hidden; }
+  .train-runtime-body.adaptive-game-sheet .train-runtime-runner {
+    height: 100%;
+    min-height: 0;
+  }
   .train-runtime-body { min-height: 0; overflow-y: auto; padding: 3px 0; }
-  .train-runtime-body:has(.lesson-runner .lesson-stage) { overflow: hidden; }
-  .train-runtime-body .lesson-runner:has(.lesson-stage) {
+  .train-runtime-body:has(.training-workspace) {
+    overflow: hidden;
+  }
+  .train-runtime-body:has(.training-workspace) .train-runtime-runner {
+    height: 100%;
+    min-height: 0;
+  }
+  .train-runtime-body .training-workspace {
     height: 100%;
     min-height: 0;
     display: grid;
     grid-template-rows: minmax(0, 1fr);
+    gap: 3px;
     overflow: hidden;
   }
-  .train-runtime-body .lesson-runner-v2:has(.lesson-stage) { grid-template-rows: auto minmax(0, 1fr); }
-  .train-runtime-body.board-first-sheet .lesson-stage {
+  .train-runtime-body .lesson-runner-v2.training-workspace,
+  .train-runtime-body .opening-trainer.training-workspace:has(> .opening-recall-stage),
+  .train-runtime-body .opening-trainer.training-workspace:has(> .opening-line-progress),
+  .train-runtime-body .calculation-runner.training-workspace {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .train-runtime-body .assessment-runner.training-workspace {
+    grid-template-rows: auto 3px minmax(0, 1fr);
+  }
+  .train-runtime-body .model-game-runner.training-workspace {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+  .train-runtime-body .endgame-runner.training-workspace {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .train-runtime-body .endgame-runner.training-workspace:has(> button.secondary) {
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+  .train-runtime-body .training-workspace-stage {
     height: 100%;
     min-height: 0;
     display: grid;
@@ -670,46 +960,79 @@
     gap: 8px;
     overflow: hidden;
   }
-  .train-runtime-body.board-first-sheet .lesson-board-column {
-    position: relative;
-    inset: auto;
+  .train-runtime-body .training-workspace-board {
     width: 100%;
-    max-width: min(100%, calc(100dvh - 72px));
-  }
-  .train-runtime-body.board-first-sheet .lesson-board-column .chess-board-wrap { width: 100%; }
-  .train-runtime-body.board-first-sheet .lesson-instruction {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    height: 100%;
+    max-width: 100%;
+    position: relative;
+    top: auto;
+    min-width: 0;
     min-height: 0;
     overflow: hidden;
   }
-  .train-runtime-body.board-first-sheet .lesson-instruction > :first-child {
+  .train-runtime-body .training-workspace-board .chess-board-wrap,
+  .train-runtime-body .calculation-board-frame {
+    width: min(100%, calc(100dvh - 88px));
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .train-runtime-body .training-workspace-panel {
+    min-width: 0;
     min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+  }
+  .train-runtime-body .training-workspace-reading {
+    min-height: 0;
+    flex: 1 1 auto;
     overflow-y: auto;
     overscroll-behavior-y: contain;
   }
-  .train-runtime-body.board-first-sheet .lesson-controls {
-    position: static;
+  .train-runtime-body .training-workspace-actions {
+    min-height: 44px;
+    max-height: min(48svh, 180px);
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    flex: 0 0 auto;
-    max-height: min(48svh, 180px);
     margin: 0;
-    padding: 5px 0;
+    padding: 3px 0;
     overflow: hidden;
+  }
+  .train-runtime-body .training-workspace-actions .lesson-button-row {
+    position: static;
+    max-height: min(42svh, 155px);
+    flex: 0 1 auto;
+    overflow-y: auto;
+  }
+  .train-runtime-body .training-workspace-panel .lesson-button-row > .primary {
+    order: -1;
+  }
+  .train-runtime-body .assessment-panel-footer,
+  .train-runtime-body .model-game-actions,
+  .train-runtime-body .endgame-recognition-continue,
+  .train-runtime-body .endgame-result-card > button.primary {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
     background: var(--chess-color-bg-app);
   }
-  .train-runtime-body.board-first-sheet .lesson-controls .lesson-mastery-preview { min-height: 0; overflow-y: auto; }
-  .train-runtime-body.board-first-sheet .lesson-button-row { flex: 0 0 auto; position: static; padding: 0; }
-  .play-session-open .play-game-page .game-arena {
+  .train-runtime-body .endgame-side-panel,
+  .train-runtime-body .endgame-recognition-panel,
+  .train-runtime-body .assessment-panel,
+  .train-runtime-body .model-game-decision-panel {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-arena {
     height: 100%;
     min-height: 0;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-layout {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-layout {
     height: 100%;
     min-height: 0;
     display: grid;
@@ -718,17 +1041,17 @@
     gap: 8px;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .game-board-column { min-height: 0; }
-  .play-session-open .play-game-page .game-board-column .chess-board-wrap {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column { min-height: 0; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-board-column .chess-board-wrap {
     width: min(100%, calc(100dvh - 142px));
   }
-  .play-session-open .play-game-page .game-side-panel {
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-side-panel {
     min-height: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-  .play-session-open .play-game-page .move-list { min-height: 0; overflow-y: auto; }
-  .play-session-open .play-game-page .game-session-actions { flex: 0 0 auto; margin-top: auto; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .move-list { min-height: 0; overflow-y: auto; }
+  :is(.play-session-open .play-game-page, .train-runtime-body.adaptive-game-sheet) .game-session-actions { flex: 0 0 auto; margin-top: auto; }
 }

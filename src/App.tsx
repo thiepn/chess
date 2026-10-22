@@ -2902,7 +2902,18 @@ export default function App() {
                 </div>
               </header>
 
-              <div className="train-runtime-progress" aria-hidden="true">
+              <div
+                className="train-runtime-progress"
+                role="progressbar"
+                aria-label="Training session progress"
+                aria-valuemin={0}
+                aria-valuemax={Math.max(1, session.activities.length)}
+                aria-valuenow={
+                  active && !manualActivity
+                    ? Math.min((activeIndex ?? 0) + 1, Math.max(1, session.activities.length))
+                    : runtimeReady ? Math.max(1, session.activities.length) : 0
+                }
+              >
                 <span
                   style={{
                     width:

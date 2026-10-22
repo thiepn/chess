@@ -631,6 +631,32 @@ button:focus-visible { outline: 2px solid #a9bcff; outline-offset: 3px; }
   min-height: 54px;
 }
 
+/* A solved continuation has visible progress without implying mastery. */
+.puzzle-attempt-progress {
+  width: 100%;
+  height: 4px;
+  margin: 12px 0 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--chess-color-separator);
+}
+.puzzle-attempt-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--chess-color-correct);
+  transition: width 160ms ease;
+}
+html[data-motion="reduced"] .puzzle-attempt-progress > span {
+  transition: none;
+}
+.training-workspace .lesson-button-row > button {
+  min-height: 44px;
+  font-size: max(14px, .875rem);
+}
+.training-workspace .lesson-instruction :is(.lesson-feedback, .hint-card) {
+  line-height: 1.45;
+}
+
 .puzzle-meta {
   display: flex;
   flex-wrap: wrap;

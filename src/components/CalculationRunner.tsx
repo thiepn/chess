@@ -350,7 +350,7 @@ export function CalculationRunner({
   </div>;
 
   return (
-    <div className="calculation-runner">
+    <div className="calculation-runner training-workspace">
       <div className="calculation-stage-rail">
         {[
           ["candidates", "Candidates"],
@@ -392,8 +392,8 @@ export function CalculationRunner({
         })}
       </div>
 
-      <div className="lesson-stage calculation-stage">
-        <div className="lesson-board-column">
+      <div className="lesson-stage calculation-stage training-workspace-stage">
+        <div className="lesson-board-column training-workspace-board">
           <div
             className={[
               "calculation-board-frame",
@@ -521,8 +521,8 @@ export function CalculationRunner({
           </div>
         </div>
 
-        <div className="lesson-instruction calculation-instruction">
-          <div>
+        <div className="lesson-instruction calculation-instruction training-workspace-panel">
+          <div className="training-workspace-reading">
             <p className="eyebrow">
               {position.assessmentStatus === "instructional-only"
                 ? "POSITION STUDY · UNSCORED" : "CALCULATION TRAINER"}
@@ -893,7 +893,7 @@ export function CalculationRunner({
               )}
           </div>
 
-          <div className="lesson-controls">
+          <div className="lesson-controls training-workspace-actions">
             <div className="calculation-engine-state" role="status" aria-live="polite">
               <span>
                 Local Stockfish
