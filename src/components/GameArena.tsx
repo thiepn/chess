@@ -130,6 +130,7 @@ export function GameArena({
   const finishedRef = useRef(Boolean(recovered.finished));
   const [fen, setFen] = useState(recovered.chess.fen());
   const [moves, setMoves] = useState<string[]>(() => recovered.chess.history());
+  const [mobileMovesOpen, setMobileMovesOpen] = useState(false);
   const clockRef = useRef<RunningClock>(recovered.clock);
   const [clock, setClock] = useState<RunningClock>(recovered.clock);
   const [engineNonce, setEngineNonce] = useState(0);
@@ -622,7 +623,7 @@ export function GameArena({
           </div>
         </div>
 
-        <aside className="game-side-panel">
+        <aside className={mobileMovesOpen ? "game-side-panel moves-expanded" : "game-side-panel"}>
           <div className="game-mode-header">
             <div className="game-mode-icon">
               {scenario ? <TargetIcon mode={scenario.mode} /> : <Swords size={20} />}
@@ -653,7 +654,17 @@ export function GameArena({
             <p>{profile.description}</p>
           </div>
 
-          <div className="move-sheet">
+          <button
+            type="button"
+            className="game-moves-toggle"
+            aria-expanded={mobileMovesOpen}
+            aria-controls="game-moves"
+            onClick={() => setMobileMovesOpen((open) => !open)}
+          >
+            <span>Moves</span>
+            <strong>{moves.length ? moves[moves.length - 1] : "—"} · {moves.length}</strong>
+          </button>
+          <div className="move-sheet" id="game-moves">
             <div className="move-sheet-title">
               <span>Moves</span>
               <strong>{moves.length} plies</strong>
