@@ -30,3 +30,22 @@ test.describe("mobile app viewport and standalone install", () => {
     }
   });
 });
+
+test("a phone keeps available training progression controls inside the viewport", async ({ page }) => {
+  await page.setViewportSize({width: 360, height: 640});
+  await page.goto("/train");
+  const start = page.locator(".train-room-start");
+  await expect(start).toBeVisible();
+  await start.click();
+  await expect(page.locator(".train-runtime-page")).toBeVisible();
+  const controls = page.locator(".train-runtime-body .lesson-controls button:visible");
+  if (await controls.count()) {
+    const button = controls.first();
+    const box = await button.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(page.viewportSize()!.height + 1);
+  }
+  const body = page.locator(".train-runtime-body");
+  await expect(body).toHaveCSS("overflow-y", "auto");
+});

@@ -36,3 +36,12 @@ test("standalone PWA manifest has real install icon sizes and a scoped start", (
     assert.equal(png.readUInt32BE(20), size);
   }
 });
+
+test("mobile progression controls are not trapped inside overflow-hidden panels", () => {
+  assert.match(css, /Mobile progression regression/);
+  const repair = css.slice(css.indexOf("Mobile progression regression"));
+  assert.match(repair, /\.train-runtime-body:has\(\.lesson-runner \.lesson-stage\)[\s\S]*?overflow-y: auto/);
+  assert.match(repair, /\.train-runtime-body\.board-first-sheet \.lesson-instruction\s*\{[\s\S]*?overflow: visible/);
+  assert.match(repair, /\.train-runtime-body\.board-first-sheet \.lesson-instruction \.lesson-controls,[\s\S]*?position: fixed/);
+  assert.match(repair, /\.play-session-open \.play-game-page \.game-side-panel\s*\{[\s\S]*?overflow: visible/);
+});
