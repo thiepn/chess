@@ -688,20 +688,19 @@ export function GameArena({
           )}
 
           {!result && !emptyResult && (
-            <button className="secondary" type="button" onClick={onExit}>
-              Discard game
-            </button>
-          )}
-
-          {!result && !emptyResult && (
-            <button
-              className="resign-button"
-              type="button"
-              disabled={!moves.length}
-              onClick={() => void finalize("resigned", "resignation")}
-            >
-              <Flag size={15} /> Resign
-            </button>
+            <div className="game-session-actions">
+              <button className="secondary" type="button" onClick={onExit}>
+                Discard game
+              </button>
+              <button
+                className="resign-button"
+                type="button"
+                disabled={!moves.length}
+                onClick={() => void finalize("resigned", "resignation")}
+              >
+                <Flag size={15} /> Resign
+              </button>
+            </div>
           )}
 
           {emptyResult && (

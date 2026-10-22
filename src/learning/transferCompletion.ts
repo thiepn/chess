@@ -1,5 +1,8 @@
 import { Chess } from "chess.js";
 import type { LessonScript, LessonStep } from "./types";
+import { lessonPositionKey } from "./lessonPositionKey";
+import { assertOriginalTransferSlot } from "./historicalTransferAuthority";
+import { assertP92ChallengeOwnership } from "./p92ChallengeIntegrity";
 
 export interface TransferChallenge {
   fen: string;
@@ -17,7 +20,6 @@ export interface TransferExercise {
 }
 let cached: Promise<ReadonlyMap<string, TransferExercise>> | undefined;
 const fields = ["skillId","fen","acceptedMove","prompt","success","misconception"] as const;
-
 function legal(fen: string, uci: string): boolean {
   try {
     return new Chess(fen).moves({verbose:true}).some(m =>
@@ -30,6 +32,7 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
   const source = raw as {schema?:string;items?:TransferExercise[]} | null;
   if (source?.schema !== "thiepn.chess.transfer.v1" || source.items?.length !== 49)
     throw Error("Unexpected transfer catalog");
+  assertP92ChallengeOwnership(source.items);
   const rows = new Map<string,TransferExercise>();
   for (const item of source.items) {
     if (!item || rows.has(item.skillId) ||
@@ -39,7 +42,7 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
     const c = item.challenge;
     if (c) {
       const moves = c.acceptedMoves;
-      if (typeof c.fen !== "string" || c.fen === item.fen ||
+      if (typeof c.fen !== "string" || lessonPositionKey(c.fen) === lessonPositionKey(item.fen) ||
         ![c.fen,c.prompt,c.success,c.misconception].every(x => typeof x === "string" && x.trim()) ||
         !Array.isArray(c.hints) || c.hints.length !== 3 ||
         c.hints.some(x => typeof x !== "string" || x.length < 15) ||
@@ -52,15 +55,23 @@ export function validateTransferCatalog(raw: unknown): ReadonlyMap<string,Transf
     }
     rows.set(item.skillId,item);
   }
+  if (rows.size !== 49)
+    throw Error("Incomplete historical independent transfer catalog");
   return rows;
 }
 
 export function checkedTransfer(lesson: LessonScript, entry: TransferExercise): LessonScript {
-  if (entry.skillId!==lesson.skillId || entry.fen===lesson.steps[0]?.fen || !legal(entry.fen,entry.acceptedMove))
+  assertOriginalTransferSlot(lesson);
+  // Compare actual position-defining FEN fields, not halfmove/fullmove
+  // counters. A replay of an earlier model/choice/retrieval board cannot
+  // qualify as the original independent P88 or P92 transfer.
+  const originalBoards = new Set(lesson.steps.map(step => lessonPositionKey(step.fen)));
+  if (entry.skillId!==lesson.skillId || originalBoards.has(lessonPositionKey(entry.fen)) ||
+      !legal(entry.fen,entry.acceptedMove))
     throw new Error("Transfer position is not independently valid");
   const move=entry.acceptedMove;
-  if (entry.challenge && (entry.challenge.fen === lesson.steps[0]?.fen ||
-      entry.challenge.fen === entry.fen))
+  if (entry.challenge && (originalBoards.has(lessonPositionKey(entry.challenge.fen)) ||
+      lessonPositionKey(entry.challenge.fen) === lessonPositionKey(entry.fen)))
     throw Error("Non-independent P92 position");
   const task:LessonStep={
     id:"transfer",type:"move",stage:"transfer",support:"transfer",

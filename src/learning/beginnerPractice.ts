@@ -1,5 +1,6 @@
 import { Chess } from "chess.js";
 import type { LessonScript, LessonStep } from "./types";
+import { lessonPositionKey } from "./lessonPositionKey";
 
 export interface BeginnerPosition {
   fen: string;
@@ -55,7 +56,7 @@ export function validateBeginnerPractice(raw: unknown): ReadonlyMap<string, Begi
         row.exercises.length !== requiredPositionsPerSkill)
       throw Error("Invalid beginner skill record");
     for (const item of row.exercises) {
-      if (!item || typeof item.fen !== "string" || seenFens.has(item.fen) ||
+      if (!item || typeof item.fen !== "string" || seenFens.has(lessonPositionKey(item.fen)) ||
           ![item.prompt, item.success, item.misconception].every(text =>
             typeof text === "string" && text.trim().length >= 45) ||
           !Array.isArray(item.acceptedMoves) || item.acceptedMoves.length !== 1 ||
@@ -82,7 +83,7 @@ export function validateBeginnerPractice(raw: unknown): ReadonlyMap<string, Begi
             wrong === uci || !legalMove(item.fen, wrong) ||
             typeof feedback !== "string" || feedback.trim().length < 45)))
         throw Error("Unverified position-specific mistake feedback");
-      seenFens.add(item.fen);
+      seenFens.add(lessonPositionKey(item.fen));
     }
     result.set(row.skillId, row);
   }
@@ -97,8 +98,8 @@ export function withBeginnerPractice(lesson: LessonScript, entry: BeginnerPracti
   const target = lesson.steps.some(step => step.id === "transfer-depth") ? "transfer-depth" : "transfer";
   if (lesson.steps.filter(step => step.id === target).length !== 1)
     throw Error("Original independent transfer anchor is missing or ambiguous");
-  const priorBoards = new Set(lesson.steps.map(step => step.fen));
-  if (entry.exercises.some(item => priorBoards.has(item.fen)))
+  const priorBoards = new Set(lesson.steps.map(step => lessonPositionKey(step.fen)));
+  if (entry.exercises.some(item => priorBoards.has(lessonPositionKey(item.fen))))
     throw Error("Beginner independent practice reused the lesson board");
   const steps: LessonStep[] = entry.exercises.map((item, i) => ({
     id: `g1-practice-${i + 1}`,

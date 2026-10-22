@@ -5,6 +5,9 @@ import type { BoardArrow, BoardHighlight, BoardTone } from "../learning/types";
 import { nextBoardFocusIndex, type BoardNavigationKey } from "../interaction/board-navigation";
 import { ChessPiece, chessPieceNames } from "./ChessPiece";
 import { isBoardDrag, isBoardSquare } from "../interaction/board-pointer";
+import { liveBoardFen, recordAcceptedBoardFen } from "../interaction/live-board-position";
+import { decideBoardTap } from "../interaction/live-board-selection";
+import { isGestureBoardCurrent } from "../interaction/board-gesture-authority";
 
 
 interface BoardMove {
@@ -23,6 +26,7 @@ interface ChessBoardProps {
   arrows?: BoardArrow[];
   onMove?: (move: BoardMove) => boolean;
   presentationMove?: { from: Square; to: Square };
+  onInspectSquare?: (square: Square) => void;
 }
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
@@ -55,13 +59,21 @@ export function ChessBoard({
   arrows = [],
   onMove,
   presentationMove,
+  onInspectSquare,
 }: ChessBoardProps) {
   const [position, setPosition] = useState(fen);
   const positionRef = useRef(fen);
   const [selected, setSelected] = useState<Square | null>(null);
+  const selectedRef = useRef<Square | null>(null);
+  // Browser events may arrive before React renders the previous selection.
+  function updateSelected(value: Square | null) {
+    selectedRef.current = value;
+    setSelected(value);
+  }
   const [dragFrom, setDragFrom] = useState<Square | null>(null);
   const [dragHover, setDragHover] = useState<Square | null>(null);
-  const pointerGestureRef = useRef<{ pointerId: number; from: Square; x: number; y: number; dragging: boolean } | null>(null);
+  const pointerGestureRef = useRef<{ pointerId: number; from: Square; x: number; y: number; dragging: boolean; fen: string } | null>(null);
+  const htmlDragFenRef = useRef<string | null>(null);
   const suppressNextClickRef = useRef(false);
   const [pendingPromotion, setPendingPromotion] = useState<{ from: Square; to: Square } | null>(null);
   const [lastMove, setLastMove] = useState<{ from: Square; to: Square } | null>(null);
@@ -88,11 +100,13 @@ export function ChessBoard({
     if (positionRef.current === fen) return;
     positionRef.current = fen;
     setPosition(fen);
-    setSelected(null);
+    updateSelected(null);
     setPendingPromotion(null);
     setDragFrom(null);
     setDragHover(null);
     pointerGestureRef.current = null;
+    htmlDragFenRef.current = null;
+    suppressNextClickRef.current = false;
     setLastMove(null);
     setSecondaryMove(null);
     setLastMoveKind("move");
@@ -145,10 +159,10 @@ export function ChessBoard({
 
   function requestMove(from: Square, to: Square) {
     if (disabled) return false;
-    const promotions = chess.moves({ square: from, verbose: true })
+    const promotions = new Chess(liveBoardFen(positionRef)).moves({ square: from, verbose: true })
       .filter((move) => move.to === to && Boolean(move.promotion));
     if (promotions.length) {
-      setSelected(null);
+      updateSelected(null);
       setPendingPromotion({ from, to });
       return false;
     }
@@ -158,7 +172,9 @@ export function ChessBoard({
   function tryMove(from: Square, to: Square, promotion: "q" | "r" | "b" | "n" = "q") {
     if (disabled) return false;
 
-    const candidate = new Chess(position);
+    // A prior accepted move may not have reached rendered React state yet.
+    // Validate against the latest synchronously committed board instead.
+    const candidate = new Chess(liveBoardFen(positionRef));
     let move;
 
     try {
@@ -185,7 +201,7 @@ export function ChessBoard({
 
     if (!accepted) {
       setRejected(to);
-      setSelected(null);
+      updateSelected(null);
       feedback("error");
       window.setTimeout(() => setRejected(null), 300);
       return false;
@@ -204,7 +220,7 @@ export function ChessBoard({
             }
         : null;
 
-    positionRef.current = candidate.fen();
+    recordAcceptedBoardFen(positionRef, candidate.fen());
     setPosition(candidate.fen());
     setPendingPromotion(null);
     setLastMove({ from, to });
@@ -218,7 +234,7 @@ export function ChessBoard({
             : "move",
     );
     setSecondaryMove(castle);
-    setSelected(null);
+    updateSelected(null);
     setDragFrom(null);
     setDragHover(null);
 
@@ -240,8 +256,9 @@ export function ChessBoard({
 
   function handlePointerDown(event: ReactPointerEvent<HTMLButtonElement>, from: Square) {
     if (disabled || pendingPromotion || event.pointerType === "mouse" || !event.isPrimary) return;
-    if (chess.get(from)?.color !== chess.turn()) return;
-    pointerGestureRef.current = { pointerId: event.pointerId, from, x: event.clientX, y: event.clientY, dragging: false };
+    const current = new Chess(liveBoardFen(positionRef));
+    if (current.get(from)?.color !== current.turn()) return;
+    pointerGestureRef.current = { pointerId: event.pointerId, from, x: event.clientX, y: event.clientY, dragging: false, fen: liveBoardFen(positionRef) };
     try { event.currentTarget.setPointerCapture(event.pointerId); }
     catch { /* Synthetic tests cannot capture an untrusted pointer. */ }
   }
@@ -249,10 +266,16 @@ export function ChessBoard({
   function handlePointerMove(event: ReactPointerEvent<HTMLButtonElement>) {
     const gesture = pointerGestureRef.current;
     if (!gesture || gesture.pointerId !== event.pointerId) return;
+    if (!isGestureBoardCurrent(gesture.fen, liveBoardFen(positionRef))) {
+      pointerGestureRef.current = null;
+      setDragFrom(null);
+      setDragHover(null);
+      return;
+    }
     if (!gesture.dragging && !isBoardDrag(gesture.x, gesture.y, event.clientX, event.clientY)) return;
     if (!gesture.dragging) {
       gesture.dragging = true;
-      setSelected(null);
+      updateSelected(null);
       setDragFrom(gesture.from);
     }
     setDragHover(pointerSquare(event));
@@ -262,6 +285,13 @@ export function ChessBoard({
     const gesture = pointerGestureRef.current;
     if (!gesture || gesture.pointerId !== event.pointerId) return;
     pointerGestureRef.current = null;
+    if (!isGestureBoardCurrent(gesture.fen, liveBoardFen(positionRef))) {
+      setDragFrom(null);
+      setDragHover(null);
+      suppressNextClickRef.current = true;
+      window.setTimeout(() => { suppressNextClickRef.current = false; }, 0);
+      return;
+    }
     if (!gesture.dragging) return; // Tap goes through normal click selection.
     const target = pointerSquare(event);
     setDragFrom(null);
@@ -297,10 +327,10 @@ export function ChessBoard({
       setPendingPromotion(null);
       return;
     }
-    if (event.key === "Escape" && selected) {
+    if (event.key === "Escape" && selectedRef.current) {
       event.preventDefault();
       event.stopPropagation();
-      setSelected(null);
+      updateSelected(null);
       return;
     }
 
@@ -329,31 +359,33 @@ export function ChessBoard({
 
   function selectSquare(square: Square) {
     setFocusedSquare(square);
-    if (disabled) return;
+    if (disabled && onInspectSquare) {
+      onInspectSquare(square);
+      return;
+    }
+    if (disabled || pendingPromotion) return;
 
-    const piece = chess.get(square);
-    if (selected) {
-      if (square === selected) {
-        setSelected(null);
-        return;
-      }
-      if (legalTargets.has(square)) {
-        void requestMove(selected, square);
-        return;
-      }
-      if (piece?.color === chess.turn()) {
-        setSelected(square);
-        return;
-      }
+    const current = new Chess(liveBoardFen(positionRef));
+    const origin = selectedRef.current;
+    const piece = current.get(square);
+    // The highlighted legalTargets set describes the last render; use
+    // current legal moves for input, especially after a rapid prior move.
+    const legal = origin !== null && current.moves({ square: origin, verbose: true })
+      .some(move => move.to === square);
+    const action = decideBoardTap(
+      origin, square, piece?.color ?? null, current.turn(), legal,
+    );
+    if (action === "clear") {
+      updateSelected(null);
+    } else if (action === "move" && origin !== null) {
+      void requestMove(origin, square);
+    } else if (action === "select") {
+      updateSelected(square);
+      feedback("select");
+    } else if (action === "reject") {
       setRejected(square);
       feedback("error");
       window.setTimeout(() => setRejected(null), 260);
-      return;
-    }
-
-    if (piece?.color === chess.turn()) {
-      setSelected(square);
-      feedback("select");
     }
   }
 
@@ -425,7 +457,9 @@ export function ChessBoard({
     <div className="chess-board-wrap">
       <span id={instructionsId} className="sr-only">
         {disabled
-          ? "Chessboard preview. Use arrow keys to inspect squares."
+          ? onInspectSquare
+            ? "Use arrow keys to focus squares. Press Enter or Space to inspect attacks and defenders."
+            : "Chessboard preview. Use arrow keys to inspect squares."
           : "Use arrow keys to move between squares. Press Enter or Space to select a piece or destination. Press Escape to clear a selected square. On touch, drag a piece or tap the piece and its destination."}
       </span>
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
@@ -439,7 +473,7 @@ export function ChessBoard({
         aria-rowcount={8}
         aria-colcount={8}
         aria-describedby={instructionsId}
-        aria-label={`${disabled ? "Chessboard preview" : "Interactive chessboard"}. ${orientation === "w" ? "White" : "Black"} is at the bottom.`}
+        aria-label={`${disabled && onInspectSquare ? "Chessboard threat inspector" : disabled ? "Chessboard preview" : "Interactive chessboard"}. ${orientation === "w" ? "White" : "Black"} is at the bottom.`}
       >
         {squares.map((square, index) => {
           const piece = chess.get(square);
@@ -507,7 +541,7 @@ export function ChessBoard({
               tabIndex={square === focusedSquare ? 0 : -1}
               aria-label={squareLabel(square)}
               aria-selected={isSelected}
-              aria-disabled={disabled}
+              aria-disabled={disabled && !onInspectSquare}
               onFocus={() => setFocusedSquare(square)}
               onKeyDown={(event) => handleSquareKeyDown(event, square)}
               onClick={() => {
@@ -523,11 +557,13 @@ export function ChessBoard({
               onPointerCancel={handlePointerCancel}
               draggable={!disabled && !!piece && piece.color === chess.turn()}
               onDragStart={(event) => {
-                if (disabled || piece?.color !== chess.turn() || pendingPromotion) {
+                const current = new Chess(liveBoardFen(positionRef));
+                if (disabled || current.get(square)?.color !== current.turn() || pendingPromotion) {
                   event.preventDefault();
                   return;
                 }
-                setSelected(null);
+                updateSelected(null);
+                htmlDragFenRef.current = liveBoardFen(positionRef);
                 setDragFrom(square);
               }}
               onDragOver={(event) => {
@@ -538,11 +574,18 @@ export function ChessBoard({
               }}
               onDrop={(event) => {
                 event.preventDefault();
-                if (dragFrom && dragFrom !== square) void requestMove(dragFrom, square);
+                if (dragFrom && dragFrom !== square &&
+                    isGestureBoardCurrent(htmlDragFenRef.current, liveBoardFen(positionRef)))
+                  void requestMove(dragFrom, square);
+                htmlDragFenRef.current = null;
                 setDragFrom(null);
                 setDragHover(null);
               }}
-              onDragEnd={() => { setDragFrom(null); setDragHover(null); }}
+              onDragEnd={() => {
+                htmlDragFenRef.current = null;
+                setDragFrom(null);
+                setDragHover(null);
+              }}
             >
               {piece && (() => {
                 const landingMove =

@@ -299,6 +299,35 @@ describe("training composer", () => {
     expect(candidate?.adaptivePolicy?.reason).toContain("resistance");
   });
 
+  it("can schedule a genuine new lesson in a first-time learner's Quick and Standard session", () => {
+    const firstTimeState = {
+      ...initialUserState,
+      mastery: {},
+      weaknesses: [],
+      recentDomainMinutes: {},
+      games: [],
+      mistakes: [],
+      savedStudies: [],
+      assessments: [],
+    };
+    const date = new Date("2026-10-05T12:00:00Z");
+    const catalog = buildCandidatePool(firstTimeState, date);
+    expect(catalog.some(item => item.source === "curriculum" &&
+      item.activityType === "conceptLesson" && item.estimatedMinutes === 10)).toBe(true);
+
+    for (const mode of ["quick", "standard"] as const) {
+      const session = composeSession(firstTimeState, mode, date);
+      expect(session.activities.some(item =>
+        item.source === "curriculum" && item.novelty > .8 &&
+        item.activityType === "conceptLesson"), mode).toBe(true);
+      expect(session.activities.reduce((total, item) =>
+        total + item.estimatedMinutes, 0)).toBeLessThanOrEqual(sessionMinutes[mode] + 1);
+      expect(session.activities.filter(item => item.novelty > .8)
+        .reduce((total, item) => total + item.estimatedMinutes, 0))
+        .toBeLessThanOrEqual(10);
+    }
+  });
+
   it("limits novel material", () => {
     const session = composeSession(
       initialUserState,

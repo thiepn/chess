@@ -13,6 +13,7 @@ import {
   courseCurriculumFloor,
 } from "../assessment/engine";
 import { trainingPolicyFor } from "../adaptation/policy";
+import { sessionNoveltyAllowance } from "./sessionNovelty";
 import { trainingScenarios } from "../play/scenarios";
 import { buildTrainingPrescriptions } from "../prescriptions/engine";
 import { buildEventRetrospective } from "../planning/retrospective";
@@ -570,7 +571,9 @@ export function composeSession(
   const domainCount = new Map<string, number>();
   let usedMinutes = 0;
   let noveltyMinutes = 0;
-  const noveltyCap = budget * .28;
+  // Short sessions must be able to fit one complete authored new lesson.
+  // The established 28% novelty share remains unchanged for Deep.
+  const noveltyCap = sessionNoveltyAllowance(mode, budget);
 
   const mandatory = [
     ...pool.filter(

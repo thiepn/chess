@@ -13,6 +13,8 @@ import {
   Target,
 } from "lucide-react";
 import { composeSession, sessionMinutes } from "./domain/composer";
+import { captureTrainingSession, resolveActiveTrainingSession, type ActiveTrainingPlan } from "./domain/sessionContinuity";
+import { resumeAdaptiveSequence, indexForAdaptiveRoute } from "./domain/sessionResume";
 import {
   curriculumStages,
   domainLabels,
@@ -284,6 +286,7 @@ export default function App() {
   const [previewIndex, setPreviewIndex] = useState(0);
   const [optionalStudiesOpen, setOptionalStudiesOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const activeTrainingPlan = useRef<ActiveTrainingPlan | null>(null);
   const [manualActivity, setManualActivity] = useState<TrainingActivity | null>(null);
   const [trainingReturnPath, setTrainingReturnPath] = useState("/train");
   const [activeModelGameId, setActiveModelGameId] = useState<string | null>(null);
@@ -295,6 +298,7 @@ export default function App() {
   const page = route.page;
   const mainContentRef = useRef<HTMLElement>(null);
   const previousRoutePath = useRef(route.path);
+  const previousAdaptiveRoutePath = useRef(route.path);
   const learnRoute = resolveLearnRoute(route.path);
   const learnSection = learnRoute.section;
   const learnSkillId = page === "learn" ? learnRoute.skillId : undefined;
@@ -315,6 +319,7 @@ export default function App() {
       if (identityChanged) {
         // Abort the prior owner's unsent runtime before the new identity
         // can write, render or rehydrate any former-owner session details.
+        activeTrainingPlan.current = null;
         setActiveIndex(null);
         setManualActivity(null);
         setActiveModelGameId(null);
@@ -401,7 +406,12 @@ export default function App() {
     state.lichess?.username,
   ]);
 
-  const session = useMemo(() => composeSession(state, mode), [state, mode]);
+  const recommendedSession = useMemo(() => composeSession(state, mode), [state, mode]);
+  // Mastery and due dates can re-rank recommendations after each answer.
+  // Retain the original already-started sequence for the current owner.
+  const session = resolveActiveTrainingSession(
+    recommendedSession, activeTrainingPlan.current, repo.getProfileId(), activeIndex,
+  );
   const sessionActivity = activeIndex === null ? null : session.activities[activeIndex];
   // A Review-triggered exercise must resolve from the current owner's saved
   // game even if a deferred view transition or reload clears manualActivity.
@@ -679,6 +689,7 @@ export default function App() {
   }
 
   function closeTrainingRuntime(returnPath = trainingReturnPath) {
+    activeTrainingPlan.current = null;
     setActiveIndex(null);
     setManualActivity(null);
     setActiveModelGameId(null);
@@ -688,8 +699,12 @@ export default function App() {
   }
 
   function openAdaptiveActivity(index: number) {
-    const activity = session.activities[index];
+    const owner = repo.getProfileId();
+    const captured = activeIndex !== null && activeTrainingPlan.current?.owner === owner
+      ? activeTrainingPlan.current.session : recommendedSession;
+    const activity = captured.activities[index];
     if (!activity) return;
+    activeTrainingPlan.current = captureTrainingSession(captured, owner);
     setTrainingReturnPath("/train");
     setManualActivity(null);
     setActiveModelGameId(null);
@@ -699,6 +714,7 @@ export default function App() {
   }
 
   function openManualActivity(activity: TrainingActivity) {
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path.startsWith("/train/") ? trainingReturnPath : route.path);
     setActiveIndex(null);
     setActiveModelGameId(null);
@@ -751,6 +767,7 @@ export default function App() {
           path?: string;
           mode?: SessionMode;
           activeIndex?: number | null;
+          activityIds?: string[];
           manualActivity?: TrainingActivity | null;
           activeModelGameId?: string | null;
           assessmentSession?: AssessmentSession | null;
@@ -758,8 +775,45 @@ export default function App() {
           owner?: string;
         };
         if (snapshot.owner === repo.getProfileId() && snapshot.path === route.path) {
-          if (snapshot.mode) setMode(snapshot.mode);
-          setActiveIndex(snapshot.activeIndex ?? null);
+          const restoredMode: SessionMode =
+            snapshot.mode === "quick" || snapshot.mode === "standard" || snapshot.mode === "deep"
+              ? snapshot.mode : mode;
+          if (restoredMode !== mode) setMode(restoredMode);
+          if (snapshot.activeIndex !== null && snapshot.activeIndex !== undefined) {
+            // Persisted IDs only express order. Canonical activities and all
+            // graded material are re-derived for this owner before rendering.
+            const current = restoredMode === mode
+              ? recommendedSession : composeSession(state, restoredMode);
+            const resumed = snapshot.activityIds
+              ? resumeAdaptiveSequence({
+                  owner: snapshot.owner,
+                  path: snapshot.path,
+                  activeIndex: snapshot.activeIndex,
+                  activityIds: snapshot.activityIds,
+                }, current, repo.getProfileId(), route.path)
+              : null;
+            if (resumed) {
+              activeTrainingPlan.current = captureTrainingSession(resumed.session, repo.getProfileId());
+              setActiveIndex(resumed.activeIndex);
+              setTrainingReturnPath(snapshot.trainingReturnPath ?? "/train");
+              return;
+            }
+            // Legacy or no-longer-available activity: recover by canonical
+            // route identity, never by the stored numeric index.
+            let selectedId = "";
+            try { selectedId = decodeURIComponent(route.path.slice("/train/session/".length)); }
+            catch { /* Reject malformed route identifiers. */ }
+            const matchingIndex = current.activities.findIndex(activity => activity.id === selectedId);
+            window.sessionStorage.removeItem("chess:training-runtime-v1");
+            if (matchingIndex >= 0) {
+              activeTrainingPlan.current = captureTrainingSession(current, repo.getProfileId());
+              setActiveIndex(matchingIndex);
+              return;
+            }
+            navigate("/train", { replace: true });
+            return;
+          }
+          setActiveIndex(null);
           setManualActivity(snapshot.manualActivity ?? null);
           setActiveModelGameId(snapshot.activeModelGameId ?? null);
           setAssessmentSession(snapshot.assessmentSession ?? null);
@@ -772,11 +826,14 @@ export default function App() {
     }
 
     const encodedId = route.path.slice("/train/session/".length);
-    const routeId = decodeURIComponent(encodedId);
-    const adaptiveIndex = session.activities.findIndex(
+    let routeId = "";
+    try { routeId = decodeURIComponent(encodedId); }
+    catch { /* Invalid route is never used to select an activity. */ }
+    const adaptiveIndex = recommendedSession.activities.findIndex(
       (activity) => activity.id === routeId,
     );
     if (adaptiveIndex >= 0) {
+      activeTrainingPlan.current = captureTrainingSession(recommendedSession, repo.getProfileId());
       setActiveIndex(adaptiveIndex);
       return;
     }
@@ -800,6 +857,7 @@ export default function App() {
         path: route.path,
         mode,
         activeIndex,
+        activityIds: activeIndex !== null ? session.activities.map(activity => activity.id) : undefined,
         manualActivity,
         activeModelGameId,
         assessmentSession,
@@ -820,6 +878,35 @@ export default function App() {
     trainingSessionOpen,
   ]);
 
+  // popstate navigation can update the URL while an existing runner is still
+  // active. The restore effect above intentionally skips active runners;
+  // keep the displayed exercise aligned with the canonical browser route.
+  useEffect(() => {
+    if (previousAdaptiveRoutePath.current === route.path) return;
+    previousAdaptiveRoutePath.current = route.path;
+    if (!loaded || !trainingSessionOpen || activeIndex === null ||
+        manualActivity || routePracticeActivity || activeModelGame || assessmentSession)
+      return;
+
+    const next = indexForAdaptiveRoute(session, route.path);
+    if (next !== null) {
+      if (next !== activeIndex) setActiveIndex(next);
+      return;
+    }
+
+    // A link to a different currently recommended lesson intentionally starts
+    // a new native sequence; old owner-scoped activity content is never used.
+    const recommendedIndex = indexForAdaptiveRoute(recommendedSession, route.path);
+    if (recommendedIndex !== null) {
+      activeTrainingPlan.current = captureTrainingSession(recommendedSession, repo.getProfileId());
+      setActiveIndex(recommendedIndex);
+      return;
+    }
+    closeTrainingRuntime("/train");
+  }, [route.path, loaded, trainingSessionOpen, activeIndex, session,
+       recommendedSession, manualActivity, routePracticeActivity,
+       activeModelGame, assessmentSession]);
+
   const hadTrainingSession = useRef(false);
   useEffect(() => {
     if (trainingSessionOpen) {
@@ -831,6 +918,7 @@ export default function App() {
     // an open training route; owner change has its separate stricter reset.
     if (!hadTrainingSession.current) return;
     hadTrainingSession.current = false;
+    activeTrainingPlan.current = null;
     if (!runtimeReady) return;
     setActiveIndex(null);
     setManualActivity(null);
@@ -1883,6 +1971,7 @@ export default function App() {
 
   function startModelGame(gameId: string) {
     if (!modelGameById[gameId]) return;
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
@@ -2430,6 +2519,7 @@ export default function App() {
   }
 
   function startPlacementAssessment() {
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
@@ -2440,6 +2530,7 @@ export default function App() {
 
   function startStageCheckpoint(stageId: CurriculumStageId) {
     if (stageGates[stageId].status === "locked") return;
+    activeTrainingPlan.current = null;
     setTrainingReturnPath(route.path);
     setActiveIndex(null);
     setManualActivity(null);
@@ -3265,6 +3356,12 @@ export default function App() {
             onNavigate={navigate}
             mistakes={state.mistakes ?? []}
             practiceHistory={state.reviewPracticeHistory ?? []}
+            learningEvents={state.analytics?.events ?? []}
+            prescriptions={progressIntelligence.prescriptions}
+            coachEffectiveness={progressIntelligence.coachEffectiveness}
+            prescriptionHistory={state.prescriptionHistory ?? []}
+            scheduledTraining={session.activities}
+            onOpenTrainingPlan={() => navigate("/train")}
             lichess={state.lichess}
             lichessSyncing={lichessSyncing}
             lichessSyncMessage={lichessSyncMessage}

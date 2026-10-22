@@ -9341,3 +9341,562 @@ html[data-motion="reduced"] .play-v2-opponent-list button,
 html[data-motion="reduced"] .play-v2-scenario-list > button {
   transition: none !important;
 }
+
+/* G4 — original opponent-defense reading lab */
+.lesson-reply-comparison {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0 20px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(177, 192, 220, .16);
+  border-bottom: 1px solid rgba(177, 192, 220, .12);
+}
+.lesson-reply-comparison > .lesson-prompt {
+  margin: 0;
+  max-width: 65ch;
+  color: #cbd4e5;
+  font-size: 14px;
+  font-weight: 450;
+}
+.lesson-reply-comparison > .lesson-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+.lesson-reply-comparison .lesson-choice {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  min-height: 48px;
+  font-size: 12px;
+}
+.lesson-reply-comparison .lesson-choice small {
+  color: #b3c6f4;
+  font-size: 10px;
+}
+.lesson-defense-prediction {
+  display: grid;
+  gap: 8px;
+}
+.lesson-defense-prediction label {
+  font-size: 13px;
+  font-weight: 650;
+  color: #e5ebf6;
+}
+.lesson-defense-prediction textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid rgba(177, 192, 220, .3);
+  border-radius: 8px;
+  background: rgba(8, 15, 29, .78);
+  color: #f2f5fc;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.lesson-defense-prediction textarea:focus-visible,
+.lesson-defense-contrast button:focus-visible {
+  outline: 2px solid #94b7ff;
+  outline-offset: 2px;
+}
+.lesson-defense-prediction small {
+  color: #a9b7cd;
+  font-size: 11px;
+}
+.lesson-defense-prediction .primary,
+.lesson-defense-contrast > button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lesson-defense-prediction > p {
+  color: #b8cbed;
+  font-size: 12px;
+}
+.lesson-defense-contrast {
+  display: grid;
+  gap: 12px;
+}
+.lesson-defense-contrast > button {
+  border: 1px solid rgba(177, 192, 220, .3);
+  border-radius: 8px;
+  background: transparent;
+  color: #dfebff;
+}
+.lesson-defense-contrast .lesson-choice-grid {
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lesson-defense-contrast .lesson-feedback {
+  display: block;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #d4dced;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.lesson-defense-contrast .lesson-feedback strong {
+  display: block;
+  margin-bottom: 8px;
+}
+@media (max-width: 720px) {
+  .lesson-defense-contrast .lesson-choice-grid {
+    grid-template-columns: 1fr;
+  }
+  .lesson-reply-comparison { gap: 12px; }
+  .lesson-reply-comparison .lesson-choice { padding: 8px; }
+}
+
+/* G5 — move-by-move original tactical replay */
+.lesson-tactical-replay {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(164, 186, 226, .24);
+  background: rgba(27, 40, 65, .3);
+  border-radius: 8px;
+}
+.lesson-tactical-replay .secondary {
+  justify-self: start;
+  min-height: 44px;
+  padding: 9px 14px;
+  font-size: 13px;
+}
+.lesson-tactical-replay-meta {
+  display: flex;
+  gap: 8px 14px;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #e8edf6;
+  font-size: 14px;
+}
+.lesson-tactical-replay-meta span {
+  color: #b9c5d9;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.lesson-tactical-replay > p {
+  margin: 0;
+  color: #d6e0ef;
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.lesson-tactical-replay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lesson-tactical-replay-actions button {
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid rgba(166, 193, 238, .3);
+  border-radius: 6px;
+  background: rgba(7, 13, 26, .35);
+  color: #e6eefa;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lesson-tactical-replay-actions button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.lesson-tactical-replay-actions button:focus-visible,
+.lesson-tactical-replay .secondary:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+@media (max-width: 420px) {
+  .lesson-tactical-replay { padding: 12px; }
+  .lesson-tactical-replay-actions button { flex: 1 1 42%; }
+}
+
+.lesson-exploration {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(160, 183, 219, .25);
+  border-radius: 8px;
+  background: rgba(18, 30, 47, .38);
+}
+.lesson-exploration > .secondary {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 15px;
+  font-size: 13px;
+}
+.lesson-exploration-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #e6edfa;
+  font-size: 14px;
+}
+.lesson-exploration-status span {
+  color: #bccbe0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.lesson-exploration-moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 170px;
+  overflow-y: auto;
+}
+.lesson-exploration-ply,
+.lesson-exploration-actions button {
+  min-height: 44px;
+  border: 1px solid rgba(161, 184, 217, .28);
+  background: rgba(12, 21, 37, .7);
+  color: #e5edf9;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.lesson-exploration-ply.current {
+  border-color: #98bcff;
+  color: #fff;
+}
+.lesson-exploration-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lesson-exploration-actions button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.lesson-exploration button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
+.lesson-exploration > p {
+  color: #bfcce0;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+@media (max-width: 520px) {
+  .lesson-exploration { padding: 10px; }
+  .lesson-exploration-actions button { flex: 1 1 44%; }
+}
+
+.lesson-variation-notebook {
+  display: grid;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(161, 184, 217, .2);
+}
+.lesson-variation-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.lesson-variation-slot {
+  display: grid;
+  gap: 8px;
+}
+.lesson-variation-slot button,
+.lesson-variation-facts button {
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid rgba(161, 184, 217, .38);
+  border-radius: 6px;
+  background: rgba(10, 19, 36, .75);
+  color: #eaf0fa;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lesson-variation-slot button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.lesson-variation-notebook button:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+.lesson-variation-analysis {
+  display: grid;
+  gap: 10px;
+}
+.lesson-variation-analysis > p {
+  color: #c6d5ec;
+  margin: 0;
+  font-size: 14px;
+}
+.lesson-variation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.lesson-variation-facts {
+  min-width: 0;
+  padding: 12px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid rgba(161, 184, 217, .23);
+  border-radius: 6px;
+  color: #d6e1f2;
+}
+.lesson-variation-facts strong { font-size: 14px; }
+.lesson-variation-facts p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.lesson-variation-facts .lesson-variation-san {
+  font-variant-numeric: tabular-nums;
+  color: #f2f5fc;
+  font-size: 14px;
+}
+@media (max-width: 720px) {
+  .lesson-variation-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+  .lesson-variation-controls { grid-template-columns: 1fr; }
+}
+
+/* G8: factual attackers, defenders, and legal-move inspection */
+.lesson-board-vision {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0;
+}
+.lesson-vision-toggle {
+  justify-self: start;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid rgba(160, 192, 238, .4);
+  border-radius: 7px;
+  background: rgba(18, 31, 52, .7);
+  color: #ecf2ff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lesson-vision-inspector {
+  display: grid;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid rgba(160, 192, 238, .28);
+  border-radius: 8px;
+  background: rgba(17, 29, 49, .48);
+  color: #dce5f3;
+}
+.lesson-vision-inspector p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.lesson-vision-selected {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(160, 192, 238, .3);
+  border-radius: 7px;
+}
+.lesson-vision-selected strong,
+.lesson-vision-threats strong {
+  color: #f1f5ff;
+  font-size: 14px;
+}
+.lesson-vision-attackers,
+.lesson-vision-threats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.lesson-vision-attackers > div,
+.lesson-vision-threats > div,
+.lesson-vision-selected > div {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+}
+.lesson-vision-square-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+}
+.lesson-vision-square-list button {
+  min-height: 44px;
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+  padding: 9px 12px;
+  border: 1px solid rgba(156, 181, 220, .25);
+  background: rgba(8, 16, 31, .46);
+  border-radius: 6px;
+  color: #ecf2ff;
+  text-align: left;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lesson-vision-square-list button span {
+  font-size: 14px;
+  color: #c3d3ea;
+}
+.lesson-vision-square-list button[aria-pressed="true"] {
+  border-color: #9bbfff;
+}
+.lesson-board-vision button:focus-visible {
+  outline: 2px solid #a6c3ff;
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .lesson-vision-inspector { padding: 12px; }
+  .lesson-vision-attackers,
+  .lesson-vision-threats { grid-template-columns: 1fr; }
+}
+
+/* Source-backed game-to-training handoff, inside the existing Review coach. */
+.review-coach-handoff {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .24);
+  border-radius: 8px;
+  background: rgba(17, 30, 49, .45);
+}
+.review-coach-handoff > strong {
+  color: #eef3fb;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.review-coach-handoff > p {
+  margin: 0;
+  color: #cbd6e8;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.review-coach-handoff > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+}
+.review-coach-handoff > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
+
+/* Original-game transfer sits in the existing coached Review action column. */
+.review-coach-transfer-route {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(159, 187, 228, .2);
+}
+.review-coach-transfer-route strong {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #edf2fc;
+}
+.review-coach-transfer-route p,
+.review-coach-later-games {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #cdd9eb;
+}
+.review-coach-transfer-route > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  white-space: normal;
+  text-align: left;
+}
+.review-coach-transfer-route > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
+
+.review-coach-prescription {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .24);
+  border-radius: 8px;
+}
+.review-coach-prescription strong {
+  font-size: 15px;
+  line-height: 1.45;
+  color: #eef3fb;
+}
+.review-coach-prescription p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cbd7e9;
+}
+.review-coach-prescription button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.review-coach-prescription button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}
+
+.review-coach-post-training {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 16px;
+  padding: 14px;
+  border: 1px solid rgba(159, 187, 228, .28);
+  border-radius: 8px;
+}
+.review-coach-post-training > strong {
+  color: #eef3fb;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.review-coach-post-training > p {
+  margin: 0;
+  color: #ccd8eb;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.review-coach-post-training > button {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.review-coach-post-training > button:focus-visible {
+  outline: 2px solid #a9c6ff;
+  outline-offset: 2px;
+}

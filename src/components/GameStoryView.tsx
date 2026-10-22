@@ -21,10 +21,24 @@ import type { BoardArrow } from "../learning/types";
 import type { OpeningDeviation } from "../openings/types";
 import { ChessBoard } from "./ChessBoard";
 import { GameReviewCoach } from "./GameReviewCoach";
+import type { RecordedReviewAttempt } from "../review/practiceLoop";
+import type { LearningAnalyticsEvent } from "../analytics/types";
+import type { CoachEffectivenessInsight, TrainingPrescription, PrescriptionTrackingRecord } from "../prescriptions/types";
+import type { TrainingActivity } from "../domain/types";
 
 interface GameStoryViewProps {
   game: ImportedGame;
   mistakes: PersonalMistake[];
+  allGames: ImportedGame[];
+  allMistakes: PersonalMistake[];
+  practiceHistory: RecordedReviewAttempt[];
+  learningEvents: LearningAnalyticsEvent[];
+  prescriptions: TrainingPrescription[];
+  coachEffectiveness: CoachEffectivenessInsight;
+  prescriptionHistory: PrescriptionTrackingRecord[];
+  onOpenReviewGame: (id: string) => void;
+  scheduledTraining: TrainingActivity[];
+  onOpenTrainingPlan: () => void;
   onBack: () => void;
   onTrainMistake: (mistakeId: string) => void;
   onReplayMistake: (mistakeId: string) => void;
@@ -91,6 +105,16 @@ function moveArrow(uci: string, tone: BoardArrow["tone"]): BoardArrow[] {
 export function GameStoryView({
   game,
   mistakes,
+  allGames,
+  allMistakes,
+  practiceHistory,
+  learningEvents,
+  prescriptions,
+  coachEffectiveness,
+  prescriptionHistory,
+  onOpenReviewGame,
+  scheduledTraining,
+  onOpenTrainingPlan,
   onBack,
   onTrainMistake,
   onReplayMistake,
@@ -544,6 +568,17 @@ export function GameStoryView({
           game={game}
           moment={coachMoment}
           mistake={coachMistake}
+          allGames={allGames}
+          allMistakes={allMistakes}
+          practiceHistory={practiceHistory}
+          learningEvents={learningEvents}
+          prescriptions={prescriptions}
+          coachEffectiveness={coachEffectiveness}
+          prescriptionHistory={prescriptionHistory}
+          onOpenReviewGame={onOpenReviewGame}
+          scheduledTraining={scheduledTraining}
+          onOpenTrainingPlan={onOpenTrainingPlan}
+          onTrainMistake={onTrainMistake}
           reflection={reflections[coachMoment.id]}
           openingDeviation={coachDeviation}
           onClose={() => setCoachMomentId(null)}

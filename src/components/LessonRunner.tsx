@@ -9,6 +9,7 @@ import type { Color } from "chess.js";
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import type {
@@ -19,7 +20,24 @@ import type {
 import { deepTransferSkillIds, lessonForSkill } from "../learning/lessons";
 import { checkedTransfer, loadTransferCatalog, type TransferExercise } from "../learning/transferCompletion";
 import { beginnerSkillIds, loadBeginnerPractice, withBeginnerPractice, type BeginnerPracticeEntry } from "../learning/beginnerPractice";
+import { g2TacticalSkillIds, loadG2TacticalTransfer, withG2TacticalTransfer, type G2Entry } from "../learning/g2TacticalTransfer";
 import { summarizeLessonMastery } from "../learning/mastery";
+import { createLiveStepAttempt, takeStepHint, countStepMistake, finishStepAttempt } from "../learning/liveStepAttempt";
+import { hasCompleteLessonEvidence, withLatestLessonEvidence, lessonEvidenceTotals } from "../learning/lessonCompletionEvidence";
+import { assembleVerifiedLesson } from "../learning/assembleVerifiedLesson";
+import { g2ReplyComparison } from "../learning/g2ReplyComparison";
+import { g8InspectSquare, g8BoardVision } from "../learning/g8BoardVision";
+import { chessPieceNames } from "./ChessPiece";
+import { g4DefenseStudy, continuesG4Case } from "../learning/g4DefenseStudy";
+import { g5TacticalReplay, g5ReplayIndex } from "../learning/g5TacticalReplay";
+import {
+  beginG6Exploration, g6CurrentFen, g6ExploreMove, g6PositionState,
+  g6Rewind, type G6Exploration,
+} from "../learning/g6ContinuationLab";
+import {
+  g7BeginNotebook, g7SaveVariation, g7LoadVariation,
+  g7CompareVariations, type G7VariationNotebook, type G7Slot,
+} from "../learning/g7VariationNotebook";
 import type {
   BoardArrow,
   BoardHighlight,
@@ -65,6 +83,7 @@ export function LessonRunner({
   );
   const missingTransfer = !deepTransferSkillIds.includes(skill.id);
   const beginner = beginnerSkillIds.some(id => id === skill.id);
+  const tacticalDepth = g2TacticalSkillIds.some(id => id === skill.id);
   const [transferEntry,setTransferEntry] = useState<{skillId:string;entry:TransferExercise}|null>(null);
   const [transferError,setTransferError] = useState<string|null>(null);
   const [transferRetry,setTransferRetry] = useState(0);
@@ -100,14 +119,57 @@ export function LessonRunner({
     return () => { cancelled = true; };
   }, [beginner, skill.id, beginnerRetry]);
 
-  const transferLesson = useMemo(() =>
-    missingTransfer && transferEntry?.skillId === skill.id
-      ? checkedTransfer(baseLesson, transferEntry.entry) : baseLesson,
-    [baseLesson, missingTransfer, skill.id, transferEntry]);
-  const lesson = useMemo(() =>
-    beginner && beginnerEntry?.skillId === skill.id
-      ? withBeginnerPractice(transferLesson, beginnerEntry.entry) : transferLesson,
-    [beginner, beginnerEntry, skill.id, transferLesson]);
+  const [tacticalEntry, setTacticalEntry] = useState<{ skillId: string; entry: G2Entry } | null>(null);
+  const [tacticalError, setTacticalError] = useState<string | null>(null);
+  const [tacticalRetry, setTacticalRetry] = useState(0);
+  useEffect(() => {
+    if (!tacticalDepth) return;
+    let cancelled = false;
+    setTacticalError(null);
+    void loadG2TacticalTransfer().then(catalog => {
+      if (cancelled) return;
+      const entry = catalog.get(skill.id);
+      if (!entry) {
+        setTacticalError("The original tactical source does not contain this selected skill.");
+        return;
+      }
+      setTacticalEntry({ skillId: skill.id, entry });
+    }).catch(() => {
+      if (!cancelled)
+        setTacticalError("Tactical transfer is unavailable or unverified. No lesson credit has been written.");
+    });
+    return () => { cancelled = true; };
+  }, [tacticalDepth, skill.id, tacticalRetry]);
+
+  const sourcesReady =
+    (!missingTransfer || transferEntry?.skillId === skill.id) &&
+    (!beginner || beginnerEntry?.skillId === skill.id) &&
+    (!tacticalDepth || tacticalEntry?.skillId === skill.id);
+  const prepared = useMemo(() => {
+    // These independent assets load in parallel. Do not run partial source
+    // assembly, or mistake an in-flight historical transfer for a conflict.
+    if (!sourcesReady) return { lesson: baseLesson, error: null as string | null };
+    try {
+      const lesson = assembleVerifiedLesson(baseLesson, {
+        transfer: missingTransfer && transferEntry?.skillId === skill.id
+          ? transferEntry.entry : undefined,
+        beginner: beginner && beginnerEntry?.skillId === skill.id
+          ? beginnerEntry.entry : undefined,
+        tactical: tacticalDepth && tacticalEntry?.skillId === skill.id
+          ? tacticalEntry.entry : undefined,
+      });
+      return { lesson, error: null as string | null };
+    } catch {
+      // Source assets can be valid individually yet conflict when grafted
+      // onto a historical lesson. Never crash Train or award partial credit.
+      return {
+        lesson: baseLesson,
+        error: "The original lesson sources conflict. No training credit has been written. Return to Learn and choose another lesson.",
+      };
+    }
+  }, [baseLesson, missingTransfer, transferEntry, beginner, beginnerEntry,
+    tacticalDepth, tacticalEntry, skill.id, sourcesReady]);
+  const { lesson, error: assemblyError } = prepared;
 
   const [stepIndex, setStepIndex] =
     useState(0);
@@ -116,18 +178,6 @@ export function LessonRunner({
   const [
     stepHintsUsed,
     setStepHintsUsed,
-  ] = useState(0);
-  const [
-    totalHintsUsed,
-    setTotalHintsUsed,
-  ] = useState(0);
-  const [
-    stepWrongAttempts,
-    setStepWrongAttempts,
-  ] = useState(0);
-  const [
-    totalWrongAttempts,
-    setTotalWrongAttempts,
   ] = useState(0);
   const [feedback, setFeedback] =
     useState<string | null>(null);
@@ -139,84 +189,191 @@ export function LessonRunner({
     useState(0);
   const [results, setResults] =
     useState<LessonStepResult[]>([]);
+  // Latest verified answers must be available to Finish before React renders.
+  // This is only an in-memory mirror of the original lesson evidence, not
+  // another mastery or persisted Review store.
+  const resultsRef = useRef<LessonStepResult[]>([]);
+  const completionSubmitted = useRef(false);
+  const liveStepAttempt = useRef(createLiveStepAttempt());
+  const advancePending = useRef(false);
+  const [completionError, setCompletionError] = useState<string | null>(null);
+  const [comparisonSelection, setComparisonSelection] = useState<string | null>(null);
+  const [revealedDefenses, setRevealedDefenses] = useState<string[]>([]);
+  const [defenseNotes, setDefenseNotes] = useState<Record<string, string>>({});
+  const [showDefenseContrast, setShowDefenseContrast] = useState(false);
+  const [replayPly, setReplayPly] = useState<number | null>(null);
+  const [activeExplorationId, setActiveExplorationId] = useState<string | null>(null);
+  const [explorations, setExplorations] = useState<Record<string, G6Exploration>>({});
+  const explorationsRef = useRef<Record<string, G6Exploration>>({});
+  const [variationNotebooks, setVariationNotebooks] = useState<Record<string, G7VariationNotebook>>({});
+  const variationNotebooksRef = useRef<Record<string, G7VariationNotebook>>({});
+  const [boardVisionOpen, setBoardVisionOpen] = useState(false);
+  const [inspectedSquare, setInspectedSquare] = useState<import("chess.js").Square | null>(null);
 
   const step = lesson.steps[stepIndex];
+  const comparison = g2ReplyComparison(lesson, step.id);
+  const defenseStudy = comparison
+    ? g4DefenseStudy(comparison, comparisonSelection, revealedDefenses) : null;
+  const displayedStep = defenseStudy?.frame.step ?? step;
+  const tacticalReplay = defenseStudy?.isRevealed && defenseStudy.chosen && comparison &&
+    tacticalEntry?.skillId === skill.id
+    ? g5TacticalReplay(tacticalEntry.entry, comparison, defenseStudy.chosen.id)
+    : null;
+  const replayFrame = tacticalReplay && replayPly !== null
+    ? tacticalReplay.frames[replayPly] : null;
+  const activeExploration = tacticalReplay && activeExplorationId === tacticalReplay.replyStepId &&
+    explorations[tacticalReplay.replyStepId]?.anchorFen === tacticalReplay.frames[2].fen
+    ? explorations[tacticalReplay.replyStepId] : null;
+  const explorationStatus = activeExploration ? g6PositionState(activeExploration) : null;
+  const explorationLastMove = activeExploration?.moves.at(-1);
+  const variationNotebook = tacticalReplay &&
+    variationNotebooks[tacticalReplay.replyStepId]?.anchorFen === tacticalReplay.frames[2].fen
+    ? variationNotebooks[tacticalReplay.replyStepId] : null;
+  const variationComparison = variationNotebook ? g7CompareVariations(variationNotebook) : null;
+  const boardFen = activeExploration
+    ? g6CurrentFen(activeExploration) : (replayFrame?.fen ?? displayedStep.fen);
+  const boardVision = boardVisionOpen && comparison ? g8BoardVision(boardFen) : null;
+  const squareVision = boardVisionOpen && inspectedSquare && comparison
+    ? g8InspectSquare(boardFen, inspectedSquare) : null;
   const isLast =
     stepIndex === lesson.steps.length - 1;
   const orientation = (
-    step.fen.split(/\s+/)[1] === "b"
+    displayedStep.fen.split(/\s+/)[1] === "b"
       ? "b"
       : "w"
   ) as Color;
 
   useEffect(() => {
+    liveStepAttempt.current = createLiveStepAttempt();
+    completionSubmitted.current = false;
+    advancePending.current = false;
+    setCompletionError(null);
     setStepIndex(0);
     setSolved(false);
     setStepHintsUsed(0);
-    setTotalHintsUsed(0);
-    setStepWrongAttempts(0);
-    setTotalWrongAttempts(0);
     setFeedback(null);
     setSelectedOption(null);
+    setComparisonSelection(null);
+    setRevealedDefenses([]);
+    setDefenseNotes({});
+    setShowDefenseContrast(false);
+    setReplayPly(null);
+    setActiveExplorationId(null);
+    explorationsRef.current = {};
+    setExplorations({});
+    variationNotebooksRef.current = {};
+    setVariationNotebooks({});
+    setBoardVisionOpen(false);
+    setInspectedSquare(null);
+    resultsRef.current = [];
     setResults([]);
     setBoardReset((value) => value + 1);
   }, [lesson.id]);
 
-  function recordResult(
-    item: LessonStepResult,
-  ) {
-    setResults((previous) => [
-      ...previous.filter(
-        (result) =>
-          result.stepId !== item.stepId,
-      ),
-      item,
-    ]);
+  // A second click on a stale Continue button must never skip a step.
+  useEffect(() => {
+    advancePending.current = false;
+  }, [stepIndex]);
+
+  function saveCandidate(slot: G7Slot) {
+    if (!tacticalReplay || !activeExploration) return;
+    const id = tacticalReplay.replyStepId;
+    const anchorFen = tacticalReplay.frames[2].fen;
+    const notebook = variationNotebooksRef.current[id] ?? g7BeginNotebook(anchorFen);
+    if (!notebook) return;
+    const next = g7SaveVariation(notebook, slot, activeExploration);
+    if (!next) return;
+    variationNotebooksRef.current = { ...variationNotebooksRef.current, [id]: next };
+    setVariationNotebooks(variationNotebooksRef.current);
   }
 
-  function resetStepState() {
+  function loadCandidate(slot: G7Slot) {
+    if (!tacticalReplay) return;
+    const id = tacticalReplay.replyStepId;
+    const notebook = variationNotebooksRef.current[id];
+    if (!notebook) return;
+    const line = g7LoadVariation(notebook, slot, tacticalReplay.frames[2].fen);
+    if (!line) return;
+    explorationsRef.current = { ...explorationsRef.current, [id]: line };
+    setExplorations(explorationsRef.current);
+    setReplayPly(null);
+    setActiveExplorationId(id);
+  }
+
+  function recordResult(item: LessonStepResult) {
+    const recorded = withLatestLessonEvidence(resultsRef.current, item);
+    resultsRef.current = recorded;
+    setResults(recorded);
+  }
+
+  function resetStepState(keepCaseStudy = false) {
+    liveStepAttempt.current = createLiveStepAttempt();
+    setComparisonSelection(null);
+    if (!keepCaseStudy) {
+      setRevealedDefenses([]);
+      setDefenseNotes({});
+    }
+    setShowDefenseContrast(false);
+    setReplayPly(null);
+    setActiveExplorationId(null);
+    setBoardVisionOpen(false);
+    setInspectedSquare(null);
+    if (!keepCaseStudy) {
+      explorationsRef.current = {};
+      setExplorations({});
+      variationNotebooksRef.current = {};
+      setVariationNotebooks({});
+    }
     setSolved(false);
     setStepHintsUsed(0);
-    setStepWrongAttempts(0);
     setFeedback(null);
     setSelectedOption(null);
     setBoardReset((value) => value + 1);
   }
 
+  function restartIncompleteLesson() {
+    if (completionSubmitted.current) return;
+    advancePending.current = false;
+    setCompletionError(null);
+    setStepIndex(0);
+    resultsRef.current = [];
+    setResults([]);
+    resetStepState();
+  }
+
   function nextStep() {
+    if (completionSubmitted.current || advancePending.current) return;
     if (isLast) {
-      const mastery =
-        summarizeLessonMastery(results);
+      const recorded = resultsRef.current;
+      if (!hasCompleteLessonEvidence(lesson, recorded)) {
+        // Never turn a skipped or missing transfer into credible completion.
+        // Restart explicitly, instead of silently awarding partial credit.
+        setCompletionError("Some assessed positions were not recorded. Restart this lesson to complete every check; no credit has been submitted.");
+        return;
+      }
+      completionSubmitted.current = true;
+      const mastery = summarizeLessonMastery(recorded);
+      const totals = lessonEvidenceTotals(recorded);
       onComplete({
         success: mastery.masteryPassed,
         quality: mastery.masteryQuality,
-        hintsUsed: totalHintsUsed,
-        wrongAttempts:
-          totalWrongAttempts,
+        hintsUsed: totals.hintsUsed,
+        wrongAttempts: totals.wrongAttempts,
         lessonEvidence: mastery,
       });
       return;
     }
 
-    setStepIndex(
-      (value) => value + 1,
-    );
-    resetStepState();
+    advancePending.current = true;
+    setStepIndex(value => Math.min(value + 1, lesson.steps.length - 1));
+    resetStepState(continuesG4Case(step.id, lesson.steps[stepIndex + 1]?.id ?? ""));
   }
 
   function revealHint() {
     if (step.type !== "move") return;
-    if (
-      stepHintsUsed >= step.hints.length
-    ) {
-      return;
-    }
-    setStepHintsUsed(
-      (value) => value + 1,
-    );
-    setTotalHintsUsed(
-      (value) => value + 1,
-    );
+    const count = takeStepHint(liveStepAttempt.current, step.hints.length);
+    if (count === null) return;
+    setStepHintsUsed(count);
     setFeedback(null);
     emitExperienceEvent({ feedback: "reveal" });
   }
@@ -235,7 +392,8 @@ export function LessonRunner({
   ) {
     if (
       step.type !== "choice" ||
-      solved
+      solved ||
+      liveStepAttempt.current.completed
     ) {
       return;
     }
@@ -246,30 +404,17 @@ export function LessonRunner({
     );
     if (!option) return;
 
-    if (
-      optionId === step.correctOptionId
-    ) {
+    if (optionId === step.correctOptionId) {
+      const result = finishStepAttempt(liveStepAttempt.current, step.id, step.support);
+      if (!result) return;
       setSolved(true);
       setFeedback(null);
-      recordResult({
-        stepId: step.id,
-        support: step.support,
-        correct: true,
-        firstTry:
-          stepWrongAttempts === 0,
-        hintsUsed: 0,
-        wrongAttempts:
-          stepWrongAttempts,
-      });
+      recordResult(result);
       return;
     }
 
-    setStepWrongAttempts(
-      (value) => value + 1,
-    );
-    setTotalWrongAttempts(
-      (value) => value + 1,
-    );
+    const wrongs = countStepMistake(liveStepAttempt.current);
+    if (wrongs === null) return;
     setFeedback(option.feedback);
   }
 
@@ -283,10 +428,12 @@ export function LessonRunner({
   const latestHint =
     revealedHints.at(-1);
 
-  const displayedHighlights: BoardHighlight[] =
-    [
-      ...(step.type === "explain"
-        ? step.highlights ?? []
+  const displayedHighlights: BoardHighlight[] = squareVision
+    ? [...squareVision.highlights] : explorationLastMove
+    ? [{ square: explorationLastMove.to, tone: "focus" }] : replayFrame
+    ? [...replayFrame.highlights] : [
+      ...(displayedStep.type === "explain"
+        ? displayedStep.highlights ?? []
         : []),
       ...(step.type === "move" &&
       latestHint
@@ -294,9 +441,12 @@ export function LessonRunner({
         : []),
     ];
 
-  const displayedArrows: BoardArrow[] = [
-    ...(step.type === "explain"
-      ? step.arrows ?? []
+  const displayedArrows: BoardArrow[] = squareVision
+    ? [...squareVision.arrows] : explorationLastMove
+    ? [{ from: explorationLastMove.from, to: explorationLastMove.to, tone: "focus" }]
+    : replayFrame ? [...replayFrame.arrows] : [
+    ...(displayedStep.type === "explain"
+      ? displayedStep.arrows ?? []
       : []),
     ...(step.type === "move" &&
     latestHint
@@ -306,18 +456,25 @@ export function LessonRunner({
 
   const masteryPreview =
     summarizeLessonMastery(results);
+  const expectedIndependent = lesson.steps.filter(item =>
+    item.type === "choice" || (item.type === "move" && item.support !== "guided")).length;
+  const expectedTransfer = lesson.steps.filter(item =>
+    item.type === "move" && item.support === "transfer").length;
 
   // Never fall through to the same-position fallback: that is retrieval, not transfer.
-  if ((missingTransfer && transferEntry?.skillId !== skill.id) ||
-      (beginner && beginnerEntry?.skillId !== skill.id)) {
-    const error = (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
-      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null);
+  if (assemblyError || (missingTransfer && transferEntry?.skillId !== skill.id) ||
+      (beginner && beginnerEntry?.skillId !== skill.id) ||
+      (tacticalDepth && tacticalEntry?.skillId !== skill.id)) {
+    const error = assemblyError ?? (missingTransfer && transferEntry?.skillId !== skill.id ? transferError : null) ??
+      (beginner && beginnerEntry?.skillId !== skill.id ? beginnerError : null) ??
+      (tacticalDepth && tacticalEntry?.skillId !== skill.id ? tacticalError : null);
     return <div className="lesson-runner lesson-runner-v2" role="status">
       <h2>{error ? "Lesson source unavailable" : "Preparing original practice"}</h2>
       <p>{error ?? "Loading and validating the independent board positions for this lesson."}</p>
-      {error && <button type="button" onClick={() => {
+      {error && !assemblyError && <button type="button" onClick={() => {
         setTransferRetry(value => value + 1);
         setBeginnerRetry(value => value + 1);
+        setTacticalRetry(value => value + 1);
       }}>Retry lesson content</button>}
     </div>;
   }
@@ -363,23 +520,29 @@ export function LessonRunner({
       <div className="lesson-stage">
         <div className="lesson-board-column">
           <ChessBoard
-            key={`${step.id}-${boardReset}`}
-            fen={step.fen}
+            key={`${displayedStep.id}-${activeExploration ? "g6" : (replayFrame?.id ?? "normal")}-${boardVisionOpen ? "inspection" : "play"}-${boardReset}`}
+            fen={boardFen}
             orientation={orientation}
-            disabled={
-              step.type !== "move" ||
-              solved
-            }
+            disabled={boardVisionOpen || (activeExploration ? Boolean(explorationStatus?.terminal) : (
+              step.type !== "move" || solved
+            ))}
+            onInspectSquare={boardVisionOpen && comparison ? setInspectedSquare : undefined}
             highlights={
               displayedHighlights
             }
             arrows={displayedArrows}
             onMove={(move) => {
-              if (
-                step.type !== "move"
-              ) {
-                return false;
+              if (activeExploration && tacticalReplay) {
+                const source = explorationsRef.current[tacticalReplay.replyStepId];
+                if (!source || source.anchorFen !== tacticalReplay.frames[2].fen) return false;
+                const next = g6ExploreMove(source, move);
+                if (!next) return false;
+                explorationsRef.current = { ...explorationsRef.current, [tacticalReplay.replyStepId]: next };
+                setExplorations(explorationsRef.current);
+                return true;
               }
+              if (step.type !== "move" || liveStepAttempt.current.completed)
+                return false;
 
               const uci =
                 `${move.from}${move.to}${move.promotion ?? ""}`;
@@ -390,31 +553,16 @@ export function LessonRunner({
               );
 
               if (accepted) {
+                const result = finishStepAttempt(liveStepAttempt.current, step.id, step.support);
+                if (!result) return false;
                 setSolved(true);
                 setFeedback(step.successByMove?.[uci] ?? step.successBody);
-                recordResult({
-                  stepId: step.id,
-                  support:
-                    step.support,
-                  correct: true,
-                  firstTry:
-                    stepWrongAttempts ===
-                      0 &&
-                    stepHintsUsed === 0,
-                  hintsUsed:
-                    stepHintsUsed,
-                  wrongAttempts:
-                    stepWrongAttempts,
-                });
+                recordResult(result);
                 return true;
               }
 
-              setStepWrongAttempts(
-                (value) => value + 1,
-              );
-              setTotalWrongAttempts(
-                (value) => value + 1,
-              );
+              const wrongs = countStepMistake(liveStepAttempt.current);
+              if (wrongs === null) return false;
               setFeedback(
                 step.wrongMoveFeedback?.[
                   uci
@@ -441,7 +589,9 @@ export function LessonRunner({
             <span>
               {step.type === "move"
                 ? "Move only when you can explain the idea"
-                : "Study the position before continuing"}
+                : defenseStudy?.chosen && !defenseStudy.isRevealed
+                  ? "Predict the defense before revealing the original line"
+                  : "Study the position before continuing"}
             </span>
           </div>
         </div>
@@ -450,7 +600,7 @@ export function LessonRunner({
           <div>
             <div className="lesson-step-meta">
               <p className="eyebrow">
-                {step.eyebrow ??
+                {displayedStep.eyebrow ??
                   "LESSON"}
               </p>
               <span>
@@ -458,12 +608,319 @@ export function LessonRunner({
               </span>
             </div>
 
-            <h2>{step.title}</h2>
+            <h2>{displayedStep.title}</h2>
+
+            {comparison && (
+              <section className="lesson-board-vision" aria-label="Board vision: attackers and defenders">
+                <button type="button" className="lesson-vision-toggle"
+                  aria-expanded={boardVisionOpen}
+                  onClick={() => {
+                    setBoardVisionOpen(open => !open);
+                    setInspectedSquare(null);
+                  }}>
+                  {boardVisionOpen ? "Close" : "Inspect"} attacks and defenders
+                </button>
+                {boardVisionOpen && boardVision && (
+                  <div className="lesson-vision-inspector">
+                    <p>
+                      Select any square on the chessboard to inspect its attackers.
+                      Attacks include pinned pieces and do not always mean legal captures.
+                    </p>
+                    <p><strong>{boardVision.sideToMove === "w" ? "White" : "Black"} to move</strong></p>
+                    {squareVision ? (
+                      <div className="lesson-vision-selected" role="status" aria-live="polite">
+                        <strong>
+                          {squareVision.square} — {squareVision.occupant
+                            ? `${squareVision.occupant.color === "w" ? "White" : "Black"} ${chessPieceNames[squareVision.occupant.piece]}`
+                            : "Empty square"}
+                        </strong>
+                        <div className="lesson-vision-attackers">
+                          {([
+                            ["White", squareVision.whiteAttackers],
+                            ["Black", squareVision.blackAttackers],
+                          ] as const).map(([side, attackers]) => (
+                            <div key={side}>
+                              <strong>{side} attackers: {attackers.length}</strong>
+                              <p>{attackers.length
+                                ? attackers.map(piece => `${chessPieceNames[piece.piece]} ${piece.square}`).join(", ")
+                                : "None"}</p>
+                            </div>
+                          ))}
+                        </div>
+                        {squareVision.occupant && (
+                          <div>
+                            <strong>Legal moves from {squareVision.square}</strong>
+                            <p>{squareVision.occupant.color !== squareVision.sideToMove
+                              ? "This piece is not on the side to move."
+                              : squareVision.legalMoves.length
+                                ? squareVision.legalMoves.map(move => `${move.san} (${move.to})`).join(", ")
+                                : "No legal moves from this square."}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p role="status">Select a square on the board.</p>
+                    )}
+                    <div className="lesson-vision-threats">
+                      {([
+                        ["White pieces attacked", boardVision.attackedWhite],
+                        ["Black pieces attacked", boardVision.attackedBlack],
+                      ] as const).map(([title, occupied]) => (
+                        <div key={title}>
+                          <strong>{title} ({occupied.length})</strong>
+                          <div className="lesson-vision-square-list">
+                            {occupied.length ? occupied.map(piece => (
+                              <button key={piece.square} type="button"
+                                aria-pressed={inspectedSquare === piece.square}
+                                onClick={() => setInspectedSquare(piece.square)}>
+                                {chessPieceNames[piece.piece]} {piece.square}
+                                <span>{piece.attackers} attackers · {piece.defenders} defenders</span>
+                              </button>
+                            )) : <p>None</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {comparison && defenseStudy && (
+              <section className="lesson-reply-comparison" aria-label={`Tactical case ${comparison.caseNumber} defense reading lab`}>
+                <p className="lesson-prompt">Select a defense, predict it, then reveal and replay the original line.</p>
+                <div className="lesson-choice-grid" role="group" aria-label="Tactical defense selection">
+                  {comparison.options.map((option, index) => {
+                    const active = index === 0
+                      ? comparisonSelection === null
+                      : comparisonSelection === option.id;
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={`lesson-choice ${active ? "selected" : ""}`}
+                        aria-pressed={active}
+                        onClick={() => {
+                          setComparisonSelection(index === 0 ? null : option.id);
+                          setShowDefenseContrast(false);
+                          setReplayPly(null);
+                          setActiveExplorationId(null);
+                        }}
+                      >
+                        <span>{option.label}</span>
+                        {index > 0 && revealedDefenses.includes(option.id) && (
+                          <small>Revealed</small>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                {defenseStudy.chosen && (
+                  <div className="lesson-defense-prediction">
+                    <label htmlFor="lesson-defense-notes">
+                      Your prediction for {defenseStudy.chosen.label}
+                    </label>
+                    <textarea
+                      id="lesson-defense-notes"
+                      rows={2}
+                      maxLength={600}
+                      value={defenseNotes[defenseStudy.chosen.id] ?? ""}
+                      onChange={(event) => setDefenseNotes(previous => ({
+                        ...previous,
+                        [defenseStudy.chosen!.id]: event.target.value,
+                      }))}
+                      placeholder="What might Black play, and what would change?"
+                    />
+                    <small>Private temporary scratchpad. Not saved, synced or graded.</small>
+                    {!defenseStudy.isRevealed ? (
+                      <button type="button" className="primary" onClick={() => {
+                        setRevealedDefenses(previous => previous.includes(defenseStudy.chosen!.id)
+                          ? previous : [...previous, defenseStudy.chosen!.id]);
+                      }}>
+                        Reveal original defense
+                      </button>
+                    ) : (
+                      <p role="status">Showing the source-authored reply and explanation below.</p>
+                    )}
+                  </div>
+                )}
+                {tacticalReplay && (
+                  <div className="lesson-tactical-replay">
+                    {replayPly === null ? (
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => { setActiveExplorationId(null); setReplayPly(0); }}
+                      >
+                        Replay White's tactic and Black's reply
+                      </button>
+                    ) : (
+                      <>
+                        <div className="lesson-tactical-replay-meta" role="status" aria-live="polite">
+                          <strong>{replayFrame?.label}</strong>
+                          <span>Position {replayPly + 1} of 3</span>
+                        </div>
+                        <p>{replayFrame?.explanation}</p>
+                        <div className="lesson-tactical-replay-actions">
+                          <button type="button" disabled={replayPly === 0}
+                            onClick={() => setReplayPly(current =>
+                              current === null ? 0 : g5ReplayIndex(current, -1))}>
+                            Previous move
+                          </button>
+                          <button type="button" disabled={replayPly === 2}
+                            onClick={() => setReplayPly(current =>
+                              current === null ? 0 : g5ReplayIndex(current, 1))}>
+                            Next move
+                          </button>
+                          <button type="button"
+                            onClick={() => setReplayPly(null)}>
+                            Close replay
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+                {tacticalReplay && (
+                  <div className="lesson-exploration" aria-label="Legal continuation study">
+                    {!activeExploration ? (
+                      <button type="button" className="secondary" onClick={() => {
+                        const id = tacticalReplay.replyStepId;
+                        const anchor = tacticalReplay.frames[2].fen;
+                        const previous = explorationsRef.current[id];
+                        const line = previous?.anchorFen === anchor
+                          ? previous : beginG6Exploration(anchor);
+                        if (!line) return;
+                        explorationsRef.current = { ...explorationsRef.current, [id]: line };
+                        setExplorations(explorationsRef.current);
+                        setReplayPly(null);
+                        setActiveExplorationId(id);
+                      }}>
+                        Explore legal continuations
+                      </button>
+                    ) : (
+                      <>
+                        <div className="lesson-exploration-status" role="status" aria-live="polite">
+                          <strong>{explorationStatus?.description}</strong>
+                          <span>{activeExploration.moves.length} / 12 moves explored</span>
+                        </div>
+                        <div className="lesson-exploration-moves" aria-label="Explored continuation">
+                          <button type="button" className="lesson-exploration-ply"
+                            onClick={() => {
+                              const id = tacticalReplay.replyStepId;
+                              const next = g6Rewind(explorationsRef.current[id], 0);
+                              if (!next) return;
+                              explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                              setExplorations(explorationsRef.current);
+                            }}>
+                            Start position
+                          </button>
+                          {activeExploration.moves.map((item, index) => (
+                            <button key={`${index}-${item.fen}`} type="button"
+                              className={`lesson-exploration-ply ${index === activeExploration.moves.length - 1 ? "current" : ""}`}
+                              onClick={() => {
+                                const id = tacticalReplay.replyStepId;
+                                const next = g6Rewind(explorationsRef.current[id], index + 1);
+                                if (!next) return;
+                                explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                                setExplorations(explorationsRef.current);
+                              }}>
+                              {index % 2 === 0 ? "White" : "Black"}: {item.san}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="lesson-exploration-actions">
+                          <button type="button" disabled={activeExploration.moves.length === 0}
+                            onClick={() => {
+                              const id = tacticalReplay.replyStepId;
+                              const next = g6Rewind(explorationsRef.current[id], activeExploration.moves.length - 1);
+                              if (!next) return;
+                              explorationsRef.current = { ...explorationsRef.current, [id]: next };
+                              setExplorations(explorationsRef.current);
+                            }}>
+                            Undo move
+                          </button>
+                          <button type="button" onClick={() => setActiveExplorationId(null)}>
+                            Return to original line
+                          </button>
+                        </div>
+                        <div className="lesson-variation-notebook" aria-label="Alternative line comparison">
+                          <div className="lesson-variation-controls">
+                            {(["A", "B"] as const).map(slot => (
+                              <div className="lesson-variation-slot" key={slot}>
+                                <button type="button"
+                                  disabled={activeExploration.moves.length === 0}
+                                  onClick={() => saveCandidate(slot)}>
+                                  Save as line {slot}
+                                </button>
+                                <button type="button"
+                                  disabled={!variationNotebook?.[slot]}
+                                  onClick={() => loadCandidate(slot)}>
+                                  Load line {slot}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                          {variationComparison && (
+                            <div className="lesson-variation-analysis" role="region"
+                              aria-label="Comparison of learner-created legal lines">
+                              <p>Common starting moves: {variationComparison.commonPlies}</p>
+                              <div className="lesson-variation-grid">
+                                {(["A", "B"] as const).map(slot => {
+                                  const facts = variationComparison[slot];
+                                  return (
+                                    <div className="lesson-variation-facts" key={slot}>
+                                      <strong>Line {slot} · {facts.plies} plies</strong>
+                                      <p className="lesson-variation-san">{facts.moves.join(" ")}</p>
+                                      <p>{facts.status}</p>
+                                      <p>Pieces remaining — White: {facts.whitePieces}, Black: {facts.blackPieces}</p>
+                                      <button type="button" onClick={() => loadCandidate(slot)}>
+                                        Explore line {slot}
+                                      </button>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <p>Play either side using the board. Legal moves only; no evaluation or lesson credit.</p>
+                      </>
+                    )}
+                  </div>
+                )}
+                {defenseStudy.canCompare && (
+                  <div className="lesson-defense-contrast">
+                    <button
+                      type="button"
+                      aria-expanded={showDefenseContrast}
+                      onClick={() => setShowDefenseContrast(value => !value)}
+                    >
+                      {showDefenseContrast ? "Hide" : "Compare"} both authored defenses
+                    </button>
+                    {showDefenseContrast && (
+                      <div className="lesson-choice-grid" role="region" aria-label="Both original Black reply explanations">
+                        {defenseStudy.revealedReplies.map(option => (
+                          <div key={option.id} className="lesson-feedback">
+                            <strong>{option.step.title}</strong>
+                            {option.step.type === "explain" && <p>{option.step.body}</p>}
+                            {defenseNotes[option.id] && (
+                              <p><strong>Your prediction:</strong> {defenseNotes[option.id]}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            )}
 
             {step.type ===
             "explain" ? (
               <p className="lesson-body">
-                {step.body}
+                {displayedStep.type === "explain" ? displayedStep.body :
+                  displayedStep.type === "move" ? displayedStep.prompt : step.body}
               </p>
             ) : step.type ===
               "choice" ? (
@@ -637,6 +1094,14 @@ export function LessonRunner({
           </div>
 
           <div className="lesson-controls lesson-controls-v2">
+            {completionError && (
+              <div className="lesson-feedback error" role="alert">
+                <span>{completionError}</span>
+                <button type="button" onClick={restartIncompleteLesson}>
+                  <RotateCcw size={15} /> Restart lesson
+                </button>
+              </div>
+            )}
             <div className="lesson-mastery-preview">
               <span>
                 Independent checks
@@ -647,12 +1112,12 @@ export function LessonRunner({
                 }
                 /
                 {
-                  masteryPreview.independentSteps
+                  expectedIndependent
                 }
               </strong>
               <small>
-                {masteryPreview.transferSteps > 0
-                  ? `Independent transfer: ${masteryPreview.transferFirstTryCorrect}/${masteryPreview.transferSteps} · delayed recall will be scheduled`
+                {expectedTransfer > 0
+                  ? `Independent transfer: ${masteryPreview.transferFirstTryCorrect}/${expectedTransfer} · delayed recall will be scheduled`
                   : "First try · hints are counted separately"}
               </small>
             </div>
@@ -693,6 +1158,7 @@ export function LessonRunner({
                   className="primary"
                   type="button"
                   onClick={nextStep}
+                  disabled={completionSubmitted.current || Boolean(completionError)}
                 >
                   {isLast
                     ? "Finish lesson"

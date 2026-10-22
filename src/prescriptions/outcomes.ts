@@ -38,7 +38,7 @@ function humanGamesAfter(
     );
 }
 
-function matchesTarget(
+export function matchesTarget(
   game: ImportedGame,
   target: PrescriptionTarget,
 ) {
