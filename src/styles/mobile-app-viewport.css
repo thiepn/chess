@@ -38,7 +38,7 @@
   .train-task-copy h1 {max-width:none;font-size:clamp(23px,6vw,28px);line-height:1.16}
   .train-task-subtitle {margin:8px 0 0}
   .train-task-reason {margin:8px 0 0;font-size:13px;line-height:1.4}
-  .train-session-facts {margin:10px 0 0;padding:8px 0;gap:8px}
+  .app-shell-v2 .train-session-facts {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:10px 0 0;padding:8px 0;gap:8px}
   .train-session-facts :is(dt,dd) {font-size:12px}
   .train-room-rail {order:1;display:grid;gap:8px;max-height:none;padding:0;border:0}
   .train-room-rail-heading {min-height:0;padding-bottom:7px}
@@ -51,7 +51,7 @@
   .train-room-board-column {order:2;gap:6px}
   .train-preview-board {width:min(100%,calc(100dvh - 335px),480px);min-width:0}
   .train-board-context,.train-board-status {min-height:22px;font-size:12px}
-  .train-task-actions {
+  .app-shell-v2 .train-room-coach .train-task-actions {
     position:fixed;left:max(9px,env(safe-area-inset-left));
     right:max(9px,env(safe-area-inset-right));
     bottom:var(--chess-mobile-nav-safe-height);z-index:55;
@@ -68,7 +68,7 @@
   .app-shell-v2 .app-main:has(.lesson-page-v2) {
     padding-bottom:calc(var(--chess-mobile-nav-safe-height) + 100px)
   }
-  .learn-v2-lesson-actions {
+  .app-shell-v2 .lesson-page-v2 .learn-v2-lesson-actions {
     display:grid;position:fixed;z-index:55;
     left:max(9px,env(safe-area-inset-left));
     right:max(9px,env(safe-area-inset-right));

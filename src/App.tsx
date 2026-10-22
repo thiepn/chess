@@ -976,24 +976,6 @@ export default function App() {
       window.removeEventListener("keydown", handleShortcut);
   }, [trainingSessionOpen, session.activities.length]);
 
-  const homeTrainingReason = !firstActivity
-    ? "No training is due right now. Open Learn to choose a concept."
-    : firstActivity.source === "prescription"
-      ? progressIntelligence.coachBrief.decisions[0]?.title
-        ? `${progressIntelligence.coachBrief.decisions[0].title} is the best next focus before starting something new.`
-        : "A repeated game problem is worth revisiting before starting something new."
-      : firstActivity.source === "weakness"
-        ? "Your recent games keep pointing to this area."
-        : firstActivity.source === "review"
-          ? "Review this now so it stays available in future games."
-          : firstActivity.source === "assessment"
-            ? "A checkpoint showed a specific gap to revisit."
-            : firstActivity.source === "curriculum"
-              ? "This is the next useful concept in your current course stage."
-              : firstActivity.source === "library"
-                ? "A saved position is ready to revisit."
-                : "This session focuses on the work most likely to help your next games.";
-
   async function linkLichess(username: string) {
     setLichessSyncError(null);
     setLichessSyncMessage(null);
@@ -3202,13 +3184,6 @@ export default function App() {
                   {previewActivity?.subtitle ??
                     "Nothing is due right now. Open Learn to choose a concept."}
                 </p>
-                {previewActivity && (
-                  <p className="train-task-reason">
-                    {boundedPreviewIndex === 0
-                      ? homeTrainingReason
-                      : `Part ${boundedPreviewIndex + 1} of today’s session.`}
-                  </p>
-                )}
               </div>
 
               <div className="train-task-actions">
