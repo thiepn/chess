@@ -1,24 +1,51 @@
-import {test,expect} from "@playwright/test";
-test("Train start fits the phone without page scrolling",async({page})=>{
-  await page.setViewportSize({width:360,height:700});
-  await page.goto("/train");
-  const start=page.locator(".train-room-start");
-  await expect(start).toBeVisible();
-  const b=await start.boundingBox();
-  expect(b).not.toBeNull();
-  expect(b!.y+b!.height).toBeLessThanOrEqual(701);
-  expect(await page.evaluate(()=>document.documentElement.scrollHeight)).toBeLessThanOrEqual(701);
+import { test, expect } from "@playwright/test";
+
+test.describe("mobile app viewport and standalone install", () => {
+  test("mobile Train keeps the start action in the visual viewport", async ({ page }) => {
+    const size = page.viewportSize();
+    test.skip(!size || size.width > 820, "Mobile portrait only");
+    await page.goto("/train");
+    const start = page.locator(".train-room-start");
+    await expect(start).toBeVisible();
+    const bounds = await start.boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(bounds!.y).toBeGreaterThanOrEqual(0);
+    expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(size!.height + 1);
+    await page.evaluate(() => window.scrollTo(0, 500));
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  });
+
+  test("manifest installs as a scoped standalone app with sized icons", async ({ request }) => {
+    const response = await request.get("/manifest.webmanifest");
+    expect(response.ok()).toBe(true);
+    const data = await response.json();
+    expect(data.display).toBe("standalone");
+    expect(data.start_url).toBe("/");
+    for (const size of [192, 512]) {
+      const icon = data.icons.find((item: { sizes: string }) => item.sizes === `${size}x${size}`);
+      expect(icon).toBeDefined();
+      const asset = await request.get(icon.src);
+      expect(asset.ok()).toBe(true);
+      expect(asset.headers()["content-type"]).toContain("image/png");
+    }
+  });
 });
-test("active training keeps its controls reachable",async({page})=>{
-  await page.setViewportSize({width:360,height:700});
+
+test("a phone keeps available training progression controls inside the viewport", async ({ page }) => {
+  await page.setViewportSize({width: 360, height: 640});
   await page.goto("/train");
-  await page.locator(".train-room-start").click();
+  const start = page.locator(".train-room-start");
+  await expect(start).toBeVisible();
+  await start.click();
   await expect(page.locator(".train-runtime-page")).toBeVisible();
-  const action=page.locator(".train-runtime-body .lesson-controls button:visible").first();
-  if(await action.count()){
-    const b=await action.boundingBox();
-    expect(b).not.toBeNull();
-    expect(b!.y).toBeGreaterThanOrEqual(0);
-    expect(b!.y+b!.height).toBeLessThanOrEqual(701);
+  const controls = page.locator(".train-runtime-body .lesson-controls button:visible");
+  if (await controls.count()) {
+    const button = controls.first();
+    const box = await button.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(page.viewportSize()!.height + 1);
   }
+  const body = page.locator(".train-runtime-body");
+  await expect(body).toHaveCSS("overflow-y", "auto");
 });
